@@ -10,7 +10,6 @@ import (
 	"fmt"
 	htmltemplate "html/template"
 	"log/slog"
-	"math"
 	"mime"
 	"mime/multipart"
 	"mime/quotedprintable"
@@ -26,6 +25,7 @@ import (
 	"time"
 
 	"github.com/productdevbook/yuva/api/internal/config"
+	"github.com/productdevbook/yuva/api/internal/mail/style"
 )
 
 type Message struct {
@@ -73,6 +73,7 @@ const (
 	darkCardColor  = "#131316"
 	maxBrandLength = 80
 	maxLinkLabel   = 40
+	layoutWidth    = 560
 )
 
 var hexColor = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
@@ -94,7 +95,7 @@ func resolveBrand(b Brand) brand {
 	if !hexColor.MatchString(c) {
 		c = inboxColor
 	}
-	return brand{Name: name, Color: c, Ink: readableOn(c, pageColor, 0), DarkColor: readableOn(c, darkCardColor, 255), OnColor: textOn(c)}
+	return brand{Name: name, Color: c, Ink: style.ReadableOn(c, pageColor, 0), DarkColor: style.ReadableOn(c, darkCardColor, 255), OnColor: style.TextOn(c)}
 }
 
 func layoutFuncs(b brand) htmltemplate.FuncMap {
@@ -114,10 +115,11 @@ func layoutFuncs(b brand) htmltemplate.FuncMap {
 			}
 			return htmltemplate.HTML(strings.Join(parts, "<br>"))
 		},
-		"msoOpen": func() htmltemplate.HTML {
-			return `<!--[if mso]><table role="presentation" width="560" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->`
+		"buttonHTML": func(url, label string) htmltemplate.HTML {
+			return htmltemplate.HTML(style.LayoutButton(url, label, b.Color, b.OnColor).HTML())
 		},
-		"msoClose": func() htmltemplate.HTML { return `<!--[if mso]></td></tr></table><![endif]-->` },
+		"msoOpen":  func() htmltemplate.HTML { return htmltemplate.HTML(style.MSOOpen(layoutWidth)) },
+		"msoClose": func() htmltemplate.HTML { return htmltemplate.HTML(style.MSOClose()) },
 	}
 }
 
@@ -137,47 +139,6 @@ func shortURL(raw string) string {
 		label += "…"
 	}
 	return label
-}
-
-func luminance(hex string) float64 {
-	v, _ := strconv.ParseUint(hex[1:], 16, 32)
-	ch := func(c uint64) float64 {
-		f := float64(c) / 255
-		if f <= 0.03928 {
-			return f / 12.92
-		}
-		return math.Pow((f+0.055)/1.055, 2.4)
-	}
-	return 0.2126*ch(v>>16&0xff) + 0.7152*ch(v>>8&0xff) + 0.0722*ch(v&0xff)
-}
-
-func contrast(a, b string) float64 {
-	la, lb := luminance(a), luminance(b)
-	if la < lb {
-		la, lb = lb, la
-	}
-	return (la + 0.05) / (lb + 0.05)
-}
-
-func textOn(bg string) string {
-	if contrast(bg, "#ffffff") >= contrast(bg, "#111111") {
-		return "#ffffff"
-	}
-	return "#111111"
-}
-
-// readableOn mixes c towards black (to 0) or white (to 255) until it reads as text on bg.
-func readableOn(c, bg string, to float64) string {
-	v, _ := strconv.ParseUint(c[1:], 16, 32)
-	r, g, b := float64(v>>16&0xff), float64(v>>8&0xff), float64(v&0xff)
-	for i := 0; i <= 10; i++ {
-		t := float64(i) / 10
-		out := fmt.Sprintf("#%02x%02x%02x", int(r+(to-r)*t), int(g+(to-g)*t), int(b+(to-b)*t))
-		if contrast(out, bg) >= 4.5 {
-			return out
-		}
-	}
-	return fmt.Sprintf("#%02x%02x%02x", int(to), int(to), int(to))
 }
 
 type layoutData struct {

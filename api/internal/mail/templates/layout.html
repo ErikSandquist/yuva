@@ -43,7 +43,7 @@
 </body>
 </html>
 {{end}}
-{{define "button"}}<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:24px 0 8px 0;"><tr><td align="center" bgcolor="{{(brand).Color}}" style="background-color:{{(brand).Color}};border-radius:8px;mso-padding-alt:12px 24px;"><a href="{{.URL}}" target="_blank" style="display:inline-block;padding:12px 24px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:20px;font-weight:600;color:{{(brand).OnColor}};text-decoration:none;border-radius:8px;">{{.Label}}</a></td></tr></table>{{end}}
+{{define "button"}}{{buttonHTML .URL .Label}}{{end}}
 {{define "heading"}}<h1 class="y-text" style="margin:0 0 16px 0;color:#18181b;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:20px;line-height:28px;font-weight:700;">{{.}}</h1>{{end}}
 {{define "quote"}}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 16px 0;"><tr><td class="y-quote" dir="auto" style="background-color:#f7f7f8;border-left:3px solid #d4d4d8;border-radius:4px;padding:10px 14px;font-size:14px;line-height:22px;color:#27272a;">{{lines .}}</td></tr></table>{{end}}
 {{define "fallback"}}<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">{{.Label}}<br><a class="y-link" href="{{.URL}}" target="_blank" style="color:{{(brand).Ink}};overflow-wrap:break-word;word-wrap:break-word;">{{shortURL .URL}}</a></p>{{end}}
