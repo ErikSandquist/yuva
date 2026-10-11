@@ -180,6 +180,14 @@ msgstr "{first} konuşmayı değerlendirdi 👎"
 msgid "{good} good"
 msgstr "{good} iyi"
 
+#: src/features/account/ConnectPage.tsx
+msgid "{host} is not one of the sites this documentation channel allows."
+msgstr "{host}, bu dokümantasyon kanalının izin verdiği sitelerden biri değil."
+
+#: src/features/account/ConnectPage.tsx
+msgid "{host} uses Yuva for its discussions. Sign in or create an account with your e-mail address; we e-mail you a one-time code."
+msgstr "{host}, tartışmaları için Yuva'yı kullanıyor. E-posta adresinizle oturum açın ya da hesap oluşturun; size tek kullanımlık bir kod gönderiyoruz."
+
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 msgstr "{hours, plural, one {# saattir bekliyor} other {# saattir bekliyor}}"
@@ -272,6 +280,7 @@ msgstr "{pending} onay bekliyor"
 msgid "{replies, plural, one {# reply} other {# replies}}"
 msgstr "{replies, plural, one {# yanıt} other {# yanıt}}"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{replies} replies"
 msgstr "{replies} yanıt"
@@ -292,6 +301,7 @@ msgstr "{threads} açık tartışma"
 msgid "{up} helpful"
 msgstr "{up} yararlı"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "{votes} votes"
@@ -300,6 +310,10 @@ msgstr "{votes} oy"
 #: src/features/inbox/SidePanels.tsx
 msgid "{who} in {contact}"
 msgstr "{contact} konuşmasında {who}"
+
+#: src/features/account/AccountPage.tsx
+msgid "{who} replied in <0>{title}</0>"
+msgstr "{who}, <0>{title}</0> tartışmasına yanıt verdi"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "*@example.com receives every address of the domain that no other channel has; replies then go out from the address the customer wrote to."
@@ -471,6 +485,10 @@ msgstr "Kabul edilen yanıt"
 msgid "Access"
 msgstr "Erişim"
 
+#: src/features/account/AccountPage.tsx
+msgid "Account"
+msgstr "Hesap"
+
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme dokümanları"
@@ -607,6 +625,10 @@ msgstr "Tümü"
 msgid "All inboxes"
 msgstr "Tüm gelen kutuları"
 
+#: src/features/account/AccountPage.tsx
+msgid "All marked as read"
+msgstr "Hepsi okundu olarak işaretlendi"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "Tüm konuşmaları da onunla birlikte silinir."
@@ -654,6 +676,10 @@ msgstr "Giriş ve bildirim e-postaları da bu dilde gelir"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Üyelerin iç notları için de message.created gönderilir. İç olaylar hiçbir zaman gönderilmez."
 
+#: src/features/account/AccountPage.tsx
+msgid "An answer was accepted in <0>{title}</0>"
+msgstr "<0>{title}</0> tartışmasında bir yanıt kabul edildi"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "An e-mail goes out only if the conversation is still unread by then."
 msgstr "E-posta yalnızca konuşma o zamana kadar okunmadıysa gönderilir."
@@ -674,7 +700,7 @@ msgstr "Davet, kişi o adrese gönderilen kodla giriş yaptığında kabul edili
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "Bir sahip ya da yönetici, Botlar gönderebilir ayarıyla asistanların kendi başına göndermesine izin verebilir."
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
 msgstr "Anonim"
 
@@ -708,6 +734,7 @@ msgstr "Yanıt (isteğe bağlı)"
 msgid "Answer cleared"
 msgstr "Kabul edilen yanıt kaldırıldı"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Answered"
 msgstr "Yanıtlandı"
@@ -855,6 +882,10 @@ msgstr "Eşzamansız"
 msgid "At most once per contact every (hours)"
 msgstr "Her kişiye en fazla şu kadar saatte bir"
 
+#: src/features/account/AccountPage.tsx
+msgid "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
+msgstr "Her tartışma için birkaç dakikada en fazla bir e-posta, yeni yanıtlar ve kabul edilen yanıtla birlikte. Buradaki bildirimler açık kalır."
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Attach files"
@@ -977,6 +1008,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
+#: src/features/account/ConnectPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -1009,7 +1041,7 @@ msgstr "Kategori"
 msgid "Cc: {cc}"
 msgstr "Bilgi: {cc}"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Adresi değiştir"
 
@@ -1038,7 +1070,7 @@ msgstr "Kanal eklendi"
 msgid "Channel removed"
 msgstr "Kanal kaldırıldı"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "E-postanızı kontrol edin"
 
@@ -1129,7 +1161,7 @@ msgstr "bugün biten"
 msgid "Closes"
 msgstr "Kapanış"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Kod"
 
@@ -1145,6 +1177,7 @@ msgstr "Renk"
 msgid "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
 msgstr "Uyarıyı onaylayıp <0>Create as a plugin</0> seçeneğini seçin. ChatGPT kendini bu sunucuya kaydeder."
 
+#: src/features/account/ConnectPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Connect"
 msgstr "Bağla"
@@ -1162,10 +1195,15 @@ msgstr "Asistan bağlayın"
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "Claude ya da ChatGPT gibi bir asistan bağlayın"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Connect to {host}"
+msgstr "{host} ile bağlan"
+
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect your servers and bots to Yuva"
 msgstr "Sunucularını ve botlarını Yuva'ya bağla"
 
+#: src/features/account/ConnectPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
 msgstr "Bağlı"
@@ -1315,6 +1353,7 @@ msgid "Could not copy"
 msgstr "Kopyalanamadı"
 
 #: src/app/Gate.tsx
+#: src/features/account/AccountLayout.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Could not reach the server"
 msgstr "Sunucuya ulaşılamadı"
@@ -1437,6 +1476,10 @@ msgstr "Bu not silinsin mi?"
 msgid "Delete this workspace"
 msgstr "Bu çalışma alanını sil"
 
+#: src/features/account/AccountPage.tsx
+msgid "Delete your account"
+msgstr "Hesabınızı silin"
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "Delete your account?"
 msgstr "Hesabınız silinsin mi?"
@@ -1450,14 +1493,14 @@ msgstr "Yazarı tarafından silindi."
 msgid "Deleted inbox"
 msgstr "Silinmiş gelen kutusu"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Deleted member"
 msgstr "Silinmiş üye"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 msgid "Deleted reader"
 msgstr "Silinmiş okuyucu"
 
@@ -1549,9 +1592,17 @@ msgstr "Tartışmalar ve onaylar"
 msgid "Discussions are off on this site's chat channel."
 msgstr "Bu sitenin sohbet kanalında tartışmalar kapalı."
 
+#: src/features/account/ConnectPage.tsx
+msgid "Discussions are turned off for {host}."
+msgstr "{host} için tartışmalar kapalı."
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Discussions on documentation pages"
 msgstr "Dokümantasyon sayfalarında tartışmalar"
+
+#: src/features/account/AccountPage.tsx
+msgid "Discussions you started or replied to"
+msgstr "Başlattığınız ya da yanıt yazdığınız tartışmalar"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -1643,6 +1694,7 @@ msgstr "Yanıtınıza eklemek için dosyaları bırakın"
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/account/AccountPage.tsx
 #: src/features/auth/AuthLayout.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
@@ -1651,7 +1703,7 @@ msgstr "Yanıtınıza eklemek için dosyaları bırakın"
 msgid "E-mail"
 msgstr "E-posta"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
 msgid "E-mail address"
@@ -1668,6 +1720,10 @@ msgstr "E-postayla yazanlara iki bağlantılı kısa bir e-posta gider; sohbet v
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
 msgstr "E-posta içeriği"
+
+#: src/features/account/AccountPage.tsx
+msgid "E-mail me about the discussions I follow"
+msgstr "Takip ettiğim tartışmalar hakkında bana e-posta gönder"
 
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
@@ -1920,6 +1976,10 @@ msgstr "Adresi ya da kanalın SMTP ayarlarını düzeltin, sonra yanıtı yenide
 msgid "Follow the system appearance"
 msgstr "Sistem temasını izle"
 
+#: src/features/account/AccountPage.tsx
+msgid "Following"
+msgstr "Takip edilenler"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
 msgstr "Yalnızca yerel program başlatabilen bir istemci için kurulum kılavuzundaki <0>yuva mcp stdio</0> köprüsünü kullanın."
@@ -2079,6 +2139,10 @@ msgstr "Yararlı"
 msgid "helpful share"
 msgstr "yararlı oranı"
 
+#: src/app/Gate.tsx
+msgid "Here to follow discussions on documentation sites?"
+msgstr "Dokümantasyon sitelerindeki tartışmaları takip etmek için mi geldiniz?"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Hi! Ask us anything."
 msgstr "Merhaba! Bize her şeyi sorabilirsiniz."
@@ -2092,6 +2156,10 @@ msgstr "Merhaba! Size nasıl yardımcı olabiliriz?"
 #: src/features/docs/discussions/parts.tsx
 msgid "Hidden"
 msgstr "Gizli"
+
+#: src/features/account/AccountPage.tsx
+msgid "Hidden by the team"
+msgstr "Ekip tarafından gizlendi"
 
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -2438,6 +2506,7 @@ msgstr "Canlı sohbet kimseyi müsait göstermez. Sana atanmış konuşmalar dı
 msgid "Load images"
 msgstr "Görselleri yükle"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
@@ -2470,6 +2539,7 @@ msgstr "Kilitle"
 msgid "Lock or unlock"
 msgstr "Kilitle ya da kilidi aç"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -2528,6 +2598,10 @@ msgstr "Webhook'ları yönetme"
 #: src/features/settings/webhooks/parts.tsx
 msgid "manual"
 msgstr "elle"
+
+#: src/features/account/AccountPage.tsx
+msgid "Mark all as read"
+msgstr "Hepsini okundu olarak işaretle"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Mark as answer"
@@ -2739,10 +2813,15 @@ msgstr "Gelen kutusuna taşı"
 msgid "Moved from {from}"
 msgstr "{from} gelen kutusundan taşındı"
 
+#: src/features/account/AccountPage.tsx
+msgid "My discussions"
+msgstr "Tartışmalarım"
+
 #: src/app/UserMenu.tsx
 msgid "My profile"
 msgstr "Profilim"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -2846,6 +2925,10 @@ msgstr "Atanmamış bir konuşmada yeni mesaj"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "New password"
 msgstr "Yeni parola"
+
+#: src/features/account/AccountPage.tsx
+msgid "New reply in <0>{title}</0>"
+msgstr "<0>{title}</0> tartışmasında yeni yanıt"
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "New signing secret"
@@ -3017,6 +3100,10 @@ msgstr "Bu konuşmada henüz medya, bağlantı ya da belge yok."
 msgid "No messages yet"
 msgstr "Henüz mesaj yok"
 
+#: src/features/account/AccountPage.tsx
+msgid "No notifications in the last 90 days."
+msgstr "Son 90 günde bildirim yok."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "Henüz kimse bir notta sizden bahsetmedi. Bir ekip arkadaşı @ ve adınızı yazdığında not burada görünür."
@@ -3095,6 +3182,10 @@ msgstr "Seçim yoksa anahtar tüm gelen kutularını görür."
 #: src/components/common/text.ts
 msgid "Normal"
 msgstr "Normal"
+
+#: src/features/account/ConnectPage.tsx
+msgid "Not {email}?"
+msgstr "{email} değil misiniz?"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Not a secret: it is part of your web pages. Rotate it to stop old embeds from starting new chats."
@@ -3185,7 +3276,12 @@ msgstr "Bu filtrelere uyan konuşma yok."
 msgid "Nothing matches your search here."
 msgstr "Burada aramana uyan bir şey yok."
 
+#: src/features/account/AccountPage.tsx
+msgid "Nothing unread."
+msgstr "Okunmamış bir şey yok."
+
 #: src/app/Palette.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Notifications"
@@ -3311,6 +3407,7 @@ msgid "Only while the panel is open in this browser. Away, you are alerted only 
 msgstr "Yalnızca panel bu tarayıcıda açıkken. Uzaktayken yalnızca size atanmış konuşmalar için uyarılırsınız."
 
 #: src/components/common/text.ts
+#: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -3356,6 +3453,10 @@ msgstr "açık tartışma"
 msgid "open feedback"
 msgstr "açık geri bildirim"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Open it from the sign-in button of a documentation page."
+msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Open on its page"
@@ -3382,6 +3483,10 @@ msgstr "Sonraki ya da önceki konuşmayı aç"
 msgid "Open what they see"
 msgstr "Baktığı konuşmayı aç"
 
+#: src/app/Gate.tsx
+msgid "Open your reader account"
+msgstr "Okuyucu hesabınızı açın"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open your site"
 msgstr "Sitenizi açın"
@@ -3398,7 +3503,7 @@ msgstr "açık, atanmamış"
 msgid "Opens"
 msgstr "Açılış"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "or"
 msgstr "veya"
 
@@ -3640,6 +3745,7 @@ msgid "Production backend"
 msgstr "Canlı sunucu"
 
 #: src/app/Palette.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profil"
@@ -3738,7 +3844,8 @@ msgstr "Konuşmaları, mesajları, etiketleri ve hazır yanıtları görme"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Çalışma alanını, üyeleri, gelen kutularını ve kanalları görme"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
+#: src/features/account/ConnectPage.tsx
 msgid "Reader"
 msgstr "Okuyucu"
 
@@ -3862,6 +3969,10 @@ msgstr "yanıt"
 #: src/features/setup/InstallStep.tsx
 msgid "Replies"
 msgstr "Yanıtlar"
+
+#: src/features/account/AccountPage.tsx
+msgid "Replies and answers in the discussions you follow"
+msgstr "Takip ettiğiniz tartışmalardaki yanıtlar"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -4031,6 +4142,7 @@ msgstr "memnun · 👍 {good} 👎 {bad}"
 msgid "Saturday"
 msgstr "Cumartesi"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -4045,6 +4157,7 @@ msgstr "Kaydet"
 msgid "Save draft"
 msgstr "Taslağı kaydet"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
@@ -4160,7 +4273,7 @@ msgstr "Gönder"
 msgid "Send a message from your app"
 msgstr "Uygulamanızdan bir mesaj gönderin"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Send a new code"
 msgstr "Yeni kod gönder"
 
@@ -4206,7 +4319,7 @@ msgstr "Bir sayfadan geri bildirim gönderin"
 msgid "Send mail for {0} to Yuva"
 msgstr "{0} adresine gelen postaları Yuva'ya iletin"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Bana kod gönder"
 
@@ -4275,6 +4388,7 @@ msgstr "Sunucu adresi"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
@@ -4367,11 +4481,19 @@ msgstr "Panelde bu adla görünür."
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Mesajlarında görünür. Boşsa anahtarın adı kullanılır."
 
+#: src/features/account/AccountPage.tsx
+msgid "Shown on your posts in every documentation site. Without one you show as “Reader”."
+msgstr "Tüm dokümantasyon sitelerindeki gönderilerinizde görünür. Ad girmezseniz “Okuyucu” olarak görünürsünüz."
+
+#: src/features/account/ConnectPage.tsx
+msgid "Shown on your posts. Leave it empty to show as “Reader”."
+msgstr "Gönderilerinizde görünür. “Okuyucu” olarak görünmek için boş bırakın."
+
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Shown to your team and to contacts"
 msgstr "Ekibin ve müşteriler görür"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Sign in"
 msgstr "Giriş yap"
 
@@ -4379,11 +4501,19 @@ msgstr "Giriş yap"
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "İstemciden oturum açın. İstemci her şeyi adresten bulur: PKCE ile OAuth 2.1; kendini otomatik olarak ya da bir Client ID Metadata Document ile kaydeder."
 
+#: src/features/account/AccountPage.tsx
+msgid "Sign in or create an account with your e-mail address to follow the discussions you write in on documentation sites. We e-mail you a one-time code; no password."
+msgstr "Dokümantasyon sitelerinde yazdığınız tartışmaları takip etmek için e-posta adresinizle oturum açın ya da hesap oluşturun. Size tek kullanımlık bir kod gönderiyoruz; parola yok."
+
+#: src/features/account/ConnectPage.tsx
+msgid "Sign in to join the discussion"
+msgstr "Tartışmaya katılmak için oturum açın"
+
 #: src/features/auth/SignInPage.tsx
 msgid "Sign in to Yuva"
 msgstr "Yuva'ya giriş yapın"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Sign in with a passkey"
 msgstr "Geçiş anahtarıyla giriş yap"
 
@@ -4397,9 +4527,14 @@ msgstr "Oturum açın:"
 
 #: src/app/Gate.tsx
 #: src/app/UserMenu.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Sign out"
 msgstr "Çıkış yap"
+
+#: src/features/account/AccountPage.tsx
+msgid "Sign-in address"
+msgstr "Oturum açma adresi"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
@@ -4604,6 +4739,7 @@ msgstr "Sistem, cihazının ayarını izler"
 
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
+#: src/components/common/DiscussionAuthor.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -4620,6 +4756,10 @@ msgstr "Ekibe not"
 #: src/features/contact/ContactPage.tsx
 msgid "Team notes"
 msgstr "Ekip notları"
+
+#: src/features/account/AccountPage.tsx
+msgid "Team panel"
+msgstr "Ekip paneli"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Team reply"
@@ -4678,7 +4818,7 @@ msgstr "Sohbet, genelde ne zaman yanıt verdiğini gösterir"
 msgid "The chat shows who is available and typing"
 msgstr "Sohbet, kimin çevrimiçi olduğunu ve yazdığını gösterir"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "The code is wrong or has expired."
 msgstr "Kod yanlış ya da süresi dolmuş."
 
@@ -4689,6 +4829,10 @@ msgstr "İzin sayfası istemcinin istediklerini işaretli getirir. Yapmasını i
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "Müşteri görmez"
+
+#: src/features/account/ConnectPage.tsx
+msgid "The documentation channel of {host} no longer exists."
+msgstr "{host} sitesinin dokümantasyon kanalı artık yok."
 
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "The documentation page to put it under, on a site of this inbox."
@@ -4754,7 +4898,7 @@ msgstr "Diğer gelen kutusunun e-posta kanalı yok, bu yüzden bu e-posta konuş
 msgid "The page is not on a site the chat channel allows."
 msgstr "Sayfa, sohbet kanalının izin verdiği bir sitede değil."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
 msgstr "Geçiş anahtarıyla giriş tamamlanmadı. Yeniden deneyin ya da e-postayla gelen kodu kullanın."
 
@@ -4824,6 +4968,10 @@ msgstr "Bu adres özel, yerel (loopback) veya bağlantı-yerel bir adres. Webhoo
 msgid "This address is undeliverable. Clear it in the contact details before you reply."
 msgstr "Bu adrese teslim edilemiyor. Yanıtlamadan önce kişi bilgilerinden temizle."
 
+#: src/features/account/AccountPage.tsx
+msgid "This also removes you from every workspace you belong to. Your posts stay, shown as from a deleted reader."
+msgstr "Bu, sizi üyesi olduğunuz tüm çalışma alanlarından da çıkarır. Gönderileriniz kalır ve silinmiş bir okuyucudan gelmiş gibi görünür."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "This browser cannot receive push notifications."
 msgstr "Bu tarayıcı anlık bildirim alamıyor."
@@ -4889,6 +5037,10 @@ msgstr "Bu, sitenizde göründüğü hâliyle canlı sohbet. Burada deneyebilirs
 msgid "This is the name the app gives itself. Yuva has not verified it."
 msgstr "Bu adı uygulama kendisi veriyor. Yuva doğrulamadı."
 
+#: src/features/account/ConnectPage.tsx
+msgid "This link is incomplete"
+msgstr "Bu bağlantı eksik"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "This list"
 msgstr "Bu liste"
@@ -4913,9 +5065,17 @@ msgstr "Bu istek artık geçerli değil"
 msgid "This server is not set up to send push notifications."
 msgstr "Bu sunucu anlık bildirim gönderecek şekilde ayarlanmamış."
 
+#: src/features/account/ConnectPage.tsx
+msgid "This site cannot connect"
+msgstr "Bu site bağlanamıyor"
+
 #: src/components/common/text.ts
 msgid "This site is not allowed to use this documentation channel."
 msgstr "Bu sitenin bu dokümantasyon kanalını kullanmasına izin verilmiyor."
+
+#: src/features/account/ConnectPage.tsx
+msgid "This window lost the page that opened it. Close it and sign in again from {host}."
+msgstr "Bu pencere, onu açan sayfayla bağlantısını kaybetti. Kapatın ve {host} üzerinden yeniden oturum açın."
 
 #: src/components/common/text.ts
 msgid "Thursday"
@@ -4990,6 +5150,7 @@ msgid "Too many attempts. Wait a little and try again."
 msgstr "Çok fazla deneme yapıldı. Biraz bekleyip yeniden deneyin."
 
 #: src/app/Gate.tsx
+#: src/features/account/AccountLayout.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Yeniden dene"
@@ -5078,6 +5239,14 @@ msgstr "Her sayfanın altında: “Bu sayfa yararlı oldu mu?”, ardından geri
 msgid "Undo"
 msgstr "Geri al"
 
+#: src/features/account/AccountPage.tsx
+msgid "Unfollow"
+msgstr "Takibi bırak"
+
+#: src/features/account/AccountPage.tsx
+msgid "Unfollowed"
+msgstr "Takip bırakıldı"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Unknown device"
 msgstr "Bilinmeyen cihaz"
@@ -5113,6 +5282,10 @@ msgstr "Sabitleme kaldırıldı"
 msgid "Unread"
 msgstr "Okunmamış"
 
+#: src/features/account/AccountPage.tsx
+msgid "Unread only"
+msgstr "Yalnızca okunmamış"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
 msgstr "Doğrulanmamış gönderen"
@@ -5140,6 +5313,10 @@ msgstr "1 ile 65535 arası bir port girin."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Use another account"
 msgstr "Başka bir hesap kullanın"
+
+#: src/features/account/ConnectPage.tsx
+msgid "Use another address"
+msgstr "Başka bir adres kullanın"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Use at most 200 characters."
@@ -5213,6 +5390,7 @@ msgstr "Ziyaretçiler sitenizin her sayfasından yazar; siz buradan anında yan�
 msgid "waiting for approval"
 msgstr "onay bekliyor"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -5241,7 +5419,7 @@ msgstr "Bu sayfa işinize yaradı mı?"
 msgid "We e-mail you a one-time code. No password to remember."
 msgstr "Size e-postayla tek kullanımlık bir kod göndeririz. Hatırlamanız gereken bir parola yok."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
 msgstr "<0>{email}</0> adresine 6 haneli bir kod gönderdik. Kod 10 dakika geçerlidir."
 
@@ -5546,6 +5724,10 @@ msgstr "Bunu yapma izniniz yok."
 msgid "You are the only owner of a workspace. Make someone else an owner there, or delete that workspace, before you delete your account."
 msgstr "Bir çalışma alanının tek sahibisiniz. Hesabınızı silmeden önce orada başka birini sahip yapın ya da o çalışma alanını silin."
 
+#: src/features/account/ConnectPage.tsx
+msgid "You can close this window and go back to {host}."
+msgstr "Bu pencereyi kapatıp {host} sitesine dönebilirsiniz."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "You can disconnect it at any time in Settings, under Connected apps."
 msgstr "Bağlantıyı istediğiniz zaman Ayarlar'da, Bağlı uygulamalar altında kaldırabilirsiniz."
@@ -5554,13 +5736,29 @@ msgstr "Bağlantıyı istediğiniz zaman Ayarlar'da, Bağlı uygulamalar altınd
 msgid "You can leave this page: the conversation will wait for you in your conversation list."
 msgstr "Bu sayfadan ayrılabilirsiniz: konuşma, konuşma listenizde sizi bekleyecek."
 
+#: src/features/account/ConnectPage.tsx
+msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
+msgstr "Ardından oradaki tartışmalara yazabilir, oy verebilir ve onları takip edebilirsiniz. Yazdığınızda {host} ekibi adınızı ve e-posta adresinizi görür; diğer okuyucular yalnızca adınızı görür."
+
+#: src/features/account/AccountPage.tsx
+msgid "You follow no discussions. You follow the ones you start or reply to."
+msgstr "Takip ettiğiniz tartışma yok. Başlattığınız ya da yanıt yazdığınız tartışmaları takip edersiniz."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 msgstr "Yeni anahtar yalnızca bir kez gösterilir. 24 saat boyunca her gönderim biri yeni, biri eski anahtarla olmak üzere iki imza taşır; böylece alıcınızı olay kaybetmeden güncelleyebilirsiniz."
 
+#: src/features/account/AccountPage.tsx
+msgid "You get a notification when someone replies in these"
+msgstr "Bunlarda biri yanıt yazdığında bildirim alırsınız"
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You have no passkeys yet."
 msgstr "Henüz geçiş anahtarınız yok."
+
+#: src/features/account/AccountPage.tsx
+msgid "You have not written in any discussion yet."
+msgstr "Henüz hiçbir tartışmaya yazmadınız."
 
 #: src/features/inbox/ChatList.tsx
 msgid "You have read everything."
@@ -5570,13 +5768,29 @@ msgstr "Her şeyi okudunuz."
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "Tüm çalışma alanlarından ayrılırsınız; oturumlarınız, geçiş anahtarlarınız ve bildirimleriniz silinir. Yazdığınız mesajlar konuşmalarında kalır ve silinmiş bir üyeden gelmiş gibi görünür. Bu geri alınamaz."
 
+#: src/features/account/AccountPage.tsx
+msgid "You replied"
+msgstr "Yanıt yazdınız"
+
+#: src/features/account/AccountPage.tsx
+msgid "You started it"
+msgstr "Siz başlattınız"
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You will no longer be able to sign in with it."
 msgstr "Artık bununla giriş yapamayacaksınız."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "siz@sirket.com"
+
+#: src/features/auth/SignInForm.tsx
+msgid "you@example.com"
+msgstr "siz@ornek.com"
+
+#: src/features/account/AccountPage.tsx
+msgid "Your account"
+msgstr "Hesabınız"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Your app or widget sends these when it identifies the contact."
@@ -5602,6 +5816,10 @@ msgstr "Taslağın duruyor; istersen sen de gönder ya da sil."
 msgid "Your first conversation is here"
 msgstr "İlk konuşmanız geldi"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Your name"
+msgstr "Adınız"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Your new API key"
 msgstr "Yeni API anahtarınız"
@@ -5609,6 +5827,14 @@ msgstr "Yeni API anahtarınız"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."
 msgstr "Özel MCP sunucularının kullanılıp kullanılamayacağına planınız ve çalışma alanı politikalarınız karar verir."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your posts stay without your name, shown as from a deleted reader. Your sign-ins, passkeys, follows, votes and notifications go. This cannot be undone."
+msgstr "Gönderileriniz adınız olmadan kalır ve silinmiş bir okuyucudan gelmiş gibi görünür. Oturumlarınız, geçiş anahtarlarınız, takipleriniz, oylarınız ve bildirimleriniz silinir. Bu geri alınamaz."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your posts stay, shown as from a deleted reader. Your follows, votes and notifications go."
+msgstr "Gönderileriniz kalır ve silinmiş bir okuyucudan gelmiş gibi görünür. Takipleriniz, oylarınız ve bildirimleriniz silinir."
 
 #: src/features/setup/previews.tsx
 msgid "Your product"
@@ -5630,6 +5856,10 @@ msgstr "Bu çalışma alanındaki rolünüz, uygulamanın istediği izinlerin hi
 #: src/components/common/text.ts
 msgid "Your session has ended. Sign in again."
 msgstr "Oturumunuz sona erdi. Yeniden giriş yapın."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your Yuva account"
+msgstr "Yuva hesabınız"
 
 #: src/app/UserMenu.tsx
 #: src/features/auth/AuthLayout.tsx

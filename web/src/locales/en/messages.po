@@ -180,6 +180,14 @@ msgstr "{first} rated the conversation 👎"
 msgid "{good} good"
 msgstr "{good} good"
 
+#: src/features/account/ConnectPage.tsx
+msgid "{host} is not one of the sites this documentation channel allows."
+msgstr "{host} is not one of the sites this documentation channel allows."
+
+#: src/features/account/ConnectPage.tsx
+msgid "{host} uses Yuva for its discussions. Sign in or create an account with your e-mail address; we e-mail you a one-time code."
+msgstr "{host} uses Yuva for its discussions. Sign in or create an account with your e-mail address; we e-mail you a one-time code."
+
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 msgstr "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
@@ -272,6 +280,7 @@ msgstr "{pending} waiting for approval"
 msgid "{replies, plural, one {# reply} other {# replies}}"
 msgstr "{replies, plural, one {# reply} other {# replies}}"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "{replies} replies"
 msgstr "{replies} replies"
@@ -292,6 +301,7 @@ msgstr "{threads} open discussions"
 msgid "{up} helpful"
 msgstr "{up} helpful"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "{votes} votes"
@@ -300,6 +310,10 @@ msgstr "{votes} votes"
 #: src/features/inbox/SidePanels.tsx
 msgid "{who} in {contact}"
 msgstr "{who} in {contact}"
+
+#: src/features/account/AccountPage.tsx
+msgid "{who} replied in <0>{title}</0>"
+msgstr "{who} replied in <0>{title}</0>"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "*@example.com receives every address of the domain that no other channel has; replies then go out from the address the customer wrote to."
@@ -471,6 +485,10 @@ msgstr "Accepted answer"
 msgid "Access"
 msgstr "Access"
 
+#: src/features/account/AccountPage.tsx
+msgid "Account"
+msgstr "Account"
+
 #: src/features/setup/AddChannelStep.tsx
 msgid "Acme docs"
 msgstr "Acme docs"
@@ -607,6 +625,10 @@ msgstr "All"
 msgid "All inboxes"
 msgstr "All inboxes"
 
+#: src/features/account/AccountPage.tsx
+msgid "All marked as read"
+msgstr "All marked as read"
+
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "All of its conversations are deleted with it."
 msgstr "All of its conversations are deleted with it."
@@ -654,6 +676,10 @@ msgstr "Also for sign-in and notification e-mails"
 msgid "Also send message.created for members' internal notes. Internal events are never sent."
 msgstr "Also send message.created for members' internal notes. Internal events are never sent."
 
+#: src/features/account/AccountPage.tsx
+msgid "An answer was accepted in <0>{title}</0>"
+msgstr "An answer was accepted in <0>{title}</0>"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "An e-mail goes out only if the conversation is still unread by then."
 msgstr "An e-mail goes out only if the conversation is still unread by then."
@@ -674,7 +700,7 @@ msgstr "An invite is accepted when the person signs in with a code sent to that 
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "An owner or admin can let assistants send on their own with Bots may send."
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
 msgstr "Anonymous"
 
@@ -708,6 +734,7 @@ msgstr "Answer (optional)"
 msgid "Answer cleared"
 msgstr "Answer cleared"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
 msgid "Answered"
 msgstr "Answered"
@@ -855,6 +882,10 @@ msgstr "Async"
 msgid "At most once per contact every (hours)"
 msgstr "At most once per contact every (hours)"
 
+#: src/features/account/AccountPage.tsx
+msgid "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
+msgstr "At most one e-mail per discussion every few minutes, with the new replies and answers. Notifications here stay on."
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Attach files"
@@ -977,6 +1008,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
+#: src/features/account/ConnectPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/docs/discussions/FromConversation.tsx
@@ -1009,7 +1041,7 @@ msgstr "Category"
 msgid "Cc: {cc}"
 msgstr "Cc: {cc}"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Change address"
 
@@ -1038,7 +1070,7 @@ msgstr "Channel added"
 msgid "Channel removed"
 msgstr "Channel removed"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "Check your e-mail"
 
@@ -1129,7 +1161,7 @@ msgstr "closed today"
 msgid "Closes"
 msgstr "Closes"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Code"
 msgstr "Code"
 
@@ -1145,6 +1177,7 @@ msgstr "Colour"
 msgid "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
 msgstr "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
 
+#: src/features/account/ConnectPage.tsx
 #: src/features/inbox/SidePanels.tsx
 msgid "Connect"
 msgstr "Connect"
@@ -1162,10 +1195,15 @@ msgstr "Connect an assistant"
 msgid "Connect an assistant such as Claude or ChatGPT"
 msgstr "Connect an assistant such as Claude or ChatGPT"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Connect to {host}"
+msgstr "Connect to {host}"
+
 #: src/features/settings/SettingsColumn.tsx
 msgid "Connect your servers and bots to Yuva"
 msgstr "Connect your servers and bots to Yuva"
 
+#: src/features/account/ConnectPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connected"
 msgstr "Connected"
@@ -1315,6 +1353,7 @@ msgid "Could not copy"
 msgstr "Could not copy"
 
 #: src/app/Gate.tsx
+#: src/features/account/AccountLayout.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Could not reach the server"
 msgstr "Could not reach the server"
@@ -1437,6 +1476,10 @@ msgstr "Delete this note?"
 msgid "Delete this workspace"
 msgstr "Delete this workspace"
 
+#: src/features/account/AccountPage.tsx
+msgid "Delete your account"
+msgstr "Delete your account"
+
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "Delete your account?"
 msgstr "Delete your account?"
@@ -1450,14 +1493,14 @@ msgstr "Deleted by its author."
 msgid "Deleted inbox"
 msgstr "Deleted inbox"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Deleted member"
 msgstr "Deleted member"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
 msgid "Deleted reader"
 msgstr "Deleted reader"
 
@@ -1549,9 +1592,17 @@ msgstr "Discussions and approvals"
 msgid "Discussions are off on this site's chat channel."
 msgstr "Discussions are off on this site's chat channel."
 
+#: src/features/account/ConnectPage.tsx
+msgid "Discussions are turned off for {host}."
+msgstr "Discussions are turned off for {host}."
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Discussions on documentation pages"
 msgstr "Discussions on documentation pages"
+
+#: src/features/account/AccountPage.tsx
+msgid "Discussions you started or replied to"
+msgstr "Discussions you started or replied to"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -1643,6 +1694,7 @@ msgstr "Drop files to attach them to your reply"
 
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
+#: src/features/account/AccountPage.tsx
 #: src/features/auth/AuthLayout.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
@@ -1651,7 +1703,7 @@ msgstr "Drop files to attach them to your reply"
 msgid "E-mail"
 msgstr "E-mail"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
 msgid "E-mail address"
@@ -1668,6 +1720,10 @@ msgstr "E-mail contacts get a short e-mail with two links; chat and app contacts
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
 msgstr "E-mail content"
+
+#: src/features/account/AccountPage.tsx
+msgid "E-mail me about the discussions I follow"
+msgstr "E-mail me about the discussions I follow"
 
 #: src/features/settings/notifications/events.ts
 msgid "E-mail only"
@@ -1920,6 +1976,10 @@ msgstr "Fix the address or the channel's SMTP settings, then send the reply agai
 msgid "Follow the system appearance"
 msgstr "Follow the system appearance"
 
+#: src/features/account/AccountPage.tsx
+msgid "Following"
+msgstr "Following"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
 msgstr "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
@@ -2079,6 +2139,10 @@ msgstr "Helpful"
 msgid "helpful share"
 msgstr "helpful share"
 
+#: src/app/Gate.tsx
+msgid "Here to follow discussions on documentation sites?"
+msgstr "Here to follow discussions on documentation sites?"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Hi! Ask us anything."
 msgstr "Hi! Ask us anything."
@@ -2092,6 +2156,10 @@ msgstr "Hi! How can we help?"
 #: src/features/docs/discussions/parts.tsx
 msgid "Hidden"
 msgstr "Hidden"
+
+#: src/features/account/AccountPage.tsx
+msgid "Hidden by the team"
+msgstr "Hidden by the team"
 
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -2438,6 +2506,7 @@ msgstr "Live chat shows nobody available. Notifications pause, except for conver
 msgid "Load images"
 msgstr "Load images"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactNotes.tsx
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
@@ -2470,6 +2539,7 @@ msgstr "Lock"
 msgid "Lock or unlock"
 msgstr "Lock or unlock"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -2528,6 +2598,10 @@ msgstr "Manage webhooks"
 #: src/features/settings/webhooks/parts.tsx
 msgid "manual"
 msgstr "manual"
+
+#: src/features/account/AccountPage.tsx
+msgid "Mark all as read"
+msgstr "Mark all as read"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Mark as answer"
@@ -2739,10 +2813,15 @@ msgstr "Move to inbox"
 msgid "Moved from {from}"
 msgstr "Moved from {from}"
 
+#: src/features/account/AccountPage.tsx
+msgid "My discussions"
+msgstr "My discussions"
+
 #: src/app/UserMenu.tsx
 msgid "My profile"
 msgstr "My profile"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -2846,6 +2925,10 @@ msgstr "New message in an unassigned conversation"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "New password"
 msgstr "New password"
+
+#: src/features/account/AccountPage.tsx
+msgid "New reply in <0>{title}</0>"
+msgstr "New reply in <0>{title}</0>"
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "New signing secret"
@@ -3017,6 +3100,10 @@ msgstr "No media, links or documents in this conversation yet."
 msgid "No messages yet"
 msgstr "No messages yet"
 
+#: src/features/account/AccountPage.tsx
+msgid "No notifications in the last 90 days."
+msgstr "No notifications in the last 90 days."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
 msgstr "No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here."
@@ -3095,6 +3182,10 @@ msgstr "None picked: the key sees every inbox."
 #: src/components/common/text.ts
 msgid "Normal"
 msgstr "Normal"
+
+#: src/features/account/ConnectPage.tsx
+msgid "Not {email}?"
+msgstr "Not {email}?"
 
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Not a secret: it is part of your web pages. Rotate it to stop old embeds from starting new chats."
@@ -3185,7 +3276,12 @@ msgstr "Nothing matches these filters."
 msgid "Nothing matches your search here."
 msgstr "Nothing matches your search here."
 
+#: src/features/account/AccountPage.tsx
+msgid "Nothing unread."
+msgstr "Nothing unread."
+
 #: src/app/Palette.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/notifications/NotificationsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Notifications"
@@ -3311,6 +3407,7 @@ msgid "Only while the panel is open in this browser. Away, you are alerted only 
 msgstr "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
 
 #: src/components/common/text.ts
+#: src/features/account/AccountPage.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -3356,6 +3453,10 @@ msgstr "open discussions"
 msgid "open feedback"
 msgstr "open feedback"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Open it from the sign-in button of a documentation page."
+msgstr "Open it from the sign-in button of a documentation page."
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Open on its page"
@@ -3382,6 +3483,10 @@ msgstr "Open the next or previous conversation"
 msgid "Open what they see"
 msgstr "Open what they see"
 
+#: src/app/Gate.tsx
+msgid "Open your reader account"
+msgstr "Open your reader account"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open your site"
 msgstr "Open your site"
@@ -3398,7 +3503,7 @@ msgstr "open, unassigned"
 msgid "Opens"
 msgstr "Opens"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "or"
 msgstr "or"
 
@@ -3640,6 +3745,7 @@ msgid "Production backend"
 msgstr "Production backend"
 
 #: src/app/Palette.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profile"
@@ -3738,7 +3844,8 @@ msgstr "Read conversations, messages, labels and canned replies"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Read the workspace, members, inboxes and channels"
 
-#: src/features/docs/discussions/parts.tsx
+#: src/components/common/DiscussionAuthor.tsx
+#: src/features/account/ConnectPage.tsx
 msgid "Reader"
 msgstr "Reader"
 
@@ -3862,6 +3969,10 @@ msgstr "replies"
 #: src/features/setup/InstallStep.tsx
 msgid "Replies"
 msgstr "Replies"
+
+#: src/features/account/AccountPage.tsx
+msgid "Replies and answers in the discussions you follow"
+msgstr "Replies and answers in the discussions you follow"
 
 #: src/features/reports/ReportPages.tsx
 #: src/features/reports/ReportsColumn.tsx
@@ -4031,6 +4142,7 @@ msgstr "satisfied · 👍 {good} 👎 {bad}"
 msgid "Saturday"
 msgstr "Saturday"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
@@ -4045,6 +4157,7 @@ msgstr "Save"
 msgid "Save draft"
 msgstr "Save draft"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/profile/ProfileForm.tsx
 #: src/features/settings/ui.tsx
@@ -4160,7 +4273,7 @@ msgstr "Send"
 msgid "Send a message from your app"
 msgstr "Send a message from your app"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Send a new code"
 msgstr "Send a new code"
 
@@ -4206,7 +4319,7 @@ msgstr "Send feedback from a page"
 msgid "Send mail for {0} to Yuva"
 msgstr "Send mail for {0} to Yuva"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Send me a code"
 msgstr "Send me a code"
 
@@ -4275,6 +4388,7 @@ msgstr "Server URL"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/settings/ui.tsx
@@ -4367,11 +4481,19 @@ msgstr "Shown in the panel."
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Shown on its messages. The key's name when empty."
 
+#: src/features/account/AccountPage.tsx
+msgid "Shown on your posts in every documentation site. Without one you show as “Reader”."
+msgstr "Shown on your posts in every documentation site. Without one you show as “Reader”."
+
+#: src/features/account/ConnectPage.tsx
+msgid "Shown on your posts. Leave it empty to show as “Reader”."
+msgstr "Shown on your posts. Leave it empty to show as “Reader”."
+
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Shown to your team and to contacts"
 msgstr "Shown to your team and to contacts"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Sign in"
 msgstr "Sign in"
 
@@ -4379,11 +4501,19 @@ msgstr "Sign in"
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 
+#: src/features/account/AccountPage.tsx
+msgid "Sign in or create an account with your e-mail address to follow the discussions you write in on documentation sites. We e-mail you a one-time code; no password."
+msgstr "Sign in or create an account with your e-mail address to follow the discussions you write in on documentation sites. We e-mail you a one-time code; no password."
+
+#: src/features/account/ConnectPage.tsx
+msgid "Sign in to join the discussion"
+msgstr "Sign in to join the discussion"
+
 #: src/features/auth/SignInPage.tsx
 msgid "Sign in to Yuva"
 msgstr "Sign in to Yuva"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "Sign in with a passkey"
 msgstr "Sign in with a passkey"
 
@@ -4397,9 +4527,14 @@ msgstr "Sign in:"
 
 #: src/app/Gate.tsx
 #: src/app/UserMenu.tsx
+#: src/features/account/AccountPage.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Sign out"
 msgstr "Sign out"
+
+#: src/features/account/AccountPage.tsx
+msgid "Sign-in address"
+msgstr "Sign-in address"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend for this inbox's conversations, messages and feedback."
@@ -4604,6 +4739,7 @@ msgstr "System follows your device"
 
 #: src/app/Rail.tsx
 #: src/app/TeamMenu.tsx
+#: src/components/common/DiscussionAuthor.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -4620,6 +4756,10 @@ msgstr "Team note"
 #: src/features/contact/ContactPage.tsx
 msgid "Team notes"
 msgstr "Team notes"
+
+#: src/features/account/AccountPage.tsx
+msgid "Team panel"
+msgstr "Team panel"
 
 #: src/features/inbox/ChatList.tsx
 msgid "Team reply"
@@ -4678,7 +4818,7 @@ msgstr "The chat shows when you usually reply"
 msgid "The chat shows who is available and typing"
 msgstr "The chat shows who is available and typing"
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "The code is wrong or has expired."
 msgstr "The code is wrong or has expired."
 
@@ -4689,6 +4829,10 @@ msgstr "The consent page ticks what the client asks for. Leave out what you do n
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "The customer does not see this"
+
+#: src/features/account/ConnectPage.tsx
+msgid "The documentation channel of {host} no longer exists."
+msgstr "The documentation channel of {host} no longer exists."
 
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "The documentation page to put it under, on a site of this inbox."
@@ -4754,7 +4898,7 @@ msgstr "The other inbox has no e-mail channel, so this e-mail conversation canno
 msgid "The page is not on a site the chat channel allows."
 msgstr "The page is not on a site the chat channel allows."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "The passkey sign-in did not complete. Try again or use an e-mailed code."
 msgstr "The passkey sign-in did not complete. Try again or use an e-mailed code."
 
@@ -4824,6 +4968,10 @@ msgstr "This address is private, loopback or link-local. Webhooks only reach pub
 msgid "This address is undeliverable. Clear it in the contact details before you reply."
 msgstr "This address is undeliverable. Clear it in the contact details before you reply."
 
+#: src/features/account/AccountPage.tsx
+msgid "This also removes you from every workspace you belong to. Your posts stay, shown as from a deleted reader."
+msgstr "This also removes you from every workspace you belong to. Your posts stay, shown as from a deleted reader."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "This browser cannot receive push notifications."
 msgstr "This browser cannot receive push notifications."
@@ -4889,6 +5037,10 @@ msgstr "This is the live chat, as it looks on your site. You can try it here."
 msgid "This is the name the app gives itself. Yuva has not verified it."
 msgstr "This is the name the app gives itself. Yuva has not verified it."
 
+#: src/features/account/ConnectPage.tsx
+msgid "This link is incomplete"
+msgstr "This link is incomplete"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "This list"
 msgstr "This list"
@@ -4913,9 +5065,17 @@ msgstr "This request has ended"
 msgid "This server is not set up to send push notifications."
 msgstr "This server is not set up to send push notifications."
 
+#: src/features/account/ConnectPage.tsx
+msgid "This site cannot connect"
+msgstr "This site cannot connect"
+
 #: src/components/common/text.ts
 msgid "This site is not allowed to use this documentation channel."
 msgstr "This site is not allowed to use this documentation channel."
+
+#: src/features/account/ConnectPage.tsx
+msgid "This window lost the page that opened it. Close it and sign in again from {host}."
+msgstr "This window lost the page that opened it. Close it and sign in again from {host}."
 
 #: src/components/common/text.ts
 msgid "Thursday"
@@ -4990,6 +5150,7 @@ msgid "Too many attempts. Wait a little and try again."
 msgstr "Too many attempts. Wait a little and try again."
 
 #: src/app/Gate.tsx
+#: src/features/account/AccountLayout.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Try again"
@@ -5078,6 +5239,14 @@ msgstr "Under each page: “Was this page helpful?”, then feedback and the pag
 msgid "Undo"
 msgstr "Undo"
 
+#: src/features/account/AccountPage.tsx
+msgid "Unfollow"
+msgstr "Unfollow"
+
+#: src/features/account/AccountPage.tsx
+msgid "Unfollowed"
+msgstr "Unfollowed"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Unknown device"
 msgstr "Unknown device"
@@ -5113,6 +5282,10 @@ msgstr "Unpinned"
 msgid "Unread"
 msgstr "Unread"
 
+#: src/features/account/AccountPage.tsx
+msgid "Unread only"
+msgstr "Unread only"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "Unverified sender"
 msgstr "Unverified sender"
@@ -5140,6 +5313,10 @@ msgstr "Use a port from 1 to 65535."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Use another account"
 msgstr "Use another account"
+
+#: src/features/account/ConnectPage.tsx
+msgid "Use another address"
+msgstr "Use another address"
 
 #: src/features/settings/channels/email/form.ts
 msgid "Use at most 200 characters."
@@ -5213,6 +5390,7 @@ msgstr "Visitors write from any page of your site; you answer here, live."
 msgid "waiting for approval"
 msgstr "waiting for approval"
 
+#: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/discussions/parts.tsx
 #: src/features/docs/discussions/QueuePane.tsx
@@ -5241,7 +5419,7 @@ msgstr "Was this page helpful?"
 msgid "We e-mail you a one-time code. No password to remember."
 msgstr "We e-mail you a one-time code. No password to remember."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
 msgstr "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
 
@@ -5546,6 +5724,10 @@ msgstr "You are not allowed to do this."
 msgid "You are the only owner of a workspace. Make someone else an owner there, or delete that workspace, before you delete your account."
 msgstr "You are the only owner of a workspace. Make someone else an owner there, or delete that workspace, before you delete your account."
 
+#: src/features/account/ConnectPage.tsx
+msgid "You can close this window and go back to {host}."
+msgstr "You can close this window and go back to {host}."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "You can disconnect it at any time in Settings, under Connected apps."
 msgstr "You can disconnect it at any time in Settings, under Connected apps."
@@ -5554,13 +5736,29 @@ msgstr "You can disconnect it at any time in Settings, under Connected apps."
 msgid "You can leave this page: the conversation will wait for you in your conversation list."
 msgstr "You can leave this page: the conversation will wait for you in your conversation list."
 
+#: src/features/account/ConnectPage.tsx
+msgid "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
+msgstr "You can then write, vote and follow discussions there. The team behind {host} sees your name and e-mail address when you write; other readers see only your name."
+
+#: src/features/account/AccountPage.tsx
+msgid "You follow no discussions. You follow the ones you start or reply to."
+msgstr "You follow no discussions. You follow the ones you start or reply to."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 msgstr "You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and one with the old secret, so you can update your receiver without losing events."
 
+#: src/features/account/AccountPage.tsx
+msgid "You get a notification when someone replies in these"
+msgstr "You get a notification when someone replies in these"
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You have no passkeys yet."
 msgstr "You have no passkeys yet."
+
+#: src/features/account/AccountPage.tsx
+msgid "You have not written in any discussion yet."
+msgstr "You have not written in any discussion yet."
 
 #: src/features/inbox/ChatList.tsx
 msgid "You have read everything."
@@ -5570,13 +5768,29 @@ msgstr "You have read everything."
 msgid "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 msgstr "You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in their conversations, shown as from a deleted member. This cannot be undone."
 
+#: src/features/account/AccountPage.tsx
+msgid "You replied"
+msgstr "You replied"
+
+#: src/features/account/AccountPage.tsx
+msgid "You started it"
+msgstr "You started it"
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You will no longer be able to sign in with it."
 msgstr "You will no longer be able to sign in with it."
 
-#: src/features/auth/SignInPage.tsx
+#: src/features/auth/SignInForm.tsx
 msgid "you@company.com"
 msgstr "you@company.com"
+
+#: src/features/auth/SignInForm.tsx
+msgid "you@example.com"
+msgstr "you@example.com"
+
+#: src/features/account/AccountPage.tsx
+msgid "Your account"
+msgstr "Your account"
 
 #: src/features/contact/ContactPage.tsx
 msgid "Your app or widget sends these when it identifies the contact."
@@ -5602,6 +5816,10 @@ msgstr "Your draft is still here; send it as well or clear it."
 msgid "Your first conversation is here"
 msgstr "Your first conversation is here"
 
+#: src/features/account/ConnectPage.tsx
+msgid "Your name"
+msgstr "Your name"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Your new API key"
 msgstr "Your new API key"
@@ -5609,6 +5827,14 @@ msgstr "Your new API key"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."
 msgstr "Your plan and workspace policies decide whether custom MCP servers are available."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your posts stay without your name, shown as from a deleted reader. Your sign-ins, passkeys, follows, votes and notifications go. This cannot be undone."
+msgstr "Your posts stay without your name, shown as from a deleted reader. Your sign-ins, passkeys, follows, votes and notifications go. This cannot be undone."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your posts stay, shown as from a deleted reader. Your follows, votes and notifications go."
+msgstr "Your posts stay, shown as from a deleted reader. Your follows, votes and notifications go."
 
 #: src/features/setup/previews.tsx
 msgid "Your product"
@@ -5630,6 +5856,10 @@ msgstr "Your role in this workspace cannot give any of the access this app asks 
 #: src/components/common/text.ts
 msgid "Your session has ended. Sign in again."
 msgstr "Your session has ended. Sign in again."
+
+#: src/features/account/AccountPage.tsx
+msgid "Your Yuva account"
+msgstr "Your Yuva account"
 
 #: src/app/UserMenu.tsx
 #: src/features/auth/AuthLayout.tsx

@@ -11,8 +11,8 @@ import {
 import { Link } from "react-router"
 
 import { Dot, toast, useConfirm } from "@/components/common"
+import { useAuthorName } from "@/components/common/DiscussionAuthor"
 import { formatShort, useErrorText } from "@/components/common/text"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { pageLabel } from "@/features/docs/PageContext"
@@ -20,32 +20,6 @@ import { threadLink, useModerate, type Moderation } from "@/features/docs/discus
 import type { Discussion, DiscussionAuthor, DiscussionPost } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
-
-export function useAuthorName() {
-  const { t } = useLingui()
-  return (a: DiscussionAuthor) => {
-    if (a.deleted) return a.kind === "member" ? t`Deleted member` : t`Deleted reader`
-    if (a.kind === "anonymous") return t`Anonymous`
-    return a.name || (a.kind === "member" ? t`Team` : t`Reader`)
-  }
-}
-
-export function AuthorAvatar({ author, className }: { author: DiscussionAuthor; className?: string }) {
-  return (
-    <Avatar
-      aria-hidden
-      className={cn(
-        "@container size-8 shrink-0 items-center justify-center font-medium after:hidden",
-        author.kind === "member" && !author.deleted ? "bg-mate text-white" : "bg-muted text-muted-foreground",
-        className
-      )}
-    >
-      <AvatarFallback className="bg-transparent text-[length:38cqw] font-[inherit] text-inherit">
-        {author.initials || "·"}
-      </AvatarFallback>
-    </Avatar>
-  )
-}
 
 export function AuthorName({ author, className }: { author: DiscussionAuthor; className?: string }) {
   const name = useAuthorName()(author)

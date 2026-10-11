@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro"
-import { BuildingIcon, ChevronRightIcon, LogOutIcon, RefreshCwIcon } from "lucide-react"
+import { BuildingIcon, ChevronRightIcon, LogOutIcon, RefreshCwIcon, UserRoundIcon } from "lucide-react"
 import { useCallback, useEffect } from "react"
-import { Navigate, useLocation, useNavigate } from "react-router"
+import { Link, Navigate, useLocation, useNavigate } from "react-router"
 
 import { AppShell } from "@/app/AppShell"
 import { EmptyState } from "@/components/common"
@@ -46,6 +46,13 @@ function NoWorkspace({ email }: { email: string }) {
         </Button>
         <DeleteAccountButton email={email} size="lg" />
       </div>
+      <p className="mt-8 text-body text-muted-foreground">
+        <Trans>Here to follow discussions on documentation sites?</Trans>{" "}
+        <Link to="/account" className="inline-flex items-center gap-1 text-brand underline-offset-4 hover:underline">
+          <UserRoundIcon className="size-3.5" />
+          <Trans>Open your reader account</Trans>
+        </Link>
+      </p>
     </AuthLayout>
   )
 }

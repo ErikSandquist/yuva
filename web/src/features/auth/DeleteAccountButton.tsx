@@ -8,7 +8,17 @@ import { Button } from "@/components/ui/button"
 import { api, ApiError, setWorkspace, unwrap } from "@/lib/api"
 import { meKey } from "@/lib/session"
 
-export function DeleteAccountButton({ email, size }: { email: string; size?: "sm" | "lg" }) {
+export function DeleteAccountButton({
+  email,
+  size,
+  redirect = "/sign-in",
+  description,
+}: {
+  email: string
+  size?: "sm" | "lg"
+  redirect?: string
+  description?: React.ReactNode
+}) {
   const qc = useQueryClient()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -19,7 +29,7 @@ export function DeleteAccountButton({ email, size }: { email: string; size?: "sm
       setWorkspace(null)
       qc.clear()
       qc.setQueryData(meKey, null)
-      navigate("/sign-in", { replace: true })
+      navigate(redirect, { replace: true })
     },
   })
   const lastOwner = remove.error instanceof ApiError && remove.error.code === "last_owner"
@@ -42,10 +52,12 @@ export function DeleteAccountButton({ email, size }: { email: string; size?: "sm
         onOpenChange={setOpen}
         title={<Trans>Delete your account?</Trans>}
         description={
-          <Trans>
-            You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in
-            their conversations, shown as from a deleted member. This cannot be undone.
-          </Trans>
+          description ?? (
+            <Trans>
+              You leave every workspace and lose your sign-ins, passkeys and notifications. Messages you wrote stay in
+              their conversations, shown as from a deleted member. This cannot be undone.
+            </Trans>
+          )
         }
         label={<Trans>Type your e-mail address to confirm</Trans>}
         expected={email}

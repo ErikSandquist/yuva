@@ -20,6 +20,7 @@ import { Link, useLocation, useParams } from "react-router"
 
 import { Dot, ErrorLine, Notice, toast } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
+import { AuthorAvatar, useAuthorName } from "@/components/common/DiscussionAuthor"
 import { DISCUSSION_KEYS, keyLabel, mod } from "@/components/common/ShortcutSheet"
 import { formatDateTime, useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -27,16 +28,7 @@ import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Textarea } from "@/components/ui/textarea"
 import { pageLabel } from "@/features/docs/PageContext"
-import {
-  AuthorAvatar,
-  AuthorName,
-  PostBody,
-  StateTag,
-  TeamTag,
-  ThreadTags,
-  useAuthorName,
-  useModeration,
-} from "@/features/docs/discussions/parts"
+import { AuthorName, PostBody, StateTag, TeamTag, ThreadTags, useModeration } from "@/features/docs/discussions/parts"
 import { useAnswer, useDiscussion, useReply, useUpdateDiscussion } from "@/features/docs/discussions/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { isGone, type Discussion, type DiscussionPost } from "@/lib/api"

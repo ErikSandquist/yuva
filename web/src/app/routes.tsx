@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router"
 
 import { Gate } from "@/app/Gate"
 import { Layout } from "@/app/Layout"
+import { AccountPage } from "@/features/account/AccountPage"
+import { ConnectPage } from "@/features/account/ConnectPage"
 import { SignInPage } from "@/features/auth/SignInPage"
 import { ContactPage } from "@/features/contact/ContactPage"
 import { ContactsHome } from "@/features/contact/ContactsColumn"
@@ -36,6 +38,8 @@ export function AppRoutes() {
     <Routes>
       <Route path="sign-in" element={<SignInPage />} />
       <Route path="oauth/consent" element={<ConsentPage />} />
+      <Route path="account" element={<AccountPage />} />
+      <Route path="account/connect" element={<ConnectPage />} />
       <Route element={<Gate />}>
         <Route path="setup" element={<SetupPage />} />
         <Route path="setup/:inboxId" element={<SetupPage />} />

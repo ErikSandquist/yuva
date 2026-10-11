@@ -5,20 +5,13 @@ import { Link, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
 import { Pane, PaneBack } from "@/components/common/Column"
+import { AuthorAvatar } from "@/components/common/DiscussionAuthor"
 import { DISCUSSION_KEYS, keyLabel } from "@/components/common/ShortcutSheet"
 import { formatShort } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { DocsSitePicker, usePickedSite } from "@/features/docs/DocsColumn"
 import { pageLabel } from "@/features/docs/PageContext"
-import {
-  AuthorAvatar,
-  AuthorName,
-  ListSkeleton,
-  LoadMore,
-  PostBody,
-  TeamTag,
-  useModeration,
-} from "@/features/docs/discussions/parts"
+import { AuthorName, ListSkeleton, LoadMore, PostBody, TeamTag, useModeration } from "@/features/docs/discussions/parts"
 import { threadLink, useQueue } from "@/features/docs/discussions/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Card, EmptyRow } from "@/features/settings/ui"
