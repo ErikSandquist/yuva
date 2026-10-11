@@ -35,6 +35,17 @@ const nodes = {
 } satisfies Record<string, [string, Record<string, string>][]>
 ---
 
-<svg class:list={["size-4 shrink-0", Astro.props.class]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-  {nodes[Astro.props.name].map(([Tag, attrs]) => <Tag {...attrs} />)}
+<svg
+  class:list={["size-4 shrink-0", Astro.props.class]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {nodes[Astro.props.name].map(([Tag, attrs]) => (
+    <Tag {...attrs} />
+  ))}
 </svg>

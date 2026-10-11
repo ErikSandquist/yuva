@@ -24,15 +24,26 @@ interface Props {
   bare?: boolean
 }
 
-const { locale, title, description, jsonLd = [], noindex = false, paths = home, translated = true, type = "website", image, wide = false, bare = false } = Astro.props
+const {
+  locale,
+  title,
+  description,
+  jsonLd = [],
+  noindex = false,
+  paths = home,
+  translated = true,
+  type = "website",
+  image,
+  wide = false,
+  bare = false,
+} = Astro.props
 const i18n = i18nFor(locale)
 const canonical = absolute(paths[locale])
 const ogImage = absolute(image ?? `/og/${locale}.png`)
 const serialize = (o: object) => JSON.stringify(o).replace(/</g, "\\u003c")
 const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
-
-
 ---
+
 <!doctype html>
 <html lang={bcp47[locale]}>
   <head>
@@ -40,21 +51,21 @@ const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {
-      noindex ? (
-        <meta name="robots" content="noindex" />
-      ) : (
-        <>
-          <link rel="canonical" href={canonical} />
-          {translated && locales.map((l) => <link rel="alternate" hreflang={l} href={absolute(paths[l])} />)}
-          {translated && <link rel="alternate" hreflang="x-default" href={absolute(paths.en)} />}
-        </>
-      )
-    }
+    {noindex ? (
+      <meta name="robots" content="noindex" />
+    ) : (
+      <>
+        <link rel="canonical" href={canonical} />
+        {translated && locales.map((l) => <link rel="alternate" hreflang={l} href={absolute(paths[l])} />)}
+        {translated && <link rel="alternate" hreflang="x-default" href={absolute(paths.en)} />}
+      </>
+    )}
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
-    {preload.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+    {preload.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title="Yuva blog" href="/blog/rss.xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -64,26 +75,38 @@ const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={ogLocale[locale]} />
-    {locales.filter((l) => l !== locale).map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)}
+    {locales
+      .filter((l) => l !== locale)
+      .map((l) => (
+        <meta property="og:locale:alternate" content={ogLocale[l]} />
+      ))}
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={title} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-    {jsonLd.map((o) => <script is:inline type="application/ld+json" set:html={serialize(o)} />)}
+    {jsonLd.map((o) => (
+      <script is:inline type="application/ld+json" set:html={serialize(o)} />
+    ))}
   </head>
   <body class="min-h-dvh overflow-x-clip bg-paper">
     <a
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
-      href="#main">{i18n._(msg`Skip to content`)}</a
+      href="#main"
     >
+      {i18n._(msg`Skip to content`)}
+    </a>
     {!bare && <Header locale={locale} paths={paths} wide={wide} />}
     <main id="main">
       <slot />
     </main>
     {!bare && <Footer locale={locale} paths={paths} wide={wide} />}
     <script is:inline src="https://app.useyuva.com/yuva.js" async></script>
-    <yuva-chat channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS" server="https://app.useyuva.com" locale={locale === "de" ? undefined : locale}></yuva-chat>
+    <yuva-chat
+      channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS"
+      server="https://app.useyuva.com"
+      locale={locale === "de" ? undefined : locale}
+    ></yuva-chat>
   </body>
 </html>

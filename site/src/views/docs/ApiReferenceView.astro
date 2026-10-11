@@ -33,7 +33,13 @@ const config = {
 }
 ---
 
-<Base locale={locale} title={`${t.apiReference} · Yuva docs`} description={t.api.description} paths={docsPath("api/")} bare>
+<Base
+  locale={locale}
+  title={`${t.apiReference} · Yuva docs`}
+  description={t.api.description}
+  paths={docsPath("api/")}
+  bare
+>
   <DocsHeader locale={locale} paths={docsPath("api/")} section="api" />
   <div id="yuva-api-reference" class="yuva-scalar" data-config={JSON.stringify(config)}></div>
 </Base>

@@ -22,7 +22,19 @@ interface Props {
   english?: boolean
 }
 
-const { locale, title, description, slug, rel, headings = [], meta = [], edit, image, wideContent = false, english = locale !== "en" } = Astro.props
+const {
+  locale,
+  title,
+  description,
+  slug,
+  rel,
+  headings = [],
+  meta = [],
+  edit,
+  image,
+  wideContent = false,
+  english = locale !== "en",
+} = Astro.props
 const t = docsCopy(i18nFor(locale))
 const groups = await nav(locale)
 const { prev, next } = await neighbours(slug, locale)
@@ -39,22 +51,20 @@ const link =
     <aside class="hidden border-e border-rule lg:block">
       <div class="sticky top-14 flex h-[calc(100svh-3.5rem)] flex-col">
         <nav class="flex-1 overflow-y-auto p-3" aria-label={t.documentation} data-sidebar>
-          {
-            groups.map((g) => (
-              <div class="mb-5">
-                <p class="px-2.5 pb-1.5 text-xs font-semibold text-ink-faint">{g.title}</p>
-                <ul class="grid gap-px">
-                  {g.items.map((c) => (
-                    <li>
-                      <a class={link} href={href(locale, c.rel)} aria-current={active(c) ? "page" : undefined}>
-                        {c.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          }
+          {groups.map((g) => (
+            <div class="mb-5">
+              <p class="px-2.5 pb-1.5 text-xs font-semibold text-ink-faint">{g.title}</p>
+              <ul class="grid gap-px">
+                {g.items.map((c) => (
+                  <li>
+                    <a class={link} href={href(locale, c.rel)} aria-current={active(c) ? "page" : undefined}>
+                      {c.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
       </div>
     </aside>
@@ -64,58 +74,98 @@ const link =
         <details class="group relative flex-1">
           <summary class="flex cursor-pointer list-none items-center justify-between rounded-xl border border-rule px-4 py-2.5 text-sm font-medium [&::-webkit-details-marker]:hidden">
             {title}
-            <svg class="size-4 text-ink-faint group-open:rotate-180" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+            <svg
+              class="size-4 text-ink-faint group-open:rotate-180"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="m4 6 4 4 4-4" />
+            </svg>
           </summary>
-          <nav class="absolute inset-x-0 top-full z-40 mt-2 grid max-h-[70svh] gap-4 overflow-y-auto rounded-xl border border-rule bg-sheet p-3 shadow-paper" aria-label={t.documentation}>
-            {
-              groups.map((g) => (
-                <div>
-                  <p class="px-2.5 pb-1 text-xs font-semibold text-ink-faint">{g.title}</p>
-                  {[...g.items, ...g.items.flatMap((i) => (inside(i) ? (i.children ?? []) : []))].map((i) => (
-                    <a class={link} href={href(locale, i.rel)} aria-current={active(i) ? "page" : undefined}>
-                      {i.title}
-                    </a>
-                  ))}
-                </div>
-              ))
-            }
+          <nav
+            class="absolute inset-x-0 top-full z-40 mt-2 grid max-h-[70svh] gap-4 overflow-y-auto rounded-xl border border-rule bg-sheet p-3 shadow-paper"
+            aria-label={t.documentation}
+          >
+            {groups.map((g) => (
+              <div>
+                <p class="px-2.5 pb-1 text-xs font-semibold text-ink-faint">{g.title}</p>
+                {[...g.items, ...g.items.flatMap((i) => (inside(i) ? (i.children ?? []) : []))].map((i) => (
+                  <a class={link} href={href(locale, i.rel)} aria-current={active(i) ? "page" : undefined}>
+                    {i.title}
+                  </a>
+                ))}
+              </div>
+            ))}
           </nav>
         </details>
       </div>
 
-      <div class:list={["mx-auto grid gap-12 px-5 py-10 sm:px-8 lg:px-12 lg:py-14", wideContent ? "max-w-[90rem]" : "max-w-6xl xl:grid-cols-[minmax(0,1fr)_14rem]"]}>
+      <div
+        class:list={[
+          "mx-auto grid gap-12 px-5 py-10 sm:px-8 lg:px-12 lg:py-14",
+          wideContent ? "max-w-[90rem]" : "max-w-6xl xl:grid-cols-[minmax(0,1fr)_14rem]",
+        ]}
+      >
         <main class="min-w-0">
-          <h1 class="text-[clamp(2.25rem,1.6rem+2vw,3rem)] leading-[1.06] font-semibold tracking-[-0.035em]">{title}</h1>
-          <p class="mt-3 text-sm text-ink-faint">{[...meta.slice(0, 1), ...(english ? [t.english] : [])].join(" · ")}</p>
+          <h1 class="text-[clamp(2.25rem,1.6rem+2vw,3rem)] leading-[1.06] font-semibold tracking-[-0.035em]">
+            {title}
+          </h1>
+          <p class="mt-3 text-sm text-ink-faint">
+            {[...meta.slice(0, 1), ...(english ? [t.english] : [])].join(" · ")}
+          </p>
           <article class="docs-content mt-10" data-copy={t.copy} data-copied={t.copied}>
             <slot />
           </article>
 
           <div class="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-6 text-sm">
-            {prev ? <a class="text-ink-soft hover:text-ink" href={href(locale, prev.rel)}>← {prev.title}</a> : <span />}
-            {next && <a class="font-medium text-brand hover:underline" href={href(locale, next.rel)}>{next.title} →</a>}
+            {prev ? (
+              <a class="text-ink-soft hover:text-ink" href={href(locale, prev.rel)}>
+                ← {prev.title}
+              </a>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <a class="font-medium text-brand hover:underline" href={href(locale, next.rel)}>
+                {next.title} →
+              </a>
+            )}
           </div>
-          {edit && <p class="mt-4 text-sm"><a class="text-ink-faint hover:text-ink" href={edit}>{t.edit} →</a></p>}
+          {edit && (
+            <p class="mt-4 text-sm">
+              <a class="text-ink-faint hover:text-ink" href={edit}>
+                {t.edit} →
+              </a>
+            </p>
+          )}
         </main>
 
-        {
-          !wideContent && toc.length > 1 && (
-            <aside class="hidden xl:block">
-              <nav class="sticky top-24" aria-label={t.onThisPage}>
-                <p class="text-xs font-semibold text-ink-faint">{t.onThisPage}</p>
-                <ol class="mt-3 border-s border-rule">
-                  {toc.map((h) => (
-                    <li>
-                      <a class:list={["-ms-px block border-s border-transparent py-1 text-sm transition-colors hover:border-ink hover:text-ink", h.depth === 3 ? "ps-6 text-ink-faint" : "ps-3 text-ink-soft"]} href={`#${h.slug}`}>
-                        {h.text}
-                      </a>
-                    </li>
-                  ))}
-                </ol>
-              </nav>
-            </aside>
-          )
-        }
+        {!wideContent && toc.length > 1 && (
+          <aside class="hidden xl:block">
+            <nav class="sticky top-24" aria-label={t.onThisPage}>
+              <p class="text-xs font-semibold text-ink-faint">{t.onThisPage}</p>
+              <ol class="mt-3 border-s border-rule">
+                {toc.map((h) => (
+                  <li>
+                    <a
+                      class:list={[
+                        "-ms-px block border-s border-transparent py-1 text-sm transition-colors hover:border-ink hover:text-ink",
+                        h.depth === 3 ? "ps-6 text-ink-faint" : "ps-3 text-ink-soft",
+                      ]}
+                      href={`#${h.slug}`}
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          </aside>
+        )}
       </div>
     </div>
   </div>
@@ -132,7 +182,21 @@ const link =
     h.append(a)
   })
   const article = document.querySelector<HTMLElement>(".docs-content")
-  const labels: Record<string, string> = { sh: "Shell", bash: "Shell", yaml: "YAML", yml: "YAML", json: "JSON", nginx: "nginx", go: "Go", swift: "Swift", kotlin: "Kotlin", html: "HTML", js: "JavaScript", ts: "TypeScript", sql: "SQL" }
+  const labels: Record<string, string> = {
+    sh: "Shell",
+    bash: "Shell",
+    yaml: "YAML",
+    yml: "YAML",
+    json: "JSON",
+    nginx: "nginx",
+    go: "Go",
+    swift: "Swift",
+    kotlin: "Kotlin",
+    html: "HTML",
+    js: "JavaScript",
+    ts: "TypeScript",
+    sql: "SQL",
+  }
   article?.querySelectorAll<HTMLPreElement>("pre.astro-code").forEach((pre) => {
     const frame = document.createElement("div")
     frame.className = "code-frame"

@@ -53,28 +53,30 @@ const link = "text-ink-soft transition-colors hover:text-ink"
           <Logo size={24} />
           <span class="text-base font-semibold tracking-tight">Yuva</span>
         </a>
-        <p class="mt-4 max-w-xs leading-relaxed text-ink-soft">{i18n._(msg`Open-source customer messaging for teams that run many products.`)}</p>
+        <p class="mt-4 max-w-xs leading-relaxed text-ink-soft">
+          {i18n._(msg`Open-source customer messaging for teams that run many products.`)}
+        </p>
         <p class="mt-2 max-w-xs text-ink-faint">{i18n._(msg`“Yuva” is Turkish for nest, or home.`)}</p>
       </div>
-      {
-        columns.map((c) => (
-          <nav aria-label={c.title}>
-            <h2 class="font-semibold">{c.title}</h2>
-            <ul class="mt-4 grid gap-2.5">
-              {c.items.map((i) => (
-                <li>
-                  <a class={link} href={i.href}>
-                    {i.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))
-      }
+      {columns.map((c) => (
+        <nav aria-label={c.title}>
+          <h2 class="font-semibold">{c.title}</h2>
+          <ul class="mt-4 grid gap-2.5">
+            {c.items.map((i) => (
+              <li>
+                <a class={link} href={i.href}>
+                  {i.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
     </div>
     <div class="mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-ink-faint sm:flex-row sm:items-center sm:justify-between">
-      <p>{i18n._(msg`Server and panel under AGPL-3.0, SDKs and API contract under MIT.`)} © {year} productdevbook</p>
+      <p>
+        {i18n._(msg`Server and panel under AGPL-3.0, SDKs and API contract under MIT.`)} © {year} productdevbook
+      </p>
       <LangMenu locale={locale} paths={paths} up />
     </div>
   </div>

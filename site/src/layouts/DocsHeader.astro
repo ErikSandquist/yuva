@@ -28,17 +28,31 @@ const tab =
       <span class="rounded-md bg-paper-deep px-1.5 py-0.5 text-xs font-medium text-ink-soft">{t.docs}</span>
     </a>
     <nav class="hidden items-center gap-6 md:flex" aria-label={t.documentation}>
-      <a class={tab} href={href(locale)} aria-current={section === "guides" ? "page" : undefined}>{t.guides}</a>
-      <a class={tab} href={href(locale, "api/")} aria-current={section === "api" ? "page" : undefined}>{t.apiReference}</a>
+      <a class={tab} href={href(locale)} aria-current={section === "guides" ? "page" : undefined}>
+        {t.guides}
+      </a>
+      <a class={tab} href={href(locale, "api/")} aria-current={section === "api" ? "page" : undefined}>
+        {t.apiReference}
+      </a>
     </nav>
     <div class="ms-auto hidden w-full max-w-sm md:block">
       <DocsSearch locale={locale} />
     </div>
     <div class="ms-auto flex shrink-0 items-center gap-4 md:ms-0">
-      <span class="md:hidden"><DocsSearch locale={locale} compact /></span>
+      <span class="md:hidden">
+        <DocsSearch locale={locale} compact />
+      </span>
       <LangMenu locale={locale} paths={paths} class="hidden sm:block" />
-      <a class="hidden text-sm text-ink-soft hover:text-ink lg:block" href={home[locale]}>{t.backToSite} ↗</a>
-      <a class="grid size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink" href={links.repo} aria-label="GitHub"><GitHubIcon size={18} /></a>
+      <a class="hidden text-sm text-ink-soft hover:text-ink lg:block" href={home[locale]}>
+        {t.backToSite} ↗
+      </a>
+      <a
+        class="grid size-9 place-items-center rounded-md text-ink-soft hover:bg-paper-deep hover:text-ink"
+        href={links.repo}
+        aria-label="GitHub"
+      >
+        <GitHubIcon size={18} />
+      </a>
     </div>
   </div>
 </header>
