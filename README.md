@@ -62,6 +62,7 @@ products land in one shared inbox. You host it yourself: one Docker image and Po
 | [Operations](docs/operations.md) | [Mobile SDKs](docs/mobile.md) | [API contract](openapi/openapi.yaml) | [Examples](examples) |
 | | [Documentation pages](docs/documentation-pages.md) | | |
 | | [Mailing lists](docs/lists.md) | | |
+| | [E-mail designs](docs/designs.md) | | |
 
 How it is built: [architecture](docs/architecture.md). What changed: [changelog](CHANGELOG.md).
 

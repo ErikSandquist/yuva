@@ -85,6 +85,7 @@ Anmeldecodes, Einladungen und Benachrichtigungen. E-Mail-Kanäle haben [ihr eige
 | `YUVA_S3_PATH_STYLE` | `false` | URLs im Path-Style, die MinIO meist braucht. |
 | `YUVA_ATTACHMENT_MAX_BYTES` | `26214400` (25 MiB) | Größter Anhang in Bytes. |
 | `YUVA_ATTACHMENT_TYPES` | siehe unten | Erlaubte Content-Types; Platzhalter wie `image/*` funktionieren. |
+| `YUVA_EMAIL_IMAGES_MAX_BYTES` | `524288000` (500 MiB) | Gesamtgröße der Bilder der [E-Mail-Designs](designs.md) eines Workspace in Bytes; `0` bedeutet keine Grenze. Weitere Uploads werden abgelehnt (`409 image_quota`). |
 
 Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application/pdf,text/plain,text/csv,application/zip,application/json,video/mp4,video/quicktime,audio/mpeg,audio/mp4`.
 

@@ -85,6 +85,7 @@ vardır.
 | `YUVA_S3_PATH_STYLE` | `false` | Path-style adresler; MinIO genelde bunu ister. |
 | `YUVA_ATTACHMENT_MAX_BYTES` | `26214400` (25 MiB) | Bayt cinsinden en büyük ek boyutu. |
 | `YUVA_ATTACHMENT_TYPES` | aşağıda | İzin verilen içerik türleri; `image/*` gibi joker karakterler çalışır. |
+| `YUVA_EMAIL_IMAGES_MAX_BYTES` | `524288000` (500 MiB) | Bir çalışma alanının [e-posta tasarımı](designs.md) görsellerinin bayt cinsinden toplam boyutu; `0` sınırsız demektir. Aşan yüklemeler reddedilir (`409 image_quota`). |
 
 Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,application/pdf,text/plain,text/csv,application/zip,application/json,video/mp4,video/quicktime,audio/mpeg,audio/mp4`.
 
