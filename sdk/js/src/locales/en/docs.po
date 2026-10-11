@@ -7,20 +7,11 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-#: src/docs/questions.ts
-msgid "Ask a question"
-msgstr "Ask a question"
-
-#: src/docs/questions.ts
-msgid "Ask another question"
-msgstr "Ask another question"
-
 #: src/docs/base.ts
 msgid "Could not send. Try again."
 msgstr "Could not send. Try again."
 
 #: src/docs/feedback.ts
-#: src/docs/questions.ts
 msgid "E-mail address"
 msgstr "E-mail address"
 
@@ -28,12 +19,7 @@ msgstr "E-mail address"
 msgid "E-mail for a reply (optional)"
 msgstr "E-mail for a reply (optional)"
 
-#: src/docs/questions.ts
-msgid "E-mail for the answer (optional)"
-msgstr "E-mail for the answer (optional)"
-
 #: src/docs/feedback.ts
-#: src/docs/questions.ts
 msgid "Enter a valid e-mail address."
 msgstr "Enter a valid e-mail address."
 
@@ -45,26 +31,13 @@ msgstr "No"
 msgid "No thanks"
 msgstr "No thanks"
 
-#: src/docs/questions.ts
-msgid "Questions and answers"
-msgstr "Questions and answers"
-
 #: src/docs/feedback.ts
 msgid "Send"
 msgstr "Send"
 
-#: src/docs/questions.ts
-msgid "Send question"
-msgstr "Send question"
-
 #: src/docs/feedback.ts
-#: src/docs/questions.ts
 msgid "Sending…"
 msgstr "Sending…"
-
-#: src/docs/questions.ts
-msgid "Sign in to ask a question."
-msgstr "Sign in to ask a question."
 
 #: src/docs/base.ts
 msgid "Sign in to write to us."
@@ -82,14 +55,6 @@ msgstr "Thanks for your feedback."
 msgid "Thanks! Anything we could add? (optional)"
 msgstr "Thanks! Anything we could add? (optional)"
 
-#: src/docs/questions.ts
-msgid "Thanks! We'll e-mail the answer to {email}."
-msgstr "Thanks! We'll e-mail the answer to {email}."
-
-#: src/docs/questions.ts
-msgid "Thanks! Your question was sent."
-msgstr "Thanks! Your question was sent."
-
 #: src/docs/base.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Too many attempts. Wait a moment and try again."
@@ -97,10 +62,6 @@ msgstr "Too many attempts. Wait a moment and try again."
 #: src/docs/feedback.ts
 msgid "Was this page helpful?"
 msgstr "Was this page helpful?"
-
-#: src/docs/questions.ts
-msgid "What would you like to know about this page?"
-msgstr "What would you like to know about this page?"
 
 #: src/docs/feedback.ts
 msgid "Yes"

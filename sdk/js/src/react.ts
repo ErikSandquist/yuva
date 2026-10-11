@@ -12,7 +12,7 @@ import {
 } from "react"
 import type { ClientConversation, ClientMessage } from "./client/api"
 import type { IdentityTokenSource, MessageInput, YuvaClient } from "./client/client"
-import type { PageFeedbackDetail, PageQuestionDetail, PageRatingDetail } from "./docs"
+import type { PageFeedbackDetail, PageRatingDetail } from "./docs"
 
 const YuvaContext = createContext<YuvaClient | null>(null)
 
@@ -245,10 +245,6 @@ export interface YuvaPageFeedbackProps extends YuvaDocsProps {
   onFeedback?: (detail: PageFeedbackDetail) => void
 }
 
-export interface YuvaPageQuestionsProps extends YuvaDocsProps {
-  onQuestion?: (detail: PageQuestionDetail) => void
-}
-
 type Handlers = Record<string, ((detail: never) => void) | undefined>
 
 function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): ReactElement {
@@ -311,8 +307,4 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
 
 export function YuvaPageFeedback({ onRating, onFeedback, ...props }: YuvaPageFeedbackProps): ReactElement {
   return useDocsElement("yuva-page-feedback", props, { "yuva-rating": onRating, "yuva-feedback": onFeedback })
-}
-
-export function YuvaPageQuestions({ onQuestion, ...props }: YuvaPageQuestionsProps): ReactElement {
-  return useDocsElement("yuva-page-questions", props, { "yuva-question": onQuestion })
 }

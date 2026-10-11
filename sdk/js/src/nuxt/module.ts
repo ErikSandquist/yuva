@@ -12,7 +12,7 @@ declare module "@nuxt/schema" {
   }
 }
 
-const components = ["YuvaChat", "YuvaPageFeedback", "YuvaPageQuestions"]
+const components = ["YuvaChat", "YuvaPageFeedback"]
 
 export default defineNuxtModule<ModuleOptions>({
   meta: { name: "useyuva", configKey: "yuva" },

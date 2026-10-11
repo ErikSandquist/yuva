@@ -1,7 +1,7 @@
 import { defineComponent, h, onMounted, ref, watch, type PropType } from "vue"
 import { useRuntimeConfig } from "#imports"
 import type { IdentityTokenSource, Layout } from "../../types"
-import type { PageFeedbackDetail, PageQuestionDetail, PageRatingDetail } from "../../docs"
+import type { PageFeedbackDetail, PageRatingDetail } from "../../docs"
 
 type Tokened = HTMLElement & { setIdentityToken(source: IdentityTokenSource | null): void }
 
@@ -88,25 +88,6 @@ export const YuvaPageFeedback = defineComponent({
         onYuvaRating: detail<PageRatingDetail>((d) => emit("rating", d)),
         onYuvaFeedback: detail<PageFeedbackDetail>((d) => emit("feedback", d)),
       }
-    )
-    expose({ element })
-    return render
-  },
-})
-
-export const YuvaPageQuestions = defineComponent({
-  name: "YuvaPageQuestions",
-  props: docsProps,
-  emits: {
-    question: (_: PageQuestionDetail) => true,
-  },
-  setup(props, { emit, expose }) {
-    const { element, render } = setup(
-      "yuva-page-questions",
-      () => import("../../docs"),
-      props,
-      (p) => ({ page: p.page, "page-title": p.pageTitle }),
-      { onYuvaQuestion: detail<PageQuestionDetail>((d) => emit("question", d)) }
     )
     expose({ element })
     return render

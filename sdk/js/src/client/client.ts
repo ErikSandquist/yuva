@@ -10,8 +10,14 @@ import {
   type ClientInbox,
   type ClientMessage,
   type ClientMessagePage,
-  type ClientPageAnswerList,
-  type ClientQuestionCreate,
+  type ClientDiscussionCreate,
+  type ClientDiscussionPostUpdate,
+  type Discussion,
+  type DiscussionDetail,
+  type DiscussionPage,
+  type DiscussionPost,
+  type DiscussionPostCreate,
+  type DiscussionSort,
   type ClientRatingCreate,
   type ClientReadState,
   type ClientRealtimeMessage,
@@ -22,6 +28,7 @@ import {
   type Request,
 } from "./api"
 import { Realtime } from "./realtime"
+import { openReaderPopup, type ReaderSession, type ReaderSignInOptions } from "./reader"
 
 export type IdentityTokenSource = () => string | null | undefined | Promise<string | null | undefined>
 
@@ -55,6 +62,7 @@ export interface YuvaClientEvents {
   event: ClientRealtimeMessage
   connection: ConnectionState
   session: { session: ClientSessionInfo; renewed: boolean }
+  reader: ReaderSession | null
 }
 
 export interface MessageInput {
@@ -72,8 +80,16 @@ export interface Page {
   limit?: number
 }
 
+export interface DiscussionListOptions extends Page {
+  sort?: DiscussionSort
+}
+
 export function storageKey(channel: string): string {
   return `yuva:${channel}`
+}
+
+export function readerStorageKey(server: string, channel: string): string {
+  return `yuva:reader:${server} ${channel}`
 }
 
 export function randomId(): string {
@@ -142,6 +158,7 @@ export class YuvaClient {
   #starting: Promise<ClientSessionInfo> | null = null
   #renewing: Promise<void> | null = null
   #realtime: Realtime | null = null
+  #reader: ReaderSession | null | undefined
   #handlers = new Map<keyof YuvaClientEvents, Set<(value: never) => void>>()
 
   constructor(options: YuvaClientOptions) {
@@ -203,10 +220,6 @@ export class YuvaClient {
       method: "POST",
       json: input,
     })
-  }
-
-  pageAnswers(page: string): Promise<ClientPageAnswerList> {
-    return this.#call(`/client/v1/channels/${encodeURIComponent(this.channel)}/page-answers${query({ page })}`)
   }
 
   setIdentityToken(source: IdentityTokenSource | null): void {
@@ -342,13 +355,121 @@ export class YuvaClient {
     })
   }
 
-  askQuestion(input: ClientQuestionCreate): Promise<ClientConversationCreated> {
-    const client_id = input.client_id ?? randomId()
-    return this.#authed("/client/v1/questions", {
-      method: "POST",
-      headers: this.#idempotency(client_id),
-      json: { ...input, client_id },
+  get reader(): ReaderSession | null {
+    if (this.#reader === undefined) {
+      try {
+        const raw = this.#storage.getItem(readerStorageKey(this.server, this.channel))
+        this.#reader = raw ? (JSON.parse(raw) as ReaderSession) : null
+      } catch {
+        this.#reader = null
+      }
+    }
+    if (this.#reader && Date.parse(this.#reader.expires_at) <= Date.now() + 30_000) this.#setReader(null)
+    return this.#reader
+  }
+
+  #setReader(reader: ReaderSession | null): void {
+    const changed = this.#reader?.token !== reader?.token
+    this.#reader = reader
+    try {
+      this.#storage.setItem(readerStorageKey(this.server, this.channel), reader ? JSON.stringify(reader) : "")
+    } catch {}
+    if (changed) this.#emit("reader", reader)
+  }
+
+  readerSignIn(options?: ReaderSignInOptions): Promise<ReaderSession> {
+    return openReaderPopup(this.server, this.channel, options).then((reader) => {
+      this.#setReader(reader)
+      return reader
     })
+  }
+
+  setReader(reader: ReaderSession | null): void {
+    this.#setReader(reader)
+  }
+
+  async readerSignOut(): Promise<void> {
+    const token = this.reader?.token
+    this.#setReader(null)
+    if (token) await this.#call("/client/v1/reader-token", { method: "DELETE", token }).catch(() => undefined)
+  }
+
+  listDiscussions(page: string, options: DiscussionListOptions = {}): Promise<DiscussionPage> {
+    return this.#discussionCall(
+      `/client/v1/channels/${encodeURIComponent(this.channel)}/discussions${query({ page, ...options })}`,
+      {},
+      false
+    )
+  }
+
+  getDiscussion(id: string): Promise<DiscussionDetail> {
+    return this.#discussionCall(
+      `/client/v1/channels/${encodeURIComponent(this.channel)}/discussions/${encodeURIComponent(id)}`,
+      {},
+      false
+    )
+  }
+
+  startDiscussion(input: ClientDiscussionCreate): Promise<Discussion> {
+    return this.#discussionCall("/client/v1/discussions", { method: "POST", json: input })
+  }
+
+  replyToDiscussion(discussionId: string, input: DiscussionPostCreate): Promise<DiscussionPost> {
+    return this.#discussionCall(`/client/v1/discussions/${encodeURIComponent(discussionId)}/posts`, {
+      method: "POST",
+      json: input,
+    })
+  }
+
+  editDiscussionPost(postId: string, input: ClientDiscussionPostUpdate): Promise<DiscussionPost> {
+    return this.#discussionCall(`/client/v1/discussion-posts/${encodeURIComponent(postId)}`, {
+      method: "PATCH",
+      json: input,
+    })
+  }
+
+  deleteDiscussionPost(postId: string): Promise<void> {
+    return this.#discussionCall(`/client/v1/discussion-posts/${encodeURIComponent(postId)}`, { method: "DELETE" })
+  }
+
+  voteDiscussionPost(postId: string, voted = true): Promise<DiscussionPost> {
+    return this.#discussionCall(`/client/v1/discussion-posts/${encodeURIComponent(postId)}/vote`, {
+      method: voted ? "PUT" : "DELETE",
+    })
+  }
+
+  followDiscussion(discussionId: string, following = true): Promise<void> {
+    return this.#discussionCall(`/client/v1/discussions/${encodeURIComponent(discussionId)}/follow`, {
+      method: following ? "PUT" : "DELETE",
+    })
+  }
+
+  acceptDiscussionAnswer(discussionId: string, postId: string | null): Promise<Discussion> {
+    const path = `/client/v1/discussions/${encodeURIComponent(discussionId)}/answer`
+    return this.#discussionCall(path, postId ? { method: "PUT", json: { post_id: postId } } : { method: "DELETE" })
+  }
+
+  async discussionWriter(): Promise<"reader" | "contact" | null> {
+    if (this.reader) return "reader"
+    if (this.#session) return this.#session.contact.identified ? "contact" : null
+    return (await this.#identity?.()) ? "contact" : null
+  }
+
+  async #discussionCall<T>(path: string, request: Request, write = true): Promise<T> {
+    const reader = this.reader
+    if (reader) {
+      try {
+        return await this.#call<T>(path, { ...request, token: reader.token })
+      } catch (error) {
+        if (!(error instanceof ApiError) || error.status !== 401 || this.#reader?.token !== reader.token) throw error
+        this.#setReader(null)
+        if (write) throw new ApiError(403, "sign_in_required")
+      }
+    }
+    const writer = await this.discussionWriter()
+    if (writer === "contact") return this.#authed<T>(path, request)
+    if (write) throw new ApiError(403, "sign_in_required")
+    return this.#call<T>(path, request)
   }
 
   #idempotency(client_id: string): Record<string, string> {
