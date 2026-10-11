@@ -40,7 +40,7 @@ const dot = "size-1.5 shrink-0 rounded-full bg-ink-faint"
       </h1>
       <p class="mx-auto mt-4 max-w-2xl text-[0.95rem] leading-normal text-pretty text-ink-soft sm:mt-6 sm:text-lg sm:leading-relaxed">{t.lead}</p>
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={appUrl ?? t.quickStartHref}>
+        <a class:list={[button, "bg-signal text-white hover:bg-signal/90"]} href={appUrl ? `${appUrl}/?signup=1` : t.quickStartHref}>
           {appUrl ? t.signUp : t.quickStart}
         </a>
         <a class:list={[button, "border border-rule-strong hover:border-ink/40 hover:bg-paper-deep"]} href={links.repo}>
