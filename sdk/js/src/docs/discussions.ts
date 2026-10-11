@@ -28,6 +28,7 @@ export interface DiscussionPostDetail {
   state: DiscussionPost["state"]
 }
 
+const hashPrefix = "#yuva-discussion-"
 const cacheFor = 60_000
 const editWindow = 30 * 60_000
 const loads = new Map<string, { at: number; request: Promise<DiscussionPage> }>()
@@ -240,13 +241,17 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     return this.#reader
   }
 
+  #hashChanged = () => this.#fromHash()
+
   connectedCallback(): void {
     super.connectedCallback()
+    window.addEventListener("hashchange", this.#hashChanged)
     this.#watchReader()
   }
 
   disconnectedCallback(): void {
     super.disconnectedCallback()
+    window.removeEventListener("hashchange", this.#hashChanged)
     this.#offReader?.()
     this.#offReader = null
   }
@@ -310,6 +315,23 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
 
   protected pageChanged(): void {
     void this.#load(false)
+    this.#fromHash()
+  }
+
+  #linked(): string {
+    const hash = location.hash
+    return hash.startsWith(hashPrefix) ? decodeURIComponent(hash.slice(hashPrefix.length)) : ""
+  }
+
+  #fromHash(): void {
+    const id = this.#linked()
+    if (!id || !this.channel || this.refused) return
+    if (this.#view.kind === "thread" && this.#view.id === id) return
+    this.#inline = null
+    this.#edit = null
+    this.#confirm = ""
+    void this.#open(id, true)
+    this.scrollIntoView({ block: "start" })
   }
 
   reload(): Promise<void> {
@@ -402,8 +424,10 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     try {
       const detail = await this.client().getDiscussion(id)
       if (this.pageUrl !== page || this.#view.kind !== "thread" || this.#view.id !== id) return
+      const titled = !!this.#thread
       this.#thread = detail
       this.#threadState = "ready"
+      if (focus && !titled) this.#focus = "thread-title"
       this.#items = this.#items.map((d) => (d.id === id ? detail.discussion : d))
     } catch (error) {
       if (this.pageUrl !== page || this.#view.kind !== "thread" || this.#view.id !== id) return
@@ -414,6 +438,11 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   }
 
   #toList(): void {
+    if (this.#linked()) {
+      const url = new URL(location.href)
+      url.hash = ""
+      history.replaceState(history.state, "", url.href)
+    }
     this.#view = { kind: "list" }
     this.#inline = null
     this.#edit = null
@@ -629,7 +658,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   #authorName(author: DiscussionAuthor): string {
     if (author.deleted) return author.kind === "member" ? this.t(msg`Former team member`) : this.t(msg`Deleted account`)
     if (author.kind === "anonymous") return this.t(msg`Anonymous`)
-    return author.name || this.t(msg`Reader`)
+    return author.name || (author.kind === "member" ? this.t(msg`Team member`) : this.t(msg`Reader`))
   }
 
   #avatar(author: DiscussionAuthor, small = false): HTMLElement {

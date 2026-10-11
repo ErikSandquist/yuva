@@ -224,6 +224,9 @@ Load the script (or `useyuva/docs`) and put the elements under the article:
 - **Content Security Policy**: allow the Yuva server in `script-src` (for `/yuva-docs.js`) and
   `connect-src`.
 - **Elements stay empty**: the origin is not allowed or the key is wrong; see the browser console.
+- **Links to a thread**: e-mails to followers and the reader's account page link to
+  `<page>#yuva-discussion-<id>`. The element opens that thread and scrolls to it, also on a
+  `hashchange`; going back to the list removes the fragment from the address.
 - **Questions from before**: published answers became discussions on their pages, answered by the
   member who published them.
 

@@ -230,6 +230,9 @@ Betiği (ya da `useyuva/docs`'u) yükleyin ve öğeleri makalenin altına koyun:
 - **Content Security Policy**: Yuva sunucusuna `script-src` (`/yuva-docs.js` için) ve `connect-src`
   içinde izin verin.
 - **Öğeler boş kalıyor**: origin'e izin verilmemiş ya da anahtar yanlış; tarayıcı konsoluna bakın.
+- **Bir başlığa bağlantılar**: takipçilere giden e-postalar ve okurun hesap sayfası
+  `<sayfa>#yuva-discussion-<id>` adresine bağlanır. Öğe o başlığı açar ve ona kaydırır, bir
+  `hashchange` olduğunda da; listeye dönmek fragment'ı adresten kaldırır.
 - **Önceki sorular**: yayımlanmış yanıtlar, sayfalarında, onları yayımlayan üyenin yanıtıyla
   tartışmalara dönüştü.
 

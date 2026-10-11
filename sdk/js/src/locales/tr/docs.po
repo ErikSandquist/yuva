@@ -262,6 +262,10 @@ msgstr "Tartışmayı başlat"
 msgid "Team"
 msgstr "Ekip"
 
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Ekip üyesi"
+
 #: src/docs/feedback.ts
 msgid "Thanks for your feedback."
 msgstr "Geri bildiriminiz için teşekkürler."

@@ -262,6 +262,10 @@ msgstr "Start discussion"
 msgid "Team"
 msgstr "Team"
 
+#: src/docs/discussions.ts
+msgid "Team member"
+msgstr "Team member"
+
 #: src/docs/feedback.ts
 msgid "Thanks for your feedback."
 msgstr "Thanks for your feedback."

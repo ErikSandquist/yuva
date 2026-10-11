@@ -236,6 +236,9 @@ Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie die Elemente unter den
   und `connect-src`.
 - **Elemente bleiben leer**: Die Origin ist nicht erlaubt oder der Schlüssel ist falsch; siehe die
   Browser-Konsole.
+- **Links auf einen Thread**: E-Mails an Folgende und die Kontoseite des Lesers verlinken auf
+  `<Seite>#yuva-discussion-<id>`. Das Element öffnet diesen Thread und scrollt zu ihm, auch bei
+  einem `hashchange`; der Weg zurück zur Liste entfernt das Fragment aus der Adresse.
 - **Frühere Fragen**: Veröffentlichte Antworten wurden zu Diskussionen auf ihren Seiten,
   beantwortet von dem Mitglied, das sie veröffentlicht hat.
 
