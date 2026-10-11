@@ -4,50 +4,34 @@ import {
   type Discussion,
   type DiscussionAuthor,
   type DiscussionPage,
-  type DiscussionPost,
-  type DiscussionDetail,
   type DiscussionSort,
 } from "../client/api"
 import type { ReaderSession } from "../client/reader"
-import { YuvaDocsElement, el } from "./base"
-import { preview } from "./preview"
+import { YuvaDocsElement, el, scriptSrc } from "./base"
+import type { DiscussionsState, Thread, ThreadHost } from "./thread"
 
-type View = { kind: "list" } | { kind: "thread"; id: string } | { kind: "new" }
-type Writer = "reader" | "contact" | null
+export type { DiscussionDetailEvent, DiscussionPostDetail } from "./thread"
 
-export interface DiscussionDetailEvent {
-  page: string
-  discussion_id: string
-  state: Discussion["state"]
-}
+type ThreadModule = typeof import("./thread")
 
-export interface DiscussionPostDetail {
-  page: string
-  discussion_id: string
-  post_id: string
-  state: DiscussionPost["state"]
-}
+declare const YUVA_DOCS_THREAD: string
 
 const hashPrefix = "#yuva-discussion-"
 const cacheFor = 60_000
-const editWindow = 30 * 60_000
 const loads = new Map<string, { at: number; request: Promise<DiscussionPage> }>()
 
 function forget(prefix: string): void {
   for (const key of loads.keys()) if (key.startsWith(prefix)) loads.delete(key)
 }
 
-const svg = (path: string, size = 16) =>
-  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`
+const svg = (path: string) =>
+  `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`
 const icons = {
   up: svg('<path d="M12 19V5M5 12l7-7 7 7"/>'),
   comment: svg('<path d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z"/>'),
   check: svg('<path d="M20 6L9 17l-5-5"/>'),
-  checkCircle: svg('<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>'),
   lock: svg('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>'),
   clock: svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
-  back: svg('<path d="M19 12H5M12 19l-7-7 7-7"/>'),
-  bell: svg('<path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/>'),
 }
 
 const styles = `
@@ -105,66 +89,13 @@ button { font: inherit; color: inherit; }
 .badge.locked { opacity: 0.75; }
 .empty { padding: 28px 16px; text-align: center; border: 1px dashed var(--yuva-border); border-radius: 12px; }
 .empty p + p { margin-block-start: 4px; }
-.thread { display: flex; flex-direction: column; gap: 12px; }
-.thread-head { display: flex; flex-direction: column; gap: 8px; }
-.post { display: flex; gap: 12px; padding: 14px; border: 1px solid var(--yuva-border); border-radius: 12px; }
-.post.accepted { border-color: var(--yuva-success); box-shadow: inset 0 0 0 1px var(--yuva-success); }
-.post.pending { border-style: dashed; }
-.side { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.vote {
-  display: inline-flex; flex-direction: column; align-items: center; gap: 0; min-inline-size: 40px; padding: 4px 6px;
-  border: 1px solid var(--yuva-border); border-radius: 8px; background: none; cursor: pointer; font-size: 0.85em; font-weight: 600;
-}
-.vote:hover:not(:disabled) { border-color: var(--yuva-accent); }
-.vote[aria-pressed="true"] { border-color: var(--yuva-accent); color: var(--yuva-accent); background: var(--yuva-soft); }
-.post-body { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; gap: 8px; }
-.post-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 0.88em; }
-.name { font-weight: 600; }
-.answer-label { display: flex; align-items: center; gap: 6px; color: var(--yuva-success); font-weight: 600; font-size: 0.85em; }
-.tools { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
-.children { display: flex; flex-direction: column; gap: 10px; margin-block-start: 4px; padding-inline-start: 14px; border-inline-start: 2px solid var(--yuva-border); }
-.children .post { padding: 10px 0; border: 0; box-shadow: none; }
-.children .post + .post { border-block-start: 1px solid var(--yuva-border); border-radius: 0; }
-.deleted { font-style: italic; opacity: 0.65; }
 .notice { padding: 10px 12px; border-radius: 10px; background: var(--yuva-soft); font-size: 0.9em; display: flex; gap: 8px; align-items: flex-start; }
 .notice svg { flex-shrink: 0; margin-block-start: 3px; }
-.signin { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 14px; border: 1px solid var(--yuva-border); border-radius: 12px; }
-.composer { display: flex; flex-direction: column; border: 1px solid var(--yuva-border); border-radius: 12px; overflow: hidden; }
-.composer:focus-within { border-color: var(--yuva-accent); }
-.composer .ctabs { display: flex; gap: 4px; padding: 0 8px; border-block-end: 1px solid var(--yuva-border); }
-.composer .ctab { padding: 7px 10px; border: 0; border-block-end: 2px solid transparent; background: none; cursor: pointer; font-size: 0.88em; opacity: 0.75; margin-block-end: -1px; }
-.composer .ctab[aria-selected="true"] { border-block-end-color: var(--yuva-accent); font-weight: 600; opacity: 1; }
-.composer .ctab:focus-visible { outline: 2px solid var(--yuva-accent); outline-offset: -2px; }
-.composer textarea, .composer .preview { border: 0; border-radius: 0; min-block-size: 110px; padding: 10px 12px; }
-.composer textarea:focus-visible { outline: none; }
-.composer .preview { overflow-wrap: anywhere; }
-.composer .foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 10px; border-block-start: 1px solid var(--yuva-border); }
-.composer .hint { font-size: 0.8em; opacity: 0.7; }
-.composer .buttons { display: flex; gap: 8px; margin-inline-start: auto; }
-.field-title { font-size: 1.05em; font-weight: 600; }
-.form { display: flex; flex-direction: column; gap: 10px; }
 .more { align-self: center; }
-.md { overflow-wrap: anywhere; }
-.md > :first-child { margin-block-start: 0; }
-.md > :last-child { margin-block-end: 0; }
-.md p, .md ul, .md ol, .md pre, .md blockquote, .md table { margin: 0 0 0.75em; }
-.md h1, .md h2, .md h3, .md h4, .md h5, .md h6 { margin: 0.9em 0 0.4em; font-size: 1em; font-weight: 600; }
-.md h1, .md h3 { font-size: 1.1em; }
-.md ul, .md ol { padding-inline-start: 1.5em; }
-.md a { color: var(--yuva-accent); }
-.md code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; padding: 1px 5px; border-radius: 5px; background: var(--yuva-soft); }
-.md pre { padding: 10px 12px; border-radius: 8px; background: var(--yuva-soft); overflow-x: auto; }
-.md pre code { padding: 0; background: none; }
-.md blockquote { padding-inline-start: 12px; border-inline-start: 3px solid var(--yuva-border); opacity: 0.85; }
-.md table { border-collapse: collapse; display: block; overflow-x: auto; }
-.md th, .md td { border: 1px solid var(--yuva-border); padding: 4px 8px; }
-.md img { max-inline-size: 100%; }
-.md hr { border: 0; border-block-start: 1px solid var(--yuva-border); }
 .skeleton { block-size: 64px; border-radius: 12px; background: var(--yuva-soft); }
 @media (max-width: 560px) {
   .item { gap: 10px; padding: 12px; }
   .item .avatar { display: none; }
-  .post { padding: 12px; gap: 10px; }
   .bar .send { inline-size: 100%; }
 }
 `
@@ -181,64 +112,38 @@ function excerptOf(html: string): string {
   return (template.content.textContent ?? "").replace(/\s+/g, " ").trim().slice(0, 240)
 }
 
-class Composer {
-  area = el("textarea")
-  previewing = false
-
-  constructor(rows: number) {
-    this.area.rows = rows
-    this.area.maxLength = 20000
-    this.area.dir = "auto"
-  }
-
-  get value(): string {
-    return this.area.value.trim()
-  }
-
-  clear(): void {
-    this.area.value = ""
-    this.previewing = false
-  }
-}
-
 export class YuvaDiscussionsElement extends YuvaDocsElement {
-  #view: View = { kind: "list" }
+  static loadThread: () => Promise<ThreadModule> = () =>
+    import(/* @vite-ignore */ new URL(YUVA_DOCS_THREAD, scriptSrc || location.href).href)
+
+  #s: DiscussionsState = {
+    view: { kind: "list" },
+    items: [],
+    thread: null,
+    threadState: "loading",
+    writer: null,
+    reader: null,
+    busy: new Set<string>(),
+    notice: "",
+    error: "",
+    confirm: "",
+    focus: "",
+  }
   #sort: DiscussionSort = "new"
-  #items: Discussion[] = []
   #cursor: string | undefined
   #listState: "loading" | "ready" | "error" | "off" = "loading"
   #loadedFor = ""
-  #thread: DiscussionDetail | null = null
-  #threadState: "loading" | "ready" | "missing" | "error" = "loading"
-  #writer: Writer = null
-  #reader: ReaderSession | null = null
   #offReader: (() => void) | null = null
-  #busy = new Set<string>()
-  #notice = ""
-  #error = ""
-  #confirm = ""
-  #reply = new Composer(4)
-  #inline: { target: string; composer: Composer } | null = null
-  #edit: { post: DiscussionPost | null; composer: Composer; title: HTMLInputElement } | null = null
-  #draft = new Composer(6)
-  #title = el("input")
-  #focus = ""
-
-  constructor() {
-    super()
-    this.#title.maxLength = 200
-    this.#title.dir = "auto"
-    this.#title.className = "field-title"
-    for (const area of [this.#reply.area, this.#draft.area]) area.addEventListener("input", () => this.#syncSend())
-    this.#title.addEventListener("input", () => this.#syncSend())
-  }
+  #thread: Thread | null = null
+  #threadLoad: Promise<Thread | null> | null = null
+  #threadStyles = ""
 
   get discussions(): Discussion[] {
-    return this.#items
+    return this.#s.items
   }
 
   get reader(): ReaderSession | null {
-    return this.#reader
+    return this.#s.reader
   }
 
   #hashChanged = () => this.#fromHash()
@@ -274,9 +179,9 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   #watchReader(): void {
     if (!this.channel || this.#offReader) return
     const client = this.client()
-    this.#reader = client.reader
+    this.#s.reader = client.reader
     this.#offReader = client.on("reader", (reader) => {
-      this.#reader = reader
+      this.#s.reader = reader
       this.emit("yuva-reader", reader ? reader.reader : null)
       void this.#refreshWriter(true)
     })
@@ -288,29 +193,28 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     const writer = await this.client()
       .discussionWriter()
       .catch(() => null)
-    const changed = writer !== this.#writer
-    this.#writer = writer
+    const changed = writer !== this.#s.writer
+    this.#s.writer = writer
     if (reload && changed) {
       this.#loadedFor = ""
       void this.#load(false)
-      if (this.#view.kind === "thread") void this.#open(this.#view.id, false)
+      if (this.#s.view.kind === "thread") void this.#open(this.#s.view.id, false)
     }
     this.render()
   }
 
   protected reset(): void {
-    this.#view = { kind: "list" }
-    this.#items = []
+    const s = this.#s
+    s.view = { kind: "list" }
+    s.items = []
     this.#cursor = undefined
     this.#listState = "loading"
     this.#loadedFor = ""
-    this.#thread = null
-    this.#notice = ""
-    this.#error = ""
-    this.#confirm = ""
-    this.#inline = null
-    this.#edit = null
-    this.#reply.clear()
+    s.thread = null
+    s.notice = ""
+    s.error = ""
+    s.confirm = ""
+    this.#thread?.reset()
   }
 
   protected pageChanged(): void {
@@ -326,12 +230,67 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   #fromHash(): void {
     const id = this.#linked()
     if (!id || !this.channel || this.refused) return
-    if (this.#view.kind === "thread" && this.#view.id === id) return
-    this.#inline = null
-    this.#edit = null
-    this.#confirm = ""
+    if (this.#s.view.kind === "thread" && this.#s.view.id === id) return
+    this.#thread?.close()
+    this.#s.confirm = ""
     void this.#open(id, true)
     this.scrollIntoView({ block: "start" })
+  }
+
+  #prefetchOn(button: HTMLElement): void {
+    const prefetch = () => void this.#loadThread()
+    button.addEventListener("pointerenter", prefetch, { once: true })
+    button.addEventListener("focus", prefetch, { once: true })
+  }
+
+  #loadThread(): Promise<Thread | null> {
+    this.#threadLoad ??= YuvaDiscussionsElement.loadThread().then(
+      (module) => {
+        this.#threadStyles = module.styles
+        this.#thread = module.createThread(this.#host)
+        if (this.#s.view.kind !== "list") this.render()
+        return this.#thread
+      },
+      () => {
+        this.#threadLoad = null
+        if (this.#s.view.kind !== "list") {
+          this.#s.view = { kind: "list" }
+          this.#s.error = this.t(msg`Could not open the discussion. Try again.`)
+          this.render()
+        }
+        return null
+      }
+    )
+    return this.#threadLoad
+  }
+
+  #host: ThreadHost = this.#makeHost()
+
+  #makeHost(): ThreadHost {
+    return {
+      s: this.#s,
+      icons,
+      root: this.root,
+      locale: () => this.locale,
+      direction: () => this.direction,
+      page: () => this.pageUrl,
+      pageTitle: () => this.pageTitle,
+      mode: () => this.#mode,
+      client: () => this.client(),
+      render: () => this.render(),
+      emit: (type, detail) => this.emit(type, detail),
+      act: (key, action) => this.#act(key, action),
+      signIn: () => this.signIn(),
+      open: (id, focus) => this.#open(id, focus),
+      toList: () => this.#toList(),
+      forget: () => forget(this.#prefix),
+      button: (className, text, key, onClick, html) => this.#button(className, text, key, onClick, html),
+      avatar: (author, small) => this.#avatar(author, small),
+      badge: (kind, short) => this.#badge(kind, short),
+      time: (value) => this.#time(value),
+      authorName: (author) => this.#authorName(author),
+      noticeBox: (text, icon) => this.#noticeBox(text, icon),
+    }
   }
 
   reload(): Promise<void> {
@@ -343,14 +302,14 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   }
 
   signIn(): Promise<void> {
-    this.#error = ""
+    this.#s.error = ""
     return this.client()
       .readerSignIn()
       .then(() => undefined)
       .catch((error: unknown) => {
         const code = error instanceof ApiError ? error.code : ""
         if (code === "sign_in_cancelled") return
-        this.#error =
+        this.#s.error =
           code === "popup_blocked"
             ? this.t(msg`Your browser blocked the sign-in window. Allow pop-ups for this site and try again.`)
             : this.#failure(error)
@@ -370,7 +329,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     const page = this.pageUrl
     if (!this.channel || !page || this.refused) return
     const reader = this.client().reader
-    const auth = reader ? reader.token.slice(-12) : (this.#writer ?? "-")
+    const auth = reader ? reader.token.slice(-12) : (this.#s.writer ?? "-")
     const key = `${this.#prefix}${this.#sort} ${auth}`
     if (!force && !more && this.#loadedFor === key) return
     this.#loadedFor = key
@@ -385,15 +344,15 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
         load.request.catch(() => loads.get(key) === current && loads.delete(key))
       }
       request = load.request
-      if (!this.#items.length) this.#listState = "loading"
+      if (!this.#s.items.length) this.#listState = "loading"
     }
-    if (more) this.#busy.add("more")
+    if (more) this.#s.busy.add("more")
     this.render()
     try {
       const result = await request
       if (this.#loadedFor !== key) return
-      this.#items = more
-        ? [...this.#items, ...result.items.filter((d) => !this.#items.some((i) => i.id === d.id))]
+      this.#s.items = more
+        ? [...this.#s.items, ...result.items.filter((d) => !this.#s.items.some((i) => i.id === d.id))]
         : result.items
       this.#cursor = result.next_cursor
       this.#listState = "ready"
@@ -401,54 +360,56 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
       if (this.#loadedFor !== key || this.refusal(error)) return
       if (!more) this.#loadedFor = ""
       this.#listState = error instanceof ApiError && error.code === "discussions_off" ? "off" : more ? "ready" : "error"
-      if (more) this.#error = this.#failure(error)
+      if (more) this.#s.error = this.#failure(error)
     } finally {
-      this.#busy.delete("more")
+      this.#s.busy.delete("more")
     }
     this.render()
   }
 
   async #open(id: string, focus: boolean): Promise<void> {
+    const s = this.#s
     const page = this.pageUrl
-    const known = this.#thread?.discussion.id === id ? this.#thread : null
-    this.#view = { kind: "thread", id }
-    const listed = this.#items.find((d) => d.id === id)
-    this.#thread = known ?? (listed ? { discussion: listed, posts: [] } : null)
-    this.#threadState = known ? "ready" : "loading"
+    const known = s.thread?.discussion.id === id ? s.thread : null
+    void this.#loadThread()
+    s.view = { kind: "thread", id }
+    const listed = s.items.find((d) => d.id === id)
+    s.thread = known ?? (listed ? { discussion: listed, posts: [] } : null)
+    s.threadState = known ? "ready" : "loading"
     if (focus) {
-      this.#notice = known ? this.#notice : ""
-      this.#error = ""
-      this.#focus = "thread-title"
+      s.notice = known ? s.notice : ""
+      s.error = ""
+      s.focus = "thread-title"
     }
     this.render()
     try {
       const detail = await this.client().getDiscussion(id)
-      if (this.pageUrl !== page || this.#view.kind !== "thread" || this.#view.id !== id) return
-      const titled = !!this.#thread
-      this.#thread = detail
-      this.#threadState = "ready"
-      if (focus && !titled) this.#focus = "thread-title"
-      this.#items = this.#items.map((d) => (d.id === id ? detail.discussion : d))
+      if (this.pageUrl !== page || s.view.kind !== "thread" || s.view.id !== id) return
+      const titled = !!s.thread
+      s.thread = detail
+      s.threadState = "ready"
+      if (focus && !titled) s.focus = "thread-title"
+      s.items = s.items.map((d) => (d.id === id ? detail.discussion : d))
     } catch (error) {
-      if (this.pageUrl !== page || this.#view.kind !== "thread" || this.#view.id !== id) return
+      if (this.pageUrl !== page || s.view.kind !== "thread" || s.view.id !== id) return
       if (this.refusal(error, false)) return
-      this.#threadState = error instanceof ApiError && error.status === 404 ? "missing" : "error"
+      s.threadState = error instanceof ApiError && error.status === 404 ? "missing" : "error"
     }
     this.render()
   }
 
   #toList(): void {
+    const s = this.#s
     if (this.#linked()) {
       const url = new URL(location.href)
       url.hash = ""
       history.replaceState(history.state, "", url.href)
     }
-    this.#view = { kind: "list" }
-    this.#inline = null
-    this.#edit = null
-    this.#confirm = ""
-    this.#error = ""
-    this.#focus = this.#thread ? `open-${this.#thread.discussion.id}` : "start"
+    s.view = { kind: "list" }
+    this.#thread?.close()
+    s.confirm = ""
+    s.error = ""
+    s.focus = s.thread ? `open-${s.thread.discussion.id}` : "start"
     this.render()
     void this.#load(false)
   }
@@ -465,179 +426,20 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   }
 
   async #act<T>(key: string, action: () => Promise<T>): Promise<T | undefined> {
-    if (this.#busy.has(key)) return
-    this.#busy.add(key)
-    this.#error = ""
+    const s = this.#s
+    if (s.busy.has(key)) return
+    s.busy.add(key)
+    s.error = ""
     this.render()
     try {
       return await action()
     } catch (error) {
-      if (!this.refusal(error, false)) this.#error = this.#failure(error)
+      if (!this.refusal(error, false)) s.error = this.#failure(error)
       if (error instanceof ApiError && error.code === "sign_in_required") void this.#refreshWriter(false)
       return undefined
     } finally {
-      this.#busy.delete(key)
+      s.busy.delete(key)
       this.render()
-    }
-  }
-
-  async #start(): Promise<void> {
-    const title = this.#title.value.trim()
-    const body = this.#draft.value
-    if (title.length < 3 || !body) return
-    const page = this.pageUrl
-    const discussion = await this.#act("start", () =>
-      this.client().startDiscussion({ page_url: page, page_title: this.pageTitle || undefined, title, body })
-    )
-    if (!discussion) return
-    forget(this.#prefix)
-    this.emit("yuva-discussion", {
-      page,
-      discussion_id: discussion.id,
-      state: discussion.state,
-    } satisfies DiscussionDetailEvent)
-    if (this.pageUrl !== page) return
-    this.#title.value = ""
-    this.#draft.clear()
-    this.#items = [discussion, ...this.#items.filter((d) => d.id !== discussion.id)]
-    this.#notice =
-      discussion.state === "pending"
-        ? this.t(msg`Thanks! Your discussion will appear for everyone once the team approves it.`)
-        : ""
-    this.#thread = { discussion, posts: [] }
-    await this.#open(discussion.id, true)
-  }
-
-  async #send(composer: Composer, parent?: string): Promise<void> {
-    const thread = this.#thread
-    const body = composer.value
-    if (!thread || !body) return
-    const page = this.pageUrl
-    const id = thread.discussion.id
-    const post = await this.#act(parent ? `reply-${parent}` : "reply", () =>
-      this.client().replyToDiscussion(id, { body, parent_post_id: parent })
-    )
-    if (!post) return
-    forget(this.#prefix)
-    this.emit("yuva-post", {
-      page,
-      discussion_id: id,
-      post_id: post.id,
-      state: post.state,
-    } satisfies DiscussionPostDetail)
-    composer.clear()
-    if (parent) this.#inline = null
-    this.#notice =
-      post.state === "pending"
-        ? this.t(msg`Thanks! Your reply will appear for everyone once the team approves it.`)
-        : ""
-    if (this.#thread?.discussion.id === id) {
-      this.#thread = { ...this.#thread, posts: [...this.#thread.posts, post] }
-      this.#focus = `post-${post.id}`
-      this.render()
-      void this.#open(id, false)
-    }
-  }
-
-  async #vote(post: { id: string; voted?: boolean }, opening: boolean): Promise<void> {
-    if (!this.#writer) return void this.signIn()
-    const updated = await this.#act(`vote-${post.id}`, () => this.client().voteDiscussionPost(post.id, !post.voted))
-    if (!updated || !this.#thread) return
-    forget(this.#prefix)
-    if (opening) {
-      const discussion = { ...this.#thread.discussion, votes: updated.votes, voted: updated.voted }
-      this.#thread = { ...this.#thread, discussion }
-      this.#items = this.#items.map((d) => (d.id === discussion.id ? discussion : d))
-    } else
-      this.#thread = {
-        ...this.#thread,
-        posts: this.#thread.posts.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)),
-      }
-  }
-
-  async #follow(): Promise<void> {
-    const thread = this.#thread
-    if (!thread) return
-    if (!this.#writer) return void this.signIn()
-    const following = !thread.discussion.following
-    const done = await this.#act("follow", () =>
-      this.client()
-        .followDiscussion(thread.discussion.id, following)
-        .then(() => true)
-    )
-    if (done && this.#thread?.discussion.id === thread.discussion.id)
-      this.#thread = { ...this.#thread, discussion: { ...this.#thread.discussion, following } }
-  }
-
-  async #accept(post: DiscussionPost | null): Promise<void> {
-    const thread = this.#thread
-    if (!thread) return
-    const discussion = await this.#act(`accept-${post?.id ?? "clear"}`, () =>
-      this.client().acceptDiscussionAnswer(thread.discussion.id, post?.id ?? null)
-    )
-    if (!discussion) return
-    forget(this.#prefix)
-    this.#focus = post ? `post-${post.id}` : "thread-title"
-    await this.#open(discussion.id, false)
-  }
-
-  async #saveEdit(): Promise<void> {
-    const edit = this.#edit
-    const thread = this.#thread
-    if (!edit || !thread) return
-    const body = edit.composer.value
-    const opening = !edit.post
-    const title = edit.title.value.trim()
-    if (!body || (opening && title.length < 3)) return
-    const postId = edit.post?.id ?? thread.discussion.opening_post_id
-    const saved = await this.#act(`edit-${postId}`, () =>
-      this.client().editDiscussionPost(postId, opening ? { body, title } : { body })
-    )
-    if (!saved) return
-    forget(this.#prefix)
-    this.#edit = null
-    this.#focus = opening ? "thread-title" : `post-${postId}`
-    await this.#open(thread.discussion.id, false)
-  }
-
-  async #delete(postId: string, opening: boolean): Promise<void> {
-    const thread = this.#thread
-    if (!thread) return
-    const done = await this.#act(`delete-${postId}`, () =>
-      this.client()
-        .deleteDiscussionPost(postId)
-        .then(() => true)
-    )
-    this.#confirm = ""
-    if (!done) return
-    forget(this.#prefix)
-    if (opening) {
-      try {
-        await this.client().getDiscussion(thread.discussion.id)
-      } catch {
-        this.#items = this.#items.filter((d) => d.id !== thread.discussion.id)
-        this.#thread = null
-        return this.#toList()
-      }
-    }
-    await this.#open(thread.discussion.id, false)
-  }
-
-  #syncSend(): void {
-    for (const button of this.root.querySelectorAll<HTMLButtonElement>("[data-requires]")) {
-      const needs = button.dataset.requires
-      const busy = this.#busy.has(button.dataset.busy ?? "")
-      const ok =
-        needs === "start"
-          ? this.#title.value.trim().length >= 3 && this.#draft.value !== ""
-          : needs === "reply"
-            ? this.#reply.value !== ""
-            : needs === "inline"
-              ? !!this.#inline?.composer.value
-              : needs === "edit"
-                ? !!this.#edit?.composer.value && (!!this.#edit.post || this.#edit.title.value.trim().length >= 3)
-                : true
-      button.disabled = busy || !ok
     }
   }
 
@@ -716,120 +518,17 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     return time
   }
 
-  #md(html: string): HTMLElement {
-    const body = el("div", "md")
-    body.dir = "auto"
-    // body_html is rendered and sanitized by the server; the shadow root keeps the host's styles out.
-    body.innerHTML = html
-    for (const link of body.querySelectorAll("a[href]")) link.setAttribute("target", "_blank")
-    return body
-  }
-
-  #composer(
-    composer: Composer,
-    options: {
-      label: string
-      placeholder: string
-      submit: string
-      busy: string
-      requires: string
-      onSubmit: () => void
-      onCancel?: () => void
-      focusKey: string
-    }
-  ): HTMLElement {
-    const box = el("div", "composer")
-    const tabs = el("div", "ctabs")
-    tabs.setAttribute("role", "tablist")
-    tabs.setAttribute("aria-label", options.label)
-    const panelId = `p-${options.focusKey}`
-    const write = this.#button("ctab", this.t(msg`Write`), `${options.focusKey}-write`, () => {
-      composer.previewing = false
-      this.#focus = options.focusKey
-      this.render()
-    })
-    const show = this.#button("ctab", this.t(msg`Preview`), `${options.focusKey}-preview`, () => {
-      composer.previewing = true
-      this.render()
-    })
-    for (const [tab, selected] of [
-      [write, !composer.previewing],
-      [show, composer.previewing],
-    ] as const) {
-      tab.setAttribute("role", "tab")
-      tab.setAttribute("aria-selected", String(selected))
-      tab.setAttribute("aria-controls", panelId)
-      tab.tabIndex = selected ? 0 : -1
-      tab.addEventListener("keydown", (event) => {
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return
-        event.preventDefault()
-        composer.previewing = !composer.previewing
-        this.#focus = `${options.focusKey}-${composer.previewing ? "preview" : "write"}`
-        this.render()
-      })
-    }
-    tabs.append(write, show)
-    box.append(tabs)
-    if (composer.previewing) {
-      const panel = el("div", "preview md")
-      panel.dir = "auto"
-      panel.id = panelId
-      panel.setAttribute("role", "tabpanel")
-      panel.setAttribute("aria-label", this.t(msg`Preview`))
-      if (composer.value) panel.append(preview(composer.area.value))
-      else panel.append(el("p", "muted", this.t(msg`Nothing to preview.`)))
-      box.append(panel)
-    } else {
-      composer.area.id = panelId
-      composer.area.placeholder = options.placeholder
-      composer.area.setAttribute("aria-label", options.label)
-      composer.area.dataset.key = options.focusKey
-      composer.area.disabled = this.#busy.has(options.busy)
-      composer.area.onkeydown = (event) => {
-        if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
-          event.preventDefault()
-          options.onSubmit()
-        } else if (event.key === "Escape" && options.onCancel) options.onCancel()
-      }
-      box.append(composer.area)
-    }
-    const foot = el("div", "foot")
-    foot.append(el("span", "hint", this.t(msg`Markdown is supported.`)))
-    const buttons = el("div", "buttons")
-    if (options.onCancel)
-      buttons.append(this.#button("ghost", this.t(msg`Cancel`), `${options.focusKey}-cancel`, options.onCancel))
-    const submit = this.#button(
-      "send",
-      this.#busy.has(options.busy) ? this.t(msg`Sending…`) : options.submit,
-      `${options.focusKey}-submit`,
-      options.onSubmit
-    )
-    submit.dataset.requires = options.requires
-    submit.dataset.busy = options.busy
-    buttons.append(submit)
-    foot.append(buttons)
-    box.append(foot)
-    return box
-  }
-
-  #signInBox(text: string): HTMLElement {
-    const box = el("div", "signin")
-    box.append(el("p", "", text))
-    box.append(this.#button("send", this.t(msg`Sign in`), "sign-in-box", () => void this.signIn()))
-    return box
-  }
-
   #header(): HTMLElement {
     const head = el("div", "head")
     head.append(el("h2", "", this.t(msg`Discussions`)))
     const who = el("div", "who")
-    const reader = this.#reader
+    const reader = this.#s.reader
     if (reader) {
       const name = reader.reader.name || this.t(msg`Reader`)
       who.append(this.#avatar({ kind: "reader", name, initials: reader.reader.initials, deleted: false }, true))
       who.append(el("span", "", name))
       who.append(this.#button("plain", this.t(msg`Sign out`), "sign-out", () => void this.signOut()))
-    } else if (!this.#writer && this.#mode !== "off") {
+    } else if (!this.#s.writer && this.#mode !== "off") {
       who.append(this.#button("ghost", this.t(msg`Sign in`), "sign-in", () => void this.signIn()))
     }
     head.append(who)
@@ -864,23 +563,25 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
       tabs.append(tab)
     })
     const start = this.#button("send", this.t(msg`Start a discussion`), "start", () => {
-      this.#view = { kind: "new" }
-      this.#error = ""
-      this.#notice = ""
-      this.#focus = "new-title"
+      void this.#loadThread()
+      this.#s.view = { kind: "new" }
+      this.#s.error = ""
+      this.#s.notice = ""
+      this.#s.focus = "new-title"
       this.render()
     })
+    this.#prefetchOn(start)
     bar.append(tabs, start)
     nodes.push(bar)
 
-    if (this.#listState === "loading" && !this.#items.length) {
+    if (this.#listState === "loading" && !this.#s.items.length) {
       const skeleton = el("div", "skeleton")
       skeleton.setAttribute("aria-busy", "true")
       skeleton.setAttribute("aria-label", this.t(msg`Loading discussions…`))
       nodes.push(skeleton)
       return nodes
     }
-    if (this.#listState === "error" && !this.#items.length) {
+    if (this.#listState === "error" && !this.#s.items.length) {
       const box = el("div", "empty")
       box.append(el("p", "", this.t(msg`Could not load the discussions.`)))
       const retry = this.#button("ghost", this.t(msg`Try again`), "retry", () => void this.#load(true))
@@ -889,7 +590,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
       nodes.push(box)
       return nodes
     }
-    if (!this.#items.length) {
+    if (!this.#s.items.length) {
       const box = el("div", "empty")
       box.append(
         el(
@@ -909,7 +610,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     list.id = "yuva-discussion-list"
     list.setAttribute("aria-label", this.t(msg`Discussions about this page`))
     list.setAttribute("aria-busy", String(this.#listState === "loading"))
-    for (const discussion of this.#items) {
+    for (const discussion of this.#s.items) {
       const item = el("li", "item")
       item.append(this.#avatar(discussion.author))
       const main = el("div", "main")
@@ -920,6 +621,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
         () => void this.#open(discussion.id, true)
       )
       title.dir = "auto"
+      this.#prefetchOn(title)
       main.append(title)
       const excerpt = discussion.deleted ? "" : excerptOf(discussion.body_html)
       if (excerpt) {
@@ -953,11 +655,11 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     if (this.#cursor) {
       const more = this.#button(
         "ghost more",
-        this.#busy.has("more") ? this.t(msg`Loading…`) : this.t(msg`Show more`),
+        this.#s.busy.has("more") ? this.t(msg`Loading…`) : this.t(msg`Show more`),
         "more",
         () => void this.#load(false, true)
       )
-      more.disabled = this.#busy.has("more")
+      more.disabled = this.#s.busy.has("more")
       nodes.push(more)
     }
     return nodes
@@ -966,375 +668,11 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   #setSort(sort: DiscussionSort): void {
     if (this.#sort === sort) return
     this.#sort = sort
-    this.#items = []
+    this.#s.items = []
     this.#cursor = undefined
     this.#listState = "loading"
-    this.#focus = `sort-${sort}`
+    this.#s.focus = `sort-${sort}`
     void this.#load(false)
-  }
-
-  #back(): HTMLElement {
-    const back = this.#button("plain", this.t(msg`All discussions`), "back", () => this.#toList(), icons.back)
-    back.style.alignSelf = "flex-start"
-    back.style.display = "inline-flex"
-    back.style.gap = "6px"
-    back.style.alignItems = "center"
-    const arrow = back.querySelector("svg")
-    if (arrow && this.direction === "rtl") arrow.style.transform = "scaleX(-1)"
-    return back
-  }
-
-  #newView(): Node[] {
-    const form = el("div", "form")
-    form.append(el("h3", "", this.t(msg`Start a discussion`)))
-    if (!this.#writer) {
-      form.append(this.#signInBox(this.t(msg`Sign in to start a discussion. Your name is shown with your post.`)))
-      return [this.#back(), form]
-    }
-    this.#title.placeholder = this.t(msg`Title`)
-    this.#title.setAttribute("aria-label", this.t(msg`Title`))
-    this.#title.dataset.key = "new-title"
-    this.#title.disabled = this.#busy.has("start")
-    form.append(this.#title)
-    form.append(
-      this.#composer(this.#draft, {
-        label: this.t(msg`Your question or idea`),
-        placeholder: this.t(msg`Ask a question, share an idea or describe a problem with this page.`),
-        submit: this.t(msg`Start discussion`),
-        busy: "start",
-        requires: "start",
-        focusKey: "new-body",
-        onSubmit: () => void this.#start(),
-        onCancel: () => this.#toList(),
-      })
-    )
-    if (this.#mode === "moderated" && this.#reader)
-      form.append(
-        el("p", "muted", this.t(msg`Your first posts are checked by the team before they appear for everyone.`))
-      )
-    return [this.#back(), form]
-  }
-
-  #editable(post: { created_at: string; mine?: boolean }): boolean {
-    return !!post.mine && !this.#thread?.discussion.locked && Date.now() - Date.parse(post.created_at) < editWindow
-  }
-
-  #postTools(post: DiscussionPost | null, top: DiscussionPost | null): HTMLElement | null {
-    const thread = this.#thread
-    if (!thread) return null
-    const discussion = thread.discussion
-    const opening = !post
-    const id = post?.id ?? discussion.opening_post_id
-    const mine = opening ? !!discussion.mine : !!post.mine
-    const deleted = opening ? !!discussion.deleted : post.deleted
-    const tools = el("div", "tools")
-    if (deleted) return null
-    if (!opening && top && !discussion.locked && this.#writer && post.state === "published") {
-      tools.append(
-        this.#button("plain", this.t(msg`Reply`), `reply-to-${post.id}`, () => {
-          this.#inline = this.#inline?.target === top.id ? this.#inline : { target: top.id, composer: new Composer(3) }
-          this.#inline.composer.area.oninput = () => this.#syncSend()
-          this.#focus = `inline-${top.id}`
-          this.render()
-        })
-      )
-    }
-    if (!opening && discussion.mine && !post.parent_post_id && post.state === "published" && !discussion.locked) {
-      const accepted = discussion.answer_post_id === post.id
-      const accept = this.#button(
-        "plain",
-        accepted ? this.t(msg`Unmark as answer`) : this.t(msg`Mark as answer`),
-        `accept-${post.id}`,
-        () => void this.#accept(accepted ? null : post),
-        accepted ? "" : icons.checkCircle
-      )
-      accept.style.display = "inline-flex"
-      accept.style.gap = "4px"
-      accept.style.alignItems = "center"
-      accept.disabled = this.#busy.has(`accept-${post.id}`) || this.#busy.has("accept-clear")
-      tools.append(accept)
-    }
-    if (mine && this.#editable(opening ? discussion : post)) {
-      tools.append(
-        this.#button("plain", this.t(msg`Edit`), `edit-${id}`, () => {
-          const composer = new Composer(opening ? 6 : 4)
-          composer.area.value = opening ? discussion.body : post.body
-          composer.area.oninput = () => this.#syncSend()
-          const title = el("input")
-          title.className = "field-title"
-          title.maxLength = 200
-          title.dir = "auto"
-          title.value = discussion.title
-          title.oninput = () => this.#syncSend()
-          this.#edit = { post, composer, title }
-          this.#focus = opening ? "edit-title" : `edit-body-${id}`
-          this.render()
-        })
-      )
-    }
-    if (mine) {
-      if (this.#confirm === id) {
-        const yes = this.#button(
-          "plain danger",
-          this.t(msg`Delete`),
-          `delete-yes-${id}`,
-          () => void this.#delete(id, opening)
-        )
-        yes.disabled = this.#busy.has(`delete-${id}`)
-        tools.append(
-          el("span", "muted", opening ? this.t(msg`Delete this discussion?`) : this.t(msg`Delete this reply?`)),
-          yes,
-          this.#button("plain", this.t(msg`Keep`), `delete-no-${id}`, () => {
-            this.#confirm = ""
-            this.#focus = `delete-${id}`
-            this.render()
-          })
-        )
-      } else
-        tools.append(
-          this.#button("plain", this.t(msg`Delete`), `delete-${id}`, () => {
-            this.#confirm = id
-            this.#focus = `delete-no-${id}`
-            this.render()
-          })
-        )
-    }
-    return tools.childElementCount ? tools : null
-  }
-
-  #voteButton(target: { id: string; votes: number; voted?: boolean; mine?: boolean }, opening: boolean): HTMLElement {
-    const vote = this.#button(
-      "vote",
-      String(target.votes),
-      `vote-${target.id}`,
-      () => void this.#vote(target, opening),
-      icons.up
-    )
-    vote.setAttribute("aria-pressed", String(!!target.voted))
-    vote.setAttribute(
-      "aria-label",
-      target.voted ? this.t(msg`Remove your vote (${target.votes} votes)`) : this.t(msg`Upvote (${target.votes} votes)`)
-    )
-    vote.disabled = !!target.mine || !!this.#thread?.discussion.locked || this.#busy.has(`vote-${target.id}`)
-    return vote
-  }
-
-  #postCard(post: DiscussionPost, top: DiscussionPost | null, children: DiscussionPost[] = []): HTMLElement {
-    const discussion = this.#thread!.discussion
-    const accepted = discussion.answer_post_id === post.id
-    const card = el("article", `post${accepted ? " accepted" : ""}${post.state === "pending" ? " pending" : ""}`)
-    card.dataset.key = `post-${post.id}`
-    card.tabIndex = -1
-    card.setAttribute("aria-label", this.#authorName(post.author))
-    const side = el("div", "side")
-    if (!post.deleted) side.append(this.#voteButton(post, false))
-    if (!top || top.id === post.id) card.append(side)
-    const body = el("div", "post-body")
-    if (accepted) {
-      const label = el("div", "answer-label")
-      label.innerHTML = icons.checkCircle
-      label.append(this.t(msg`Accepted answer`))
-      body.append(label)
-    }
-    body.append(this.#postHead(post.author, post.created_at, post.edited_at, post.state, post.deleted))
-    if (this.#edit?.post?.id === post.id) body.append(this.#editForm())
-    else if (post.deleted) body.append(el("p", "deleted", this.t(msg`This reply was deleted.`)))
-    else body.append(this.#md(post.body_html))
-    const tools = this.#postTools(post, top)
-    if (tools) body.append(tools)
-    if (children.length || this.#inline?.target === post.id) {
-      const nested = el("div", "children")
-      for (const child of children) nested.append(this.#postCard(child, post))
-      if (this.#inline?.target === post.id) {
-        const inline = this.#inline
-        nested.append(
-          this.#composer(inline.composer, {
-            label: this.t(msg`Your reply`),
-            placeholder: this.t(msg`Write a reply…`),
-            submit: this.t(msg`Reply`),
-            busy: `reply-${post.id}`,
-            requires: "inline",
-            focusKey: `inline-${post.id}`,
-            onSubmit: () => void this.#send(inline.composer, post.id),
-            onCancel: () => {
-              this.#inline = null
-              this.#focus = `reply-to-${post.id}`
-              this.render()
-            },
-          })
-        )
-      }
-      body.append(nested)
-    }
-    card.append(body)
-    return card
-  }
-
-  #postHead(
-    author: DiscussionAuthor,
-    created: string,
-    edited: string | undefined,
-    state: DiscussionPost["state"],
-    deleted: boolean
-  ): HTMLElement {
-    const head = el("div", "post-head")
-    if (!deleted) {
-      head.append(this.#avatar(author, true), el("span", "name", this.#authorName(author)))
-      if (author.kind === "member" && !author.deleted) head.append(this.#badge("team"))
-    }
-    head.append(this.#time(created))
-    if (edited && !deleted) head.append(el("span", "muted", this.t(msg`edited`)))
-    if (state === "pending") head.append(this.#badge("pending"))
-    return head
-  }
-
-  #editForm(): HTMLElement {
-    const edit = this.#edit!
-    const form = el("div", "form")
-    if (!edit.post) {
-      edit.title.setAttribute("aria-label", this.t(msg`Title`))
-      edit.title.dataset.key = "edit-title"
-      form.append(edit.title)
-    }
-    const id = edit.post?.id ?? this.#thread!.discussion.opening_post_id
-    form.append(
-      this.#composer(edit.composer, {
-        label: this.t(msg`Edit your post`),
-        placeholder: "",
-        submit: this.t(msg`Save`),
-        busy: `edit-${id}`,
-        requires: "edit",
-        focusKey: `edit-body-${id}`,
-        onSubmit: () => void this.#saveEdit(),
-        onCancel: () => {
-          this.#edit = null
-          this.#focus = `edit-${id}`
-          this.render()
-        },
-      })
-    )
-    return form
-  }
-
-  #threadView(): Node[] {
-    const nodes: Node[] = [this.#back()]
-    const thread = this.#thread
-    if (!thread || this.#threadState === "missing") {
-      const box = el("div", "empty")
-      box.append(
-        el(
-          "p",
-          "",
-          this.#threadState === "loading" ? this.t(msg`Loading…`) : this.t(msg`This discussion is no longer available.`)
-        )
-      )
-      nodes.push(box)
-      return nodes
-    }
-    const discussion = thread.discussion
-    const view = el("div", "thread")
-    const head = el("div", "thread-head")
-    if (this.#edit && !this.#edit.post) {
-      head.append(
-        this.#postHead(discussion.author, discussion.created_at, discussion.edited_at, discussion.state, false)
-      )
-      head.append(this.#editForm())
-      view.append(head)
-    } else {
-      const title = el("h3", "", discussion.title)
-      title.dir = "auto"
-      title.tabIndex = -1
-      title.dataset.key = "thread-title"
-      head.append(title)
-      const meta = el("div", "meta")
-      if (discussion.answer_post_id) meta.append(this.#badge("answered"))
-      if (discussion.state === "pending") meta.append(this.#badge("pending"))
-      if (discussion.locked) meta.append(this.#badge("locked"))
-      if (meta.childElementCount) head.append(meta)
-      view.append(head)
-
-      const opening = el("article", `post${discussion.state === "pending" ? " pending" : ""}`)
-      const side = el("div", "side")
-      if (!discussion.deleted)
-        side.append(
-          this.#voteButton(
-            { id: discussion.opening_post_id, votes: discussion.votes, voted: discussion.voted, mine: discussion.mine },
-            true
-          )
-        )
-      const body = el("div", "post-body")
-      body.append(
-        this.#postHead(
-          discussion.author,
-          discussion.created_at,
-          discussion.edited_at,
-          discussion.state,
-          !!discussion.deleted
-        )
-      )
-      body.append(
-        discussion.deleted
-          ? el("p", "deleted", this.t(msg`The opening post was deleted.`))
-          : this.#md(discussion.body_html)
-      )
-      const tools = this.#postTools(null, null)
-      if (tools) body.append(tools)
-      opening.append(side, body)
-      view.append(opening)
-    }
-
-    const actions = el("div", "bar")
-    const follow = this.#button(
-      "ghost",
-      discussion.following ? this.t(msg`Following`) : this.t(msg`Follow`),
-      "follow",
-      () => void this.#follow(),
-      icons.bell
-    )
-    follow.setAttribute("aria-pressed", String(!!discussion.following))
-    follow.title = this.t(msg`Get an e-mail when someone replies or an answer is accepted.`)
-    follow.disabled = this.#busy.has("follow")
-    const count = el("span", "muted", this.t(msg`Replies: ${discussion.reply_count}`))
-    actions.append(count, follow)
-    view.append(actions)
-
-    if (this.#threadState === "loading" && !thread.posts.length && discussion.reply_count > 0) {
-      const skeleton = el("div", "skeleton")
-      skeleton.setAttribute("aria-busy", "true")
-      skeleton.setAttribute("aria-label", this.t(msg`Loading…`))
-      view.append(skeleton)
-    }
-    const tops = thread.posts.filter((p) => !p.parent_post_id)
-    const replies = el("div", "thread")
-    for (const top of tops)
-      replies.append(
-        this.#postCard(
-          top,
-          top,
-          thread.posts.filter((p) => p.parent_post_id === top.id)
-        )
-      )
-    if (tops.length) view.append(replies)
-
-    if (this.#notice) view.append(this.#noticeBox(this.#notice))
-    if (discussion.locked)
-      view.append(this.#noticeBox(this.t(msg`This discussion is locked. New replies are closed.`), icons.lock))
-    else if (!this.#writer)
-      view.append(this.#signInBox(this.t(msg`Sign in to reply, vote and follow this discussion.`)))
-    else
-      view.append(
-        this.#composer(this.#reply, {
-          label: this.t(msg`Your reply`),
-          placeholder: this.t(msg`Write a reply…`),
-          submit: this.t(msg`Reply`),
-          busy: "reply",
-          requires: "reply",
-          focusKey: "reply",
-          onSubmit: () => void this.#send(this.#reply),
-        })
-      )
-    nodes.push(view)
-    return nodes
   }
 
   #noticeBox(text: string, icon = icons.clock): HTMLElement {
@@ -1357,21 +695,29 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
     const children: Node[] = [this.#header()]
     if (this.#mode === "off" || this.#listState === "off") {
       children.push(el("p", "muted", this.t(msg`Discussions are turned off for this site.`)))
-    } else if (this.#view.kind === "thread") children.push(...this.#threadView())
-    else if (this.#view.kind === "new") children.push(...this.#newView())
-    else {
-      if (this.#notice) children.push(this.#noticeBox(this.#notice))
+    } else if (this.#s.view.kind !== "list") {
+      const thread = this.#thread
+      if (thread) children.push(...(this.#s.view.kind === "thread" ? thread.threadView() : thread.newView()))
+      else {
+        const skeleton = el("div", "skeleton")
+        skeleton.setAttribute("aria-busy", "true")
+        skeleton.setAttribute("aria-label", this.t(msg`Loading…`))
+        children.push(skeleton)
+      }
+    } else {
+      if (this.#s.notice) children.push(this.#noticeBox(this.#s.notice))
       children.push(...this.#listView())
     }
-    if (this.#error) {
-      const error = el("p", "error", this.#error)
+    if (this.#s.error) {
+      const error = el("p", "error", this.#s.error)
       error.setAttribute("role", "alert")
       children.push(error)
     }
-    this.frame(styles, ...children)
-    this.#syncSend()
-    const wanted = this.#focus
-    this.#focus = ""
+    this.frame(styles + this.#threadStyles, ...children)
+    if (this.#s.view.kind !== "list" && !this.#thread) return
+    this.#thread?.syncSend()
+    const wanted = this.#s.focus
+    this.#s.focus = ""
     const key = wanted || focused
     if (!key) return
     let active: Element | null = null

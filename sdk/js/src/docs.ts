@@ -1,15 +1,12 @@
+import { defineDocs } from "./docs/define"
 import { YuvaDiscussionsElement, type DiscussionDetailEvent, type DiscussionPostDetail } from "./docs/discussions"
 import { YuvaPageFeedbackElement, type PageFeedbackDetail, type PageRatingDetail } from "./docs/feedback"
 
-export function defineDocs(): void {
-  if (typeof customElements === "undefined") return
-  if (!customElements.get("yuva-discussions")) customElements.define("yuva-discussions", YuvaDiscussionsElement)
-  if (!customElements.get("yuva-page-feedback")) customElements.define("yuva-page-feedback", YuvaPageFeedbackElement)
-}
-
+YuvaDiscussionsElement.loadThread = () => import("./docs/thread")
 defineDocs()
 
 export {
+  defineDocs,
   YuvaDiscussionsElement,
   YuvaPageFeedbackElement,
   type DiscussionDetailEvent,

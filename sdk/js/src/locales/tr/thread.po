@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: tr\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Kabul edilen yanıt"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Tüm tartışmalar"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Bir soru sorun, bir fikir paylaşın ya da bu sayfadaki bir sorunu anlatın."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Sil"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Bu tartışma silinsin mi?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Bu yanıt silinsin mi?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Gönderinizi düzenleyin"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "düzenlendi"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Takip et"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Takip ediliyor"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Biri yanıt yazdığında ya da bir yanıt kabul edildiğinde e-posta alın."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Kalsın"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Yanıt olarak işaretle"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown desteklenir."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Önizlenecek bir şey yok."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Önizleme"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Oyunuzu geri alın ({0} oy)"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Yanıtlar: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Yanıtla"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Kaydet"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Gönderiliyor…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Giriş yap"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Bu tartışmada yanıt yazmak, oy vermek ve takip etmek için giriş yapın."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Tartışma başlatmak için giriş yapın. Adınız gönderinizle birlikte gösterilir."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Tartışma başlat"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Tartışmayı başlat"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Teşekkürler! Tartışmanız ekip onayladığında herkese görünecek."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Teşekkürler! Yanıtınız ekip onayladığında herkese görünecek."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Açılış gönderisi silindi."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Bu tartışma kilitli. Yeni yanıt yazılamaz."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Bu tartışma artık mevcut değil."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Bu yanıt silindi."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Başlık"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Yanıt işaretini kaldır"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Oy ver ({0} oy)"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Yaz"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Bir yanıt yazın…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "İlk gönderileriniz herkese görünmeden önce ekip tarafından kontrol edilir."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Sorunuz ya da fikriniz"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Yanıtınız"

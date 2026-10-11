@@ -6,7 +6,10 @@ import { directionOf, resolveLocale, translatePlain } from "../i18n"
 import { messages as en } from "../locales/en/docs"
 import { messages as tr } from "../locales/tr/docs"
 import { contrastOn, launcherOf, readStored, writeStored } from "../types"
+import { el } from "./dom"
 import { followPage, pageOf } from "./page"
+
+export { el }
 
 const catalogs: Record<string, Messages> = { en, tr }
 
@@ -14,7 +17,7 @@ const settings = new Map<string, Promise<ClientInbox>>()
 
 const Base = (typeof HTMLElement === "undefined" ? class {} : HTMLElement) as typeof HTMLElement
 
-const scriptSrc =
+export const scriptSrc =
   typeof document !== "undefined" && document.currentScript instanceof HTMLScriptElement
     ? document.currentScript.src
     : ""
@@ -68,17 +71,6 @@ textarea:focus-visible, input:focus-visible { outline: 2px solid var(--yuva-acce
 .link { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; opacity: 0.8; }
 @media (max-width: 480px) { textarea, input { font-size: 16px; } }
 `
-
-export function el<K extends keyof HTMLElementTagNameMap>(
-  tag: K,
-  className?: string,
-  text?: string
-): HTMLElementTagNameMap[K] {
-  const element = document.createElement(tag)
-  if (className) element.className = className
-  if (text !== undefined) element.textContent = text
-  return element
-}
 
 export abstract class YuvaDocsElement extends Base {
   static observedAttributes = ["channel", "server", "locale", "dir", "page", "page-title", "identity-token"]

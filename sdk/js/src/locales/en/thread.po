@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Accepted answer"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "All discussions"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Ask a question, share an idea or describe a problem with this page."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Delete"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Delete this discussion?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Delete this reply?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Edit"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Edit your post"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "edited"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Follow"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Following"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Get an e-mail when someone replies or an answer is accepted."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Keep"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Loading…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Mark as answer"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown is supported."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Nothing to preview."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Preview"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Remove your vote ({0} votes)"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Replies: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Reply"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Save"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Sending…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Sign in"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Sign in to reply, vote and follow this discussion."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Sign in to start a discussion. Your name is shown with your post."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Start a discussion"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Start discussion"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Thanks! Your discussion will appear for everyone once the team approves it."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Thanks! Your reply will appear for everyone once the team approves it."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "The opening post was deleted."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "This discussion is locked. New replies are closed."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "This discussion is no longer available."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "This reply was deleted."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Title"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Unmark as answer"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Upvote ({0} votes)"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Write"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Write a reply…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Your first posts are checked by the team before they appear for everyone."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Your question or idea"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Your reply"

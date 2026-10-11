@@ -8,14 +8,6 @@ msgstr ""
 "Language: en\n"
 
 #: src/docs/discussions.ts
-msgid "Accepted answer"
-msgstr "Accepted answer"
-
-#: src/docs/discussions.ts
-msgid "All discussions"
-msgstr "All discussions"
-
-#: src/docs/discussions.ts
 msgid "Anonymous"
 msgstr "Anonymous"
 
@@ -24,16 +16,8 @@ msgid "Answered"
 msgstr "Answered"
 
 #: src/docs/discussions.ts
-msgid "Ask a question, share an idea or describe a problem with this page."
-msgstr "Ask a question, share an idea or describe a problem with this page."
-
-#: src/docs/discussions.ts
 msgid "Awaiting approval"
 msgstr "Awaiting approval"
-
-#: src/docs/discussions.ts
-msgid "Cancel"
-msgstr "Cancel"
 
 #: src/docs/discussions.ts
 msgid "Check the title and the text and try again."
@@ -43,21 +27,13 @@ msgstr "Check the title and the text and try again."
 msgid "Could not load the discussions."
 msgstr "Could not load the discussions."
 
+#: src/docs/discussions.ts
+msgid "Could not open the discussion. Try again."
+msgstr "Could not open the discussion. Try again."
+
 #: src/docs/base.ts
 msgid "Could not send. Try again."
 msgstr "Could not send. Try again."
-
-#: src/docs/discussions.ts
-msgid "Delete"
-msgstr "Delete"
-
-#: src/docs/discussions.ts
-msgid "Delete this discussion?"
-msgstr "Delete this discussion?"
-
-#: src/docs/discussions.ts
-msgid "Delete this reply?"
-msgstr "Delete this reply?"
 
 #: src/docs/discussions.ts
 msgid "Deleted member"
@@ -87,18 +63,6 @@ msgstr "E-mail address"
 msgid "E-mail for a reply (optional)"
 msgstr "E-mail for a reply (optional)"
 
-#: src/docs/discussions.ts
-msgid "Edit"
-msgstr "Edit"
-
-#: src/docs/discussions.ts
-msgid "Edit your post"
-msgstr "Edit your post"
-
-#: src/docs/discussions.ts
-msgid "edited"
-msgstr "edited"
-
 #: src/docs/feedback.ts
 msgid "Enter a valid e-mail address."
 msgstr "Enter a valid e-mail address."
@@ -108,28 +72,12 @@ msgid "Every discussion on this page has an answer."
 msgstr "Every discussion on this page has an answer."
 
 #: src/docs/discussions.ts
-msgid "Follow"
-msgstr "Follow"
-
-#: src/docs/discussions.ts
-msgid "Following"
-msgstr "Following"
-
-#: src/docs/discussions.ts
-msgid "Get an e-mail when someone replies or an answer is accepted."
-msgstr "Get an e-mail when someone replies or an answer is accepted."
-
-#: src/docs/discussions.ts
 msgid "Have a question or an idea? Start the first one."
 msgstr "Have a question or an idea? Start the first one."
 
 #: src/docs/discussions.ts
 msgid "just now"
 msgstr "just now"
-
-#: src/docs/discussions.ts
-msgid "Keep"
-msgstr "Keep"
 
 #: src/docs/discussions.ts
 msgid "Loading discussions…"
@@ -142,14 +90,6 @@ msgstr "Loading…"
 #: src/docs/discussions.ts
 msgid "Locked"
 msgstr "Locked"
-
-#: src/docs/discussions.ts
-msgid "Mark as answer"
-msgstr "Mark as answer"
-
-#: src/docs/discussions.ts
-msgid "Markdown is supported."
-msgstr "Markdown is supported."
 
 #: src/docs/discussions.ts
 msgid "New"
@@ -168,10 +108,6 @@ msgid "No thanks"
 msgstr "No thanks"
 
 #: src/docs/discussions.ts
-msgid "Nothing to preview."
-msgstr "Nothing to preview."
-
-#: src/docs/discussions.ts
 msgid "Pending"
 msgstr "Pending"
 
@@ -180,36 +116,18 @@ msgid "Posts can be edited for 30 minutes after they are written."
 msgstr "Posts can be edited for 30 minutes after they are written."
 
 #: src/docs/discussions.ts
-msgid "Preview"
-msgstr "Preview"
-
-#: src/docs/discussions.ts
 msgid "Reader"
 msgstr "Reader"
-
-#. placeholder {0}: target.votes
-#: src/docs/discussions.ts
-msgid "Remove your vote ({0} votes)"
-msgstr "Remove your vote ({0} votes)"
 
 #. placeholder {0}: discussion.reply_count
 #: src/docs/discussions.ts
 msgid "Replies: {0}"
 msgstr "Replies: {0}"
 
-#: src/docs/discussions.ts
-msgid "Reply"
-msgstr "Reply"
-
-#: src/docs/discussions.ts
-msgid "Save"
-msgstr "Save"
-
 #: src/docs/feedback.ts
 msgid "Send"
 msgstr "Send"
 
-#: src/docs/discussions.ts
 #: src/docs/feedback.ts
 msgid "Sending…"
 msgstr "Sending…"
@@ -221,14 +139,6 @@ msgstr "Show more"
 #: src/docs/discussions.ts
 msgid "Sign in"
 msgstr "Sign in"
-
-#: src/docs/discussions.ts
-msgid "Sign in to reply, vote and follow this discussion."
-msgstr "Sign in to reply, vote and follow this discussion."
-
-#: src/docs/discussions.ts
-msgid "Sign in to start a discussion. Your name is shown with your post."
-msgstr "Sign in to start a discussion. Your name is shown with your post."
 
 #: src/docs/discussions.ts
 msgid "Sign in to take part in the discussion."
@@ -255,10 +165,6 @@ msgid "Start a discussion"
 msgstr "Start a discussion"
 
 #: src/docs/discussions.ts
-msgid "Start discussion"
-msgstr "Start discussion"
-
-#: src/docs/discussions.ts
 msgid "Team"
 msgstr "Team"
 
@@ -275,36 +181,8 @@ msgid "Thanks! Anything we could add? (optional)"
 msgstr "Thanks! Anything we could add? (optional)"
 
 #: src/docs/discussions.ts
-msgid "Thanks! Your discussion will appear for everyone once the team approves it."
-msgstr "Thanks! Your discussion will appear for everyone once the team approves it."
-
-#: src/docs/discussions.ts
-msgid "Thanks! Your reply will appear for everyone once the team approves it."
-msgstr "Thanks! Your reply will appear for everyone once the team approves it."
-
-#: src/docs/discussions.ts
-msgid "The opening post was deleted."
-msgstr "The opening post was deleted."
-
-#: src/docs/discussions.ts
 msgid "This discussion is locked."
 msgstr "This discussion is locked."
-
-#: src/docs/discussions.ts
-msgid "This discussion is locked. New replies are closed."
-msgstr "This discussion is locked. New replies are closed."
-
-#: src/docs/discussions.ts
-msgid "This discussion is no longer available."
-msgstr "This discussion is no longer available."
-
-#: src/docs/discussions.ts
-msgid "This reply was deleted."
-msgstr "This reply was deleted."
-
-#: src/docs/discussions.ts
-msgid "Title"
-msgstr "Title"
 
 #: src/docs/base.ts
 msgid "Too many attempts. Wait a moment and try again."
@@ -322,15 +200,6 @@ msgstr "Try again"
 msgid "Unanswered"
 msgstr "Unanswered"
 
-#: src/docs/discussions.ts
-msgid "Unmark as answer"
-msgstr "Unmark as answer"
-
-#. placeholder {0}: target.votes
-#: src/docs/discussions.ts
-msgid "Upvote ({0} votes)"
-msgstr "Upvote ({0} votes)"
-
 #. placeholder {0}: discussion.votes
 #: src/docs/discussions.ts
 msgid "Votes: {0}"
@@ -339,14 +208,6 @@ msgstr "Votes: {0}"
 #: src/docs/feedback.ts
 msgid "Was this page helpful?"
 msgstr "Was this page helpful?"
-
-#: src/docs/discussions.ts
-msgid "Write"
-msgstr "Write"
-
-#: src/docs/discussions.ts
-msgid "Write a reply…"
-msgstr "Write a reply…"
 
 #: src/docs/feedback.ts
 msgid "Yes"
@@ -363,15 +224,3 @@ msgstr "You seem to be offline."
 #: src/docs/discussions.ts
 msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
 msgstr "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
-
-#: src/docs/discussions.ts
-msgid "Your first posts are checked by the team before they appear for everyone."
-msgstr "Your first posts are checked by the team before they appear for everyone."
-
-#: src/docs/discussions.ts
-msgid "Your question or idea"
-msgstr "Your question or idea"
-
-#: src/docs/discussions.ts
-msgid "Your reply"
-msgstr "Your reply"

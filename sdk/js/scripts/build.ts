@@ -5,13 +5,26 @@ import pkg from "../package.json"
 process.env.NODE_ENV = "production"
 await rm("dist", { recursive: true, force: true })
 
-const define = { "process.env.NODE_ENV": '"production"' }
-
 function check(result: Bun.BuildOutput): void {
   if (result.success) return
   for (const log of result.logs) console.error(log)
   process.exit(1)
 }
+
+const chunks = await Bun.build({
+  entrypoints: ["src/docs/thread.ts"],
+  outdir: "dist/widget",
+  format: "esm",
+  target: "browser",
+  minify: true,
+  naming: "yuva-docs-thread-[hash].[ext]",
+  define: { "process.env.NODE_ENV": '"production"' },
+  plugins: [linguiMacro],
+})
+check(chunks)
+const thread = `widget/${chunks.outputs[0]!.path.split("/").pop()}`
+
+const define = { "process.env.NODE_ENV": '"production"', YUVA_DOCS_THREAD: JSON.stringify(thread) }
 
 const scripts = [
   { entry: "src/yuva.ts", format: "iife" },
@@ -69,6 +82,7 @@ for (const name of [
   "yuva.js",
   "yuva-chat.js",
   "yuva-docs.js",
+  thread,
   "esm/index.js",
   "esm/chat.js",
   "esm/docs.js",
