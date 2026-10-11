@@ -63,6 +63,11 @@ form{gap:10px}
 input{inline-size:100%;padding:8px 10px;border:1px solid rgb(127 127 127/.35);border-radius:var(--r);background:none;color:inherit;font:inherit}
 [aria-invalid=true]{border-color:var(--d)}
 [type=checkbox]{inline-size:18px;block-size:18px;margin:2px 0 0;flex:none;accent-color:var(--a)}
+[role=switch]{appearance:none;position:relative;inline-size:36px;block-size:20px;margin:1px 0 0;border-radius:10px;background:rgb(127 127 127/.45);cursor:pointer;transition:background .15s}
+[role=switch]::before{content:"";position:absolute;inset-block-start:2px;inset-inline-start:2px;inline-size:16px;block-size:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgb(0 0 0/.3);transition:inset-inline-start .15s}
+[role=switch]:checked{background:var(--a)}
+[role=switch]:checked::before{inset-inline-start:18px;background:var(--on)}
+[role=switch]:disabled{opacity:.5;cursor:default}
 button{padding:8px 16px;border:0;border-radius:var(--r);background:var(--a);color:var(--on);font:inherit;font-weight:600;cursor:pointer}
 button:disabled{opacity:.6;cursor:default}
 :focus-visible{outline:2px solid var(--a);outline-offset:2px}
@@ -464,6 +469,12 @@ export class YuvaSubscribeElement extends Base {
       const box = label.querySelector("input")!
       if (identity) {
         box.setAttribute("role", "switch")
+        box.setAttribute("aria-checked", String(box.checked))
+        box.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter") return
+          event.preventDefault()
+          box.click()
+        })
         box.disabled = this.#busy.has(item.list.id)
       } else box.disabled = this.#phase === "submitting"
       group.append(label)
