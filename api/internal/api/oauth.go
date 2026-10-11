@@ -9,7 +9,6 @@ import (
 	"errors"
 	"io"
 	"log/slog"
-	"math"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -137,9 +136,7 @@ func (s *Server) meterBearer(ctx context.Context, p principal) error {
 	}
 	now := s.now()
 	if ok, wait := s.limits.allowWait(key, limitBearer, now); !ok {
-		e := *errClientRateLimited
-		e.RetryAfter = int(math.Ceil(wait.Seconds()))
-		return &e
+		return rateLimited(wait)
 	}
 	if !p.isGrant() {
 		return nil

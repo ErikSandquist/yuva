@@ -80,7 +80,8 @@ func (q *Queries) AddOptOut(ctx context.Context, arg AddOptOutParams) error {
 
 const contactObjectionEmails = `-- name: ContactObjectionEmails :many
 SELECT s.email FROM list_subscriptions s
-WHERE s.workspace_id = $1 AND s.contact_id = $2 AND s.state = 'unsubscribed'
+WHERE s.workspace_id = $1 AND s.contact_id = $2
+  AND (s.state = 'unsubscribed' OR (s.state = 'pending' AND s.unsubscribe_reason IS NOT NULL))
 UNION
 SELECT x.email FROM email_suppressions x
 JOIN contact_emails e ON e.workspace_id = x.workspace_id AND e.email = x.email
@@ -978,7 +979,9 @@ func (q *Queries) ListSubscriptions(ctx context.Context, arg ListSubscriptionsPa
 }
 
 const listUnsubscribedEmails = `-- name: ListUnsubscribedEmails :many
-SELECT email FROM list_subscriptions WHERE workspace_id = $1 AND list_id = $2 AND state = 'unsubscribed'
+SELECT email FROM list_subscriptions
+WHERE workspace_id = $1 AND list_id = $2
+  AND (state = 'unsubscribed' OR (state = 'pending' AND unsubscribe_reason IS NOT NULL))
 `
 
 type ListUnsubscribedEmailsParams struct {

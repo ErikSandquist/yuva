@@ -9632,7 +9632,8 @@ type ClientInterface interface {
 	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+	// seconds until the hour ends); confirmation mails are
 	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 	// without changing the answer.
 	//
@@ -9666,7 +9667,8 @@ type ClientInterface interface {
 	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+	// seconds until the hour ends); confirmation mails are
 	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 	// without changing the answer.
 	//
@@ -11926,12 +11928,14 @@ type ClientInterface interface {
 	//
 	// Answers `201` for a new subscription and `200` with the existing one when the address is
 	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-	// mails today.
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+	// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+	// person can come back, by asking on a form or in the app and confirming the mail they get;
+	// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+	// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+	// bounced or was reported as spam, `400 validation_failed` without `consent` or
+	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+	// got 3 confirmation mails today.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -11957,12 +11961,14 @@ type ClientInterface interface {
 	//
 	// Answers `201` for a new subscription and `200` with the existing one when the address is
 	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-	// mails today.
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+	// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+	// person can come back, by asking on a form or in the app and confirming the mail they get;
+	// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+	// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+	// bounced or was reported as spam, `400 validation_failed` without `consent` or
+	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+	// got 3 confirmation mails today.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -11991,8 +11997,8 @@ type ClientInterface interface {
 	// UpdateSubscriptionWithBody Unsubscribe a subscriber
 	//
 	// The only change a member or key can make is `state: unsubscribed`; anything that would
-	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-	// `consent.confirmed: false` to mail the person a confirmation).
+	// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+	// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -12004,8 +12010,8 @@ type ClientInterface interface {
 	// UpdateSubscription Unsubscribe a subscriber
 	//
 	// The only change a member or key can make is `state: unsubscribed`; anything that would
-	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-	// `consent.confirmed: false` to mail the person a confirmation).
+	// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+	// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -12893,7 +12899,8 @@ func (c *Client) CreatePageRating(ctx context.Context, channelKey ChannelKey, bo
 // after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 // (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 // channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+// seconds until the hour ends); confirmation mails are
 // capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 // without changing the answer.
 //
@@ -12937,7 +12944,8 @@ func (c *Client) CreateClientSubscriptionWithBody(ctx context.Context, channelKe
 // after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 // (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 // channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+// seconds until the hour ends); confirmation mails are
 // capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 // without changing the answer.
 //
@@ -17027,12 +17035,14 @@ func (c *Client) ListSubscriptions(ctx context.Context, listId ListId, params *L
 //
 // Answers `201` for a new subscription and `200` with the existing one when the address is
 // already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-// mails today.
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+// person can come back, by asking on a form or in the app and confirming the mail they get;
+// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+// bounced or was reported as spam, `400 validation_failed` without `consent` or
+// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+// got 3 confirmation mails today.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -17068,12 +17078,14 @@ func (c *Client) CreateSubscriptionWithBody(ctx context.Context, listId ListId, 
 //
 // Answers `201` for a new subscription and `200` with the existing one when the address is
 // already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-// mails today.
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+// person can come back, by asking on a form or in the app and confirming the mail they get;
+// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+// bounced or was reported as spam, `400 validation_failed` without `consent` or
+// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+// got 3 confirmation mails today.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -17132,8 +17144,8 @@ func (c *Client) GetSubscription(ctx context.Context, listId ListId, subscriptio
 // UpdateSubscriptionWithBody Unsubscribe a subscriber
 //
 // The only change a member or key can make is `state: unsubscribed`; anything that would
-// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-// `consent.confirmed: false` to mail the person a confirmation).
+// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -17155,8 +17167,8 @@ func (c *Client) UpdateSubscriptionWithBody(ctx context.Context, listId ListId, 
 // UpdateSubscription Unsubscribe a subscriber
 //
 // The only change a member or key can make is `state: unsubscribed`; anything that would
-// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-// `consent.confirmed: false` to mail the person a confirmation).
+// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -29642,7 +29654,8 @@ type ClientWithResponsesInterface interface {
 	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+	// seconds until the hour ends); confirmation mails are
 	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 	// without changing the answer.
 	//
@@ -29676,7 +29689,8 @@ type ClientWithResponsesInterface interface {
 	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+	// seconds until the hour ends); confirmation mails are
 	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 	// without changing the answer.
 	//
@@ -32100,12 +32114,14 @@ type ClientWithResponsesInterface interface {
 	//
 	// Answers `201` for a new subscription and `200` with the existing one when the address is
 	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-	// mails today.
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+	// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+	// person can come back, by asking on a form or in the app and confirming the mail they get;
+	// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+	// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+	// bounced or was reported as spam, `400 validation_failed` without `consent` or
+	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+	// got 3 confirmation mails today.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -32131,12 +32147,14 @@ type ClientWithResponsesInterface interface {
 	//
 	// Answers `201` for a new subscription and `200` with the existing one when the address is
 	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-	// mails today.
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+	// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+	// person can come back, by asking on a form or in the app and confirming the mail they get;
+	// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+	// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+	// bounced or was reported as spam, `400 validation_failed` without `consent` or
+	// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+	// got 3 confirmation mails today.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -32169,8 +32187,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateSubscriptionWithBodyWithResponse Unsubscribe a subscriber
 	//
 	// The only change a member or key can make is `state: unsubscribed`; anything that would
-	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-	// `consent.confirmed: false` to mail the person a confirmation).
+	// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+	// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -32182,8 +32200,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateSubscriptionWithResponse Unsubscribe a subscriber
 	//
 	// The only change a member or key can make is `state: unsubscribed`; anything that would
-	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-	// `consent.confirmed: false` to mail the person a confirmation).
+	// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+	// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -45317,7 +45335,8 @@ func (c *ClientWithResponses) CreatePageRatingWithResponse(ctx context.Context, 
 // after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 // (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 // channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+// seconds until the hour ends); confirmation mails are
 // capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 // without changing the answer.
 //
@@ -45357,7 +45376,8 @@ func (c *ClientWithResponses) CreateClientSubscriptionWithBodyWithResponse(ctx c
 // after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
 // (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
 // channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+// seconds until the hour ends); confirmation mails are
 // capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
 // without changing the answer.
 //
@@ -48879,12 +48899,14 @@ func (c *ClientWithResponses) ListSubscriptionsWithResponse(ctx context.Context,
 //
 // Answers `201` for a new subscription and `200` with the existing one when the address is
 // already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-// mails today.
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+// person can come back, by asking on a form or in the app and confirming the mail they get;
+// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+// bounced or was reported as spam, `400 validation_failed` without `consent` or
+// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+// got 3 confirmation mails today.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -48916,12 +48938,14 @@ func (c *ClientWithResponses) CreateSubscriptionWithBodyWithResponse(ctx context
 //
 // Answers `201` for a new subscription and `200` with the existing one when the address is
 // already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-// (only the person can come back: send `confirmed: false` to mail them a confirmation),
-// `409 opted_out` when it unsubscribed from everything, complained or was erased after
-// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-// mails today.
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+// with `confirmed: true` also when it asked again and waits for its confirmation: only the
+// person can come back, by asking on a form or in the app and confirming the mail they get;
+// no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+// everything, complained or was erased after objecting, `409 suppressed` when mail to it
+// bounced or was reported as spam, `400 validation_failed` without `consent` or
+// `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+// got 3 confirmation mails today.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -48972,8 +48996,8 @@ func (c *ClientWithResponses) GetSubscriptionWithResponse(ctx context.Context, l
 // UpdateSubscriptionWithBodyWithResponse Unsubscribe a subscriber
 //
 // The only change a member or key can make is `state: unsubscribed`; anything that would
-// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-// `consent.confirmed: false` to mail the person a confirmation).
+// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -48991,8 +49015,8 @@ func (c *ClientWithResponses) UpdateSubscriptionWithBodyWithResponse(ctx context
 // UpdateSubscriptionWithResponse Unsubscribe a subscriber
 //
 // The only change a member or key can make is `state: unsubscribed`; anything that would
-// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-// `consent.confirmed: false` to mail the person a confirmation).
+// make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+// never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //

@@ -429,3 +429,123 @@ func TestSubscriptionWebhooks(t *testing.T) {
 		t.Fatalf("subscription.updated data %v", updated)
 	}
 }
+
+func TestOnlyThePersonSubscribesAgain(t *testing.T) {
+	h := newHarness(t)
+	lt := newListTeam(t, h)
+	subs := "/v1/lists/" + lt.list + "/subscriptions"
+	key := h.client()
+	key.bearer = lt.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "host", "scopes": []string{"lists:write", "lists:read"}}).str("secret")
+	add := func(addr string, confirmed bool) map[string]any {
+		return map[string]any{"email": addr, "consent": map[string]any{"confirmed": confirmed}}
+	}
+	state := func(addr string) any {
+		t.Helper()
+		return lt.subscription(t, addr)["state"]
+	}
+	refused := func(addr string) {
+		t.Helper()
+		for _, c := range []*client{lt.owner, key} {
+			c.expectProblem(http.StatusConflict, "unsubscribed", "POST", subs, add(addr, true))
+		}
+	}
+
+	addr := unique("leaver") + "@example.org"
+	id := lt.owner.expect(http.StatusCreated, "POST", subs, add(addr, true)).str("id")
+	lt.owner.expect(http.StatusOK, "PATCH", subs+"/"+id, map[string]any{"state": "unsubscribed"})
+	h.runListMail(lt.ws)
+
+	refused(addr)
+	for _, c := range []*client{lt.owner, key} {
+		c.expectProblem(http.StatusConflict, "unsubscribed", "POST", subs, add(addr, false))
+		c.expectProblem(http.StatusConflict, "confirmation_required", "PATCH", subs+"/"+id, map[string]any{"state": "subscribed"})
+		c.expectProblem(http.StatusConflict, "confirmation_required", "PATCH", subs+"/"+id, map[string]any{"state": "pending"})
+		c.expectProblem(http.StatusConflict, "not_pending", "POST", subs+"/"+id+"/confirmation", nil)
+	}
+	if got := state(addr); got != "unsubscribed" {
+		t.Fatalf("after members and keys tried: %v", got)
+	}
+	if mails := h.runListMail(lt.ws); len(mails) != 0 {
+		t.Fatalf("a member or key mailed an unsubscribed address %d times", len(mails))
+	}
+
+	c, token := lt.form(h)
+	h.clock.Advance(3 * time.Second)
+	c.expect(http.StatusAccepted, "POST", "/client/v1/channels/"+lt.key+"/subscriptions", lt.subscribeBody(addr, token))
+	if got := state(addr); got != "pending" {
+		t.Fatalf("after asking on the form: %v", got)
+	}
+	refused(addr)
+	if r := lt.owner.expect(http.StatusOK, "POST", subs, add(addr, false)); r.str("state") != "pending" {
+		t.Fatalf("member adding a pending address: %s", r.raw)
+	}
+	mails := h.runListMail(lt.ws)
+	if len(mails) != 1 {
+		t.Fatalf("confirmation mails after the form: %d", len(mails))
+	}
+	if got := state(addr); got != "pending" {
+		t.Fatalf("after members and keys tried again: %v", got)
+	}
+	if status, page := pageAt(t, h, "POST", linkIn(t, mails[0], "s"), url.Values{"action": {"confirm"}}); status != http.StatusOK || !strings.Contains(page, "You are subscribed") {
+		t.Fatalf("POST /s/: %d %s", status, page)
+	}
+	if got := state(addr); got != "subscribed" {
+		t.Fatalf("after the person confirmed: %v", got)
+	}
+	if r := key.expect(http.StatusOK, "POST", subs, add(addr, true)); r.str("state") != "subscribed" {
+		t.Fatalf("key adding a confirmed address: %s", r.raw)
+	}
+
+	fresh := unique("fresh") + "@example.org"
+	if r := lt.owner.expect(http.StatusCreated, "POST", subs, add(fresh, false)); r.str("state") != "pending" {
+		t.Fatalf("member asking a new address to confirm: %s", r.raw)
+	}
+	if r := key.expect(http.StatusOK, "POST", subs, add(fresh, true)); r.str("state") != "subscribed" {
+		t.Fatalf("key confirming a pending address that never left: %s", r.raw)
+	}
+
+	erased := unique("erased") + "@example.org"
+	eid := lt.owner.expect(http.StatusCreated, "POST", subs, add(erased, true)).str("id")
+	lt.owner.expect(http.StatusOK, "PATCH", subs+"/"+eid, map[string]any{"state": "unsubscribed"})
+	h.clock.Advance(3 * time.Second)
+	c.expect(http.StatusAccepted, "POST", "/client/v1/channels/"+lt.key+"/subscriptions", lt.subscribeBody(erased, token))
+	lt.owner.expect(http.StatusNoContent, "DELETE", subs+"/"+eid, nil)
+	lt.owner.expectProblem(http.StatusConflict, "opted_out", "POST", subs, add(erased, true))
+
+	verified := unique("app") + "@example.org"
+	cs := lt.session(h, map[string]any{"identity_token": lt.token(h, map[string]any{"sub": unique("u"), "email": verified, "email_verified": true})})
+	cs.expect(http.StatusOK, "PUT", "/client/v1/subscriptions/"+lt.list, map[string]any{"consent_text": "Yes"})
+	cs.expect(http.StatusNoContent, "DELETE", "/client/v1/subscriptions/"+lt.list, nil)
+	refused(verified)
+	if r := cs.expect(http.StatusOK, "PUT", "/client/v1/subscriptions/"+lt.list, map[string]any{"consent_text": "Again"}); r.str("state") != "pending" {
+		t.Fatalf("identity asking again: %s", r.raw)
+	}
+	refused(verified)
+	if got := state(verified); got != "pending" {
+		t.Fatalf("after the app asked again: %v", got)
+	}
+}
+
+func TestSubscriptionConsentRequired(t *testing.T) {
+	h := newHarness(t)
+	lt := newListTeam(t, h)
+	subs := "/v1/lists/" + lt.list + "/subscriptions"
+	addr := unique("silent") + "@example.org"
+	for body, field := range map[string]string{
+		`{"email":"` + addr + `"}`:                        "consent is required",
+		`{"email":"` + addr + `","consent":null}`:         "consent is required",
+		`{"email":"` + addr + `","consent":{}}`:           "consent.confirmed is required",
+		`{"email":"` + addr + `","consent":{"text":"x"}}`: "consent.confirmed is required",
+	} {
+		r := lt.owner.do("POST", subs, json.RawMessage(body))
+		if r.status != http.StatusBadRequest || r.str("code") != "validation_failed" || !strings.Contains(r.str("detail"), field) {
+			t.Fatalf("%s: %d %s", body, r.status, r.raw)
+		}
+	}
+	if lt.subscription(t, addr) != nil {
+		t.Fatal("a subscription without consent was created")
+	}
+	if mails := h.runListMail(lt.ws); len(mails) != 0 {
+		t.Fatalf("%d mails sent without consent", len(mails))
+	}
+}

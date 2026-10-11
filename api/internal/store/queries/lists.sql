@@ -174,14 +174,17 @@ DELETE FROM email_optouts WHERE workspace_id = @workspace_id AND email_hash = @e
 
 -- name: ContactObjectionEmails :many
 SELECT s.email FROM list_subscriptions s
-WHERE s.workspace_id = @workspace_id AND s.contact_id = @contact_id AND s.state = 'unsubscribed'
+WHERE s.workspace_id = @workspace_id AND s.contact_id = @contact_id
+  AND (s.state = 'unsubscribed' OR (s.state = 'pending' AND s.unsubscribe_reason IS NOT NULL))
 UNION
 SELECT x.email FROM email_suppressions x
 JOIN contact_emails e ON e.workspace_id = x.workspace_id AND e.email = x.email
 WHERE x.workspace_id = @workspace_id AND e.contact_id = @contact_id AND x.reason = 'complaint';
 
 -- name: ListUnsubscribedEmails :many
-SELECT email FROM list_subscriptions WHERE workspace_id = @workspace_id AND list_id = @list_id AND state = 'unsubscribed';
+SELECT email FROM list_subscriptions
+WHERE workspace_id = @workspace_id AND list_id = @list_id
+  AND (state = 'unsubscribed' OR (state = 'pending' AND unsubscribe_reason IS NOT NULL));
 
 -- name: IsEmailSuppressedAnyScope :one
 SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2) AS suppressed;

@@ -85,6 +85,7 @@ func (s *Server) clientCORS(next http.Handler) http.Handler {
 		}
 		w.Header().Add("Vary", "Origin")
 		w.Header().Set("Access-Control-Allow-Origin", raw)
+		w.Header().Set("Access-Control-Expose-Headers", "Retry-After")
 		if !known {
 			writeProblem(w, errOriginRefused)
 			return

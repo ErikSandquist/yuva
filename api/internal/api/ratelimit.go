@@ -1,13 +1,35 @@
 package api
 
 import (
+	"fmt"
+	"math"
 	"net/http"
 	"net/netip"
 	"sync"
 	"time"
 )
 
-var errClientRateLimited = problem(http.StatusTooManyRequests, "rate_limited", "too many requests; try again in a minute")
+// rateLimited is the 429 for a refused window: the detail names the wait and Retry-After carries
+// it in seconds.
+func rateLimited(wait time.Duration) *apiError {
+	secs := max(int(math.Ceil(wait.Seconds())), 1)
+	var in string
+	switch mins := (secs + 59) / 60; {
+	case secs < 60:
+		in = fmt.Sprintf("%d seconds", secs)
+	case mins == 1:
+		in = "a minute"
+	case mins < 60:
+		in = fmt.Sprintf("%d minutes", mins)
+	case mins == 60:
+		in = "an hour"
+	default:
+		in = fmt.Sprintf("%d hours", (mins+59)/60)
+	}
+	e := problem(http.StatusTooManyRequests, "rate_limited", "too many requests; try again in "+in)
+	e.RetryAfter = secs
+	return e
+}
 
 type limit struct {
 	n      int
@@ -99,8 +121,8 @@ func rateIP(ip string) string {
 func (s *Server) rateLimit(checks ...rateCheck) error {
 	now := s.now()
 	for _, c := range checks {
-		if !s.limits.allow(c.key, c.lim, now) {
-			return errClientRateLimited
+		if ok, wait := s.limits.allowWait(c.key, c.lim, now); !ok {
+			return rateLimited(wait)
 		}
 	}
 	return nil

@@ -43,7 +43,7 @@ const (
 
 var (
 	errSubscriptionGone     = problem(http.StatusNotFound, "not_found", "no such subscription")
-	errSubUnsubscribed      = problem(http.StatusConflict, "unsubscribed", "the address unsubscribed from this list; only the person can come back: send consent.confirmed false to mail them a confirmation")
+	errSubUnsubscribed      = problem(http.StatusConflict, "unsubscribed", "the address unsubscribed from this list; only the person can come back, by asking on a form or in the app and confirming the mail they get")
 	errSubOptedOut          = problem(http.StatusConflict, "opted_out", "the address objected to mail from this workspace; only the person can subscribe it again")
 	errSubSuppressed        = problem(http.StatusConflict, "suppressed", "mail to this address bounced or was reported as spam")
 	errInvalidEmail         = problem(http.StatusBadRequest, "invalid_email", "email is not a valid address")
@@ -320,6 +320,12 @@ func (s *Server) confirmListSubscription(ctx context.Context, q *store.Queries, 
 	}
 	s.queueWelcome(events, list, out)
 	return out, nil
+}
+
+// objected says whether the person unsubscribed from the list and has not confirmed since: an
+// `unsubscribed` subscription, or a `pending` one they asked for again.
+func objected(sub store.ListSubscription) bool {
+	return sub.State == subUnsubscribed || (sub.State == subPending && sub.UnsubscribeReason != nil)
 }
 
 // requestAgain moves an `unsubscribed` subscription to `pending`: only a confirmation by the
@@ -617,23 +623,12 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 			switch {
 			case cur.State == subSubscribed:
 				out = cur
-			case cur.State == subPending && c.Confirmed:
-				out, err = s.subscribeNow(ctx, q, events, list, cur, consentAt, pr)
-			case cur.State == subPending:
-				out = cur
-			case c.Confirmed:
+			case cur.State == subUnsubscribed || (objected(cur) && c.Confirmed):
 				return errSubUnsubscribed
+			case c.Confirmed:
+				out, err = s.subscribeNow(ctx, q, events, list, cur, consentAt, pr)
 			default:
-				if !s.confirmationAllowed(p.workspaceID, list.ID, email, nil) {
-					return errConfirmationLimit
-				}
-				if out, err = s.requestAgain(ctx, q, events, list, cur); err != nil {
-					return err
-				}
-				if err := s.consentEvent(ctx, q, out, consentRequested, pr); err != nil {
-					return err
-				}
-				err = s.queueConfirmation(ctx, q, events, out)
+				out = cur
 			}
 			return err
 		}
@@ -756,7 +751,7 @@ func (s *Server) DeleteSubscription(ctx context.Context, req oas.DeleteSubscript
 		if err := requireManagerOrKey(p); err != nil {
 			return err
 		}
-		if sub.State == subUnsubscribed {
+		if objected(sub) {
 			if err := s.rememberOptOuts(ctx, q, p.workspaceID, []string{sub.Email}, optOutErasure); err != nil {
 				return err
 			}
