@@ -25,6 +25,7 @@ const (
 		"       yuva inbox list --workspace <id|name>"
 	channelUsage = "usage: yuva channel create-email --workspace <id|name> --inbox <id|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>]\n" +
 		"         [--smtp-host <host> [--smtp-port <n>] [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]\n" +
+		"       yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]\n" +
 		"       yuva channel list --workspace <id|name> --inbox <id|slug>"
 	workspaceUsage = "usage: yuva workspace delete --workspace <id|name> --yes"
 	personUsage    = "usage: yuva person delete --email <address> --yes"
@@ -249,6 +250,44 @@ func channelCommand(ctx context.Context, st *store.Store, srv *api.Server, args 
 		fmt.Fprintf(stderr, "email channel %q for %s created in inbox %s\n", c.Name, c.Email.Address, in.Slug)
 		_, err = fmt.Fprintln(stdout, c.Id)
 		return err
+	case "create-chat":
+		name := fs.String("name", "", "name of the channel")
+		var origins repeated
+		fs.Var(&origins, "origin", "an origin whose pages may use the widget, such as https://www.example.com (repeatable)")
+		allowAnonymous := fs.Bool("allow-anonymous", false, "visitors without an identity token may chat")
+		askEmailOffline := fs.Bool("ask-email-offline", true, "the widget asks for an e-mail address when nobody is available")
+		greeting := fs.String("greeting", "", "shown before the first message; the inbox branding greeting when empty")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		if fs.NArg() != 0 {
+			return errors.New(channelUsage)
+		}
+		ws, in, err := findInbox(ctx, st, srv, *workspace, *inbox)
+		if err != nil {
+			return err
+		}
+		c := &oas.ChatChannelInput{AllowedOrigins: make([]oas.Origin, len(origins))}
+		for i, o := range origins {
+			c.AllowedOrigins[i] = oas.Origin(o)
+		}
+		fs.Visit(func(f *flag.Flag) {
+			switch f.Name {
+			case "allow-anonymous":
+				c.AllowAnonymous = allowAnonymous
+			case "ask-email-offline":
+				c.AskEmailOffline = askEmailOffline
+			case "greeting":
+				c.Greeting = greeting
+			}
+		})
+		ch, err := srv.OperatorCreateChannel(ctx, ws.ID, in.Id, oas.ChannelCreate{Kind: oas.ChannelKindChat, Name: *name, Chat: c})
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(stderr, "chat channel %q for %s created in inbox %s\n", ch.Name, joinOrigins(ch.Chat.AllowedOrigins), in.Slug)
+		_, err = fmt.Fprintf(stdout, "%s\t%s\n", ch.Id, ch.Chat.PublicKey)
+		return err
 	case "list":
 		if err := fs.Parse(args[1:]); err != nil {
 			return err
@@ -265,9 +304,13 @@ func channelCommand(ctx context.Context, st *store.Store, srv *api.Server, args 
 			return err
 		}
 		tw := tabwriter.NewWriter(stdout, 0, 0, 2, ' ', 0)
-		fmt.Fprintln(tw, "ID\tKIND\tNAME\tADDRESS\tSMTP\tPASSWORD")
+		fmt.Fprintln(tw, "ID\tKIND\tNAME\tADDRESS\tSMTP\tPASSWORD\tPUBLIC KEY\tORIGINS")
 		for _, c := range channels {
-			address, smtp, password := "-", "-", "-"
+			address, smtp, password, publicKey, origins := "-", "-", "-", "-", "-"
+			if c.Chat != nil {
+				publicKey = c.Chat.PublicKey
+				origins = joinOrigins(c.Chat.AllowedOrigins)
+			}
 			if c.Email != nil {
 				address = string(c.Email.Address)
 				if c.Email.Smtp != nil {
@@ -278,7 +321,7 @@ func channelCommand(ctx context.Context, st *store.Store, srv *api.Server, args 
 					}
 				}
 			}
-			fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\t%s\n", c.Id, c.Kind, c.Name, address, smtp, password)
+			fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n", c.Id, c.Kind, c.Name, address, smtp, password, publicKey, origins)
 		}
 		return tw.Flush()
 	default:
@@ -306,6 +349,14 @@ func findInbox(ctx context.Context, st *store.Store, srv *api.Server, workspace,
 		}
 	}
 	return ws, oas.Inbox{}, fmt.Errorf("no inbox %q in workspace %s", ref, ws.ID)
+}
+
+func joinOrigins(origins []oas.Origin) string {
+	s := make([]string, len(origins))
+	for i, o := range origins {
+		s[i] = string(o)
+	}
+	return strings.Join(s, ",")
 }
 
 func readPassword(path string, stdin io.Reader) (string, error) {

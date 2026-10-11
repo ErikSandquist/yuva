@@ -45,6 +45,8 @@ const usageText = `usage:
   yuva inbox list --workspace <id|name>
   yuva channel create-email --workspace <id|name> --inbox <id|slug> --name <name> --address <address> [--display-name <name>] [--from-address <address>]
       [--smtp-host <host> [--smtp-port <n>] [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]
+  yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]
+      (prints the channel id and its public key, tab-separated)
   yuva channel list --workspace <id|name> --inbox <id|slug>
   yuva workspace delete --workspace <id|name> --yes
   yuva person delete --email <address> --yes

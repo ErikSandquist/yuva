@@ -188,3 +188,58 @@ func TestInboxAndChannelCommands(t *testing.T) {
 		t.Fatal("channel list shows a password")
 	}
 }
+
+func TestChannelCreateChat(t *testing.T) {
+	st := testStore(t)
+	srv, _ := operatorServer(t, st)
+	ctx := context.Background()
+	name := uniqueName("cli-chat")
+	ws := bootstrapWorkspace(t, st, name)
+	other := bootstrapWorkspace(t, st, uniqueName("cli-chat-other"))
+	if _, err := runInbox(t, st, srv, "create", "--workspace", name, "--name", "Web"); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, origin := range []string{"https://www.example.com/pricing", "ftp://example.com", "example.com", "https://user@example.com"} {
+		if _, err := runChannel(t, st, srv, "", "create-chat", "--workspace", name, "--inbox", "web", "--name", "Bad", "--origin", origin); err == nil {
+			t.Fatalf("origin %q accepted", origin)
+		}
+	}
+	if _, err := runChannel(t, st, srv, "", "create-chat", "--workspace", name, "--inbox", "web", "--name", "None"); err == nil {
+		t.Fatal("chat channel without an origin accepted")
+	}
+	if _, err := runChannel(t, st, srv, "", "create-chat", "--workspace", other.WorkspaceID.String(), "--inbox", "web", "--name", "Foreign",
+		"--origin", "https://example.com"); err == nil {
+		t.Fatal("inbox of another workspace accepted")
+	}
+
+	out, err := runChannel(t, st, srv, "", "create-chat", "--workspace", name, "--inbox", "web", "--name", "Site",
+		"--origin", "HTTPS://WWW.Example.com:443/", "--origin", "http://localhost:3000")
+	if err != nil {
+		t.Fatal(err)
+	}
+	fields := strings.Split(strings.TrimSpace(out), "\t")
+	if len(fields) != 2 || !strings.HasPrefix(fields[1], "yuva_pk_") {
+		t.Fatalf("create-chat must print the channel id and public key, got %q", out)
+	}
+	id, err := uuid.Parse(fields[0])
+	if err != nil {
+		t.Fatal(err)
+	}
+	c, err := st.GetChatChannel(ctx, store.GetChatChannelParams{WorkspaceID: ws.WorkspaceID, ChannelID: id})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if c.PublicKey != fields[1] || strings.Join(c.AllowedOrigins, ",") != "https://www.example.com,http://localhost:3000" ||
+		c.AllowAnonymous || !c.AskEmailOffline {
+		t.Fatalf("chat channel stored as %+v", c)
+	}
+
+	list, err := runChannel(t, st, srv, "", "list", "--workspace", name, "--inbox", "web")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(list, fields[1]) || !strings.Contains(list, "https://www.example.com,http://localhost:3000") {
+		t.Fatalf("channel list misses the chat key or origins:\n%s", list)
+	}
+}

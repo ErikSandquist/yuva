@@ -149,6 +149,8 @@ yuva inbox list --workspace <id|name>
 yuva channel create-email --workspace <id|name> --inbox <id|slug> --name <name> --address <address> \
   [--display-name <name>] [--from-address <address>] [--smtp-host <host> [--smtp-port <n>] \
   [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]   # prints the channel id
+yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... \
+  [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]   # prints the channel id and public key
 yuva channel list --workspace <id|name> --inbox <id|slug>                 # never a password
 ```
 
