@@ -136,6 +136,44 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "use-yuva-subscribe",
+      "type": "registry:hook",
+      "title": "Yuva subscribe hook",
+      "description": "A React hook over the useyuva headless client: the channel's public mailing lists, subscribing from a form with its form token, and the signed-in user's subscriptions with an identity token.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/hooks/use-yuva-subscribe.tsx",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "yuva-subscribe",
+      "type": "registry:component",
+      "title": "Yuva subscribe form",
+      "description": "A mailing list sign-up form: e-mail, optional name, a checkbox per list, an unticked consent box whose sentence is stored as shown, and a switch per list for signed-in users.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "registryDependencies": [
+        "button",
+        "checkbox",
+        "input",
+        "label",
+        "switch",
+        "https://useyuva.com/r/use-yuva-subscribe.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-subscribe.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
