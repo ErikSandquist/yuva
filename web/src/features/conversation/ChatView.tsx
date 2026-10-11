@@ -588,6 +588,7 @@ function Loaded({
           </Button>
         </Alert>
       )}
+      {pagePublishing.banner}
       <Thread
         key={c.id}
         items={items}
@@ -627,6 +628,7 @@ function Loaded({
           ctx={ctx}
           actions={actions}
           autoFocus={fine && revision === 0}
+          onPublish={pagePublishing.sendAndPublish}
         />
       </Composer>
       {pagePublishing.dialogs}

@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { PaperclipIcon, SlashIcon, SmileIcon, SparklesIcon, XIcon } from "lucide-react"
+import { PaperclipIcon, SlashIcon, SmileIcon, SparklesIcon, UploadIcon, XIcon } from "lucide-react"
 import { forwardRef, lazy, Suspense, useEffect, useImperativeHandle, useRef, useState } from "react"
 
 import { BotAvatar, ErrorLine, Kbd, toast } from "@/components/common"
-import { mod } from "@/components/common/ShortcutSheet"
+import { alt, mod } from "@/components/common/ShortcutSheet"
 import { formatBytes } from "@/components/common/text"
 import { popupClass } from "@/components/ui/dropdown-menu"
 import { firstName, readDraft, writeDraft, type ConversationActions } from "@/features/conversation/actions"
@@ -111,10 +111,11 @@ export const ReplyBox = forwardRef<
     ctx: ThreadContext
     actions: ConversationActions
     autoFocus: boolean
+    onPublish?: (answer: string) => void
     className?: string
   }
 >(function ReplyBox(
-  { c, contactName, via, emailTo, undeliverable, suggestion, ctx, actions, autoFocus, className },
+  { c, contactName, via, emailTo, undeliverable, suggestion, ctx, actions, autoFocus, onPublish, className },
   ref
 ) {
   const { t, i18n } = useLingui()
@@ -254,6 +255,20 @@ export const ReplyBox = forwardRef<
     })
     reset()
   }
+  const sendAndPublish = () => {
+    if (!onPublish || !body.trim() || note) return
+    typing.stop()
+    const linkedDraft = suggestion && linked === suggestion.id ? suggestion : undefined
+    const saved = { body, files }
+    actions.send({ body, files, close: false, suggestion: linkedDraft, now: true })?.then(
+      () => onPublish(saved.body.trim()),
+      () => {
+        setBody((b) => b || saved.body)
+        setFiles((f) => (f.length ? f : saved.files))
+      }
+    )
+    reset()
+  }
   const addNote = () => {
     if (!hasContent || noting) return
     const saved = { body, files }
@@ -310,6 +325,11 @@ export const ReplyBox = forwardRef<
     if (e.key === "Tab" && !e.shiftKey && showSuggestion && body.trim() === "") {
       e.preventDefault()
       applySuggestion()
+      return
+    }
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && e.altKey && onPublish && !note) {
+      e.preventDefault()
+      sendAndPublish()
       return
     }
     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
@@ -530,6 +550,21 @@ export const ReplyBox = forwardRef<
             >
               <Trans>Send and close</Trans>
             </Button>
+            {onPublish && (
+              <Button
+                variant="outline"
+                onClick={sendAndPublish}
+                disabled={!body.trim()}
+                aria-label={t`Send and publish to page`}
+                title={t`Send, then publish the reply to the page (${alt}${mod}↵)`}
+                data-testid="composer-send-publish"
+              >
+                <UploadIcon />
+                <span className="@max-lg/composer:hidden">
+                  <Trans>Send and publish to page</Trans>
+                </span>
+              </Button>
+            )}
           </>
         )}
       </div>

@@ -624,6 +624,10 @@ msgstr "başka bir gelen kutusu"
 msgid "Answer"
 msgstr "Yanıt"
 
+#: src/features/docs/PageContext.tsx
+msgid "Answered privately — not on the page yet"
+msgstr "Özelden yanıtlandı — henüz sayfada değil"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
 msgstr "Yanıtlarken"
@@ -2924,6 +2928,10 @@ msgstr "iPhone ve iPad'de Paylaş › Ana Ekrana Ekle ile Yuva'yı ana ekrana ek
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "Team ve Enterprise planlarında bir sahip bunu <0>Organization settings › Connectors</0> bölümünde bir kez ekler; üyeler de Connectors altında bulup Connect'e tıklar."
 
+#: src/features/docs/PageContext.tsx
+msgid "On the page"
+msgstr "Sayfada yayında"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "Web'de"
@@ -3307,16 +3315,13 @@ msgid "Public key"
 msgstr "Genel anahtar"
 
 #: src/features/docs/AnswerDialog.tsx
+#: src/features/docs/PageContext.tsx
 msgid "Publish"
 msgstr "Yayımla"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish a question to its page, or edit the published answer"
 msgstr "Bir soruyu sayfasında yayımla ya da yayımlanan yanıtı düzenle"
-
-#: src/features/docs/PageContext.tsx
-msgid "Publish to page"
-msgstr "Sayfada yayımla"
 
 #: src/features/docs/AnswerDialog.tsx
 msgid "Publish to the page"
@@ -3325,10 +3330,6 @@ msgstr "Sayfada yayımla"
 #: src/features/docs/PageContext.tsx
 msgid "Publish to the page ({key})"
 msgstr "Sayfada yayımla ({key})"
-
-#: src/features/docs/PageContext.tsx
-msgid "Published"
-msgstr "Yayımlandı"
 
 #: src/features/docs/AnswerDialog.tsx
 msgid "Published {published}"
@@ -3845,6 +3846,14 @@ msgstr "Otomatik yanıt gönder"
 msgid "Send and close"
 msgstr "Gönder ve bitir"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send and publish to page"
+msgstr "Gönder ve sayfada yayımla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send and publish to the page, in a question"
+msgstr "Gönder ve sayfada yayımla (sorularda)"
+
 #: src/components/common/text.ts
 msgid "Send drafts"
 msgstr "Taslakları gönderme"
@@ -3877,6 +3886,10 @@ msgstr "Sohbet ya da uygulama konuşmasında gönder veya notu ekle (yeni satır
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Send the e-mail after"
 msgstr "E-postayı gönderme zamanı"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send, then publish the reply to the page ({alt}{mod}↵)"
+msgstr "Gönder, ardından yanıtı sayfada yayımla ({alt}{mod}↵)"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Sending"

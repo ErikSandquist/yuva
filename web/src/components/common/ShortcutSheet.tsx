@@ -41,7 +41,11 @@ export function keyLabel(k: string): string[] {
   return /^[A-Z]$/.test(k) ? ["⇧", k] : [k.toUpperCase()]
 }
 
-export const mod = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘" : "Ctrl"
+const apple = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform)
+
+export const mod = apple ? "⌘" : "Ctrl"
+
+export const alt = apple ? "⌥" : "Alt"
 
 export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   const { t } = useLingui()
@@ -55,6 +59,7 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [[mod, "↵"], t`Send and close`],
         [["⇧", mod, "↵"], t`Send only`],
         [["↵"], t`Send or add the note, in a chat or app conversation (⇧↵ for a new line)`],
+        [[alt, mod, "↵"], t`Send and publish to the page, in a question`],
         [["Tab"], t`Use the suggested reply`],
         [k(SHORTCUTS.discardSuggestion), t`Discard the suggested reply`],
         [k(SHORTCUTS.attach), t`Attach files`],

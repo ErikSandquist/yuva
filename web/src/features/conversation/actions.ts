@@ -142,7 +142,7 @@ function revertOf(c: Conversation): ConversationUpdate {
   return { status: c.status }
 }
 
-export type SendRequest = { body: string; files: File[]; close: boolean; suggestion?: Message }
+export type SendRequest = { body: string; files: File[]; close: boolean; suggestion?: Message; now?: boolean }
 
 export function useConversationActions(c: Conversation, contactName: string) {
   const { t } = useLingui()
@@ -222,11 +222,16 @@ export function useConversationActions(c: Conversation, contactName: string) {
     send: (req: SendRequest): Promise<void> | undefined => {
       const { close } = req
       writeDraft(c.id, { body: "", mode: "message", files: [] })
-      if (live && !close) {
-        return inLine(c.id, () => deliver(req)).catch((err) => {
-          toast(t`Your reply to ${first} was not sent. ${errorText(err)}`)
-          throw err
-        })
+      if ((live || req.now) && !close) {
+        return inLine(c.id, () => deliver(req)).then(
+          () => {
+            if (!live && c.status !== "pending") patch({ status: "pending" }).catch(failed)
+          },
+          (err) => {
+            toast(t`Your reply to ${first} was not sent. ${errorText(err)}`)
+            throw err
+          }
+        )
       }
       if (live) {
         inLine(c.id, () => deliver(req)).then(

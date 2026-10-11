@@ -1,8 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
   BadgeCheckIcon,
+  ExternalLinkIcon,
+  EyeOffIcon,
   GlobeIcon,
   MessageCircleQuestionMarkIcon,
+  PencilIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
   UploadIcon,
@@ -64,12 +67,13 @@ export function usePagePublishing(c: Conversation, items: Message[], allLoaded: 
   const published = answers.data?.pages[0]?.items[0]
   const reply = items.findLast(isMemberReply)
   const asked = allLoaded ? items.find((m) => m.kind === "message" && m.direction !== "out") : undefined
-  const [publishing, setPublishing] = useState(false)
+  const [publishing, setPublishing] = useState<string | null>(null)
   const actions = useAnswerActions()
+  const ready = !!question && !answers.isPending
   const run = () => {
-    if (!question || answers.isPending) return
+    if (!ready) return
     if (published) actions.edit(published)
-    else if (reply) setPublishing(true)
+    else if (reply) setPublishing(reply.body.trim())
   }
   const key = keyLabel(SHORTCUTS.publish).join("")
 
@@ -81,49 +85,10 @@ export function usePagePublishing(c: Conversation, items: Message[], allLoaded: 
           Asked on <PageLink url={question.page_url} title={question.page_title} />
         </Trans>
       </span>
-      {published ? (
-        <>
-          <span aria-hidden>·</span>
-          <span className="inline-flex shrink-0 items-center gap-1 text-success" data-testid="question-published">
-            <BadgeCheckIcon className="size-3.5" />
-            <Trans>Published</Trans>
-          </span>
-          <Button
-            variant="ghost"
-            className={small}
-            onClick={() => actions.edit(published)}
-            title={t`Edit the published answer (${key})`}
-            data-testid="question-edit"
-          >
-            <Trans>Edit</Trans>
-          </Button>
-          <Button
-            variant="ghost"
-            className={cn(small, "text-destructive hover:text-destructive")}
-            onClick={() => actions.unpublish(published)}
-            data-testid="question-unpublish"
-          >
-            <Trans>Unpublish</Trans>
-          </Button>
-        </>
-      ) : reply ? (
-        <Button
-          variant="outline"
-          className={cn(small, "ms-1")}
-          onClick={run}
-          disabled={answers.isPending}
-          title={t`Publish to the page (${key})`}
-          data-testid="question-publish"
-        >
-          <UploadIcon />
-          <Trans>Publish to page</Trans>
-        </Button>
-      ) : (
-        !answers.isPending && (
-          <span className="shrink-0">
-            · <Trans>reply first to publish it</Trans>
-          </span>
-        )
+      {ready && !published && !reply && (
+        <span className="shrink-0">
+          · <Trans>reply first to publish it</Trans>
+        </span>
       )}
     </span>
   ) : c.kind === "feedback" && c.feedback?.page_url ? (
@@ -139,18 +104,87 @@ export function usePagePublishing(c: Conversation, items: Message[], allLoaded: 
     </span>
   ) : null
 
+  const banner =
+    ready && published ? (
+      <div
+        role="status"
+        className="flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b bg-success/8 py-1.5 ps-4 pe-2 text-small"
+        data-testid="publish-banner"
+        data-state="published"
+      >
+        <BadgeCheckIcon className="size-4 shrink-0 text-success" />
+        <span className="font-medium" data-testid="question-published">
+          <Trans>On the page</Trans>
+        </span>
+        <a
+          href={published.page}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-w-0 items-center gap-1 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          data-testid="publish-banner-link"
+        >
+          <span className="truncate">{pageLabel(published.page, published.title || question?.page_title)}</span>
+          <ExternalLinkIcon className="size-3.5 shrink-0" />
+        </a>
+        <span className="ms-auto flex shrink-0 items-center gap-0.5">
+          <Button
+            variant="ghost"
+            className={small}
+            onClick={() => actions.edit(published)}
+            title={t`Edit the published answer (${key})`}
+            data-testid="question-edit"
+          >
+            <PencilIcon />
+            <Trans>Edit</Trans>
+          </Button>
+          <Button
+            variant="ghost"
+            className={cn(small, "text-destructive hover:text-destructive")}
+            onClick={() => actions.unpublish(published)}
+            data-testid="question-unpublish"
+          >
+            <Trans>Unpublish</Trans>
+          </Button>
+        </span>
+      </div>
+    ) : ready && reply ? (
+      <div
+        role="status"
+        className="flex shrink-0 flex-wrap items-center gap-x-2 gap-y-1 border-b bg-warning/8 py-1.5 ps-4 pe-2 text-small"
+        data-testid="publish-banner"
+        data-state="private"
+      >
+        <EyeOffIcon className="size-4 shrink-0 text-warning" />
+        <span className="min-w-0 flex-1 font-medium">
+          <Trans>Answered privately — not on the page yet</Trans>
+        </span>
+        <Button
+          variant="outline"
+          className={cn(small, "shrink-0 bg-background")}
+          onClick={run}
+          title={t`Publish to the page (${key})`}
+          data-testid="question-publish"
+        >
+          <UploadIcon />
+          <Trans>Publish</Trans>
+        </Button>
+      </div>
+    ) : null
+
+  const sendAndPublish = ready && !published ? (answer: string) => setPublishing(answer) : undefined
+
   const dialogs = (
     <>
       {actions.dialogs}
-      {publishing && question && (
+      {publishing !== null && question && (
         <PublishDialog
           conversationId={c.id}
           page={question.page_url}
-          initial={{ question: asked?.body.trim() || c.subject, answer: reply?.body.trim() ?? "" }}
-          onClose={() => setPublishing(false)}
+          initial={{ question: asked?.body.trim() || c.subject, answer: publishing }}
+          onClose={() => setPublishing(null)}
         />
       )}
     </>
   )
-  return { line, dialogs, run }
+  return { line, banner, dialogs, run, sendAndPublish }
 }

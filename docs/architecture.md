@@ -937,8 +937,12 @@ serve both.
   the window and a zero-filled series per day of ratings, page feedback and questions
   (`GET /v1/docs/summary`) feed the charts. A page shows its ratings per day
   (`GET /v1/docs/page`), its feedback and questions (`GET /v1/conversations?page=`) and its
-  published answers (`GET /v1/page-answers?page=`). A `question` conversation offers "Publish to
-  page" once it has a member reply.
+  published answers (`GET /v1/page-answers?page=`). In a `question` conversation the composer has
+  a second send action, "Send and publish to page" (⌥/Alt + ⌘/Ctrl + Enter), which posts the reply
+  at once, without the undo hold, and then opens the Publish dialog with that reply as the answer.
+  While the question has a member reply and no published answer, a banner at the top of the thread
+  says "Answered privately — not on the page yet" with a Publish button; once published it says
+  "On the page" with a link to the page, Edit and Unpublish. P publishes or edits.
 - Ratings are counters, so they send no events or webhooks; page feedback and questions are
   conversations and send the same ones as any conversation and feedback.
 

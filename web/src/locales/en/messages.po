@@ -624,6 +624,10 @@ msgstr "another inbox"
 msgid "Answer"
 msgstr "Answer"
 
+#: src/features/docs/PageContext.tsx
+msgid "Answered privately — not on the page yet"
+msgstr "Answered privately — not on the page yet"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
 msgstr "Answering"
@@ -2924,6 +2928,10 @@ msgstr "On iPhone and iPad, add Yuva to your Home Screen with Share › Add to H
 msgid "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 msgstr "On Team and Enterprise plans an owner adds it once in <0>Organization settings › Connectors</0>; members then find it under Connectors and click Connect."
 
+#: src/features/docs/PageContext.tsx
+msgid "On the page"
+msgstr "On the page"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "On the web"
@@ -3307,16 +3315,13 @@ msgid "Public key"
 msgstr "Public key"
 
 #: src/features/docs/AnswerDialog.tsx
+#: src/features/docs/PageContext.tsx
 msgid "Publish"
 msgstr "Publish"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Publish a question to its page, or edit the published answer"
 msgstr "Publish a question to its page, or edit the published answer"
-
-#: src/features/docs/PageContext.tsx
-msgid "Publish to page"
-msgstr "Publish to page"
 
 #: src/features/docs/AnswerDialog.tsx
 msgid "Publish to the page"
@@ -3325,10 +3330,6 @@ msgstr "Publish to the page"
 #: src/features/docs/PageContext.tsx
 msgid "Publish to the page ({key})"
 msgstr "Publish to the page ({key})"
-
-#: src/features/docs/PageContext.tsx
-msgid "Published"
-msgstr "Published"
 
 #: src/features/docs/AnswerDialog.tsx
 msgid "Published {published}"
@@ -3845,6 +3846,14 @@ msgstr "Send an auto-reply"
 msgid "Send and close"
 msgstr "Send and close"
 
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send and publish to page"
+msgstr "Send and publish to page"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send and publish to the page, in a question"
+msgstr "Send and publish to the page, in a question"
+
 #: src/components/common/text.ts
 msgid "Send drafts"
 msgstr "Send drafts"
@@ -3877,6 +3886,10 @@ msgstr "Send or add the note, in a chat or app conversation (⇧↵ for a new li
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Send the e-mail after"
 msgstr "Send the e-mail after"
+
+#: src/features/conversation/composer/ReplyBox.tsx
+msgid "Send, then publish the reply to the page ({alt}{mod}↵)"
+msgstr "Send, then publish the reply to the page ({alt}{mod}↵)"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Sending"
