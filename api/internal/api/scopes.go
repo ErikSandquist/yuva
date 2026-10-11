@@ -11,6 +11,7 @@ var allScopes = []oas.ApiKeyScope{
 	oas.ConversationsRead, oas.ConversationsWrite, oas.MessagesWrite, oas.DraftsSend, oas.NotesWrite,
 	oas.ContactsRead, oas.ContactsWrite, oas.InboxesRead, oas.InboxesManage, oas.LabelsWrite,
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
+	oas.BroadcastsRead, oas.BroadcastsWrite,
 }
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage}
@@ -124,6 +125,23 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateSubscription":             {oas.ListsWrite},
 	"DeleteSubscription":             {oas.ListsWrite},
 	"ResendSubscriptionConfirmation": {oas.ListsWrite},
+
+	"ListEmailTemplates":      {oas.BroadcastsRead},
+	"GetEmailTemplate":        {oas.BroadcastsRead},
+	"ListEmailDesigns":        {oas.BroadcastsRead},
+	"GetEmailDesign":          {oas.BroadcastsRead},
+	"ListEmailDesignVersions": {oas.BroadcastsRead},
+	"GetEmailDesignVersion":   {oas.BroadcastsRead},
+	"RenderEmailDesign":       {oas.BroadcastsRead},
+	"ListEmailImages":         {oas.BroadcastsRead},
+
+	"CreateEmailDesign":         {oas.BroadcastsWrite},
+	"UpdateEmailDesign":         {oas.BroadcastsWrite},
+	"ArchiveEmailDesign":        {oas.BroadcastsWrite},
+	"DuplicateEmailDesign":      {oas.BroadcastsWrite},
+	"RestoreEmailDesignVersion": {oas.BroadcastsWrite},
+	"UploadEmailImage":          {oas.BroadcastsWrite},
+	"DeleteEmailImage":          {oas.BroadcastsWrite},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

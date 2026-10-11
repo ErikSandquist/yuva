@@ -51,6 +51,7 @@ const usageText = `usage:
   yuva workspace delete --workspace <id|name> --yes
   yuva person delete --email <address> --yes
   yuva vapid-keys                (prints a new Web Push key pair)
+  yuva templates render [--dir templates/email]   (writes each gallery template's preview.<locale>.html)
   yuva mcp stdio --url <server> --key <key>   (bridges stdio to the server's /mcp; or YUVA_URL, YUVA_API_KEY)`
 
 func main() {
@@ -64,6 +65,13 @@ func main() {
 	defer stop()
 	if os.Args[1] == "vapid-keys" {
 		if err := vapidKeys(); err != nil {
+			log.Error("fatal", slog.Any("error", err))
+			os.Exit(1)
+		}
+		return
+	}
+	if os.Args[1] == "templates" {
+		if err := templatesCLI(os.Args[2:], os.Stdout); err != nil {
 			log.Error("fatal", slog.Any("error", err))
 			os.Exit(1)
 		}
@@ -227,6 +235,8 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		DisablePanel:     !cfg.Panel,
 		DisableWidget:    !cfg.Widget,
 		OperatorEmails:   cfg.OperatorEmails,
+
+		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")

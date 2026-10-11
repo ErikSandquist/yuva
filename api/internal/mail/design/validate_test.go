@@ -155,13 +155,13 @@ func TestStoredFormRoundTrips(t *testing.T) {
 func TestMergeFields(t *testing.T) {
 	v := Values{ContactName: "Ada Lovelace", ContactEmail: "a+b@example.com", Attributes: map[string]string{"plan": "<Pro>"}}
 	for in, want := range map[string]string{
-		`Hi {{ contact.first_name | "there" }}`: "Hi Ada",
-		`Hi {{contact.name}}`:                   "Hi Ada Lovelace",
-		`{{ contact.attributes.plan }}`:         "<Pro>",
+		`Hi {{ contact.first_name | "there" }}`:  "Hi Ada",
+		`Hi {{contact.name}}`:                    "Hi Ada Lovelace",
+		`{{ contact.attributes.plan }}`:          "<Pro>",
 		`{{ contact.attributes.missing | "-" }}`: "-",
-		`{{ list.name | "our list" }}`:          "our list",
-		`a {{ not closed`:                       "a {{ not closed",
-		`{{ unknown.field }}`:                   "{{ unknown.field }}",
+		`{{ list.name | "our list" }}`:           "our list",
+		`a {{ not closed`:                        "a {{ not closed",
+		`{{ unknown.field }}`:                    "{{ unknown.field }}",
 	} {
 		if got := v.Text(in); got != want {
 			t.Errorf("%q: %q, want %q", in, got, want)

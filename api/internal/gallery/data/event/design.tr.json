@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#f8f0f4",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#be185d",
+      "link": "#be185d",
+      "border": "#f0dbe5"
+    }
+  },
+  "preheader": "19 Kasım Perşembe, 18.00 (TSİ), çevrimiçi: daha sakin sürümler üzerine 45 dakika, ardından sorularınız.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Sahne ışıklarını andıran soyut pembe ve mor şekiller",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "kind",
+      "type": "text",
+      "html": "<p><strong>CANLI WEBİNAR · ÜCRETSİZ</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Daha sakin sürümler: Northwind ekibiyle canlı oturum",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Sürücülerinizi şaşırtmadan her hafta nasıl yayın yapılır? Bizde neyin işe yarayıp neyin yaramadığını anlattığımız 45 dakikaya ve sorularınız için bolca zamana katılın.</p>",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "facts",
+      "type": "columns",
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "when-label",
+              "type": "text",
+              "html": "<p><strong>Ne zaman</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "when-text",
+              "type": "text",
+              "html": "<p>19 Kasım 2026 Perşembe<br>18.00–19.00 (TSİ)</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "where-label",
+              "type": "text",
+              "html": "<p><strong>Nerede</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "where-text",
+              "type": "text",
+              "html": "<p>Çevrimiçi, tarayıcınızda<br>Bağlantı kayıttan sonra gelir</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "agenda",
+      "type": "heading",
+      "level": 2,
+      "text": "Program",
+      "padding": [
+        16,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "agenda-list",
+      "type": "text",
+      "html": "<ul><li><strong>18.00</strong> Sürümler neden riskli gelir?</li><li><strong>18.15</strong> Karmaşasız özellik bayrakları</li><li><strong>18.35</strong> Müşterilere neyin değiştiğini anlatmak</li><li><strong>18.45</strong> Sorularınız</li></ul>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "speaker",
+      "type": "columns",
+      "stack": false,
+      "gap": 16,
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 22,
+          "blocks": [
+            {
+              "id": "speaker-img",
+              "type": "image",
+              "asset": "speaker.png",
+              "alt": "Konuşmacının çizilmiş portresi",
+              "width": 96,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "width": 78,
+          "blocks": [
+            {
+              "id": "speaker-name",
+              "type": "heading",
+              "level": 3,
+              "text": "Defne Aksoy",
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "speaker-role",
+              "type": "text",
+              "html": "<p>Northwind'de ürün lideri. Cuma günü yayın yapıp bunu anlatacak kadar hayatta kaldı.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rsvp",
+      "type": "button",
+      "label": "Yerinizi ayırtın",
+      "url": "https://example.com/events/calmer-releases",
+      "full_width": true,
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "html": "<p>Katılamayacak mısınız? Yine de kaydolun, kaydı size gönderelim.</p>",
+      "size": 14,
+      "align": "center",
+      "padding": [
+        4,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Northwind etkinliklerine abone olduğunuz için etkinlik davetlerini alıyorsunuz.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

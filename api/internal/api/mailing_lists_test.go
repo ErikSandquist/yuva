@@ -295,7 +295,7 @@ func TestMailingListAccessAndScopes(t *testing.T) {
 	old := h.client()
 	old.bearer = lt.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "old", "scopes": []string{"contacts:read", "conversations:read"}}).str("secret")
 	old.expectProblem(http.StatusForbidden, "insufficient_scope", "GET", "/v1/lists", nil)
-	lt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/api-keys", map[string]any{"name": "b", "scopes": []string{"broadcasts:read"}})
+	lt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/api-keys", map[string]any{"name": "b", "scopes": []string{"broadcasts:send"}})
 	writer := h.client()
 	writer.bearer = lt.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "writer", "scopes": []string{"lists:write", "lists:read"}}).str("secret")
 	added := writer.expect(http.StatusCreated, "POST", "/v1/lists/"+lt.list+"/subscriptions", map[string]any{

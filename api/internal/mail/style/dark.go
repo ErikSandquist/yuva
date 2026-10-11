@@ -62,7 +62,9 @@ func (c OKLCH) Hex() string {
 		c.C *= 0.9
 	}
 	r, g, b := c.rgb()
-	ch := func(x float64) int { return int(math.Round(math.Max(0, math.Min(1, fromLinear(math.Max(0, x)))) * 255)) }
+	ch := func(x float64) int {
+		return int(math.Round(math.Max(0, math.Min(1, fromLinear(math.Max(0, x)))) * 255))
+	}
 	return fmt.Sprintf("#%02x%02x%02x", ch(r), ch(g), ch(b))
 }
 

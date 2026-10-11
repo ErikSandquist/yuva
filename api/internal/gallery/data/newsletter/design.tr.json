@@ -1,0 +1,382 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#eef2f7",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#1d4ed8",
+      "link": "#1d4ed8",
+      "border": "#e2e8f0"
+    }
+  },
+  "preheader": "Daha akıcı rotalar, daha temiz veriler ve limanda yeni bir ofis: Ekim bülteni.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Gün doğumunda sakin bir limanı katmanlı mavi dalgalarla gösteren çizim",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "issue",
+      "type": "text",
+      "html": "<p><strong>NORTHWIND BÜLTENİ · EKİM 2026</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Daha akıcı rotalar, daha temiz veriler ve limanda yeni bir ofis",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>{{ contact.first_name | \"Merhaba\" }},</p><p>Ekim, Northwind'de yoğun geçti. Bu ay en çok gurur duyduğumuz üç gelişme, yaklaşık üç dakikalık okumayla burada.</p>",
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "rule0",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card1",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card1-img",
+              "type": "image",
+              "asset": "article-routes.jpg",
+              "alt": "Planlanan teslimat rotalarını simgeleyen soyut mavi şekiller",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card1-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Kendini planlayan rotalar",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card1-text",
+              "type": "text",
+              "html": "<p>Yeni planlayıcı yakın durakları bir araya getiriyor ve sürücülere günde ortalama 40 dakika kazandırıyor.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card1-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/1\">Devamını okuyun →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card2",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card2-img",
+              "type": "image",
+              "asset": "article-data.jpg",
+              "alt": "Düzenli kayıtları simgeleyen soyut çivit mavisi şekiller",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card2-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Daha temiz müşteri verileri",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card2-text",
+              "type": "text",
+              "html": "<p>Yinelenen adresler artık sizin yerinize birleştiriliyor; her paket doğru kapıya gidiyor.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card2-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/2\">Devamını okuyun →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule2",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card3",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card3-img",
+              "type": "image",
+              "asset": "article-office.jpg",
+              "alt": "Yeni bir ofisi simgeleyen soyut altın sarısı şekiller",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card3-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Limanda bize uğrayın",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card3-text",
+              "type": "text",
+              "html": "<p>Eski limanın yanındaki yeni ofisimiz 6 Kasım'da kapılarını açıyor. Kahveler bizden.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card3-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/3\">Devamını okuyun →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule",
+      "type": "divider",
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "signoff",
+      "type": "text",
+      "html": "<p>Okuduğunuz için teşekkürler. Bir sorunuz ya da fikriniz varsa bu e-postayı yanıtlayın; doğrudan ekibimize ulaşır.</p>",
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "social",
+      "type": "social",
+      "style": "icons",
+      "color": "dark",
+      "items": [
+        {
+          "network": "website",
+          "url": "https://example.com"
+        },
+        {
+          "network": "mastodon",
+          "url": "https://mastodon.example/@northwind"
+        },
+        {
+          "network": "linkedin",
+          "url": "https://example.com/linkedin"
+        },
+        {
+          "network": "youtube",
+          "url": "https://example.com/youtube"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Rotalar, sürümler ve arkasındaki insanlar hakkındaki aylık mektubumuz Northwind Bülteni'ni okuyorsunuz.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

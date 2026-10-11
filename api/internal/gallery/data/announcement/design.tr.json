@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#eef4f3",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#0f766e",
+      "link": "#0f766e",
+      "border": "#d7e5e2"
+    }
+  },
+  "preheader": "Northwind 2 Kasım'da yeni veri merkezlerine taşınıyor. Sizin için hiçbir şey değişmiyor.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hl",
+      "type": "section",
+      "background": "#e6f4f1",
+      "border_radius": 0,
+      "padding": [
+        32,
+        0,
+        28,
+        0
+      ],
+      "blocks": [
+        {
+          "id": "label",
+          "type": "text",
+          "html": "<p><strong>ÖNEMLİ · 2 KASIM 2026</strong></p>",
+          "size": 13,
+          "padding": [
+            8,
+            32,
+            0,
+            32
+          ]
+        },
+        {
+          "id": "title",
+          "type": "heading",
+          "level": 1,
+          "text": "Daha hızlı ve daha yeşil veri merkezlerine taşınıyoruz",
+          "padding": [
+            8,
+            32,
+            12,
+            32
+          ]
+        },
+        {
+          "id": "lead",
+          "type": "text",
+          "html": "<p>2 Kasım Pazar günü 02.00 ile 04.00 (TSİ 04.00–06.00) arasında Northwind, yenilenebilir enerjiyle çalışan yeni veri merkezlerine taşınıyor.</p>",
+          "size": 17,
+          "padding": [
+            0,
+            32,
+            8,
+            32
+          ]
+        },
+        {
+          "id": "cta",
+          "type": "button",
+          "label": "Ayrıntıları okuyun",
+          "url": "https://example.com/announcement",
+          "align": "left",
+          "padding": [
+            16,
+            32,
+            8,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "type": "text",
+      "html": "<p>Sizin bir şey yapmanız gerekmiyor. Verileriniz, bağlantılarınız ve ayarlarınız olduğu gibi kalıyor. Taşıma sırasında uygulama birkaç dakika yavaşlayabilir; yoldaki teslimatlar etkilenmez.</p><p>Sonrasında sayfalar yaklaşık %30 daha hızlı açılacak ve gönderdiğiniz her paket rüzgâr ve güneşle çalışan sunucularda işlenecek.</p>",
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sign",
+      "type": "text",
+      "html": "<p>Teslimatlarınız için bize güvendiğiniz için teşekkürler,<br>Northwind ekibi</p>",
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Hizmet duyurularını yalnızca hesabınızı etkileyen bir şey olduğunda gönderiyoruz.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

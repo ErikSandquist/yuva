@@ -39,6 +39,8 @@ type Config struct {
 
 	Storage     Storage
 	Attachments Attachments
+	// EmailImagesMaxBytes caps each workspace's e-mail images; 0 is no limit.
+	EmailImagesMaxBytes int64
 
 	IngressSecret        string
 	IngressAcceptV1      bool
@@ -183,6 +185,9 @@ func Load(version string) (Config, error) {
 	}
 	if c.Attachments.MaxBytes, err = strconv.ParseInt(env("YUVA_ATTACHMENT_MAX_BYTES", "26214400"), 10, 64); err != nil || c.Attachments.MaxBytes < 1 {
 		return c, errors.New("YUVA_ATTACHMENT_MAX_BYTES must be a positive number of bytes")
+	}
+	if c.EmailImagesMaxBytes, err = strconv.ParseInt(env("YUVA_EMAIL_IMAGES_MAX_BYTES", "524288000"), 10, 64); err != nil || c.EmailImagesMaxBytes < 0 {
+		return c, errors.New("YUVA_EMAIL_IMAGES_MAX_BYTES must be a number of bytes, 0 for no limit")
 	}
 	if c.EmailSenderHourlyCap, err = strconv.Atoi(env("YUVA_EMAIL_SENDER_HOURLY_CAP", "500")); err != nil || c.EmailSenderHourlyCap < 1 {
 		return c, errors.New("YUVA_EMAIL_SENDER_HOURLY_CAP must be a positive number of messages")

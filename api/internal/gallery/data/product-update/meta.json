@@ -1,0 +1,17 @@
+{
+  "slug": "product-update",
+  "order": 2,
+  "category": "product",
+  "name": {
+    "en": "Product update",
+    "tr": "Ürün güncellemesi",
+    "de": "Produkt-Update"
+  },
+  "description": {
+    "en": "Release notes with four feature rows and a link to the changelog.",
+    "tr": "Dört özellik satırı ve değişiklik günlüğü bağlantısıyla sürüm notları.",
+    "de": "Versionshinweise mit vier Funktionszeilen und einem Link zum Änderungsprotokoll."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}

@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#eef4f3",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#0f766e",
+      "link": "#0f766e",
+      "border": "#d7e5e2"
+    }
+  },
+  "preheader": "On 2 November Northwind moves to new data centres. Nothing changes for you.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hl",
+      "type": "section",
+      "background": "#e6f4f1",
+      "border_radius": 0,
+      "padding": [
+        32,
+        0,
+        28,
+        0
+      ],
+      "blocks": [
+        {
+          "id": "label",
+          "type": "text",
+          "html": "<p><strong>IMPORTANT · 2 NOVEMBER 2026</strong></p>",
+          "size": 13,
+          "padding": [
+            8,
+            32,
+            0,
+            32
+          ]
+        },
+        {
+          "id": "title",
+          "type": "heading",
+          "level": 1,
+          "text": "We are moving to faster, greener data centres",
+          "padding": [
+            8,
+            32,
+            12,
+            32
+          ]
+        },
+        {
+          "id": "lead",
+          "type": "text",
+          "html": "<p>On Sunday 2 November between 02:00 and 04:00 CET, Northwind moves to new data centres that run on renewable energy.</p>",
+          "size": 17,
+          "padding": [
+            0,
+            32,
+            8,
+            32
+          ]
+        },
+        {
+          "id": "cta",
+          "type": "button",
+          "label": "Read the details",
+          "url": "https://example.com/announcement",
+          "align": "left",
+          "padding": [
+            16,
+            32,
+            8,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "body",
+      "type": "text",
+      "html": "<p>You do not need to do anything. Your data, links and settings stay exactly as they are. During the move the app may be slow for a few minutes; deliveries in progress are not affected.</p><p>Afterwards pages load about 30% faster, and every shipment you send is carried by servers powered by wind and sun.</p>",
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sign",
+      "type": "text",
+      "html": "<p>Thank you for trusting us with your deliveries,<br>The Northwind team</p>",
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>We send service announcements only when something affects your account.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

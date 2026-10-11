@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 10,
+    "colors": {
+      "page": "#f1f3f5",
+      "card": "#ffffff",
+      "text": "#18181b",
+      "muted": "#52525b",
+      "accent": "#0369a1",
+      "link": "#0369a1",
+      "border": "#e4e4e7"
+    }
+  },
+  "preheader": "Bu haftadan bilmeye değer beş şey, iki dakikada.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "date",
+      "type": "text",
+      "html": "<p><strong>HAFTALIK ÖZET · 12 EKİM 2026</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Bu hafta Northwind'de",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Uzun bir haftanın kısa hali. Her başlık haberin tamamına götürür.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "rule0",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec0",
+      "type": "heading",
+      "level": 3,
+      "text": "Ürün",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec0-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/0-0\">Depo raporları artık pazartesi sabahları geliyor</a></strong><br>Her depo için tek sayfa; ilk araç yola çıkmadan gelen kutunuzda.</p><p><strong><a href=\"https://example.com/digest/0-1\">Teslimat aralıklarında toplu düzenleme</a></strong><br>Bir sokağın tamamının teslimat aralığını tek seferde değiştirin.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec1",
+      "type": "heading",
+      "level": 3,
+      "text": "Topluluk",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec1-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/1-0\">Rotterdam'da rota buluşması</a></strong><br>Kırk sevk sorumlusu dar sokaklar ve yükleme alanları üzerine deneyimlerini paylaştı.</p><p><strong><a href=\"https://example.com/digest/1-1\">Müşteri hikâyesi: kahvaltıyı hiç kaçırmayan fırın</a></strong><br>Bir aile fırını sabah 7.00'den önce 600 siparişi nasıl teslim ediyor?</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule2",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec2",
+      "type": "heading",
+      "level": 3,
+      "text": "Okuma listesi",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec2-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/2-0\">Son kilometre neden en zoru?</a></strong><br>Teslimat maliyetlerinin gerçekte nereden geldiğini anlatan açık bir yazı.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule-end",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "text",
+      "html": "<p>Bu özet işinize yaradı mı? Tek kelimeyle yanıtlayın, evet ya da hayır; her yanıtı okuyoruz.</p>",
+      "size": 14,
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Northwind haftalık bültenine abone olduğunuz için bu özeti her pazartesi alıyorsunuz.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

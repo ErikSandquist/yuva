@@ -228,6 +228,7 @@ func (r *renderer) document() {
 	h.WriteString("a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;}\n")
 	h.WriteString("@media (max-width:620px){.y-col{display:block!important;width:100%!important;max-width:100%!important;}" +
 		".y-px{padding-left:20px!important;padding-right:20px!important;}" +
+		".y-gap{padding-left:0!important;padding-right:0!important;}.y-col img.y-fluid{max-width:100%!important;}" +
 		".y-wrap{padding:0!important;}.y-card{border-radius:0!important;}" +
 		".y-full{width:100%!important;max-width:100%!important;}" +
 		".y-h1{font-size:26px!important;line-height:34px!important;}" +
@@ -420,7 +421,11 @@ func (r *renderer) columns(b Block, bg surface, width int) {
 		} else {
 			fmt.Fprintf(h, "<div style=\"display:inline-block;width:%d%%;vertical-align:top;\">", c.Width)
 		}
-		fmt.Fprintf(h, "<table role=\"presentation\"%s width=\"100%%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%%;\"><tr><td style=\"padding:0 %dpx 0 %dpx;\">", r.dir(), right, left)
+		gapCls := ""
+		if stack {
+			gapCls = ` class="y-gap"`
+		}
+		fmt.Fprintf(h, "<table role=\"presentation\"%s width=\"100%%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%%;\"><tr><td%s style=\"padding:0 %dpx 0 %dpx;\">", r.dir(), gapCls, right, left)
 		h.WriteString("<table role=\"presentation\"" + r.dir() + " width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"width:100%;\">")
 		for _, in := range c.Blocks {
 			r.block(in, bg, inner, 2)
@@ -633,6 +638,9 @@ func (r *renderer) image(b Block, bg surface, avail int, align string) {
 		margin = "margin:0 auto 0 0;"
 	case "right":
 		margin = "margin:0 0 0 auto;"
+	}
+	if b.Width == 0 {
+		extra += ` class="y-fluid"`
 	}
 	tag := fmt.Sprintf("<img src=\"%s\" width=\"%d\" alt=\"%s\"%s style=\"display:block;width:100%%;max-width:%dpx;height:auto;border:0;outline:none;text-decoration:none;border-radius:%dpx;%s\">",
 		style.URLAttr(img.URL), w, style.Escape(alt), extra, w, r.radius, margin)

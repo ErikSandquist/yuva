@@ -35,7 +35,7 @@ import (
 
 const maxBodyBytes = 8 << 20
 
-var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/"}
+var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix}
 
 var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp"}
 
@@ -65,6 +65,8 @@ type Server struct {
 	webhooks WebhookSettings
 	hooks    *webhook.Client
 	push     *push.Sender
+
+	imagesMax int64
 
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
@@ -108,6 +110,8 @@ type Deps struct {
 	DisableWidget bool
 	// OperatorEmails get a digest of new sign-ups and workspaces (YUVA_OPERATOR_EMAIL); empty is off.
 	OperatorEmails []string
+	// EmailImagesMaxBytes caps a workspace's e-mail images (YUVA_EMAIL_IMAGES_MAX_BYTES); 0 is no limit.
+	EmailImagesMaxBytes int64
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -210,7 +214,7 @@ func New(d Deps) *Server {
 		secrets: d.Secrets, objects: d.Storage, attach: d.Attachments, sanitize: htmlPolicy(), original: originalHTMLPolicy(),
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
-		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails,
+		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -311,6 +315,10 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("POST "+confirmPathPrefix+"{token}", s.serveConfirmPost)
 	mux.HandleFunc("GET "+managePathPrefix+"{token}", s.serveManagePage)
 	mux.HandleFunc("POST "+managePathPrefix+"{token}", s.serveManagePost)
+	mux.HandleFunc("GET "+emailImagePathPrefix+"s/{file}", s.serveSocialIcon)
+	mux.HandleFunc("GET "+emailImagePathPrefix+"{token}", s.serveEmailImage)
+	mux.HandleFunc("GET "+emailTemplatesPathPrefix+"{slug}/{file}", s.serveTemplatePreview)
+	mux.HandleFunc("GET "+emailTemplatesPathPrefix+"{slug}/assets/{file}", s.serveTemplateAsset)
 	mux.HandleFunc("GET /.well-known/oauth-authorization-server", s.serveOAuthServerMetadata)
 	mux.HandleFunc("GET /.well-known/oauth-protected-resource", s.serveResourceMetadata(s.apiResource(), "Yuva"))
 	mux.HandleFunc("GET /.well-known/oauth-protected-resource/mcp", s.serveResourceMetadata(s.mcpResource(), "Yuva MCP"))
@@ -410,6 +418,9 @@ func (s *Server) logRequests(next http.Handler) http.Handler {
 		took := time.Since(start)
 		metrics.Requests.WithLabelValues(r.Method, strconv.Itoa(rec.status)).Inc()
 		metrics.RequestSeconds.WithLabelValues(r.Method).Observe(took.Seconds())
+		if strings.HasPrefix(r.URL.Path, emailImagePathPrefix) {
+			return
+		}
 		s.log.Info("request", slog.String("method", r.Method), slog.String("path", r.URL.Path),
 			slog.Int("status", rec.status), slog.Duration("duration", took))
 	})

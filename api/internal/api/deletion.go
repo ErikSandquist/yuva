@@ -174,6 +174,20 @@ func (s *Server) PurgeWorkspace(ctx context.Context, workspaceID uuid.UUID, budg
 			return out, nil
 		}
 	}
+	for {
+		keys, err := s.st.DeleteWorkspaceEmailImages(ctx, store.DeleteWorkspaceEmailImagesParams{WorkspaceID: workspaceID, Lim: purgeContactBatch})
+		if err != nil {
+			return out, err
+		}
+		s.deleteObjects(ctx, keys)
+		out.Files += len(keys)
+		if len(keys) < purgeContactBatch {
+			break
+		}
+		if time.Now().After(deadline) {
+			return out, nil
+		}
+	}
 	if _, err := s.st.PurgeWorkspace(ctx, workspaceID); err != nil {
 		return out, err
 	}

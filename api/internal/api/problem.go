@@ -16,6 +16,8 @@ type apiError struct {
 	Scope  string
 	// RetryAfter, in seconds, is sent as the Retry-After header when set.
 	RetryAfter int
+	// Extra members of the problem document, such as a design's validation errors.
+	Extra map[string]any
 }
 
 func (e *apiError) Error() string { return fmt.Sprintf("%d %s: %s", e.Status, e.Code, e.Detail) }
@@ -53,5 +55,15 @@ func writeProblem(w http.ResponseWriter, e *apiError) {
 		w.Header().Set("Retry-After", strconv.Itoa(e.RetryAfter))
 	}
 	w.WriteHeader(e.Status)
-	_ = json.NewEncoder(w).Encode(e.body())
+	if len(e.Extra) == 0 {
+		_ = json.NewEncoder(w).Encode(e.body())
+		return
+	}
+	doc := map[string]any{}
+	b, _ := json.Marshal(e.body())
+	_ = json.Unmarshal(b, &doc)
+	for k, v := range e.Extra {
+		doc[k] = v
+	}
+	_ = json.NewEncoder(w).Encode(doc)
 }
