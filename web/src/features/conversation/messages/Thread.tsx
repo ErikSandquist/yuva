@@ -38,6 +38,7 @@ import { MailBody, MailControls, mailSurface, useMail } from "@/features/convers
 import { EventLine } from "@/features/conversation/messages/EventLine"
 import { Highlight, MessageActions, Ticks } from "@/features/conversation/messages/MessageActions"
 import { useDraftActions } from "@/features/conversation/queries"
+import { useLatest } from "@/hooks/use-latest"
 import { rawMessageUrl, type Conversation, type Feedback, type FeedbackCategory, type Message } from "@/lib/api"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -768,8 +769,7 @@ function Older({
   onLoad: () => void
 }) {
   const self = useRef<HTMLDivElement>(null)
-  const load = useRef(onLoad)
-  load.current = onLoad
+  const load = useLatest(onLoad)
   useEffect(() => {
     const el = self.current
     if (!el || loading || typeof IntersectionObserver === "undefined") return
@@ -779,7 +779,7 @@ function Older({
     })
     io.observe(el)
     return () => io.disconnect()
-  }, [root, loading])
+  }, [root, loading, load])
   return (
     <div ref={self} className="flex justify-center py-1">
       <Button variant="ghost" size="sm" onClick={onLoad} disabled={loading} data-testid="load-older">
@@ -837,13 +837,13 @@ function ThreadView({
   const viewport = useRef<HTMLDivElement>(null)
   const me = membership.member_id
   const current = base.find?.current
-  const [flash, setFlash] = useState<string>()
+  const [flashed, setFlashed] = useState<string>()
   const focusLoaded = !!focusId && items.some((m) => m.id === focusId)
+  const flash = focusLoaded && flashed !== focusId ? focusId : undefined
   useEffect(() => {
     if (!focusId || !focusLoaded) return
     scrollToMessage(focusId, { align: "center" })
-    setFlash(focusId)
-    const timer = window.setTimeout(() => setFlash(undefined), 2400)
+    const timer = window.setTimeout(() => setFlashed(focusId), 2400)
     return () => window.clearTimeout(timer)
   }, [focusId, focusLoaded, scrollToMessage])
   const ctx = flash && !current ? { ...base, find: { query: base.find?.query ?? "", current: flash } } : base

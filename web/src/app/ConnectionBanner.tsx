@@ -5,17 +5,17 @@ import { Button } from "@/components/ui/button"
 import { reconnectNow, useRealtimeStatus } from "@/lib/realtime"
 
 export function ConnectionBanner() {
-  const status = useRealtimeStatus()
-  const [shown, setShown] = useState(false)
+  const offline = useRealtimeStatus() === "offline"
+  const [late, setLate] = useState(false)
   useEffect(() => {
-    if (status !== "offline") {
-      setShown(false)
-      return
+    if (!offline) return
+    const id = setTimeout(() => setLate(true), 1500)
+    return () => {
+      clearTimeout(id)
+      setLate(false)
     }
-    const id = setTimeout(() => setShown(true), 1500)
-    return () => clearTimeout(id)
-  }, [status])
-  if (!shown) return null
+  }, [offline])
+  if (!offline || !late) return null
   return (
     <div
       role="status"

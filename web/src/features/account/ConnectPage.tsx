@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { CircleCheckIcon, LinkIcon, TriangleAlertIcon } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 
 import { ErrorLine } from "@/components/common"
@@ -96,7 +96,7 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
   const signOut = useSignOut()
   const id = `${channel} ${origin}`
   const [name, setName] = useState("")
-  const auto = useRef(remembered().includes(id))
+  const [auto] = useState(() => remembered().includes(id))
   const connect = useMutation({
     mutationFn: async (): Promise<ReaderToken> => {
       if (!account.name && name.trim()) {
@@ -114,8 +114,8 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
   })
   const run = connect.mutate
   useEffect(() => {
-    if (auto.current && window.opener) run()
-  }, [run])
+    if (auto && window.opener) run()
+  }, [auto, run])
 
   const err = connect.error
   if (err instanceof ApiError && (err.status === 403 || err.status === 404)) {
@@ -143,7 +143,7 @@ function Consent({ account, channel, origin, host }: { account: ReaderAccount } 
         </p>
       </Message>
     )
-  if (auto.current && (connect.isPending || connect.isIdle)) return <Skeleton className="h-40 rounded-2xl" />
+  if (auto && (connect.isPending || connect.isIdle)) return <Skeleton className="h-40 rounded-2xl" />
 
   const shown = account.name || name.trim() || t`Reader`
   const email = account.email

@@ -89,6 +89,10 @@ const chipFilters: Record<Chip, ConversationFilters> = {
 let remembered: Chip = "all"
 let focused = 0
 
+function rememberChip(c: Chip) {
+  remembered = c
+}
+
 function useDebounced(value: string, ms: number) {
   const [v, setV] = useState(value)
   useEffect(() => {
@@ -534,7 +538,7 @@ export function ChatList({
   }, [nearEnd, hasNextPage, isFetchingNextPage, fetchNextPage, loaded.length])
 
   const setChip = (c: Chip) => {
-    remembered = c
+    rememberChip(c)
     setChipState(c)
     setCursorId(null)
     scroller.current?.scrollTo({ top: 0 })

@@ -256,21 +256,18 @@ function Loaded({
   const mateName = mate ? mate.name || memberName(mate.member_id) : ""
   const showCollision = !!mate && claimedFrom !== mate.member_id && c.status === "open"
 
-  const seen = useRef<Set<string> | null>(null)
-  useEffect(() => {
-    if (!messages.data) return
-    if (!seen.current) {
-      seen.current = new Set(items.map((m) => m.id))
-      return
-    }
+  const [seen, setSeen] = useState<{ items: Message[]; ids: Set<string> } | null>(null)
+  if (messages.data && seen?.items !== items) {
+    const ids = new Set(seen?.ids)
     for (const m of items) {
-      if (seen.current.has(m.id)) continue
-      seen.current.add(m.id)
+      if (ids.has(m.id)) continue
+      ids.add(m.id)
       const by = m.sent_by ?? m.author
-      if (m.kind !== "message" || m.direction !== "out" || m.draft || by.member_id === me) continue
+      if (!seen || m.kind !== "message" || m.direction !== "out" || m.draft || by.member_id === me) continue
       if (readDraft(c.id).body.trim()) setBeatenBy(by.type === "bot" ? by.name || t`Bot` : memberName(by.member_id))
     }
-  })
+    setSeen({ items, ids })
+  }
 
   const last = shown.at(-1)
   const lastId = last?.id

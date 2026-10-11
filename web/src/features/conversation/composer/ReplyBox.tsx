@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { PaperclipIcon, SlashIcon, SmileIcon, SparklesIcon, XIcon } from "lucide-react"
-import { forwardRef, lazy, Suspense, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, lazy, Suspense, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react"
 
 import { BotAvatar, ErrorLine, Kbd, toast } from "@/components/common"
 import { mod } from "@/components/common/ShortcutSheet"
@@ -36,15 +36,18 @@ const MAX_FILES = 10
 const EmojiPanel = lazy(() => import("@/features/conversation/composer/EmojiPanel"))
 
 function FileThumb({ file }: { file: File }) {
-  const [url, setUrl] = useState<string | null>(null)
-  useEffect(() => {
-    if (!file.type.startsWith("image/") || file.type === "image/svg+xml") return
-    const u = URL.createObjectURL(file)
-    setUrl(u)
-    return () => URL.revokeObjectURL(u)
-  }, [file])
-  if (!url) return <PaperclipIcon className="size-3 shrink-0 text-faint" />
-  return <img src={url} alt="" className="size-6 shrink-0 rounded object-cover" />
+  const preview = useCallback(
+    (img: HTMLImageElement | null) => {
+      if (!img) return
+      const url = URL.createObjectURL(file)
+      img.src = url
+      return () => URL.revokeObjectURL(url)
+    },
+    [file]
+  )
+  if (!file.type.startsWith("image/") || file.type === "image/svg+xml")
+    return <PaperclipIcon className="size-3 shrink-0 text-faint" />
+  return <img ref={preview} alt="" className="size-6 shrink-0 rounded object-cover" />
 }
 
 function Suggestion({
@@ -118,7 +121,7 @@ export const ReplyBox = forwardRef<
   ref
 ) {
   const { t, i18n } = useLingui()
-  const initial = useRef(readDraft(c.id)).current
+  const [initial] = useState(() => readDraft(c.id))
   const [mode, setMode] = useState(initial.mode)
   const [body, setBody] = useState(initial.body)
   const [files, setFiles] = useState<File[]>(initial.files)
@@ -176,13 +179,6 @@ export const ReplyBox = forwardRef<
       el.setSelectionRange(next.length, next.length)
     })
   }
-  useImperativeHandle(ref, () => ({
-    focus,
-    attach: () => fileInput.current?.click(),
-    discardSuggestion: dropSuggestion,
-    quote,
-    addFiles,
-  }))
 
   const at = note ? mentionToken(body, caret) : null
   const people = useAssignableMembers(c.inbox_id).filter((m) => m.id !== membership.member_id)
@@ -235,6 +231,13 @@ export const ReplyBox = forwardRef<
   }
 
   const addFiles = (more: File[]) => setFiles((f) => [...f, ...more].slice(0, MAX_FILES))
+  useImperativeHandle(ref, () => ({
+    focus,
+    attach: () => fileInput.current?.click(),
+    discardSuggestion: dropSuggestion,
+    quote,
+    addFiles,
+  }))
   const hasContent = body.trim() !== "" || files.length > 0
   const reset = () => {
     setBody("")
