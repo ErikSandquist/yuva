@@ -1,6 +1,6 @@
 -- name: CreateOperatorNotice :exec
-INSERT INTO operator_notices (id, kind, email, reader, workspace_name, ip, country, created_at)
-VALUES (@id, @kind, @email, @reader, sqlc.narg(workspace_name), @ip, sqlc.narg(country), @created_at);
+INSERT INTO operator_notices (id, kind, email, reader, workspace_name, ip, country, detail, created_at)
+VALUES (@id, @kind, @email, @reader, sqlc.narg(workspace_name), @ip, sqlc.narg(country), sqlc.narg(detail), @created_at);
 
 -- name: LockOperatorNotices :exec
 SELECT pg_advisory_xact_lock(hashtext('yuva.operator_notices'));

@@ -278,7 +278,7 @@ func (q *Queries) CreateMessageEmail(ctx context.Context, arg CreateMessageEmail
 }
 
 const findConversationByEmailToken = `-- name: FindConversationByEmailToken :one
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND email_token = ANY($3::text[])
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND email_token = ANY($3::text[])
 ORDER BY (contact_id = $4) DESC, created_at DESC
 LIMIT 1
 `
@@ -330,12 +330,13 @@ func (q *Queries) FindConversationByEmailToken(ctx context.Context, arg FindConv
 		&i.PageUrl,
 		&i.PageTitle,
 		&i.ChannelKind,
+		&i.BroadcastID,
 	)
 	return i, err
 }
 
 const findConversationByHeaders = `-- name: FindConversationByHeaders :one
-SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind FROM message_emails e
+SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
 WHERE e.workspace_id = $1 AND c.inbox_id = $2 AND e.header_message_id = ANY($3::text[])
 ORDER BY (c.contact_id = $4) DESC, e.created_at DESC, e.message_id DESC
@@ -389,6 +390,7 @@ func (q *Queries) FindConversationByHeaders(ctx context.Context, arg FindConvers
 		&i.PageUrl,
 		&i.PageTitle,
 		&i.ChannelKind,
+		&i.BroadcastID,
 	)
 	return i, err
 }
@@ -658,7 +660,7 @@ func (q *Queries) IsEmailSuppressed(ctx context.Context, arg IsEmailSuppressedPa
 }
 
 const latestContactConversation = `-- name: LatestContactConversation :one
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind FROM conversations
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id FROM conversations
 WHERE workspace_id = $1 AND channel_id = $2 AND contact_id = $3
 ORDER BY created_at DESC, id DESC
 LIMIT 1
@@ -705,6 +707,7 @@ func (q *Queries) LatestContactConversation(ctx context.Context, arg LatestConta
 		&i.PageUrl,
 		&i.PageTitle,
 		&i.ChannelKind,
+		&i.BroadcastID,
 	)
 	return i, err
 }
@@ -1065,10 +1068,68 @@ func (q *Queries) SetConversationSpam(ctx context.Context, arg SetConversationSp
 	return err
 }
 
+const setEmailChannelBroadcast = `-- name: SetEmailChannelBroadcast :one
+UPDATE email_channels SET broadcast_smtp_host = $1, broadcast_smtp_port = $2,
+    broadcast_smtp_username = $3, broadcast_smtp_password = $4,
+    broadcast_smtp_tls = $5, broadcast_rate = $6
+WHERE workspace_id = $7 AND channel_id = $8
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled
+`
+
+type SetEmailChannelBroadcastParams struct {
+	Host        *string
+	Port        *int32
+	Username    *string
+	Password    []byte
+	Tls         *string
+	Rate        int32
+	WorkspaceID uuid.UUID
+	ChannelID   uuid.UUID
+}
+
+func (q *Queries) SetEmailChannelBroadcast(ctx context.Context, arg SetEmailChannelBroadcastParams) (EmailChannel, error) {
+	row := q.db.QueryRow(ctx, setEmailChannelBroadcast,
+		arg.Host,
+		arg.Port,
+		arg.Username,
+		arg.Password,
+		arg.Tls,
+		arg.Rate,
+		arg.WorkspaceID,
+		arg.ChannelID,
+	)
+	var i EmailChannel
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ChannelID,
+		&i.Address,
+		&i.DisplayName,
+		&i.FromAddress,
+		&i.SmtpHost,
+		&i.SmtpPort,
+		&i.SmtpUsername,
+		&i.SmtpPassword,
+		&i.SmtpTls,
+		&i.AutoReplyEnabled,
+		&i.AutoReplyText,
+		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
+	)
+	return i, err
+}
+
 const suppressEmail = `-- name: SuppressEmail :exec
 INSERT INTO email_suppressions (workspace_id, email, reason, detail, created_at)
 VALUES ($1, $2, $3, $4, $5)
-ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, created_at = excluded.created_at
+ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, scope = 'all', created_at = excluded.created_at
 `
 
 type SuppressEmailParams struct {

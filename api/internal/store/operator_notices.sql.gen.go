@@ -13,8 +13,8 @@ import (
 )
 
 const createOperatorNotice = `-- name: CreateOperatorNotice :exec
-INSERT INTO operator_notices (id, kind, email, reader, workspace_name, ip, country, created_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+INSERT INTO operator_notices (id, kind, email, reader, workspace_name, ip, country, detail, created_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `
 
 type CreateOperatorNoticeParams struct {
@@ -25,6 +25,7 @@ type CreateOperatorNoticeParams struct {
 	WorkspaceName *string
 	Ip            string
 	Country       *string
+	Detail        *string
 	CreatedAt     time.Time
 }
 
@@ -37,6 +38,7 @@ func (q *Queries) CreateOperatorNotice(ctx context.Context, arg CreateOperatorNo
 		arg.WorkspaceName,
 		arg.Ip,
 		arg.Country,
+		arg.Detail,
 		arg.CreatedAt,
 	)
 	return err
@@ -63,7 +65,7 @@ func (q *Queries) LastOperatorDigestAt(ctx context.Context) (*time.Time, error) 
 }
 
 const listUnsentOperatorNotices = `-- name: ListUnsentOperatorNotices :many
-SELECT id, kind, email, reader, workspace_name, ip, country, created_at, sent_at FROM operator_notices WHERE sent_at IS NULL ORDER BY created_at, id
+SELECT id, kind, email, reader, workspace_name, ip, country, created_at, sent_at, detail FROM operator_notices WHERE sent_at IS NULL ORDER BY created_at, id
 `
 
 func (q *Queries) ListUnsentOperatorNotices(ctx context.Context) ([]OperatorNotice, error) {
@@ -85,6 +87,7 @@ func (q *Queries) ListUnsentOperatorNotices(ctx context.Context) ([]OperatorNoti
 			&i.Country,
 			&i.CreatedAt,
 			&i.SentAt,
+			&i.Detail,
 		); err != nil {
 			return nil, err
 		}

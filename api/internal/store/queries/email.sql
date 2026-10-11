@@ -127,7 +127,7 @@ RETURNING sent_at;
 -- name: SuppressEmail :exec
 INSERT INTO email_suppressions (workspace_id, email, reason, detail, created_at)
 VALUES (@workspace_id, @email, @reason, @detail, @now)
-ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, created_at = excluded.created_at;
+ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, scope = 'all', created_at = excluded.created_at;
 
 -- name: IsEmailSuppressed :one
 SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope = 'all') AS suppressed;
@@ -170,3 +170,10 @@ LIMIT @max_rows;
 -- name: ClearRawKeys :execrows
 UPDATE message_emails SET raw_key = NULL, raw_size = NULL
 WHERE workspace_id = @workspace_id AND raw_key = ANY(@keys::text[]);
+
+-- name: SetEmailChannelBroadcast :one
+UPDATE email_channels SET broadcast_smtp_host = sqlc.narg(host), broadcast_smtp_port = sqlc.narg(port),
+    broadcast_smtp_username = sqlc.narg(username), broadcast_smtp_password = sqlc.narg(password),
+    broadcast_smtp_tls = sqlc.narg(tls), broadcast_rate = @rate
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id
+RETURNING *;

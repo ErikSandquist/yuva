@@ -47,6 +47,87 @@ type Attachment struct {
 	Inline         bool
 }
 
+type Broadcast struct {
+	ID                 uuid.UUID
+	WorkspaceID        uuid.UUID
+	InboxID            uuid.UUID
+	ChannelID          *uuid.UUID
+	Name               string
+	Subject            string
+	Preheader          string
+	DesignID           *uuid.UUID
+	DesignVersion      *int32
+	Document           []byte
+	Audience           []byte
+	ClickTracking      bool
+	State              string
+	PauseReason        *string
+	StateDetail        *string
+	ScheduledAt        *time.Time
+	WaitingUntil       *time.Time
+	StartedAt          *time.Time
+	ResumedAt          *time.Time
+	FinishedAt         *time.Time
+	LastTestAt         *time.Time
+	SnapshotAfter      *uuid.UUID
+	SnapshotDone       bool
+	SenderFailingSince *time.Time
+	Counts             []byte
+	CreatedBy          *uuid.UUID
+	ScheduledBy        *uuid.UUID
+	ScheduledByKey     *uuid.UUID
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+}
+
+type BroadcastClick struct {
+	WorkspaceID uuid.UUID
+	DeliveryID  uuid.UUID
+	Position    int32
+	FirstAt     time.Time
+}
+
+type BroadcastDelivery struct {
+	ID              uuid.UUID
+	WorkspaceID     uuid.UUID
+	BroadcastID     uuid.UUID
+	ContactID       uuid.UUID
+	ListID          *uuid.UUID
+	Email           string
+	EmailToken      string
+	HeaderMessageID string
+	State           string
+	SkipReason      *string
+	Attempts        int32
+	NextAttemptAt   *time.Time
+	Error           *string
+	SentAt          *time.Time
+	BouncedAt       *time.Time
+	ComplainedAt    *time.Time
+	UnsubscribedAt  *time.Time
+	RepliedAt       *time.Time
+	AutoRepliedAt   *time.Time
+	ClickedAt       *time.Time
+	ConversationID  *uuid.UUID
+	CreatedAt       time.Time
+}
+
+type BroadcastLink struct {
+	WorkspaceID uuid.UUID
+	BroadcastID uuid.UUID
+	Position    int32
+	Url         string
+	Clicks      int64
+}
+
+type BroadcastSendingDay struct {
+	WorkspaceID uuid.UUID
+	Day         time.Time
+	Sent        int32
+	Bounced     int32
+	Complained  int32
+}
+
 type CannedReply struct {
 	ID          uuid.UUID
 	WorkspaceID uuid.UUID
@@ -201,6 +282,7 @@ type Conversation struct {
 	PageUrl               *string
 	PageTitle             *string
 	ChannelKind           *string
+	BroadcastID           *uuid.UUID
 }
 
 type ConversationLabel struct {
@@ -699,6 +781,7 @@ type OperatorNotice struct {
 	Country       *string
 	CreatedAt     time.Time
 	SentAt        *time.Time
+	Detail        *string
 }
 
 type PageRating struct {
