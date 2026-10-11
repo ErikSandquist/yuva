@@ -60,6 +60,7 @@ func emailChannelBody(e store.EmailChannel) *oas.EmailChannel {
 		}
 	}
 	out.BroadcastRate = e.BroadcastRate
+	out.Dkim = emailDkimBody(e)
 	return out
 }
 

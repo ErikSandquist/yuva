@@ -227,6 +227,7 @@ type bcRenderer struct {
 
 	fromName, from, replyTo, domain string
 	cfg                             email.SMTPConfig
+	dkim                            *email.DKIMKey
 }
 
 func (s *Server) newBroadcastRenderer(ctx context.Context, q *store.Queries, b store.Broadcast, doc design.Document, ch *store.EmailChannel) (*bcRenderer, error) {
@@ -274,6 +275,9 @@ func (s *Server) newBroadcastRenderer(ctx context.Context, q *store.Queries, b s
 			return nil, errSenderNotReady
 		}
 		r.cfg, r.from, r.domain = cfg, from, email.Domain(from)
+		if r.dkim, err = s.dkimKey(*ch, from); err != nil {
+			return nil, err
+		}
 		r.fromName = ch.DisplayName
 		if r.fromName == "" {
 			if c, err := q.GetChannel(ctx, store.GetChannelParams{WorkspaceID: b.WorkspaceID, ID: ch.ChannelID}); err == nil {
@@ -432,11 +436,15 @@ func (r *bcRenderer) message(d store.BroadcastDelivery, c contactRow) ([]byte, e
 		return nil, err
 	}
 	l, hasList := r.lists[listID]
-	return email.Build(email.Outgoing{
+	raw, err := email.Build(email.Outgoing{
 		From: email.Address{Name: r.fromName, Email: r.from}, ReplyTo: email.Address{Name: r.fromName, Email: r.replyTo},
 		To: email.Address{Name: c.Name, Email: d.Email}, Subject: v.Text(r.b.Subject), MessageID: d.HeaderMessageID,
 		Text: out.Text, HTML: r.track(out.HTML, ws, d.ID), Date: r.s.now(), Headers: r.listHeaders(manage, l, hasList),
 	})
+	if err != nil {
+		return nil, err
+	}
+	return signWith(r.dkim, raw)
 }
 
 // StartBroadcast takes the audience of a broadcast whose time has come, page by page, and starts
@@ -1216,6 +1224,9 @@ func (s *Server) SendBroadcastTestMail(ctx context.Context, a BroadcastTestArgs,
 		MessageID: email.NewMessageID(email.NewConversationToken(), r.domain), Headers: r.listHeaders(manage, l, hasList),
 	})
 	if err != nil {
+		return err
+	}
+	if raw, err = signWith(r.dkim, raw); err != nil {
 		return err
 	}
 	sendCtx, cancel := context.WithTimeout(ctx, time.Minute)

@@ -263,6 +263,11 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 	if err != nil {
 		return IngestResult{}, errIngestMalformed
 	}
+	if probe, err := s.takeProbe(ctx, ch.WorkspaceID, m); err != nil {
+		return IngestResult{}, err
+	} else if probe {
+		return IngestResult{Status: IngestDropped}, nil
+	}
 	sender := m.From.Email
 	if sender == "" {
 		if a, ok := email.ParseAddress(envelopeFrom); ok {

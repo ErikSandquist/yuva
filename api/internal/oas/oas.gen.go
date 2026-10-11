@@ -110,6 +110,45 @@ func (e AppPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AuthStatus.
+const (
+	AuthFail      AuthStatus = "fail"
+	AuthNeutral   AuthStatus = "neutral"
+	AuthNone      AuthStatus = "none"
+	AuthPass      AuthStatus = "pass"
+	AuthPermerror AuthStatus = "permerror"
+	AuthPolicy    AuthStatus = "policy"
+	AuthSoftfail  AuthStatus = "softfail"
+	AuthTemperror AuthStatus = "temperror"
+	AuthUnknown   AuthStatus = "unknown"
+)
+
+// Valid indicates whether the value is a known member of the AuthStatus enum.
+func (e AuthStatus) Valid() bool {
+	switch e {
+	case AuthFail:
+		return true
+	case AuthNeutral:
+		return true
+	case AuthNone:
+		return true
+	case AuthPass:
+		return true
+	case AuthPermerror:
+		return true
+	case AuthPolicy:
+		return true
+	case AuthSoftfail:
+		return true
+	case AuthTemperror:
+		return true
+	case AuthUnknown:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AuthorType.
 const (
 	AuthorTypeBot     AuthorType = "bot"
@@ -284,6 +323,7 @@ const (
 	BroadcastReviewKeyAudienceNonempty BroadcastReviewKey = "audience_nonempty"
 	BroadcastReviewKeyClickTracking    BroadcastReviewKey = "click_tracking"
 	BroadcastReviewKeyDailyCap         BroadcastReviewKey = "daily_cap"
+	BroadcastReviewKeyDeliverability   BroadcastReviewKey = "deliverability"
 	BroadcastReviewKeyDesign           BroadcastReviewKey = "design"
 	BroadcastReviewKeyHtmlSize         BroadcastReviewKey = "html_size"
 	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
@@ -305,6 +345,8 @@ func (e BroadcastReviewKey) Valid() bool {
 	case BroadcastReviewKeyClickTracking:
 		return true
 	case BroadcastReviewKeyDailyCap:
+		return true
+	case BroadcastReviewKeyDeliverability:
 		return true
 	case BroadcastReviewKeyDesign:
 		return true
@@ -800,6 +842,36 @@ func (e ConversationStatus) Valid() bool {
 	}
 }
 
+// Defines values for DeliverabilityState.
+const (
+	DeliverabilityFailed       DeliverabilityState = "failed"
+	DeliverabilityQueued       DeliverabilityState = "queued"
+	DeliverabilityReceived     DeliverabilityState = "received"
+	DeliverabilitySent         DeliverabilityState = "sent"
+	DeliverabilityTimeout      DeliverabilityState = "timeout"
+	DeliverabilityUnverifiable DeliverabilityState = "unverifiable"
+)
+
+// Valid indicates whether the value is a known member of the DeliverabilityState enum.
+func (e DeliverabilityState) Valid() bool {
+	switch e {
+	case DeliverabilityFailed:
+		return true
+	case DeliverabilityQueued:
+		return true
+	case DeliverabilityReceived:
+		return true
+	case DeliverabilitySent:
+		return true
+	case DeliverabilityTimeout:
+		return true
+	case DeliverabilityUnverifiable:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for Direction.
 const (
 	In  Direction = "in"
@@ -959,6 +1031,27 @@ func (e DiscussionTeamSort) Valid() bool {
 	case DiscussionTeamSortNew:
 		return true
 	case DiscussionTeamSortTop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DmarcPolicy.
+const (
+	DmarcPolicyNone       DmarcPolicy = "none"
+	DmarcPolicyQuarantine DmarcPolicy = "quarantine"
+	DmarcPolicyReject     DmarcPolicy = "reject"
+)
+
+// Valid indicates whether the value is a known member of the DmarcPolicy enum.
+func (e DmarcPolicy) Valid() bool {
+	switch e {
+	case DmarcPolicyNone:
+		return true
+	case DmarcPolicyQuarantine:
+		return true
+	case DmarcPolicyReject:
 		return true
 	default:
 		return false
@@ -2907,6 +3000,10 @@ type Attachment struct {
 
 // Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 type Attributes map[string]interface{}
+
+// AuthStatus A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+// when it was not reported.
+type AuthStatus string
 
 // AuthorType `bot` is an API key. Rows written with a key before bot authors existed have `system`.
 type AuthorType string
@@ -4865,6 +4962,103 @@ type CountByID struct {
 	Id    uuid.UUID `json:"id"`
 }
 
+// DeliverabilityCheck defines model for DeliverabilityCheck.
+type DeliverabilityCheck struct {
+	// CheckedAt When the probe arrived or failed.
+	CheckedAt *time.Time          `json:"checked_at,omitempty"`
+	CreatedAt time.Time           `json:"created_at"`
+	Dkim      DeliverabilityDkim  `json:"dkim"`
+	Dmarc     DeliverabilityDmarc `json:"dmarc"`
+
+	// Domain The sending domain, of `From`.
+	Domain string `json:"domain"`
+
+	// Error `failed` only: why the probe was not sent, such as the SMTP server's answer.
+	Error *string           `json:"error,omitempty"`
+	Mx    *DeliverabilityMx `json:"mx,omitempty"`
+	Spf   DeliverabilitySpf `json:"spf"`
+
+	// State `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+	// `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+	// server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+	// receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+	// minutes; `failed` when it could not be sent (`error`).
+	State DeliverabilityState `json:"state"`
+
+	// Tls The probe went to the SMTP server encrypted (STARTTLS or TLS).
+	Tls      *bool                   `json:"tls,omitempty"`
+	YuvaDkim *DeliverabilityYuvaDkim `json:"yuva_dkim,omitempty"`
+}
+
+// DeliverabilityDkim defines model for DeliverabilityDkim.
+type DeliverabilityDkim struct {
+	// Aligned A signature aligned with `From` passed.
+	Aligned bool `json:"aligned"`
+
+	// CoversListUnsubscribe That passing aligned signature covers `List-Unsubscribe` and `List-Unsubscribe-Post`.
+	CoversListUnsubscribe bool    `json:"covers_list_unsubscribe"`
+	Domain                *string `json:"domain,omitempty"`
+
+	// Signatures Every DKIM signature of the probe with the receiving server's result for it.
+	Signatures []DkimSignature `json:"signatures"`
+
+	// Status The result of the signature aligned with `From`, else of the first one reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityDmarc defines model for DeliverabilityDmarc.
+type DeliverabilityDmarc struct {
+	Policy *DmarcPolicy `json:"policy,omitempty"`
+
+	// Record The DMARC record that applies to the sending domain; absent when there is none.
+	Record *string `json:"record,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityMx defines model for DeliverabilityMx.
+type DeliverabilityMx struct {
+	// Domain The domain of the channel's reply address.
+	Domain string `json:"domain"`
+
+	// Hosts Its MX hosts by preference; empty when it has none.
+	Hosts []string `json:"hosts"`
+}
+
+// DeliverabilitySpf defines model for DeliverabilitySpf.
+type DeliverabilitySpf struct {
+	// Aligned `domain` shares its organizational domain with `From` (DMARC relaxed alignment).
+	Aligned bool `json:"aligned"`
+
+	// Domain The envelope sender's domain the result is for (`smtp.mailfrom`).
+	Domain *string `json:"domain,omitempty"`
+
+	// Record The SPF record of the sending domain itself; absent when it has none.
+	Record *string `json:"record,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityState `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+// `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+// server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+// receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+// minutes; `failed` when it could not be sent (`error`).
+type DeliverabilityState string
+
+// DeliverabilityYuvaDkim defines model for DeliverabilityYuvaDkim.
+type DeliverabilityYuvaDkim struct {
+	DnsName string `json:"dns_name"`
+
+	// Published DNS answers at `dns_name` with the channel's public key.
+	Published bool   `json:"published"`
+	Selector  string `json:"selector"`
+}
+
 // Direction defines model for Direction.
 type Direction string
 
@@ -5127,6 +5321,34 @@ type DiscussionUpdate struct {
 	Title  *string `json:"title,omitempty"`
 }
 
+// DkimKeyCreate defines model for DkimKeyCreate.
+type DkimKeyCreate struct {
+	// Selector The DNS label the key is published under, such as `yuva` or `yuva2026`.
+	Selector string `json:"selector"`
+}
+
+// DkimSignature defines model for DkimSignature.
+type DkimSignature struct {
+	// Aligned `domain` shares its organizational domain with `From`.
+	Aligned bool `json:"aligned"`
+
+	// CoversListUnsubscribe Its `h=` lists both `List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058).
+	CoversListUnsubscribe bool `json:"covers_list_unsubscribe"`
+
+	// Domain `d=`
+	Domain string `json:"domain"`
+
+	// Selector `s=`
+	Selector *string `json:"selector,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DmarcPolicy defines model for DmarcPolicy.
+type DmarcPolicy string
+
 // DocsPage defines model for DocsPage.
 type DocsPage struct {
 	Down         int64     `json:"down"`
@@ -5376,6 +5598,9 @@ type EmailChannel struct {
 	// DisplayName The name in `From`; the channel name when empty.
 	DisplayName string `json:"display_name"`
 
+	// Dkim The channel's Yuva DKIM key; absent without one.
+	Dkim *EmailDkim `json:"dkim,omitempty"`
+
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email `json:"from_address,omitempty"`
 
@@ -5406,6 +5631,12 @@ type EmailChannelInput struct {
 	// BroadcastSmtpRemove `true` removes the broadcast SMTP account; broadcasts then use `smtp`.
 	BroadcastSmtpRemove *bool   `json:"broadcast_smtp_remove,omitempty"`
 	DisplayName         *string `json:"display_name,omitempty"`
+
+	// Dkim Absent keeps the stored state. `enabled: true` needs a key (`POST
+	// /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+	// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+	// until it is enabled again for the new domain.
+	Dkim *EmailDkimInput `json:"dkim,omitempty"`
 
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email             `json:"from_address,omitempty"`
@@ -5699,6 +5930,28 @@ type EmailDividerBlock struct {
 
 // EmailDividerBlockType defines model for EmailDividerBlock.Type.
 type EmailDividerBlockType string
+
+// EmailDkim A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
+// TXT record to publish; they follow the sending domain (`from_address`, else `address`).
+type EmailDkim struct {
+	// DnsName Examples: yuva._domainkey.example.com
+	DnsName string `json:"dns_name"`
+
+	// DnsValue Examples: v=DKIM1; k=rsa; p=MIIBIjANBgkqh...
+	DnsValue string `json:"dns_value"`
+
+	// Enabled Mail is signed with the key.
+	Enabled  bool   `json:"enabled"`
+	Selector string `json:"selector"`
+}
+
+// EmailDkimInput Absent keeps the stored state. `enabled: true` needs a key (`POST
+// /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+// until it is enabled again for the new domain.
+type EmailDkimInput struct {
+	Enabled bool `json:"enabled"`
+}
 
 // EmailFont A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
 // `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
@@ -9123,6 +9376,36 @@ type UpdateChannelParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetDeliverabilityParams defines parameters for GetDeliverability.
+type GetDeliverabilityParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CheckDeliverabilityParams defines parameters for CheckDeliverability.
+type CheckDeliverabilityParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteDkimKeyParams defines parameters for DeleteDkimKey.
+type DeleteDkimKeyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDkimKeyParams defines parameters for CreateDkimKey.
+type CreateDkimKeyParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // RotateChannelPublicKeyParams defines parameters for RotateChannelPublicKey.
 type RotateChannelPublicKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -10663,6 +10946,9 @@ type UpdateCannedReplyJSONRequestBody = CannedReplyUpdate
 
 // UpdateChannelJSONRequestBody defines body for UpdateChannel for application/json ContentType.
 type UpdateChannelJSONRequestBody = ChannelUpdate
+
+// CreateDkimKeyJSONRequestBody defines body for CreateDkimKey for application/json ContentType.
+type CreateDkimKeyJSONRequestBody = DkimKeyCreate
 
 // CreateContactJSONRequestBody defines body for CreateContact for application/json ContentType.
 type CreateContactJSONRequestBody = ContactCreate
@@ -13733,6 +14019,18 @@ type ServerInterface interface {
 	// UpdateChannel Update a channel
 	// (PATCH /v1/channels/{channelId})
 	UpdateChannel(w http.ResponseWriter, r *http.Request, channelId ChannelId, params UpdateChannelParams)
+	// GetDeliverability Get the last deliverability check of an e-mail channel
+	// (GET /v1/channels/{channelId}/deliverability)
+	GetDeliverability(w http.ResponseWriter, r *http.Request, channelId ChannelId, params GetDeliverabilityParams)
+	// CheckDeliverability Check how an e-mail channel's broadcasts authenticate
+	// (POST /v1/channels/{channelId}/deliverability-check)
+	CheckDeliverability(w http.ResponseWriter, r *http.Request, channelId ChannelId, params CheckDeliverabilityParams)
+	// DeleteDkimKey Remove an e-mail channel's DKIM key
+	// (DELETE /v1/channels/{channelId}/dkim-key)
+	DeleteDkimKey(w http.ResponseWriter, r *http.Request, channelId ChannelId, params DeleteDkimKeyParams)
+	// CreateDkimKey Create a DKIM key for an e-mail channel
+	// (POST /v1/channels/{channelId}/dkim-key)
+	CreateDkimKey(w http.ResponseWriter, r *http.Request, channelId ChannelId, params CreateDkimKeyParams)
 	// RotateChannelPublicKey Rotate a chat or app channel's public key
 	// (POST /v1/channels/{channelId}/public-key)
 	RotateChannelPublicKey(w http.ResponseWriter, r *http.Request, channelId ChannelId, params RotateChannelPublicKeyParams)
@@ -17247,6 +17545,244 @@ func (siw *ServerInterfaceWrapper) UpdateChannel(w http.ResponseWriter, r *http.
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.UpdateChannel(w, r, channelId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetDeliverability operation middleware
+func (siw *ServerInterfaceWrapper) GetDeliverability(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channelId" -------------
+	var channelId ChannelId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channelId", r.PathValue("channelId"), &channelId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channelId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDeliverabilityParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetDeliverability(w, r, channelId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CheckDeliverability operation middleware
+func (siw *ServerInterfaceWrapper) CheckDeliverability(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channelId" -------------
+	var channelId ChannelId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channelId", r.PathValue("channelId"), &channelId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channelId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CheckDeliverabilityParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CheckDeliverability(w, r, channelId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteDkimKey operation middleware
+func (siw *ServerInterfaceWrapper) DeleteDkimKey(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channelId" -------------
+	var channelId ChannelId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channelId", r.PathValue("channelId"), &channelId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channelId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteDkimKeyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteDkimKey(w, r, channelId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateDkimKey operation middleware
+func (siw *ServerInterfaceWrapper) CreateDkimKey(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channelId" -------------
+	var channelId ChannelId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channelId", r.PathValue("channelId"), &channelId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channelId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateDkimKeyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateDkimKey(w, r, channelId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -26239,6 +26775,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/channels/{channelId}", wrapper.GetChannel)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/channels/{channelId}", wrapper.UpdateChannel)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/channels/{channelId}/public-key", wrapper.RotateChannelPublicKey)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/channels/{channelId}/deliverability-check", wrapper.CheckDeliverability)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/channels/{channelId}/deliverability", wrapper.GetDeliverability)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/channels/{channelId}/dkim-key", wrapper.DeleteDkimKey)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/channels/{channelId}/dkim-key", wrapper.CreateDkimKey)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts", wrapper.ListContacts)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/contacts", wrapper.CreateContact)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/lookup", wrapper.LookupContact)
@@ -33477,6 +34017,339 @@ func (response UpdateChannel404ApplicationProblemPlusJSONResponse) VisitUpdateCh
 type UpdateChannel409ApplicationProblemPlusJSONResponse Problem
 
 func (response UpdateChannel409ApplicationProblemPlusJSONResponse) VisitUpdateChannelResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDeliverabilityRequestObject struct {
+	ChannelId ChannelId `json:"channelId"`
+	Params    GetDeliverabilityParams
+}
+
+type GetDeliverabilityResponseObject interface {
+	VisitGetDeliverabilityResponse(w http.ResponseWriter) error
+}
+
+type GetDeliverability200JSONResponse DeliverabilityCheck
+
+func (response GetDeliverability200JSONResponse) VisitGetDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDeliverability401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetDeliverability401ApplicationProblemPlusJSONResponse) VisitGetDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDeliverability403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetDeliverability403ApplicationProblemPlusJSONResponse) VisitGetDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDeliverability404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetDeliverability404ApplicationProblemPlusJSONResponse) VisitGetDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverabilityRequestObject struct {
+	ChannelId ChannelId `json:"channelId"`
+	Params    CheckDeliverabilityParams
+}
+
+type CheckDeliverabilityResponseObject interface {
+	VisitCheckDeliverabilityResponse(w http.ResponseWriter) error
+}
+
+type CheckDeliverability202JSONResponse DeliverabilityCheck
+
+func (response CheckDeliverability202JSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverability401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CheckDeliverability401ApplicationProblemPlusJSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverability403ApplicationProblemPlusJSONResponse Problem
+
+func (response CheckDeliverability403ApplicationProblemPlusJSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverability404ApplicationProblemPlusJSONResponse Problem
+
+func (response CheckDeliverability404ApplicationProblemPlusJSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverability409ApplicationProblemPlusJSONResponse Problem
+
+func (response CheckDeliverability409ApplicationProblemPlusJSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CheckDeliverability429ApplicationProblemPlusJSONResponse Problem
+
+func (response CheckDeliverability429ApplicationProblemPlusJSONResponse) VisitCheckDeliverabilityResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDkimKeyRequestObject struct {
+	ChannelId ChannelId `json:"channelId"`
+	Params    DeleteDkimKeyParams
+}
+
+type DeleteDkimKeyResponseObject interface {
+	VisitDeleteDkimKeyResponse(w http.ResponseWriter) error
+}
+
+type DeleteDkimKey204Response struct {
+}
+
+func (response DeleteDkimKey204Response) VisitDeleteDkimKeyResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteDkimKey401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteDkimKey401ApplicationProblemPlusJSONResponse) VisitDeleteDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDkimKey403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteDkimKey403ApplicationProblemPlusJSONResponse) VisitDeleteDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDkimKey404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteDkimKey404ApplicationProblemPlusJSONResponse) VisitDeleteDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDkimKey409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteDkimKey409ApplicationProblemPlusJSONResponse) VisitDeleteDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKeyRequestObject struct {
+	ChannelId ChannelId `json:"channelId"`
+	Params    CreateDkimKeyParams
+	Body      *CreateDkimKeyJSONRequestBody
+}
+
+type CreateDkimKeyResponseObject interface {
+	VisitCreateDkimKeyResponse(w http.ResponseWriter) error
+}
+
+type CreateDkimKey201JSONResponse EmailDkim
+
+func (response CreateDkimKey201JSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKey400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateDkimKey400ApplicationProblemPlusJSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKey401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDkimKey401ApplicationProblemPlusJSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKey403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDkimKey403ApplicationProblemPlusJSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKey404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDkimKey404ApplicationProblemPlusJSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDkimKey409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDkimKey409ApplicationProblemPlusJSONResponse) VisitCreateDkimKeyResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -45324,6 +46197,18 @@ type StrictServerInterface interface {
 	// UpdateChannel Update a channel
 	// (PATCH /v1/channels/{channelId})
 	UpdateChannel(ctx context.Context, request UpdateChannelRequestObject) (UpdateChannelResponseObject, error)
+	// GetDeliverability Get the last deliverability check of an e-mail channel
+	// (GET /v1/channels/{channelId}/deliverability)
+	GetDeliverability(ctx context.Context, request GetDeliverabilityRequestObject) (GetDeliverabilityResponseObject, error)
+	// CheckDeliverability Check how an e-mail channel's broadcasts authenticate
+	// (POST /v1/channels/{channelId}/deliverability-check)
+	CheckDeliverability(ctx context.Context, request CheckDeliverabilityRequestObject) (CheckDeliverabilityResponseObject, error)
+	// DeleteDkimKey Remove an e-mail channel's DKIM key
+	// (DELETE /v1/channels/{channelId}/dkim-key)
+	DeleteDkimKey(ctx context.Context, request DeleteDkimKeyRequestObject) (DeleteDkimKeyResponseObject, error)
+	// CreateDkimKey Create a DKIM key for an e-mail channel
+	// (POST /v1/channels/{channelId}/dkim-key)
+	CreateDkimKey(ctx context.Context, request CreateDkimKeyRequestObject) (CreateDkimKeyResponseObject, error)
 	// RotateChannelPublicKey Rotate a chat or app channel's public key
 	// (POST /v1/channels/{channelId}/public-key)
 	RotateChannelPublicKey(ctx context.Context, request RotateChannelPublicKeyRequestObject) (RotateChannelPublicKeyResponseObject, error)
@@ -48046,6 +48931,121 @@ func (sh *strictHandler) UpdateChannel(w http.ResponseWriter, r *http.Request, c
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateChannelResponseObject); ok {
 		if err := validResponse.VisitUpdateChannelResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetDeliverability operation middleware
+func (sh *strictHandler) GetDeliverability(w http.ResponseWriter, r *http.Request, channelId ChannelId, params GetDeliverabilityParams) {
+	var request GetDeliverabilityRequestObject
+
+	request.ChannelId = channelId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetDeliverability(ctx, request.(GetDeliverabilityRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetDeliverability")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetDeliverabilityResponseObject); ok {
+		if err := validResponse.VisitGetDeliverabilityResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CheckDeliverability operation middleware
+func (sh *strictHandler) CheckDeliverability(w http.ResponseWriter, r *http.Request, channelId ChannelId, params CheckDeliverabilityParams) {
+	var request CheckDeliverabilityRequestObject
+
+	request.ChannelId = channelId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CheckDeliverability(ctx, request.(CheckDeliverabilityRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CheckDeliverability")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CheckDeliverabilityResponseObject); ok {
+		if err := validResponse.VisitCheckDeliverabilityResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteDkimKey operation middleware
+func (sh *strictHandler) DeleteDkimKey(w http.ResponseWriter, r *http.Request, channelId ChannelId, params DeleteDkimKeyParams) {
+	var request DeleteDkimKeyRequestObject
+
+	request.ChannelId = channelId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteDkimKey(ctx, request.(DeleteDkimKeyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteDkimKey")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteDkimKeyResponseObject); ok {
+		if err := validResponse.VisitDeleteDkimKeyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateDkimKey operation middleware
+func (sh *strictHandler) CreateDkimKey(w http.ResponseWriter, r *http.Request, channelId ChannelId, params CreateDkimKeyParams) {
+	var request CreateDkimKeyRequestObject
+
+	request.ChannelId = channelId
+	request.Params = params
+
+	var body CreateDkimKeyJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateDkimKey(ctx, request.(CreateDkimKeyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateDkimKey")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateDkimKeyResponseObject); ok {
+		if err := validResponse.VisitCreateDkimKeyResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

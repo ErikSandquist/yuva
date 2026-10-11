@@ -73,6 +73,8 @@ type BroadcastSettings struct {
 	Mode            string
 	DailyRecipients int64
 	LinkURL         string
+	// Resolver replaces the system resolver for deliverability checks and DKIM records, for tests.
+	Resolver DNSResolver
 }
 
 type bcCondition struct {

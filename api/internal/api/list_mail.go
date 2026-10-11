@@ -189,6 +189,13 @@ func (s *Server) SendListMail(ctx context.Context, a ListMailArgs, lastAttempt b
 	if err != nil {
 		return err
 	}
+	key, err := s.dkimKey(ch, from)
+	if err != nil {
+		return skip(err.Error())
+	}
+	if raw, err = signWith(key, raw); err != nil {
+		return err
+	}
 	var password string
 	if len(ch.SmtpPassword) > 0 {
 		plain, err := s.secrets.Open(ch.SmtpPassword, smtpSecretContext(ws, ch.ChannelID))

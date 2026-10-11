@@ -308,6 +308,16 @@ type ConversationRead struct {
 	UpdatedAt         time.Time
 }
 
+type DeliverabilityCheck struct {
+	WorkspaceID uuid.UUID
+	ChannelID   uuid.UUID
+	ProbeToken  string
+	State       string
+	Result      []byte
+	CreatedAt   time.Time
+	FinishedAt  *time.Time
+}
+
 type Discussion struct {
 	ID             uuid.UUID
 	WorkspaceID    uuid.UUID
@@ -411,6 +421,7 @@ type EmailChannel struct {
 	DkimSelector           *string
 	DkimPrivateKey         []byte
 	DkimEnabled            bool
+	DkimPublicKey          []byte
 }
 
 type EmailConfirmation struct {

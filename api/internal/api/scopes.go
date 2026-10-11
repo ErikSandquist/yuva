@@ -31,6 +31,8 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"ListChannels":     {oas.InboxesRead},
 	"GetChannel":       {oas.InboxesRead},
 
+	"GetDeliverability": {oas.InboxesRead},
+
 	"CreateInbox":               {oas.InboxesManage},
 	"UpdateInbox":               {oas.InboxesManage},
 	"DeleteInbox":               {oas.InboxesManage},
@@ -41,6 +43,9 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateChannel":             {oas.InboxesManage},
 	"DeleteChannel":             {oas.InboxesManage},
 	"RotateChannelPublicKey":    {oas.InboxesManage},
+	"CheckDeliverability":       {oas.InboxesManage},
+	"CreateDkimKey":             {oas.InboxesManage},
+	"DeleteDkimKey":             {oas.InboxesManage},
 
 	"UpdateWorkspace": {oas.WorkspaceManage},
 	"GetUsage":        {oas.WorkspaceManage},

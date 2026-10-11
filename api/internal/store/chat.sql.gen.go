@@ -695,7 +695,7 @@ func (q *Queries) GetSessionChannel(ctx context.Context, arg GetSessionChannelPa
 }
 
 const inboxEmailChannel = `-- name: InboxEmailChannel :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 WHERE e.workspace_id = $1 AND c.inbox_id = $2
 ORDER BY (e.address LIKE '*@%'), c.created_at, c.id
@@ -733,6 +733,7 @@ func (q *Queries) InboxEmailChannel(ctx context.Context, arg InboxEmailChannelPa
 		&i.DkimSelector,
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
+		&i.DkimPublicKey,
 	)
 	return i, err
 }

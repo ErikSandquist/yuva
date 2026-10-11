@@ -120,6 +120,9 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 	if isEmail && req.Body.Email == nil {
 		return nil, errEmailRequired
 	}
+	if isEmail && req.Body.Email.Dkim != nil && req.Body.Email.Dkim.Enabled {
+		return nil, errDkimNoKey
+	}
 	if !isEmail && req.Body.Email != nil {
 		return nil, errEmailNotAllowed
 	}
@@ -281,7 +284,11 @@ func (s *Server) UpdateChannel(ctx context.Context, req oas.UpdateChannelRequest
 			if err != nil {
 				return err
 			}
-			if _, err := saveEmailChannel(ctx, q, arg); err != nil {
+			saved, err := saveEmailChannel(ctx, q, arg)
+			if err != nil {
+				return err
+			}
+			if err := s.applyDkimInput(ctx, q, prev, saved, req.Body.Email.Dkim); err != nil {
 				return err
 			}
 			bc, err := s.emailBroadcastParams(p.workspaceID, c.ID, req.Body.Email, prev)

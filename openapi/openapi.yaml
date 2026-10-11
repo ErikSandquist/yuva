@@ -1882,6 +1882,143 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/channels/{channelId}/deliverability-check:
+    post:
+      operationId: checkDeliverability
+      summary: Check how an e-mail channel's broadcasts authenticate
+      description: |
+        Sends a probe through the channel's broadcast SMTP account (its support account when it
+        has none) to the channel's own address, with the headers a broadcast carries, and looks up
+        DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+        domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+        it arrives and never becomes a conversation; the result is read only from the
+        `Authentication-Results` of the receiving server the operator trusts
+        (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+        `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+        when it has not within 10 minutes. A new check replaces the previous one.
+
+        `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+        at most 6 checks an hour per channel (`429 rate_limited`).
+
+        Owners, admins and API keys. Scope: `inboxes:manage`.
+      tags: [channels]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChannelId"
+      responses:
+        "202":
+          description: The check, `queued`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliverabilityCheck"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/channels/{channelId}/deliverability:
+    get:
+      operationId: getDeliverability
+      summary: Get the last deliverability check of an e-mail channel
+      description: |
+        The last check and what it found. `404 not_found` when the channel was never checked. The
+        broadcast review reads it: a warning when the channel was never checked, the check did not
+        finish or found no DMARC record, blocking when it found no passing DKIM signature.
+
+        Scope: `inboxes:read`.
+      tags: [channels]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChannelId"
+      responses:
+        "200":
+          description: The last check.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliverabilityCheck"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/channels/{channelId}/dkim-key:
+    post:
+      operationId: createDkimKey
+      summary: Create a DKIM key for an e-mail channel
+      description: |
+        Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+        deliverability probes with, once enabled. The private key is stored encrypted under the
+        server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+        (a provider that limits TXT strings to 255 characters splits it into several strings of
+        one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+        which looks the record up first. The signature uses `d=` the sending domain,
+        relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+        `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+
+        `409 dkim_exists` when the channel has a key (remove it first); `409
+        email_channel_required` when the channel is not an e-mail channel.
+
+        Owners, admins and API keys. Scope: `inboxes:manage`.
+      tags: [channels]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChannelId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DkimKeyCreate"
+      responses:
+        "201":
+          description: The key's selector and the DNS record to publish.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDkim"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteDkimKey
+      summary: Remove an e-mail channel's DKIM key
+      description: |
+        Stops signing with it and deletes the key; a channel without a key also answers `204`.
+        `409 email_channel_required` when the channel is not an e-mail channel.
+
+        Owners, admins and API keys. Scope: `inboxes:manage`.
+      tags: [channels]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChannelId"
+      responses:
+        "204":
+          description: Removed.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
   /v1/contacts:
     get:
       operationId: listContacts
@@ -9833,6 +9970,9 @@ components:
           type: integer
           format: int32
           description: Broadcast mails a second through this channel.
+        dkim:
+          $ref: "#/components/schemas/EmailDkim"
+          description: The channel's Yuva DKIM key; absent without one.
     EmailChannelInput:
       type: object
       required: [address]
@@ -9868,6 +10008,187 @@ components:
           minimum: 1
           maximum: 100
           description: Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
+        dkim:
+          $ref: "#/components/schemas/EmailDkimInput"
+    EmailDkim:
+      type: object
+      description: |
+        A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
+        TXT record to publish; they follow the sending domain (`from_address`, else `address`).
+      required: [selector, enabled, dns_name, dns_value]
+      properties:
+        selector:
+          type: string
+        enabled:
+          type: boolean
+          description: Mail is signed with the key.
+        dns_name:
+          type: string
+          examples: ["yuva._domainkey.example.com"]
+        dns_value:
+          type: string
+          examples: ["v=DKIM1; k=rsa; p=MIIBIjANBgkqh..."]
+    EmailDkimInput:
+      type: object
+      description: |
+        Absent keeps the stored state. `enabled: true` needs a key (`POST
+        /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+        same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+        until it is enabled again for the new domain.
+      required: [enabled]
+      properties:
+        enabled:
+          type: boolean
+    DkimKeyCreate:
+      type: object
+      required: [selector]
+      properties:
+        selector:
+          type: string
+          minLength: 1
+          maxLength: 63
+          pattern: "^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$"
+          description: The DNS label the key is published under, such as `yuva` or `yuva2026`.
+    DeliverabilityState:
+      type: string
+      description: |
+        `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+        `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+        server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+        receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+        minutes; `failed` when it could not be sent (`error`).
+      enum: [queued, sent, received, unverifiable, timeout, failed]
+      x-enum-varnames: [DeliverabilityQueued, DeliverabilitySent, DeliverabilityReceived, DeliverabilityUnverifiable, DeliverabilityTimeout, DeliverabilityFailed]
+    AuthStatus:
+      type: string
+      description: |
+        A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+        when it was not reported.
+      enum: [pass, fail, softfail, neutral, none, policy, temperror, permerror, unknown]
+      x-enum-varnames: [AuthPass, AuthFail, AuthSoftfail, AuthNeutral, AuthNone, AuthPolicy, AuthTemperror, AuthPermerror, AuthUnknown]
+    DeliverabilitySpf:
+      type: object
+      required: [status, aligned]
+      properties:
+        status:
+          $ref: "#/components/schemas/AuthStatus"
+        domain:
+          type: string
+          description: The envelope sender's domain the result is for (`smtp.mailfrom`).
+        aligned:
+          type: boolean
+          description: "`domain` shares its organizational domain with `From` (DMARC relaxed alignment)."
+        record:
+          type: string
+          description: The SPF record of the sending domain itself; absent when it has none.
+    DkimSignature:
+      type: object
+      required: [domain, status, aligned, covers_list_unsubscribe]
+      properties:
+        domain:
+          type: string
+          description: "`d=`"
+        selector:
+          type: string
+          description: "`s=`"
+        status:
+          $ref: "#/components/schemas/AuthStatus"
+        aligned:
+          type: boolean
+          description: "`domain` shares its organizational domain with `From`."
+        covers_list_unsubscribe:
+          type: boolean
+          description: "Its `h=` lists both `List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058)."
+    DeliverabilityDkim:
+      type: object
+      required: [status, aligned, covers_list_unsubscribe, signatures]
+      properties:
+        status:
+          $ref: "#/components/schemas/AuthStatus"
+          description: The result of the signature aligned with `From`, else of the first one reported.
+        domain:
+          type: string
+        aligned:
+          type: boolean
+          description: A signature aligned with `From` passed.
+        covers_list_unsubscribe:
+          type: boolean
+          description: That passing aligned signature covers `List-Unsubscribe` and `List-Unsubscribe-Post`.
+        signatures:
+          type: array
+          description: Every DKIM signature of the probe with the receiving server's result for it.
+          items:
+            $ref: "#/components/schemas/DkimSignature"
+    DmarcPolicy:
+      type: string
+      enum: [none, quarantine, reject]
+      x-enum-varnames: [DmarcPolicyNone, DmarcPolicyQuarantine, DmarcPolicyReject]
+    DeliverabilityDmarc:
+      type: object
+      required: [status]
+      properties:
+        status:
+          $ref: "#/components/schemas/AuthStatus"
+        policy:
+          $ref: "#/components/schemas/DmarcPolicy"
+        record:
+          type: string
+          description: The DMARC record that applies to the sending domain; absent when there is none.
+    DeliverabilityMx:
+      type: object
+      required: [domain, hosts]
+      properties:
+        domain:
+          type: string
+          description: The domain of the channel's reply address.
+        hosts:
+          type: array
+          description: Its MX hosts by preference; empty when it has none.
+          items:
+            type: string
+    DeliverabilityYuvaDkim:
+      type: object
+      required: [selector, dns_name, published]
+      properties:
+        selector:
+          type: string
+        dns_name:
+          type: string
+        published:
+          type: boolean
+          description: DNS answers at `dns_name` with the channel's public key.
+    DeliverabilityCheck:
+      type: object
+      required: [state, domain, spf, dkim, dmarc, created_at]
+      properties:
+        state:
+          $ref: "#/components/schemas/DeliverabilityState"
+        error:
+          type: string
+          description: "`failed` only: why the probe was not sent, such as the SMTP server's answer."
+        domain:
+          type: string
+          description: The sending domain, of `From`.
+        tls:
+          type: boolean
+          description: The probe went to the SMTP server encrypted (STARTTLS or TLS).
+        spf:
+          $ref: "#/components/schemas/DeliverabilitySpf"
+        dkim:
+          $ref: "#/components/schemas/DeliverabilityDkim"
+        dmarc:
+          $ref: "#/components/schemas/DeliverabilityDmarc"
+        mx:
+          $ref: "#/components/schemas/DeliverabilityMx"
+        yuva_dkim:
+          $ref: "#/components/schemas/DeliverabilityYuvaDkim"
+        created_at:
+          type: string
+          format: date-time
+        checked_at:
+          type: string
+          format: date-time
+          description: When the probe arrived or failed.
     Channel:
       type: object
       required: [id, inbox_id, kind, name, settings, created_at, updated_at]
@@ -13376,7 +13697,7 @@ components:
             $ref: "#/components/schemas/BroadcastListCount"
     BroadcastReviewKey:
       type: string
-      enum: [sender_identity, sender_ready, approval, design, audience_nonempty, merge_fields, html_size, images_alt, links, subject, daily_cap, test_sent, click_tracking]
+      enum: [sender_identity, sender_ready, approval, design, audience_nonempty, merge_fields, html_size, images_alt, links, subject, deliverability, daily_cap, test_sent, click_tracking]
     BroadcastReviewStatus:
       type: string
       enum: [ok, warning, blocking]

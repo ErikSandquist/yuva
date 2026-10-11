@@ -177,3 +177,18 @@ UPDATE email_channels SET broadcast_smtp_host = sqlc.narg(host), broadcast_smtp_
     broadcast_smtp_tls = sqlc.narg(tls), broadcast_rate = @rate
 WHERE workspace_id = @workspace_id AND channel_id = @channel_id
 RETURNING *;
+
+-- name: CreateEmailChannelDkimKey :one
+UPDATE email_channels SET dkim_selector = @selector, dkim_private_key = @private_key, dkim_public_key = @public_key,
+    dkim_enabled = false
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id AND dkim_private_key IS NULL
+RETURNING *;
+
+-- name: DeleteEmailChannelDkimKey :exec
+UPDATE email_channels SET dkim_selector = NULL, dkim_private_key = NULL, dkim_public_key = NULL, dkim_enabled = false
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id;
+
+-- name: SetEmailChannelDkimEnabled :one
+UPDATE email_channels SET dkim_enabled = @enabled
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id AND (dkim_private_key IS NOT NULL OR NOT @enabled)
+RETURNING *;

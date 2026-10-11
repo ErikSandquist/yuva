@@ -40,6 +40,9 @@ type Message struct {
 	Headers     map[string]string
 	Bounce      *Bounce
 	Feedback    *Feedback
+
+	DKIMSignatures []string
+	Probe          string
 }
 
 const (
@@ -86,6 +89,8 @@ func Parse(raw []byte) (*Message, error) {
 	if ar := env.GetHeaderValues("Authentication-Results"); len(ar) > 0 {
 		m.AuthResults = strings.TrimSpace(ar[0])
 	}
+	m.DKIMSignatures = env.GetHeaderValues("DKIM-Signature")
+	m.Probe = strings.TrimSpace(env.GetHeader(ProbeHeader))
 	m.Auto = Automatic(m.Headers, m.From.Email)
 	m.Attachments = attachments(env)
 	if env.Root != nil {

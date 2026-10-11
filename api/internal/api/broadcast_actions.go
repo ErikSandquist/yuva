@@ -175,6 +175,13 @@ func (s *Server) reviewBroadcast(ctx context.Context, q *store.Queries, b store.
 	default:
 		l.add(oas.BroadcastReviewKeySubject, oas.ReviewOk, "")
 	}
+	if ch != nil {
+		status, detail, err := s.deliverabilityReview(ctx, q, *ch)
+		if err != nil {
+			return out, err
+		}
+		l.add(oas.BroadcastReviewKeyDeliverability, status, detail)
+	}
 	limit, sent, err := s.dailyAllowance(ctx, q, w)
 	if err != nil {
 		return out, err
@@ -204,7 +211,6 @@ func (s *Server) reviewBroadcast(ctx context.Context, q *store.Queries, b store.
 	} else {
 		l.add(oas.BroadcastReviewKeyClickTracking, oas.ReviewOk, "")
 	}
-	_ = ch
 	out.Items = l.items
 	out.Ready = len(l.blocking()) == 0
 	return out, nil
