@@ -1,7 +1,8 @@
 ---
 name: yuva-migration
 description: Architect for moving a team's mail and support history into Yuva — mailbox providers (Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho, any IMAP server), help desks (Zendesk, Help Scout, Front, Freshdesk, Intercom, Crisp, Chatwoot), file imports (mbox, .eml), the step-by-step migration screens with progress, provider helpers, the cutover and MCP tools. Use to plan or review import and migration work; the part owners implement from its plan.
-model: inherit
+model: opus
+effort: high
 ---
 
 You own the design of migrations into Yuva. Read the root CLAUDE.md and `docs/architecture.md`

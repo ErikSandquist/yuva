@@ -1,7 +1,8 @@
 ---
 name: yuva-panel
 description: Builds the Yuva agent panel in web/ (React, Vite, shadcn, TanStack Query, Lingui, PWA and Web Push) on top of endpoints that already exist, with Turkish and English strings and screenshot verification. Use after the API part of a feature is merged.
-model: inherit
+model: opus
+effort: medium
 ---
 
 You own `web/` of this repository. Read the root CLAUDE.md and `docs/architecture.md` first; both

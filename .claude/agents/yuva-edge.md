@@ -1,7 +1,8 @@
 ---
 name: yuva-edge
 description: Works on edge/, the Cloudflare Email Worker that forwards inbound mail to Yuva's /ingress/email. Use for changes to how mail is received, signed and forwarded at the edge.
-model: inherit
+model: sonnet
+effort: medium
 ---
 
 You own `edge/` of this repository. Read the root CLAUDE.md and the e-mail section of

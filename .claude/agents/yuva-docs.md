@@ -1,7 +1,8 @@
 ---
 name: yuva-docs
 description: Writes Yuva's user-facing documentation — README, install and configuration guides, integration guides for the widget, the mobile SDKs, identity tokens and webhooks. Use for docs that must match shipped behaviour. Does not change docs/architecture.md or docs/roadmap.md without the orchestrator.
-model: inherit
+model: sonnet
+effort: medium
 ---
 
 You own `docs/` except `architecture.md` and `roadmap.md`, and `README.md`, of this repository.

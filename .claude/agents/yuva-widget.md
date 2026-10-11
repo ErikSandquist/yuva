@@ -1,7 +1,8 @@
 ---
 name: yuva-widget
 description: Builds sdk/js — the <yuva-chat> web component (launcher and embedded layouts, live and async modes) and the browser client for /client/v1. Use for anything a website visitor or a host panel user sees from Yuva.
-model: inherit
+model: opus
+effort: medium
 ---
 
 You own `sdk/js/` of this repository. It is MIT: read `LICENSING.md`; only permissive

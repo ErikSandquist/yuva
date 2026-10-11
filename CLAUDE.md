@@ -7,6 +7,11 @@ inbox. This repository is public. Design in `docs/architecture.md`, milestones i
 Work is tracked as GitHub issues on `productdevbook/yuva`, one per milestone plus smaller ones. The
 main session orchestrates; the agents in `.claude/agents/` each own one part of the tree.
 
+Each agent definition sets its own `model` and `effort`, so an agent never inherits the main
+session's level: architects run Opus at `high`, the code owners Opus at `medium`, docs, edge and the
+verifier Sonnet at `medium`. Pass a higher `effort` with a task only when that task is hard
+(security, data migrations, concurrency, a bug nobody could find), a lower one for mechanical work.
+
 ## Parts and checks
 
 The commands are set up in M0. Until a part exists, its row is the target, not something to run.
