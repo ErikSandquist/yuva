@@ -13,8 +13,8 @@
     "links": "bun scripts/check-links.ts",
     "check": "bun run format:check && bun run lint && bun run i18n && bun run build && bun run links",
     "lint": "oxlint",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
+    "format": "oxfmt && prettier --write --log-level warn \"src/**/*.astro\"",
+    "format:check": "oxfmt --check && prettier --check --log-level warn \"src/**/*.astro\"",
     "registry": "bun scripts/registry.ts"
   },
   "dependencies": {
@@ -47,6 +47,8 @@
     "opentype.js": "2.0.0",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.1",
     "shadcn": "4.21.4",
     "typescript": "~6"
   }
