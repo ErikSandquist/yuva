@@ -135,7 +135,8 @@ neueste.
 
 Hat jemand anderes (oder ein anderer Tab von Ihnen) zuerst gespeichert, bietet ein Dialog drei Wege:
 meine behalten, meine als Kopie speichern oder ihre laden. Ihre Änderung geht nie verloren, und die
-andere Version bleibt in den Versionen.
+andere Version bleibt in den Versionen. Was Sie auch wählen, die Version der Gegenseite wird dort als
+„Aus einem Konflikt behalten“ aufbewahrt; keine Änderung geht verloren.
 
 Download JSON speichert das Dokument des Designs als Datei. Archive blendet ein Design aus der Liste
 aus; erneutes Speichern holt es zurück. Ein Dokument, das ein neueres Yuva erstellt hat, lässt sich

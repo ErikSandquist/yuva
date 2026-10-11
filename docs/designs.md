@@ -126,7 +126,8 @@ manual save and one for each restore. Restoring saves that version as the newest
 
 If someone else (or another tab of yours) saved first, a dialog offers three ways out: keep mine,
 save mine as a copy, or load theirs. Your edit is never dropped, and the other version stays in the
-versions.
+versions. Whatever you pick, the other side's version is kept there as "Kept from a conflict", so no
+edit is lost.
 
 Download JSON saves the design's document as a file. Archive hides a design from the list; saving it
 again brings it back. A document made by a newer Yuva can be viewed but not changed.

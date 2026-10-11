@@ -129,7 +129,8 @@ her geri yüklemede bir. Geri yükleme, o sürümü en yeni sürüm olarak kayde
 
 Başka biri (ya da sizin başka bir sekmeniz) önce kaydettiyse bir pencere üç yol sunar: benimkini
 koru, benimkini kopya olarak kaydet ya da onlarınkini yükle. Düzenlemeniz hiç kaybolmaz, diğer sürüm de
-sürümlerde kalır.
+sürümlerde kalır. Hangisini seçerseniz seçin, karşı tarafın sürümü orada "Çakışmada saklandı" adıyla
+tutulur; hiçbir düzenleme kaybolmaz.
 
 JSON indir, tasarımın belgesini dosya olarak kaydeder. Arşivle, tasarımı listeden gizler; yeniden
 kaydetmek geri getirir. Yuva'nın daha yeni bir sürümünün yaptığı belge görüntülenebilir ama

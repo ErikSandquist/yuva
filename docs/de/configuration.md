@@ -105,6 +105,7 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | Variable | Standard | Bedeutung |
 |---|---|---|
 | `YUVA_CHAT_EMAIL_DELAY` | `5m` | Wie lange eine Antwort ungelesen bleibt, bevor sie einem Kontakt, der den Chat verlassen hat, per E-Mail geschickt wird. Mindestens `1s`. |
+| `YUVA_DISCUSSION_EMAIL_DELAY` | `10m` | Pro Follower und Diskussionsthread in dieser Zeit höchstens eine E-Mail mit den neuen Antworten und der akzeptierten Antwort. Mindestens `1s`. |
 | `YUVA_ANONYMOUS_CONTACTS_PER_HOUR` | `20` | Neue anonyme Besucher pro IP-Adresse (IPv6 /64), Kanal und Stunde; weitere erhalten `429`. |
 
 ## Webhooks

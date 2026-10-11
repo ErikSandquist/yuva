@@ -105,6 +105,7 @@ Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,appli
 | Değişken | Varsayılan | Anlamı |
 |---|---|---|
 | `YUVA_CHAT_EMAIL_DELAY` | `5m` | Sohbetten ayrılmış bir kişiye, okunmamış bir yanıtın ne kadar süre sonra e-postayla gönderileceği. En az `1s`. |
+| `YUVA_DISCUSSION_EMAIL_DELAY` | `10m` | Bir takipçiye ve tartışma başlığına bu sürede en çok bir e-posta gider; yeni yanıtları ve kabul edilen yanıtı listeler. En az `1s`. |
 | `YUVA_ANONYMOUS_CONTACTS_PER_HOUR` | `20` | IP adresi (IPv6 /64), kanal ve saat başına yeni anonim ziyaretçi sayısı; fazlası `429` alır. |
 
 ## Webhook'lar

@@ -104,6 +104,7 @@ Default types: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | Variable | Default | Meaning |
 |---|---|---|
 | `YUVA_CHAT_EMAIL_DELAY` | `5m` | How long a reply stays unread before it is e-mailed to a contact who left the chat. At least `1s`. |
+| `YUVA_DISCUSSION_EMAIL_DELAY` | `10m` | At most one e-mail per follower and discussion thread in this time, listing the new replies and the accepted answer. At least `1s`. |
 | `YUVA_ANONYMOUS_CONTACTS_PER_HOUR` | `20` | New anonymous visitors per IP address (IPv6 /64), channel and hour; more get `429`. |
 
 ## Webhooks
