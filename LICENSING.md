@@ -6,7 +6,7 @@ in your own apps carry no copyleft obligations.
 | Path | License | Why |
 |---|---|---|
 | everything not listed below (`api/`, `web/`, `edge/`, `deploy/`, `docs/`) | [AGPL-3.0-only](LICENSE) | The server and agent panel. If you run a modified Yuva as a network service, you must offer its source to its users. |
-| `sdk/` (web widget, Swift, Kotlin, Go helpers) | [MIT](sdk/LICENSE) | These ship inside your own websites and apps, including App Store and Play builds. |
+| `sdk/` (web widget, shadcn registry, Swift, Kotlin, Go helpers) | [MIT](sdk/LICENSE) | These ship inside your own websites and apps, including App Store and Play builds. |
 | `openapi/` | [MIT](openapi/LICENSE) | Anyone may generate clients from the API contract. |
 | `examples/` | [MIT](examples/LICENSE) | Copy the examples into your own code freely. |
 

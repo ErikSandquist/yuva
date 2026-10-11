@@ -1,0 +1,18 @@
+{
+  "name": "yuva-shadcn",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "shadcn build --output dist/r",
+    "check": "bun run format:check && bun run lint && bun run build",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "shadcn": "4.21.4"
+  }
+}

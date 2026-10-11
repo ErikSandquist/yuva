@@ -19,10 +19,11 @@ Keep this table current when a command changes.
 | `web/` | yuva-panel | in `web/`: `npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build` |
 | `edge/` | yuva-edge | in `edge/`: `bun run check` (oxfmt check, oxlint, tsc, tests) |
 | `sdk/js` | yuva-widget | in `sdk/js/`: `bun run check && bun run build` (`check` runs oxfmt check, oxlint, Lingui compile, tsc and tests; `build` reports the gzip size) |
+| `sdk/shadcn` | yuva-widget | in `sdk/shadcn/`: `bun run check` (oxfmt, oxlint, `shadcn build`); the site serves the registry at `/r/*.json` from it; `examples/shadcn-next`: `npx next build` |
 | `sdk/swift` | yuva-mobile | on the Mac, at the root: `swift build && swift test`; in `sdk/swift/Example/`: `xcodebuild -project YuvaExample.xcodeproj -scheme YuvaExample -destination "generic/platform=iOS Simulator" build` |
 | `sdk/kotlin` | yuva-mobile | in `sdk/kotlin/` on the Mac (JDK 21 as `JAVA_HOME`, `ANDROID_HOME` set), never on a machine without swap: `./gradlew check :sample:assembleDebug` |
 | `docs/`, site | yuva-docs | links resolve; every documented endpoint exists in `openapi/` |
-| `site/` | yuva-docs | in `site/`: `bun run format:check && bun run lint && bun run i18n && bun run build && bun run links` (oxfmt check, oxlint, Lingui extract and `compile --strict`, Astro static build, link check over `dist/`) |
+| `site/` | yuva-docs | in `site/`: `bun run format:check && bun run lint && bun run i18n && bun run build && bun run links` (oxfmt check, oxlint, Lingui extract and `compile --strict`, the shadcn registry from `sdk/shadcn` into `public/r`, Astro static build, link check over `dist/`) |
 
 - TypeScript and JavaScript are formatted by oxfmt and linted by oxlint with the root `.oxfmtrc.json` and
   `.oxlintrc.json` (no semicolons, double quotes); `format` in a part rewrites its files.

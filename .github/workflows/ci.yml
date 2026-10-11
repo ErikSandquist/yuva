@@ -93,6 +93,14 @@ jobs:
         working-directory: sdk/js
         run: bun install --frozen-lockfile && bun run check && bun run build
 
+  sdk-shadcn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+      - working-directory: sdk/shadcn
+        run: bun install --frozen-lockfile && bun run check
+
   site:
     runs-on: ubuntu-latest
     steps:

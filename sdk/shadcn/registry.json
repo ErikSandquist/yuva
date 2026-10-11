@@ -1,0 +1,141 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "yuva",
+  "homepage": "https://useyuva.com",
+  "items": [
+    {
+      "name": "use-yuva-discussions",
+      "type": "registry:hook",
+      "title": "Yuva discussions hooks",
+      "description": "A React provider and hooks over the useyuva headless client: discussions of a page, one thread, reader sign-in, the channel's discussion mode and page ratings. Labels with English defaults.",
+      "dependencies": [
+        "useyuva"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/hooks/use-yuva-discussions.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "registry/yuva/lib/yuva-utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
+      "name": "yuva-discussion-composer",
+      "type": "registry:component",
+      "title": "Yuva discussion composer",
+      "description": "A Markdown composer with Write and Preview tabs for new discussions, replies and edits, and the reader sign-in prompt.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "tabs",
+        "textarea",
+        "https://useyuva.com/r/use-yuva-discussions.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-discussion-composer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/yuva/components/yuva-markdown-preview.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-discussion-list",
+      "type": "registry:component",
+      "title": "Yuva discussion list",
+      "description": "The discussions of a page with New, Top and Unanswered tabs, answered and locked badges, votes and reply counts.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "badge",
+        "button",
+        "skeleton",
+        "tabs",
+        "https://useyuva.com/r/use-yuva-discussions.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-discussion-list.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-discussion-thread",
+      "type": "registry:component",
+      "title": "Yuva discussion thread",
+      "description": "One discussion: the opening post, the accepted answer, replies one level deep, votes, follow, accept, edit and delete, and the reply composer.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "badge",
+        "button",
+        "separator",
+        "skeleton",
+        "https://useyuva.com/r/use-yuva-discussions.json",
+        "https://useyuva.com/r/yuva-discussion-composer.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-discussion-thread.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-discussions",
+      "type": "registry:block",
+      "title": "Yuva discussions",
+      "description": "Discussions for a documentation page, like GitHub Discussions: the list with sort tabs, threads, accepted answers, replies, votes, a composer with preview, reader sign-in and follow.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "https://useyuva.com/r/use-yuva-discussions.json",
+        "https://useyuva.com/r/yuva-discussion-composer.json",
+        "https://useyuva.com/r/yuva-discussion-list.json",
+        "https://useyuva.com/r/yuva-discussion-thread.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-discussions.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "yuva-page-feedback",
+      "type": "registry:component",
+      "title": "Yuva page feedback",
+      "description": "\"Was this page helpful?\" with yes and no, sent to Yuva as a page rating.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "https://useyuva.com/r/use-yuva-discussions.json"
+      ],
+      "files": [
+        {
+          "path": "registry/yuva/components/yuva-page-feedback.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
