@@ -160,3 +160,7 @@ export function useVersion() {
     retry: false,
   })
 }
+
+export function useSignup() {
+  return useVersion().data?.signup
+}

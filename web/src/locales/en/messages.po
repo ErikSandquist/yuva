@@ -476,6 +476,10 @@ msgstr "A teammate"
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
+msgstr "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Accepted answer"
@@ -824,10 +828,6 @@ msgstr "As {name}, since {when}"
 msgid "As above ({current})"
 msgstr "As above ({current})"
 
-#: src/app/Gate.tsx
-msgid "Ask an owner or admin of your workspace to invite you."
-msgstr "Ask an owner or admin of your workspace to invite you."
-
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Ask for a rating after closing"
 msgstr "Ask for a rating after closing"
@@ -926,6 +926,7 @@ msgstr "available now"
 msgid "Away"
 msgstr "Away"
 
+#: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Back"
@@ -1365,6 +1366,19 @@ msgstr "Could not reach the server. Check your connection and try again."
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Create key"
 msgstr "Create key"
+
+#: src/app/UserMenu.tsx
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Create workspace"
+msgstr "Create workspace"
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Create your workspace"
+msgstr "Create your workspace"
+
+#: src/features/auth/SignInPage.tsx
+msgid "Create your Yuva account"
+msgstr "Create your Yuva account"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Created"
@@ -1815,6 +1829,10 @@ msgstr "Enter a valid e-mail address."
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Enter an http or https URL without a user name or password."
 
+#: src/features/auth/SignInPage.tsx
+msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
+msgstr "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
+
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
 msgstr "Error or answer"
@@ -2000,6 +2018,10 @@ msgstr "For developers"
 msgid "For every inbox in this workspace, unless an inbox below says otherwise."
 msgstr "For every inbox in this workspace, unless an inbox below says otherwise."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "For example Acme"
+msgstr "For example Acme"
+
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "For example Fieldnote"
@@ -2140,6 +2162,7 @@ msgid "helpful share"
 msgstr "helpful share"
 
 #: src/app/Gate.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Here to follow discussions on documentation sites?"
 msgstr "Here to follow discussions on documentation sites?"
 
@@ -3227,6 +3250,10 @@ msgstr "Not shown"
 msgid "Not spam"
 msgstr "Not spam"
 
+#: src/features/auth/SignInForm.tsx
+msgid "Not there after a minute? Look in your spam or junk folder, or send a new code below."
+msgstr "Not there after a minute? Look in your spam or junk folder, or send a new code below."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "Not used yet"
@@ -3484,6 +3511,7 @@ msgid "Open what they see"
 msgstr "Open what they see"
 
 #: src/app/Gate.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Open your reader account"
 msgstr "Open your reader account"
 
@@ -4493,6 +4521,10 @@ msgstr "Shown on your posts. Leave it empty to show as “Reader”."
 msgid "Shown to your team and to contacts"
 msgstr "Shown to your team and to contacts"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Shown to your team and to customers you reply to"
+msgstr "Shown to your team and to customers you reply to"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Sign in"
 msgstr "Sign in"
@@ -4500,6 +4532,10 @@ msgstr "Sign in"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
+
+#: src/features/auth/SignInPage.tsx
+msgid "Sign in or create an account"
+msgstr "Sign in or create an account"
 
 #: src/features/account/AccountPage.tsx
 msgid "Sign in or create an account with your e-mail address to follow the discussions you write in on documentation sites. We e-mail you a one-time code; no password."
@@ -4528,6 +4564,7 @@ msgstr "Sign in:"
 #: src/app/Gate.tsx
 #: src/app/UserMenu.tsx
 #: src/features/account/AccountPage.tsx
+#: src/features/auth/CreateWorkspace.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Sign out"
 msgstr "Sign out"
@@ -5065,6 +5102,10 @@ msgstr "This request has ended"
 msgid "This server is not set up to send push notifications."
 msgstr "This server is not set up to send push notifications."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "This server no longer lets people create workspaces. Ask your team for an invitation."
+msgstr "This server no longer lets people create workspaces. Ask your team for an invitation."
+
 #: src/features/account/ConnectPage.tsx
 msgid "This site cannot connect"
 msgstr "This site cannot connect"
@@ -5148,6 +5189,10 @@ msgstr "Tomorrow morning"
 #: src/components/common/text.ts
 msgid "Too many attempts. Wait a little and try again."
 msgstr "Too many attempts. Wait a little and try again."
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Too many workspaces were created from your network today. Try again tomorrow."
+msgstr "Too many workspaces were created from your network today. Try again tomorrow."
 
 #: src/app/Gate.tsx
 #: src/features/account/AccountLayout.tsx
@@ -5359,6 +5404,10 @@ msgstr "Username"
 msgid "Usually replies within a day"
 msgstr "Usually replies within a day"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Usually your company or team; you can change it later"
+msgstr "Usually your company or team; you can change it later"
+
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
@@ -5416,12 +5465,20 @@ msgid "Was this page helpful?"
 msgstr "Was this page helpful?"
 
 #: src/features/auth/SignInPage.tsx
+msgid "We e-mail you a one-time code. A new address gets a new account; no password to remember."
+msgstr "We e-mail you a one-time code. A new address gets a new account; no password to remember."
+
+#: src/features/auth/SignInPage.tsx
 msgid "We e-mail you a one-time code. No password to remember."
 msgstr "We e-mail you a one-time code. No password to remember."
 
 #: src/features/auth/SignInForm.tsx
 msgid "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
 msgstr "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
+
+#: src/features/auth/SignInForm.tsx
+msgid "We sent a new code. Only the newest code works."
+msgstr "We sent a new code. Only the newest code works."
 
 #: src/components/common/text.ts
 #: src/features/settings/channels/chat/ChatFields.tsx
@@ -5631,6 +5688,10 @@ msgstr "Workspace"
 msgid "Workspace members"
 msgstr "Workspace members"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Workspace name"
+msgstr "Workspace name"
+
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "Write a message…"
@@ -5708,10 +5769,6 @@ msgstr "You are away"
 msgid "You are away. Live chat shows nobody available and notifications pause."
 msgstr "You are away. Live chat shows nobody available and notifications pause."
 
-#: src/app/Gate.tsx
-msgid "You are not a member of any workspace"
-msgstr "You are not a member of any workspace"
-
 #: src/features/oauth/ConsentPage.tsx
 msgid "You are not a member of any workspace, so there is nothing to connect."
 msgstr "You are not a member of any workspace, so there is nothing to connect."
@@ -5719,6 +5776,10 @@ msgstr "You are not a member of any workspace, so there is nothing to connect."
 #: src/components/common/text.ts
 msgid "You are not allowed to do this."
 msgstr "You are not allowed to do this."
+
+#: src/app/Gate.tsx
+msgid "You are not in a workspace yet"
+msgstr "You are not in a workspace yet"
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You are the only owner of a workspace. Make someone else an owner there, or delete that workspace, before you delete your account."
@@ -5751,6 +5812,10 @@ msgstr "You get a new secret once. For 24 hours every delivery carries two signa
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "You get a notification when someone replies in these"
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
+msgstr "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
 
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You have no passkeys yet."
@@ -5817,6 +5882,7 @@ msgid "Your first conversation is here"
 msgstr "Your first conversation is here"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Your name"
 msgstr "Your name"
 
@@ -5869,6 +5935,14 @@ msgstr "Yuva {version}"
 #: src/features/setup/InstallStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva does not run a mail server: your domain's mail is passed to it."
+
+#: src/app/Gate.tsx
+msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
+msgstr "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
+
+#: src/features/auth/SignInPage.tsx
+msgid "Yuva on this server is invite only. Ask your team for an invitation."
+msgstr "Yuva on this server is invite only. Ask your team for an invitation."
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

@@ -19,11 +19,13 @@ export function SignInForm({
   title,
   lead,
   reader,
+  note,
   onSignedIn,
 }: {
   title: React.ReactNode
   lead: React.ReactNode
   reader?: boolean
+  note?: React.ReactNode
   onSignedIn?: (me: Me) => void
 }) {
   const { t } = useLingui()
@@ -31,6 +33,7 @@ export function SignInForm({
   const [email, setEmail] = useState("")
   const [code, setCode] = useState("")
   const [step, setStep] = useState<"email" | "code">("email")
+  const [resent, setResent] = useState(false)
 
   const done = (data: Me) => {
     qc.setQueryData(meKey, data)
@@ -39,7 +42,10 @@ export function SignInForm({
 
   const request = useMutation({
     mutationFn: () => unwrap(api.POST("/v1/auth/code", { body: reader ? { email, reader: true } : { email } })),
-    onSuccess: () => setStep("code"),
+    onSuccess: () => {
+      setResent(step === "code")
+      setStep("code")
+    },
   })
   const verify = useMutation({
     mutationFn: () => unwrap(api.POST("/v1/auth/code/verify", { body: { email, code } })),
@@ -66,6 +72,15 @@ export function SignInForm({
             </Trans>
           )}
         </p>
+        {step === "code" && (
+          <p className="mt-2 text-pretty text-body text-muted-foreground" data-testid="sign-in-spam">
+            {resent ? (
+              <Trans>We sent a new code. Only the newest code works.</Trans>
+            ) : (
+              <Trans>Not there after a minute? Look in your spam or junk folder, or send a new code below.</Trans>
+            )}
+          </p>
+        )}
       </div>
 
       {step === "email" ? (
@@ -114,6 +129,7 @@ export function SignInForm({
               <Trans>The passkey sign-in did not complete. Try again or use an e-mailed code.</Trans>
             </p>
           )}
+          {note}
         </div>
       ) : (
         <form
@@ -159,7 +175,9 @@ export function SignInForm({
               onClick={() => {
                 setStep("email")
                 setCode("")
+                setResent(false)
                 verify.reset()
+                request.reset()
               }}
             >
               <ArrowLeftIcon />

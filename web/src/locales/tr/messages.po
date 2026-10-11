@@ -476,6 +476,10 @@ msgstr "Bir ekip arkadaşı"
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresiz gönderilmez."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
+msgstr "Çalışma alanı ekibinizi, gelen kutularınızı ve konuşmalarınızı bir arada tutar. Sahibi sizsiniz; başkalarını sonra davet edebilirsiniz."
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Accepted answer"
 msgstr "Kabul edilen yanıt"
@@ -824,10 +828,6 @@ msgstr "{name} olarak, {when} tarihinden beri"
 msgid "As above ({current})"
 msgstr "Yukarıdaki gibi ({current})"
 
-#: src/app/Gate.tsx
-msgid "Ask an owner or admin of your workspace to invite you."
-msgstr "Çalışma alanınızın sahibinden ya da bir yöneticisinden sizi davet etmesini isteyin."
-
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Ask for a rating after closing"
 msgstr "Bitince değerlendirme iste"
@@ -926,6 +926,7 @@ msgstr "şu an müsait"
 msgid "Away"
 msgstr "Uzakta"
 
+#: src/features/auth/CreateWorkspace.tsx
 #: src/features/contact/MergeContactDialog.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Back"
@@ -1365,6 +1366,19 @@ msgstr "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Create key"
 msgstr "Anahtar oluştur"
+
+#: src/app/UserMenu.tsx
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Create workspace"
+msgstr "Çalışma alanı oluştur"
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Create your workspace"
+msgstr "Çalışma alanınızı oluşturun"
+
+#: src/features/auth/SignInPage.tsx
+msgid "Create your Yuva account"
+msgstr "Yuva hesabınızı oluşturun"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Created"
@@ -1815,6 +1829,10 @@ msgstr "Geçerli bir e-posta adresi girin."
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Kullanıcı adı ve parola içermeyen bir http veya https adresi girin."
 
+#: src/features/auth/SignInPage.tsx
+msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
+msgstr "İş e-posta adresinizi yazın, size bir kod gönderelim. Parola yok; sonraki girişlerde de aynı şekilde kodla girersiniz."
+
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
 msgstr "Hata veya yanıt"
@@ -2000,6 +2018,10 @@ msgstr "Geliştiriciler için"
 msgid "For every inbox in this workspace, unless an inbox below says otherwise."
 msgstr "Aşağıda farklı ayarlanmış bir gelen kutusu yoksa bu çalışma alanındaki tüm gelen kutuları için."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "For example Acme"
+msgstr "Örn. Acme"
+
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "Örn. Fieldnote"
@@ -2140,6 +2162,7 @@ msgid "helpful share"
 msgstr "yararlı oranı"
 
 #: src/app/Gate.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Here to follow discussions on documentation sites?"
 msgstr "Dokümantasyon sitelerindeki tartışmaları takip etmek için mi geldiniz?"
 
@@ -3227,6 +3250,10 @@ msgstr "Gösterilmez"
 msgid "Not spam"
 msgstr "Spam değil"
 
+#: src/features/auth/SignInForm.tsx
+msgid "Not there after a minute? Look in your spam or junk folder, or send a new code below."
+msgstr "Bir dakika içinde gelmediyse spam ya da gereksiz klasörünüze bakın veya aşağıdan yeni kod isteyin."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "Henüz kullanılmadı"
@@ -3484,6 +3511,7 @@ msgid "Open what they see"
 msgstr "Baktığı konuşmayı aç"
 
 #: src/app/Gate.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Open your reader account"
 msgstr "Okuyucu hesabınızı açın"
 
@@ -4493,6 +4521,10 @@ msgstr "Gönderilerinizde görünür. “Okuyucu” olarak görünmek için boş
 msgid "Shown to your team and to contacts"
 msgstr "Ekibin ve müşteriler görür"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Shown to your team and to customers you reply to"
+msgstr "Ekibiniz ve yanıt verdiğiniz müşteriler görür"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Sign in"
 msgstr "Giriş yap"
@@ -4500,6 +4532,10 @@ msgstr "Giriş yap"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "İstemciden oturum açın. İstemci her şeyi adresten bulur: PKCE ile OAuth 2.1; kendini otomatik olarak ya da bir Client ID Metadata Document ile kaydeder."
+
+#: src/features/auth/SignInPage.tsx
+msgid "Sign in or create an account"
+msgstr "Giriş yapın ya da hesap oluşturun"
 
 #: src/features/account/AccountPage.tsx
 msgid "Sign in or create an account with your e-mail address to follow the discussions you write in on documentation sites. We e-mail you a one-time code; no password."
@@ -4528,6 +4564,7 @@ msgstr "Oturum açın:"
 #: src/app/Gate.tsx
 #: src/app/UserMenu.tsx
 #: src/features/account/AccountPage.tsx
+#: src/features/auth/CreateWorkspace.tsx
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Sign out"
 msgstr "Çıkış yap"
@@ -5065,6 +5102,10 @@ msgstr "Bu istek artık geçerli değil"
 msgid "This server is not set up to send push notifications."
 msgstr "Bu sunucu anlık bildirim gönderecek şekilde ayarlanmamış."
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "This server no longer lets people create workspaces. Ask your team for an invitation."
+msgstr "Bu sunucuda artık çalışma alanı oluşturulamıyor. Ekibinizden davet isteyin."
+
 #: src/features/account/ConnectPage.tsx
 msgid "This site cannot connect"
 msgstr "Bu site bağlanamıyor"
@@ -5148,6 +5189,10 @@ msgstr "Yarın sabah"
 #: src/components/common/text.ts
 msgid "Too many attempts. Wait a little and try again."
 msgstr "Çok fazla deneme yapıldı. Biraz bekleyip yeniden deneyin."
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Too many workspaces were created from your network today. Try again tomorrow."
+msgstr "Bugün ağınızdan çok fazla çalışma alanı oluşturuldu. Yarın yeniden deneyin."
 
 #: src/app/Gate.tsx
 #: src/features/account/AccountLayout.tsx
@@ -5359,6 +5404,10 @@ msgstr "Kullanıcı adı"
 msgid "Usually replies within a day"
 msgstr "Genellikle bir gün içinde yanıtlar"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Usually your company or team; you can change it later"
+msgstr "Genellikle şirketinizin ya da ekibinizin adı; sonra değiştirebilirsiniz"
+
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Her isteğe güvenmeden önce doğrulayın: <0>webhook-signature</0> başlığı <1>Standard Webhooks</1> belirtimine uyar, bu yüzden onun kütüphanelerinden herhangi biri uç noktanın anahtarıyla imzayı denetleyebilir. Go arka uçları Yuva deposundaki <2>sdk/go/webhook</2> paketini kullanabilir."
@@ -5416,12 +5465,20 @@ msgid "Was this page helpful?"
 msgstr "Bu sayfa işinize yaradı mı?"
 
 #: src/features/auth/SignInPage.tsx
+msgid "We e-mail you a one-time code. A new address gets a new account; no password to remember."
+msgstr "Size e-postayla tek kullanımlık bir kod göndeririz. Yeni bir adresle girerseniz hesabınız oluşturulur; hatırlamanız gereken bir parola yok."
+
+#: src/features/auth/SignInPage.tsx
 msgid "We e-mail you a one-time code. No password to remember."
 msgstr "Size e-postayla tek kullanımlık bir kod göndeririz. Hatırlamanız gereken bir parola yok."
 
 #: src/features/auth/SignInForm.tsx
 msgid "We sent a 6-digit code to <0>{email}</0>. It is valid for 10 minutes."
 msgstr "<0>{email}</0> adresine 6 haneli bir kod gönderdik. Kod 10 dakika geçerlidir."
+
+#: src/features/auth/SignInForm.tsx
+msgid "We sent a new code. Only the newest code works."
+msgstr "Yeni bir kod gönderdik. Yalnızca en son gönderilen kod geçerli."
 
 #: src/components/common/text.ts
 #: src/features/settings/channels/chat/ChatFields.tsx
@@ -5631,6 +5688,10 @@ msgstr "Çalışma alanı"
 msgid "Workspace members"
 msgstr "Çalışma alanı üyeleri"
 
+#: src/features/auth/CreateWorkspace.tsx
+msgid "Workspace name"
+msgstr "Çalışma alanı adı"
+
 #: src/features/setup/previews.tsx
 msgid "Write a message…"
 msgstr "Bir mesaj yazın…"
@@ -5708,10 +5769,6 @@ msgstr "Uzaktasın"
 msgid "You are away. Live chat shows nobody available and notifications pause."
 msgstr "Uzaktasın. Canlı sohbette kimse çevrimiçi görünmez ve bildirimler durur."
 
-#: src/app/Gate.tsx
-msgid "You are not a member of any workspace"
-msgstr "Hiçbir çalışma alanına üye değilsiniz"
-
 #: src/features/oauth/ConsentPage.tsx
 msgid "You are not a member of any workspace, so there is nothing to connect."
 msgstr "Hiçbir çalışma alanının üyesi değilsiniz, bu yüzden bağlanacak bir şey yok."
@@ -5719,6 +5776,10 @@ msgstr "Hiçbir çalışma alanının üyesi değilsiniz, bu yüzden bağlanacak
 #: src/components/common/text.ts
 msgid "You are not allowed to do this."
 msgstr "Bunu yapma izniniz yok."
+
+#: src/app/Gate.tsx
+msgid "You are not in a workspace yet"
+msgstr "Henüz bir çalışma alanında değilsiniz"
 
 #: src/features/auth/DeleteAccountButton.tsx
 msgid "You are the only owner of a workspace. Make someone else an owner there, or delete that workspace, before you delete your account."
@@ -5751,6 +5812,10 @@ msgstr "Yeni anahtar yalnızca bir kez gösterilir. 24 saat boyunca her gönderi
 #: src/features/account/AccountPage.tsx
 msgid "You get a notification when someone replies in these"
 msgstr "Bunlarda biri yanıt yazdığında bildirim alırsınız"
+
+#: src/features/auth/CreateWorkspace.tsx
+msgid "You have created as many workspaces as this server allows. Delete one you no longer use, or ask to be invited to another."
+msgstr "Bu sunucunun izin verdiği sayıda çalışma alanı oluşturdunuz. Artık kullanmadığınız birini silin ya da başka birine davet isteyin."
 
 #: src/features/settings/profile/Passkeys.tsx
 msgid "You have no passkeys yet."
@@ -5817,6 +5882,7 @@ msgid "Your first conversation is here"
 msgstr "İlk konuşmanız geldi"
 
 #: src/features/account/ConnectPage.tsx
+#: src/features/auth/CreateWorkspace.tsx
 msgid "Your name"
 msgstr "Adınız"
 
@@ -5869,6 +5935,14 @@ msgstr "Yuva {version}"
 #: src/features/setup/InstallStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva kendi posta sunucusunu çalıştırmaz: alan adınıza gelen postalar ona iletilir."
+
+#: src/app/Gate.tsx
+msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
+msgstr "Bu sunucudaki Yuva'ya yalnızca davetle girilebilir. Ekibinizin çalışma alanının sahibinden ya da yöneticisinden davet isteyin."
+
+#: src/features/auth/SignInPage.tsx
+msgid "Yuva on this server is invite only. Ask your team for an invitation."
+msgstr "Bu sunucudaki Yuva'ya yalnızca davetle girilebilir. Ekibinizden davet isteyin."
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

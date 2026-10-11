@@ -8,6 +8,7 @@ import {
   LogOutIcon,
   MonitorIcon,
   MoonIcon,
+  PlusIcon,
   SunIcon,
   UserIcon,
 } from "lucide-react"
@@ -60,7 +61,7 @@ export function UserMenu({
   const signOut = useSignOut()
   const install = useInstallPrompt()
   const changeLocale = useChangeLocale()
-  const version = useVersion().data?.version
+  const { version, signup } = useVersion().data ?? {}
   const live = useRealtimeStatus() === "live"
   const availability = me.person.availability
   const setAvailability = useSetAvailability()
@@ -142,7 +143,7 @@ export function UserMenu({
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        {me.memberships.length > 1 && (
+        {(me.memberships.length > 1 || signup === "open") && (
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <BuildingIcon />
@@ -159,6 +160,15 @@ export function UserMenu({
                   </DropdownMenuRadioItem>
                 ))}
               </DropdownMenuRadioGroup>
+              {signup === "open" && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/workspaces/new")} data-testid="create-workspace">
+                    <PlusIcon />
+                    <Trans>Create workspace</Trans>
+                  </DropdownMenuItem>
+                </>
+              )}
             </DropdownMenuSubContent>
           </DropdownMenuSub>
         )}

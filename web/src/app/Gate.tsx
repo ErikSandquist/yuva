@@ -8,8 +8,9 @@ import { EmptyState } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "@/features/auth/AuthLayout"
 import { DeleteAccountButton } from "@/features/auth/DeleteAccountButton"
+import { CreateWorkspace } from "@/features/auth/CreateWorkspace"
 import { activate, i18n } from "@/i18n"
-import type { Me } from "@/lib/api"
+import { useVersion, type Me } from "@/lib/api"
 import { signInPath } from "@/lib/next"
 import { pickMembership, SessionProvider, useMe, useSignOut, useWorkspaceChoice } from "@/lib/session"
 import { Item } from "@/components/ui/item"
@@ -25,10 +26,12 @@ function NoWorkspace({ email }: { email: string }) {
         <BuildingIcon className="size-5" />
       </span>
       <h1 className={heading}>
-        <Trans>You are not a member of any workspace</Trans>
+        <Trans>You are not in a workspace yet</Trans>
       </h1>
       <p className="mt-3 text-muted-foreground">
-        <Trans>Ask an owner or admin of your workspace to invite you.</Trans>
+        <Trans>
+          Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation.
+        </Trans>
       </p>
       <p className="mt-4 rounded-xl bg-surface px-3.5 py-2.5 text-body break-words">{email}</p>
       <div className="mt-8 flex flex-wrap items-center gap-2">
@@ -84,6 +87,7 @@ function WorkspacePicker({ me, onChoose }: { me: Me; onChoose: (id: string) => v
 
 export function Gate() {
   const me = useMe()
+  const version = useVersion()
   const location = useLocation()
   const navigate = useNavigate()
   const [chosen, choose] = useWorkspaceChoice()
@@ -97,9 +101,9 @@ export function Gate() {
     if (personLocale && personLocale !== i18n.locale) activate(personLocale)
   }, [personLocale])
   const onSwitch = useCallback(
-    (id: string) => {
+    (id: string, to = "/") => {
       choose(id)
-      navigate("/")
+      navigate(to)
     },
     [choose, navigate]
   )
@@ -117,7 +121,12 @@ export function Gate() {
     )
   }
   if (!me.data) return <Navigate to={signInPath(location.pathname, location.search)} replace />
-  if (me.data.memberships.length === 0) return <NoWorkspace email={me.data.person.email} />
+  if (me.data.memberships.length === 0) {
+    if (version.isPending) return <div className="min-h-svh bg-background" />
+    if (version.data?.signup === "open")
+      return <CreateWorkspace me={me.data} onCreated={(id) => onSwitch(id, "/setup")} />
+    return <NoWorkspace email={me.data.person.email} />
+  }
   const membership = pickMembership(me.data, linkedMember ? linked : chosen)
   if (!membership) return <WorkspacePicker me={me.data} onChoose={choose} />
   return (

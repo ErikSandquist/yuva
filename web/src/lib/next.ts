@@ -1,6 +1,8 @@
 export function signInPath(path: string, search: string): string {
   const next = path + search
-  return next === "/" ? "/sign-in" : `/sign-in?next=${encodeURIComponent(next)}`
+  if (next === "/") return "/sign-in"
+  if (path === "/" && new URLSearchParams(search).get("signup") === "1") return "/sign-in?signup=1"
+  return `/sign-in?next=${encodeURIComponent(next)}`
 }
 
 export function safeNext(raw: string | null): string {

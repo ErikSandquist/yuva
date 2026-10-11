@@ -53,7 +53,8 @@ export interface paths {
         };
         /**
          * Server version
-         * @description The version of the running server build.
+         * @description The version of the running server build and whether anyone may sign up (`signup`), so a
+         *     sign-in page can offer "Create an account" or say that the server is invite only.
          */
         get: operations["getVersion"];
         put?: never;
@@ -76,8 +77,9 @@ export interface paths {
         /**
          * Request a sign-in code
          * @description Sends a one-time code to the address when it belongs to a person (a member, a former member
-         *     or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-         *     creates the person on verification. The answer is the same either way and takes the same
+         *     or a reader) or has a pending invite, or to any address with `reader: true` or when the
+         *     server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+         *     workspace, on verification. The answer is the same either way and takes the same
          *     time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
          *     most recent code of an address is accepted.
          */
@@ -102,7 +104,9 @@ export interface paths {
          * @description Exchanges a valid code for a member session. Each code accepts five attempts. After 20
          *     wrong codes for an address within 24 hours, codes for it are refused
          *     (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-         *     e-mail; passkeys still work. Pending invites for the address are accepted on success.
+         *     e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+         *     address that is not yet a person becomes one when it has an invite, when the code was
+         *     requested with `reader: true`, or when the server's sign-up is `open`.
          */
         post: operations["verifySignInCode"];
         delete?: never;
@@ -635,6 +639,34 @@ export interface paths {
          *     Scope: `workspace:manage`.
          */
         patch: operations["updateWorkspace"];
+        trace?: never;
+    };
+    "/v1/workspaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a workspace
+         * @description Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+         *     is `open` (`403 signup_closed` otherwise; operators create workspaces with
+         *     `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+         *     workspaces they created (`403 workspace_limit`), and at most
+         *     `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+         *     hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+         *
+         *     Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+         *     `Yuva-Workspace` to act on it.
+         */
+        post: operations["createWorkspace"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/members": {
@@ -3894,6 +3926,9 @@ export interface components {
             /** Format: date-time */
             created_at: string;
         };
+        WorkspaceCreate: {
+            name: string;
+        };
         /** @description Only the fields sent change; at least one is required. */
         WorkspaceUpdate: {
             /**
@@ -6252,7 +6287,7 @@ export interface components {
             opening_post_id: string;
             /** @description Markdown as written; empty once the opening post was deleted. */
             body: string;
-            /** @description `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow ugc noopener"`). */
+            /** @description `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow noreferrer"`, and links to other sites also `target="_blank"` with `noopener`). */
             body_html: string;
             author: components["schemas"]["DiscussionAuthor"];
             state: components["schemas"]["DiscussionState"];
@@ -6522,7 +6557,10 @@ export interface components {
             page: string;
             inbox_name: string;
             author?: components["schemas"]["DiscussionAuthor"];
-            /** @description The start of the post, at most 200 characters of plain text. */
+            /**
+             * @description The start of the post as plain text: the text of its rendered HTML (no Markdown or
+             *     markup), whitespace collapsed, at most 200 characters, cut at a word boundary and ending in an ellipsis.
+             */
             excerpt: string;
             /** Format: date-time */
             created_at: string;
@@ -7096,6 +7134,13 @@ export interface components {
              * @example 0.1.0
              */
             version: string;
+            /**
+             * @description `invite`: only people with an invite (or an existing account) can sign in to the panel.
+             *     `open`: anyone can sign in with an e-mailed code and create a workspace
+             *     (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.
+             * @enum {string}
+             */
+            signup: "invite" | "open";
         };
         /** @description An RFC 9457 problem document. */
         Problem: {
@@ -8084,6 +8129,34 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+        };
+    };
+    createWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkspaceCreate"];
+            };
+        };
+        responses: {
+            /** @description The new workspace. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Workspace"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     listMembers: {

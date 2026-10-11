@@ -4,6 +4,7 @@ import { Gate } from "@/app/Gate"
 import { Layout } from "@/app/Layout"
 import { AccountPage } from "@/features/account/AccountPage"
 import { ConnectPage } from "@/features/account/ConnectPage"
+import { NewWorkspacePage } from "@/features/auth/CreateWorkspace"
 import { SignInPage } from "@/features/auth/SignInPage"
 import { ContactPage } from "@/features/contact/ContactPage"
 import { ContactsHome } from "@/features/contact/ContactsColumn"
@@ -41,6 +42,7 @@ export function AppRoutes() {
       <Route path="account" element={<AccountPage />} />
       <Route path="account/connect" element={<ConnectPage />} />
       <Route element={<Gate />}>
+        <Route path="workspaces/new" element={<NewWorkspacePage />} />
         <Route path="setup" element={<SetupPage />} />
         <Route path="setup/:inboxId" element={<SetupPage />} />
         <Route path="setup/:inboxId/add/:kind" element={<SetupPage />} />

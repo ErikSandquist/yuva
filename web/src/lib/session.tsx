@@ -49,7 +49,7 @@ type Session = {
   membership: Membership
   workspaceId: string
   canManage: boolean
-  switchWorkspace: (id: string) => void
+  switchWorkspace: (id: string, to?: string) => void
 }
 
 const SessionContext = createContext<Session | null>(null)
@@ -77,7 +77,7 @@ export function SessionProvider({
 }: {
   me: Me
   membership: Membership
-  onSwitch: (id: string) => void
+  onSwitch: (id: string, to?: string) => void
   children: React.ReactNode
 }) {
   setWorkspace(membership.workspace.id)
