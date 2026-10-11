@@ -11,6 +11,8 @@ Each agent definition sets its own `model` and `effort`, so an agent never inher
 session's level: architects run Opus at `high`, the code owners Opus at `medium`, docs, edge and the
 verifier Sonnet at `medium`. Pass a higher `effort` with a task only when that task is hard
 (security, data migrations, concurrency, a bug nobody could find), a lower one for mechanical work.
+Agents cannot start other agents (`disallowedTools: Agent`): fan-out multiplies cost and its
+results die with a stopped parent; the orchestrator alone runs agents, one area at a time.
 
 ## Parts and checks
 

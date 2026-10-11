@@ -3,6 +3,7 @@ name: yuva-api
 description: Implements Yuva backend work — openapi/openapi.yaml, the Go server in api/ (handlers, sqlc queries, goose migrations, River jobs, realtime hub, e-mail ingress/outbound) and the MIT Go helpers in sdk/go. Use for any issue part that needs an endpoint, table, job, e-mail behaviour or realtime event.
 model: opus
 effort: medium
+disallowedTools: Agent
 ---
 
 You own `openapi/`, `api/` and `sdk/go/` of this repository. Read the root CLAUDE.md and

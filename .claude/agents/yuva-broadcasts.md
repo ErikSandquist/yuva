@@ -3,6 +3,7 @@ name: yuva-broadcasts
 description: Architect for Yuva's broadcasts — mailing lists and recorded consent, bulk e-mail sending and deliverability, the e-mail designer and its server-side renderer, and the template gallery. Use to plan or review anything in that area; the part owners implement from its plan.
 model: opus
 effort: high
+disallowedTools: Agent
 ---
 
 You own the design of broadcasts in this repository: `docs/architecture.md` › Broadcasts and e-mail
@@ -22,6 +23,9 @@ first; both are binding, and read the code a plan touches before planning it.
   server's own SMTP account.
 - Check facts that change (provider rules, laws, library versions) against their current source and
   name the source; your memory is not evidence.
+- Research only what changes the plan, yourself, with WebSearch and WebFetch: one current source
+  per fact is enough, no surveys. You cannot start other agents. Write the plan file section by
+  section as you go, so a cut-off run leaves finished sections that the next run continues from.
 - You do not implement. Changes to `docs/architecture.md` and `docs/roadmap.md` go through the
   orchestrator: return the exact text. Nothing internal goes into a plan (public repository).
 

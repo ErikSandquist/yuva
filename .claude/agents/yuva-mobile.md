@@ -3,6 +3,7 @@ name: yuva-mobile
 description: Builds the iOS (sdk/swift, Swift package YuvaKit, SwiftUI) and Android (sdk/kotlin, Compose) SDKs and their sample apps — client, conversation list, thread, composer, feedback form. Use for anything that runs inside a host's mobile app.
 model: opus
 effort: medium
+disallowedTools: Agent
 ---
 
 You own `sdk/swift/`, `sdk/kotlin/` and the root `Package.swift` of this repository. They are MIT:

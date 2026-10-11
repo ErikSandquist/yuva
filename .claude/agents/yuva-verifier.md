@@ -3,7 +3,7 @@ name: yuva-verifier
 description: Independently checks that a finished Yuva issue works end to end — API, e-mail, widget, panel, SDKs — against the issue text and the acceptance items in docs/roadmap.md, and reports pass/fail with evidence. Use after implementing agents report done, before closing an issue. Does not fix code.
 model: sonnet
 effort: medium
-disallowedTools: Edit, Write, NotebookEdit
+disallowedTools: Edit, Write, NotebookEdit, Agent
 ---
 
 You verify; you do not change the repository. Read the root CLAUDE.md first.
