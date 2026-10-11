@@ -2,6 +2,7 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import {
   BadgeCheckIcon,
   BarChart3Icon,
+  GlobeIcon,
   MessageCircleQuestionMarkIcon,
   MessageSquareTextIcon,
   ThumbsDownIcon,
@@ -10,12 +11,22 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
-import { Dot, ErrorLine, Segmented } from "@/components/common"
+import { Dot, ErrorLine, hostOf, Segmented } from "@/components/common"
 import { Column, ColumnLink } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { pageLabel } from "@/features/docs/AnswerDialog"
-import { docsPageLink, SORTS, useDocsDays, useDocsPages, useDocsSort, WINDOWS } from "@/features/docs/queries"
+import {
+  docsPageLink,
+  SORTS,
+  useDocsDays,
+  useDocsPages,
+  useDocsSite,
+  useDocsSites,
+  useDocsSort,
+  WINDOWS,
+} from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useHotkeys } from "@/hooks/use-hotkeys"
@@ -225,6 +236,63 @@ export function DocsSort({ className }: { className?: string }) {
   )
 }
 
+export function usePickedSite(inboxId: string) {
+  const [days] = useDocsDays()
+  const [site] = useDocsSite()
+  const sites = useDocsSites(inboxId, days).data?.items
+  return site && sites && !sites.some((s) => s.origin === site) ? "" : site
+}
+
+const ALL_SITES = "all"
+
+export function DocsSitePicker({ className }: { className?: string }) {
+  const { t } = useLingui()
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const [inboxId] = useInboxFilter()
+  const [days] = useDocsDays()
+  const [, setSite] = useDocsSite()
+  const site = usePickedSite(inboxId)
+  const all = useDocsSites(inboxId, days).data?.items ?? []
+  const sites = all.filter((s, i) => all.findIndex((x) => x.origin === s.origin) === i)
+  if (sites.length === 0) return null
+  const nameOf = (origin: string) => all.find((x) => x.origin === origin && x.channel_name)?.channel_name
+  const items: Record<string, string> = {
+    [ALL_SITES]: t`All sites`,
+    ...Object.fromEntries(sites.map((s) => [s.origin, nameOf(s.origin) || hostOf(s.origin)])),
+  }
+  return (
+    <Select
+      value={site || ALL_SITES}
+      items={items}
+      onValueChange={(v) => {
+        const next = !v || v === ALL_SITES ? "" : String(v)
+        setSite(next)
+        if (pathname === "/docs/page") navigate("/docs")
+      }}
+    >
+      <SelectTrigger aria-label={t`Site`} className={cn("w-auto", className)} data-testid="docs-site-picker">
+        <GlobeIcon className="size-4 text-faint" />
+        <SelectValue className="min-w-0 flex-1 truncate text-start" />
+      </SelectTrigger>
+      <SelectContent className="min-w-64">
+        <SelectItem value={ALL_SITES}>{t`All sites`}</SelectItem>
+        {sites.map((s) => {
+          const name = nameOf(s.origin)
+          return (
+            <SelectItem key={s.origin} value={s.origin} data-testid="docs-site-option">
+              <span className="flex min-w-0 flex-col">
+                <span className="truncate">{name || hostOf(s.origin)}</span>
+                {name && <small className="truncate text-caption text-faint">{hostOf(s.origin)}</small>}
+              </span>
+            </SelectItem>
+          )
+        })}
+      </SelectContent>
+    </Select>
+  )
+}
+
 export function DocsColumn() {
   const { t } = useLingui()
   const navigate = useNavigate()
@@ -236,12 +304,13 @@ export function DocsColumn() {
   const phone = useIsPhone()
   const inboxes = useInboxes().data ?? []
   const colors = new Map(inboxes.map((i) => [i.id, i.branding.color]))
-  const pages = useDocsPages(inboxId, days, sort)
+  const site = usePickedSite(inboxId)
+  const pages = useDocsPages(inboxId, site, days, sort)
   const items = pages.data?.pages.flatMap((p) => p.items) ?? []
   const currentKey = pathname === "/docs/page" ? `${params.get("inbox")} ${params.get("url")}` : ""
   const [cursor, setCursor] = useState(-1)
   const list = useRef<HTMLUListElement>(null)
-  useEffect(() => setCursor(-1), [inboxId, days, sort])
+  useEffect(() => setCursor(-1), [inboxId, site, days, sort])
 
   useHotkeys({
     j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
@@ -263,6 +332,7 @@ export function DocsColumn() {
       bodyClassName="px-2"
     >
       <nav aria-label={t`Documentation pages`} className="flex flex-col">
+        <DocsSitePicker className="mx-1 mb-2.5" />
         <DocsWindow className="mx-1 mb-2.5 flex" />
         <DocsSort className="mx-1 mb-2" />
         <ColumnLink to={phone ? "/docs/overview" : "/docs"} end testId="docs-overview-link">

@@ -548,6 +548,10 @@ msgstr "Tüm konuşmaları da onunla birlikte silinir."
 msgid "All scopes"
 msgstr "Tüm yetkiler"
 
+#: src/features/docs/DocsColumn.tsx
+msgid "All sites"
+msgstr "Tüm siteler"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "Allow"
 msgstr "İzin ver"
@@ -4107,6 +4111,7 @@ msgstr "yalnızca oturum açmış kullanıcılar"
 msgid "Signing secret"
 msgstr "İmzalama anahtarı"
 
+#: src/features/docs/DocsColumn.tsx
 #: src/features/inbox/SourceFilter.tsx
 msgid "Site"
 msgstr "Site"

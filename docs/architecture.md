@@ -944,7 +944,9 @@ serve both.
   a single `up` never leads) or most activity (ratings plus open feedback and questions). The list
   is an aggregate, so its cursor is a position within one sort and window. Above it, totals over
   the window and a zero-filled series per day of ratings, page feedback and questions
-  (`GET /v1/docs/summary`) feed the charts. A page shows its ratings per day
+  (`GET /v1/docs/summary`) feed the charts. A site picker at the top of the Docs column (all sites,
+  or each site by its channel name and host, from `GET /v1/docs/sites`) passes `site=` to the list,
+  the summary and the page; changing it while a page is open goes back to the overview. A page shows its ratings per day
   (`GET /v1/docs/page`), its feedback and questions (`GET /v1/conversations?page=`) and its
   published answers (`GET /v1/page-answers?page=`). In a `question` conversation the composer has
   a second send action, "Send and publish to page" (⌥/Alt + ⌘/Ctrl + Enter), which posts the reply

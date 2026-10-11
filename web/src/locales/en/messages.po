@@ -548,6 +548,10 @@ msgstr "All of its conversations are deleted with it."
 msgid "All scopes"
 msgstr "All scopes"
 
+#: src/features/docs/DocsColumn.tsx
+msgid "All sites"
+msgstr "All sites"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "Allow"
 msgstr "Allow"
@@ -4107,6 +4111,7 @@ msgstr "signed-in users only"
 msgid "Signing secret"
 msgstr "Signing secret"
 
+#: src/features/docs/DocsColumn.tsx
 #: src/features/inbox/SourceFilter.tsx
 msgid "Site"
 msgstr "Site"

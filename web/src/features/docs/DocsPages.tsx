@@ -1,8 +1,8 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { BookOpenTextIcon, ExternalLinkIcon } from "lucide-react"
+import { BookOpenTextIcon, ExternalLinkIcon, GlobeIcon } from "lucide-react"
 import { Link, useSearchParams } from "react-router"
 
-import { ContactAvatar, Dot, ErrorLine } from "@/components/common"
+import { ContactAvatar, Dot, ErrorLine, hostOf } from "@/components/common"
 import { Pane, PaneBack, PaneEmpty } from "@/components/common/Column"
 import { formatShort, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { CategoryChip } from "@/features/conversation/Feedback"
 import { AnswerCard, pageLabel, useAnswerActions } from "@/features/docs/AnswerDialog"
 import { DailyChart, zeroFill } from "@/features/docs/DailyChart"
-import { DocsGuide, DocsWindow, helpfulShare } from "@/features/docs/DocsColumn"
+import { DocsGuide, DocsSitePicker, DocsWindow, helpfulShare, usePickedSite } from "@/features/docs/DocsColumn"
 import { PageRatingMark } from "@/features/docs/PageContext"
 import {
   useDocsDays,
@@ -32,7 +32,8 @@ export function DocsHome() {
   const [inboxId] = useInboxFilter()
   const [days] = useDocsDays()
   const [sort] = useDocsSort()
-  const pages = useDocsPages(inboxId, days, sort)
+  const site = usePickedSite(inboxId)
+  const pages = useDocsPages(inboxId, site, days, sort)
   const none = !!pages.data && pages.data.pages[0]?.items.length === 0
   if (none) {
     return (
@@ -65,7 +66,8 @@ export function DocsOverview() {
   const { t, i18n } = useLingui()
   const [inboxId] = useInboxFilter()
   const [days] = useDocsDays()
-  const summary = useDocsSummary(inboxId, days)
+  const site = usePickedSite(inboxId)
+  const summary = useDocsSummary(inboxId, site, days)
   const ratings = useRatingConfig()
   const conversations: ChartConfig = {
     feedback: { label: t`Feedback`, theme: { light: "#c2410c", dark: "#ea580c" } },
@@ -87,7 +89,14 @@ export function DocsOverview() {
             other="The last # days, over the inboxes you can see."
           />
         </p>
+        {site && (
+          <p className="mt-1 inline-flex items-center gap-1.5 text-body text-muted-foreground" data-testid="docs-site">
+            <GlobeIcon className="size-4 text-faint" />
+            <span dir="ltr">{hostOf(site)}</span>
+          </p>
+        )}
       </header>
+      <DocsSitePicker className="hidden phone:flex" />
       <DocsWindow className="hidden phone:flex" />
       {summary.isPending && <Skeleton className="h-28 rounded-2xl" />}
       <ErrorLine error={summary.error} />
@@ -300,7 +309,8 @@ export function DocsPagePane() {
   const inboxId = params.get("inbox") ?? ""
   const page = params.get("url") ?? ""
   const [days] = useDocsDays()
-  const detail = useDocsPage(inboxId, page, days)
+  const site = usePickedSite("")
+  const detail = useDocsPage(inboxId, page, site, days)
   const inbox = (useInboxes().data ?? []).find((i) => i.id === inboxId)
   const d = detail.data?.page
   const fmt = new Intl.NumberFormat(i18n.locale)

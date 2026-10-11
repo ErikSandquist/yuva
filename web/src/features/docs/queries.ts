@@ -25,19 +25,29 @@ function store<T>(initial: T) {
 
 export const useDocsDays = store<DocsDays>(30)
 export const useDocsSort = store<DocsPageSort>("down")
+export const useDocsSite = store<string>("")
 
 export function docsPageLink(inboxId: string, page: string) {
   return `/docs/page?${new URLSearchParams({ inbox: inboxId, url: page })}`
 }
 
-export function useDocsPages(inboxId: string, d: DocsDays, sort: DocsPageSort) {
+export function useDocsPages(inboxId: string, site: string, d: DocsDays, sort: DocsPageSort) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
-    queryKey: keys.docsPages(ws, inboxId, d, sort),
+    queryKey: keys.docsPages(ws, inboxId, site, d, sort),
     queryFn: ({ pageParam }) =>
       unwrap(
         api.GET("/v1/docs/pages", {
-          params: { query: { inbox_id: inboxId || undefined, days: d, sort, cursor: pageParam, limit: 100 } },
+          params: {
+            query: {
+              inbox_id: inboxId || undefined,
+              site: site || undefined,
+              days: d,
+              sort,
+              cursor: pageParam,
+              limit: 100,
+            },
+          },
         })
       ),
     initialPageParam: undefined as string | undefined,
@@ -45,20 +55,27 @@ export function useDocsPages(inboxId: string, d: DocsDays, sort: DocsPageSort) {
   })
 }
 
-export function useDocsSummary(inboxId: string, d: DocsDays) {
+export function useDocsSummary(inboxId: string, site: string, d: DocsDays) {
   const { workspaceId: ws } = useSession()
   return useQuery({
-    queryKey: keys.docsSummary(ws, inboxId, d),
+    queryKey: keys.docsSummary(ws, inboxId, site, d),
     queryFn: () =>
-      unwrap(api.GET("/v1/docs/summary", { params: { query: { inbox_id: inboxId || undefined, days: d } } })),
+      unwrap(
+        api.GET("/v1/docs/summary", {
+          params: { query: { inbox_id: inboxId || undefined, site: site || undefined, days: d } },
+        })
+      ),
   })
 }
 
-export function useDocsPage(inboxId: string, page: string, d: DocsDays) {
+export function useDocsPage(inboxId: string, page: string, site: string, d: DocsDays) {
   const { workspaceId: ws } = useSession()
   return useQuery({
-    queryKey: keys.docsPage(ws, inboxId, page, d),
-    queryFn: () => unwrap(api.GET("/v1/docs/page", { params: { query: { inbox_id: inboxId, page, days: d } } })),
+    queryKey: keys.docsPage(ws, inboxId, page, site, d),
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/docs/page", { params: { query: { inbox_id: inboxId, page, site: site || undefined, days: d } } })
+      ),
     enabled: !!inboxId && !!page,
   })
 }

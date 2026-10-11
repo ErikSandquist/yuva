@@ -47,11 +47,12 @@ export const keys = {
   draftLists: (ws: string) => ["ws", ws, "drafts"] as const,
   drafts: (ws: string, f: DraftFilters) => ["ws", ws, "drafts", f] as const,
   docs: (ws: string) => ["ws", ws, "docs"] as const,
-  docsPages: (ws: string, inbox: string, days: DocsDays, sort: DocsPageSort) =>
-    ["ws", ws, "docs", "pages", inbox, days, sort] as const,
-  docsSummary: (ws: string, inbox: string, days: DocsDays) => ["ws", ws, "docs", "summary", inbox, days] as const,
-  docsPage: (ws: string, inbox: string, page: string, days: DocsDays) =>
-    ["ws", ws, "docs", "page", inbox, page, days] as const,
+  docsPages: (ws: string, inbox: string, site: string, days: DocsDays, sort: DocsPageSort) =>
+    ["ws", ws, "docs", "pages", inbox, site, days, sort] as const,
+  docsSummary: (ws: string, inbox: string, site: string, days: DocsDays) =>
+    ["ws", ws, "docs", "summary", inbox, site, days] as const,
+  docsPage: (ws: string, inbox: string, page: string, site: string, days: DocsDays) =>
+    ["ws", ws, "docs", "page", inbox, page, site, days] as const,
   docsSites: (ws: string, inbox: string, days: DocsDays) => ["ws", ws, "docs", "sites", inbox, days] as const,
   pageAnswers: (ws: string, f: PageAnswerFilters) => ["ws", ws, "docs", "answers", f] as const,
 }
