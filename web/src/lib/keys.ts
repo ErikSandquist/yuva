@@ -1,4 +1,4 @@
-import type { ConversationQuery, DiscussionQuery, DocsPageSort, DraftAuthorKind } from "@/lib/api"
+import type { ConversationQuery, DiscussionQuery, DocsPageSort, DraftAuthorKind, SubscriptionState } from "@/lib/api"
 
 export type ConversationFilters = Omit<ConversationQuery, "cursor" | "limit">
 
@@ -7,6 +7,8 @@ export type DraftFilters = { inbox_id?: string; author?: DraftAuthorKind }
 export type DocsDays = 7 | 30 | 90
 
 export type DiscussionFilters = Omit<DiscussionQuery, "cursor" | "limit">
+
+export type GrowthDays = 30 | 90
 
 export type QueueFilters = { inbox_id?: string; site?: string; page?: string }
 
@@ -60,4 +62,12 @@ export const keys = {
   discussionList: (ws: string, f: DiscussionFilters) => ["ws", ws, "discussions", "list", f] as const,
   discussion: (ws: string, id: string) => ["ws", ws, "discussions", "one", id] as const,
   discussionQueue: (ws: string, f: QueueFilters) => ["ws", ws, "discussions", "queue", f] as const,
+  lists: (ws: string) => ["ws", ws, "lists"] as const,
+  listPages: (ws: string, inbox: string, archived: boolean) => ["ws", ws, "lists", "pages", inbox, archived] as const,
+  list: (ws: string, id: string) => ["ws", ws, "lists", "one", id] as const,
+  listGrowth: (ws: string, id: string, days: GrowthDays) => ["ws", ws, "lists", "growth", id, days] as const,
+  subscriptions: (ws: string, list: string, state: SubscriptionState | "", q: string) =>
+    ["ws", ws, "lists", "subscriptions", list, state, q] as const,
+  subscription: (ws: string, list: string, id: string) => ["ws", ws, "lists", "subscription", list, id] as const,
+  contactSubscriptions: (ws: string, contact: string) => ["ws", ws, "lists", "contact", contact] as const,
 }

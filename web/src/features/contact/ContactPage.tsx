@@ -21,6 +21,7 @@ import {
 } from "@/features/contact/ContactDetails"
 import { MergeContactDialog } from "@/features/contact/MergeContactDialog"
 import { ContactNotes } from "@/features/contact/ContactNotes"
+import { ContactSubscriptions } from "@/features/contact/ContactSubscriptions"
 import { useContact, useContactSummary } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
 import { useSession } from "@/lib/session"
@@ -188,6 +189,9 @@ export function ContactPage() {
               </div>
             </Card>
           )}
+          <Card title={<Trans>Mailing lists</Trans>}>
+            <ContactSubscriptions contactId={c.id} />
+          </Card>
           <Card title={<Trans>Team notes</Trans>} className="border-note-border">
             <ContactNotes contactId={c.id} />
           </Card>

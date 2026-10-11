@@ -1281,6 +1281,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/contacts/{contactId}/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A contact's subscriptions
+         * @description The contact's subscriptions to the lists of the inboxes the caller can see.
+         *
+         *     Scopes: `contacts:read` and `lists:read`.
+         */
+        get: operations["listContactSubscriptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/contacts/{contactId}/consent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export a contact's consent records
+         * @description Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+         *     first, in the rows of `exportListConsent`: for answering a data subject's access request
+         *     (GDPR Art. 15, KVKK Art. 11).
+         *
+         *     Scopes: `contacts:read` and `lists:read`.
+         */
+        get: operations["exportContactConsent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/conversations": {
         parameters: {
             query?: never;
@@ -2251,6 +2297,231 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List mailing lists
+         * @description The lists of the inboxes the caller can see, newest first, with their subscription counts.
+         *     Archived lists are left out unless `archived=true`, which lists only them.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["listMailingLists"];
+        put?: never;
+        /**
+         * Create a mailing list
+         * @description A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+         *     confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+         *     account (`409 email_channel_required`). A list without one still takes subscribers from the
+         *     API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+         *     inbox (`409 name_taken`).
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["createMailingList"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A mailing list
+         * @description Scope: `lists:read`.
+         */
+        get: operations["getMailingList"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a mailing list
+         * @description Deletes the list with its subscriptions and their consent events. Addresses that had
+         *     unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+         *     member or a key.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        delete: operations["deleteMailingList"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a mailing list
+         * @description Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+         *     `archived: true` hides it from forms, the preference page and the default list.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        patch: operations["updateMailingList"];
+        trace?: never;
+    };
+    "/v1/lists/{listId}/growth": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How a list grew
+         * @description Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+         *     subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+         *     period's subscriptions that needed a confirmation and got one; absent when none needed one.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["getMailingListGrowth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a list's subscriptions
+         * @description Newest first. `q` matches the address or the contact's name.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["listSubscriptions"];
+        put?: never;
+        /**
+         * Add a subscriber
+         * @description Adds an address (or a contact's first address) to the list, for host backends and members
+         *     who collected consent themselves. The caller declares it in `consent`:
+         *
+         *     - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+         *       reference to your own record). The subscription is `subscribed` at once and the list's
+         *       welcome mail is sent.
+         *     - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+         *       nothing is sent to them until they confirm.
+         *
+         *     The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+         *     address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+         *     contact keeps what it has (only an empty name and missing locale are filled).
+         *
+         *     Answers `201` for a new subscription and `200` with the existing one when the address is
+         *     already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+         *     `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+         *     (only the person can come back: send `confirmed: false` to mail them a confirmation),
+         *     `409 opted_out` when it unsubscribed from everything, complained or was erased after
+         *     objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+         *     `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+         *     mails today.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["createSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/subscriptions/{subscriptionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A subscription with its consent events
+         * @description Scope: `lists:read`.
+         */
+        get: operations["getSubscription"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a subscription
+         * @description Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+         *     address opted out, so it cannot be added back by a member or a key.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        delete: operations["deleteSubscription"];
+        options?: never;
+        head?: never;
+        /**
+         * Unsubscribe a subscriber
+         * @description The only change a member or key can make is `state: unsubscribed`; anything that would
+         *     make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+         *     `consent.confirmed: false` to mail the person a confirmation).
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        patch: operations["updateSubscription"];
+        trace?: never;
+    };
+    "/v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mail the confirmation again
+         * @description Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+         *     otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+         *     a list without a usable e-mail channel answers `409 email_channel_required`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["resendSubscriptionConfirmation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/consent-export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export a list's consent records
+         * @description One row per consent event of the list's subscriptions, with the subscription's address and
+         *     current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+         *     records or an upload to a registry such as İYS. `since` keeps the events from then on.
+         *     `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+         *     `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["exportListConsent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/usage": {
         parameters: {
             query?: never;
@@ -2905,6 +3176,75 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/client/v1/channels/{channel_key}/lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The public mailing lists a form may offer
+         * @description The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+         *     `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+         *
+         *     Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+         *     Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+         */
+        get: operations["listClientMailingLists"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Subscribe from a form
+         * @description A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+         *     answer is the same `202` for an address that is new, already subscribed, waiting for its
+         *     confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+         *     address is known: `confirmation` only says whether any of the lists asks the person to
+         *     confirm by mail. What happens:
+         *
+         *     - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+         *       on a list without it, `subscribed` at once with the list's welcome mail;
+         *     - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+         *       becomes `pending` and gets a confirmation (only the person can come back);
+         *     - a subscribed or undeliverable address changes nothing.
+         *
+         *     The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+         *     visitor ticked, stored with `page_url`, the IP address and the user agent.
+         *
+         *     Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+         *     `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+         *     after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+         *     (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+         *     channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+         *     address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+         *     capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+         *     without changing the answer.
+         *
+         *     Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+         *     An `app` channel's key answers `404`.
+         */
+        post: operations["createClientSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/client/v1/discussions": {
         parameters: {
             query?: never;
@@ -3075,6 +3415,60 @@ export interface paths {
          *     server.
          */
         delete: operations["deleteReaderToken"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The session contact's subscriptions
+         * @description Every public, unarchived list of the session's inbox with the contact's state on it
+         *     (absent when the contact never subscribed), for a toggle in the widget or the app.
+         */
+        get: operations["listClientSubscriptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/subscriptions/{listId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Subscribe the session contact
+         * @description Subscribes the signed-in user of the host app (a session started with an identity token)
+         *     to a public list of the session's inbox. When the contact has a known address (an
+         *     identity token with `email_verified: true`, or one a member or an e-mail conversation
+         *     gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+         *     with only an address the user typed, it is `pending` and a confirmation mail goes out.
+         *     Anonymous visitor sessions answer `403 identity_required` (they use the form);
+         *     a contact without an address `409 no_email`; a list that is not a public list of the inbox
+         *     `404`. Already subscribed or pending: the current state, nothing sent. An address that
+         *     bounced or complained stays `pending` and gets nothing.
+         */
+        put: operations["subscribeClient"];
+        post?: never;
+        /**
+         * Unsubscribe the session contact
+         * @description Unsubscribes the session's contact from a public list of the session's inbox at once.
+         *     Nothing to unsubscribe is not an error.
+         */
+        delete: operations["unsubscribeClient"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3870,6 +4264,49 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "subscription.created": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A subscription was created
+         * @description Someone subscribed to a list of the endpoint's inbox, in any state (`pending` while
+         *     waiting for the confirmation). Endpoints limited to an inbox receive the events of that
+         *     inbox's lists.
+         */
+        post: operations["webhookSubscriptionCreated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "subscription.updated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A subscription changed state
+         * @description Confirmed, unsubscribed (with `unsubscribe_reason`) or subscribed again;
+         *     `previous_state` is the state before.
+         */
+        post: operations["webhookSubscriptionUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -4111,9 +4548,16 @@ export interface components {
          *     - `webhooks:manage`: webhooks, their deliveries and attempts.
          *     - `workspace:manage`: update the workspace, usage.
          *     - `feedback:write`: feedback.
+         *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
+         *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
+         *       subscribers; resend confirmations.
+         *     - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
+         *       cannot hold them yet.
+         *
+         *     `lists:*` and `broadcasts:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -4408,6 +4852,7 @@ export interface components {
              *     closed after it was turned on can be rated; turning it off and on again starts over.
              */
             ask_for_rating: boolean;
+            sender: components["schemas"]["InboxSender"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -4441,6 +4886,8 @@ export interface components {
             expected_reply_minutes?: number | null;
             business_hours?: components["schemas"]["BusinessHours"];
             ask_for_rating?: boolean;
+            /** @description Owners, admins and keys with `inboxes:manage`. */
+            sender?: components["schemas"]["InboxSenderUpdate"];
         };
         InboxCreated: {
             inbox: components["schemas"]["Inbox"];
@@ -4716,7 +5163,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -5946,7 +6393,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -5965,7 +6412,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -6477,6 +6924,372 @@ export interface components {
         };
         WebhookDiscussionPayload: components["schemas"]["WebhookPayloadBase"] & {
             data: components["schemas"]["DiscussionEventData"];
+        };
+        MailingListCounts: {
+            /** Format: int64 */
+            subscribed: number;
+            /** Format: int64 */
+            pending: number;
+            /** Format: int64 */
+            unsubscribed: number;
+        };
+        MailingList: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /**
+             * Format: uuid
+             * @description The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
+             */
+            channel_id?: string;
+            name: string;
+            /** @description Shown on subscribe forms and the preference page. */
+            description: string;
+            /** @description Form subscribers confirm by mail before they are subscribed. */
+            double_opt_in: boolean;
+            /** @description Offered on subscribe forms and the preference page; private lists are filled by the API and members only. */
+            public: boolean;
+            /** @description Marketing content. Off for service announcements to existing users; it changes no sending rule and is part of the consent export. */
+            commercial: boolean;
+            /** @description Send a receipt with an unsubscribe link right after someone subscribes. */
+            welcome: boolean;
+            /** @description `channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out. */
+            sender_ready: boolean;
+            /** Format: date-time */
+            archived_at?: string;
+            counts: components["schemas"]["MailingListCounts"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        MailingListRef: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+        };
+        MailingListCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            name: string;
+            description?: string;
+            /** @default true */
+            double_opt_in: boolean;
+            /** @default true */
+            public: boolean;
+            /** @default true */
+            commercial: boolean;
+            /** @default true */
+            welcome: boolean;
+            /** Format: uuid */
+            channel_id?: string;
+        };
+        MailingListUpdate: {
+            name?: string;
+            description?: string;
+            double_opt_in?: boolean;
+            public?: boolean;
+            commercial?: boolean;
+            welcome?: boolean;
+            /**
+             * Format: uuid
+             * @description `null` leaves the list without a sending channel.
+             */
+            channel_id?: string | null;
+            archived?: boolean;
+        };
+        MailingListPage: {
+            items: components["schemas"]["MailingList"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        MailingListGrowthDay: {
+            /** Format: date */
+            date: string;
+            /**
+             * Format: int64
+             * @description Subscriptions created that day, in any state.
+             */
+            new: number;
+            /** Format: int64 */
+            confirmed: number;
+            /** Format: int64 */
+            unsubscribed: number;
+        };
+        MailingListGrowth: {
+            days: components["schemas"]["MailingListGrowthDay"][];
+            /** Format: double */
+            confirmation_rate?: number;
+        };
+        /**
+         * @description `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+         *     `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+         *     complaint) ended it; only the person subscribes again.
+         * @enum {string}
+         */
+        SubscriptionState: "pending" | "subscribed" | "unsubscribed";
+        /**
+         * @description How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+         *     for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+         *     or `preferences` (the person on the `/m/` page).
+         * @enum {string}
+         */
+        SubscriptionSource: "form" | "identity" | "api" | "member" | "import" | "preferences";
+        /**
+         * @description `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+         *     (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+         *     person reported a mail as spam), `erasure`.
+         * @enum {string}
+         */
+        UnsubscribeReason: "link" | "one_click" | "preferences" | "client" | "member" | "api" | "complaint" | "erasure";
+        SubscriptionContact: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        Subscription: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            list_id: string;
+            contact: components["schemas"]["SubscriptionContact"];
+            email: components["schemas"]["Email"];
+            state: components["schemas"]["SubscriptionState"];
+            source: components["schemas"]["SubscriptionSource"];
+            /**
+             * Format: date-time
+             * @description When the person agreed (the confirmation for double opt-in).
+             */
+            consent_at?: string;
+            /** Format: date-time */
+            confirmed_at?: string;
+            /** Format: date-time */
+            confirmation_sent_at?: string;
+            /** Format: date-time */
+            unsubscribed_at?: string;
+            unsubscribe_reason?: components["schemas"]["UnsubscribeReason"];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        /**
+         * @description `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+         *     confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+         *     proof), `unsubscribed`, `complained`.
+         * @enum {string}
+         */
+        ConsentEventKind: "requested" | "confirmation_sent" | "confirmed" | "subscribed" | "unsubscribed" | "complained";
+        ConsentEvent: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            subscription_id: string;
+            kind: components["schemas"]["ConsentEventKind"];
+            /** @description Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`. */
+            source: string;
+            /** @description The client's IP address, when the person acted. */
+            ip?: string;
+            user_agent?: string;
+            /** @description The page the person subscribed on, or the one the API caller declared. */
+            page_url?: string;
+            /** @description The label the person agreed to, as the form or the API caller sent it. */
+            consent_text?: string;
+            /** Format: uuid */
+            member_id?: string;
+            /** Format: uuid */
+            api_key_id?: string;
+            /** Format: uuid */
+            broadcast_id?: string;
+            /** @description More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token. */
+            detail: {
+                [key: string]: unknown;
+            };
+            /** Format: date-time */
+            created_at: string;
+        };
+        SubscriptionDetail: components["schemas"]["Subscription"] & {
+            events: components["schemas"]["ConsentEvent"][];
+        };
+        SubscriptionPage: {
+            items: components["schemas"]["Subscription"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        /** @description How the person agreed, as the caller declares it; stored as proof. */
+        SubscriptionConsent: {
+            /** @description `true`: the person already agreed. `false`: mail them a confirmation first. */
+            confirmed: boolean;
+            /** Format: date-time */
+            obtained_at?: string;
+            /** @description The statement the person agreed to. */
+            text?: string;
+            ip?: string;
+            page_url?: string;
+            /** @description Your own record of the consent, such as an order or sign-up id. */
+            reference?: string;
+        };
+        /** @description Name the person with `email`, `contact_id` or `external_id` (at least one). */
+        SubscriptionCreate: {
+            email?: string;
+            /** Format: uuid */
+            contact_id?: string;
+            /** @description The host app's id for the person in the list's inbox. */
+            external_id?: string;
+            name?: string;
+            locale?: components["schemas"]["LanguageTag"];
+            attributes?: components["schemas"]["Attributes"];
+            consent: components["schemas"]["SubscriptionConsent"];
+        };
+        SubscriptionUpdate: {
+            state: components["schemas"]["SubscriptionState"];
+        };
+        ContactSubscription: components["schemas"]["Subscription"] & {
+            list: components["schemas"]["MailingListRef"];
+        };
+        ContactSubscriptionList: {
+            items: components["schemas"]["ContactSubscription"][];
+        };
+        /** @description One consent event with its subscription, list and the subscription's current state. */
+        ConsentRecord: {
+            /** Format: uuid */
+            list_id: string;
+            list_name: string;
+            commercial: boolean;
+            /** Format: uuid */
+            subscription_id: string;
+            /** Format: uuid */
+            contact_id: string;
+            email: components["schemas"]["Email"];
+            state: components["schemas"]["SubscriptionState"];
+            source: components["schemas"]["SubscriptionSource"];
+            /** Format: date-time */
+            consent_at?: string;
+            /** Format: date-time */
+            unsubscribed_at?: string;
+            unsubscribe_reason?: components["schemas"]["UnsubscribeReason"];
+            /** Format: uuid */
+            event_id: string;
+            event_kind: components["schemas"]["ConsentEventKind"];
+            event_source: string;
+            /** Format: date-time */
+            event_at: string;
+            ip?: string;
+            user_agent?: string;
+            page_url?: string;
+            consent_text?: string;
+            /** Format: uuid */
+            member_id?: string;
+            /** Format: uuid */
+            api_key_id?: string;
+            detail: {
+                [key: string]: unknown;
+            };
+        };
+        ConsentExport: {
+            items: components["schemas"]["ConsentRecord"][];
+        };
+        /**
+         * @description Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+         *     Regulation on Commercial Communication): the legal name, a postal address, a registration
+         *     such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+         */
+        InboxSender: {
+            legal_name?: string;
+            postal_address?: string;
+            registration?: string;
+            contact?: string;
+        };
+        /** @description The given fields change; `null` or an empty string clears one. */
+        InboxSenderUpdate: {
+            legal_name?: string | null;
+            postal_address?: string | null;
+            registration?: string | null;
+            contact?: string | null;
+        };
+        SubscriptionEventData: {
+            subscription: components["schemas"]["Subscription"];
+            list: components["schemas"]["MailingListRef"];
+            /** @description `subscription.updated` only: the state before. */
+            previous_state?: components["schemas"]["SubscriptionState"];
+        };
+        /**
+         * @description `subscription.created`: someone subscribed (any state). `subscription.updated`: the state
+         *     changed (confirmed, unsubscribed, subscribed again). Delivered to callers who hold
+         *     `lists:read` and can see the list's inbox.
+         */
+        SubscriptionEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "subscription.created" | "subscription.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["SubscriptionEventData"];
+        };
+        WebhookSubscriptionData: {
+            subscription: components["schemas"]["Subscription"];
+            list: components["schemas"]["MailingListRef"];
+            previous_state?: components["schemas"]["SubscriptionState"];
+            contact: components["schemas"]["WebhookContact"];
+        };
+        WebhookSubscriptionPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["WebhookSubscriptionData"];
+        };
+        ClientMailingList: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            description: string;
+            double_opt_in: boolean;
+        };
+        ClientMailingLists: {
+            lists: components["schemas"]["ClientMailingList"][];
+            /** @description Send it back with the form, 2 seconds to 2 hours from now. */
+            form_token: string;
+        };
+        ClientSubscriptionCreate: {
+            email: string;
+            name?: string;
+            list_ids: string[];
+            locale?: components["schemas"]["LanguageTag"];
+            /** @description The page with the form. */
+            page_url: string;
+            /** @description The consent label exactly as the visitor saw it. */
+            consent_text: string;
+            form_token: string;
+            /** @description A honeypot field hidden from people; leave it empty. */
+            website?: string;
+        };
+        ClientSubscriptionAccepted: {
+            /** @description At least one of the lists has double opt-in, so tell the visitor to check their inbox. */
+            confirmation: boolean;
+        };
+        ClientSubscription: {
+            list: components["schemas"]["ClientMailingList"];
+            /** @description Absent when the contact never subscribed to the list. */
+            state?: components["schemas"]["SubscriptionState"];
+        };
+        ClientSubscriptionList: {
+            items: components["schemas"]["ClientSubscription"][];
+        };
+        ClientSubscriptionPut: {
+            /** @description The label the user agreed to. */
+            consent_text: string;
+            page_url?: string;
+        };
+        ClientSubscriptionStatus: {
+            state: components["schemas"]["SubscriptionState"];
         };
         ReaderAccount: {
             /** Format: uuid */
@@ -7234,6 +8047,10 @@ export interface components {
         CannedReplyId: string;
         /** @description The chat channel's public key. */
         ChannelKey: string;
+        ListId: string;
+        SubscriptionId: string;
+        /** @description `csv` (the default) or `json`. */
+        ConsentFormat: "csv" | "json";
         DiscussionId: string;
         DiscussionPostId: string;
         /**
@@ -9326,6 +10143,68 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listContactSubscriptions: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                contactId: components["parameters"]["ContactId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The subscriptions, newest first. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContactSubscriptionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    exportContactConsent: {
+        parameters: {
+            query?: {
+                /** @description `csv` (the default) or `json`. */
+                format?: components["parameters"]["ConsentFormat"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                contactId: components["parameters"]["ContactId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The records. */
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                    "application/json": components["schemas"]["ConsentExport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     listConversations: {
         parameters: {
             query?: {
@@ -10924,6 +11803,432 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listMailingLists: {
+        parameters: {
+            query?: {
+                inbox_id?: string;
+                archived?: boolean;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of lists. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingListPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createMailingList: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MailingListCreate"];
+            };
+        };
+        responses: {
+            /** @description The list. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getMailingList: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteMailingList: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateMailingList: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MailingListUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getMailingListGrowth: {
+        parameters: {
+            query?: {
+                days?: 30 | 90;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The series. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MailingListGrowth"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listSubscriptions: {
+        parameters: {
+            query?: {
+                state?: components["schemas"]["SubscriptionState"];
+                q?: string;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of subscriptions. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubscriptionPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubscriptionCreate"];
+            };
+        };
+        responses: {
+            /** @description The address was already on the list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Subscription"];
+                };
+            };
+            /** @description The new subscription. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Subscription"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                subscriptionId: components["parameters"]["SubscriptionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The subscription and its events, oldest first. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubscriptionDetail"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                subscriptionId: components["parameters"]["SubscriptionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateSubscription: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                subscriptionId: components["parameters"]["SubscriptionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubscriptionUpdate"];
+            };
+        };
+        responses: {
+            /** @description The subscription. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Subscription"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    resendSubscriptionConfirmation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                subscriptionId: components["parameters"]["SubscriptionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Queued. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    exportListConsent: {
+        parameters: {
+            query?: {
+                /** @description `csv` (the default) or `json`. */
+                format?: components["parameters"]["ConsentFormat"];
+                since?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The records. */
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                    "application/json": components["schemas"]["ConsentExport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     getUsage: {
         parameters: {
             query?: never;
@@ -11712,6 +13017,64 @@ export interface operations {
             429: components["responses"]["Problem"];
         };
     };
+    listClientMailingLists: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The chat channel's public key. */
+                channel_key: components["parameters"]["ChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The lists and a form token. */
+            200: {
+                headers: {
+                    "Cache-Control"?: "no-store";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientMailingLists"];
+                };
+            };
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    createClientSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The chat channel's public key. */
+                channel_key: components["parameters"]["ChannelKey"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientSubscriptionCreate"];
+            };
+        };
+        responses: {
+            /** @description Accepted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientSubscriptionAccepted"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
     createClientDiscussion: {
         parameters: {
             query?: never;
@@ -11999,6 +13362,85 @@ export interface operations {
                 content?: never;
             };
             401: components["responses"]["Problem"];
+        };
+    };
+    listClientSubscriptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The lists and states. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientSubscriptionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    subscribeClient: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientSubscriptionPut"];
+            };
+        };
+        responses: {
+            /** @description The contact's state on the list. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientSubscriptionStatus"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    unsubscribeClient: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Unsubscribed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     listClientConversations: {
@@ -13114,6 +14556,72 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookDiscussionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookSubscriptionCreated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookSubscriptionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookSubscriptionUpdated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookSubscriptionPayload"];
             };
         };
         responses: {

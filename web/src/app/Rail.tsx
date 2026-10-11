@@ -5,6 +5,7 @@ import {
   BookOpenTextIcon,
   BookUserIcon,
   BotIcon,
+  MegaphoneIcon,
   MessagesSquareIcon,
   SettingsIcon,
   UsersIcon,
@@ -59,6 +60,7 @@ function useEntries(): Entry[] {
     { key: "team", label: t`Team`, icon: UsersIcon, shortcut: SHORTCUTS.team },
     { key: "reports", label: t`Reports`, icon: BarChart3Icon, shortcut: SHORTCUTS.reports },
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
+    { key: "broadcasts", label: t`Broadcasts`, icon: MegaphoneIcon, shortcut: SHORTCUTS.broadcasts },
     {
       key: "assistants",
       label: t`Assistants`,
@@ -206,7 +208,10 @@ export function TabBar() {
           data-testid={`tab-${e.key}`}
         >
           <span
-            className={cn("relative grid h-7 w-12 place-items-center rounded-full", e.key === view && "bg-brand-wash")}
+            className={cn(
+              "relative grid h-7 w-full max-w-12 place-items-center rounded-full",
+              e.key === view && "bg-brand-wash"
+            )}
           >
             <e.icon className="size-5" />
             <Badge n={e.badge ?? 0} id={e.key} className="-top-1 end-auto start-[calc(50%+6px)]" />

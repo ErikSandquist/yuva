@@ -50,6 +50,10 @@ export function AppShell() {
       const contacts =
         pathname.startsWith("/contacts") && document.querySelector<HTMLInputElement>("[data-testid=contacts-search]")
       if (contacts) return contacts.focus()
+      const subscribers =
+        pathname.startsWith("/broadcasts/") &&
+        document.querySelector<HTMLInputElement>("[data-testid=subscribers-search]")
+      if (subscribers) return subscribers.focus()
       if (!chats) navigate("/")
       focusListSearch()
     },
@@ -58,6 +62,7 @@ export function AppShell() {
     [SHORTCUTS.team]: () => go("team"),
     [SHORTCUTS.reports]: () => go("reports"),
     [SHORTCUTS.docs]: () => go("docs"),
+    [SHORTCUTS.broadcasts]: () => go("broadcasts"),
     [SHORTCUTS.assistants]: () => go("assistants"),
     [SHORTCUTS.mentions]: () => go("mentions"),
   })

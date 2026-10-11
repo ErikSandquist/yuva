@@ -6,6 +6,7 @@ import { AccountPage } from "@/features/account/AccountPage"
 import { ConnectPage } from "@/features/account/ConnectPage"
 import { NewWorkspacePage } from "@/features/auth/CreateWorkspace"
 import { SignInPage } from "@/features/auth/SignInPage"
+import { BroadcastsHome, ListPage } from "@/features/broadcasts/ListPage"
 import { ContactPage } from "@/features/contact/ContactPage"
 import { ContactsHome } from "@/features/contact/ContactsColumn"
 import { DocsHome, DocsOverview, DocsPagePane } from "@/features/docs/DocsPages"
@@ -69,6 +70,9 @@ export function AppRoutes() {
           <Route path="docs/discussions" element={<DiscussionsPane />} />
           <Route path="docs/discussions/queue" element={<QueuePane />} />
           <Route path="docs/discussions/:discussionId" element={<ThreadPane />} />
+          <Route path="broadcasts" element={<BroadcastsHome />} />
+          <Route path="broadcasts/lists" element={<Navigate to="/broadcasts" replace />} />
+          <Route path="broadcasts/lists/:listId" element={<ListPage />} />
           <Route path="settings">
             <Route index element={<SettingsHome />} />
             <Route element={<SettingsPane />}>

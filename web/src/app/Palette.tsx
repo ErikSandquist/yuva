@@ -93,6 +93,7 @@ function useItems(open: boolean): Item[] {
     go(t`Docs`, "/docs", keyLabel(SHORTCUTS.docs))
     go(t`Discussions`, "/docs/discussions")
     go(t`Discussion posts waiting for approval`, "/docs/discussions/queue")
+    go(t`Mailing lists`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
     go(t`Settings`, "/settings", [mod, ","])
     go(t`Profile`, "/settings/profile")
     go(t`Notifications`, "/settings/notifications")

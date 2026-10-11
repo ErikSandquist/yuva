@@ -33,6 +33,7 @@ export const SHORTCUTS = {
   pin: "p",
   unread: "u",
   docs: "g d",
+  broadcasts: "g b",
   discussion: "P",
 } as const
 
@@ -143,6 +144,7 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [k(SHORTCUTS.team), t`Team`],
         [k(SHORTCUTS.reports), t`Reports`],
         [k(SHORTCUTS.docs), t`Docs`],
+        [k(SHORTCUTS.broadcasts), t`Broadcasts`],
         [k(SHORTCUTS.assistants), t`Assistants`],
         [[mod, "K"], t`Everything`],
         [[mod, ","], t`Settings`],

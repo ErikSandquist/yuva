@@ -15,6 +15,7 @@ import { ChannelDialog } from "@/features/settings/channels/ChannelDialog"
 import { ChannelSummary } from "@/features/settings/channels/ChannelSummary"
 import { DeleteInbox, IdentitySecret } from "@/features/settings/inboxes/InboxSecurity"
 import { useInbox, useSaveInbox } from "@/features/settings/inboxes/queries"
+import { SenderIdentity } from "@/features/settings/inboxes/SenderIdentity"
 import {
   Card,
   ChoiceSelect,
@@ -562,6 +563,7 @@ export function InboxPage() {
           <CustomerSees key={`see:${inbox.id}`} inbox={inbox} />
           <Hours key={`hours:${inbox.id}`} inbox={inbox} />
           <WhoCanReply inbox={inbox} />
+          <SenderIdentity key={`sender:${inbox.id}`} inbox={inbox} />
           {canManage && (
             <>
               <Developer key={`dev:${inbox.id}`} inbox={inbox} />

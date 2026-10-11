@@ -144,6 +144,19 @@ function refreshCounts(qc: QueryClient, ws: string) {
   )
 }
 
+const listTimers = new Map<string, ReturnType<typeof setTimeout>>()
+
+function refreshLists(qc: QueryClient, ws: string) {
+  clearTimeout(listTimers.get(ws))
+  listTimers.set(
+    ws,
+    setTimeout(() => {
+      listTimers.delete(ws)
+      void qc.invalidateQueries({ queryKey: keys.lists(ws) })
+    }, 400)
+  )
+}
+
 function setConversation(qc: QueryClient, ctx: LiveContext, c: Conversation) {
   const current = qc.getQueryData<Conversation>(keys.conversation(ctx.ws, c.id))
   if (current && current.updated_at > c.updated_at) return
@@ -446,6 +459,10 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
         refreshMentions(qc, ctx.ws)
         refreshDrafts(qc, ctx.ws)
       }
+      return
+    case "subscription.created":
+    case "subscription.updated":
+      refreshLists(qc, ctx.ws)
       return
     case "discussion.created":
     case "discussion.post_created":

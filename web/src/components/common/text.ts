@@ -5,11 +5,15 @@ import {
   type ApiKeyScope,
   type AppPlatform,
   type ChannelKind,
+  type ConsentEventKind,
   type ConversationStatus,
   type FeedbackCategory,
   type InboxMode,
   type Priority,
   type Role,
+  type SubscriptionSource,
+  type SubscriptionState,
+  type UnsubscribeReason,
   type WebhookDeliveryState,
   type WebhookEventType,
   type Weekday,
@@ -38,6 +42,8 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "discussion.post_created",
   "discussion.answered",
   "discussion.updated",
+  "subscription.created",
+  "subscription.updated",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -54,9 +60,12 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "webhooks:manage",
   "workspace:manage",
   "feedback:write",
+  "lists:read",
+  "lists:write",
 ]
 export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = ["inboxes:manage", "webhooks:manage", "workspace:manage"]
 export const DELIVERY_STATES: WebhookDeliveryState[] = ["pending", "succeeded", "failed"]
+export const SUBSCRIPTION_STATES: SubscriptionState[] = ["subscribed", "pending", "unsubscribed"]
 
 export function useEnumText() {
   const { t } = useLingui()
@@ -92,6 +101,8 @@ export function useEnumText() {
       "discussion.post_created": t`A reply was written in a discussion`,
       "discussion.answered": t`A discussion got an accepted answer`,
       "discussion.updated": t`A discussion changed`,
+      "subscription.created": t`Someone subscribed to a mailing list`,
+      "subscription.updated": t`A subscription changed`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -108,11 +119,47 @@ export function useEnumText() {
       "webhooks:manage": t`Manage webhooks`,
       "workspace:manage": t`Change the workspace and read usage`,
       "feedback:write": t`Post feedback for your app's users`,
+      "lists:read": t`Read mailing lists, subscribers and consent records`,
+      "lists:write": t`Manage mailing lists and subscribers`,
+      "broadcasts:read": t`Read broadcasts and e-mail designs`,
+      "broadcasts:write": t`Write broadcasts and e-mail designs`,
+      "broadcasts:send": t`Schedule and send broadcasts`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,
       string
     >,
+    subscription: {
+      pending: t`Waiting for confirmation`,
+      subscribed: t`Subscribed`,
+      unsubscribed: t`Unsubscribed`,
+    } satisfies Record<SubscriptionState, string>,
+    subscriptionSource: {
+      form: t`Subscribe form`,
+      identity: t`Signed-in user`,
+      api: t`API`,
+      member: t`Added by the team`,
+      import: t`Import`,
+      preferences: t`Preference page`,
+    } satisfies Record<SubscriptionSource, string>,
+    unsubscribeReason: {
+      link: t`Unsubscribe link`,
+      one_click: t`One-click unsubscribe in their mail app`,
+      preferences: t`Preference page`,
+      client: t`From your site or app`,
+      member: t`By the team`,
+      api: t`Through the API`,
+      complaint: t`Reported a mail as spam`,
+      erasure: t`The contact was deleted`,
+    } satisfies Record<UnsubscribeReason, string>,
+    consentEvent: {
+      requested: t`Asked to subscribe`,
+      confirmation_sent: t`Confirmation mail sent`,
+      confirmed: t`Confirmed`,
+      subscribed: t({ message: "Subscribed", context: "consent event" }),
+      unsubscribed: t`Unsubscribed`,
+      complained: t`Reported a mail as spam`,
+    } satisfies Record<ConsentEventKind, string>,
     weekday: {
       mon: t`Monday`,
       tue: t`Tuesday`,
@@ -145,6 +192,20 @@ export function useErrorText() {
     if (err.code === "discussions_off") return t`Discussions are off on this site's chat channel.`
     if (err.code === "page_origin") return t`The page is not on a site the chat channel allows.`
     if (err.code === "origin_not_allowed") return t`This site is not allowed to use this documentation channel.`
+    if (err.code === "name_taken") return t`This inbox already has a list with this name.`
+    if (err.code === "email_channel_required")
+      return t`Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails.`
+    if (err.code === "unsubscribed")
+      return t`This address unsubscribed from this list. Only the person can come back: choose “Mail them a confirmation” to ask them.`
+    if (err.code === "opted_out")
+      return t`This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again.`
+    if (err.code === "suppressed")
+      return t`Mail to this address bounced or was reported as spam, so it cannot be added.`
+    if (err.code === "invalid_email") return t`This is not a valid e-mail address.`
+    if (err.code === "confirmation_limit")
+      return t`This address got as many confirmation mails as allowed for now. Try again tomorrow.`
+    if (err.code === "confirmation_required") return t`Only the person can subscribe again, by confirming a mail.`
+    if (err.code === "not_pending") return t`This subscription is no longer waiting for confirmation.`
     if (err.code === "attachment_type_mismatch")
       return t`A file's content does not match its type. Check the file and try again.`
     switch (err.status) {
