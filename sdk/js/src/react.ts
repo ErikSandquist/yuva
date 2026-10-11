@@ -13,6 +13,7 @@ import {
 import type { ClientConversation, ClientMessage } from "./client/api"
 import type { IdentityTokenSource, MessageInput, YuvaClient } from "./client/client"
 import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "./docs"
+import type { SubscribeDetail, SubscribeErrorDetail } from "./subscribe"
 import type { ReaderProfile } from "./client/api"
 
 const YuvaContext = createContext<YuvaClient | null>(null)
@@ -256,36 +257,63 @@ export interface YuvaDiscussionsProps extends YuvaDocsProps {
   onReader?: (detail: ReaderProfile | null) => void
 }
 
+export interface YuvaSubscribeProps extends Omit<YuvaDocsProps, "page" | "pageTitle"> {
+  lists?: string[]
+  layout?: "stacked" | "inline"
+  name?: "off" | "optional" | "required"
+  buttonText?: string
+  consent?: string
+  privacyUrl?: string
+  onSubscribe?: (detail: SubscribeDetail) => void
+  onError?: (detail: SubscribeErrorDetail) => void
+}
+
 type Handlers = Record<string, ((detail: never) => void) | undefined>
 
-function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): ReactElement {
+interface ElementProps {
+  channel: string
+  server?: string
+  locale?: string
+  dir?: "ltr" | "rtl"
+  identityToken?: string | IdentityTokenSource | null
+  className?: string
+  style?: CSSProperties
+}
+
+function useYuvaElement(
+  tag: string,
+  load: () => Promise<unknown>,
+  props: ElementProps,
+  extra: Record<string, string | undefined>,
+  handlers: Handlers
+): ReactElement {
   const [element, setElement] = useState<HTMLElement | null>(null)
   const latest = useRef(handlers)
+  const loader = useRef(load)
   useEffect(() => {
     latest.current = handlers
   })
-  const { channel, server, locale, dir, page, pageTitle, identityToken, className, style } = props
+  const { channel, server, locale, dir, identityToken, className, style } = props
 
   useEffect(() => {
-    void import("./docs")
+    void loader.current()
   }, [])
 
+  const attributes = JSON.stringify({
+    server,
+    locale,
+    dir,
+    ...extra,
+    "identity-token": typeof identityToken === "string" ? identityToken : undefined,
+    channel,
+  })
   useEffect(() => {
     if (!element) return
-    const attributes: Record<string, string | undefined> = {
-      server,
-      locale,
-      dir,
-      page,
-      "page-title": pageTitle,
-      "identity-token": typeof identityToken === "string" ? identityToken : undefined,
-      channel,
-    }
-    for (const [name, value] of Object.entries(attributes)) {
+    for (const [name, value] of Object.entries(JSON.parse(attributes) as Record<string, string | undefined>)) {
       if (value) element.setAttribute(name, value)
       else element.removeAttribute(name)
     }
-  }, [element, channel, server, locale, dir, page, pageTitle, identityToken])
+  }, [element, attributes])
 
   useEffect(() => {
     if (!element || typeof identityToken !== "function") return
@@ -315,14 +343,45 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
   return createElement(tag, { ref: setElement, className, style })
 }
 
+const loadDocs = () => import("./docs")
+
 export function YuvaPageFeedback({ onRating, onFeedback, ...props }: YuvaPageFeedbackProps): ReactElement {
-  return useDocsElement("yuva-page-feedback", props, { "yuva-rating": onRating, "yuva-feedback": onFeedback })
+  return useYuvaElement(
+    "yuva-page-feedback",
+    loadDocs,
+    props,
+    { page: props.page, "page-title": props.pageTitle },
+    { "yuva-rating": onRating, "yuva-feedback": onFeedback }
+  )
 }
 
 export function YuvaDiscussions({ onDiscussion, onPost, onReader, ...props }: YuvaDiscussionsProps): ReactElement {
-  return useDocsElement("yuva-discussions", props, {
-    "yuva-discussion": onDiscussion,
-    "yuva-post": onPost,
-    "yuva-reader": onReader,
-  })
+  return useYuvaElement(
+    "yuva-discussions",
+    loadDocs,
+    props,
+    { page: props.page, "page-title": props.pageTitle },
+    {
+      "yuva-discussion": onDiscussion,
+      "yuva-post": onPost,
+      "yuva-reader": onReader,
+    }
+  )
+}
+
+export function YuvaSubscribe({ onSubscribe, onError, ...props }: YuvaSubscribeProps): ReactElement {
+  return useYuvaElement(
+    "yuva-subscribe",
+    () => import("./subscribe"),
+    props,
+    {
+      lists: props.lists?.join(","),
+      layout: props.layout,
+      name: props.name,
+      "button-text": props.buttonText,
+      consent: props.consent,
+      "privacy-url": props.privacyUrl,
+    },
+    { "yuva-subscribe": onSubscribe, "yuva-subscribe-error": onError }
+  )
 }

@@ -14,6 +14,7 @@ export default defineConfig({
       exclude: ["<rootDir>/src/docs/thread.ts"],
     },
     { path: "<rootDir>/src/locales/{locale}/thread", include: ["<rootDir>/src/docs/thread.ts"] },
+    { path: "<rootDir>/src/locales/{locale}/subscribe", include: ["<rootDir>/src/subscribe"] },
   ],
   format: formatter({ lineNumbers: false }),
   extractors: [createSwcExtractor()],

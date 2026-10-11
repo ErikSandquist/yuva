@@ -3,6 +3,7 @@ import { useRuntimeConfig } from "#imports"
 import type { IdentityTokenSource, Layout } from "../../types"
 import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "../../docs"
 import type { ReaderProfile } from "../../client/api"
+import type { SubscribeDetail, SubscribeErrorDetail } from "../../subscribe"
 
 type Tokened = HTMLElement & { setIdentityToken(source: IdentityTokenSource | null): void }
 
@@ -17,6 +18,16 @@ const shared = {
 const docsProps = { ...shared, page: String, pageTitle: String }
 
 const chatProps = { ...shared, layout: String as PropType<Layout>, open: Boolean }
+
+const subscribeProps = {
+  ...shared,
+  lists: Array as PropType<string[]>,
+  layout: String as PropType<"stacked" | "inline">,
+  name: String as PropType<"off" | "optional" | "required">,
+  buttonText: String,
+  consent: String,
+  privacyUrl: String,
+}
 
 type Props = {
   channel?: string
@@ -133,6 +144,36 @@ export const YuvaChat = defineComponent({
       props,
       (p) => ({ layout: p.layout, open: p.open || undefined }),
       { onYuvaUnread: detail<{ count: number }>((d) => emit("unread", d)) }
+    )
+    expose({ element })
+    return render
+  },
+})
+
+export const YuvaSubscribe = defineComponent({
+  name: "YuvaSubscribe",
+  props: subscribeProps,
+  emits: {
+    subscribe: (_: SubscribeDetail) => true,
+    error: (_: SubscribeErrorDetail) => true,
+  },
+  setup(props, { emit, expose }) {
+    const { element, render } = setup(
+      "yuva-subscribe",
+      () => import("../../subscribe"),
+      props,
+      (p) => ({
+        lists: (p.lists as string[] | undefined)?.join(","),
+        layout: p.layout,
+        name: p.name,
+        "button-text": p.buttonText,
+        consent: p.consent,
+        "privacy-url": p.privacyUrl,
+      }),
+      {
+        onYuvaSubscribe: detail<SubscribeDetail>((d) => emit("subscribe", d)),
+        onYuvaSubscribeError: detail<SubscribeErrorDetail>((d) => emit("error", d)),
+      }
     )
     expose({ element })
     return render

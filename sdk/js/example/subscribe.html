@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Subscribe form example</title>
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+      body { margin: 0; padding: 24px 16px; background: Canvas; color: CanvasText; }
+      main { max-width: 720px; margin: 0 auto; }
+      form#settings { display: grid; grid-template-columns: max-content 1fr; gap: 8px 12px; align-items: center; margin-block: 16px; }
+      #settings input, #settings select { font: inherit; padding: 4px 6px; min-width: 0; }
+      .actions { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; }
+      section { margin-block: 24px; padding: 16px; border: 1px solid GrayText; border-radius: 12px; }
+      h2 { margin-block: 0 12px; font-size: 1.1em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Subscribe form</h1>
+      <p>
+        <code>&lt;yuva-subscribe&gt;</code> on a chat channel's key. Without a user id it is the public form; with one this
+        page asks its dev server for an identity token (<code>/example/identity-token</code>, signed with
+        <code>YUVA_IDENTITY_SECRET</code>) and the element shows a switch per list.
+      </p>
+      <form id="settings">
+        <label for="server">Server</label><input id="server" name="server" placeholder="http://127.0.0.1:8809" />
+        <label for="channel">Channel key</label><input id="channel" name="channel" />
+        <label for="lists">List ids</label><input id="lists" name="lists" placeholder="empty: all public lists" />
+        <label for="layout">Layout</label>
+        <select id="layout" name="layout"><option>stacked</option><option>inline</option></select>
+        <label for="name">Name field</label>
+        <select id="name" name="name"><option>off</option><option>optional</option><option>required</option></select>
+        <label for="locale">Locale</label><input id="locale" name="locale" placeholder="browser" />
+        <label for="dir">Direction</label>
+        <select id="dir" name="dir"><option value="">auto</option><option>ltr</option><option>rtl</option></select>
+        <label for="privacy-url">Privacy URL</label><input id="privacy-url" name="privacy-url" />
+        <label for="user">User id</label><input id="user" name="user" placeholder="empty: anonymous visitor" />
+        <label for="email">User e-mail</label><input id="email" name="email" type="email" />
+        <div class="actions"><button>Apply</button></div>
+      </form>
+      <section>
+        <h2>Newsletter</h2>
+        <div id="slot"></div>
+      </section>
+    </main>
+    <script src="../dist/yuva-subscribe.js"></script>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const form = document.getElementById("settings");
+      for (const field of form.elements) if (field.name && params.has(field.name)) field.value = params.get(field.name);
+
+      const element = document.createElement("yuva-subscribe");
+      for (const name of ["server", "channel", "lists", "layout", "name", "locale", "dir", "privacy-url", "button-text"]) {
+        if (params.get(name)) element.setAttribute(name, params.get(name));
+      }
+      const user = params.get("user");
+      if (user) {
+        element.setIdentityToken(async () => {
+          const query = new URLSearchParams({ sub: user });
+          for (const name of ["email", "locale"]) if (params.get(name)) query.set(name, params.get(name));
+          const response = await fetch(`identity-token?${query}`);
+          return response.ok ? (await response.json()).token : null;
+        });
+      }
+      for (const type of ["yuva-subscribe", "yuva-subscribe-error"]) {
+        element.addEventListener(type, (event) => console.log(type, event.detail));
+      }
+      document.getElementById("slot").append(element);
+    </script>
+  </body>
+</html>

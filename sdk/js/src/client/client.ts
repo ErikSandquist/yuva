@@ -1,7 +1,15 @@
 import {
   ApiError,
   call,
+  createSubscription,
+  mailingLists,
   type Fetch,
+  type ClientMailingLists,
+  type ClientSubscriptionAccepted,
+  type ClientSubscriptionCreate,
+  type ClientSubscriptionList,
+  type ClientSubscriptionPut,
+  type ClientSubscriptionStatus,
   type ClientContact,
   type ClientConversation,
   type ClientConversationCreated,
@@ -220,6 +228,26 @@ export class YuvaClient {
       method: "POST",
       json: input,
     })
+  }
+
+  lists(): Promise<ClientMailingLists> {
+    return mailingLists(this.#fetch, this.server, this.channel)
+  }
+
+  subscribe(input: ClientSubscriptionCreate): Promise<ClientSubscriptionAccepted> {
+    return createSubscription(this.#fetch, this.server, this.channel, input)
+  }
+
+  subscriptions(): Promise<ClientSubscriptionList> {
+    return this.#authed("/client/v1/subscriptions")
+  }
+
+  subscribeList(listId: string, input: ClientSubscriptionPut): Promise<ClientSubscriptionStatus> {
+    return this.#authed(`/client/v1/subscriptions/${encodeURIComponent(listId)}`, { method: "PUT", json: input })
+  }
+
+  unsubscribeList(listId: string): Promise<void> {
+    return this.#authed(`/client/v1/subscriptions/${encodeURIComponent(listId)}`, { method: "DELETE" })
   }
 
   setIdentityToken(source: IdentityTokenSource | null): void {

@@ -11,25 +11,35 @@ function check(result: Bun.BuildOutput): void {
   process.exit(1)
 }
 
-const chunks = await Bun.build({
-  entrypoints: ["src/docs/thread.ts"],
-  outdir: "dist/widget",
-  format: "esm",
-  target: "browser",
-  minify: true,
-  naming: "yuva-docs-thread-[hash].[ext]",
-  define: { "process.env.NODE_ENV": '"production"' },
-  plugins: [linguiMacro],
-})
-check(chunks)
-const thread = `widget/${chunks.outputs[0]!.path.split("/").pop()}`
+async function chunk(entry: string, name: string): Promise<string> {
+  const result = await Bun.build({
+    entrypoints: [entry],
+    outdir: "dist/widget",
+    format: "esm",
+    target: "browser",
+    minify: true,
+    naming: `${name}-[hash].[ext]`,
+    define: { "process.env.NODE_ENV": '"production"' },
+    plugins: [linguiMacro],
+  })
+  check(result)
+  return `widget/${result.outputs[0]!.path.split("/").pop()}`
+}
 
-const define = { "process.env.NODE_ENV": '"production"', YUVA_DOCS_THREAD: JSON.stringify(thread) }
+const thread = await chunk("src/docs/thread.ts", "yuva-docs-thread")
+const subscribeClient = await chunk("src/subscribe/client.ts", "yuva-subscribe-client")
+
+const define = {
+  "process.env.NODE_ENV": '"production"',
+  YUVA_DOCS_THREAD: JSON.stringify(thread),
+  YUVA_SUBSCRIBE_CLIENT: JSON.stringify(subscribeClient),
+}
 
 const scripts = [
   { entry: "src/yuva.ts", format: "iife" },
   { entry: "src/yuva-chat.ts", format: "esm" },
   { entry: "src/yuva-docs.ts", format: "iife" },
+  { entry: "src/yuva-subscribe.ts", format: "iife" },
 ] as const
 
 for (const { entry, format } of scripts) {
@@ -46,7 +56,7 @@ for (const { entry, format } of scripts) {
   )
 }
 
-const entries = ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/react.ts", "src/api.ts"]
+const entries = ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/subscribe.ts", "src/react.ts", "src/api.ts"]
 check(
   await Bun.build({
     entrypoints: entries,
@@ -82,10 +92,13 @@ for (const name of [
   "yuva.js",
   "yuva-chat.js",
   "yuva-docs.js",
+  "yuva-subscribe.js",
   thread,
+  subscribeClient,
   "esm/index.js",
   "esm/chat.js",
   "esm/docs.js",
+  "esm/subscribe.js",
   "esm/react.js",
   "esm/api.js",
   "esm/nuxt/module.js",

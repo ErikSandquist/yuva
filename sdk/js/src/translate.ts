@@ -14,3 +14,22 @@ export function translate(messages: Messages, descriptor: MessageDescriptor, fal
   }
   return descriptor.message ?? descriptor.id
 }
+
+const rtlLanguages = new Set(["ar", "fa", "he", "ur"])
+
+export const sourceLocale = "en"
+
+export function localeIn(catalogs: Record<string, Messages>, candidates: (string | null | undefined)[]): string {
+  for (const candidate of candidates) {
+    if (!candidate) continue
+    const tag = candidate.toLowerCase()
+    if (catalogs[tag]) return tag
+    const language = tag.split(/[-_]/)[0] ?? ""
+    if (catalogs[language]) return language
+  }
+  return sourceLocale
+}
+
+export function directionOf(locale: string): "ltr" | "rtl" {
+  return rtlLanguages.has(locale.split(/[-_]/)[0] ?? "") ? "rtl" : "ltr"
+}

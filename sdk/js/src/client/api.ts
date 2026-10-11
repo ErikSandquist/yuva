@@ -34,6 +34,15 @@ export type ClientAttachment = Schemas["ClientAttachment"]
 export type ClientReadState = Schemas["ClientReadState"]
 export type ClientRealtimeMessage = Schemas["ClientRealtimeMessage"]
 export type Problem = Schemas["Problem"]
+export type ClientMailingList = Schemas["ClientMailingList"]
+export type ClientMailingLists = Schemas["ClientMailingLists"]
+export type ClientSubscriptionCreate = Schemas["ClientSubscriptionCreate"]
+export type ClientSubscriptionAccepted = Schemas["ClientSubscriptionAccepted"]
+export type ClientSubscription = Schemas["ClientSubscription"]
+export type ClientSubscriptionList = Schemas["ClientSubscriptionList"]
+export type ClientSubscriptionPut = Schemas["ClientSubscriptionPut"]
+export type ClientSubscriptionStatus = Schemas["ClientSubscriptionStatus"]
+export type SubscriptionState = Schemas["SubscriptionState"]
 
 export type Fetch = (url: string, init: RequestInit) => Promise<Response>
 
@@ -83,4 +92,20 @@ export async function call<T>(
   }
   if (response.status === 204) return undefined as T
   return (blob ? await response.blob() : await response.json()) as T
+}
+
+export function mailingLists(fetcher: Fetch, server: string, channel: string): Promise<ClientMailingLists> {
+  return call(fetcher, server, `/client/v1/channels/${encodeURIComponent(channel)}/lists`)
+}
+
+export function createSubscription(
+  fetcher: Fetch,
+  server: string,
+  channel: string,
+  input: ClientSubscriptionCreate
+): Promise<ClientSubscriptionAccepted> {
+  return call(fetcher, server, `/client/v1/channels/${encodeURIComponent(channel)}/subscriptions`, {
+    method: "POST",
+    json: input,
+  })
 }

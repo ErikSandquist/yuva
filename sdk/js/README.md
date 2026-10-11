@@ -7,8 +7,9 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva` | `createYuvaClient()`: the contact side (`/client/v1`) without DOM. Browsers, Node 22+, Bun, Deno, workers. |
 | `useyuva/chat` | The `<yuva-chat>` web component, built on that client. Browser only. |
 | `useyuva/docs` | `<yuva-page-feedback>` and `<yuva-discussions>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
+| `useyuva/subscribe` | `<yuva-subscribe>`, a mailing list sign-up form. Registers in the browser only. |
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`. React 18+ is an optional peer. |
-| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback` and `YuvaDiscussions` components, configured once in `nuxt.config`. |
+| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
 
 ```sh
@@ -16,7 +17,8 @@ npm install useyuva
 ```
 
 Without a bundler, the server hosts the widget itself: `<script src="https://<your-yuva>/yuva.js" defer></script>`,
-and the documentation page elements without the chat: `<script src="https://<your-yuva>/yuva-docs.js" defer></script>`.
+the documentation page elements without the chat: `<script src="https://<your-yuva>/yuva-docs.js" defer></script>`,
+and the subscribe form: `<script src="https://<your-yuva>/yuva-subscribe.js" defer></script>`.
 
 ## Client
 
@@ -108,6 +110,11 @@ Reader sign-in:
 - `discussionWriter()` resolves to `"reader"`, `"contact"` (an identity token) or `null` (read only).
 - `openReaderPopup(server, channel)` and `readerConnectUrl(server, channel, origin)` are the same popup without a client.
 
+Mailing lists:
+
+- `lists()` returns the channel's public lists and a `form_token`; `subscribe({ email, list_ids, page_url, consent_text, form_token })` answers `{ confirmation }` the same way for every address. Send the token back 2 seconds to 2 hours after `lists()`.
+- With an identity token: `subscriptions()` lists the public lists with the contact's `state`; `subscribeList(listId, { consent_text })` and `unsubscribeList(listId)` change it.
+
 Errors worth handling: `403 sign_in_required`, `discussions_off`, `discussion_locked`, `edit_window_closed`, `forbidden`; `400 page_origin`; `429 rate_limited`.
 
 ## Chat element
@@ -148,6 +155,26 @@ Events: `yuva-rating` (`{ page, rating, previous }`), `yuva-feedback` (`{ page, 
 and `yuva-reader` (`{ name, initials }` or `null`). In React use `YuvaPageFeedback` and
 `YuvaDiscussions` from `useyuva/react` (`onDiscussion`, `onPost`, `onReader`).
 
+## Subscribe form
+
+```ts
+import "useyuva/subscribe";
+```
+
+```html
+<yuva-subscribe channel="yuva_pk_…" server="https://support.example.com" layout="inline"></yuva-subscribe>
+```
+
+Takes `channel`, `server`, `locale`, `dir` and `identity-token`, plus `lists` (comma-separated ids;
+empty for every public list, with a checkbox each when there is more than one), `layout` (`stacked`
+or `inline`), `name` (`optional` or `required` adds a name field), `button-text`, `consent` (your
+own consent sentence) and `privacy-url`. The consent sentence next to the unticked box is sent as it
+is shown. With an identity token it shows a switch per list instead of the e-mail field. Style it
+with `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` and
+`::part(field|button|consent|status)`. Events: `yuva-subscribe` (`{ lists, confirmation }`) and
+`yuva-subscribe-error` (`{ code }`); `YuvaSubscribe` in `useyuva/react` (`onSubscribe`, `onError`)
+and Nuxt (`@subscribe`, `@error`).
+
 ## Nuxt
 
 ```ts
@@ -159,7 +186,7 @@ export default defineNuxtConfig({
 ```
 
 `NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL` and `NUXT_PUBLIC_YUVA_LOCALE` override the
-options at runtime. `<YuvaChat />`, `<YuvaPageFeedback />` and `<YuvaDiscussions />` are
+options at runtime. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
 auto-imported, render on the server and load their element in the browser when they mount. Props
 are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);
 events are `@rating`, `@feedback`, `@discussion`, `@post`, `@reader` and `@unread`. `yuva-*` tags are custom elements in
