@@ -11,7 +11,7 @@ useSeoMeta({ title: page.value.title, description: page.value.description })
   <article v-if="page">
     <h1>{{ page.title }}</h1>
     <ContentRenderer :value="page" />
-    <YuvaPageQuestions :page-title="page.title" />
     <YuvaPageFeedback :page-title="page.title" />
+    <YuvaDiscussions :page-title="page.title" />
   </article>
 </template>

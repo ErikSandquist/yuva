@@ -9,8 +9,8 @@ export default function HomePage() {
         <Link href="/docs" className="font-medium underline">
           /docs
         </Link>{" "}
-        to read the documentation. Every page ends with Yuva&apos;s questions box and &ldquo;Was this page
-        helpful?&rdquo;.
+        to read the documentation. Every page ends with &ldquo;Was this page helpful?&rdquo; and Yuva&apos;s
+        discussions.
       </p>
     </div>
   )

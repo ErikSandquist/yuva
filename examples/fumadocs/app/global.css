@@ -12,7 +12,7 @@ html > body[data-scroll-locked] {
 }
 
 yuva-page-feedback,
-yuva-page-questions {
+yuva-discussions {
   margin-block: 2rem;
   --yuva-accent: var(--color-fd-primary) !important;
   --yuva-on-accent: var(--color-fd-primary-foreground) !important;

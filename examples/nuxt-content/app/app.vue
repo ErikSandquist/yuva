@@ -59,7 +59,7 @@ td {
   border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
 }
 yuva-page-feedback,
-yuva-page-questions {
+yuva-discussions {
   margin-block: 2rem;
 }
 </style>

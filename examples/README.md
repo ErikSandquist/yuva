@@ -1,7 +1,7 @@
 # Examples
 
 Small programs that use Yuva without its panel, and documentation sites with Yuva's page
-feedback and questions. They are MIT licensed ([LICENSE](LICENSE)), so you can copy them into
+feedback and discussions. They are MIT licensed ([LICENSE](LICENSE)), so you can copy them into
 your own code. The walkthroughs are the [Headless guide](../docs/headless.md) and
 [Documentation pages](../docs/documentation-pages.md).
 
@@ -10,8 +10,8 @@ your own code. The walkthroughs are the [Headless guide](../docs/headless.md) an
 | [headless-chat](headless-chat) | A terminal chat for a contact, built only on `createYuvaClient()` from `useyuva` | Node 22.18+ |
 | [inbox-feed](inbox-feed) | Follows a workspace through the event feed `GET /v1/events` with the typed `/v1` client from `useyuva/api` | Node 22.18+ |
 | [draft-bot](draft-bot) | A webhook receiver that verifies the signature and answers every incoming message with a draft | Go 1.27 |
-| [nuxt-content](nuxt-content) | A Nuxt Content documentation site with `<yuva-page-feedback>` and `<yuva-page-questions>` on every page | Node 22.5+, Nuxt 4, Nuxt Content 3 |
-| [fumadocs](fumadocs) | A Fumadocs site (from `create-fumadocs-app`) with `YuvaPageFeedback` and `YuvaPageQuestions` on every docs page | Node 20.9+, Next.js 16, Fumadocs 16 |
+| [nuxt-content](nuxt-content) | A Nuxt Content documentation site with `<yuva-page-feedback>` and `<yuva-discussions>` on every page | Node 22.5+, Nuxt 4, Nuxt Content 3 |
+| [fumadocs](fumadocs) | A Fumadocs site (from `create-fumadocs-app`) with `YuvaPageFeedback` and `YuvaDiscussions` on every docs page | Node 20.9+, Next.js 16, Fumadocs 16 |
 
 The JS examples point at the SDK in this repository (`file:../../sdk/js`); build it once with
 `bun install && bun run build` in `sdk/js`. In your own project, depend on `useyuva` from npm

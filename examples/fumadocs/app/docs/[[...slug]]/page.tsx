@@ -12,7 +12,7 @@ import { getMDXComponents } from "@/components/mdx"
 import type { Metadata } from "next"
 import { createRelativeLink } from "fumadocs-ui/mdx"
 import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from "@/lib/shared"
-import { PageFeedback, PageQuestions } from "@/components/yuva"
+import { PageDiscussions, PageFeedback } from "@/components/yuva"
 
 export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
   const params = await props.params
@@ -41,8 +41,8 @@ export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
           })}
         />
       </DocsBody>
-      <PageQuestions title={page.data.title} />
       <PageFeedback title={page.data.title} />
+      <PageDiscussions title={page.data.title} />
     </DocsPage>
   )
 }
