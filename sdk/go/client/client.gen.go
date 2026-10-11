@@ -150,6 +150,309 @@ func (e Availability) Valid() bool {
 	}
 }
 
+// Defines values for BroadcastConditionOp.
+const (
+	ConditionContains  BroadcastConditionOp = "contains"
+	ConditionEq        BroadcastConditionOp = "eq"
+	ConditionExists    BroadcastConditionOp = "exists"
+	ConditionGt        BroadcastConditionOp = "gt"
+	ConditionIn        BroadcastConditionOp = "in"
+	ConditionLt        BroadcastConditionOp = "lt"
+	ConditionNeq       BroadcastConditionOp = "neq"
+	ConditionNotExists BroadcastConditionOp = "not_exists"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastConditionOp enum.
+func (e BroadcastConditionOp) Valid() bool {
+	switch e {
+	case ConditionContains:
+		return true
+	case ConditionEq:
+		return true
+	case ConditionExists:
+		return true
+	case ConditionGt:
+		return true
+	case ConditionIn:
+		return true
+	case ConditionLt:
+		return true
+	case ConditionNeq:
+		return true
+	case ConditionNotExists:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastDeliveryState.
+const (
+	BroadcastDeliveryStateBounced    BroadcastDeliveryState = "bounced"
+	BroadcastDeliveryStateComplained BroadcastDeliveryState = "complained"
+	BroadcastDeliveryStateFailed     BroadcastDeliveryState = "failed"
+	BroadcastDeliveryStateQueued     BroadcastDeliveryState = "queued"
+	BroadcastDeliveryStateSent       BroadcastDeliveryState = "sent"
+	BroadcastDeliveryStateSkipped    BroadcastDeliveryState = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastDeliveryState enum.
+func (e BroadcastDeliveryState) Valid() bool {
+	switch e {
+	case BroadcastDeliveryStateBounced:
+		return true
+	case BroadcastDeliveryStateComplained:
+		return true
+	case BroadcastDeliveryStateFailed:
+		return true
+	case BroadcastDeliveryStateQueued:
+		return true
+	case BroadcastDeliveryStateSent:
+		return true
+	case BroadcastDeliveryStateSkipped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastEventType.
+const (
+	BroadcastEventTypeBroadcastUpdated BroadcastEventType = "broadcast.updated"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastEventType enum.
+func (e BroadcastEventType) Valid() bool {
+	switch e {
+	case BroadcastEventTypeBroadcastUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastPauseReason.
+const (
+	BroadcastPauseReasonBounceRate         BroadcastPauseReason = "bounce_rate"
+	BroadcastPauseReasonComplaintRate      BroadcastPauseReason = "complaint_rate"
+	BroadcastPauseReasonMember             BroadcastPauseReason = "member"
+	BroadcastPauseReasonOperator           BroadcastPauseReason = "operator"
+	BroadcastPauseReasonSenderError        BroadcastPauseReason = "sender_error"
+	BroadcastPauseReasonWorkspaceSuspended BroadcastPauseReason = "workspace_suspended"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastPauseReason enum.
+func (e BroadcastPauseReason) Valid() bool {
+	switch e {
+	case BroadcastPauseReasonBounceRate:
+		return true
+	case BroadcastPauseReasonComplaintRate:
+		return true
+	case BroadcastPauseReasonMember:
+		return true
+	case BroadcastPauseReasonOperator:
+		return true
+	case BroadcastPauseReasonSenderError:
+		return true
+	case BroadcastPauseReasonWorkspaceSuspended:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastProgressEventType.
+const (
+	BroadcastProgressEventTypeBroadcastProgress BroadcastProgressEventType = "broadcast.progress"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastProgressEventType enum.
+func (e BroadcastProgressEventType) Valid() bool {
+	switch e {
+	case BroadcastProgressEventTypeBroadcastProgress:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastReviewKey.
+const (
+	BroadcastReviewKeyApproval         BroadcastReviewKey = "approval"
+	BroadcastReviewKeyAudienceNonempty BroadcastReviewKey = "audience_nonempty"
+	BroadcastReviewKeyClickTracking    BroadcastReviewKey = "click_tracking"
+	BroadcastReviewKeyDailyCap         BroadcastReviewKey = "daily_cap"
+	BroadcastReviewKeyDesign           BroadcastReviewKey = "design"
+	BroadcastReviewKeyHtmlSize         BroadcastReviewKey = "html_size"
+	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
+	BroadcastReviewKeyLinks            BroadcastReviewKey = "links"
+	BroadcastReviewKeyMergeFields      BroadcastReviewKey = "merge_fields"
+	BroadcastReviewKeySenderIdentity   BroadcastReviewKey = "sender_identity"
+	BroadcastReviewKeySenderReady      BroadcastReviewKey = "sender_ready"
+	BroadcastReviewKeySubject          BroadcastReviewKey = "subject"
+	BroadcastReviewKeyTestSent         BroadcastReviewKey = "test_sent"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastReviewKey enum.
+func (e BroadcastReviewKey) Valid() bool {
+	switch e {
+	case BroadcastReviewKeyApproval:
+		return true
+	case BroadcastReviewKeyAudienceNonempty:
+		return true
+	case BroadcastReviewKeyClickTracking:
+		return true
+	case BroadcastReviewKeyDailyCap:
+		return true
+	case BroadcastReviewKeyDesign:
+		return true
+	case BroadcastReviewKeyHtmlSize:
+		return true
+	case BroadcastReviewKeyImagesAlt:
+		return true
+	case BroadcastReviewKeyLinks:
+		return true
+	case BroadcastReviewKeyMergeFields:
+		return true
+	case BroadcastReviewKeySenderIdentity:
+		return true
+	case BroadcastReviewKeySenderReady:
+		return true
+	case BroadcastReviewKeySubject:
+		return true
+	case BroadcastReviewKeyTestSent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastReviewStatus.
+const (
+	ReviewBlocking BroadcastReviewStatus = "blocking"
+	ReviewOk       BroadcastReviewStatus = "ok"
+	ReviewWarning  BroadcastReviewStatus = "warning"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastReviewStatus enum.
+func (e BroadcastReviewStatus) Valid() bool {
+	switch e {
+	case ReviewBlocking:
+		return true
+	case ReviewOk:
+		return true
+	case ReviewWarning:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastSkipReason.
+const (
+	BroadcastSkipReasonCancelled    BroadcastSkipReason = "cancelled"
+	BroadcastSkipReasonOptedOut     BroadcastSkipReason = "opted_out"
+	BroadcastSkipReasonSuppressed   BroadcastSkipReason = "suppressed"
+	BroadcastSkipReasonUnsubscribed BroadcastSkipReason = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastSkipReason enum.
+func (e BroadcastSkipReason) Valid() bool {
+	switch e {
+	case BroadcastSkipReasonCancelled:
+		return true
+	case BroadcastSkipReasonOptedOut:
+		return true
+	case BroadcastSkipReasonSuppressed:
+		return true
+	case BroadcastSkipReasonUnsubscribed:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastState.
+const (
+	BroadcastStateCancelled BroadcastState = "cancelled"
+	BroadcastStateDraft     BroadcastState = "draft"
+	BroadcastStateFailed    BroadcastState = "failed"
+	BroadcastStatePaused    BroadcastState = "paused"
+	BroadcastStatePreparing BroadcastState = "preparing"
+	BroadcastStateScheduled BroadcastState = "scheduled"
+	BroadcastStateSending   BroadcastState = "sending"
+	BroadcastStateSent      BroadcastState = "sent"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastState enum.
+func (e BroadcastState) Valid() bool {
+	switch e {
+	case BroadcastStateCancelled:
+		return true
+	case BroadcastStateDraft:
+		return true
+	case BroadcastStateFailed:
+		return true
+	case BroadcastStatePaused:
+		return true
+	case BroadcastStatePreparing:
+		return true
+	case BroadcastStateScheduled:
+		return true
+	case BroadcastStateSending:
+		return true
+	case BroadcastStateSent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastsMode.
+const (
+	BroadcastsModeApproval BroadcastsMode = "approval"
+	BroadcastsModeOff      BroadcastsMode = "off"
+	BroadcastsModeOn       BroadcastsMode = "on"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastsMode enum.
+func (e BroadcastsMode) Valid() bool {
+	switch e {
+	case BroadcastsModeApproval:
+		return true
+	case BroadcastsModeOff:
+		return true
+	case BroadcastsModeOn:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastsStatus.
+const (
+	Allowed           BroadcastsStatus = "allowed"
+	ApprovalRequested BroadcastsStatus = "approval_requested"
+	ApprovalRequired  BroadcastsStatus = "approval_required"
+	Suspended         BroadcastsStatus = "suspended"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastsStatus enum.
+func (e BroadcastsStatus) Valid() bool {
+	switch e {
+	case Allowed:
+		return true
+	case ApprovalRequested:
+		return true
+	case ApprovalRequired:
+		return true
+	case Suspended:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ChannelKind.
 const (
 	ChannelKindApi   ChannelKind = "api"
@@ -1163,18 +1466,21 @@ func (e EmailThemeDirection) Valid() bool {
 
 // Defines values for EventType.
 const (
-	Assigned      EventType = "assigned"
-	LabelsChanged EventType = "labels_changed"
-	Moved         EventType = "moved"
-	Rated         EventType = "rated"
-	StatusChanged EventType = "status_changed"
-	Unassigned    EventType = "unassigned"
+	Assigned       EventType = "assigned"
+	BroadcastReply EventType = "broadcast_reply"
+	LabelsChanged  EventType = "labels_changed"
+	Moved          EventType = "moved"
+	Rated          EventType = "rated"
+	StatusChanged  EventType = "status_changed"
+	Unassigned     EventType = "unassigned"
 )
 
 // Valid indicates whether the value is a known member of the EventType enum.
 func (e EventType) Valid() bool {
 	switch e {
 	case Assigned:
+		return true
+	case BroadcastReply:
 		return true
 	case LabelsChanged:
 		return true
@@ -2063,6 +2369,7 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
+	WebhookEventTypeBroadcastUpdated      WebhookEventType = "broadcast.updated"
 	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
 	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
 	WebhookEventTypeConversationCreated   WebhookEventType = "conversation.created"
@@ -2084,6 +2391,8 @@ const (
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
 func (e WebhookEventType) Valid() bool {
 	switch e {
+	case WebhookEventTypeBroadcastUpdated:
+		return true
 	case WebhookEventTypeContactDeleted:
 		return true
 	case WebhookEventTypeContactUpdated:
@@ -2385,11 +2694,14 @@ type ApiKeyList struct {
 //	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
 //	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
 //	    subscribers; resend confirmations.
-//	  - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
-//	    gallery.
-//	  - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
-//	    images.
-//	  - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
+//	  - `broadcasts:read`: broadcasts, their audience counts, reviews and reports; e-mail
+//	    designs, their snapshots and renders, images, the template gallery. Deliveries also
+//	    need `contacts:read`.
+//	  - `broadcasts:write`: create, change and delete draft broadcasts and send tests; create,
+//	    save, copy, archive and restore designs; upload and delete images.
+//	  - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
+//	    and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
+//	    without naming its scopes does not hold it.
 //
 // `lists:*` and `broadcasts:*` are never added to keys made before they existed.
 type ApiKeyScope string
@@ -2459,6 +2771,490 @@ type Availability string
 
 // BotAvatarUrl An `https` image URL.
 type BotAvatarUrl = string
+
+// Broadcast defines model for Broadcast.
+type Broadcast struct {
+	Audience BroadcastAudience `json:"audience"`
+
+	// ChannelId The inbox's e-mail channel it goes out through; absent until chosen or when removed.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ClickTracking Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default.
+	ClickTracking bool `json:"click_tracking"`
+
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts    BroadcastCounts `json:"counts"`
+	CreatedAt time.Time       `json:"created_at"`
+
+	// CreatedBy The member who created it.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+	DesignId  *uuid.UUID `json:"design_id,omitempty"`
+
+	// DesignVersion The design's version frozen when it was scheduled; later edits to the design do not change it.
+	DesignVersion *int32     `json:"design_version,omitempty"`
+	FinishedAt    *time.Time `json:"finished_at,omitempty"`
+	Id            uuid.UUID  `json:"id"`
+	InboxId       uuid.UUID  `json:"inbox_id"`
+	LastTestAt    *time.Time `json:"last_test_at,omitempty"`
+
+	// Name Shown to the team only.
+	Name string `json:"name"`
+
+	// PauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+	// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+	// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+	// too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+	// workspace was suspended from sending. `operator`: the server's operator paused it.
+	PauseReason *BroadcastPauseReason `json:"pause_reason,omitempty"`
+
+	// Preheader The preview text after the subject; the design's own when empty.
+	Preheader string `json:"preheader"`
+
+	// ScheduledAt When sending starts or started.
+	ScheduledAt *time.Time `json:"scheduled_at,omitempty"`
+
+	// ScheduledBy The member who scheduled it.
+	ScheduledBy *uuid.UUID `json:"scheduled_by,omitempty"`
+
+	// ScheduledByApiKey The API key that scheduled it.
+	ScheduledByApiKey *uuid.UUID `json:"scheduled_by_api_key,omitempty"`
+	StartedAt         *time.Time `json:"started_at,omitempty"`
+
+	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	State BroadcastState `json:"state"`
+
+	// StateDetail Why it paused or failed, in words (an SMTP answer, the rates).
+	StateDetail *string `json:"state_detail,omitempty"`
+
+	// Subject May hold merge fields.
+	Subject   string    `json:"subject"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
+}
+
+// BroadcastApprovalRequest defines model for BroadcastApprovalRequest.
+type BroadcastApprovalRequest struct {
+	// ConsentDescription How the subscribers agreed to get them.
+	ConsentDescription string `json:"consent_description"`
+
+	// SenderDescription Who sends and what the broadcasts are about.
+	SenderDescription string `json:"sender_description"`
+	Website           string `json:"website"`
+}
+
+// BroadcastAudience defines model for BroadcastAudience.
+type BroadcastAudience struct {
+	// Conditions Every condition must match.
+	Conditions []BroadcastCondition `json:"conditions"`
+
+	// ListIds Lists of the broadcast's inbox, in order of preference for a contact on several.
+	ListIds []uuid.UUID `json:"list_ids"`
+
+	// Locales Keep only contacts whose language is one of these (`tr` also matches `tr-TR`); empty keeps every language.
+	Locales []LanguageTag `json:"locales"`
+}
+
+// BroadcastAudienceCount defines model for BroadcastAudienceCount.
+type BroadcastAudienceCount struct {
+	// ByList Recipients by the list their mail goes out under.
+	ByList []BroadcastListCount `json:"by_list"`
+
+	// Excluded Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+	// the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+	// mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+	// match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+	Excluded BroadcastAudienceExcluded `json:"excluded"`
+
+	// MissingMergeFields Per merge field without a fallback (`contact.first_name`), the recipients it would be empty for.
+	MissingMergeFields map[string]int64 `json:"missing_merge_fields"`
+	Recipients         int64            `json:"recipients"`
+}
+
+// BroadcastAudienceExcluded Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+// the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+// mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+// match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+type BroadcastAudienceExcluded struct {
+	Blocked      int64 `json:"blocked"`
+	Duplicate    int64 `json:"duplicate"`
+	Filtered     int64 `json:"filtered"`
+	OptedOut     int64 `json:"opted_out"`
+	Pending      int64 `json:"pending"`
+	Suppressed   int64 `json:"suppressed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// BroadcastAudienceInput defines model for BroadcastAudienceInput.
+type BroadcastAudienceInput struct {
+	Conditions *[]BroadcastCondition `json:"conditions,omitempty"`
+	ListIds    []uuid.UUID           `json:"list_ids"`
+	Locales    *[]LanguageTag        `json:"locales,omitempty"`
+}
+
+// BroadcastCondition defines model for BroadcastCondition.
+type BroadcastCondition struct {
+	Attribute string `json:"attribute"`
+
+	// Op Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+	// ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+	// `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+	// without the attribute matches only `neq` and `not_exists`.
+	Op     BroadcastConditionOp `json:"op"`
+	Value  *string              `json:"value,omitempty"`
+	Values *[]string            `json:"values,omitempty"`
+}
+
+// BroadcastConditionOp Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+// ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+// `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+// without the attribute matches only `neq` and `not_exists`.
+type BroadcastConditionOp string
+
+// BroadcastCounts `recipients` is the audience taken when sending started; `queued` the mails still to go
+// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+// without naming a bad address. `bounced` and `complained` count recipients whose mail
+// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+// only).
+type BroadcastCounts struct {
+	AutoReplied int64 `json:"auto_replied"`
+	Bounced     int64 `json:"bounced"`
+	Clicked     int64 `json:"clicked"`
+	Complained  int64 `json:"complained"`
+	Failed      int64 `json:"failed"`
+
+	// Prepared `preparing` only: recipients taken so far.
+	Prepared   *int64 `json:"prepared,omitempty"`
+	Queued     int64  `json:"queued"`
+	Recipients int64  `json:"recipients"`
+	Replied    int64  `json:"replied"`
+	Sent       int64  `json:"sent"`
+
+	// Skipped Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+	// before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+	Skipped      BroadcastSkipped `json:"skipped"`
+	Unsubscribed int64            `json:"unsubscribed"`
+}
+
+// BroadcastCreate defines model for BroadcastCreate.
+type BroadcastCreate struct {
+	Audience      *BroadcastAudienceInput `json:"audience,omitempty"`
+	ChannelId     *uuid.UUID              `json:"channel_id,omitempty"`
+	ClickTracking *bool                   `json:"click_tracking,omitempty"`
+	DesignId      *uuid.UUID              `json:"design_id,omitempty"`
+	InboxId       uuid.UUID               `json:"inbox_id"`
+	Name          string                  `json:"name"`
+	Preheader     *string                 `json:"preheader,omitempty"`
+	Subject       *string                 `json:"subject,omitempty"`
+}
+
+// BroadcastDelivery defines model for BroadcastDelivery.
+type BroadcastDelivery struct {
+	Attempts      int32               `json:"attempts"`
+	AutoRepliedAt *time.Time          `json:"auto_replied_at,omitempty"`
+	BouncedAt     *time.Time          `json:"bounced_at,omitempty"`
+	ClickedAt     *time.Time          `json:"clicked_at,omitempty"`
+	ComplainedAt  *time.Time          `json:"complained_at,omitempty"`
+	Contact       SubscriptionContact `json:"contact"`
+
+	// ConversationId The conversation the recipient's reply opened.
+	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
+	CreatedAt      time.Time  `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email Email `json:"email"`
+
+	// Error The SMTP server's answer when it refused the mail or the last retry failed.
+	Error *string   `json:"error,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// ListId The list the mail went out under; absent when the list was deleted.
+	ListId     *uuid.UUID           `json:"list_id,omitempty"`
+	RepliedAt  *time.Time           `json:"replied_at,omitempty"`
+	SentAt     *time.Time           `json:"sent_at,omitempty"`
+	SkipReason *BroadcastSkipReason `json:"skip_reason,omitempty"`
+
+	// State `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+	// hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+	// `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+	// was cancelled.
+	State          BroadcastDeliveryState `json:"state"`
+	UnsubscribedAt *time.Time             `json:"unsubscribed_at,omitempty"`
+}
+
+// BroadcastDeliveryPage defines model for BroadcastDeliveryPage.
+type BroadcastDeliveryPage struct {
+	Items      []BroadcastDelivery `json:"items"`
+	NextCursor *string             `json:"next_cursor,omitempty"`
+}
+
+// BroadcastDeliveryState `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+// hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+// `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+// was cancelled.
+type BroadcastDeliveryState string
+
+// BroadcastEvent `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+// `broadcasts:read` and can see its inbox.
+type BroadcastEvent struct {
+	CreatedAt   time.Time          `json:"created_at"`
+	Data        BroadcastEventData `json:"data"`
+	Id          int64              `json:"id"`
+	InboxId     uuid.UUID          `json:"inbox_id"`
+	Type        BroadcastEventType `json:"type"`
+	WorkspaceId uuid.UUID          `json:"workspace_id"`
+}
+
+// BroadcastEventType defines model for BroadcastEvent.Type.
+type BroadcastEventType string
+
+// BroadcastEventData defines model for BroadcastEventData.
+type BroadcastEventData struct {
+	Broadcast Broadcast `json:"broadcast"`
+
+	// PreviousState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	PreviousState *BroadcastState `json:"previous_state,omitempty"`
+}
+
+// BroadcastListCount defines model for BroadcastListCount.
+type BroadcastListCount struct {
+	ListId     uuid.UUID `json:"list_id"`
+	Recipients int64     `json:"recipients"`
+}
+
+// BroadcastPage defines model for BroadcastPage.
+type BroadcastPage struct {
+	Items      []Broadcast `json:"items"`
+	NextCursor *string     `json:"next_cursor,omitempty"`
+}
+
+// BroadcastPauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+// too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+// workspace was suspended from sending. `operator`: the server's operator paused it.
+type BroadcastPauseReason string
+
+// BroadcastProblem defines model for BroadcastProblem.
+type BroadcastProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Items `review_failed` only: the blocking review items.
+	Items *[]BroadcastReviewItem `json:"items,omitempty"`
+
+	// Recipients `audience_changed` only: the audience count now.
+	Recipients *int64 `json:"recipients,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// BroadcastProgress defines model for BroadcastProgress.
+type BroadcastProgress struct {
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts BroadcastCounts `json:"counts"`
+	Id     uuid.UUID       `json:"id"`
+
+	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	State        BroadcastState `json:"state"`
+	WaitingUntil *time.Time     `json:"waiting_until,omitempty"`
+}
+
+// BroadcastProgressEvent `broadcast.progress`, on `/v1/realtime` only: the counts of a preparing or sending broadcast,
+// at most every 5 seconds. Not stored, no id, never replayed; reload the broadcast after a
+// reconnect.
+type BroadcastProgressEvent struct {
+	CreatedAt   time.Time                  `json:"created_at"`
+	Data        BroadcastProgress          `json:"data"`
+	InboxId     uuid.UUID                  `json:"inbox_id"`
+	Type        BroadcastProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                  `json:"workspace_id"`
+}
+
+// BroadcastProgressEventType defines model for BroadcastProgressEvent.Type.
+type BroadcastProgressEventType string
+
+// BroadcastRates Shares of `sent`, from 0 to 1; all 0 before anything was sent.
+type BroadcastRates struct {
+	Bounced      float64 `json:"bounced"`
+	Clicked      float64 `json:"clicked"`
+	Complained   float64 `json:"complained"`
+	Replied      float64 `json:"replied"`
+	Unsubscribed float64 `json:"unsubscribed"`
+}
+
+// BroadcastRef defines model for BroadcastRef.
+type BroadcastRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// BroadcastReport defines model for BroadcastReport.
+type BroadcastReport struct {
+	BroadcastId uuid.UUID `json:"broadcast_id"`
+
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts BroadcastCounts `json:"counts"`
+
+	// Links Click tracking only, most clicked first.
+	Links *[]BroadcastReportLink `json:"links,omitempty"`
+
+	// Rates Shares of `sent`, from 0 to 1; all 0 before anything was sent.
+	Rates BroadcastRates `json:"rates"`
+
+	// Replies The first 50 conversations opened by replies.
+	Replies []BroadcastReportReply `json:"replies"`
+
+	// Timeline Per hour for the first 72 hours after sending started, then per UTC day; only periods with something in them.
+	Timeline []BroadcastReportPoint `json:"timeline"`
+}
+
+// BroadcastReportLink defines model for BroadcastReportLink.
+type BroadcastReportLink struct {
+	// Clicks Recipients who opened it.
+	Clicks int64  `json:"clicks"`
+	Url    string `json:"url"`
+}
+
+// BroadcastReportPoint defines model for BroadcastReportPoint.
+type BroadcastReportPoint struct {
+	// At The start of the hour or UTC day.
+	At           time.Time `json:"at"`
+	Bounced      int64     `json:"bounced"`
+	Clicked      int64     `json:"clicked"`
+	Complained   int64     `json:"complained"`
+	Replied      int64     `json:"replied"`
+	Sent         int64     `json:"sent"`
+	Unsubscribed int64     `json:"unsubscribed"`
+}
+
+// BroadcastReportReply defines model for BroadcastReportReply.
+type BroadcastReportReply struct {
+	At             time.Time           `json:"at"`
+	Contact        SubscriptionContact `json:"contact"`
+	ConversationId uuid.UUID           `json:"conversation_id"`
+}
+
+// BroadcastReview defines model for BroadcastReview.
+type BroadcastReview struct {
+	// Days How many UTC days sending takes under the workspace's daily limit; absent without a limit.
+	Days      *int32                `json:"days,omitempty"`
+	HtmlBytes *int32                `json:"html_bytes,omitempty"`
+	Items     []BroadcastReviewItem `json:"items"`
+
+	// Ready No item is `blocking`.
+	Ready bool `json:"ready"`
+
+	// Recipients The audience count the review used; pass it as `confirm_recipients` to schedule only this audience.
+	Recipients int64 `json:"recipients"`
+}
+
+// BroadcastReviewItem defines model for BroadcastReviewItem.
+type BroadcastReviewItem struct {
+	// Detail What is wrong or what to know, in English.
+	Detail *string               `json:"detail,omitempty"`
+	Key    BroadcastReviewKey    `json:"key"`
+	Status BroadcastReviewStatus `json:"status"`
+}
+
+// BroadcastReviewKey defines model for BroadcastReviewKey.
+type BroadcastReviewKey string
+
+// BroadcastReviewStatus defines model for BroadcastReviewStatus.
+type BroadcastReviewStatus string
+
+// BroadcastSchedule defines model for BroadcastSchedule.
+type BroadcastSchedule struct {
+	ConfirmRecipients *int64     `json:"confirm_recipients,omitempty"`
+	SendAt            *time.Time `json:"send_at,omitempty"`
+}
+
+// BroadcastSkipReason defines model for BroadcastSkipReason.
+type BroadcastSkipReason string
+
+// BroadcastSkipped Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+// before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+type BroadcastSkipped struct {
+	Cancelled    int64 `json:"cancelled"`
+	OptedOut     int64 `json:"opted_out"`
+	Suppressed   int64 `json:"suppressed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// BroadcastState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+// `failed` when it cannot go on (its channel was removed).
+type BroadcastState string
+
+// BroadcastTest defines model for BroadcastTest.
+type BroadcastTest struct {
+	ContactId *uuid.UUID   `json:"contact_id,omitempty"`
+	MemberIds *[]uuid.UUID `json:"member_ids,omitempty"`
+}
+
+// BroadcastTestResult defines model for BroadcastTestResult.
+type BroadcastTestResult struct {
+	SentTo []Email `json:"sent_to"`
+}
+
+// BroadcastUpdate defines model for BroadcastUpdate.
+type BroadcastUpdate struct {
+	Audience      *BroadcastAudienceInput      `json:"audience,omitempty"`
+	ChannelId     nullable.Nullable[uuid.UUID] `json:"channel_id,omitempty"`
+	ClickTracking *bool                        `json:"click_tracking,omitempty"`
+	DesignId      nullable.Nullable[uuid.UUID] `json:"design_id,omitempty"`
+	Name          *string                      `json:"name,omitempty"`
+	Preheader     *string                      `json:"preheader,omitempty"`
+	Subject       *string                      `json:"subject,omitempty"`
+}
+
+// BroadcastsMode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+// operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+// still work).
+type BroadcastsMode string
+
+// BroadcastsStatus `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+// `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+// or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+type BroadcastsStatus string
 
 // BusinessHours When `enabled` is false the inbox counts as always open.
 type BusinessHours struct {
@@ -3535,6 +4331,11 @@ type Conversation struct {
 	// AssigneeId The assigned member; absent when unassigned.
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
 
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
@@ -3697,6 +4498,11 @@ type ConversationKind string
 type ConversationListItem struct {
 	// AssigneeId The assigned member; absent when unassigned.
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
+
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
 
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
@@ -4411,6 +5217,13 @@ type EmailChannel struct {
 	// answer to automatic mail.
 	AutoReply EmailAutoReply `json:"auto_reply"`
 
+	// BroadcastRate Broadcast mails a second through this channel.
+	BroadcastRate int32 `json:"broadcast_rate"`
+
+	// BroadcastSmtp A separate SMTP account for broadcasts, so complaints about marketing mail never land
+	// on the support account; absent when broadcasts use `smtp`.
+	BroadcastSmtp *SmtpSettings `json:"broadcast_smtp,omitempty"`
+
 	// DisplayName The name in `From`; the channel name when empty.
 	DisplayName string `json:"display_name"`
 
@@ -4431,9 +5244,19 @@ type EmailChannelInput struct {
 	//
 	//
 	// Examples: owner@example.com
-	Address     Email                `json:"address"`
-	AutoReply   *EmailAutoReplyInput `json:"auto_reply,omitempty"`
-	DisplayName *string              `json:"display_name,omitempty"`
+	Address   Email                `json:"address"`
+	AutoReply *EmailAutoReplyInput `json:"auto_reply,omitempty"`
+
+	// BroadcastRate Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
+	BroadcastRate *int32 `json:"broadcast_rate,omitempty"`
+
+	// BroadcastSmtp The broadcast SMTP account. Absent keeps the stored one; its `password` absent keeps
+	// the stored password. Remove it with `broadcast_smtp_remove`.
+	BroadcastSmtp *SmtpSettingsInput `json:"broadcast_smtp,omitempty"`
+
+	// BroadcastSmtpRemove `true` removes the broadcast SMTP account; broadcasts then use `smtp`.
+	BroadcastSmtpRemove *bool   `json:"broadcast_smtp_remove,omitempty"`
+	DisplayName         *string `json:"display_name,omitempty"`
 
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email             `json:"from_address,omitempty"`
@@ -6071,6 +6894,9 @@ type MessageEvent struct {
 	// AssigneeId The new assignee (`assigned`).
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
 
+	// Broadcast `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation.
+	Broadcast *BroadcastRef `json:"broadcast,omitempty"`
+
 	// InboxId The inbox it moved to (`moved`).
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
@@ -7042,8 +7868,11 @@ type UsageList struct {
 // UsageMonth defines model for UsageMonth.
 type UsageMonth struct {
 	AttachmentBytes int64 `json:"attachment_bytes"`
-	Conversations   int64 `json:"conversations"`
-	Messages        int64 `json:"messages"`
+
+	// BroadcastRecipients Broadcast mails accepted by the SMTP server.
+	BroadcastRecipients int64 `json:"broadcast_recipients"`
+	Conversations       int64 `json:"conversations"`
+	Messages            int64 `json:"messages"`
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
@@ -7123,6 +7952,29 @@ type WebhookAttempt struct {
 // WebhookAttemptList defines model for WebhookAttemptList.
 type WebhookAttemptList struct {
 	Items []WebhookAttempt `json:"items"`
+}
+
+// WebhookBroadcastData defines model for WebhookBroadcastData.
+type WebhookBroadcastData struct {
+	Broadcast Broadcast `json:"broadcast"`
+
+	// PreviousState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	PreviousState *BroadcastState `json:"previous_state,omitempty"`
+}
+
+// WebhookBroadcastPayload defines model for WebhookBroadcastPayload.
+type WebhookBroadcastPayload struct {
+	Data WebhookBroadcastData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
 // WebhookContact The contact as a host backend needs it.
@@ -7421,13 +8273,38 @@ type Workspace struct {
 	// (`403 bot_sending_disabled`) and a key cannot send drafts; members review and send
 	// them. On: a key with `messages:write` sends directly, and one that also has
 	// `drafts:send` sends drafts. Members always may.
-	BotsMaySend bool      `json:"bots_may_send"`
-	CreatedAt   time.Time `json:"created_at"`
-	Id          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
+	BotsMaySend bool                `json:"bots_may_send"`
+	Broadcasts  WorkspaceBroadcasts `json:"broadcasts"`
+	CreatedAt   time.Time           `json:"created_at"`
+	Id          uuid.UUID           `json:"id"`
+	Name        string              `json:"name"`
 
 	// RetentionDays Closed conversations untouched for this many days are deleted with their messages and attachments, and raw e-mails older than this are deleted. Absent when everything is kept.
 	RetentionDays *int32 `json:"retention_days,omitempty"`
+}
+
+// WorkspaceBroadcasts defines model for WorkspaceBroadcasts.
+type WorkspaceBroadcasts struct {
+	// ByKeys API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Off by default.
+	ByKeys bool `json:"by_keys"`
+
+	// DailyLimit Recipients the workspace may send to today (UTC), all broadcasts together; absent without a limit.
+	DailyLimit *int64 `json:"daily_limit,omitempty"`
+
+	// Mode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+	// operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+	// still work).
+	Mode BroadcastsMode `json:"mode"`
+
+	// Reason The operator's or the server's reason for the status.
+	Reason    *string `json:"reason,omitempty"`
+	SentToday int64   `json:"sent_today"`
+
+	// Status `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+	// `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+	// or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+	Status   BroadcastsStatus `json:"status"`
+	StatusAt *time.Time       `json:"status_at,omitempty"`
 }
 
 // WorkspaceCreate defines model for WorkspaceCreate.
@@ -7446,6 +8323,9 @@ type WorkspaceUpdate struct {
 	// BotsMaySend Owners and admins, with a member session.
 	BotsMaySend *bool `json:"bots_may_send,omitempty"`
 
+	// BroadcastsByKeys Whether API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Owners and admins, with a member session.
+	BroadcastsByKeys *bool `json:"broadcasts_by_keys,omitempty"`
+
 	// RetentionDays `null` keeps everything. Owners, or an API key with `workspace:manage`.
 	RetentionDays nullable.Nullable[int32] `json:"retention_days,omitempty"`
 }
@@ -7455,6 +8335,9 @@ type ApiKeyId = uuid.UUID
 
 // AttachmentId defines model for AttachmentId.
 type AttachmentId = uuid.UUID
+
+// BroadcastId defines model for BroadcastId.
+type BroadcastId = uuid.UUID
 
 // CannedReplyId defines model for CannedReplyId.
 type CannedReplyId = uuid.UUID
@@ -7717,6 +8600,139 @@ type DownloadAttachmentParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListBroadcastsParams defines parameters for ListBroadcasts.
+type ListBroadcastsParams struct {
+	InboxId *uuid.UUID        `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	State   *[]BroadcastState `form:"state,omitempty" json:"state,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateBroadcastParams defines parameters for CreateBroadcast.
+type CreateBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteBroadcastParams defines parameters for DeleteBroadcast.
+type DeleteBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetBroadcastParams defines parameters for GetBroadcast.
+type GetBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateBroadcastParams defines parameters for UpdateBroadcast.
+type UpdateBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CountBroadcastAudienceParams defines parameters for CountBroadcastAudience.
+type CountBroadcastAudienceParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelBroadcastParams defines parameters for CancelBroadcast.
+type CancelBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListBroadcastDeliveriesParams defines parameters for ListBroadcastDeliveries.
+type ListBroadcastDeliveriesParams struct {
+	State   *BroadcastDeliveryState `form:"state,omitempty" json:"state,omitempty"`
+	Q       *string                 `form:"q,omitempty" json:"q,omitempty"`
+	Replied *bool                   `form:"replied,omitempty" json:"replied,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PauseBroadcastParams defines parameters for PauseBroadcast.
+type PauseBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetBroadcastReportParams defines parameters for GetBroadcastReport.
+type GetBroadcastReportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResumeBroadcastParams defines parameters for ResumeBroadcast.
+type ResumeBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReviewBroadcastParams defines parameters for ReviewBroadcast.
+type ReviewBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScheduleBroadcastParams defines parameters for ScheduleBroadcast.
+type ScheduleBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SendBroadcastTestParams defines parameters for SendBroadcastTest.
+type SendBroadcastTestParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnscheduleBroadcastParams defines parameters for UnscheduleBroadcast.
+type UnscheduleBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListCannedRepliesParams defines parameters for ListCannedReplies.
 type ListCannedRepliesParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -7945,6 +8961,9 @@ type ListConversationsParams struct {
 	// Page Only conversations sent from this documentation page (a URL; query and fragment are
 	// ignored).
 	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// BroadcastId Only conversations opened by replies to this broadcast.
+	BroadcastId *uuid.UUID `form:"broadcast_id,omitempty" json:"broadcast_id,omitempty"`
 
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
 	// without it, both. Member sessions only (`400 validation_failed` for API keys).
@@ -8906,6 +9925,29 @@ type UpdateWorkspaceParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// RequestBroadcastApprovalParams defines parameters for RequestBroadcastApproval.
+type RequestBroadcastApprovalParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// WebhookBroadcastUpdatedParams defines parameters for WebhookBroadcastUpdated.
+type WebhookBroadcastUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookContactDeletedParams defines parameters for WebhookContactDeleted.
 type WebhookContactDeletedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -9208,6 +10250,18 @@ type VerifySignInCodeJSONRequestBody = SignInCodeVerify
 // FinishPasskeySignInJSONRequestBody defines body for FinishPasskeySignIn for application/json ContentType.
 type FinishPasskeySignInJSONRequestBody = PasskeyCeremonyResult
 
+// CreateBroadcastJSONRequestBody defines body for CreateBroadcast for application/json ContentType.
+type CreateBroadcastJSONRequestBody = BroadcastCreate
+
+// UpdateBroadcastJSONRequestBody defines body for UpdateBroadcast for application/json ContentType.
+type UpdateBroadcastJSONRequestBody = BroadcastUpdate
+
+// ScheduleBroadcastJSONRequestBody defines body for ScheduleBroadcast for application/json ContentType.
+type ScheduleBroadcastJSONRequestBody = BroadcastSchedule
+
+// SendBroadcastTestJSONRequestBody defines body for SendBroadcastTest for application/json ContentType.
+type SendBroadcastTestJSONRequestBody = BroadcastTest
+
 // CreateCannedReplyJSONRequestBody defines body for CreateCannedReply for application/json ContentType.
 type CreateCannedReplyJSONRequestBody = CannedReplyCreate
 
@@ -9361,8 +10415,14 @@ type DeleteWorkspaceJSONRequestBody = WorkspaceDeletion
 // UpdateWorkspaceJSONRequestBody defines body for UpdateWorkspace for application/json ContentType.
 type UpdateWorkspaceJSONRequestBody = WorkspaceUpdate
 
+// RequestBroadcastApprovalJSONRequestBody defines body for RequestBroadcastApproval for application/json ContentType.
+type RequestBroadcastApprovalJSONRequestBody = BroadcastApprovalRequest
+
 // CreateWorkspaceJSONRequestBody defines body for CreateWorkspace for application/json ContentType.
 type CreateWorkspaceJSONRequestBody = WorkspaceCreate
+
+// WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
+type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
 
 // WebhookContactDeletedJSONRequestBody defines body for WebhookContactDeleted for application/json ContentType.
 type WebhookContactDeletedJSONRequestBody = WebhookContactDeletedPayload
@@ -11170,6 +12230,58 @@ func (t *RealtimeMessage) MergeSubscriptionEvent(v SubscriptionEvent) error {
 	return err
 }
 
+// AsBroadcastEvent returns the union data inside the RealtimeMessage as a BroadcastEvent
+func (t RealtimeMessage) AsBroadcastEvent() (BroadcastEvent, error) {
+	var body BroadcastEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastEvent overwrites any union data inside the RealtimeMessage as the provided BroadcastEvent
+func (t *RealtimeMessage) FromBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastEvent performs a merge with any union data inside the RealtimeMessage, using the provided BroadcastEvent
+func (t *RealtimeMessage) MergeBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsBroadcastProgressEvent returns the union data inside the RealtimeMessage as a BroadcastProgressEvent
+func (t RealtimeMessage) AsBroadcastProgressEvent() (BroadcastProgressEvent, error) {
+	var body BroadcastProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastProgressEvent overwrites any union data inside the RealtimeMessage as the provided BroadcastProgressEvent
+func (t *RealtimeMessage) FromBroadcastProgressEvent(v BroadcastProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided BroadcastProgressEvent
+func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -11340,6 +12452,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "broadcast.progress":
+		return t.AsBroadcastProgressEvent()
+	case "broadcast.updated":
+		return t.AsBroadcastEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.presence":
@@ -11829,6 +12945,32 @@ func (t *StoredEvent) MergeSubscriptionEvent(v SubscriptionEvent) error {
 	return err
 }
 
+// AsBroadcastEvent returns the union data inside the StoredEvent as a BroadcastEvent
+func (t StoredEvent) AsBroadcastEvent() (BroadcastEvent, error) {
+	var body BroadcastEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastEvent overwrites any union data inside the StoredEvent as the provided BroadcastEvent
+func (t *StoredEvent) FromBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastEvent performs a merge with any union data inside the StoredEvent, using the provided BroadcastEvent
+func (t *StoredEvent) MergeBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -11843,6 +12985,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "broadcast.updated":
+		return t.AsBroadcastEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.read":
@@ -12982,6 +14126,259 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/auth/sign-out (the `SignOut` operationId).
 	SignOut(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListBroadcasts List broadcasts
+	//
+	// Newest first, in the inboxes the caller can see. `state` may be repeated.
+	//
+	// Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+	// `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/broadcasts (the `ListBroadcasts` operationId).
+	ListBroadcasts(ctx context.Context, params *ListBroadcastsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateBroadcastWithBody Create a draft broadcast
+	//
+	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+	// languages to keep. Everything can be changed while the broadcast is a draft; the review
+	// (`GET .../review`) says what is still missing before it can be scheduled.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+	// broadcast write answers `403 broadcasts_disabled`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+	CreateBroadcastWithBody(ctx context.Context, params *CreateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateBroadcast Create a draft broadcast
+	//
+	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+	// languages to keep. Everything can be changed while the broadcast is a draft; the review
+	// (`GET .../review`) says what is still missing before it can be scheduled.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+	// broadcast write answers `403 broadcasts_disabled`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+	CreateBroadcast(ctx context.Context, params *CreateBroadcastParams, body CreateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteBroadcast Delete a broadcast
+	//
+	// Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+	// conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+	// scheduled, preparing, sending or paused: cancel it first.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Corresponds with DELETE /v1/broadcasts/{broadcastId} (the `DeleteBroadcast` operationId).
+	DeleteBroadcast(ctx context.Context, broadcastId BroadcastId, params *DeleteBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetBroadcast A broadcast
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId} (the `GetBroadcast` operationId).
+	GetBroadcast(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateBroadcastWithBody Change a draft
+	//
+	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+	// `design_id: null` clear them; `audience` replaces the whole audience.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+	UpdateBroadcastWithBody(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateBroadcast Change a draft
+	//
+	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+	// `design_id: null` clear them; `audience` replaces the whole audience.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+	UpdateBroadcast(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, body UpdateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CountBroadcastAudience Count the audience
+	//
+	// Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+	// of its lists (the address of the first list in the broadcast's order), matching every
+	// condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+	// per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+	// stored; the audience is taken again when sending starts.
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/audience (the `CountBroadcastAudience` operationId).
+	CountBroadcastAudience(ctx context.Context, broadcastId BroadcastId, params *CountBroadcastAudienceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelBroadcast Cancel a broadcast
+	//
+	// A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+	// progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/cancel (the `CancelBroadcast` operationId).
+	CancelBroadcast(ctx context.Context, broadcastId BroadcastId, params *CancelBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListBroadcastDeliveries List a broadcast's deliveries
+	//
+	// One row per recipient, in the order they were taken. `q` matches the address or the
+	// contact's name; `replied=true` keeps the recipients who answered.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/deliveries (the `ListBroadcastDeliveries` operationId).
+	ListBroadcastDeliveries(ctx context.Context, broadcastId BroadcastId, params *ListBroadcastDeliveriesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PauseBroadcast Pause sending
+	//
+	// A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+	// with `pause_reason: member`. `409 invalid_state` otherwise.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/pause (the `PauseBroadcast` operationId).
+	PauseBroadcast(ctx context.Context, broadcastId BroadcastId, params *PauseBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetBroadcastReport A broadcast's report
+	//
+	// Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+	// sending started, then per day), the links by unique clicks when click tracking was on, and
+	// the first 50 conversations opened by replies. There is no open tracking. Clicks are
+	// approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+	// security scanner) are not counted.
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/report (the `GetBroadcastReport` operationId).
+	GetBroadcastReport(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ResumeBroadcast Resume sending
+	//
+	// A paused broadcast continues where it stopped, whatever paused it; the bounce and
+	// complaint rates that pause it on their own count again from now. Refused like scheduling
+	// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+	// when it is not paused.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/resume (the `ResumeBroadcast` operationId).
+	ResumeBroadcast(ctx context.Context, broadcastId BroadcastId, params *ResumeBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ReviewBroadcast Review before sending
+	//
+	// The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+	// `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+	// can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+	// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+	// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+	// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+	// above 80), `daily_cap` (warning when the send will take more than one day),
+	// `test_sent` (warning when no test went out since the last change) and `click_tracking`
+	// (warning: links point at the server's link domain).
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/review (the `ReviewBroadcast` operationId).
+	ReviewBroadcast(ctx context.Context, broadcastId BroadcastId, params *ReviewBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ScheduleBroadcastWithBody Schedule or send now
+	//
+	// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+	// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+	// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+	// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+	// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+	//
+	// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+	// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+	// (the server's operator has not approved the workspace yet),
+	// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+	// while the workspace's `broadcasts.by_keys` is off).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+	ScheduleBroadcastWithBody(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ScheduleBroadcast Schedule or send now
+	//
+	// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+	// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+	// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+	// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+	// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+	//
+	// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+	// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+	// (the server's operator has not approved the workspace yet),
+	// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+	// while the workspace's `broadcasts.by_keys` is off).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+	ScheduleBroadcast(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, body ScheduleBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendBroadcastTestWithBody Send a test
+	//
+	// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+	// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+	// absent (API keys must name members). `contact_id` fills the merge fields with that
+	// contact's values instead of sample values. Its unsubscribe link names no list and says it
+	// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+	// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+	SendBroadcastTestWithBody(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendBroadcastTest Send a test
+	//
+	// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+	// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+	// absent (API keys must name members). `contact_id` fills the merge fields with that
+	// contact's values instead of sample values. Its unsubscribe link names no list and says it
+	// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+	// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+	SendBroadcastTest(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, body SendBroadcastTestJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnscheduleBroadcast Back to draft
+	//
+	// A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+	// otherwise).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/unschedule (the `UnscheduleBroadcast` operationId).
+	UnscheduleBroadcast(ctx context.Context, broadcastId BroadcastId, params *UnscheduleBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListCannedReplies List canned replies
 	//
@@ -14587,7 +15984,8 @@ type ClientInterface interface {
 	//
 	// Deletes the list with its subscriptions and their consent events. Addresses that had
 	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-	// member or a key.
+	// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+	// broadcast sends to it.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -15190,7 +16588,8 @@ type ClientInterface interface {
 	// GetUsage Usage per month
 	//
 	// Counters of the workspace per calendar month (UTC), newest first: conversations and
-	// messages (including notes, not events) created, and attachment bytes uploaded.
+	// messages (including notes, not events) created, attachment bytes uploaded and broadcast
+	// mails sent.
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -15383,8 +16782,9 @@ type ClientInterface interface {
 
 	// UpdateWorkspaceWithBody Update the workspace
 	//
-	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-	// and admins with a member session (`403 member_session_required` for a key).
+	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+	// `broadcasts_by_keys`: owners and admins with a member session (`403
+	// member_session_required` for a key).
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -15395,8 +16795,9 @@ type ClientInterface interface {
 
 	// UpdateWorkspace Update the workspace
 	//
-	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-	// and admins with a member session (`403 member_session_required` for a key).
+	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+	// `broadcasts_by_keys`: owners and admins with a member session (`403
+	// member_session_required` for a key).
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -15404,6 +16805,36 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 	UpdateWorkspace(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RequestBroadcastApprovalWithBody Ask the operator to allow broadcasts
+	//
+	// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+	// after the server's operator approves it. The request tells the operator the website, what
+	// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+	// `approval_required`.
+	//
+	// Owners only, with a member session.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+	RequestBroadcastApprovalWithBody(ctx context.Context, params *RequestBroadcastApprovalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RequestBroadcastApproval Ask the operator to allow broadcasts
+	//
+	// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+	// after the server's operator approves it. The request tells the operator the website, what
+	// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+	// `approval_required`.
+	//
+	// Owners only, with a member session.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+	RequestBroadcastApproval(ctx context.Context, params *RequestBroadcastApprovalParams, body RequestBroadcastApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateWorkspaceWithBody Create a workspace
 	//
@@ -17205,6 +18636,449 @@ func (c *Client) BeginPasskeySignIn(ctx context.Context, reqEditors ...RequestEd
 // Corresponds with POST /v1/auth/sign-out (the `SignOut` operationId).
 func (c *Client) SignOut(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSignOutRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListBroadcasts List broadcasts
+//
+// Newest first, in the inboxes the caller can see. `state` may be repeated.
+//
+// Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+// `broadcasts:read`.
+//
+// Corresponds with GET /v1/broadcasts (the `ListBroadcasts` operationId).
+func (c *Client) ListBroadcasts(ctx context.Context, params *ListBroadcastsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListBroadcastsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateBroadcastWithBody Create a draft broadcast
+//
+// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+// languages to keep. Everything can be changed while the broadcast is a draft; the review
+// (`GET .../review`) says what is still missing before it can be scheduled.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+// broadcast write answers `403 broadcasts_disabled`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+func (c *Client) CreateBroadcastWithBody(ctx context.Context, params *CreateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateBroadcastRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateBroadcast Create a draft broadcast
+//
+// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+// languages to keep. Everything can be changed while the broadcast is a draft; the review
+// (`GET .../review`) says what is still missing before it can be scheduled.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+// broadcast write answers `403 broadcasts_disabled`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+func (c *Client) CreateBroadcast(ctx context.Context, params *CreateBroadcastParams, body CreateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateBroadcastRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteBroadcast Delete a broadcast
+//
+// Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+// conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+// scheduled, preparing, sending or paused: cancel it first.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Corresponds with DELETE /v1/broadcasts/{broadcastId} (the `DeleteBroadcast` operationId).
+func (c *Client) DeleteBroadcast(ctx context.Context, broadcastId BroadcastId, params *DeleteBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetBroadcast A broadcast
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId} (the `GetBroadcast` operationId).
+func (c *Client) GetBroadcast(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateBroadcastWithBody Change a draft
+//
+// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+// `design_id: null` clear them; `audience` replaces the whole audience.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+func (c *Client) UpdateBroadcastWithBody(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateBroadcastRequestWithBody(c.Server, broadcastId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateBroadcast Change a draft
+//
+// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+// `design_id: null` clear them; `audience` replaces the whole audience.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+func (c *Client) UpdateBroadcast(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, body UpdateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateBroadcastRequest(c.Server, broadcastId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CountBroadcastAudience Count the audience
+//
+// Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+// of its lists (the address of the first list in the broadcast's order), matching every
+// condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+// per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+// stored; the audience is taken again when sending starts.
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/audience (the `CountBroadcastAudience` operationId).
+func (c *Client) CountBroadcastAudience(ctx context.Context, broadcastId BroadcastId, params *CountBroadcastAudienceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCountBroadcastAudienceRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelBroadcast Cancel a broadcast
+//
+// A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+// progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/cancel (the `CancelBroadcast` operationId).
+func (c *Client) CancelBroadcast(ctx context.Context, broadcastId BroadcastId, params *CancelBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListBroadcastDeliveries List a broadcast's deliveries
+//
+// One row per recipient, in the order they were taken. `q` matches the address or the
+// contact's name; `replied=true` keeps the recipients who answered.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/deliveries (the `ListBroadcastDeliveries` operationId).
+func (c *Client) ListBroadcastDeliveries(ctx context.Context, broadcastId BroadcastId, params *ListBroadcastDeliveriesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListBroadcastDeliveriesRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PauseBroadcast Pause sending
+//
+// A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+// with `pause_reason: member`. `409 invalid_state` otherwise.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/pause (the `PauseBroadcast` operationId).
+func (c *Client) PauseBroadcast(ctx context.Context, broadcastId BroadcastId, params *PauseBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPauseBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetBroadcastReport A broadcast's report
+//
+// Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+// sending started, then per day), the links by unique clicks when click tracking was on, and
+// the first 50 conversations opened by replies. There is no open tracking. Clicks are
+// approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+// security scanner) are not counted.
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/report (the `GetBroadcastReport` operationId).
+func (c *Client) GetBroadcastReport(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetBroadcastReportRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ResumeBroadcast Resume sending
+//
+// A paused broadcast continues where it stopped, whatever paused it; the bounce and
+// complaint rates that pause it on their own count again from now. Refused like scheduling
+// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+// when it is not paused.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/resume (the `ResumeBroadcast` operationId).
+func (c *Client) ResumeBroadcast(ctx context.Context, broadcastId BroadcastId, params *ResumeBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResumeBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ReviewBroadcast Review before sending
+//
+// The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+// `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+// can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+// above 80), `daily_cap` (warning when the send will take more than one day),
+// `test_sent` (warning when no test went out since the last change) and `click_tracking`
+// (warning: links point at the server's link domain).
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/review (the `ReviewBroadcast` operationId).
+func (c *Client) ReviewBroadcast(ctx context.Context, broadcastId BroadcastId, params *ReviewBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewReviewBroadcastRequest(c.Server, broadcastId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ScheduleBroadcastWithBody Schedule or send now
+//
+// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+//
+// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+// (the server's operator has not approved the workspace yet),
+// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+// while the workspace's `broadcasts.by_keys` is off).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+func (c *Client) ScheduleBroadcastWithBody(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewScheduleBroadcastRequestWithBody(c.Server, broadcastId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ScheduleBroadcast Schedule or send now
+//
+// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+//
+// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+// (the server's operator has not approved the workspace yet),
+// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+// while the workspace's `broadcasts.by_keys` is off).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+func (c *Client) ScheduleBroadcast(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, body ScheduleBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewScheduleBroadcastRequest(c.Server, broadcastId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendBroadcastTestWithBody Send a test
+//
+// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+// absent (API keys must name members). `contact_id` fills the merge fields with that
+// contact's values instead of sample values. Its unsubscribe link names no list and says it
+// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+func (c *Client) SendBroadcastTestWithBody(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendBroadcastTestRequestWithBody(c.Server, broadcastId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendBroadcastTest Send a test
+//
+// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+// absent (API keys must name members). `contact_id` fills the merge fields with that
+// contact's values instead of sample values. Its unsubscribe link names no list and says it
+// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+func (c *Client) SendBroadcastTest(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, body SendBroadcastTestJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendBroadcastTestRequest(c.Server, broadcastId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnscheduleBroadcast Back to draft
+//
+// A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+// otherwise).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/unschedule (the `UnscheduleBroadcast` operationId).
+func (c *Client) UnscheduleBroadcast(ctx context.Context, broadcastId BroadcastId, params *UnscheduleBroadcastParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnscheduleBroadcastRequest(c.Server, broadcastId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -20089,7 +21963,8 @@ func (c *Client) CreateMailingList(ctx context.Context, params *CreateMailingLis
 //
 // Deletes the list with its subscriptions and their consent events. Addresses that had
 // unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-// member or a key.
+// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+// broadcast sends to it.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -21242,7 +23117,8 @@ func (c *Client) GetStats(ctx context.Context, params *GetStatsParams, reqEditor
 // GetUsage Usage per month
 //
 // Counters of the workspace per calendar month (UTC), newest first: conversations and
-// messages (including notes, not events) created, and attachment bytes uploaded.
+// messages (including notes, not events) created, attachment bytes uploaded and broadcast
+// mails sent.
 //
 // Scope: `workspace:manage`.
 //
@@ -21605,8 +23481,9 @@ func (c *Client) GetWorkspace(ctx context.Context, params *GetWorkspaceParams, r
 
 // UpdateWorkspaceWithBody Update the workspace
 //
-// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-// and admins with a member session (`403 member_session_required` for a key).
+// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+// `broadcasts_by_keys`: owners and admins with a member session (`403
+// member_session_required` for a key).
 //
 // Scope: `workspace:manage`.
 //
@@ -21627,8 +23504,9 @@ func (c *Client) UpdateWorkspaceWithBody(ctx context.Context, params *UpdateWork
 
 // UpdateWorkspace Update the workspace
 //
-// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-// and admins with a member session (`403 member_session_required` for a key).
+// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+// `broadcasts_by_keys`: owners and admins with a member session (`403
+// member_session_required` for a key).
 //
 // Scope: `workspace:manage`.
 //
@@ -21637,6 +23515,56 @@ func (c *Client) UpdateWorkspaceWithBody(ctx context.Context, params *UpdateWork
 // Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 func (c *Client) UpdateWorkspace(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateWorkspaceRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RequestBroadcastApprovalWithBody Ask the operator to allow broadcasts
+//
+// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+// after the server's operator approves it. The request tells the operator the website, what
+// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+// `approval_required`.
+//
+// Owners only, with a member session.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+func (c *Client) RequestBroadcastApprovalWithBody(ctx context.Context, params *RequestBroadcastApprovalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRequestBroadcastApprovalRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RequestBroadcastApproval Ask the operator to allow broadcasts
+//
+// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+// after the server's operator approves it. The request tells the operator the website, what
+// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+// `approval_required`.
+//
+// Owners only, with a member session.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+func (c *Client) RequestBroadcastApproval(ctx context.Context, params *RequestBroadcastApprovalParams, body RequestBroadcastApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRequestBroadcastApprovalRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -24172,6 +26100,1005 @@ func NewSignOutRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
+// NewListBroadcastsRequest constructs an http.Request for the ListBroadcasts method
+func NewListBroadcastsRequest(server string, params *ListBroadcastsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateBroadcastRequest calls the generic CreateBroadcast builder with application/json body
+func NewCreateBroadcastRequest(server string, params *CreateBroadcastParams, body CreateBroadcastJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateBroadcastRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateBroadcastRequestWithBody constructs an http.Request for the CreateBroadcast method, with any body, and a specified content type
+func NewCreateBroadcastRequestWithBody(server string, params *CreateBroadcastParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteBroadcastRequest constructs an http.Request for the DeleteBroadcast method
+func NewDeleteBroadcastRequest(server string, broadcastId BroadcastId, params *DeleteBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetBroadcastRequest constructs an http.Request for the GetBroadcast method
+func NewGetBroadcastRequest(server string, broadcastId BroadcastId, params *GetBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateBroadcastRequest calls the generic UpdateBroadcast builder with application/json body
+func NewUpdateBroadcastRequest(server string, broadcastId BroadcastId, params *UpdateBroadcastParams, body UpdateBroadcastJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateBroadcastRequestWithBody(server, broadcastId, params, "application/json", bodyReader)
+}
+
+// NewUpdateBroadcastRequestWithBody constructs an http.Request for the UpdateBroadcast method, with any body, and a specified content type
+func NewUpdateBroadcastRequestWithBody(server string, broadcastId BroadcastId, params *UpdateBroadcastParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCountBroadcastAudienceRequest constructs an http.Request for the CountBroadcastAudience method
+func NewCountBroadcastAudienceRequest(server string, broadcastId BroadcastId, params *CountBroadcastAudienceParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/audience", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCancelBroadcastRequest constructs an http.Request for the CancelBroadcast method
+func NewCancelBroadcastRequest(server string, broadcastId BroadcastId, params *CancelBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/cancel", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListBroadcastDeliveriesRequest constructs an http.Request for the ListBroadcastDeliveries method
+func NewListBroadcastDeliveriesRequest(server string, broadcastId BroadcastId, params *ListBroadcastDeliveriesParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/deliveries", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Replied != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "replied", *params.Replied, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPauseBroadcastRequest constructs an http.Request for the PauseBroadcast method
+func NewPauseBroadcastRequest(server string, broadcastId BroadcastId, params *PauseBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/pause", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetBroadcastReportRequest constructs an http.Request for the GetBroadcastReport method
+func NewGetBroadcastReportRequest(server string, broadcastId BroadcastId, params *GetBroadcastReportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/report", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewResumeBroadcastRequest constructs an http.Request for the ResumeBroadcast method
+func NewResumeBroadcastRequest(server string, broadcastId BroadcastId, params *ResumeBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/resume", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewReviewBroadcastRequest constructs an http.Request for the ReviewBroadcast method
+func NewReviewBroadcastRequest(server string, broadcastId BroadcastId, params *ReviewBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/review", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewScheduleBroadcastRequest calls the generic ScheduleBroadcast builder with application/json body
+func NewScheduleBroadcastRequest(server string, broadcastId BroadcastId, params *ScheduleBroadcastParams, body ScheduleBroadcastJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewScheduleBroadcastRequestWithBody(server, broadcastId, params, "application/json", bodyReader)
+}
+
+// NewScheduleBroadcastRequestWithBody constructs an http.Request for the ScheduleBroadcast method, with any body, and a specified content type
+func NewScheduleBroadcastRequestWithBody(server string, broadcastId BroadcastId, params *ScheduleBroadcastParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/schedule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewSendBroadcastTestRequest calls the generic SendBroadcastTest builder with application/json body
+func NewSendBroadcastTestRequest(server string, broadcastId BroadcastId, params *SendBroadcastTestParams, body SendBroadcastTestJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSendBroadcastTestRequestWithBody(server, broadcastId, params, "application/json", bodyReader)
+}
+
+// NewSendBroadcastTestRequestWithBody constructs an http.Request for the SendBroadcastTest method, with any body, and a specified content type
+func NewSendBroadcastTestRequestWithBody(server string, broadcastId BroadcastId, params *SendBroadcastTestParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/test", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnscheduleBroadcastRequest constructs an http.Request for the UnscheduleBroadcast method
+func NewUnscheduleBroadcastRequest(server string, broadcastId BroadcastId, params *UnscheduleBroadcastParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "broadcastId", broadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/broadcasts/%s/unschedule", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListCannedRepliesRequest constructs an http.Request for the ListCannedReplies method
 func NewListCannedRepliesRequest(server string, params *ListCannedRepliesParams) (*http.Request, error) {
 	var err error
@@ -25765,6 +28692,18 @@ func NewListConversationsRequest(server string, params *ListConversationsParams)
 		if params.Page != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.BroadcastId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "broadcast_id", *params.BroadcastId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -33649,6 +36588,72 @@ func NewUpdateWorkspaceRequestWithBody(server string, params *UpdateWorkspacePar
 	return req, nil
 }
 
+// NewRequestBroadcastApprovalRequest calls the generic RequestBroadcastApproval builder with application/json body
+func NewRequestBroadcastApprovalRequest(server string, params *RequestBroadcastApprovalParams, body RequestBroadcastApprovalJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRequestBroadcastApprovalRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewRequestBroadcastApprovalRequestWithBody constructs an http.Request for the RequestBroadcastApproval method, with any body, and a specified content type
+func NewRequestBroadcastApprovalRequestWithBody(server string, params *RequestBroadcastApprovalParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/workspace/broadcast-approval")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewCreateWorkspaceRequest calls the generic CreateWorkspace builder with application/json body
 func NewCreateWorkspaceRequest(server string, body CreateWorkspaceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -34799,6 +37804,281 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/auth/sign-out (the `SignOut` operationId).
 	SignOutWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*SignOutResponse, error)
+
+	// ListBroadcastsWithResponse List broadcasts
+	//
+	// Newest first, in the inboxes the caller can see. `state` may be repeated.
+	//
+	// Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+	// `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/broadcasts (the `ListBroadcasts` operationId).
+	ListBroadcastsWithResponse(ctx context.Context, params *ListBroadcastsParams, reqEditors ...RequestEditorFn) (*ListBroadcastsResponse, error)
+
+	// CreateBroadcastWithBodyWithResponse Create a draft broadcast
+	//
+	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+	// languages to keep. Everything can be changed while the broadcast is a draft; the review
+	// (`GET .../review`) says what is still missing before it can be scheduled.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+	// broadcast write answers `403 broadcasts_disabled`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+	CreateBroadcastWithBodyWithResponse(ctx context.Context, params *CreateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBroadcastResponse, error)
+
+	// CreateBroadcastWithResponse Create a draft broadcast
+	//
+	// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+	// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+	// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+	// languages to keep. Everything can be changed while the broadcast is a draft; the review
+	// (`GET .../review`) says what is still missing before it can be scheduled.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+	// broadcast write answers `403 broadcasts_disabled`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+	CreateBroadcastWithResponse(ctx context.Context, params *CreateBroadcastParams, body CreateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBroadcastResponse, error)
+
+	// DeleteBroadcastWithResponse Delete a broadcast
+	//
+	// Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+	// conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+	// scheduled, preparing, sending or paused: cancel it first.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/broadcasts/{broadcastId} (the `DeleteBroadcast` operationId).
+	DeleteBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *DeleteBroadcastParams, reqEditors ...RequestEditorFn) (*DeleteBroadcastResponse, error)
+
+	// GetBroadcastWithResponse A broadcast
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId} (the `GetBroadcast` operationId).
+	GetBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastParams, reqEditors ...RequestEditorFn) (*GetBroadcastResponse, error)
+
+	// UpdateBroadcastWithBodyWithResponse Change a draft
+	//
+	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+	// `design_id: null` clear them; `audience` replaces the whole audience.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+	UpdateBroadcastWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBroadcastResponse, error)
+
+	// UpdateBroadcastWithResponse Change a draft
+	//
+	// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+	// `design_id: null` clear them; `audience` replaces the whole audience.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+	UpdateBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, body UpdateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBroadcastResponse, error)
+
+	// CountBroadcastAudienceWithResponse Count the audience
+	//
+	// Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+	// of its lists (the address of the first list in the broadcast's order), matching every
+	// condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+	// per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+	// stored; the audience is taken again when sending starts.
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/audience (the `CountBroadcastAudience` operationId).
+	CountBroadcastAudienceWithResponse(ctx context.Context, broadcastId BroadcastId, params *CountBroadcastAudienceParams, reqEditors ...RequestEditorFn) (*CountBroadcastAudienceResponse, error)
+
+	// CancelBroadcastWithResponse Cancel a broadcast
+	//
+	// A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+	// progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/cancel (the `CancelBroadcast` operationId).
+	CancelBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *CancelBroadcastParams, reqEditors ...RequestEditorFn) (*CancelBroadcastResponse, error)
+
+	// ListBroadcastDeliveriesWithResponse List a broadcast's deliveries
+	//
+	// One row per recipient, in the order they were taken. `q` matches the address or the
+	// contact's name; `replied=true` keeps the recipients who answered.
+	//
+	// Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/deliveries (the `ListBroadcastDeliveries` operationId).
+	ListBroadcastDeliveriesWithResponse(ctx context.Context, broadcastId BroadcastId, params *ListBroadcastDeliveriesParams, reqEditors ...RequestEditorFn) (*ListBroadcastDeliveriesResponse, error)
+
+	// PauseBroadcastWithResponse Pause sending
+	//
+	// A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+	// with `pause_reason: member`. `409 invalid_state` otherwise.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/pause (the `PauseBroadcast` operationId).
+	PauseBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *PauseBroadcastParams, reqEditors ...RequestEditorFn) (*PauseBroadcastResponse, error)
+
+	// GetBroadcastReportWithResponse A broadcast's report
+	//
+	// Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+	// sending started, then per day), the links by unique clicks when click tracking was on, and
+	// the first 50 conversations opened by replies. There is no open tracking. Clicks are
+	// approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+	// security scanner) are not counted.
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/report (the `GetBroadcastReport` operationId).
+	GetBroadcastReportWithResponse(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastReportParams, reqEditors ...RequestEditorFn) (*GetBroadcastReportResponse, error)
+
+	// ResumeBroadcastWithResponse Resume sending
+	//
+	// A paused broadcast continues where it stopped, whatever paused it; the bounce and
+	// complaint rates that pause it on their own count again from now. Refused like scheduling
+	// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+	// when it is not paused.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/resume (the `ResumeBroadcast` operationId).
+	ResumeBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ResumeBroadcastParams, reqEditors ...RequestEditorFn) (*ResumeBroadcastResponse, error)
+
+	// ReviewBroadcastWithResponse Review before sending
+	//
+	// The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+	// `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+	// can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+	// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+	// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+	// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+	// above 80), `daily_cap` (warning when the send will take more than one day),
+	// `test_sent` (warning when no test went out since the last change) and `click_tracking`
+	// (warning: links point at the server's link domain).
+	//
+	// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/broadcasts/{broadcastId}/review (the `ReviewBroadcast` operationId).
+	ReviewBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ReviewBroadcastParams, reqEditors ...RequestEditorFn) (*ReviewBroadcastResponse, error)
+
+	// ScheduleBroadcastWithBodyWithResponse Schedule or send now
+	//
+	// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+	// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+	// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+	// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+	// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+	//
+	// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+	// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+	// (the server's operator has not approved the workspace yet),
+	// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+	// while the workspace's `broadcasts.by_keys` is off).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+	ScheduleBroadcastWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ScheduleBroadcastResponse, error)
+
+	// ScheduleBroadcastWithResponse Schedule or send now
+	//
+	// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+	// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+	// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+	// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+	// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+	//
+	// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+	// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+	// (the server's operator has not approved the workspace yet),
+	// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+	// while the workspace's `broadcasts.by_keys` is off).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+	ScheduleBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, body ScheduleBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*ScheduleBroadcastResponse, error)
+
+	// SendBroadcastTestWithBodyWithResponse Send a test
+	//
+	// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+	// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+	// absent (API keys must name members). `contact_id` fills the merge fields with that
+	// contact's values instead of sample values. Its unsubscribe link names no list and says it
+	// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+	// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+	SendBroadcastTestWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendBroadcastTestResponse, error)
+
+	// SendBroadcastTestWithResponse Send a test
+	//
+	// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+	// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+	// absent (API keys must name members). `contact_id` fills the merge fields with that
+	// contact's values instead of sample values. Its unsubscribe link names no list and says it
+	// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+	// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+	SendBroadcastTestWithResponse(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, body SendBroadcastTestJSONRequestBody, reqEditors ...RequestEditorFn) (*SendBroadcastTestResponse, error)
+
+	// UnscheduleBroadcastWithResponse Back to draft
+	//
+	// A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+	// otherwise).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:send`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/broadcasts/{broadcastId}/unschedule (the `UnscheduleBroadcast` operationId).
+	UnscheduleBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *UnscheduleBroadcastParams, reqEditors ...RequestEditorFn) (*UnscheduleBroadcastResponse, error)
 
 	// ListCannedRepliesWithResponse List canned replies
 	//
@@ -36524,7 +39804,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Deletes the list with its subscriptions and their consent events. Addresses that had
 	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-	// member or a key.
+	// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+	// broadcast sends to it.
 	//
 	// Owners, admins and API keys. Scope: `lists:write`.
 	//
@@ -37189,7 +40470,8 @@ type ClientWithResponsesInterface interface {
 	// GetUsageWithResponse Usage per month
 	//
 	// Counters of the workspace per calendar month (UTC), newest first: conversations and
-	// messages (including notes, not events) created, and attachment bytes uploaded.
+	// messages (including notes, not events) created, attachment bytes uploaded and broadcast
+	// mails sent.
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -37404,8 +40686,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateWorkspaceWithBodyWithResponse Update the workspace
 	//
-	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-	// and admins with a member session (`403 member_session_required` for a key).
+	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+	// `broadcasts_by_keys`: owners and admins with a member session (`403
+	// member_session_required` for a key).
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -37416,8 +40699,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateWorkspaceWithResponse Update the workspace
 	//
-	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-	// and admins with a member session (`403 member_session_required` for a key).
+	// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+	// `broadcasts_by_keys`: owners and admins with a member session (`403
+	// member_session_required` for a key).
 	//
 	// Scope: `workspace:manage`.
 	//
@@ -37425,6 +40709,36 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 	UpdateWorkspaceWithResponse(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkspaceResponse, error)
+
+	// RequestBroadcastApprovalWithBodyWithResponse Ask the operator to allow broadcasts
+	//
+	// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+	// after the server's operator approves it. The request tells the operator the website, what
+	// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+	// `approval_required`.
+	//
+	// Owners only, with a member session.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+	RequestBroadcastApprovalWithBodyWithResponse(ctx context.Context, params *RequestBroadcastApprovalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RequestBroadcastApprovalResponse, error)
+
+	// RequestBroadcastApprovalWithResponse Ask the operator to allow broadcasts
+	//
+	// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+	// after the server's operator approves it. The request tells the operator the website, what
+	// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+	// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+	// `approval_required`.
+	//
+	// Owners only, with a member session.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+	RequestBroadcastApprovalWithResponse(ctx context.Context, params *RequestBroadcastApprovalParams, body RequestBroadcastApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*RequestBroadcastApprovalResponse, error)
 
 	// CreateWorkspaceWithBodyWithResponse Create a workspace
 	//
@@ -40812,6 +44126,1041 @@ func (r SignOutResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SignOutResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListBroadcastsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *BroadcastPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListBroadcastsResponse) GetJSON200() *BroadcastPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListBroadcastsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListBroadcastsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListBroadcastsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListBroadcastsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListBroadcastsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListBroadcastsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListBroadcastsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListBroadcastsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Broadcast
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateBroadcastResponse) GetJSON201() *Broadcast {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateBroadcastResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateBroadcastResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CountBroadcastAudienceResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *BroadcastAudienceCount
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CountBroadcastAudienceResponse) GetJSON200() *BroadcastAudienceCount {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CountBroadcastAudienceResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CountBroadcastAudienceResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CountBroadcastAudienceResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CountBroadcastAudienceResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CountBroadcastAudienceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CountBroadcastAudienceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CountBroadcastAudienceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CancelBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CancelBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CancelBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CancelBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CancelBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CancelBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListBroadcastDeliveriesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *BroadcastDeliveryPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListBroadcastDeliveriesResponse) GetJSON200() *BroadcastDeliveryPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListBroadcastDeliveriesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListBroadcastDeliveriesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListBroadcastDeliveriesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListBroadcastDeliveriesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListBroadcastDeliveriesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListBroadcastDeliveriesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListBroadcastDeliveriesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListBroadcastDeliveriesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PauseBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PauseBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PauseBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PauseBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PauseBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PauseBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PauseBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PauseBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PauseBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PauseBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetBroadcastReportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *BroadcastReport
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetBroadcastReportResponse) GetJSON200() *BroadcastReport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetBroadcastReportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetBroadcastReportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetBroadcastReportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetBroadcastReportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetBroadcastReportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetBroadcastReportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetBroadcastReportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ResumeBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ResumeBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ResumeBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ResumeBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ResumeBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ResumeBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r ResumeBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ResumeBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ResumeBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ResumeBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ReviewBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *BroadcastReview
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ReviewBroadcastResponse) GetJSON200() *BroadcastReview {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ReviewBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ReviewBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ReviewBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ReviewBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ReviewBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ReviewBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ReviewBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ScheduleBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *BroadcastProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ScheduleBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ScheduleBroadcastResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ScheduleBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ScheduleBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ScheduleBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ScheduleBroadcastResponse) GetApplicationproblemJSON409() *BroadcastProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r ScheduleBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ScheduleBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ScheduleBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ScheduleBroadcastResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SendBroadcastTestResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *BroadcastTestResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r SendBroadcastTestResponse) GetJSON202() *BroadcastTestResult {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r SendBroadcastTestResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r SendBroadcastTestResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SendBroadcastTestResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SendBroadcastTestResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SendBroadcastTestResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnscheduleBroadcastResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Broadcast
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnscheduleBroadcastResponse) GetJSON200() *Broadcast {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnscheduleBroadcastResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnscheduleBroadcastResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnscheduleBroadcastResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UnscheduleBroadcastResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UnscheduleBroadcastResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnscheduleBroadcastResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnscheduleBroadcastResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnscheduleBroadcastResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -47110,6 +51459,8 @@ type DeleteMailingListResponse struct {
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
 	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
 }
 
 // GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
@@ -47125,6 +51476,11 @@ func (r DeleteMailingListResponse) GetApplicationproblemJSON403() *Problem {
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
 func (r DeleteMailingListResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteMailingListResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
 }
 
 // GetBody returns the raw response body bytes
@@ -50684,6 +55040,75 @@ func (r UpdateWorkspaceResponse) ContentType() string {
 	return ""
 }
 
+type RequestBroadcastApprovalResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *Workspace
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r RequestBroadcastApprovalResponse) GetJSON202() *Workspace {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RequestBroadcastApprovalResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RequestBroadcastApprovalResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RequestBroadcastApprovalResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r RequestBroadcastApprovalResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r RequestBroadcastApprovalResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RequestBroadcastApprovalResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RequestBroadcastApprovalResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RequestBroadcastApprovalResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateWorkspaceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -52280,6 +56705,395 @@ func (c *ClientWithResponses) SignOutWithResponse(ctx context.Context, reqEditor
 		return nil, err
 	}
 	return ParseSignOutResponse(rsp)
+}
+
+// ListBroadcastsWithResponse List broadcasts
+//
+// Newest first, in the inboxes the caller can see. `state` may be repeated.
+//
+// Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+// `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/broadcasts (the `ListBroadcasts` operationId).
+func (c *ClientWithResponses) ListBroadcastsWithResponse(ctx context.Context, params *ListBroadcastsParams, reqEditors ...RequestEditorFn) (*ListBroadcastsResponse, error) {
+	rsp, err := c.ListBroadcasts(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListBroadcastsResponse(rsp)
+}
+
+// CreateBroadcastWithBodyWithResponse Create a draft broadcast
+//
+// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+// languages to keep. Everything can be changed while the broadcast is a draft; the review
+// (`GET .../review`) says what is still missing before it can be scheduled.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+// broadcast write answers `403 broadcasts_disabled`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+func (c *ClientWithResponses) CreateBroadcastWithBodyWithResponse(ctx context.Context, params *CreateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBroadcastResponse, error) {
+	rsp, err := c.CreateBroadcastWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateBroadcastResponse(rsp)
+}
+
+// CreateBroadcastWithResponse Create a draft broadcast
+//
+// A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+// an SMTP account and an address to send from (`409 email_channel_required`). The audience
+// names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+// languages to keep. Everything can be changed while the broadcast is a draft; the review
+// (`GET .../review`) says what is still missing before it can be scheduled.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+// broadcast write answers `403 broadcasts_disabled`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts (the `CreateBroadcast` operationId).
+func (c *ClientWithResponses) CreateBroadcastWithResponse(ctx context.Context, params *CreateBroadcastParams, body CreateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBroadcastResponse, error) {
+	rsp, err := c.CreateBroadcast(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateBroadcastResponse(rsp)
+}
+
+// DeleteBroadcastWithResponse Delete a broadcast
+//
+// Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+// conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+// scheduled, preparing, sending or paused: cancel it first.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/broadcasts/{broadcastId} (the `DeleteBroadcast` operationId).
+func (c *ClientWithResponses) DeleteBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *DeleteBroadcastParams, reqEditors ...RequestEditorFn) (*DeleteBroadcastResponse, error) {
+	rsp, err := c.DeleteBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteBroadcastResponse(rsp)
+}
+
+// GetBroadcastWithResponse A broadcast
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId} (the `GetBroadcast` operationId).
+func (c *ClientWithResponses) GetBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastParams, reqEditors ...RequestEditorFn) (*GetBroadcastResponse, error) {
+	rsp, err := c.GetBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetBroadcastResponse(rsp)
+}
+
+// UpdateBroadcastWithBodyWithResponse Change a draft
+//
+// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+// `design_id: null` clear them; `audience` replaces the whole audience.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+func (c *ClientWithResponses) UpdateBroadcastWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBroadcastResponse, error) {
+	rsp, err := c.UpdateBroadcastWithBody(ctx, broadcastId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateBroadcastResponse(rsp)
+}
+
+// UpdateBroadcastWithResponse Change a draft
+//
+// Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+// `design_id: null` clear them; `audience` replaces the whole audience.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/broadcasts/{broadcastId} (the `UpdateBroadcast` operationId).
+func (c *ClientWithResponses) UpdateBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *UpdateBroadcastParams, body UpdateBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBroadcastResponse, error) {
+	rsp, err := c.UpdateBroadcast(ctx, broadcastId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateBroadcastResponse(rsp)
+}
+
+// CountBroadcastAudienceWithResponse Count the audience
+//
+// Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+// of its lists (the address of the first list in the broadcast's order), matching every
+// condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+// per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+// stored; the audience is taken again when sending starts.
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/audience (the `CountBroadcastAudience` operationId).
+func (c *ClientWithResponses) CountBroadcastAudienceWithResponse(ctx context.Context, broadcastId BroadcastId, params *CountBroadcastAudienceParams, reqEditors ...RequestEditorFn) (*CountBroadcastAudienceResponse, error) {
+	rsp, err := c.CountBroadcastAudience(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCountBroadcastAudienceResponse(rsp)
+}
+
+// CancelBroadcastWithResponse Cancel a broadcast
+//
+// A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+// progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/cancel (the `CancelBroadcast` operationId).
+func (c *ClientWithResponses) CancelBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *CancelBroadcastParams, reqEditors ...RequestEditorFn) (*CancelBroadcastResponse, error) {
+	rsp, err := c.CancelBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelBroadcastResponse(rsp)
+}
+
+// ListBroadcastDeliveriesWithResponse List a broadcast's deliveries
+//
+// One row per recipient, in the order they were taken. `q` matches the address or the
+// contact's name; `replied=true` keeps the recipients who answered.
+//
+// Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/deliveries (the `ListBroadcastDeliveries` operationId).
+func (c *ClientWithResponses) ListBroadcastDeliveriesWithResponse(ctx context.Context, broadcastId BroadcastId, params *ListBroadcastDeliveriesParams, reqEditors ...RequestEditorFn) (*ListBroadcastDeliveriesResponse, error) {
+	rsp, err := c.ListBroadcastDeliveries(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListBroadcastDeliveriesResponse(rsp)
+}
+
+// PauseBroadcastWithResponse Pause sending
+//
+// A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+// with `pause_reason: member`. `409 invalid_state` otherwise.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/pause (the `PauseBroadcast` operationId).
+func (c *ClientWithResponses) PauseBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *PauseBroadcastParams, reqEditors ...RequestEditorFn) (*PauseBroadcastResponse, error) {
+	rsp, err := c.PauseBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePauseBroadcastResponse(rsp)
+}
+
+// GetBroadcastReportWithResponse A broadcast's report
+//
+// Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+// sending started, then per day), the links by unique clicks when click tracking was on, and
+// the first 50 conversations opened by replies. There is no open tracking. Clicks are
+// approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+// security scanner) are not counted.
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/report (the `GetBroadcastReport` operationId).
+func (c *ClientWithResponses) GetBroadcastReportWithResponse(ctx context.Context, broadcastId BroadcastId, params *GetBroadcastReportParams, reqEditors ...RequestEditorFn) (*GetBroadcastReportResponse, error) {
+	rsp, err := c.GetBroadcastReport(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetBroadcastReportResponse(rsp)
+}
+
+// ResumeBroadcastWithResponse Resume sending
+//
+// A paused broadcast continues where it stopped, whatever paused it; the bounce and
+// complaint rates that pause it on their own count again from now. Refused like scheduling
+// while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+// when it is not paused.
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/resume (the `ResumeBroadcast` operationId).
+func (c *ClientWithResponses) ResumeBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ResumeBroadcastParams, reqEditors ...RequestEditorFn) (*ResumeBroadcastResponse, error) {
+	rsp, err := c.ResumeBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseResumeBroadcastResponse(rsp)
+}
+
+// ReviewBroadcastWithResponse Review before sending
+//
+// The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+// `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+// can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+// `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+// `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+// (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+// above 80), `daily_cap` (warning when the send will take more than one day),
+// `test_sent` (warning when no test went out since the last change) and `click_tracking`
+// (warning: links point at the server's link domain).
+//
+// Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/broadcasts/{broadcastId}/review (the `ReviewBroadcast` operationId).
+func (c *ClientWithResponses) ReviewBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ReviewBroadcastParams, reqEditors ...RequestEditorFn) (*ReviewBroadcastResponse, error) {
+	rsp, err := c.ReviewBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseReviewBroadcastResponse(rsp)
+}
+
+// ScheduleBroadcastWithBodyWithResponse Schedule or send now
+//
+// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+//
+// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+// (the server's operator has not approved the workspace yet),
+// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+// while the workspace's `broadcasts.by_keys` is off).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+func (c *ClientWithResponses) ScheduleBroadcastWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ScheduleBroadcastResponse, error) {
+	rsp, err := c.ScheduleBroadcastWithBody(ctx, broadcastId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseScheduleBroadcastResponse(rsp)
+}
+
+// ScheduleBroadcastWithResponse Schedule or send now
+//
+// Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+// for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+// taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+// bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+// given, must equal the current audience count (`409 audience_changed` with `recipients`).
+//
+// Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+// `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+// (the server's operator has not approved the workspace yet),
+// `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+// while the workspace's `broadcasts.by_keys` is off).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/schedule (the `ScheduleBroadcast` operationId).
+func (c *ClientWithResponses) ScheduleBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *ScheduleBroadcastParams, body ScheduleBroadcastJSONRequestBody, reqEditors ...RequestEditorFn) (*ScheduleBroadcastResponse, error) {
+	rsp, err := c.ScheduleBroadcast(ctx, broadcastId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseScheduleBroadcastResponse(rsp)
+}
+
+// SendBroadcastTestWithBodyWithResponse Send a test
+//
+// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+// absent (API keys must name members). `contact_id` fills the merge fields with that
+// contact's values instead of sample values. Its unsubscribe link names no list and says it
+// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+func (c *ClientWithResponses) SendBroadcastTestWithBodyWithResponse(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendBroadcastTestResponse, error) {
+	rsp, err := c.SendBroadcastTestWithBody(ctx, broadcastId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendBroadcastTestResponse(rsp)
+}
+
+// SendBroadcastTestWithResponse Send a test
+//
+// Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+// workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+// absent (API keys must name members). `contact_id` fills the merge fields with that
+// contact's values instead of sample values. Its unsubscribe link names no list and says it
+// was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+// sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/test (the `SendBroadcastTest` operationId).
+func (c *ClientWithResponses) SendBroadcastTestWithResponse(ctx context.Context, broadcastId BroadcastId, params *SendBroadcastTestParams, body SendBroadcastTestJSONRequestBody, reqEditors ...RequestEditorFn) (*SendBroadcastTestResponse, error) {
+	rsp, err := c.SendBroadcastTest(ctx, broadcastId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendBroadcastTestResponse(rsp)
+}
+
+// UnscheduleBroadcastWithResponse Back to draft
+//
+// A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+// otherwise).
+//
+// Owners, admins and API keys. Scope: `broadcasts:send`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/broadcasts/{broadcastId}/unschedule (the `UnscheduleBroadcast` operationId).
+func (c *ClientWithResponses) UnscheduleBroadcastWithResponse(ctx context.Context, broadcastId BroadcastId, params *UnscheduleBroadcastParams, reqEditors ...RequestEditorFn) (*UnscheduleBroadcastResponse, error) {
+	rsp, err := c.UnscheduleBroadcast(ctx, broadcastId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnscheduleBroadcastResponse(rsp)
 }
 
 // ListCannedRepliesWithResponse List canned replies
@@ -54768,7 +59582,8 @@ func (c *ClientWithResponses) CreateMailingListWithResponse(ctx context.Context,
 //
 // Deletes the list with its subscriptions and their consent events. Addresses that had
 // unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-// member or a key.
+// member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+// broadcast sends to it.
 //
 // Owners, admins and API keys. Scope: `lists:write`.
 //
@@ -55763,7 +60578,8 @@ func (c *ClientWithResponses) GetStatsWithResponse(ctx context.Context, params *
 // GetUsageWithResponse Usage per month
 //
 // Counters of the workspace per calendar month (UTC), newest first: conversations and
-// messages (including notes, not events) created, and attachment bytes uploaded.
+// messages (including notes, not events) created, attachment bytes uploaded and broadcast
+// mails sent.
 //
 // Scope: `workspace:manage`.
 //
@@ -56080,8 +60896,9 @@ func (c *ClientWithResponses) GetWorkspaceWithResponse(ctx context.Context, para
 
 // UpdateWorkspaceWithBodyWithResponse Update the workspace
 //
-// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-// and admins with a member session (`403 member_session_required` for a key).
+// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+// `broadcasts_by_keys`: owners and admins with a member session (`403
+// member_session_required` for a key).
 //
 // Scope: `workspace:manage`.
 //
@@ -56098,8 +60915,9 @@ func (c *ClientWithResponses) UpdateWorkspaceWithBodyWithResponse(ctx context.Co
 
 // UpdateWorkspaceWithResponse Update the workspace
 //
-// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-// and admins with a member session (`403 member_session_required` for a key).
+// `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+// `broadcasts_by_keys`: owners and admins with a member session (`403
+// member_session_required` for a key).
 //
 // Scope: `workspace:manage`.
 //
@@ -56112,6 +60930,48 @@ func (c *ClientWithResponses) UpdateWorkspaceWithResponse(ctx context.Context, p
 		return nil, err
 	}
 	return ParseUpdateWorkspaceResponse(rsp)
+}
+
+// RequestBroadcastApprovalWithBodyWithResponse Ask the operator to allow broadcasts
+//
+// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+// after the server's operator approves it. The request tells the operator the website, what
+// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+// `approval_required`.
+//
+// Owners only, with a member session.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+func (c *ClientWithResponses) RequestBroadcastApprovalWithBodyWithResponse(ctx context.Context, params *RequestBroadcastApprovalParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RequestBroadcastApprovalResponse, error) {
+	rsp, err := c.RequestBroadcastApprovalWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRequestBroadcastApprovalResponse(rsp)
+}
+
+// RequestBroadcastApprovalWithResponse Ask the operator to allow broadcasts
+//
+// On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+// after the server's operator approves it. The request tells the operator the website, what
+// the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+// `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+// `approval_required`.
+//
+// Owners only, with a member session.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/workspace/broadcast-approval (the `RequestBroadcastApproval` operationId).
+func (c *ClientWithResponses) RequestBroadcastApprovalWithResponse(ctx context.Context, params *RequestBroadcastApprovalParams, body RequestBroadcastApprovalJSONRequestBody, reqEditors ...RequestEditorFn) (*RequestBroadcastApprovalResponse, error) {
+	rsp, err := c.RequestBroadcastApproval(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRequestBroadcastApprovalResponse(rsp)
 }
 
 // CreateWorkspaceWithBodyWithResponse Create a workspace
@@ -58801,6 +63661,819 @@ func ParseSignOutResponse(rsp *http.Response) (*SignOutResponse, error) {
 			headers.SetCookie = &value
 		}
 		response.Headers204 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseListBroadcastsResponse parses an HTTP response from a ListBroadcastsWithResponse call
+func ParseListBroadcastsResponse(rsp *http.Response) (*ListBroadcastsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListBroadcastsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BroadcastPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateBroadcastResponse parses an HTTP response from a CreateBroadcastWithResponse call
+func ParseCreateBroadcastResponse(rsp *http.Response) (*CreateBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteBroadcastResponse parses an HTTP response from a DeleteBroadcastWithResponse call
+func ParseDeleteBroadcastResponse(rsp *http.Response) (*DeleteBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetBroadcastResponse parses an HTTP response from a GetBroadcastWithResponse call
+func ParseGetBroadcastResponse(rsp *http.Response) (*GetBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateBroadcastResponse parses an HTTP response from a UpdateBroadcastWithResponse call
+func ParseUpdateBroadcastResponse(rsp *http.Response) (*UpdateBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCountBroadcastAudienceResponse parses an HTTP response from a CountBroadcastAudienceWithResponse call
+func ParseCountBroadcastAudienceResponse(rsp *http.Response) (*CountBroadcastAudienceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CountBroadcastAudienceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BroadcastAudienceCount
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelBroadcastResponse parses an HTTP response from a CancelBroadcastWithResponse call
+func ParseCancelBroadcastResponse(rsp *http.Response) (*CancelBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListBroadcastDeliveriesResponse parses an HTTP response from a ListBroadcastDeliveriesWithResponse call
+func ParseListBroadcastDeliveriesResponse(rsp *http.Response) (*ListBroadcastDeliveriesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListBroadcastDeliveriesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BroadcastDeliveryPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePauseBroadcastResponse parses an HTTP response from a PauseBroadcastWithResponse call
+func ParsePauseBroadcastResponse(rsp *http.Response) (*PauseBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PauseBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetBroadcastReportResponse parses an HTTP response from a GetBroadcastReportWithResponse call
+func ParseGetBroadcastReportResponse(rsp *http.Response) (*GetBroadcastReportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetBroadcastReportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BroadcastReport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseResumeBroadcastResponse parses an HTTP response from a ResumeBroadcastWithResponse call
+func ParseResumeBroadcastResponse(rsp *http.Response) (*ResumeBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ResumeBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseReviewBroadcastResponse parses an HTTP response from a ReviewBroadcastWithResponse call
+func ParseReviewBroadcastResponse(rsp *http.Response) (*ReviewBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ReviewBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BroadcastReview
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseScheduleBroadcastResponse parses an HTTP response from a ScheduleBroadcastWithResponse call
+func ParseScheduleBroadcastResponse(rsp *http.Response) (*ScheduleBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ScheduleBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest BroadcastProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSendBroadcastTestResponse parses an HTTP response from a SendBroadcastTestWithResponse call
+func ParseSendBroadcastTestResponse(rsp *http.Response) (*SendBroadcastTestResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SendBroadcastTestResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest BroadcastTestResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnscheduleBroadcastResponse parses an HTTP response from a UnscheduleBroadcastWithResponse call
+func ParseUnscheduleBroadcastResponse(rsp *http.Response) (*UnscheduleBroadcastResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnscheduleBroadcastResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Broadcast
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	}
 
 	return response, nil
@@ -63768,6 +69441,13 @@ func ParseDeleteMailingListResponse(rsp *http.Response) (*DeleteMailingListRespo
 		}
 		response.ApplicationproblemJSON404 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
 	}
 
 	return response, nil
@@ -66506,6 +72186,60 @@ func ParseUpdateWorkspaceResponse(rsp *http.Response) (*UpdateWorkspaceResponse,
 	return response, nil
 }
 
+// ParseRequestBroadcastApprovalResponse parses an HTTP response from a RequestBroadcastApprovalWithResponse call
+func ParseRequestBroadcastApprovalResponse(rsp *http.Response) (*RequestBroadcastApprovalResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RequestBroadcastApprovalResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest Workspace
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateWorkspaceResponse parses an HTTP response from a CreateWorkspaceWithResponse call
 func ParseCreateWorkspaceResponse(rsp *http.Response) (*CreateWorkspaceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -66626,6 +72360,11 @@ func (p *WebhookInitiator) applyWebhookEditors(ctx context.Context, req *http.Re
 
 // WebhookInitiatorInterface is the interface specification for the webhook initiator.
 type WebhookInitiatorInterface interface {
+	// WebhookBroadcastUpdatedWithBody fires the broadcast.updated webhook with any body
+	WebhookBroadcastUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookBroadcastUpdated(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, body WebhookBroadcastUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookContactDeletedWithBody fires the contact.deleted webhook with any body
 	WebhookContactDeletedWithBody(ctx context.Context, targetURL string, params *WebhookContactDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -66705,6 +72444,30 @@ type WebhookInitiatorInterface interface {
 	WebhookSubscriptionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	WebhookSubscriptionUpdated(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, body WebhookSubscriptionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+func (p *WebhookInitiator) WebhookBroadcastUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookBroadcastUpdatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookBroadcastUpdated(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, body WebhookBroadcastUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookBroadcastUpdatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
 }
 
 func (p *WebhookInitiator) WebhookContactDeletedWithBody(ctx context.Context, targetURL string, params *WebhookContactDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -67089,6 +72852,67 @@ func (p *WebhookInitiator) WebhookSubscriptionUpdated(ctx context.Context, targe
 		return nil, err
 	}
 	return p.Client.Do(req)
+}
+
+// NewWebhookBroadcastUpdatedWebhookRequest builds a application/json POST request for the broadcast.updated webhook
+func NewWebhookBroadcastUpdatedWebhookRequest(targetURL string, params *WebhookBroadcastUpdatedParams, body WebhookBroadcastUpdatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookBroadcastUpdatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookBroadcastUpdatedWebhookRequestWithBody builds a POST request for the broadcast.updated webhook with any body
+func NewWebhookBroadcastUpdatedWebhookRequestWithBody(targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
 }
 
 // NewWebhookContactDeletedWebhookRequest builds a application/json POST request for the contact.deleted webhook

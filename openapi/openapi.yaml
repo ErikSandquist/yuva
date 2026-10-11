@@ -191,6 +191,29 @@ tags:
       The gallery (`/v1/email-templates`) holds the starter designs that ship with the server
       (`templates/email` in the repository, MIT) in English, Turkish and German. Their previews are
       public at `/email-templates/{slug}/{locale}.html` and `/email-templates/{slug}/{locale}.webp`.
+  - name: broadcasts
+    description: |
+      Broadcasts: one e-mail to many contacts (newsletters, product updates, announcements), sent on
+      behalf of an inbox through one of its e-mail channels, from a design to the subscribers of its
+      lists. A reply becomes a conversation in the inbox with `broadcast_id`. Owners, admins and API
+      keys create and send them; agents read the broadcasts of their inboxes so they understand a
+      reply. Keys and OAuth tokens need `broadcasts:read`, `broadcasts:write` or `broadcasts:send`,
+      and schedule or resume only while the workspace's `broadcasts.by_keys` is on.
+
+      A broadcast never goes out through the server's own mailer: it uses the channel's broadcast
+      SMTP account (`email.broadcast_smtp`) when set, else its support account, at the channel's
+      pace (`email.broadcast_rate` mails a second). Every mail carries `List-Unsubscribe` with
+      one-click (RFC 8058), `List-Id`, `Feedback-ID` and `X-Auto-Response-Suppress`, and the
+      required footer with the unsubscribe and preference links. Bounces (SES through SNS,
+      delivery reports to the channel, SMTP refusals) suppress the address for all mail; a
+      complaint about a broadcast suppresses broadcasts only, unsubscribes the address from every
+      list of the workspace and remembers the objection. A broadcast pauses itself at 5% bounces
+      (after 200 mails) or 0.3% complaints (after 1,000), and a workspace whose broadcast mail of
+      the last 30 days reached 0.3% complaints is suspended from sending.
+
+      `YUVA_BROADCAST_DAILY_RECIPIENTS` and the operator's per-workspace limit cap the recipients
+      of a workspace per UTC day; a send that reaches the cap continues the next day
+      (`waiting_until`).
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -1043,8 +1066,9 @@ paths:
       operationId: updateWorkspace
       summary: Update the workspace
       description: |
-        `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-        and admins with a member session (`403 member_session_required` for a key).
+        `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+        `broadcasts_by_keys`: owners and admins with a member session (`403
+        member_session_required` for a key).
 
         Scope: `workspace:manage`.
       tags: [workspace]
@@ -1099,6 +1123,45 @@ paths:
         "401":
           $ref: "#/components/responses/Problem"
         "403":
+          $ref: "#/components/responses/Problem"
+  /v1/workspace/broadcast-approval:
+    post:
+      operationId: requestBroadcastApproval
+      summary: Ask the operator to allow broadcasts
+      description: |
+        On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+        after the server's operator approves it. The request tells the operator the website, what
+        the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+        `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+        `approval_required`.
+
+        Owners only, with a member session.
+      tags: [workspace]
+      security:
+        - session: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastApprovalRequest"
+      responses:
+        "202":
+          description: The request is with the operator.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "409":
           $ref: "#/components/responses/Problem"
   /v1/workspaces:
     post:
@@ -2394,6 +2457,12 @@ paths:
           schema:
             type: string
             maxLength: 2000
+        - name: broadcast_id
+          in: query
+          description: Only conversations opened by replies to this broadcast.
+          schema:
+            type: string
+            format: uuid
         - name: pinned
           in: query
           description: |
@@ -4175,7 +4244,8 @@ paths:
       description: |
         Deletes the list with its subscriptions and their consent events. Addresses that had
         unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-        member or a key.
+        member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+        broadcast sends to it.
 
         Owners, admins and API keys. Scope: `lists:write`.
       tags: [lists]
@@ -4190,6 +4260,8 @@ paths:
         "403":
           $ref: "#/components/responses/Problem"
         "404":
+          $ref: "#/components/responses/Problem"
+        "409":
           $ref: "#/components/responses/Problem"
   /v1/lists/{listId}/growth:
     get:
@@ -5008,13 +5080,518 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/EmailImageProblem"
+  /v1/broadcasts:
+    get:
+      operationId: listBroadcasts
+      summary: List broadcasts
+      description: |
+        Newest first, in the inboxes the caller can see. `state` may be repeated.
+
+        Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+        `broadcasts:read`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: state
+          in: query
+          style: form
+          explode: true
+          schema:
+            type: array
+            maxItems: 8
+            items:
+              $ref: "#/components/schemas/BroadcastState"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of broadcasts.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createBroadcast
+      summary: Create a draft broadcast
+      description: |
+        A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+        an SMTP account and an address to send from (`409 email_channel_required`). The audience
+        names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+        languages to keep. Everything can be changed while the broadcast is a draft; the review
+        (`GET .../review`) says what is still missing before it can be scheduled.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+        broadcast write answers `403 broadcasts_disabled`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastCreate"
+      responses:
+        "201":
+          description: The draft.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}:
+    get:
+      operationId: getBroadcast
+      summary: A broadcast
+      description: "Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`."
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateBroadcast
+      summary: Change a draft
+      description: |
+        Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+        `design_id: null` clear them; `audience` replaces the whole audience.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastUpdate"
+      responses:
+        "200":
+          description: The draft.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteBroadcast
+      summary: Delete a broadcast
+      description: |
+        Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+        conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+        scheduled, preparing, sending or paused: cancel it first.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/audience:
+    post:
+      operationId: countBroadcastAudience
+      summary: Count the audience
+      description: |
+        Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+        of its lists (the address of the first list in the broadcast's order), matching every
+        condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+        per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+        stored; the audience is taken again when sending starts.
+
+        Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The counts.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastAudienceCount"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/review:
+    get:
+      operationId: reviewBroadcast
+      summary: Review before sending
+      description: |
+        The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+        `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+        can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+        `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+        `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+        (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+        above 80), `daily_cap` (warning when the send will take more than one day),
+        `test_sent` (warning when no test went out since the last change) and `click_tracking`
+        (warning: links point at the server's link domain).
+
+        Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The checklist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastReview"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/test:
+    post:
+      operationId: sendBroadcastTest
+      summary: Send a test
+      description: |
+        Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+        workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+        absent (API keys must name members). `contact_id` fills the merge fields with that
+        contact's values instead of sample values. Its unsubscribe link names no list and says it
+        was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+        sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastTest"
+      responses:
+        "202":
+          description: The tests are queued.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastTestResult"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/schedule:
+    post:
+      operationId: scheduleBroadcast
+      summary: Schedule or send now
+      description: |
+        Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+        for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+        taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+        bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+        given, must equal the current audience count (`409 audience_changed` with `recipients`).
+
+        Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+        `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+        (the server's operator has not approved the workspace yet),
+        `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+        while the workspace's `broadcasts.by_keys` is off).
+
+        Owners, admins and API keys. Scope: `broadcasts:send`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastSchedule"
+      responses:
+        "200":
+          description: The scheduled broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/BroadcastProblem"
+  /v1/broadcasts/{broadcastId}/unschedule:
+    post:
+      operationId: unscheduleBroadcast
+      summary: Back to draft
+      description: |
+        A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+        otherwise).
+
+        Owners, admins and API keys. Scope: `broadcasts:send`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The draft.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/pause:
+    post:
+      operationId: pauseBroadcast
+      summary: Pause sending
+      description: |
+        A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+        with `pause_reason: member`. `409 invalid_state` otherwise.
+
+        Owners, admins and API keys. Scope: `broadcasts:send`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The paused broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/resume:
+    post:
+      operationId: resumeBroadcast
+      summary: Resume sending
+      description: |
+        A paused broadcast continues where it stopped, whatever paused it; the bounce and
+        complaint rates that pause it on their own count again from now. Refused like scheduling
+        while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+        when it is not paused.
+
+        Owners, admins and API keys. Scope: `broadcasts:send`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/cancel:
+    post:
+      operationId: cancelBroadcast
+      summary: Cancel a broadcast
+      description: |
+        A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+        progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+
+        Owners, admins and API keys. Scope: `broadcasts:send`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The cancelled broadcast.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Broadcast"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/deliveries:
+    get:
+      operationId: listBroadcastDeliveries
+      summary: List a broadcast's deliveries
+      description: |
+        One row per recipient, in the order they were taken. `q` matches the address or the
+        contact's name; `replied=true` keeps the recipients who answered.
+
+        Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+        - name: state
+          in: query
+          schema:
+            $ref: "#/components/schemas/BroadcastDeliveryState"
+        - name: q
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 320
+        - name: replied
+          in: query
+          schema:
+            type: boolean
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of deliveries.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastDeliveryPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/broadcasts/{broadcastId}/report:
+    get:
+      operationId: getBroadcastReport
+      summary: A broadcast's report
+      description: |
+        Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+        sending started, then per day), the links by unique clicks when click tracking was on, and
+        the first 50 conversations opened by replies. There is no open tracking. Clicks are
+        approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+        security scanner) are not counted.
+
+        Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+      tags: [broadcasts]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/BroadcastId"
+      responses:
+        "200":
+          description: The report.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastReport"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/usage:
     get:
       operationId: getUsage
       summary: Usage per month
       description: |
         Counters of the workspace per calendar month (UTC), newest first: conversations and
-        messages (including notes, not events) created, and attachment bytes uploaded.
+        messages (including notes, not events) created, attachment bytes uploaded and broadcast
+        mails sent.
 
         Scope: `workspace:manage`.
       tags: [workspace]
@@ -7548,6 +8125,29 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  broadcast.updated:
+    post:
+      operationId: webhookBroadcastUpdated
+      summary: A broadcast changed state
+      description: |
+        Scheduled, back to draft, preparing, sending (started or resumed), paused (with
+        `pause_reason`), sent, cancelled or failed; `previous_state` is the state before. Endpoints
+        of an inbox get the broadcasts of that inbox.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookBroadcastPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -7773,6 +8373,13 @@ components:
       schema:
         type: string
         format: uuid
+    BroadcastId:
+      name: broadcastId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     DesignVersion:
       name: version
       in: path
@@ -7879,6 +8486,12 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
+    BroadcastProblem:
+      description: The broadcast was refused; `items` or `recipients` say why.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/BroadcastProblem"
     EmailDesignProblem:
       description: The design was refused; `errors` names each problem.
       content:
@@ -7961,7 +8574,7 @@ components:
           $ref: "#/components/schemas/Availability"
     Workspace:
       type: object
-      required: [id, name, bots_may_send, created_at]
+      required: [id, name, bots_may_send, broadcasts, created_at]
       properties:
         id:
           type: string
@@ -7981,6 +8594,8 @@ components:
             (`403 bot_sending_disabled`) and a key cannot send drafts; members review and send
             them. On: a key with `messages:write` sends directly, and one that also has
             `drafts:send` sends drafts. Members always may.
+        broadcasts:
+          $ref: "#/components/schemas/WorkspaceBroadcasts"
         created_at:
           type: string
           format: date-time
@@ -8005,6 +8620,9 @@ components:
         bots_may_send:
           type: boolean
           description: Owners and admins, with a member session.
+        broadcasts_by_keys:
+          type: boolean
+          description: Whether API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Owners and admins, with a member session.
     WorkspaceDeletion:
       type: object
       required: [name]
@@ -8250,11 +8868,14 @@ components:
         - `lists:read`: mailing lists, subscriptions, growth, consent exports.
         - `lists:write`: create, change and delete lists; add, unsubscribe and delete
           subscribers; resend confirmations.
-        - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
-          gallery.
-        - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
-          images.
-        - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
+        - `broadcasts:read`: broadcasts, their audience counts, reviews and reports; e-mail
+          designs, their snapshots and renders, images, the template gallery. Deliveries also
+          need `contacts:read`.
+        - `broadcasts:write`: create, change and delete draft broadcasts and send tests; create,
+          save, copy, archive and restore designs; upload and delete images.
+        - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
+          and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
+          without naming its scopes does not hold it.
 
         `lists:*` and `broadcasts:*` are never added to keys made before they existed.
       enum:
@@ -8933,7 +9554,7 @@ components:
     EmailChannel:
       type: object
       description: Settings of an `email` channel.
-      required: [address, display_name, auto_reply]
+      required: [address, display_name, auto_reply, broadcast_rate]
       properties:
         address:
           $ref: "#/components/schemas/Email"
@@ -8952,6 +9573,15 @@ components:
           $ref: "#/components/schemas/SmtpSettings"
         auto_reply:
           $ref: "#/components/schemas/EmailAutoReply"
+        broadcast_smtp:
+          $ref: "#/components/schemas/SmtpSettings"
+          description: |
+            A separate SMTP account for broadcasts, so complaints about marketing mail never land
+            on the support account; absent when broadcasts use `smtp`.
+        broadcast_rate:
+          type: integer
+          format: int32
+          description: Broadcast mails a second through this channel.
     EmailChannelInput:
       type: object
       required: [address]
@@ -8973,6 +9603,20 @@ components:
           $ref: "#/components/schemas/SmtpSettingsInput"
         auto_reply:
           $ref: "#/components/schemas/EmailAutoReplyInput"
+        broadcast_smtp:
+          $ref: "#/components/schemas/SmtpSettingsInput"
+          description: |
+            The broadcast SMTP account. Absent keeps the stored one; its `password` absent keeps
+            the stored password. Remove it with `broadcast_smtp_remove`.
+        broadcast_smtp_remove:
+          type: boolean
+          description: "`true` removes the broadcast SMTP account; broadcasts then use `smtp`."
+        broadcast_rate:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          description: Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
     Channel:
       type: object
       required: [id, inbox_id, kind, name, settings, created_at, updated_at]
@@ -9275,7 +9919,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated, broadcast.updated]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -9721,6 +10365,13 @@ components:
           description: |
             Read-only: the kind of the channel it started on, kept when that channel is removed or
             the conversation moves to another inbox. Absent when it started without a channel.
+        broadcast_id:
+          type: string
+          format: uuid
+          description: |
+            Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+            or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+            deleted.
         related_conversation_id:
           type: string
           format: uuid
@@ -10289,7 +10940,7 @@ components:
             "Ayşe via Claude Code"; absent for the panel, API keys and contacts.
     EventType:
       type: string
-      enum: [assigned, unassigned, status_changed, labels_changed, moved, rated]
+      enum: [assigned, unassigned, status_changed, labels_changed, moved, rated, broadcast_reply]
     MessageEvent:
       type: object
       required: [type]
@@ -10329,6 +10980,9 @@ components:
         rating:
           $ref: "#/components/schemas/Rating"
           description: "`rated` only: the contact's rating; the message body is their comment."
+        broadcast:
+          $ref: "#/components/schemas/BroadcastRef"
+          description: "`broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation."
     Attachment:
       type: object
       required: [id, filename, content_type, size, inline, created_at]
@@ -10709,7 +11363,7 @@ components:
             $ref: "#/components/schemas/CannedReply"
     UsageMonth:
       type: object
-      required: [month, conversations, messages, attachment_bytes]
+      required: [month, conversations, messages, attachment_bytes, broadcast_recipients]
       properties:
         month:
           type: string
@@ -10724,6 +11378,10 @@ components:
         attachment_bytes:
           type: integer
           format: int64
+        broadcast_recipients:
+          type: integer
+          format: int64
+          description: Broadcast mails accepted by the SMTP server.
     UsageList:
       type: object
       required: [items]
@@ -11159,6 +11817,7 @@ components:
         - $ref: "#/components/schemas/ConversationPinEvent"
         - $ref: "#/components/schemas/DiscussionEvent"
         - $ref: "#/components/schemas/SubscriptionEvent"
+        - $ref: "#/components/schemas/BroadcastEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -11185,6 +11844,7 @@ components:
           discussion.updated: "#/components/schemas/DiscussionEvent"
           subscription.created: "#/components/schemas/SubscriptionEvent"
           subscription.updated: "#/components/schemas/SubscriptionEvent"
+          broadcast.updated: "#/components/schemas/BroadcastEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -11227,6 +11887,8 @@ components:
         - $ref: "#/components/schemas/ConversationPinEvent"
         - $ref: "#/components/schemas/DiscussionEvent"
         - $ref: "#/components/schemas/SubscriptionEvent"
+        - $ref: "#/components/schemas/BroadcastEvent"
+        - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/TypingEvent"
         - $ref: "#/components/schemas/MemberPresenceEvent"
         - $ref: "#/components/schemas/ContactPresenceEvent"
@@ -11259,6 +11921,8 @@ components:
           discussion.updated: "#/components/schemas/DiscussionEvent"
           subscription.created: "#/components/schemas/SubscriptionEvent"
           subscription.updated: "#/components/schemas/SubscriptionEvent"
+          broadcast.updated: "#/components/schemas/BroadcastEvent"
+          broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           typing: "#/components/schemas/TypingEvent"
           member.presence: "#/components/schemas/MemberPresenceEvent"
           contact.presence: "#/components/schemas/ContactPresenceEvent"
@@ -12093,6 +12757,761 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/DiscussionEventData"
+    BroadcastState:
+      type: string
+      description: |
+        `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+        `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+        `failed` when it cannot go on (its channel was removed).
+      enum: [draft, scheduled, preparing, sending, paused, sent, cancelled, failed]
+    BroadcastPauseReason:
+      type: string
+      description: |
+        `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+        or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+        spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+        too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+        workspace was suspended from sending. `operator`: the server's operator paused it.
+      enum: [member, bounce_rate, complaint_rate, sender_error, workspace_suspended, operator]
+    BroadcastConditionOp:
+      type: string
+      description: |
+        Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+        ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+        `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+        without the attribute matches only `neq` and `not_exists`.
+      enum: [eq, neq, exists, not_exists, contains, gt, lt, in]
+      x-enum-varnames: [ConditionEq, ConditionNeq, ConditionExists, ConditionNotExists, ConditionContains, ConditionGt, ConditionLt, ConditionIn]
+    BroadcastCondition:
+      type: object
+      required: [attribute, op]
+      properties:
+        attribute:
+          type: string
+          pattern: "^[A-Za-z0-9_.-]{1,64}$"
+        op:
+          $ref: "#/components/schemas/BroadcastConditionOp"
+        value:
+          type: string
+          maxLength: 500
+        values:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            maxLength: 500
+    BroadcastAudience:
+      type: object
+      required: [list_ids, conditions, locales]
+      properties:
+        list_ids:
+          type: array
+          description: Lists of the broadcast's inbox, in order of preference for a contact on several.
+          maxItems: 10
+          items:
+            type: string
+            format: uuid
+        conditions:
+          type: array
+          description: Every condition must match.
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/BroadcastCondition"
+        locales:
+          type: array
+          description: Keep only contacts whose language is one of these (`tr` also matches `tr-TR`); empty keeps every language.
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+    BroadcastAudienceInput:
+      type: object
+      required: [list_ids]
+      properties:
+        list_ids:
+          type: array
+          maxItems: 10
+          items:
+            type: string
+            format: uuid
+        conditions:
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/BroadcastCondition"
+        locales:
+          type: array
+          maxItems: 20
+          items:
+            $ref: "#/components/schemas/LanguageTag"
+    BroadcastSkipped:
+      type: object
+      description: |
+        Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+        before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+      required: [suppressed, opted_out, unsubscribed, cancelled]
+      properties:
+        suppressed:
+          type: integer
+          format: int64
+        opted_out:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+        cancelled:
+          type: integer
+          format: int64
+    BroadcastCounts:
+      type: object
+      description: |
+        `recipients` is the audience taken when sending started; `queued` the mails still to go
+        out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+        without naming a bad address. `bounced` and `complained` count recipients whose mail
+        bounced or who reported it as spam, `unsubscribed` those who left a list through this
+        broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+        automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+        only).
+      required: [recipients, queued, sent, failed, bounced, complained, unsubscribed, replied, auto_replied, clicked, skipped]
+      properties:
+        recipients:
+          type: integer
+          format: int64
+        prepared:
+          type: integer
+          format: int64
+          description: "`preparing` only: recipients taken so far."
+        queued:
+          type: integer
+          format: int64
+        sent:
+          type: integer
+          format: int64
+        failed:
+          type: integer
+          format: int64
+        bounced:
+          type: integer
+          format: int64
+        complained:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+        replied:
+          type: integer
+          format: int64
+        auto_replied:
+          type: integer
+          format: int64
+        clicked:
+          type: integer
+          format: int64
+        skipped:
+          $ref: "#/components/schemas/BroadcastSkipped"
+    Broadcast:
+      type: object
+      required: [id, inbox_id, name, subject, preheader, audience, click_tracking, state, counts, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+          description: The inbox's e-mail channel it goes out through; absent until chosen or when removed.
+        name:
+          type: string
+          description: Shown to the team only.
+        subject:
+          type: string
+          description: May hold merge fields.
+        preheader:
+          type: string
+          description: The preview text after the subject; the design's own when empty.
+        design_id:
+          type: string
+          format: uuid
+        design_version:
+          type: integer
+          format: int32
+          description: The design's version frozen when it was scheduled; later edits to the design do not change it.
+        audience:
+          $ref: "#/components/schemas/BroadcastAudience"
+        click_tracking:
+          type: boolean
+          description: Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default.
+        state:
+          $ref: "#/components/schemas/BroadcastState"
+        pause_reason:
+          $ref: "#/components/schemas/BroadcastPauseReason"
+        state_detail:
+          type: string
+          description: Why it paused or failed, in words (an SMTP answer, the rates).
+        scheduled_at:
+          type: string
+          format: date-time
+          description: When sending starts or started.
+        waiting_until:
+          type: string
+          format: date-time
+          description: The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        last_test_at:
+          type: string
+          format: date-time
+        counts:
+          $ref: "#/components/schemas/BroadcastCounts"
+        created_by:
+          type: string
+          format: uuid
+          description: The member who created it.
+        scheduled_by:
+          type: string
+          format: uuid
+          description: The member who scheduled it.
+        scheduled_by_api_key:
+          type: string
+          format: uuid
+          description: The API key that scheduled it.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    BroadcastRef:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    BroadcastCreate:
+      type: object
+      required: [inbox_id, name]
+      properties:
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        subject:
+          type: string
+          maxLength: 300
+        preheader:
+          type: string
+          maxLength: 300
+        design_id:
+          type: string
+          format: uuid
+        audience:
+          $ref: "#/components/schemas/BroadcastAudienceInput"
+        click_tracking:
+          type: boolean
+    BroadcastUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        channel_id:
+          type: [string, "null"]
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        subject:
+          type: string
+          maxLength: 300
+        preheader:
+          type: string
+          maxLength: 300
+        design_id:
+          type: [string, "null"]
+          format: uuid
+        audience:
+          $ref: "#/components/schemas/BroadcastAudienceInput"
+        click_tracking:
+          type: boolean
+    BroadcastPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Broadcast"
+        next_cursor:
+          type: string
+    BroadcastAudienceExcluded:
+      type: object
+      description: |
+        Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+        the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+        mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+        match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+      required: [unsubscribed, pending, suppressed, opted_out, blocked, filtered, duplicate]
+      properties:
+        unsubscribed:
+          type: integer
+          format: int64
+        pending:
+          type: integer
+          format: int64
+        suppressed:
+          type: integer
+          format: int64
+        opted_out:
+          type: integer
+          format: int64
+        blocked:
+          type: integer
+          format: int64
+        filtered:
+          type: integer
+          format: int64
+        duplicate:
+          type: integer
+          format: int64
+    BroadcastListCount:
+      type: object
+      required: [list_id, recipients]
+      properties:
+        list_id:
+          type: string
+          format: uuid
+        recipients:
+          type: integer
+          format: int64
+    BroadcastAudienceCount:
+      type: object
+      required: [recipients, excluded, missing_merge_fields, by_list]
+      properties:
+        recipients:
+          type: integer
+          format: int64
+        excluded:
+          $ref: "#/components/schemas/BroadcastAudienceExcluded"
+        missing_merge_fields:
+          type: object
+          description: Per merge field without a fallback (`contact.first_name`), the recipients it would be empty for.
+          additionalProperties:
+            type: integer
+            format: int64
+        by_list:
+          type: array
+          description: Recipients by the list their mail goes out under.
+          items:
+            $ref: "#/components/schemas/BroadcastListCount"
+    BroadcastReviewKey:
+      type: string
+      enum: [sender_identity, sender_ready, approval, design, audience_nonempty, merge_fields, html_size, images_alt, links, subject, daily_cap, test_sent, click_tracking]
+    BroadcastReviewStatus:
+      type: string
+      enum: [ok, warning, blocking]
+      x-enum-varnames: [ReviewOk, ReviewWarning, ReviewBlocking]
+    BroadcastReviewItem:
+      type: object
+      required: [key, status]
+      properties:
+        key:
+          $ref: "#/components/schemas/BroadcastReviewKey"
+        status:
+          $ref: "#/components/schemas/BroadcastReviewStatus"
+        detail:
+          type: string
+          description: What is wrong or what to know, in English.
+    BroadcastReview:
+      type: object
+      required: [ready, recipients, items]
+      properties:
+        ready:
+          type: boolean
+          description: No item is `blocking`.
+        recipients:
+          type: integer
+          format: int64
+          description: The audience count the review used; pass it as `confirm_recipients` to schedule only this audience.
+        html_bytes:
+          type: integer
+          format: int32
+        days:
+          type: integer
+          format: int32
+          description: How many UTC days sending takes under the workspace's daily limit; absent without a limit.
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BroadcastReviewItem"
+    BroadcastProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            items:
+              type: array
+              description: "`review_failed` only: the blocking review items."
+              items:
+                $ref: "#/components/schemas/BroadcastReviewItem"
+            recipients:
+              type: integer
+              format: int64
+              description: "`audience_changed` only: the audience count now."
+    BroadcastTest:
+      type: object
+      properties:
+        member_ids:
+          type: array
+          minItems: 1
+          maxItems: 5
+          items:
+            type: string
+            format: uuid
+        contact_id:
+          type: string
+          format: uuid
+    BroadcastTestResult:
+      type: object
+      required: [sent_to]
+      properties:
+        sent_to:
+          type: array
+          items:
+            $ref: "#/components/schemas/Email"
+    BroadcastSchedule:
+      type: object
+      properties:
+        send_at:
+          type: string
+          format: date-time
+        confirm_recipients:
+          type: integer
+          format: int64
+          minimum: 0
+    BroadcastDeliveryState:
+      type: string
+      description: |
+        `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+        hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+        `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+        was cancelled.
+      enum: [queued, sent, failed, bounced, complained, skipped]
+    BroadcastSkipReason:
+      type: string
+      enum: [suppressed, opted_out, unsubscribed, cancelled]
+    BroadcastDelivery:
+      type: object
+      required: [id, contact, email, state, attempts, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        contact:
+          $ref: "#/components/schemas/SubscriptionContact"
+        email:
+          $ref: "#/components/schemas/Email"
+        list_id:
+          type: string
+          format: uuid
+          description: The list the mail went out under; absent when the list was deleted.
+        state:
+          $ref: "#/components/schemas/BroadcastDeliveryState"
+        skip_reason:
+          $ref: "#/components/schemas/BroadcastSkipReason"
+        error:
+          type: string
+          description: The SMTP server's answer when it refused the mail or the last retry failed.
+        attempts:
+          type: integer
+          format: int32
+        sent_at:
+          type: string
+          format: date-time
+        bounced_at:
+          type: string
+          format: date-time
+        complained_at:
+          type: string
+          format: date-time
+        unsubscribed_at:
+          type: string
+          format: date-time
+        replied_at:
+          type: string
+          format: date-time
+        auto_replied_at:
+          type: string
+          format: date-time
+        clicked_at:
+          type: string
+          format: date-time
+        conversation_id:
+          type: string
+          format: uuid
+          description: The conversation the recipient's reply opened.
+        created_at:
+          type: string
+          format: date-time
+    BroadcastDeliveryPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BroadcastDelivery"
+        next_cursor:
+          type: string
+    BroadcastRates:
+      type: object
+      description: Shares of `sent`, from 0 to 1; all 0 before anything was sent.
+      required: [bounced, complained, unsubscribed, replied, clicked]
+      properties:
+        bounced:
+          type: number
+          format: double
+        complained:
+          type: number
+          format: double
+        unsubscribed:
+          type: number
+          format: double
+        replied:
+          type: number
+          format: double
+        clicked:
+          type: number
+          format: double
+    BroadcastReportPoint:
+      type: object
+      required: [at, sent, bounced, complained, unsubscribed, replied, clicked]
+      properties:
+        at:
+          type: string
+          format: date-time
+          description: The start of the hour or UTC day.
+        sent:
+          type: integer
+          format: int64
+        bounced:
+          type: integer
+          format: int64
+        complained:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+        replied:
+          type: integer
+          format: int64
+        clicked:
+          type: integer
+          format: int64
+    BroadcastReportLink:
+      type: object
+      required: [url, clicks]
+      properties:
+        url:
+          type: string
+        clicks:
+          type: integer
+          format: int64
+          description: Recipients who opened it.
+    BroadcastReportReply:
+      type: object
+      required: [conversation_id, contact, at]
+      properties:
+        conversation_id:
+          type: string
+          format: uuid
+        contact:
+          $ref: "#/components/schemas/SubscriptionContact"
+        at:
+          type: string
+          format: date-time
+    BroadcastReport:
+      type: object
+      required: [broadcast_id, counts, rates, timeline, replies]
+      properties:
+        broadcast_id:
+          type: string
+          format: uuid
+        counts:
+          $ref: "#/components/schemas/BroadcastCounts"
+        rates:
+          $ref: "#/components/schemas/BroadcastRates"
+        timeline:
+          type: array
+          description: Per hour for the first 72 hours after sending started, then per UTC day; only periods with something in them.
+          items:
+            $ref: "#/components/schemas/BroadcastReportPoint"
+        links:
+          type: array
+          description: Click tracking only, most clicked first.
+          items:
+            $ref: "#/components/schemas/BroadcastReportLink"
+        replies:
+          type: array
+          description: The first 50 conversations opened by replies.
+          items:
+            $ref: "#/components/schemas/BroadcastReportReply"
+    BroadcastEventData:
+      type: object
+      required: [broadcast]
+      properties:
+        broadcast:
+          $ref: "#/components/schemas/Broadcast"
+        previous_state:
+          $ref: "#/components/schemas/BroadcastState"
+    BroadcastEvent:
+      type: object
+      description: |
+        `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+        `broadcasts:read` and can see its inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [broadcast.updated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/BroadcastEventData"
+    BroadcastProgress:
+      type: object
+      required: [id, state, counts]
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/BroadcastState"
+        counts:
+          $ref: "#/components/schemas/BroadcastCounts"
+        waiting_until:
+          type: string
+          format: date-time
+    BroadcastProgressEvent:
+      type: object
+      description: |
+        `broadcast.progress`, on `/v1/realtime` only: the counts of a preparing or sending broadcast,
+        at most every 5 seconds. Not stored, no id, never replayed; reload the broadcast after a
+        reconnect.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [broadcast.progress]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/BroadcastProgress"
+    WebhookBroadcastData:
+      type: object
+      required: [broadcast]
+      properties:
+        broadcast:
+          $ref: "#/components/schemas/Broadcast"
+        previous_state:
+          $ref: "#/components/schemas/BroadcastState"
+    WebhookBroadcastPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/WebhookBroadcastData"
+    BroadcastsMode:
+      type: string
+      description: |
+        The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+        operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+        still work).
+      enum: ["on", approval, "off"]
+    BroadcastsStatus:
+      type: string
+      description: |
+        `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+        `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+        or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+      enum: [allowed, approval_required, approval_requested, suspended]
+    WorkspaceBroadcasts:
+      type: object
+      required: [mode, status, sent_today, by_keys]
+      properties:
+        mode:
+          $ref: "#/components/schemas/BroadcastsMode"
+        status:
+          $ref: "#/components/schemas/BroadcastsStatus"
+        reason:
+          type: string
+          description: The operator's or the server's reason for the status.
+        status_at:
+          type: string
+          format: date-time
+        daily_limit:
+          type: integer
+          format: int64
+          description: Recipients the workspace may send to today (UTC), all broadcasts together; absent without a limit.
+        sent_today:
+          type: integer
+          format: int64
+        by_keys:
+          type: boolean
+          description: API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Off by default.
+    BroadcastApprovalRequest:
+      type: object
+      required: [website, sender_description, consent_description]
+      properties:
+        website:
+          type: string
+          format: uri
+          maxLength: 2000
+        sender_description:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: Who sends and what the broadcasts are about.
+        consent_description:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: How the subscribers agreed to get them.
     MailingListCounts:
       type: object
       required: [subscribed, pending, unsubscribed]

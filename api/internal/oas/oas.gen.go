@@ -152,6 +152,309 @@ func (e Availability) Valid() bool {
 	}
 }
 
+// Defines values for BroadcastConditionOp.
+const (
+	ConditionContains  BroadcastConditionOp = "contains"
+	ConditionEq        BroadcastConditionOp = "eq"
+	ConditionExists    BroadcastConditionOp = "exists"
+	ConditionGt        BroadcastConditionOp = "gt"
+	ConditionIn        BroadcastConditionOp = "in"
+	ConditionLt        BroadcastConditionOp = "lt"
+	ConditionNeq       BroadcastConditionOp = "neq"
+	ConditionNotExists BroadcastConditionOp = "not_exists"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastConditionOp enum.
+func (e BroadcastConditionOp) Valid() bool {
+	switch e {
+	case ConditionContains:
+		return true
+	case ConditionEq:
+		return true
+	case ConditionExists:
+		return true
+	case ConditionGt:
+		return true
+	case ConditionIn:
+		return true
+	case ConditionLt:
+		return true
+	case ConditionNeq:
+		return true
+	case ConditionNotExists:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastDeliveryState.
+const (
+	BroadcastDeliveryStateBounced    BroadcastDeliveryState = "bounced"
+	BroadcastDeliveryStateComplained BroadcastDeliveryState = "complained"
+	BroadcastDeliveryStateFailed     BroadcastDeliveryState = "failed"
+	BroadcastDeliveryStateQueued     BroadcastDeliveryState = "queued"
+	BroadcastDeliveryStateSent       BroadcastDeliveryState = "sent"
+	BroadcastDeliveryStateSkipped    BroadcastDeliveryState = "skipped"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastDeliveryState enum.
+func (e BroadcastDeliveryState) Valid() bool {
+	switch e {
+	case BroadcastDeliveryStateBounced:
+		return true
+	case BroadcastDeliveryStateComplained:
+		return true
+	case BroadcastDeliveryStateFailed:
+		return true
+	case BroadcastDeliveryStateQueued:
+		return true
+	case BroadcastDeliveryStateSent:
+		return true
+	case BroadcastDeliveryStateSkipped:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastEventType.
+const (
+	BroadcastEventTypeBroadcastUpdated BroadcastEventType = "broadcast.updated"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastEventType enum.
+func (e BroadcastEventType) Valid() bool {
+	switch e {
+	case BroadcastEventTypeBroadcastUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastPauseReason.
+const (
+	BroadcastPauseReasonBounceRate         BroadcastPauseReason = "bounce_rate"
+	BroadcastPauseReasonComplaintRate      BroadcastPauseReason = "complaint_rate"
+	BroadcastPauseReasonMember             BroadcastPauseReason = "member"
+	BroadcastPauseReasonOperator           BroadcastPauseReason = "operator"
+	BroadcastPauseReasonSenderError        BroadcastPauseReason = "sender_error"
+	BroadcastPauseReasonWorkspaceSuspended BroadcastPauseReason = "workspace_suspended"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastPauseReason enum.
+func (e BroadcastPauseReason) Valid() bool {
+	switch e {
+	case BroadcastPauseReasonBounceRate:
+		return true
+	case BroadcastPauseReasonComplaintRate:
+		return true
+	case BroadcastPauseReasonMember:
+		return true
+	case BroadcastPauseReasonOperator:
+		return true
+	case BroadcastPauseReasonSenderError:
+		return true
+	case BroadcastPauseReasonWorkspaceSuspended:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastProgressEventType.
+const (
+	BroadcastProgressEventTypeBroadcastProgress BroadcastProgressEventType = "broadcast.progress"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastProgressEventType enum.
+func (e BroadcastProgressEventType) Valid() bool {
+	switch e {
+	case BroadcastProgressEventTypeBroadcastProgress:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastReviewKey.
+const (
+	BroadcastReviewKeyApproval         BroadcastReviewKey = "approval"
+	BroadcastReviewKeyAudienceNonempty BroadcastReviewKey = "audience_nonempty"
+	BroadcastReviewKeyClickTracking    BroadcastReviewKey = "click_tracking"
+	BroadcastReviewKeyDailyCap         BroadcastReviewKey = "daily_cap"
+	BroadcastReviewKeyDesign           BroadcastReviewKey = "design"
+	BroadcastReviewKeyHtmlSize         BroadcastReviewKey = "html_size"
+	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
+	BroadcastReviewKeyLinks            BroadcastReviewKey = "links"
+	BroadcastReviewKeyMergeFields      BroadcastReviewKey = "merge_fields"
+	BroadcastReviewKeySenderIdentity   BroadcastReviewKey = "sender_identity"
+	BroadcastReviewKeySenderReady      BroadcastReviewKey = "sender_ready"
+	BroadcastReviewKeySubject          BroadcastReviewKey = "subject"
+	BroadcastReviewKeyTestSent         BroadcastReviewKey = "test_sent"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastReviewKey enum.
+func (e BroadcastReviewKey) Valid() bool {
+	switch e {
+	case BroadcastReviewKeyApproval:
+		return true
+	case BroadcastReviewKeyAudienceNonempty:
+		return true
+	case BroadcastReviewKeyClickTracking:
+		return true
+	case BroadcastReviewKeyDailyCap:
+		return true
+	case BroadcastReviewKeyDesign:
+		return true
+	case BroadcastReviewKeyHtmlSize:
+		return true
+	case BroadcastReviewKeyImagesAlt:
+		return true
+	case BroadcastReviewKeyLinks:
+		return true
+	case BroadcastReviewKeyMergeFields:
+		return true
+	case BroadcastReviewKeySenderIdentity:
+		return true
+	case BroadcastReviewKeySenderReady:
+		return true
+	case BroadcastReviewKeySubject:
+		return true
+	case BroadcastReviewKeyTestSent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastReviewStatus.
+const (
+	ReviewBlocking BroadcastReviewStatus = "blocking"
+	ReviewOk       BroadcastReviewStatus = "ok"
+	ReviewWarning  BroadcastReviewStatus = "warning"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastReviewStatus enum.
+func (e BroadcastReviewStatus) Valid() bool {
+	switch e {
+	case ReviewBlocking:
+		return true
+	case ReviewOk:
+		return true
+	case ReviewWarning:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastSkipReason.
+const (
+	BroadcastSkipReasonCancelled    BroadcastSkipReason = "cancelled"
+	BroadcastSkipReasonOptedOut     BroadcastSkipReason = "opted_out"
+	BroadcastSkipReasonSuppressed   BroadcastSkipReason = "suppressed"
+	BroadcastSkipReasonUnsubscribed BroadcastSkipReason = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastSkipReason enum.
+func (e BroadcastSkipReason) Valid() bool {
+	switch e {
+	case BroadcastSkipReasonCancelled:
+		return true
+	case BroadcastSkipReasonOptedOut:
+		return true
+	case BroadcastSkipReasonSuppressed:
+		return true
+	case BroadcastSkipReasonUnsubscribed:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastState.
+const (
+	BroadcastStateCancelled BroadcastState = "cancelled"
+	BroadcastStateDraft     BroadcastState = "draft"
+	BroadcastStateFailed    BroadcastState = "failed"
+	BroadcastStatePaused    BroadcastState = "paused"
+	BroadcastStatePreparing BroadcastState = "preparing"
+	BroadcastStateScheduled BroadcastState = "scheduled"
+	BroadcastStateSending   BroadcastState = "sending"
+	BroadcastStateSent      BroadcastState = "sent"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastState enum.
+func (e BroadcastState) Valid() bool {
+	switch e {
+	case BroadcastStateCancelled:
+		return true
+	case BroadcastStateDraft:
+		return true
+	case BroadcastStateFailed:
+		return true
+	case BroadcastStatePaused:
+		return true
+	case BroadcastStatePreparing:
+		return true
+	case BroadcastStateScheduled:
+		return true
+	case BroadcastStateSending:
+		return true
+	case BroadcastStateSent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastsMode.
+const (
+	BroadcastsModeApproval BroadcastsMode = "approval"
+	BroadcastsModeOff      BroadcastsMode = "off"
+	BroadcastsModeOn       BroadcastsMode = "on"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastsMode enum.
+func (e BroadcastsMode) Valid() bool {
+	switch e {
+	case BroadcastsModeApproval:
+		return true
+	case BroadcastsModeOff:
+		return true
+	case BroadcastsModeOn:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for BroadcastsStatus.
+const (
+	Allowed           BroadcastsStatus = "allowed"
+	ApprovalRequested BroadcastsStatus = "approval_requested"
+	ApprovalRequired  BroadcastsStatus = "approval_required"
+	Suspended         BroadcastsStatus = "suspended"
+)
+
+// Valid indicates whether the value is a known member of the BroadcastsStatus enum.
+func (e BroadcastsStatus) Valid() bool {
+	switch e {
+	case Allowed:
+		return true
+	case ApprovalRequested:
+		return true
+	case ApprovalRequired:
+		return true
+	case Suspended:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ChannelKind.
 const (
 	ChannelKindApi   ChannelKind = "api"
@@ -1165,18 +1468,21 @@ func (e EmailThemeDirection) Valid() bool {
 
 // Defines values for EventType.
 const (
-	Assigned      EventType = "assigned"
-	LabelsChanged EventType = "labels_changed"
-	Moved         EventType = "moved"
-	Rated         EventType = "rated"
-	StatusChanged EventType = "status_changed"
-	Unassigned    EventType = "unassigned"
+	Assigned       EventType = "assigned"
+	BroadcastReply EventType = "broadcast_reply"
+	LabelsChanged  EventType = "labels_changed"
+	Moved          EventType = "moved"
+	Rated          EventType = "rated"
+	StatusChanged  EventType = "status_changed"
+	Unassigned     EventType = "unassigned"
 )
 
 // Valid indicates whether the value is a known member of the EventType enum.
 func (e EventType) Valid() bool {
 	switch e {
 	case Assigned:
+		return true
+	case BroadcastReply:
 		return true
 	case LabelsChanged:
 		return true
@@ -2065,6 +2371,7 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
+	WebhookEventTypeBroadcastUpdated      WebhookEventType = "broadcast.updated"
 	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
 	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
 	WebhookEventTypeConversationCreated   WebhookEventType = "conversation.created"
@@ -2086,6 +2393,8 @@ const (
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
 func (e WebhookEventType) Valid() bool {
 	switch e {
+	case WebhookEventTypeBroadcastUpdated:
+		return true
 	case WebhookEventTypeContactDeleted:
 		return true
 	case WebhookEventTypeContactUpdated:
@@ -2387,11 +2696,14 @@ type ApiKeyList struct {
 //	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
 //	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
 //	    subscribers; resend confirmations.
-//	  - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
-//	    gallery.
-//	  - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
-//	    images.
-//	  - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
+//	  - `broadcasts:read`: broadcasts, their audience counts, reviews and reports; e-mail
+//	    designs, their snapshots and renders, images, the template gallery. Deliveries also
+//	    need `contacts:read`.
+//	  - `broadcasts:write`: create, change and delete draft broadcasts and send tests; create,
+//	    save, copy, archive and restore designs; upload and delete images.
+//	  - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
+//	    and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
+//	    without naming its scopes does not hold it.
 //
 // `lists:*` and `broadcasts:*` are never added to keys made before they existed.
 type ApiKeyScope string
@@ -2461,6 +2773,490 @@ type Availability string
 
 // BotAvatarUrl An `https` image URL.
 type BotAvatarUrl = string
+
+// Broadcast defines model for Broadcast.
+type Broadcast struct {
+	Audience BroadcastAudience `json:"audience"`
+
+	// ChannelId The inbox's e-mail channel it goes out through; absent until chosen or when removed.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ClickTracking Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default.
+	ClickTracking bool `json:"click_tracking"`
+
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts    BroadcastCounts `json:"counts"`
+	CreatedAt time.Time       `json:"created_at"`
+
+	// CreatedBy The member who created it.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+	DesignId  *uuid.UUID `json:"design_id,omitempty"`
+
+	// DesignVersion The design's version frozen when it was scheduled; later edits to the design do not change it.
+	DesignVersion *int32     `json:"design_version,omitempty"`
+	FinishedAt    *time.Time `json:"finished_at,omitempty"`
+	Id            uuid.UUID  `json:"id"`
+	InboxId       uuid.UUID  `json:"inbox_id"`
+	LastTestAt    *time.Time `json:"last_test_at,omitempty"`
+
+	// Name Shown to the team only.
+	Name string `json:"name"`
+
+	// PauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+	// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+	// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+	// too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+	// workspace was suspended from sending. `operator`: the server's operator paused it.
+	PauseReason *BroadcastPauseReason `json:"pause_reason,omitempty"`
+
+	// Preheader The preview text after the subject; the design's own when empty.
+	Preheader string `json:"preheader"`
+
+	// ScheduledAt When sending starts or started.
+	ScheduledAt *time.Time `json:"scheduled_at,omitempty"`
+
+	// ScheduledBy The member who scheduled it.
+	ScheduledBy *uuid.UUID `json:"scheduled_by,omitempty"`
+
+	// ScheduledByApiKey The API key that scheduled it.
+	ScheduledByApiKey *uuid.UUID `json:"scheduled_by_api_key,omitempty"`
+	StartedAt         *time.Time `json:"started_at,omitempty"`
+
+	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	State BroadcastState `json:"state"`
+
+	// StateDetail Why it paused or failed, in words (an SMTP answer, the rates).
+	StateDetail *string `json:"state_detail,omitempty"`
+
+	// Subject May hold merge fields.
+	Subject   string    `json:"subject"`
+	UpdatedAt time.Time `json:"updated_at"`
+
+	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
+}
+
+// BroadcastApprovalRequest defines model for BroadcastApprovalRequest.
+type BroadcastApprovalRequest struct {
+	// ConsentDescription How the subscribers agreed to get them.
+	ConsentDescription string `json:"consent_description"`
+
+	// SenderDescription Who sends and what the broadcasts are about.
+	SenderDescription string `json:"sender_description"`
+	Website           string `json:"website"`
+}
+
+// BroadcastAudience defines model for BroadcastAudience.
+type BroadcastAudience struct {
+	// Conditions Every condition must match.
+	Conditions []BroadcastCondition `json:"conditions"`
+
+	// ListIds Lists of the broadcast's inbox, in order of preference for a contact on several.
+	ListIds []uuid.UUID `json:"list_ids"`
+
+	// Locales Keep only contacts whose language is one of these (`tr` also matches `tr-TR`); empty keeps every language.
+	Locales []LanguageTag `json:"locales"`
+}
+
+// BroadcastAudienceCount defines model for BroadcastAudienceCount.
+type BroadcastAudienceCount struct {
+	// ByList Recipients by the list their mail goes out under.
+	ByList []BroadcastListCount `json:"by_list"`
+
+	// Excluded Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+	// the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+	// mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+	// match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+	Excluded BroadcastAudienceExcluded `json:"excluded"`
+
+	// MissingMergeFields Per merge field without a fallback (`contact.first_name`), the recipients it would be empty for.
+	MissingMergeFields map[string]int64 `json:"missing_merge_fields"`
+	Recipients         int64            `json:"recipients"`
+}
+
+// BroadcastAudienceExcluded Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+// the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+// mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+// match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+type BroadcastAudienceExcluded struct {
+	Blocked      int64 `json:"blocked"`
+	Duplicate    int64 `json:"duplicate"`
+	Filtered     int64 `json:"filtered"`
+	OptedOut     int64 `json:"opted_out"`
+	Pending      int64 `json:"pending"`
+	Suppressed   int64 `json:"suppressed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// BroadcastAudienceInput defines model for BroadcastAudienceInput.
+type BroadcastAudienceInput struct {
+	Conditions *[]BroadcastCondition `json:"conditions,omitempty"`
+	ListIds    []uuid.UUID           `json:"list_ids"`
+	Locales    *[]LanguageTag        `json:"locales,omitempty"`
+}
+
+// BroadcastCondition defines model for BroadcastCondition.
+type BroadcastCondition struct {
+	Attribute string `json:"attribute"`
+
+	// Op Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+	// ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+	// `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+	// without the attribute matches only `neq` and `not_exists`.
+	Op     BroadcastConditionOp `json:"op"`
+	Value  *string              `json:"value,omitempty"`
+	Values *[]string            `json:"values,omitempty"`
+}
+
+// BroadcastConditionOp Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+// ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+// `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+// without the attribute matches only `neq` and `not_exists`.
+type BroadcastConditionOp string
+
+// BroadcastCounts `recipients` is the audience taken when sending started; `queued` the mails still to go
+// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+// without naming a bad address. `bounced` and `complained` count recipients whose mail
+// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+// only).
+type BroadcastCounts struct {
+	AutoReplied int64 `json:"auto_replied"`
+	Bounced     int64 `json:"bounced"`
+	Clicked     int64 `json:"clicked"`
+	Complained  int64 `json:"complained"`
+	Failed      int64 `json:"failed"`
+
+	// Prepared `preparing` only: recipients taken so far.
+	Prepared   *int64 `json:"prepared,omitempty"`
+	Queued     int64  `json:"queued"`
+	Recipients int64  `json:"recipients"`
+	Replied    int64  `json:"replied"`
+	Sent       int64  `json:"sent"`
+
+	// Skipped Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+	// before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+	Skipped      BroadcastSkipped `json:"skipped"`
+	Unsubscribed int64            `json:"unsubscribed"`
+}
+
+// BroadcastCreate defines model for BroadcastCreate.
+type BroadcastCreate struct {
+	Audience      *BroadcastAudienceInput `json:"audience,omitempty"`
+	ChannelId     *uuid.UUID              `json:"channel_id,omitempty"`
+	ClickTracking *bool                   `json:"click_tracking,omitempty"`
+	DesignId      *uuid.UUID              `json:"design_id,omitempty"`
+	InboxId       uuid.UUID               `json:"inbox_id"`
+	Name          string                  `json:"name"`
+	Preheader     *string                 `json:"preheader,omitempty"`
+	Subject       *string                 `json:"subject,omitempty"`
+}
+
+// BroadcastDelivery defines model for BroadcastDelivery.
+type BroadcastDelivery struct {
+	Attempts      int32               `json:"attempts"`
+	AutoRepliedAt *time.Time          `json:"auto_replied_at,omitempty"`
+	BouncedAt     *time.Time          `json:"bounced_at,omitempty"`
+	ClickedAt     *time.Time          `json:"clicked_at,omitempty"`
+	ComplainedAt  *time.Time          `json:"complained_at,omitempty"`
+	Contact       SubscriptionContact `json:"contact"`
+
+	// ConversationId The conversation the recipient's reply opened.
+	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
+	CreatedAt      time.Time  `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email Email `json:"email"`
+
+	// Error The SMTP server's answer when it refused the mail or the last retry failed.
+	Error *string   `json:"error,omitempty"`
+	Id    uuid.UUID `json:"id"`
+
+	// ListId The list the mail went out under; absent when the list was deleted.
+	ListId     *uuid.UUID           `json:"list_id,omitempty"`
+	RepliedAt  *time.Time           `json:"replied_at,omitempty"`
+	SentAt     *time.Time           `json:"sent_at,omitempty"`
+	SkipReason *BroadcastSkipReason `json:"skip_reason,omitempty"`
+
+	// State `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+	// hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+	// `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+	// was cancelled.
+	State          BroadcastDeliveryState `json:"state"`
+	UnsubscribedAt *time.Time             `json:"unsubscribed_at,omitempty"`
+}
+
+// BroadcastDeliveryPage defines model for BroadcastDeliveryPage.
+type BroadcastDeliveryPage struct {
+	Items      []BroadcastDelivery `json:"items"`
+	NextCursor *string             `json:"next_cursor,omitempty"`
+}
+
+// BroadcastDeliveryState `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+// hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+// `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+// was cancelled.
+type BroadcastDeliveryState string
+
+// BroadcastEvent `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+// `broadcasts:read` and can see its inbox.
+type BroadcastEvent struct {
+	CreatedAt   time.Time          `json:"created_at"`
+	Data        BroadcastEventData `json:"data"`
+	Id          int64              `json:"id"`
+	InboxId     uuid.UUID          `json:"inbox_id"`
+	Type        BroadcastEventType `json:"type"`
+	WorkspaceId uuid.UUID          `json:"workspace_id"`
+}
+
+// BroadcastEventType defines model for BroadcastEvent.Type.
+type BroadcastEventType string
+
+// BroadcastEventData defines model for BroadcastEventData.
+type BroadcastEventData struct {
+	Broadcast Broadcast `json:"broadcast"`
+
+	// PreviousState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	PreviousState *BroadcastState `json:"previous_state,omitempty"`
+}
+
+// BroadcastListCount defines model for BroadcastListCount.
+type BroadcastListCount struct {
+	ListId     uuid.UUID `json:"list_id"`
+	Recipients int64     `json:"recipients"`
+}
+
+// BroadcastPage defines model for BroadcastPage.
+type BroadcastPage struct {
+	Items      []Broadcast `json:"items"`
+	NextCursor *string     `json:"next_cursor,omitempty"`
+}
+
+// BroadcastPauseReason `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+// or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+// spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+// too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+// workspace was suspended from sending. `operator`: the server's operator paused it.
+type BroadcastPauseReason string
+
+// BroadcastProblem defines model for BroadcastProblem.
+type BroadcastProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Items `review_failed` only: the blocking review items.
+	Items *[]BroadcastReviewItem `json:"items,omitempty"`
+
+	// Recipients `audience_changed` only: the audience count now.
+	Recipients *int64 `json:"recipients,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// BroadcastProgress defines model for BroadcastProgress.
+type BroadcastProgress struct {
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts BroadcastCounts `json:"counts"`
+	Id     uuid.UUID       `json:"id"`
+
+	// State `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	State        BroadcastState `json:"state"`
+	WaitingUntil *time.Time     `json:"waiting_until,omitempty"`
+}
+
+// BroadcastProgressEvent `broadcast.progress`, on `/v1/realtime` only: the counts of a preparing or sending broadcast,
+// at most every 5 seconds. Not stored, no id, never replayed; reload the broadcast after a
+// reconnect.
+type BroadcastProgressEvent struct {
+	CreatedAt   time.Time                  `json:"created_at"`
+	Data        BroadcastProgress          `json:"data"`
+	InboxId     uuid.UUID                  `json:"inbox_id"`
+	Type        BroadcastProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                  `json:"workspace_id"`
+}
+
+// BroadcastProgressEventType defines model for BroadcastProgressEvent.Type.
+type BroadcastProgressEventType string
+
+// BroadcastRates Shares of `sent`, from 0 to 1; all 0 before anything was sent.
+type BroadcastRates struct {
+	Bounced      float64 `json:"bounced"`
+	Clicked      float64 `json:"clicked"`
+	Complained   float64 `json:"complained"`
+	Replied      float64 `json:"replied"`
+	Unsubscribed float64 `json:"unsubscribed"`
+}
+
+// BroadcastRef defines model for BroadcastRef.
+type BroadcastRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// BroadcastReport defines model for BroadcastReport.
+type BroadcastReport struct {
+	BroadcastId uuid.UUID `json:"broadcast_id"`
+
+	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
+	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+	// without naming a bad address. `bounced` and `complained` count recipients whose mail
+	// bounced or who reported it as spam, `unsubscribed` those who left a list through this
+	// broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+	// automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+	// only).
+	Counts BroadcastCounts `json:"counts"`
+
+	// Links Click tracking only, most clicked first.
+	Links *[]BroadcastReportLink `json:"links,omitempty"`
+
+	// Rates Shares of `sent`, from 0 to 1; all 0 before anything was sent.
+	Rates BroadcastRates `json:"rates"`
+
+	// Replies The first 50 conversations opened by replies.
+	Replies []BroadcastReportReply `json:"replies"`
+
+	// Timeline Per hour for the first 72 hours after sending started, then per UTC day; only periods with something in them.
+	Timeline []BroadcastReportPoint `json:"timeline"`
+}
+
+// BroadcastReportLink defines model for BroadcastReportLink.
+type BroadcastReportLink struct {
+	// Clicks Recipients who opened it.
+	Clicks int64  `json:"clicks"`
+	Url    string `json:"url"`
+}
+
+// BroadcastReportPoint defines model for BroadcastReportPoint.
+type BroadcastReportPoint struct {
+	// At The start of the hour or UTC day.
+	At           time.Time `json:"at"`
+	Bounced      int64     `json:"bounced"`
+	Clicked      int64     `json:"clicked"`
+	Complained   int64     `json:"complained"`
+	Replied      int64     `json:"replied"`
+	Sent         int64     `json:"sent"`
+	Unsubscribed int64     `json:"unsubscribed"`
+}
+
+// BroadcastReportReply defines model for BroadcastReportReply.
+type BroadcastReportReply struct {
+	At             time.Time           `json:"at"`
+	Contact        SubscriptionContact `json:"contact"`
+	ConversationId uuid.UUID           `json:"conversation_id"`
+}
+
+// BroadcastReview defines model for BroadcastReview.
+type BroadcastReview struct {
+	// Days How many UTC days sending takes under the workspace's daily limit; absent without a limit.
+	Days      *int32                `json:"days,omitempty"`
+	HtmlBytes *int32                `json:"html_bytes,omitempty"`
+	Items     []BroadcastReviewItem `json:"items"`
+
+	// Ready No item is `blocking`.
+	Ready bool `json:"ready"`
+
+	// Recipients The audience count the review used; pass it as `confirm_recipients` to schedule only this audience.
+	Recipients int64 `json:"recipients"`
+}
+
+// BroadcastReviewItem defines model for BroadcastReviewItem.
+type BroadcastReviewItem struct {
+	// Detail What is wrong or what to know, in English.
+	Detail *string               `json:"detail,omitempty"`
+	Key    BroadcastReviewKey    `json:"key"`
+	Status BroadcastReviewStatus `json:"status"`
+}
+
+// BroadcastReviewKey defines model for BroadcastReviewKey.
+type BroadcastReviewKey string
+
+// BroadcastReviewStatus defines model for BroadcastReviewStatus.
+type BroadcastReviewStatus string
+
+// BroadcastSchedule defines model for BroadcastSchedule.
+type BroadcastSchedule struct {
+	ConfirmRecipients *int64     `json:"confirm_recipients,omitempty"`
+	SendAt            *time.Time `json:"send_at,omitempty"`
+}
+
+// BroadcastSkipReason defines model for BroadcastSkipReason.
+type BroadcastSkipReason string
+
+// BroadcastSkipped Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+// before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+type BroadcastSkipped struct {
+	Cancelled    int64 `json:"cancelled"`
+	OptedOut     int64 `json:"opted_out"`
+	Suppressed   int64 `json:"suppressed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// BroadcastState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+// `failed` when it cannot go on (its channel was removed).
+type BroadcastState string
+
+// BroadcastTest defines model for BroadcastTest.
+type BroadcastTest struct {
+	ContactId *uuid.UUID   `json:"contact_id,omitempty"`
+	MemberIds *[]uuid.UUID `json:"member_ids,omitempty"`
+}
+
+// BroadcastTestResult defines model for BroadcastTestResult.
+type BroadcastTestResult struct {
+	SentTo []Email `json:"sent_to"`
+}
+
+// BroadcastUpdate defines model for BroadcastUpdate.
+type BroadcastUpdate struct {
+	Audience      *BroadcastAudienceInput      `json:"audience,omitempty"`
+	ChannelId     nullable.Nullable[uuid.UUID] `json:"channel_id,omitempty"`
+	ClickTracking *bool                        `json:"click_tracking,omitempty"`
+	DesignId      nullable.Nullable[uuid.UUID] `json:"design_id,omitempty"`
+	Name          *string                      `json:"name,omitempty"`
+	Preheader     *string                      `json:"preheader,omitempty"`
+	Subject       *string                      `json:"subject,omitempty"`
+}
+
+// BroadcastsMode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+// operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+// still work).
+type BroadcastsMode string
+
+// BroadcastsStatus `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+// `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+// or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+type BroadcastsStatus string
 
 // BusinessHours When `enabled` is false the inbox counts as always open.
 type BusinessHours struct {
@@ -3537,6 +4333,11 @@ type Conversation struct {
 	// AssigneeId The assigned member; absent when unassigned.
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
 
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
@@ -3699,6 +4500,11 @@ type ConversationKind string
 type ConversationListItem struct {
 	// AssigneeId The assigned member; absent when unassigned.
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
+
+	// BroadcastId Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+	// or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+	// deleted.
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
 
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
@@ -4413,6 +5219,13 @@ type EmailChannel struct {
 	// answer to automatic mail.
 	AutoReply EmailAutoReply `json:"auto_reply"`
 
+	// BroadcastRate Broadcast mails a second through this channel.
+	BroadcastRate int32 `json:"broadcast_rate"`
+
+	// BroadcastSmtp A separate SMTP account for broadcasts, so complaints about marketing mail never land
+	// on the support account; absent when broadcasts use `smtp`.
+	BroadcastSmtp *SmtpSettings `json:"broadcast_smtp,omitempty"`
+
 	// DisplayName The name in `From`; the channel name when empty.
 	DisplayName string `json:"display_name"`
 
@@ -4433,9 +5246,19 @@ type EmailChannelInput struct {
 	//
 	//
 	// Examples: owner@example.com
-	Address     Email                `json:"address"`
-	AutoReply   *EmailAutoReplyInput `json:"auto_reply,omitempty"`
-	DisplayName *string              `json:"display_name,omitempty"`
+	Address   Email                `json:"address"`
+	AutoReply *EmailAutoReplyInput `json:"auto_reply,omitempty"`
+
+	// BroadcastRate Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
+	BroadcastRate *int32 `json:"broadcast_rate,omitempty"`
+
+	// BroadcastSmtp The broadcast SMTP account. Absent keeps the stored one; its `password` absent keeps
+	// the stored password. Remove it with `broadcast_smtp_remove`.
+	BroadcastSmtp *SmtpSettingsInput `json:"broadcast_smtp,omitempty"`
+
+	// BroadcastSmtpRemove `true` removes the broadcast SMTP account; broadcasts then use `smtp`.
+	BroadcastSmtpRemove *bool   `json:"broadcast_smtp_remove,omitempty"`
+	DisplayName         *string `json:"display_name,omitempty"`
 
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email             `json:"from_address,omitempty"`
@@ -6073,6 +6896,9 @@ type MessageEvent struct {
 	// AssigneeId The new assignee (`assigned`).
 	AssigneeId *uuid.UUID `json:"assignee_id,omitempty"`
 
+	// Broadcast `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation.
+	Broadcast *BroadcastRef `json:"broadcast,omitempty"`
+
 	// InboxId The inbox it moved to (`moved`).
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
 
@@ -7044,8 +7870,11 @@ type UsageList struct {
 // UsageMonth defines model for UsageMonth.
 type UsageMonth struct {
 	AttachmentBytes int64 `json:"attachment_bytes"`
-	Conversations   int64 `json:"conversations"`
-	Messages        int64 `json:"messages"`
+
+	// BroadcastRecipients Broadcast mails accepted by the SMTP server.
+	BroadcastRecipients int64 `json:"broadcast_recipients"`
+	Conversations       int64 `json:"conversations"`
+	Messages            int64 `json:"messages"`
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
@@ -7125,6 +7954,29 @@ type WebhookAttempt struct {
 // WebhookAttemptList defines model for WebhookAttemptList.
 type WebhookAttemptList struct {
 	Items []WebhookAttempt `json:"items"`
+}
+
+// WebhookBroadcastData defines model for WebhookBroadcastData.
+type WebhookBroadcastData struct {
+	Broadcast Broadcast `json:"broadcast"`
+
+	// PreviousState `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+	// `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+	// `failed` when it cannot go on (its channel was removed).
+	PreviousState *BroadcastState `json:"previous_state,omitempty"`
+}
+
+// WebhookBroadcastPayload defines model for WebhookBroadcastPayload.
+type WebhookBroadcastPayload struct {
+	Data WebhookBroadcastData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
 // WebhookContact The contact as a host backend needs it.
@@ -7423,13 +8275,38 @@ type Workspace struct {
 	// (`403 bot_sending_disabled`) and a key cannot send drafts; members review and send
 	// them. On: a key with `messages:write` sends directly, and one that also has
 	// `drafts:send` sends drafts. Members always may.
-	BotsMaySend bool      `json:"bots_may_send"`
-	CreatedAt   time.Time `json:"created_at"`
-	Id          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
+	BotsMaySend bool                `json:"bots_may_send"`
+	Broadcasts  WorkspaceBroadcasts `json:"broadcasts"`
+	CreatedAt   time.Time           `json:"created_at"`
+	Id          uuid.UUID           `json:"id"`
+	Name        string              `json:"name"`
 
 	// RetentionDays Closed conversations untouched for this many days are deleted with their messages and attachments, and raw e-mails older than this are deleted. Absent when everything is kept.
 	RetentionDays *int32 `json:"retention_days,omitempty"`
+}
+
+// WorkspaceBroadcasts defines model for WorkspaceBroadcasts.
+type WorkspaceBroadcasts struct {
+	// ByKeys API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Off by default.
+	ByKeys bool `json:"by_keys"`
+
+	// DailyLimit Recipients the workspace may send to today (UTC), all broadcasts together; absent without a limit.
+	DailyLimit *int64 `json:"daily_limit,omitempty"`
+
+	// Mode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+	// operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+	// still work).
+	Mode BroadcastsMode `json:"mode"`
+
+	// Reason The operator's or the server's reason for the status.
+	Reason    *string `json:"reason,omitempty"`
+	SentToday int64   `json:"sent_today"`
+
+	// Status `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+	// `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+	// or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+	Status   BroadcastsStatus `json:"status"`
+	StatusAt *time.Time       `json:"status_at,omitempty"`
 }
 
 // WorkspaceCreate defines model for WorkspaceCreate.
@@ -7448,6 +8325,9 @@ type WorkspaceUpdate struct {
 	// BotsMaySend Owners and admins, with a member session.
 	BotsMaySend *bool `json:"bots_may_send,omitempty"`
 
+	// BroadcastsByKeys Whether API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Owners and admins, with a member session.
+	BroadcastsByKeys *bool `json:"broadcasts_by_keys,omitempty"`
+
 	// RetentionDays `null` keeps everything. Owners, or an API key with `workspace:manage`.
 	RetentionDays nullable.Nullable[int32] `json:"retention_days,omitempty"`
 }
@@ -7457,6 +8337,9 @@ type ApiKeyId = uuid.UUID
 
 // AttachmentId defines model for AttachmentId.
 type AttachmentId = uuid.UUID
+
+// BroadcastId defines model for BroadcastId.
+type BroadcastId = uuid.UUID
 
 // CannedReplyId defines model for CannedReplyId.
 type CannedReplyId = uuid.UUID
@@ -7719,6 +8602,139 @@ type DownloadAttachmentParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListBroadcastsParams defines parameters for ListBroadcasts.
+type ListBroadcastsParams struct {
+	InboxId *uuid.UUID        `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	State   *[]BroadcastState `form:"state,omitempty" json:"state,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateBroadcastParams defines parameters for CreateBroadcast.
+type CreateBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteBroadcastParams defines parameters for DeleteBroadcast.
+type DeleteBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetBroadcastParams defines parameters for GetBroadcast.
+type GetBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateBroadcastParams defines parameters for UpdateBroadcast.
+type UpdateBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CountBroadcastAudienceParams defines parameters for CountBroadcastAudience.
+type CountBroadcastAudienceParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelBroadcastParams defines parameters for CancelBroadcast.
+type CancelBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListBroadcastDeliveriesParams defines parameters for ListBroadcastDeliveries.
+type ListBroadcastDeliveriesParams struct {
+	State   *BroadcastDeliveryState `form:"state,omitempty" json:"state,omitempty"`
+	Q       *string                 `form:"q,omitempty" json:"q,omitempty"`
+	Replied *bool                   `form:"replied,omitempty" json:"replied,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PauseBroadcastParams defines parameters for PauseBroadcast.
+type PauseBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetBroadcastReportParams defines parameters for GetBroadcastReport.
+type GetBroadcastReportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResumeBroadcastParams defines parameters for ResumeBroadcast.
+type ResumeBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ReviewBroadcastParams defines parameters for ReviewBroadcast.
+type ReviewBroadcastParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScheduleBroadcastParams defines parameters for ScheduleBroadcast.
+type ScheduleBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SendBroadcastTestParams defines parameters for SendBroadcastTest.
+type SendBroadcastTestParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnscheduleBroadcastParams defines parameters for UnscheduleBroadcast.
+type UnscheduleBroadcastParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListCannedRepliesParams defines parameters for ListCannedReplies.
 type ListCannedRepliesParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -7947,6 +8963,9 @@ type ListConversationsParams struct {
 	// Page Only conversations sent from this documentation page (a URL; query and fragment are
 	// ignored).
 	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// BroadcastId Only conversations opened by replies to this broadcast.
+	BroadcastId *uuid.UUID `form:"broadcast_id,omitempty" json:"broadcast_id,omitempty"`
 
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
 	// without it, both. Member sessions only (`400 validation_failed` for API keys).
@@ -8908,6 +9927,29 @@ type UpdateWorkspaceParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// RequestBroadcastApprovalParams defines parameters for RequestBroadcastApproval.
+type RequestBroadcastApprovalParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// WebhookBroadcastUpdatedParams defines parameters for WebhookBroadcastUpdated.
+type WebhookBroadcastUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookContactDeletedParams defines parameters for WebhookContactDeleted.
 type WebhookContactDeletedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -9210,6 +10252,18 @@ type VerifySignInCodeJSONRequestBody = SignInCodeVerify
 // FinishPasskeySignInJSONRequestBody defines body for FinishPasskeySignIn for application/json ContentType.
 type FinishPasskeySignInJSONRequestBody = PasskeyCeremonyResult
 
+// CreateBroadcastJSONRequestBody defines body for CreateBroadcast for application/json ContentType.
+type CreateBroadcastJSONRequestBody = BroadcastCreate
+
+// UpdateBroadcastJSONRequestBody defines body for UpdateBroadcast for application/json ContentType.
+type UpdateBroadcastJSONRequestBody = BroadcastUpdate
+
+// ScheduleBroadcastJSONRequestBody defines body for ScheduleBroadcast for application/json ContentType.
+type ScheduleBroadcastJSONRequestBody = BroadcastSchedule
+
+// SendBroadcastTestJSONRequestBody defines body for SendBroadcastTest for application/json ContentType.
+type SendBroadcastTestJSONRequestBody = BroadcastTest
+
 // CreateCannedReplyJSONRequestBody defines body for CreateCannedReply for application/json ContentType.
 type CreateCannedReplyJSONRequestBody = CannedReplyCreate
 
@@ -9363,8 +10417,14 @@ type DeleteWorkspaceJSONRequestBody = WorkspaceDeletion
 // UpdateWorkspaceJSONRequestBody defines body for UpdateWorkspace for application/json ContentType.
 type UpdateWorkspaceJSONRequestBody = WorkspaceUpdate
 
+// RequestBroadcastApprovalJSONRequestBody defines body for RequestBroadcastApproval for application/json ContentType.
+type RequestBroadcastApprovalJSONRequestBody = BroadcastApprovalRequest
+
 // CreateWorkspaceJSONRequestBody defines body for CreateWorkspace for application/json ContentType.
 type CreateWorkspaceJSONRequestBody = WorkspaceCreate
+
+// WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
+type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
 
 // WebhookContactDeletedJSONRequestBody defines body for WebhookContactDeleted for application/json ContentType.
 type WebhookContactDeletedJSONRequestBody = WebhookContactDeletedPayload
@@ -11172,6 +12232,58 @@ func (t *RealtimeMessage) MergeSubscriptionEvent(v SubscriptionEvent) error {
 	return err
 }
 
+// AsBroadcastEvent returns the union data inside the RealtimeMessage as a BroadcastEvent
+func (t RealtimeMessage) AsBroadcastEvent() (BroadcastEvent, error) {
+	var body BroadcastEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastEvent overwrites any union data inside the RealtimeMessage as the provided BroadcastEvent
+func (t *RealtimeMessage) FromBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastEvent performs a merge with any union data inside the RealtimeMessage, using the provided BroadcastEvent
+func (t *RealtimeMessage) MergeBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsBroadcastProgressEvent returns the union data inside the RealtimeMessage as a BroadcastProgressEvent
+func (t RealtimeMessage) AsBroadcastProgressEvent() (BroadcastProgressEvent, error) {
+	var body BroadcastProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastProgressEvent overwrites any union data inside the RealtimeMessage as the provided BroadcastProgressEvent
+func (t *RealtimeMessage) FromBroadcastProgressEvent(v BroadcastProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided BroadcastProgressEvent
+func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -11342,6 +12454,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "broadcast.progress":
+		return t.AsBroadcastProgressEvent()
+	case "broadcast.updated":
+		return t.AsBroadcastEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.presence":
@@ -11831,6 +12947,32 @@ func (t *StoredEvent) MergeSubscriptionEvent(v SubscriptionEvent) error {
 	return err
 }
 
+// AsBroadcastEvent returns the union data inside the StoredEvent as a BroadcastEvent
+func (t StoredEvent) AsBroadcastEvent() (BroadcastEvent, error) {
+	var body BroadcastEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromBroadcastEvent overwrites any union data inside the StoredEvent as the provided BroadcastEvent
+func (t *StoredEvent) FromBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeBroadcastEvent performs a merge with any union data inside the StoredEvent, using the provided BroadcastEvent
+func (t *StoredEvent) MergeBroadcastEvent(v BroadcastEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -11845,6 +12987,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "broadcast.updated":
+		return t.AsBroadcastEvent()
 	case "contact.deleted":
 		return t.AsContactDeletedEvent()
 	case "contact.read":
@@ -12070,6 +13214,51 @@ type ServerInterface interface {
 	// SignOut Sign out
 	// (POST /v1/auth/sign-out)
 	SignOut(w http.ResponseWriter, r *http.Request)
+	// ListBroadcasts List broadcasts
+	// (GET /v1/broadcasts)
+	ListBroadcasts(w http.ResponseWriter, r *http.Request, params ListBroadcastsParams)
+	// CreateBroadcast Create a draft broadcast
+	// (POST /v1/broadcasts)
+	CreateBroadcast(w http.ResponseWriter, r *http.Request, params CreateBroadcastParams)
+	// DeleteBroadcast Delete a broadcast
+	// (DELETE /v1/broadcasts/{broadcastId})
+	DeleteBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params DeleteBroadcastParams)
+	// GetBroadcast A broadcast
+	// (GET /v1/broadcasts/{broadcastId})
+	GetBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params GetBroadcastParams)
+	// UpdateBroadcast Change a draft
+	// (PATCH /v1/broadcasts/{broadcastId})
+	UpdateBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params UpdateBroadcastParams)
+	// CountBroadcastAudience Count the audience
+	// (POST /v1/broadcasts/{broadcastId}/audience)
+	CountBroadcastAudience(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params CountBroadcastAudienceParams)
+	// CancelBroadcast Cancel a broadcast
+	// (POST /v1/broadcasts/{broadcastId}/cancel)
+	CancelBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params CancelBroadcastParams)
+	// ListBroadcastDeliveries List a broadcast's deliveries
+	// (GET /v1/broadcasts/{broadcastId}/deliveries)
+	ListBroadcastDeliveries(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ListBroadcastDeliveriesParams)
+	// PauseBroadcast Pause sending
+	// (POST /v1/broadcasts/{broadcastId}/pause)
+	PauseBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params PauseBroadcastParams)
+	// GetBroadcastReport A broadcast's report
+	// (GET /v1/broadcasts/{broadcastId}/report)
+	GetBroadcastReport(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params GetBroadcastReportParams)
+	// ResumeBroadcast Resume sending
+	// (POST /v1/broadcasts/{broadcastId}/resume)
+	ResumeBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ResumeBroadcastParams)
+	// ReviewBroadcast Review before sending
+	// (GET /v1/broadcasts/{broadcastId}/review)
+	ReviewBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ReviewBroadcastParams)
+	// ScheduleBroadcast Schedule or send now
+	// (POST /v1/broadcasts/{broadcastId}/schedule)
+	ScheduleBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ScheduleBroadcastParams)
+	// SendBroadcastTest Send a test
+	// (POST /v1/broadcasts/{broadcastId}/test)
+	SendBroadcastTest(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params SendBroadcastTestParams)
+	// UnscheduleBroadcast Back to draft
+	// (POST /v1/broadcasts/{broadcastId}/unschedule)
+	UnscheduleBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params UnscheduleBroadcastParams)
 	// ListCannedReplies List canned replies
 	// (GET /v1/canned-replies)
 	ListCannedReplies(w http.ResponseWriter, r *http.Request, params ListCannedRepliesParams)
@@ -12526,6 +13715,9 @@ type ServerInterface interface {
 	// UpdateWorkspace Update the workspace
 	// (PATCH /v1/workspace)
 	UpdateWorkspace(w http.ResponseWriter, r *http.Request, params UpdateWorkspaceParams)
+	// RequestBroadcastApproval Ask the operator to allow broadcasts
+	// (POST /v1/workspace/broadcast-approval)
+	RequestBroadcastApproval(w http.ResponseWriter, r *http.Request, params RequestBroadcastApprovalParams)
 	// CreateWorkspace Create a workspace
 	// (POST /v1/workspaces)
 	CreateWorkspace(w http.ResponseWriter, r *http.Request)
@@ -14238,6 +15430,1007 @@ func (siw *ServerInterfaceWrapper) SignOut(w http.ResponseWriter, r *http.Reques
 	handler.ServeHTTP(w, r)
 }
 
+// ListBroadcasts operation middleware
+func (siw *ServerInterfaceWrapper) ListBroadcasts(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListBroadcastsParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListBroadcasts(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) CreateBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateBroadcast(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) DeleteBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) GetBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) UpdateBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CountBroadcastAudience operation middleware
+func (siw *ServerInterfaceWrapper) CountBroadcastAudience(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CountBroadcastAudienceParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CountBroadcastAudience(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CancelBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) CancelBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CancelBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CancelBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListBroadcastDeliveries operation middleware
+func (siw *ServerInterfaceWrapper) ListBroadcastDeliveries(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListBroadcastDeliveriesParams
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "replied" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "replied", r.URL.Query(), &params.Replied, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "replied"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "replied", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListBroadcastDeliveries(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PauseBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) PauseBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PauseBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PauseBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetBroadcastReport operation middleware
+func (siw *ServerInterfaceWrapper) GetBroadcastReport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetBroadcastReportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetBroadcastReport(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ResumeBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) ResumeBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ResumeBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ResumeBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ReviewBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) ReviewBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ReviewBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ReviewBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ScheduleBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) ScheduleBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ScheduleBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ScheduleBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SendBroadcastTest operation middleware
+func (siw *ServerInterfaceWrapper) SendBroadcastTest(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SendBroadcastTestParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SendBroadcastTest(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnscheduleBroadcast operation middleware
+func (siw *ServerInterfaceWrapper) UnscheduleBroadcast(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "broadcastId" -------------
+	var broadcastId BroadcastId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "broadcastId", r.PathValue("broadcastId"), &broadcastId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcastId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnscheduleBroadcastParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnscheduleBroadcast(w, r, broadcastId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListCannedReplies operation middleware
 func (siw *ServerInterfaceWrapper) ListCannedReplies(w http.ResponseWriter, r *http.Request) {
 
@@ -15736,6 +17929,19 @@ func (siw *ServerInterfaceWrapper) ListConversations(w http.ResponseWriter, r *h
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "broadcast_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "broadcast_id", r.URL.Query(), &params.BroadcastId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "broadcast_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "broadcast_id", Err: err})
 		}
 		return
 	}
@@ -22880,6 +25086,66 @@ func (siw *ServerInterfaceWrapper) UpdateWorkspace(w http.ResponseWriter, r *htt
 	handler.ServeHTTP(w, r)
 }
 
+// RequestBroadcastApproval operation middleware
+func (siw *ServerInterfaceWrapper) RequestBroadcastApproval(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RequestBroadcastApprovalParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RequestBroadcastApproval(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // CreateWorkspace operation middleware
 func (siw *ServerInterfaceWrapper) CreateWorkspace(w http.ResponseWriter, r *http.Request) {
 
@@ -23050,6 +25316,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/workspace", wrapper.DeleteWorkspace)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/workspace", wrapper.GetWorkspace)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/workspace", wrapper.UpdateWorkspace)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/workspace/broadcast-approval", wrapper.RequestBroadcastApproval)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/workspaces", wrapper.CreateWorkspace)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/members", wrapper.ListMembers)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/members/{memberId}", wrapper.RemoveMember)
@@ -23168,6 +25435,21 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/email-images", wrapper.ListEmailImages)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/email-images", wrapper.UploadEmailImage)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/email-images/{imageId}", wrapper.DeleteEmailImage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/broadcasts", wrapper.ListBroadcasts)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts", wrapper.CreateBroadcast)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}", wrapper.DeleteBroadcast)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}", wrapper.GetBroadcast)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}", wrapper.UpdateBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/audience", wrapper.CountBroadcastAudience)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/review", wrapper.ReviewBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/test", wrapper.SendBroadcastTest)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/schedule", wrapper.ScheduleBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/unschedule", wrapper.UnscheduleBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/pause", wrapper.PauseBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/resume", wrapper.ResumeBroadcast)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/cancel", wrapper.CancelBroadcast)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/deliveries", wrapper.ListBroadcastDeliveries)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/broadcasts/{broadcastId}/report", wrapper.GetBroadcastReport)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/usage", wrapper.GetUsage)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/feedback", wrapper.CreateFeedback)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/webhooks", wrapper.ListWebhooks)
@@ -23231,6 +25513,9 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 // webhook http.Handler returned by {Op}WebhookHandler at
 // whatever URL path they advertise to senders.
 type WebhookReceiverInterface interface {
+	// A broadcast changed state
+	// HandleWebhookBroadcastUpdatedWebhook handles the POST webhook for broadcast.updated.
+	HandleWebhookBroadcastUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookBroadcastUpdatedParams)
 	// A contact was deleted
 	// HandleWebhookContactDeletedWebhook handles the POST webhook for contact.deleted.
 	HandleWebhookContactDeletedWebhook(w http.ResponseWriter, r *http.Request, params WebhookContactDeletedParams)
@@ -23284,6 +25569,98 @@ type WebhookReceiverInterface interface {
 // WebhookReceiverMiddlewareFunc wraps an http.Handler with cross-
 // cutting behavior (signature verification, logging, rate limiting, ...).
 type WebhookReceiverMiddlewareFunc func(http.Handler) http.Handler
+
+// WebhookBroadcastUpdatedWebhookHandler returns the http.Handler for the broadcast.updated webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookBroadcastUpdatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookBroadcastUpdatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookBroadcastUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
 
 // WebhookContactDeletedWebhookHandler returns the http.Handler for the contact.deleted webhook.
 // Mount this at the URL path advertised to webhook senders. errHandler
@@ -24756,6 +27133,8 @@ func WebhookSubscriptionUpdatedWebhookHandler(si WebhookReceiverInterface, errHa
 	}
 	return h
 }
+
+type BroadcastProblemApplicationProblemPlusJSONResponse BroadcastProblem
 
 type EmailDesignProblemApplicationProblemPlusJSONResponse EmailDesignProblem
 
@@ -28462,6 +30841,1233 @@ func (response SignOut401ApplicationProblemPlusJSONResponse) VisitSignOutRespons
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastsRequestObject struct {
+	Params ListBroadcastsParams
+}
+
+type ListBroadcastsResponseObject interface {
+	VisitListBroadcastsResponse(w http.ResponseWriter) error
+}
+
+type ListBroadcasts200JSONResponse BroadcastPage
+
+func (response ListBroadcasts200JSONResponse) VisitListBroadcastsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcasts400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListBroadcasts400ApplicationProblemPlusJSONResponse) VisitListBroadcastsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcasts401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcasts401ApplicationProblemPlusJSONResponse) VisitListBroadcastsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcasts403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcasts403ApplicationProblemPlusJSONResponse) VisitListBroadcastsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcasts404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcasts404ApplicationProblemPlusJSONResponse) VisitListBroadcastsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcastRequestObject struct {
+	Params CreateBroadcastParams
+	Body   *CreateBroadcastJSONRequestBody
+}
+
+type CreateBroadcastResponseObject interface {
+	VisitCreateBroadcastResponse(w http.ResponseWriter) error
+}
+
+type CreateBroadcast201JSONResponse Broadcast
+
+func (response CreateBroadcast201JSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcast400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateBroadcast400ApplicationProblemPlusJSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcast401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateBroadcast401ApplicationProblemPlusJSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateBroadcast403ApplicationProblemPlusJSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateBroadcast404ApplicationProblemPlusJSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateBroadcast409ApplicationProblemPlusJSONResponse) VisitCreateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      DeleteBroadcastParams
+}
+
+type DeleteBroadcastResponseObject interface {
+	VisitDeleteBroadcastResponse(w http.ResponseWriter) error
+}
+
+type DeleteBroadcast204Response struct {
+}
+
+func (response DeleteBroadcast204Response) VisitDeleteBroadcastResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteBroadcast401ApplicationProblemPlusJSONResponse) VisitDeleteBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteBroadcast403ApplicationProblemPlusJSONResponse) VisitDeleteBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteBroadcast404ApplicationProblemPlusJSONResponse) VisitDeleteBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteBroadcast409ApplicationProblemPlusJSONResponse) VisitDeleteBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      GetBroadcastParams
+}
+
+type GetBroadcastResponseObject interface {
+	VisitGetBroadcastResponse(w http.ResponseWriter) error
+}
+
+type GetBroadcast200JSONResponse Broadcast
+
+func (response GetBroadcast200JSONResponse) VisitGetBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetBroadcast401ApplicationProblemPlusJSONResponse) VisitGetBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetBroadcast403ApplicationProblemPlusJSONResponse) VisitGetBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetBroadcast404ApplicationProblemPlusJSONResponse) VisitGetBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      UpdateBroadcastParams
+	Body        *UpdateBroadcastJSONRequestBody
+}
+
+type UpdateBroadcastResponseObject interface {
+	VisitUpdateBroadcastResponse(w http.ResponseWriter) error
+}
+
+type UpdateBroadcast200JSONResponse Broadcast
+
+func (response UpdateBroadcast200JSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcast400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateBroadcast400ApplicationProblemPlusJSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcast401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateBroadcast401ApplicationProblemPlusJSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateBroadcast403ApplicationProblemPlusJSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateBroadcast404ApplicationProblemPlusJSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateBroadcast409ApplicationProblemPlusJSONResponse) VisitUpdateBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CountBroadcastAudienceRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      CountBroadcastAudienceParams
+}
+
+type CountBroadcastAudienceResponseObject interface {
+	VisitCountBroadcastAudienceResponse(w http.ResponseWriter) error
+}
+
+type CountBroadcastAudience200JSONResponse BroadcastAudienceCount
+
+func (response CountBroadcastAudience200JSONResponse) VisitCountBroadcastAudienceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CountBroadcastAudience401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CountBroadcastAudience401ApplicationProblemPlusJSONResponse) VisitCountBroadcastAudienceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CountBroadcastAudience403ApplicationProblemPlusJSONResponse Problem
+
+func (response CountBroadcastAudience403ApplicationProblemPlusJSONResponse) VisitCountBroadcastAudienceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CountBroadcastAudience404ApplicationProblemPlusJSONResponse Problem
+
+func (response CountBroadcastAudience404ApplicationProblemPlusJSONResponse) VisitCountBroadcastAudienceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      CancelBroadcastParams
+}
+
+type CancelBroadcastResponseObject interface {
+	VisitCancelBroadcastResponse(w http.ResponseWriter) error
+}
+
+type CancelBroadcast200JSONResponse Broadcast
+
+func (response CancelBroadcast200JSONResponse) VisitCancelBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CancelBroadcast401ApplicationProblemPlusJSONResponse) VisitCancelBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelBroadcast403ApplicationProblemPlusJSONResponse) VisitCancelBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelBroadcast404ApplicationProblemPlusJSONResponse) VisitCancelBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelBroadcast409ApplicationProblemPlusJSONResponse) VisitCancelBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastDeliveriesRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      ListBroadcastDeliveriesParams
+}
+
+type ListBroadcastDeliveriesResponseObject interface {
+	VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error
+}
+
+type ListBroadcastDeliveries200JSONResponse BroadcastDeliveryPage
+
+func (response ListBroadcastDeliveries200JSONResponse) VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastDeliveries400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListBroadcastDeliveries400ApplicationProblemPlusJSONResponse) VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastDeliveries401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcastDeliveries401ApplicationProblemPlusJSONResponse) VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastDeliveries403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcastDeliveries403ApplicationProblemPlusJSONResponse) VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListBroadcastDeliveries404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListBroadcastDeliveries404ApplicationProblemPlusJSONResponse) VisitListBroadcastDeliveriesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      PauseBroadcastParams
+}
+
+type PauseBroadcastResponseObject interface {
+	VisitPauseBroadcastResponse(w http.ResponseWriter) error
+}
+
+type PauseBroadcast200JSONResponse Broadcast
+
+func (response PauseBroadcast200JSONResponse) VisitPauseBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PauseBroadcast401ApplicationProblemPlusJSONResponse) VisitPauseBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseBroadcast403ApplicationProblemPlusJSONResponse) VisitPauseBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseBroadcast404ApplicationProblemPlusJSONResponse) VisitPauseBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseBroadcast409ApplicationProblemPlusJSONResponse) VisitPauseBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcastReportRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      GetBroadcastReportParams
+}
+
+type GetBroadcastReportResponseObject interface {
+	VisitGetBroadcastReportResponse(w http.ResponseWriter) error
+}
+
+type GetBroadcastReport200JSONResponse BroadcastReport
+
+func (response GetBroadcastReport200JSONResponse) VisitGetBroadcastReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcastReport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetBroadcastReport401ApplicationProblemPlusJSONResponse) VisitGetBroadcastReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcastReport403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetBroadcastReport403ApplicationProblemPlusJSONResponse) VisitGetBroadcastReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetBroadcastReport404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetBroadcastReport404ApplicationProblemPlusJSONResponse) VisitGetBroadcastReportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      ResumeBroadcastParams
+}
+
+type ResumeBroadcastResponseObject interface {
+	VisitResumeBroadcastResponse(w http.ResponseWriter) error
+}
+
+type ResumeBroadcast200JSONResponse Broadcast
+
+func (response ResumeBroadcast200JSONResponse) VisitResumeBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ResumeBroadcast401ApplicationProblemPlusJSONResponse) VisitResumeBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeBroadcast403ApplicationProblemPlusJSONResponse) VisitResumeBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeBroadcast404ApplicationProblemPlusJSONResponse) VisitResumeBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeBroadcast409ApplicationProblemPlusJSONResponse) VisitResumeBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReviewBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      ReviewBroadcastParams
+}
+
+type ReviewBroadcastResponseObject interface {
+	VisitReviewBroadcastResponse(w http.ResponseWriter) error
+}
+
+type ReviewBroadcast200JSONResponse BroadcastReview
+
+func (response ReviewBroadcast200JSONResponse) VisitReviewBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReviewBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ReviewBroadcast401ApplicationProblemPlusJSONResponse) VisitReviewBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReviewBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response ReviewBroadcast403ApplicationProblemPlusJSONResponse) VisitReviewBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ReviewBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response ReviewBroadcast404ApplicationProblemPlusJSONResponse) VisitReviewBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      ScheduleBroadcastParams
+	Body        *ScheduleBroadcastJSONRequestBody
+}
+
+type ScheduleBroadcastResponseObject interface {
+	VisitScheduleBroadcastResponse(w http.ResponseWriter) error
+}
+
+type ScheduleBroadcast200JSONResponse Broadcast
+
+func (response ScheduleBroadcast200JSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcast400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ScheduleBroadcast400ApplicationProblemPlusJSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcast401ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleBroadcast401ApplicationProblemPlusJSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleBroadcast403ApplicationProblemPlusJSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response ScheduleBroadcast404ApplicationProblemPlusJSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScheduleBroadcast409ApplicationProblemPlusJSONResponse struct {
+	BroadcastProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ScheduleBroadcast409ApplicationProblemPlusJSONResponse) VisitScheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTestRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      SendBroadcastTestParams
+	Body        *SendBroadcastTestJSONRequestBody
+}
+
+type SendBroadcastTestResponseObject interface {
+	VisitSendBroadcastTestResponse(w http.ResponseWriter) error
+}
+
+type SendBroadcastTest202JSONResponse BroadcastTestResult
+
+func (response SendBroadcastTest202JSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SendBroadcastTest400ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest401ApplicationProblemPlusJSONResponse Problem
+
+func (response SendBroadcastTest401ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest403ApplicationProblemPlusJSONResponse Problem
+
+func (response SendBroadcastTest403ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest404ApplicationProblemPlusJSONResponse Problem
+
+func (response SendBroadcastTest404ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest409ApplicationProblemPlusJSONResponse Problem
+
+func (response SendBroadcastTest409ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendBroadcastTest429ApplicationProblemPlusJSONResponse Problem
+
+func (response SendBroadcastTest429ApplicationProblemPlusJSONResponse) VisitSendBroadcastTestResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleBroadcastRequestObject struct {
+	BroadcastId BroadcastId `json:"broadcastId"`
+	Params      UnscheduleBroadcastParams
+}
+
+type UnscheduleBroadcastResponseObject interface {
+	VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error
+}
+
+type UnscheduleBroadcast200JSONResponse Broadcast
+
+func (response UnscheduleBroadcast200JSONResponse) VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleBroadcast401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnscheduleBroadcast401ApplicationProblemPlusJSONResponse) VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleBroadcast403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnscheduleBroadcast403ApplicationProblemPlusJSONResponse) VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleBroadcast404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnscheduleBroadcast404ApplicationProblemPlusJSONResponse) VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnscheduleBroadcast409ApplicationProblemPlusJSONResponse Problem
+
+func (response UnscheduleBroadcast409ApplicationProblemPlusJSONResponse) VisitUnscheduleBroadcastResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -35880,6 +39486,20 @@ func (response DeleteMailingList404ApplicationProblemPlusJSONResponse) VisitDele
 	return err
 }
 
+type DeleteMailingList409ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMailingList409ApplicationProblemPlusJSONResponse) VisitDeleteMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetMailingListRequestObject struct {
 	ListId ListId `json:"listId"`
 	Params GetMailingListParams
@@ -39787,6 +43407,87 @@ func (response UpdateWorkspace403ApplicationProblemPlusJSONResponse) VisitUpdate
 	return err
 }
 
+type RequestBroadcastApprovalRequestObject struct {
+	Params RequestBroadcastApprovalParams
+	Body   *RequestBroadcastApprovalJSONRequestBody
+}
+
+type RequestBroadcastApprovalResponseObject interface {
+	VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error
+}
+
+type RequestBroadcastApproval202JSONResponse Workspace
+
+func (response RequestBroadcastApproval202JSONResponse) VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RequestBroadcastApproval400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RequestBroadcastApproval400ApplicationProblemPlusJSONResponse) VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RequestBroadcastApproval401ApplicationProblemPlusJSONResponse Problem
+
+func (response RequestBroadcastApproval401ApplicationProblemPlusJSONResponse) VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RequestBroadcastApproval403ApplicationProblemPlusJSONResponse Problem
+
+func (response RequestBroadcastApproval403ApplicationProblemPlusJSONResponse) VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RequestBroadcastApproval409ApplicationProblemPlusJSONResponse Problem
+
+func (response RequestBroadcastApproval409ApplicationProblemPlusJSONResponse) VisitRequestBroadcastApprovalResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type CreateWorkspaceRequestObject struct {
 	Body *CreateWorkspaceJSONRequestBody
 }
@@ -40031,6 +43732,51 @@ type StrictServerInterface interface {
 	// SignOut Sign out
 	// (POST /v1/auth/sign-out)
 	SignOut(ctx context.Context, request SignOutRequestObject) (SignOutResponseObject, error)
+	// ListBroadcasts List broadcasts
+	// (GET /v1/broadcasts)
+	ListBroadcasts(ctx context.Context, request ListBroadcastsRequestObject) (ListBroadcastsResponseObject, error)
+	// CreateBroadcast Create a draft broadcast
+	// (POST /v1/broadcasts)
+	CreateBroadcast(ctx context.Context, request CreateBroadcastRequestObject) (CreateBroadcastResponseObject, error)
+	// DeleteBroadcast Delete a broadcast
+	// (DELETE /v1/broadcasts/{broadcastId})
+	DeleteBroadcast(ctx context.Context, request DeleteBroadcastRequestObject) (DeleteBroadcastResponseObject, error)
+	// GetBroadcast A broadcast
+	// (GET /v1/broadcasts/{broadcastId})
+	GetBroadcast(ctx context.Context, request GetBroadcastRequestObject) (GetBroadcastResponseObject, error)
+	// UpdateBroadcast Change a draft
+	// (PATCH /v1/broadcasts/{broadcastId})
+	UpdateBroadcast(ctx context.Context, request UpdateBroadcastRequestObject) (UpdateBroadcastResponseObject, error)
+	// CountBroadcastAudience Count the audience
+	// (POST /v1/broadcasts/{broadcastId}/audience)
+	CountBroadcastAudience(ctx context.Context, request CountBroadcastAudienceRequestObject) (CountBroadcastAudienceResponseObject, error)
+	// CancelBroadcast Cancel a broadcast
+	// (POST /v1/broadcasts/{broadcastId}/cancel)
+	CancelBroadcast(ctx context.Context, request CancelBroadcastRequestObject) (CancelBroadcastResponseObject, error)
+	// ListBroadcastDeliveries List a broadcast's deliveries
+	// (GET /v1/broadcasts/{broadcastId}/deliveries)
+	ListBroadcastDeliveries(ctx context.Context, request ListBroadcastDeliveriesRequestObject) (ListBroadcastDeliveriesResponseObject, error)
+	// PauseBroadcast Pause sending
+	// (POST /v1/broadcasts/{broadcastId}/pause)
+	PauseBroadcast(ctx context.Context, request PauseBroadcastRequestObject) (PauseBroadcastResponseObject, error)
+	// GetBroadcastReport A broadcast's report
+	// (GET /v1/broadcasts/{broadcastId}/report)
+	GetBroadcastReport(ctx context.Context, request GetBroadcastReportRequestObject) (GetBroadcastReportResponseObject, error)
+	// ResumeBroadcast Resume sending
+	// (POST /v1/broadcasts/{broadcastId}/resume)
+	ResumeBroadcast(ctx context.Context, request ResumeBroadcastRequestObject) (ResumeBroadcastResponseObject, error)
+	// ReviewBroadcast Review before sending
+	// (GET /v1/broadcasts/{broadcastId}/review)
+	ReviewBroadcast(ctx context.Context, request ReviewBroadcastRequestObject) (ReviewBroadcastResponseObject, error)
+	// ScheduleBroadcast Schedule or send now
+	// (POST /v1/broadcasts/{broadcastId}/schedule)
+	ScheduleBroadcast(ctx context.Context, request ScheduleBroadcastRequestObject) (ScheduleBroadcastResponseObject, error)
+	// SendBroadcastTest Send a test
+	// (POST /v1/broadcasts/{broadcastId}/test)
+	SendBroadcastTest(ctx context.Context, request SendBroadcastTestRequestObject) (SendBroadcastTestResponseObject, error)
+	// UnscheduleBroadcast Back to draft
+	// (POST /v1/broadcasts/{broadcastId}/unschedule)
+	UnscheduleBroadcast(ctx context.Context, request UnscheduleBroadcastRequestObject) (UnscheduleBroadcastResponseObject, error)
 	// ListCannedReplies List canned replies
 	// (GET /v1/canned-replies)
 	ListCannedReplies(ctx context.Context, request ListCannedRepliesRequestObject) (ListCannedRepliesResponseObject, error)
@@ -40487,6 +44233,9 @@ type StrictServerInterface interface {
 	// UpdateWorkspace Update the workspace
 	// (PATCH /v1/workspace)
 	UpdateWorkspace(ctx context.Context, request UpdateWorkspaceRequestObject) (UpdateWorkspaceResponseObject, error)
+	// RequestBroadcastApproval Ask the operator to allow broadcasts
+	// (POST /v1/workspace/broadcast-approval)
+	RequestBroadcastApproval(ctx context.Context, request RequestBroadcastApprovalRequestObject) (RequestBroadcastApprovalResponseObject, error)
 	// CreateWorkspace Create a workspace
 	// (POST /v1/workspaces)
 	CreateWorkspace(ctx context.Context, request CreateWorkspaceRequestObject) (CreateWorkspaceResponseObject, error)
@@ -42105,6 +45854,443 @@ func (sh *strictHandler) SignOut(w http.ResponseWriter, r *http.Request) {
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(SignOutResponseObject); ok {
 		if err := validResponse.VisitSignOutResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListBroadcasts operation middleware
+func (sh *strictHandler) ListBroadcasts(w http.ResponseWriter, r *http.Request, params ListBroadcastsParams) {
+	var request ListBroadcastsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListBroadcasts(ctx, request.(ListBroadcastsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListBroadcasts")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListBroadcastsResponseObject); ok {
+		if err := validResponse.VisitListBroadcastsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateBroadcast operation middleware
+func (sh *strictHandler) CreateBroadcast(w http.ResponseWriter, r *http.Request, params CreateBroadcastParams) {
+	var request CreateBroadcastRequestObject
+
+	request.Params = params
+
+	var body CreateBroadcastJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateBroadcast(ctx, request.(CreateBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateBroadcastResponseObject); ok {
+		if err := validResponse.VisitCreateBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteBroadcast operation middleware
+func (sh *strictHandler) DeleteBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params DeleteBroadcastParams) {
+	var request DeleteBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteBroadcast(ctx, request.(DeleteBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteBroadcastResponseObject); ok {
+		if err := validResponse.VisitDeleteBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetBroadcast operation middleware
+func (sh *strictHandler) GetBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params GetBroadcastParams) {
+	var request GetBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetBroadcast(ctx, request.(GetBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetBroadcastResponseObject); ok {
+		if err := validResponse.VisitGetBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateBroadcast operation middleware
+func (sh *strictHandler) UpdateBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params UpdateBroadcastParams) {
+	var request UpdateBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	var body UpdateBroadcastJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateBroadcast(ctx, request.(UpdateBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateBroadcastResponseObject); ok {
+		if err := validResponse.VisitUpdateBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CountBroadcastAudience operation middleware
+func (sh *strictHandler) CountBroadcastAudience(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params CountBroadcastAudienceParams) {
+	var request CountBroadcastAudienceRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CountBroadcastAudience(ctx, request.(CountBroadcastAudienceRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CountBroadcastAudience")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CountBroadcastAudienceResponseObject); ok {
+		if err := validResponse.VisitCountBroadcastAudienceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CancelBroadcast operation middleware
+func (sh *strictHandler) CancelBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params CancelBroadcastParams) {
+	var request CancelBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CancelBroadcast(ctx, request.(CancelBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CancelBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CancelBroadcastResponseObject); ok {
+		if err := validResponse.VisitCancelBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListBroadcastDeliveries operation middleware
+func (sh *strictHandler) ListBroadcastDeliveries(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ListBroadcastDeliveriesParams) {
+	var request ListBroadcastDeliveriesRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListBroadcastDeliveries(ctx, request.(ListBroadcastDeliveriesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListBroadcastDeliveries")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListBroadcastDeliveriesResponseObject); ok {
+		if err := validResponse.VisitListBroadcastDeliveriesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PauseBroadcast operation middleware
+func (sh *strictHandler) PauseBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params PauseBroadcastParams) {
+	var request PauseBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PauseBroadcast(ctx, request.(PauseBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PauseBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PauseBroadcastResponseObject); ok {
+		if err := validResponse.VisitPauseBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetBroadcastReport operation middleware
+func (sh *strictHandler) GetBroadcastReport(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params GetBroadcastReportParams) {
+	var request GetBroadcastReportRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetBroadcastReport(ctx, request.(GetBroadcastReportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetBroadcastReport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetBroadcastReportResponseObject); ok {
+		if err := validResponse.VisitGetBroadcastReportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ResumeBroadcast operation middleware
+func (sh *strictHandler) ResumeBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ResumeBroadcastParams) {
+	var request ResumeBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ResumeBroadcast(ctx, request.(ResumeBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ResumeBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ResumeBroadcastResponseObject); ok {
+		if err := validResponse.VisitResumeBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ReviewBroadcast operation middleware
+func (sh *strictHandler) ReviewBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ReviewBroadcastParams) {
+	var request ReviewBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ReviewBroadcast(ctx, request.(ReviewBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ReviewBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ReviewBroadcastResponseObject); ok {
+		if err := validResponse.VisitReviewBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ScheduleBroadcast operation middleware
+func (sh *strictHandler) ScheduleBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params ScheduleBroadcastParams) {
+	var request ScheduleBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	var body ScheduleBroadcastJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ScheduleBroadcast(ctx, request.(ScheduleBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ScheduleBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ScheduleBroadcastResponseObject); ok {
+		if err := validResponse.VisitScheduleBroadcastResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SendBroadcastTest operation middleware
+func (sh *strictHandler) SendBroadcastTest(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params SendBroadcastTestParams) {
+	var request SendBroadcastTestRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	var body SendBroadcastTestJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		if !errors.Is(err, io.EOF) {
+			sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+			return
+		}
+	} else {
+		request.Body = &body
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SendBroadcastTest(ctx, request.(SendBroadcastTestRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SendBroadcastTest")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SendBroadcastTestResponseObject); ok {
+		if err := validResponse.VisitSendBroadcastTestResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnscheduleBroadcast operation middleware
+func (sh *strictHandler) UnscheduleBroadcast(w http.ResponseWriter, r *http.Request, broadcastId BroadcastId, params UnscheduleBroadcastParams) {
+	var request UnscheduleBroadcastRequestObject
+
+	request.BroadcastId = broadcastId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnscheduleBroadcast(ctx, request.(UnscheduleBroadcastRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnscheduleBroadcast")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnscheduleBroadcastResponseObject); ok {
+		if err := validResponse.VisitUnscheduleBroadcastResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -46507,6 +50693,39 @@ func (sh *strictHandler) UpdateWorkspace(w http.ResponseWriter, r *http.Request,
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateWorkspaceResponseObject); ok {
 		if err := validResponse.VisitUpdateWorkspaceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RequestBroadcastApproval operation middleware
+func (sh *strictHandler) RequestBroadcastApproval(w http.ResponseWriter, r *http.Request, params RequestBroadcastApprovalParams) {
+	var request RequestBroadcastApprovalRequestObject
+
+	request.Params = params
+
+	var body RequestBroadcastApprovalJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RequestBroadcastApproval(ctx, request.(RequestBroadcastApprovalRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RequestBroadcastApproval")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RequestBroadcastApprovalResponseObject); ok {
+		if err := validResponse.VisitRequestBroadcastApprovalResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
