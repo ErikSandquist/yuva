@@ -79,7 +79,7 @@ func digestAuthor(p store.DiscussionPostView) string {
 	if a.Name != nil {
 		return *a.Name
 	}
-	return "A reader"
+	return ""
 }
 
 // SendDiscussionDigest e-mails a follower the replies and the accepted answer of a thread since

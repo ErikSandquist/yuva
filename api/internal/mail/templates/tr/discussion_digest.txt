@@ -1,11 +1,11 @@
 {{.Inbox}}: "{{.Title}}" {{if .Answer}}yanıtlandı{{else}}konusunda yeni yanıtlar{{end}}
 
-{{if .Answer}}"{{.Title}}" konusunda bir yanıt kabul edildi{{if .Answer.Author}} ({{.Answer.Author}}){{end}}:
+{{if .Answer}}"{{.Title}}" konusunda bir yanıt kabul edildi ({{or .Answer.Author "bir okuyucu"}}):
 > {{.Answer.Text}}
 
 {{end}}{{if .Posts}}"{{.Title}}" konusunda yeni yanıtlar:
 {{range .Posts}}
-{{.Author}} yazdı:
+{{or .Author "Bir okuyucu"}} yazdı:
 > {{.Text}}
 {{end}}{{if .More}}
 …ve {{.More}} yanıt daha.

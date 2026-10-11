@@ -1,12 +1,12 @@
 {{template "heading" .Title}}
 {{- if .Answer}}
-<p style="margin:0;">Eine Antwort wurde angenommen{{if .Answer.Author}}, geschrieben von <strong>{{.Answer.Author}}</strong>{{end}}:</p>
+<p style="margin:0;">Eine Antwort wurde angenommen, geschrieben von {{with .Answer.Author}}<strong>{{.}}</strong>{{else}}jemandem aus der Leserschaft{{end}}:</p>
 {{template "answer" .Answer.Text}}
 {{- end}}
 {{- if .Posts}}
 <p style="margin:0 0 4px 0;">Neue Antworten:</p>
 {{- range .Posts}}
-<p style="margin:12px 0 0 0;"><strong>{{.Author}}</strong> schrieb:</p>
+<p style="margin:12px 0 0 0;">{{with .Author}}<strong>{{.}}</strong>{{else}}Jemand aus der Leserschaft{{end}} schrieb:</p>
 {{template "quote" .Text}}
 {{- end}}
 {{- if .More}}

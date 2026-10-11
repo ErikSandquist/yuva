@@ -18,6 +18,7 @@ import (
 	"net/mail"
 	"net/smtp"
 	"net/textproto"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -71,6 +72,7 @@ const (
 	pageColor      = "#f4f4f5"
 	darkCardColor  = "#131316"
 	maxBrandLength = 80
+	maxLinkLabel   = 40
 )
 
 var hexColor = regexp.MustCompile(`^#[0-9a-fA-F]{6}$`)
@@ -104,6 +106,7 @@ func layoutFuncs(b brand) htmltemplate.FuncMap {
 		"rating": func(goodURL, good, badURL, bad string) map[string]string {
 			return map[string]string{"GoodURL": goodURL, "Good": good, "BadURL": badURL, "Bad": bad}
 		},
+		"shortURL": shortURL,
 		"lines": func(s string) htmltemplate.HTML {
 			parts := strings.Split(strings.ReplaceAll(strings.TrimSpace(s), "\r\n", "\n"), "\n")
 			for i, p := range parts {
@@ -116,6 +119,24 @@ func layoutFuncs(b brand) htmltemplate.FuncMap {
 		},
 		"msoClose": func() htmltemplate.HTML { return `<!--[if mso]></td></tr></table><![endif]-->` },
 	}
+}
+
+// shortURL is the link text for a URL whose query holds a long token: the host and path, shortened
+// so it never has to break mid-token on a phone; the href keeps the full URL.
+func shortURL(raw string) string {
+	u, err := url.Parse(raw)
+	if err != nil || u.Host == "" {
+		return raw
+	}
+	label := u.Host + strings.TrimSuffix(u.Path, "/")
+	cut := u.RawQuery != "" || u.Fragment != ""
+	if r := []rune(label); len(r) > maxLinkLabel {
+		label, cut = string(r[:maxLinkLabel]), true
+	}
+	if cut {
+		label += "…"
+	}
+	return label
 }
 
 func luminance(hex string) float64 {

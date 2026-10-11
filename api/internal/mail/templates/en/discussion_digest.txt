@@ -1,11 +1,11 @@
 {{.Inbox}}: {{if .Answer}}answered{{else}}new replies{{end}} in "{{.Title}}"
 
-{{if .Answer}}An answer was accepted in "{{.Title}}"{{if .Answer.Author}}, written by {{.Answer.Author}}{{end}}:
+{{if .Answer}}An answer was accepted in "{{.Title}}", written by {{or .Answer.Author "a reader"}}:
 > {{.Answer.Text}}
 
 {{end}}{{if .Posts}}New replies in "{{.Title}}":
 {{range .Posts}}
-{{.Author}} wrote:
+{{or .Author "A reader"}} wrote:
 > {{.Text}}
 {{end}}{{if .More}}
 …and {{.More}} more.

@@ -1,12 +1,12 @@
 {{template "heading" .Title}}
 {{- if .Answer}}
-<p style="margin:0;">Bir yanıt kabul edildi{{if .Answer.Author}} (<strong>{{.Answer.Author}}</strong>){{end}}:</p>
+<p style="margin:0;">Bir yanıt kabul edildi ({{with .Answer.Author}}<strong>{{.}}</strong>{{else}}bir okuyucu{{end}}):</p>
 {{template "answer" .Answer.Text}}
 {{- end}}
 {{- if .Posts}}
 <p style="margin:0 0 4px 0;">Yeni yanıtlar:</p>
 {{- range .Posts}}
-<p style="margin:12px 0 0 0;"><strong>{{.Author}}</strong> yazdı:</p>
+<p style="margin:12px 0 0 0;">{{with .Author}}<strong>{{.}}</strong>{{else}}Bir okuyucu{{end}} yazdı:</p>
 {{template "quote" .Text}}
 {{- end}}
 {{- if .More}}

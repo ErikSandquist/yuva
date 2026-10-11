@@ -1,11 +1,11 @@
 {{.Inbox}}: {{if .Answer}}Antwort in „{{.Title}}“{{else}}neue Antworten in „{{.Title}}“{{end}}
 
-{{if .Answer}}In „{{.Title}}“ wurde eine Antwort angenommen{{if .Answer.Author}}, geschrieben von {{.Answer.Author}}{{end}}:
+{{if .Answer}}In „{{.Title}}“ wurde eine Antwort angenommen, geschrieben von {{or .Answer.Author "jemandem aus der Leserschaft"}}:
 > {{.Answer.Text}}
 
 {{end}}{{if .Posts}}Neue Antworten in „{{.Title}}“:
 {{range .Posts}}
-{{.Author}} schrieb:
+{{or .Author "Jemand aus der Leserschaft"}} schrieb:
 > {{.Text}}
 {{end}}{{if .More}}
 …und {{.More}} weitere.

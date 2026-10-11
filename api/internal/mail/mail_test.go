@@ -54,8 +54,8 @@ func samples(inbox, text string) map[string]map[string]any {
 		},
 		"discussion_digest": {
 			"Inbox": inbox, "Title": "How do I export my data?",
-			"Answer": map[string]string{"Author": "Support team", "Text": "Open Settings, then Export.\nThe file arrives by e-mail."},
-			"Posts":  []map[string]string{{"Author": "Jane Doe", "Text": text}, {"Author": "A reader", "Text": "Same question here."}},
+			"Answer": map[string]string{"Author": "Mehmet Kaya", "Text": "Open Settings, then Export.\nThe file arrives by e-mail."},
+			"Posts":  []map[string]string{{"Author": "Jane Doe", "Text": text}, {"Author": "", "Text": "Same question here."}},
 			"More":   3, "URL": "https://docs.example.com/export#yuva-discussion-1",
 			"UnsubscribeURL": "https://yuva.example.com/discussions/unsubscribe/tok",
 			"SettingsURL":    "https://yuva.example.com/account",
@@ -309,5 +309,49 @@ func TestPreview(t *testing.T) {
 				t.Fatal(err)
 			}
 		}
+	}
+}
+
+func TestDigestNamesUnnamedReadersInTheirLanguage(t *testing.T) {
+	data := map[string]any{
+		"Inbox": "Acme", "Title": "Export", "URL": "https://docs.example.com/x", "UnsubscribeURL": "https://yuva.example.com/u",
+		"Answer": map[string]string{"Author": "", "Text": "Use Export."},
+		"Posts":  []map[string]string{{"Author": "", "Text": "Thanks!"}},
+	}
+	for locale, want := range map[string][]string{
+		"en": {"written by a reader", "A reader wrote:"},
+		"tr": {"(bir okuyucu)", "Bir okuyucu yazdı:"},
+		"de": {"geschrieben von jemandem aus der Leserschaft", "Jemand aus der Leserschaft schrieb:"},
+	} {
+		m, err := mail.RenderAs(mail.Brand{Name: "Acme"}, "discussion_digest", locale, data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, w := range want {
+			if !strings.Contains(m.Text, w) || !strings.Contains(m.HTML, w) {
+				t.Errorf("%s: %q missing", locale, w)
+			}
+		}
+		if locale != "en" && strings.Contains(m.Text+m.HTML, "reader") {
+			t.Errorf("%s: English fallback name", locale)
+		}
+	}
+}
+
+func TestFallbackLinkShowsAShortLabel(t *testing.T) {
+	token := "0190a3c4-7b2e-7d1f-9a3b-1c2d3e4f5a6b.Zq3xV9mK2pL8nR4tW7yB1cD6fH0jG5sA_e-uIoPkMnB"
+	link := "https://yuva.example.com/email/confirm?token=" + token
+	m, err := mail.RenderAs(mail.Brand{Name: "Acme"}, "confirm_email", "en", map[string]any{"Inbox": "Acme", "URL": link, "Hours": 24})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(m.HTML, `>yuva.example.com/email/confirm…</a>`) {
+		t.Error("the link text is not the short label")
+	}
+	if strings.Count(m.HTML, `href="`+link+`"`) != 2 {
+		t.Error("the button and the link do not both carry the full URL")
+	}
+	if !strings.Contains(m.Text, link) {
+		t.Error("the text part lost the full URL")
 	}
 }
