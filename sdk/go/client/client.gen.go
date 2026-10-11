@@ -726,6 +726,438 @@ func (e DraftEventType) Valid() bool {
 	}
 }
 
+// Defines values for EmailAlign.
+const (
+	EmailAlignCenter EmailAlign = "center"
+	EmailAlignLeft   EmailAlign = "left"
+	EmailAlignRight  EmailAlign = "right"
+)
+
+// Valid indicates whether the value is a known member of the EmailAlign enum.
+func (e EmailAlign) Valid() bool {
+	switch e {
+	case EmailAlignCenter:
+		return true
+	case EmailAlignLeft:
+		return true
+	case EmailAlignRight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailButtonBlockType.
+const (
+	EmailBlockButton EmailButtonBlockType = "button"
+)
+
+// Valid indicates whether the value is a known member of the EmailButtonBlockType enum.
+func (e EmailButtonBlockType) Valid() bool {
+	switch e {
+	case EmailBlockButton:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailColumnsBlockType.
+const (
+	EmailBlockColumns EmailColumnsBlockType = "columns"
+)
+
+// Valid indicates whether the value is a known member of the EmailColumnsBlockType enum.
+func (e EmailColumnsBlockType) Valid() bool {
+	switch e {
+	case EmailBlockColumns:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailDesignDocumentSchema.
+const (
+	EmailDesignSchema1 EmailDesignDocumentSchema = 1
+)
+
+// Valid indicates whether the value is a known member of the EmailDesignDocumentSchema enum.
+func (e EmailDesignDocumentSchema) Valid() bool {
+	switch e {
+	case EmailDesignSchema1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailDesignVersionReason.
+const (
+	VersionAutosave  EmailDesignVersionReason = "autosave"
+	VersionManual    EmailDesignVersionReason = "manual"
+	VersionRestored  EmailDesignVersionReason = "restored"
+	VersionScheduled EmailDesignVersionReason = "scheduled"
+	VersionTest      EmailDesignVersionReason = "test"
+)
+
+// Valid indicates whether the value is a known member of the EmailDesignVersionReason enum.
+func (e EmailDesignVersionReason) Valid() bool {
+	switch e {
+	case VersionAutosave:
+		return true
+	case VersionManual:
+		return true
+	case VersionRestored:
+		return true
+	case VersionScheduled:
+		return true
+	case VersionTest:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailDividerBlockType.
+const (
+	EmailBlockDivider EmailDividerBlockType = "divider"
+)
+
+// Valid indicates whether the value is a known member of the EmailDividerBlockType enum.
+func (e EmailDividerBlockType) Valid() bool {
+	switch e {
+	case EmailBlockDivider:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailFont.
+const (
+	EmailFontGeometric EmailFont = "geometric"
+	EmailFontHumanist  EmailFont = "humanist"
+	EmailFontMono      EmailFont = "mono"
+	EmailFontSerif     EmailFont = "serif"
+	EmailFontSystem    EmailFont = "system"
+)
+
+// Valid indicates whether the value is a known member of the EmailFont enum.
+func (e EmailFont) Valid() bool {
+	switch e {
+	case EmailFontGeometric:
+		return true
+	case EmailFontHumanist:
+		return true
+	case EmailFontMono:
+		return true
+	case EmailFontSerif:
+		return true
+	case EmailFontSystem:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailFooterBlockType.
+const (
+	EmailBlockFooter EmailFooterBlockType = "footer"
+)
+
+// Valid indicates whether the value is a known member of the EmailFooterBlockType enum.
+func (e EmailFooterBlockType) Valid() bool {
+	switch e {
+	case EmailBlockFooter:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailHeadingBlockLevel.
+const (
+	EmailHeading1 EmailHeadingBlockLevel = 1
+	EmailHeading2 EmailHeadingBlockLevel = 2
+	EmailHeading3 EmailHeadingBlockLevel = 3
+)
+
+// Valid indicates whether the value is a known member of the EmailHeadingBlockLevel enum.
+func (e EmailHeadingBlockLevel) Valid() bool {
+	switch e {
+	case EmailHeading1:
+		return true
+	case EmailHeading2:
+		return true
+	case EmailHeading3:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailHeadingBlockType.
+const (
+	EmailBlockHeading EmailHeadingBlockType = "heading"
+)
+
+// Valid indicates whether the value is a known member of the EmailHeadingBlockType enum.
+func (e EmailHeadingBlockType) Valid() bool {
+	switch e {
+	case EmailBlockHeading:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailHide.
+const (
+	EmailHideDesktop EmailHide = "desktop"
+	EmailHideMobile  EmailHide = "mobile"
+	EmailHideNone    EmailHide = "none"
+)
+
+// Valid indicates whether the value is a known member of the EmailHide enum.
+func (e EmailHide) Valid() bool {
+	switch e {
+	case EmailHideDesktop:
+		return true
+	case EmailHideMobile:
+		return true
+	case EmailHideNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailImageContentType.
+const (
+	EmailImageGif  EmailImageContentType = "image/gif"
+	EmailImageJpeg EmailImageContentType = "image/jpeg"
+	EmailImagePng  EmailImageContentType = "image/png"
+)
+
+// Valid indicates whether the value is a known member of the EmailImageContentType enum.
+func (e EmailImageContentType) Valid() bool {
+	switch e {
+	case EmailImageGif:
+		return true
+	case EmailImageJpeg:
+		return true
+	case EmailImagePng:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailImageBlockType.
+const (
+	EmailBlockImage EmailImageBlockType = "image"
+)
+
+// Valid indicates whether the value is a known member of the EmailImageBlockType enum.
+func (e EmailImageBlockType) Valid() bool {
+	switch e {
+	case EmailBlockImage:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSectionBlockType.
+const (
+	EmailBlockSection EmailSectionBlockType = "section"
+)
+
+// Valid indicates whether the value is a known member of the EmailSectionBlockType enum.
+func (e EmailSectionBlockType) Valid() bool {
+	switch e {
+	case EmailBlockSection:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSocialBlockColor.
+const (
+	SocialColorBrand EmailSocialBlockColor = "brand"
+	SocialColorDark  EmailSocialBlockColor = "dark"
+	SocialColorLight EmailSocialBlockColor = "light"
+)
+
+// Valid indicates whether the value is a known member of the EmailSocialBlockColor enum.
+func (e EmailSocialBlockColor) Valid() bool {
+	switch e {
+	case SocialColorBrand:
+		return true
+	case SocialColorDark:
+		return true
+	case SocialColorLight:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSocialBlockStyle.
+const (
+	SocialStyleIcons EmailSocialBlockStyle = "icons"
+	SocialStyleText  EmailSocialBlockStyle = "text"
+)
+
+// Valid indicates whether the value is a known member of the EmailSocialBlockStyle enum.
+func (e EmailSocialBlockStyle) Valid() bool {
+	switch e {
+	case SocialStyleIcons:
+		return true
+	case SocialStyleText:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSocialBlockType.
+const (
+	EmailBlockSocial EmailSocialBlockType = "social"
+)
+
+// Valid indicates whether the value is a known member of the EmailSocialBlockType enum.
+func (e EmailSocialBlockType) Valid() bool {
+	switch e {
+	case EmailBlockSocial:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSocialNetwork.
+const (
+	SocialBluesky   EmailSocialNetwork = "bluesky"
+	SocialDiscord   EmailSocialNetwork = "discord"
+	SocialFacebook  EmailSocialNetwork = "facebook"
+	SocialGithub    EmailSocialNetwork = "github"
+	SocialInstagram EmailSocialNetwork = "instagram"
+	SocialLinkedin  EmailSocialNetwork = "linkedin"
+	SocialMastodon  EmailSocialNetwork = "mastodon"
+	SocialThreads   EmailSocialNetwork = "threads"
+	SocialTiktok    EmailSocialNetwork = "tiktok"
+	SocialWebsite   EmailSocialNetwork = "website"
+	SocialX         EmailSocialNetwork = "x"
+	SocialYoutube   EmailSocialNetwork = "youtube"
+)
+
+// Valid indicates whether the value is a known member of the EmailSocialNetwork enum.
+func (e EmailSocialNetwork) Valid() bool {
+	switch e {
+	case SocialBluesky:
+		return true
+	case SocialDiscord:
+		return true
+	case SocialFacebook:
+		return true
+	case SocialGithub:
+		return true
+	case SocialInstagram:
+		return true
+	case SocialLinkedin:
+		return true
+	case SocialMastodon:
+		return true
+	case SocialThreads:
+		return true
+	case SocialTiktok:
+		return true
+	case SocialWebsite:
+		return true
+	case SocialX:
+		return true
+	case SocialYoutube:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailSpacerBlockType.
+const (
+	EmailBlockSpacer EmailSpacerBlockType = "spacer"
+)
+
+// Valid indicates whether the value is a known member of the EmailSpacerBlockType enum.
+func (e EmailSpacerBlockType) Valid() bool {
+	switch e {
+	case EmailBlockSpacer:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailTemplateLocale.
+const (
+	TemplateDe EmailTemplateLocale = "de"
+	TemplateEn EmailTemplateLocale = "en"
+	TemplateTr EmailTemplateLocale = "tr"
+)
+
+// Valid indicates whether the value is a known member of the EmailTemplateLocale enum.
+func (e EmailTemplateLocale) Valid() bool {
+	switch e {
+	case TemplateDe:
+		return true
+	case TemplateEn:
+		return true
+	case TemplateTr:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailTextBlockType.
+const (
+	EmailBlockText EmailTextBlockType = "text"
+)
+
+// Valid indicates whether the value is a known member of the EmailTextBlockType enum.
+func (e EmailTextBlockType) Valid() bool {
+	switch e {
+	case EmailBlockText:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for EmailThemeDirection.
+const (
+	EmailDirectionAuto EmailThemeDirection = "auto"
+	EmailDirectionLtr  EmailThemeDirection = "ltr"
+	EmailDirectionRtl  EmailThemeDirection = "rtl"
+)
+
+// Valid indicates whether the value is a known member of the EmailThemeDirection enum.
+func (e EmailThemeDirection) Valid() bool {
+	switch e {
+	case EmailDirectionAuto:
+		return true
+	case EmailDirectionLtr:
+		return true
+	case EmailDirectionRtl:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for EventType.
 const (
 	Assigned      EventType = "assigned"
@@ -1950,8 +2382,11 @@ type ApiKeyList struct {
 //	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
 //	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
 //	    subscribers; resend confirmations.
-//	  - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
-//	    cannot hold them yet.
+//	  - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
+//	    gallery.
+//	  - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
+//	    images.
+//	  - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
 //
 // `lists:*` and `broadcasts:*` are never added to keys made before they existed.
 type ApiKeyScope string
@@ -3867,6 +4302,9 @@ type DraftPage struct {
 // Email Examples: owner@example.com
 type Email = openapi_types.Email
 
+// EmailAlign Mirrored in right-to-left designs.
+type EmailAlign string
+
 // EmailAutoReply A greeting e-mailed when a new conversation starts by e-mail, at most once per contact
 // within `interval_hours`. It carries `Auto-Submitted: auto-replied` and is never sent in
 // answer to automatic mail.
@@ -3886,6 +4324,72 @@ type EmailAutoReplyInput struct {
 	// Text Required when `enabled`.
 	Text *string `json:"text,omitempty"`
 }
+
+// EmailBlock defines model for EmailBlock.
+type EmailBlock struct {
+	union json.RawMessage
+}
+
+// EmailBlockBase defines model for EmailBlockBase.
+type EmailBlockBase struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32 `json:"padding,omitempty"`
+}
+
+// EmailButtonBlock defines model for EmailButtonBlock.
+type EmailButtonBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Color The theme's accent when absent.
+	//
+	// Examples: #2563eb
+	Color     *EmailColor `json:"color,omitempty"`
+	FullWidth *bool       `json:"full_width,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Label Plain text with merge fields.
+	Label string `json:"label"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32 `json:"padding,omitempty"`
+
+	// TextColor Used when it reads at 4.5:1 on the button; otherwise white or near-black is chosen.
+	//
+	// Examples: #2563eb
+	TextColor *EmailColor          `json:"text_color,omitempty"`
+	Type      EmailButtonBlockType `json:"type"`
+
+	// Url An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+	// query, where their values are URL-escaped.
+	//
+	//
+	// Examples: https://example.com/news?ref=mail
+	Url EmailUrl `json:"url"`
+}
+
+// EmailButtonBlockType defines model for EmailButtonBlock.Type.
+type EmailButtonBlockType string
 
 // EmailChannel Settings of an `email` channel.
 type EmailChannel struct {
@@ -3932,6 +4436,762 @@ type EmailChannelInput struct {
 	FromAddress *Email             `json:"from_address,omitempty"`
 	Smtp        *SmtpSettingsInput `json:"smtp,omitempty"`
 }
+
+// EmailColor Examples: #2563eb
+type EmailColor = string
+
+// EmailColumn defines model for EmailColumn.
+type EmailColumn struct {
+	Blocks []EmailColumnChild `json:"blocks"`
+
+	// Width Percent of the row; the widths of a row add up to 100.
+	Width int32 `json:"width"`
+}
+
+// EmailColumnChild defines model for EmailColumnChild.
+type EmailColumnChild struct {
+	union json.RawMessage
+}
+
+// EmailColumnsBlock Two or three columns side by side that stack on narrow screens (unless `stack` is false).
+// Columns do not nest.
+type EmailColumnsBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor   `json:"background,omitempty"`
+	Columns    []EmailColumn `json:"columns"`
+
+	// Gap Space between columns in pixels; 16 when absent.
+	Gap *int32 `json:"gap,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32              `json:"padding,omitempty"`
+	Stack   *bool                 `json:"stack,omitempty"`
+	Type    EmailColumnsBlockType `json:"type"`
+}
+
+// EmailColumnsBlockType defines model for EmailColumnsBlock.Type.
+type EmailColumnsBlockType string
+
+// EmailDesign defines model for EmailDesign.
+type EmailDesign struct {
+	ArchivedAt *time.Time `json:"archived_at,omitempty"`
+	CreatedAt  time.Time  `json:"created_at"`
+
+	// CreatedBy The member; absent for keys and members who left.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document EmailDesignDocument `json:"document"`
+	Id       uuid.UUID           `json:"id"`
+
+	// InboxId Absent for workspace-wide designs.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+	Name    string     `json:"name"`
+
+	// TemplateSlug The gallery template it was made from.
+	TemplateSlug *string    `json:"template_slug,omitempty"`
+	UpdatedAt    time.Time  `json:"updated_at"`
+	UpdatedBy    *uuid.UUID `json:"updated_by,omitempty"`
+
+	// Version Increases by one with every save.
+	Version int32 `json:"version"`
+
+	// Warnings What the render of the document warns about (see `renderEmailDesign`).
+	Warnings []EmailDesignIssue `json:"warnings"`
+}
+
+// EmailDesignCreate At most one of `document` and `template`; with neither the design starts empty.
+type EmailDesignCreate struct {
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document *EmailDesignDocument    `json:"document,omitempty"`
+	InboxId  *uuid.UUID              `json:"inbox_id,omitempty"`
+	Name     string                  `json:"name"`
+	Template *EmailDesignTemplateRef `json:"template,omitempty"`
+}
+
+// EmailDesignDocument An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+// JSON. Nesting is section › columns › blocks at most.
+type EmailDesignDocument struct {
+	Blocks []EmailBlock `json:"blocks"`
+
+	// Preheader The preview text inboxes show after the subject; a broadcast's own preheader wins.
+	Preheader *string `json:"preheader,omitempty"`
+
+	// Schema The document format version.
+	Schema EmailDesignDocumentSchema `json:"schema"`
+	Theme  EmailTheme                `json:"theme"`
+}
+
+// EmailDesignDocumentSchema The document format version.
+type EmailDesignDocumentSchema int32
+
+// EmailDesignDuplicate defines model for EmailDesignDuplicate.
+type EmailDesignDuplicate struct {
+	Name *string `json:"name,omitempty"`
+}
+
+// EmailDesignIssue One problem with a document. Error codes: `required`, `invalid`, `too_long`, `too_many`,
+// `duplicate_id`, `nesting`, `invalid_rich_text`, `invalid_url`, `unknown_merge_field`,
+// `merge_field_in_url`, `foreign_asset`, `asset_not_allowed`, `column_widths`. Warning codes
+// are listed under `renderEmailDesign`.
+type EmailDesignIssue struct {
+	// BlockId The block; absent for the theme and the preheader.
+	BlockId *string `json:"block_id,omitempty"`
+
+	// Code Examples: invalid_rich_text
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Field The field, as a dotted path inside the block or the document.
+	//
+	// Examples: html, theme.colors.text, columns.1.width
+	Field *string `json:"field,omitempty"`
+}
+
+// EmailDesignPage defines model for EmailDesignPage.
+type EmailDesignPage struct {
+	Items []EmailDesignSummary `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// EmailDesignProblem defines model for EmailDesignProblem.
+type EmailDesignProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code string `json:"code"`
+
+	// Design `version_conflict` only: the design as it is now.
+	Design *EmailDesign        `json:"design,omitempty"`
+	Detail *string             `json:"detail,omitempty"`
+	Errors *[]EmailDesignIssue `json:"errors,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// EmailDesignRender defines model for EmailDesignRender.
+type EmailDesignRender struct {
+	Html string `json:"html"`
+
+	// SizeBytes The HTML's size in bytes, as Gmail counts it before clipping.
+	SizeBytes int64              `json:"size_bytes"`
+	Text      string             `json:"text"`
+	Warnings  []EmailDesignIssue `json:"warnings"`
+}
+
+// EmailDesignRenderRequest defines model for EmailDesignRenderRequest.
+type EmailDesignRenderRequest struct {
+	ContactId *uuid.UUID `json:"contact_id,omitempty"`
+	Dark      *bool      `json:"dark,omitempty"`
+
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document EmailDesignDocument `json:"document"`
+	InboxId  *uuid.UUID          `json:"inbox_id,omitempty"`
+	ListId   *uuid.UUID          `json:"list_id,omitempty"`
+
+	// Preheader Wins over the document's own.
+	Preheader *string `json:"preheader,omitempty"`
+	Subject   *string `json:"subject,omitempty"`
+}
+
+// EmailDesignRestore defines model for EmailDesignRestore.
+type EmailDesignRestore struct {
+	BaseVersion int32 `json:"base_version"`
+}
+
+// EmailDesignSummary defines model for EmailDesignSummary.
+type EmailDesignSummary struct {
+	ArchivedAt *time.Time `json:"archived_at,omitempty"`
+	CreatedAt  time.Time  `json:"created_at"`
+
+	// CreatedBy The member; absent for keys and members who left.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+	Id        uuid.UUID  `json:"id"`
+
+	// InboxId Absent for workspace-wide designs.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+	Name    string     `json:"name"`
+
+	// TemplateSlug The gallery template it was made from.
+	TemplateSlug *string    `json:"template_slug,omitempty"`
+	UpdatedAt    time.Time  `json:"updated_at"`
+	UpdatedBy    *uuid.UUID `json:"updated_by,omitempty"`
+
+	// Version Increases by one with every save.
+	Version int32 `json:"version"`
+}
+
+// EmailDesignTemplateRef defines model for EmailDesignTemplateRef.
+type EmailDesignTemplateRef struct {
+	Locale *EmailTemplateLocale `json:"locale,omitempty"`
+	Slug   string               `json:"slug"`
+}
+
+// EmailDesignUpdate defines model for EmailDesignUpdate.
+type EmailDesignUpdate struct {
+	// BaseVersion The `version` this edit started from.
+	BaseVersion int32 `json:"base_version"`
+
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document EmailDesignDocument `json:"document"`
+
+	// InboxId Absent makes the design workspace-wide.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+	Name    string     `json:"name"`
+
+	// Snapshot Keep a snapshot of this save (`manual`) whatever the time since the last one.
+	Snapshot *bool `json:"snapshot,omitempty"`
+}
+
+// EmailDesignVersion defines model for EmailDesignVersion.
+type EmailDesignVersion struct {
+	CreatedAt time.Time                `json:"created_at"`
+	MemberId  *uuid.UUID               `json:"member_id,omitempty"`
+	Reason    EmailDesignVersionReason `json:"reason"`
+	Version   int32                    `json:"version"`
+}
+
+// EmailDesignVersionDetail defines model for EmailDesignVersionDetail.
+type EmailDesignVersionDetail struct {
+	CreatedAt time.Time `json:"created_at"`
+
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document EmailDesignDocument      `json:"document"`
+	MemberId *uuid.UUID               `json:"member_id,omitempty"`
+	Reason   EmailDesignVersionReason `json:"reason"`
+	Version  int32                    `json:"version"`
+}
+
+// EmailDesignVersionList defines model for EmailDesignVersionList.
+type EmailDesignVersionList struct {
+	Items []EmailDesignVersion `json:"items"`
+}
+
+// EmailDesignVersionReason defines model for EmailDesignVersionReason.
+type EmailDesignVersionReason string
+
+// EmailDividerBlock defines model for EmailDividerBlock.
+type EmailDividerBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Color The theme's border colour when absent.
+	//
+	// Examples: #2563eb
+	Color *EmailColor `json:"color,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding   *[]int32              `json:"padding,omitempty"`
+	Thickness *int32                `json:"thickness,omitempty"`
+	Type      EmailDividerBlockType `json:"type"`
+
+	// Width Percent of the content width; 100 when absent.
+	Width *int32 `json:"width,omitempty"`
+}
+
+// EmailDividerBlockType defines model for EmailDividerBlock.Type.
+type EmailDividerBlockType string
+
+// EmailFont A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
+// `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
+// `serif` Georgia and Times New Roman, `mono` the platform's monospace font.
+type EmailFont string
+
+// EmailFooterBlock Extra footer text, shown above the required footer that is always added.
+type EmailFooterBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Html Rich text with merge fields.
+	Html string `json:"html"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32             `json:"padding,omitempty"`
+	Type    EmailFooterBlockType `json:"type"`
+}
+
+// EmailFooterBlockType defines model for EmailFooterBlock.Type.
+type EmailFooterBlockType string
+
+// EmailHeadingBlock defines model for EmailHeadingBlock.
+type EmailHeadingBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Color The theme's text colour when absent.
+	//
+	// Examples: #2563eb
+	Color *EmailColor `json:"color,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id    string                 `json:"id"`
+	Level EmailHeadingBlockLevel `json:"level"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32 `json:"padding,omitempty"`
+
+	// Text Inline rich text (`strong`, `em`, `u`, `s`, `a`, `br`, `code`) with merge fields.
+	Text string                `json:"text"`
+	Type EmailHeadingBlockType `json:"type"`
+}
+
+// EmailHeadingBlockLevel defines model for EmailHeadingBlock.Level.
+type EmailHeadingBlockLevel int32
+
+// EmailHeadingBlockType defines model for EmailHeadingBlock.Type.
+type EmailHeadingBlockType string
+
+// EmailHide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+type EmailHide string
+
+// EmailImage defines model for EmailImage.
+type EmailImage struct {
+	ContentType EmailImageContentType `json:"content_type"`
+	CreatedAt   time.Time             `json:"created_at"`
+	Filename    string                `json:"filename"`
+	Height      int32                 `json:"height"`
+	Id          uuid.UUID             `json:"id"`
+
+	// SentAt When a sent broadcast first used it.
+	SentAt    *time.Time `json:"sent_at,omitempty"`
+	SizeBytes int64      `json:"size_bytes"`
+
+	// Url Public, at `/i/{token}`.
+	Url   string `json:"url"`
+	Width int32  `json:"width"`
+}
+
+// EmailImageContentType defines model for EmailImage.ContentType.
+type EmailImageContentType string
+
+// EmailImageBlock An uploaded image (`image_id`). Gallery templates name their own files in `asset` instead;
+// a saved design never does. An image block without either renders as an empty frame with
+// the warning `image_missing`.
+type EmailImageBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Alt Required unless `decorative`.
+	Alt *string `json:"alt,omitempty"`
+
+	// Asset Templates only; the file in the template's `assets` folder.
+	Asset *string `json:"asset,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Decorative Says nothing to screen readers (`alt=""`).
+	Decorative *bool `json:"decorative,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id      string     `json:"id"`
+	ImageId *uuid.UUID `json:"image_id,omitempty"`
+
+	// Link An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+	// query, where their values are URL-escaped.
+	//
+	//
+	// Examples: https://example.com/news?ref=mail
+	Link *EmailUrl `json:"link,omitempty"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32 `json:"padding,omitempty"`
+
+	// Plate Draws a light plate behind the image in dark mode, for dark logos on transparency.
+	Plate *bool               `json:"plate,omitempty"`
+	Type  EmailImageBlockType `json:"type"`
+
+	// Width Display width in pixels; the full content width when absent. The image is stored up to twice as wide for sharp screens.
+	Width *int32 `json:"width,omitempty"`
+}
+
+// EmailImageBlockType defines model for EmailImageBlock.Type.
+type EmailImageBlockType string
+
+// EmailImagePage defines model for EmailImagePage.
+type EmailImagePage struct {
+	Items []EmailImage `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// EmailImageProblem defines model for EmailImageProblem.
+type EmailImageProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type   string           `json:"type"`
+	UsedBy *EmailImageUsage `json:"used_by,omitempty"`
+}
+
+// EmailImageUpload defines model for EmailImageUpload.
+type EmailImageUpload struct {
+	File openapi_types.File `json:"file"`
+}
+
+// EmailImageUsage defines model for EmailImageUsage.
+type EmailImageUsage struct {
+	Designs []struct {
+		Id   uuid.UUID `json:"id"`
+		Name string    `json:"name"`
+	} `json:"designs"`
+}
+
+// EmailSectionBlock A group of blocks on its own background. Sections do not nest.
+type EmailSectionBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background   *EmailColor         `json:"background,omitempty"`
+	Blocks       []EmailSectionChild `json:"blocks"`
+	BorderRadius *int32              `json:"border_radius,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32              `json:"padding,omitempty"`
+	Type    EmailSectionBlockType `json:"type"`
+}
+
+// EmailSectionBlockType defines model for EmailSectionBlock.Type.
+type EmailSectionBlockType string
+
+// EmailSectionChild defines model for EmailSectionChild.
+type EmailSectionChild struct {
+	union json.RawMessage
+}
+
+// EmailSocialBlock Links to profiles, as icons (served by the server) or as text.
+type EmailSocialBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Color Icon colour; `dark` icons turn light in dark mode.
+	Color *EmailSocialBlockColor `json:"color,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id    string            `json:"id"`
+	Items []EmailSocialItem `json:"items"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32               `json:"padding,omitempty"`
+	Style   *EmailSocialBlockStyle `json:"style,omitempty"`
+	Type    EmailSocialBlockType   `json:"type"`
+}
+
+// EmailSocialBlockColor Icon colour; `dark` icons turn light in dark mode.
+type EmailSocialBlockColor string
+
+// EmailSocialBlockStyle defines model for EmailSocialBlock.Style.
+type EmailSocialBlockStyle string
+
+// EmailSocialBlockType defines model for EmailSocialBlock.Type.
+type EmailSocialBlockType string
+
+// EmailSocialItem defines model for EmailSocialItem.
+type EmailSocialItem struct {
+	Network EmailSocialNetwork `json:"network"`
+
+	// Url An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+	// query, where their values are URL-escaped.
+	//
+	//
+	// Examples: https://example.com/news?ref=mail
+	Url EmailUrl `json:"url"`
+}
+
+// EmailSocialNetwork defines model for EmailSocialNetwork.
+type EmailSocialNetwork string
+
+// EmailSpacerBlock defines model for EmailSpacerBlock.
+type EmailSpacerBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+	Height     int32       `json:"height"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32             `json:"padding,omitempty"`
+	Type    EmailSpacerBlockType `json:"type"`
+}
+
+// EmailSpacerBlockType defines model for EmailSpacerBlock.Type.
+type EmailSpacerBlockType string
+
+// EmailTemplate defines model for EmailTemplate.
+type EmailTemplate struct {
+	Added openapi_types.Date `json:"added"`
+
+	// Category Examples: newsletter
+	Category    string `json:"category"`
+	Description string `json:"description"`
+
+	// Locales The languages the template has its own text in.
+	Locales []EmailTemplateLocale `json:"locales"`
+	Name    string                `json:"name"`
+
+	// PreviewHtmlUrl The rendered HTML with sample values.
+	PreviewHtmlUrl string `json:"preview_html_url"`
+
+	// PreviewUrl A WebP screenshot, 600 pixels wide at twice the density.
+	PreviewUrl string `json:"preview_url"`
+
+	// Slug Examples: newsletter
+	Slug string `json:"slug"`
+}
+
+// EmailTemplateDetail defines model for EmailTemplateDetail.
+type EmailTemplateDetail struct {
+	Added openapi_types.Date `json:"added"`
+
+	// Category Examples: newsletter
+	Category    string `json:"category"`
+	Description string `json:"description"`
+
+	// Document An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+	// JSON. Nesting is section › columns › blocks at most.
+	Document EmailDesignDocument  `json:"document"`
+	Images   []EmailTemplateImage `json:"images"`
+	Locale   EmailTemplateLocale  `json:"locale"`
+
+	// Locales The languages the template has its own text in.
+	Locales []EmailTemplateLocale `json:"locales"`
+	Name    string                `json:"name"`
+
+	// PreviewHtmlUrl The rendered HTML with sample values.
+	PreviewHtmlUrl string `json:"preview_html_url"`
+
+	// PreviewUrl A WebP screenshot, 600 pixels wide at twice the density.
+	PreviewUrl string `json:"preview_url"`
+
+	// Slug Examples: newsletter
+	Slug string `json:"slug"`
+}
+
+// EmailTemplateImage defines model for EmailTemplateImage.
+type EmailTemplateImage struct {
+	Asset  string `json:"asset"`
+	Height int32  `json:"height"`
+	Url    string `json:"url"`
+	Width  int32  `json:"width"`
+}
+
+// EmailTemplateList defines model for EmailTemplateList.
+type EmailTemplateList struct {
+	Items []EmailTemplate `json:"items"`
+}
+
+// EmailTemplateLocale defines model for EmailTemplateLocale.
+type EmailTemplateLocale string
+
+// EmailTextBlock defines model for EmailTextBlock.
+type EmailTextBlock struct {
+	// Align Mirrored in right-to-left designs.
+	Align *EmailAlign `json:"align,omitempty"`
+
+	// Background Examples: #2563eb
+	Background *EmailColor `json:"background,omitempty"`
+
+	// Color The theme's text colour when absent.
+	//
+	// Examples: #2563eb
+	Color *EmailColor `json:"color,omitempty"`
+
+	// Hide Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+	Hide *EmailHide `json:"hide,omitempty"`
+
+	// Html Rich text with merge fields.
+	Html string `json:"html"`
+
+	// Id Chosen by the client, unique in the document; validation errors and warnings name it.
+	Id string `json:"id"`
+
+	// Padding Top, right, bottom and left padding in pixels; the block's default when absent.
+	Padding *[]int32 `json:"padding,omitempty"`
+
+	// Size Font size in pixels; 16 when absent.
+	Size *int32             `json:"size,omitempty"`
+	Type EmailTextBlockType `json:"type"`
+}
+
+// EmailTextBlockType defines model for EmailTextBlock.Type.
+type EmailTextBlockType string
+
+// EmailTheme defines model for EmailTheme.
+type EmailTheme struct {
+	Colors EmailThemeColors `json:"colors"`
+
+	// Dark Colours for readers in dark mode. A missing one is derived from its light colour: the same
+	// hue, dark backgrounds, text raised to 4.5:1 contrast.
+	Dark *EmailThemeDarkColors `json:"dark,omitempty"`
+
+	// Direction `rtl` lays the mail out right to left; `auto` lets each text follow its own script.
+	Direction *EmailThemeDirection `json:"direction,omitempty"`
+
+	// Font A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
+	// `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
+	// `serif` Georgia and Times New Roman, `mono` the platform's monospace font.
+	Font EmailFont `json:"font"`
+
+	// HeadingFont Headings; the body font when absent.
+	HeadingFont *EmailFont `json:"heading_font,omitempty"`
+
+	// Radius Corner radius of the card, sections, buttons and images in pixels; 0 when absent.
+	Radius *int32 `json:"radius,omitempty"`
+
+	// Width The content width in pixels on wide screens; 600 is the usual.
+	Width int32 `json:"width"`
+}
+
+// EmailThemeDirection `rtl` lays the mail out right to left; `auto` lets each text follow its own script.
+type EmailThemeDirection string
+
+// EmailThemeColors defines model for EmailThemeColors.
+type EmailThemeColors struct {
+	// Accent Buttons and highlights.
+	//
+	// Examples: #2563eb
+	Accent EmailColor `json:"accent"`
+
+	// Border Dividers and outlines.
+	//
+	// Examples: #2563eb
+	Border EmailColor `json:"border"`
+
+	// Card The content's background.
+	//
+	// Examples: #2563eb
+	Card EmailColor `json:"card"`
+
+	// Link Examples: #2563eb
+	Link EmailColor `json:"link"`
+
+	// Muted Secondary text and the required footer.
+	//
+	// Examples: #2563eb
+	Muted EmailColor `json:"muted"`
+
+	// Page Behind the card.
+	//
+	// Examples: #2563eb
+	Page EmailColor `json:"page"`
+
+	// Text Examples: #2563eb
+	Text EmailColor `json:"text"`
+}
+
+// EmailThemeDarkColors Colours for readers in dark mode. A missing one is derived from its light colour: the same
+// hue, dark backgrounds, text raised to 4.5:1 contrast.
+type EmailThemeDarkColors struct {
+	// Accent Examples: #2563eb
+	Accent *EmailColor `json:"accent,omitempty"`
+
+	// Border Examples: #2563eb
+	Border *EmailColor `json:"border,omitempty"`
+
+	// Card Examples: #2563eb
+	Card *EmailColor `json:"card,omitempty"`
+
+	// Link Examples: #2563eb
+	Link *EmailColor `json:"link,omitempty"`
+
+	// Muted Examples: #2563eb
+	Muted *EmailColor `json:"muted,omitempty"`
+
+	// Page Examples: #2563eb
+	Page *EmailColor `json:"page,omitempty"`
+
+	// Text Examples: #2563eb
+	Text *EmailColor `json:"text,omitempty"`
+}
+
+// EmailUrl An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+// query, where their values are URL-escaped.
+//
+// Examples: https://example.com/news?ref=mail
+type EmailUrl = string
 
 // EventPage defines model for EventPage.
 type EventPage struct {
@@ -6217,6 +7477,12 @@ type Cursor = string
 // DeliveryId defines model for DeliveryId.
 type DeliveryId = uuid.UUID
 
+// DesignId defines model for DesignId.
+type DesignId = uuid.UUID
+
+// DesignVersion defines model for DesignVersion.
+type DesignVersion = int32
+
 // DiscussionId defines model for DiscussionId.
 type DiscussionId = uuid.UUID
 
@@ -6231,6 +7497,9 @@ type DocsSiteFilter = string
 
 // IdempotencyKey defines model for IdempotencyKey.
 type IdempotencyKey = string
+
+// ImageId defines model for ImageId.
+type ImageId = uuid.UUID
 
 // InboxId defines model for InboxId.
 type InboxId = uuid.UUID
@@ -6270,6 +7539,12 @@ type Search = string
 
 // SubscriptionId defines model for SubscriptionId.
 type SubscriptionId = uuid.UUID
+
+// TemplateLocale defines model for TemplateLocale.
+type TemplateLocale = EmailTemplateLocale
+
+// TemplateSlug defines model for TemplateSlug.
+type TemplateSlug = string
 
 // WebhookId defines model for WebhookId.
 type WebhookId = uuid.UUID
@@ -7003,6 +8278,133 @@ type ListDraftsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListEmailDesignsParams defines parameters for ListEmailDesigns.
+type ListEmailDesignsParams struct {
+	// InboxId Only the designs of this inbox.
+	InboxId  *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Q        *string    `form:"q,omitempty" json:"q,omitempty"`
+	Archived *bool      `form:"archived,omitempty" json:"archived,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateEmailDesignParams defines parameters for CreateEmailDesign.
+type CreateEmailDesignParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RenderEmailDesignParams defines parameters for RenderEmailDesign.
+type RenderEmailDesignParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ArchiveEmailDesignParams defines parameters for ArchiveEmailDesign.
+type ArchiveEmailDesignParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetEmailDesignParams defines parameters for GetEmailDesign.
+type GetEmailDesignParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateEmailDesignParams defines parameters for UpdateEmailDesign.
+type UpdateEmailDesignParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DuplicateEmailDesignParams defines parameters for DuplicateEmailDesign.
+type DuplicateEmailDesignParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListEmailDesignVersionsParams defines parameters for ListEmailDesignVersions.
+type ListEmailDesignVersionsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetEmailDesignVersionParams defines parameters for GetEmailDesignVersion.
+type GetEmailDesignVersionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RestoreEmailDesignVersionParams defines parameters for RestoreEmailDesignVersion.
+type RestoreEmailDesignVersionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListEmailImagesParams defines parameters for ListEmailImages.
+type ListEmailImagesParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadEmailImageParams defines parameters for UploadEmailImage.
+type UploadEmailImageParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteEmailImageParams defines parameters for DeleteEmailImage.
+type DeleteEmailImageParams struct {
+	Force *bool `form:"force,omitempty" json:"force,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListEmailTemplatesParams defines parameters for ListEmailTemplates.
+type ListEmailTemplatesParams struct {
+	// Locale The language of the template's text; English by default.
+	Locale *TemplateLocale `form:"locale,omitempty" json:"locale,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetEmailTemplateParams defines parameters for GetEmailTemplate.
+type GetEmailTemplateParams struct {
+	// Locale The language of the template's text; English by default.
+	Locale *TemplateLocale `form:"locale,omitempty" json:"locale,omitempty"`
 
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
@@ -7866,6 +9268,24 @@ type AcceptDiscussionAnswerJSONRequestBody = DiscussionAnswer
 // CreateDiscussionPostJSONRequestBody defines body for CreateDiscussionPost for application/json ContentType.
 type CreateDiscussionPostJSONRequestBody = DiscussionPostCreate
 
+// CreateEmailDesignJSONRequestBody defines body for CreateEmailDesign for application/json ContentType.
+type CreateEmailDesignJSONRequestBody = EmailDesignCreate
+
+// RenderEmailDesignJSONRequestBody defines body for RenderEmailDesign for application/json ContentType.
+type RenderEmailDesignJSONRequestBody = EmailDesignRenderRequest
+
+// UpdateEmailDesignJSONRequestBody defines body for UpdateEmailDesign for application/json ContentType.
+type UpdateEmailDesignJSONRequestBody = EmailDesignUpdate
+
+// DuplicateEmailDesignJSONRequestBody defines body for DuplicateEmailDesign for application/json ContentType.
+type DuplicateEmailDesignJSONRequestBody = EmailDesignDuplicate
+
+// RestoreEmailDesignVersionJSONRequestBody defines body for RestoreEmailDesignVersion for application/json ContentType.
+type RestoreEmailDesignVersionJSONRequestBody = EmailDesignRestore
+
+// UploadEmailImageMultipartRequestBody defines body for UploadEmailImage for multipart/form-data ContentType.
+type UploadEmailImageMultipartRequestBody = EmailImageUpload
+
 // CreateFeedbackJSONRequestBody defines body for CreateFeedback for application/json ContentType.
 type CreateFeedbackJSONRequestBody = FeedbackCreate
 
@@ -8268,6 +9688,1065 @@ func (t ClientRealtimeMessage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *ClientRealtimeMessage) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsEmailSectionBlock returns the union data inside the EmailBlock as a EmailSectionBlock
+func (t EmailBlock) AsEmailSectionBlock() (EmailSectionBlock, error) {
+	var body EmailSectionBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSectionBlock overwrites any union data inside the EmailBlock as the provided EmailSectionBlock
+func (t *EmailBlock) FromEmailSectionBlock(v EmailSectionBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"section"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSectionBlock performs a merge with any union data inside the EmailBlock, using the provided EmailSectionBlock
+func (t *EmailBlock) MergeEmailSectionBlock(v EmailSectionBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"section"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailColumnsBlock returns the union data inside the EmailBlock as a EmailColumnsBlock
+func (t EmailBlock) AsEmailColumnsBlock() (EmailColumnsBlock, error) {
+	var body EmailColumnsBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailColumnsBlock overwrites any union data inside the EmailBlock as the provided EmailColumnsBlock
+func (t *EmailBlock) FromEmailColumnsBlock(v EmailColumnsBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"columns"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailColumnsBlock performs a merge with any union data inside the EmailBlock, using the provided EmailColumnsBlock
+func (t *EmailBlock) MergeEmailColumnsBlock(v EmailColumnsBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"columns"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailHeadingBlock returns the union data inside the EmailBlock as a EmailHeadingBlock
+func (t EmailBlock) AsEmailHeadingBlock() (EmailHeadingBlock, error) {
+	var body EmailHeadingBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailHeadingBlock overwrites any union data inside the EmailBlock as the provided EmailHeadingBlock
+func (t *EmailBlock) FromEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailHeadingBlock performs a merge with any union data inside the EmailBlock, using the provided EmailHeadingBlock
+func (t *EmailBlock) MergeEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailTextBlock returns the union data inside the EmailBlock as a EmailTextBlock
+func (t EmailBlock) AsEmailTextBlock() (EmailTextBlock, error) {
+	var body EmailTextBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailTextBlock overwrites any union data inside the EmailBlock as the provided EmailTextBlock
+func (t *EmailBlock) FromEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailTextBlock performs a merge with any union data inside the EmailBlock, using the provided EmailTextBlock
+func (t *EmailBlock) MergeEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailImageBlock returns the union data inside the EmailBlock as a EmailImageBlock
+func (t EmailBlock) AsEmailImageBlock() (EmailImageBlock, error) {
+	var body EmailImageBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailImageBlock overwrites any union data inside the EmailBlock as the provided EmailImageBlock
+func (t *EmailBlock) FromEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailImageBlock performs a merge with any union data inside the EmailBlock, using the provided EmailImageBlock
+func (t *EmailBlock) MergeEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailButtonBlock returns the union data inside the EmailBlock as a EmailButtonBlock
+func (t EmailBlock) AsEmailButtonBlock() (EmailButtonBlock, error) {
+	var body EmailButtonBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailButtonBlock overwrites any union data inside the EmailBlock as the provided EmailButtonBlock
+func (t *EmailBlock) FromEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailButtonBlock performs a merge with any union data inside the EmailBlock, using the provided EmailButtonBlock
+func (t *EmailBlock) MergeEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailDividerBlock returns the union data inside the EmailBlock as a EmailDividerBlock
+func (t EmailBlock) AsEmailDividerBlock() (EmailDividerBlock, error) {
+	var body EmailDividerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailDividerBlock overwrites any union data inside the EmailBlock as the provided EmailDividerBlock
+func (t *EmailBlock) FromEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailDividerBlock performs a merge with any union data inside the EmailBlock, using the provided EmailDividerBlock
+func (t *EmailBlock) MergeEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSpacerBlock returns the union data inside the EmailBlock as a EmailSpacerBlock
+func (t EmailBlock) AsEmailSpacerBlock() (EmailSpacerBlock, error) {
+	var body EmailSpacerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSpacerBlock overwrites any union data inside the EmailBlock as the provided EmailSpacerBlock
+func (t *EmailBlock) FromEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSpacerBlock performs a merge with any union data inside the EmailBlock, using the provided EmailSpacerBlock
+func (t *EmailBlock) MergeEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSocialBlock returns the union data inside the EmailBlock as a EmailSocialBlock
+func (t EmailBlock) AsEmailSocialBlock() (EmailSocialBlock, error) {
+	var body EmailSocialBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSocialBlock overwrites any union data inside the EmailBlock as the provided EmailSocialBlock
+func (t *EmailBlock) FromEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSocialBlock performs a merge with any union data inside the EmailBlock, using the provided EmailSocialBlock
+func (t *EmailBlock) MergeEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailFooterBlock returns the union data inside the EmailBlock as a EmailFooterBlock
+func (t EmailBlock) AsEmailFooterBlock() (EmailFooterBlock, error) {
+	var body EmailFooterBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailFooterBlock overwrites any union data inside the EmailBlock as the provided EmailFooterBlock
+func (t *EmailBlock) FromEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailFooterBlock performs a merge with any union data inside the EmailBlock, using the provided EmailFooterBlock
+func (t *EmailBlock) MergeEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t EmailBlock) Discriminator() (string, error) {
+	var discriminator struct {
+		Discriminator string `json:"type"`
+	}
+	err := json.Unmarshal(t.union, &discriminator)
+	return discriminator.Discriminator, err
+}
+
+func (t EmailBlock) ValueByDiscriminator() (interface{}, error) {
+	discriminator, err := t.Discriminator()
+	if err != nil {
+		return nil, err
+	}
+	switch discriminator {
+	case "button":
+		return t.AsEmailButtonBlock()
+	case "columns":
+		return t.AsEmailColumnsBlock()
+	case "divider":
+		return t.AsEmailDividerBlock()
+	case "footer":
+		return t.AsEmailFooterBlock()
+	case "heading":
+		return t.AsEmailHeadingBlock()
+	case "image":
+		return t.AsEmailImageBlock()
+	case "section":
+		return t.AsEmailSectionBlock()
+	case "social":
+		return t.AsEmailSocialBlock()
+	case "spacer":
+		return t.AsEmailSpacerBlock()
+	case "text":
+		return t.AsEmailTextBlock()
+	default:
+		return nil, errors.New("unknown discriminator value: " + discriminator)
+	}
+}
+
+func (t EmailBlock) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *EmailBlock) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsEmailHeadingBlock returns the union data inside the EmailColumnChild as a EmailHeadingBlock
+func (t EmailColumnChild) AsEmailHeadingBlock() (EmailHeadingBlock, error) {
+	var body EmailHeadingBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailHeadingBlock overwrites any union data inside the EmailColumnChild as the provided EmailHeadingBlock
+func (t *EmailColumnChild) FromEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailHeadingBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailHeadingBlock
+func (t *EmailColumnChild) MergeEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailTextBlock returns the union data inside the EmailColumnChild as a EmailTextBlock
+func (t EmailColumnChild) AsEmailTextBlock() (EmailTextBlock, error) {
+	var body EmailTextBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailTextBlock overwrites any union data inside the EmailColumnChild as the provided EmailTextBlock
+func (t *EmailColumnChild) FromEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailTextBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailTextBlock
+func (t *EmailColumnChild) MergeEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailImageBlock returns the union data inside the EmailColumnChild as a EmailImageBlock
+func (t EmailColumnChild) AsEmailImageBlock() (EmailImageBlock, error) {
+	var body EmailImageBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailImageBlock overwrites any union data inside the EmailColumnChild as the provided EmailImageBlock
+func (t *EmailColumnChild) FromEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailImageBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailImageBlock
+func (t *EmailColumnChild) MergeEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailButtonBlock returns the union data inside the EmailColumnChild as a EmailButtonBlock
+func (t EmailColumnChild) AsEmailButtonBlock() (EmailButtonBlock, error) {
+	var body EmailButtonBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailButtonBlock overwrites any union data inside the EmailColumnChild as the provided EmailButtonBlock
+func (t *EmailColumnChild) FromEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailButtonBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailButtonBlock
+func (t *EmailColumnChild) MergeEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailDividerBlock returns the union data inside the EmailColumnChild as a EmailDividerBlock
+func (t EmailColumnChild) AsEmailDividerBlock() (EmailDividerBlock, error) {
+	var body EmailDividerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailDividerBlock overwrites any union data inside the EmailColumnChild as the provided EmailDividerBlock
+func (t *EmailColumnChild) FromEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailDividerBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailDividerBlock
+func (t *EmailColumnChild) MergeEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSpacerBlock returns the union data inside the EmailColumnChild as a EmailSpacerBlock
+func (t EmailColumnChild) AsEmailSpacerBlock() (EmailSpacerBlock, error) {
+	var body EmailSpacerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSpacerBlock overwrites any union data inside the EmailColumnChild as the provided EmailSpacerBlock
+func (t *EmailColumnChild) FromEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSpacerBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailSpacerBlock
+func (t *EmailColumnChild) MergeEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSocialBlock returns the union data inside the EmailColumnChild as a EmailSocialBlock
+func (t EmailColumnChild) AsEmailSocialBlock() (EmailSocialBlock, error) {
+	var body EmailSocialBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSocialBlock overwrites any union data inside the EmailColumnChild as the provided EmailSocialBlock
+func (t *EmailColumnChild) FromEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSocialBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailSocialBlock
+func (t *EmailColumnChild) MergeEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailFooterBlock returns the union data inside the EmailColumnChild as a EmailFooterBlock
+func (t EmailColumnChild) AsEmailFooterBlock() (EmailFooterBlock, error) {
+	var body EmailFooterBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailFooterBlock overwrites any union data inside the EmailColumnChild as the provided EmailFooterBlock
+func (t *EmailColumnChild) FromEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailFooterBlock performs a merge with any union data inside the EmailColumnChild, using the provided EmailFooterBlock
+func (t *EmailColumnChild) MergeEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t EmailColumnChild) Discriminator() (string, error) {
+	var discriminator struct {
+		Discriminator string `json:"type"`
+	}
+	err := json.Unmarshal(t.union, &discriminator)
+	return discriminator.Discriminator, err
+}
+
+func (t EmailColumnChild) ValueByDiscriminator() (interface{}, error) {
+	discriminator, err := t.Discriminator()
+	if err != nil {
+		return nil, err
+	}
+	switch discriminator {
+	case "button":
+		return t.AsEmailButtonBlock()
+	case "divider":
+		return t.AsEmailDividerBlock()
+	case "footer":
+		return t.AsEmailFooterBlock()
+	case "heading":
+		return t.AsEmailHeadingBlock()
+	case "image":
+		return t.AsEmailImageBlock()
+	case "social":
+		return t.AsEmailSocialBlock()
+	case "spacer":
+		return t.AsEmailSpacerBlock()
+	case "text":
+		return t.AsEmailTextBlock()
+	default:
+		return nil, errors.New("unknown discriminator value: " + discriminator)
+	}
+}
+
+func (t EmailColumnChild) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *EmailColumnChild) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsEmailColumnsBlock returns the union data inside the EmailSectionChild as a EmailColumnsBlock
+func (t EmailSectionChild) AsEmailColumnsBlock() (EmailColumnsBlock, error) {
+	var body EmailColumnsBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailColumnsBlock overwrites any union data inside the EmailSectionChild as the provided EmailColumnsBlock
+func (t *EmailSectionChild) FromEmailColumnsBlock(v EmailColumnsBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"columns"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailColumnsBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailColumnsBlock
+func (t *EmailSectionChild) MergeEmailColumnsBlock(v EmailColumnsBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"columns"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailHeadingBlock returns the union data inside the EmailSectionChild as a EmailHeadingBlock
+func (t EmailSectionChild) AsEmailHeadingBlock() (EmailHeadingBlock, error) {
+	var body EmailHeadingBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailHeadingBlock overwrites any union data inside the EmailSectionChild as the provided EmailHeadingBlock
+func (t *EmailSectionChild) FromEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailHeadingBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailHeadingBlock
+func (t *EmailSectionChild) MergeEmailHeadingBlock(v EmailHeadingBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"heading"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailTextBlock returns the union data inside the EmailSectionChild as a EmailTextBlock
+func (t EmailSectionChild) AsEmailTextBlock() (EmailTextBlock, error) {
+	var body EmailTextBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailTextBlock overwrites any union data inside the EmailSectionChild as the provided EmailTextBlock
+func (t *EmailSectionChild) FromEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailTextBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailTextBlock
+func (t *EmailSectionChild) MergeEmailTextBlock(v EmailTextBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"text"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailImageBlock returns the union data inside the EmailSectionChild as a EmailImageBlock
+func (t EmailSectionChild) AsEmailImageBlock() (EmailImageBlock, error) {
+	var body EmailImageBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailImageBlock overwrites any union data inside the EmailSectionChild as the provided EmailImageBlock
+func (t *EmailSectionChild) FromEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailImageBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailImageBlock
+func (t *EmailSectionChild) MergeEmailImageBlock(v EmailImageBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"image"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailButtonBlock returns the union data inside the EmailSectionChild as a EmailButtonBlock
+func (t EmailSectionChild) AsEmailButtonBlock() (EmailButtonBlock, error) {
+	var body EmailButtonBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailButtonBlock overwrites any union data inside the EmailSectionChild as the provided EmailButtonBlock
+func (t *EmailSectionChild) FromEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailButtonBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailButtonBlock
+func (t *EmailSectionChild) MergeEmailButtonBlock(v EmailButtonBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"button"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailDividerBlock returns the union data inside the EmailSectionChild as a EmailDividerBlock
+func (t EmailSectionChild) AsEmailDividerBlock() (EmailDividerBlock, error) {
+	var body EmailDividerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailDividerBlock overwrites any union data inside the EmailSectionChild as the provided EmailDividerBlock
+func (t *EmailSectionChild) FromEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailDividerBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailDividerBlock
+func (t *EmailSectionChild) MergeEmailDividerBlock(v EmailDividerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"divider"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSpacerBlock returns the union data inside the EmailSectionChild as a EmailSpacerBlock
+func (t EmailSectionChild) AsEmailSpacerBlock() (EmailSpacerBlock, error) {
+	var body EmailSpacerBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSpacerBlock overwrites any union data inside the EmailSectionChild as the provided EmailSpacerBlock
+func (t *EmailSectionChild) FromEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSpacerBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailSpacerBlock
+func (t *EmailSectionChild) MergeEmailSpacerBlock(v EmailSpacerBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"spacer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailSocialBlock returns the union data inside the EmailSectionChild as a EmailSocialBlock
+func (t EmailSectionChild) AsEmailSocialBlock() (EmailSocialBlock, error) {
+	var body EmailSocialBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailSocialBlock overwrites any union data inside the EmailSectionChild as the provided EmailSocialBlock
+func (t *EmailSectionChild) FromEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailSocialBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailSocialBlock
+func (t *EmailSectionChild) MergeEmailSocialBlock(v EmailSocialBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"social"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsEmailFooterBlock returns the union data inside the EmailSectionChild as a EmailFooterBlock
+func (t EmailSectionChild) AsEmailFooterBlock() (EmailFooterBlock, error) {
+	var body EmailFooterBlock
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromEmailFooterBlock overwrites any union data inside the EmailSectionChild as the provided EmailFooterBlock
+func (t *EmailSectionChild) FromEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	t.union = b
+	return err
+}
+
+// MergeEmailFooterBlock performs a merge with any union data inside the EmailSectionChild, using the provided EmailFooterBlock
+func (t *EmailSectionChild) MergeEmailFooterBlock(v EmailFooterBlock) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+	b, err = runtime.JSONMerge(b, []byte(`{"type":"footer"}`))
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t EmailSectionChild) Discriminator() (string, error) {
+	var discriminator struct {
+		Discriminator string `json:"type"`
+	}
+	err := json.Unmarshal(t.union, &discriminator)
+	return discriminator.Discriminator, err
+}
+
+func (t EmailSectionChild) ValueByDiscriminator() (interface{}, error) {
+	discriminator, err := t.Discriminator()
+	if err != nil {
+		return nil, err
+	}
+	switch discriminator {
+	case "button":
+		return t.AsEmailButtonBlock()
+	case "columns":
+		return t.AsEmailColumnsBlock()
+	case "divider":
+		return t.AsEmailDividerBlock()
+	case "footer":
+		return t.AsEmailFooterBlock()
+	case "heading":
+		return t.AsEmailHeadingBlock()
+	case "image":
+		return t.AsEmailImageBlock()
+	case "social":
+		return t.AsEmailSocialBlock()
+	case "spacer":
+		return t.AsEmailSpacerBlock()
+	case "text":
+		return t.AsEmailTextBlock()
+	default:
+		return nil, errors.New("unknown discriminator value: " + discriminator)
+	}
+}
+
+func (t EmailSectionChild) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *EmailSectionChild) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -11473,6 +13952,269 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/drafts (the `ListDrafts` operationId).
 	ListDrafts(ctx context.Context, params *ListDraftsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListEmailDesigns List e-mail designs
+	//
+	// Most recently saved first, without their documents. Archived designs are left out unless
+	// `archived=true`, which lists only them. `q` matches the name.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-designs (the `ListEmailDesigns` operationId).
+	ListEmailDesigns(ctx context.Context, params *ListEmailDesignsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateEmailDesignWithBody Create an e-mail design
+	//
+	// From a `document`, from a gallery `template` (its files become the workspace's images,
+	// reused when the same file is already there), or empty when neither is given. `inbox_id`
+	// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+	// the render's `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+	CreateEmailDesignWithBody(ctx context.Context, params *CreateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateEmailDesign Create an e-mail design
+	//
+	// From a `document`, from a gallery `template` (its files become the workspace's images,
+	// reused when the same file is already there), or empty when neither is given. `inbox_id`
+	// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+	// the render's `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+	CreateEmailDesign(ctx context.Context, params *CreateEmailDesignParams, body CreateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderEmailDesignWithBody Render a design
+	//
+	// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+	// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+	// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+	// without them sample values are used. `dark: true` renders the dark palette as the page's
+	// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+	// and preference pages point at an example token.
+	//
+	// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+	// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+	// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+	// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+	// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+	// refused (`422 html_too_large`). At most 120 renders a minute per caller
+	// (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+	RenderEmailDesignWithBody(ctx context.Context, params *RenderEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RenderEmailDesign Render a design
+	//
+	// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+	// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+	// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+	// without them sample values are used. `dark: true` renders the dark palette as the page's
+	// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+	// and preference pages point at an example token.
+	//
+	// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+	// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+	// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+	// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+	// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+	// refused (`422 html_too_large`). At most 120 renders a minute per caller
+	// (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+	RenderEmailDesign(ctx context.Context, params *RenderEmailDesignParams, body RenderEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ArchiveEmailDesign Archive an e-mail design
+	//
+	// Hides the design from the default list; it keeps its document and versions, and saving it
+	// again brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Corresponds with DELETE /v1/email-designs/{designId} (the `ArchiveEmailDesign` operationId).
+	ArchiveEmailDesign(ctx context.Context, designId DesignId, params *ArchiveEmailDesignParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEmailDesign An e-mail design
+	//
+	// The design with its document (upgraded to the newest `schema`) and the render's
+	// `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-designs/{designId} (the `GetEmailDesign` operationId).
+	GetEmailDesign(ctx context.Context, designId DesignId, params *GetEmailDesignParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateEmailDesignWithBody Save an e-mail design
+	//
+	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+	// from; when the design has moved on since, nothing is saved and the answer is
+	// `409 version_conflict` with the current design in `design`. Each save increases
+	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+	// `snapshot` is true. Saving an archived design brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+	UpdateEmailDesignWithBody(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateEmailDesign Save an e-mail design
+	//
+	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+	// from; when the design has moved on since, nothing is saved and the answer is
+	// `409 version_conflict` with the current design in `design`. Each save increases
+	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+	// `snapshot` is true. Saving an archived design brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+	UpdateEmailDesign(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, body UpdateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DuplicateEmailDesignWithBody Copy an e-mail design
+	//
+	// A new design with the same inbox and document, named `name` or "<name> (copy)".
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+	DuplicateEmailDesignWithBody(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DuplicateEmailDesign Copy an e-mail design
+	//
+	// A new design with the same inbox and document, named `name` or "<name> (copy)".
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+	DuplicateEmailDesign(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, body DuplicateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListEmailDesignVersions List a design's snapshots
+	//
+	// The kept snapshots, newest first, without their documents (at most 50).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-designs/{designId}/versions (the `ListEmailDesignVersions` operationId).
+	ListEmailDesignVersions(ctx context.Context, designId DesignId, params *ListEmailDesignVersionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEmailDesignVersion A snapshot with its document
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-designs/{designId}/versions/{version} (the `GetEmailDesignVersion` operationId).
+	GetEmailDesignVersion(ctx context.Context, designId DesignId, version DesignVersion, params *GetEmailDesignVersionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreEmailDesignVersionWithBody Restore a snapshot
+	//
+	// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+	// same `base_version` check) and takes a `restored` snapshot of it.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+	RestoreEmailDesignVersionWithBody(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RestoreEmailDesignVersion Restore a snapshot
+	//
+	// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+	// same `base_version` check) and takes a `restored` snapshot of it.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+	RestoreEmailDesignVersion(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, body RestoreEmailDesignVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListEmailImages List the workspace's e-mail images
+	//
+	// Newest first.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-images (the `ListEmailImages` operationId).
+	ListEmailImages(ctx context.Context, params *ListEmailImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UploadEmailImageWithBody Upload an e-mail image
+	//
+	// One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+	// JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+	// over 40 megapixels or 8,000 pixels on a side are refused before decoding
+	// (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+	// colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+	// as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+	// as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+	// refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+	// (`422 image_too_large`).
+	//
+	// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+	// the workspace's images would exceed the server's limit.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/email-images (the `UploadEmailImage` operationId).
+	UploadEmailImageWithBody(ctx context.Context, params *UploadEmailImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteEmailImage Delete an e-mail image
+	//
+	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+	// not archived uses the image. An image that went out in a sent broadcast needs
+	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+	// image. The public URL stops working at once.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Corresponds with DELETE /v1/email-images/{imageId} (the `DeleteEmailImage` operationId).
+	DeleteEmailImage(ctx context.Context, imageId ImageId, params *DeleteEmailImageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListEmailTemplates List the template gallery
+	//
+	// The starter designs that ship with the server, in gallery order, with the name and
+	// description in `locale` (English when the template has no text in it).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-templates (the `ListEmailTemplates` operationId).
+	ListEmailTemplates(ctx context.Context, params *ListEmailTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetEmailTemplate A template with its design
+	//
+	// The template's design in `locale` (English when the template has no text in it). Its image
+	// blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+	// public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+	// `template`, which copies the files into the workspace's images.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Corresponds with GET /v1/email-templates/{slug} (the `GetEmailTemplate` operationId).
+	GetEmailTemplate(ctx context.Context, slug TemplateSlug, params *GetEmailTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListEvents Events after a cursor
 	//
@@ -16191,6 +18933,469 @@ func (c *Client) GetDocsSummary(ctx context.Context, params *GetDocsSummaryParam
 // Corresponds with GET /v1/drafts (the `ListDrafts` operationId).
 func (c *Client) ListDrafts(ctx context.Context, params *ListDraftsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListDraftsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListEmailDesigns List e-mail designs
+//
+// Most recently saved first, without their documents. Archived designs are left out unless
+// `archived=true`, which lists only them. `q` matches the name.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-designs (the `ListEmailDesigns` operationId).
+func (c *Client) ListEmailDesigns(ctx context.Context, params *ListEmailDesignsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListEmailDesignsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateEmailDesignWithBody Create an e-mail design
+//
+// From a `document`, from a gallery `template` (its files become the workspace's images,
+// reused when the same file is already there), or empty when neither is given. `inbox_id`
+// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+// the render's `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+func (c *Client) CreateEmailDesignWithBody(ctx context.Context, params *CreateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateEmailDesignRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateEmailDesign Create an e-mail design
+//
+// From a `document`, from a gallery `template` (its files become the workspace's images,
+// reused when the same file is already there), or empty when neither is given. `inbox_id`
+// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+// the render's `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+func (c *Client) CreateEmailDesign(ctx context.Context, params *CreateEmailDesignParams, body CreateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateEmailDesignRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderEmailDesignWithBody Render a design
+//
+// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+// without them sample values are used. `dark: true` renders the dark palette as the page's
+// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+// and preference pages point at an example token.
+//
+// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+// refused (`422 html_too_large`). At most 120 renders a minute per caller
+// (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+func (c *Client) RenderEmailDesignWithBody(ctx context.Context, params *RenderEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderEmailDesignRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RenderEmailDesign Render a design
+//
+// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+// without them sample values are used. `dark: true` renders the dark palette as the page's
+// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+// and preference pages point at an example token.
+//
+// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+// refused (`422 html_too_large`). At most 120 renders a minute per caller
+// (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+func (c *Client) RenderEmailDesign(ctx context.Context, params *RenderEmailDesignParams, body RenderEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRenderEmailDesignRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ArchiveEmailDesign Archive an e-mail design
+//
+// Hides the design from the default list; it keeps its document and versions, and saving it
+// again brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Corresponds with DELETE /v1/email-designs/{designId} (the `ArchiveEmailDesign` operationId).
+func (c *Client) ArchiveEmailDesign(ctx context.Context, designId DesignId, params *ArchiveEmailDesignParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewArchiveEmailDesignRequest(c.Server, designId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetEmailDesign An e-mail design
+//
+// The design with its document (upgraded to the newest `schema`) and the render's
+// `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-designs/{designId} (the `GetEmailDesign` operationId).
+func (c *Client) GetEmailDesign(ctx context.Context, designId DesignId, params *GetEmailDesignParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEmailDesignRequest(c.Server, designId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateEmailDesignWithBody Save an e-mail design
+//
+// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+// from; when the design has moved on since, nothing is saved and the answer is
+// `409 version_conflict` with the current design in `design`. Each save increases
+// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+// `snapshot` is true. Saving an archived design brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+func (c *Client) UpdateEmailDesignWithBody(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateEmailDesignRequestWithBody(c.Server, designId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateEmailDesign Save an e-mail design
+//
+// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+// from; when the design has moved on since, nothing is saved and the answer is
+// `409 version_conflict` with the current design in `design`. Each save increases
+// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+// `snapshot` is true. Saving an archived design brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+func (c *Client) UpdateEmailDesign(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, body UpdateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateEmailDesignRequest(c.Server, designId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DuplicateEmailDesignWithBody Copy an e-mail design
+//
+// A new design with the same inbox and document, named `name` or "<name> (copy)".
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+func (c *Client) DuplicateEmailDesignWithBody(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDuplicateEmailDesignRequestWithBody(c.Server, designId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DuplicateEmailDesign Copy an e-mail design
+//
+// A new design with the same inbox and document, named `name` or "<name> (copy)".
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+func (c *Client) DuplicateEmailDesign(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, body DuplicateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDuplicateEmailDesignRequest(c.Server, designId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListEmailDesignVersions List a design's snapshots
+//
+// The kept snapshots, newest first, without their documents (at most 50).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-designs/{designId}/versions (the `ListEmailDesignVersions` operationId).
+func (c *Client) ListEmailDesignVersions(ctx context.Context, designId DesignId, params *ListEmailDesignVersionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListEmailDesignVersionsRequest(c.Server, designId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetEmailDesignVersion A snapshot with its document
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-designs/{designId}/versions/{version} (the `GetEmailDesignVersion` operationId).
+func (c *Client) GetEmailDesignVersion(ctx context.Context, designId DesignId, version DesignVersion, params *GetEmailDesignVersionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEmailDesignVersionRequest(c.Server, designId, version, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreEmailDesignVersionWithBody Restore a snapshot
+//
+// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+// same `base_version` check) and takes a `restored` snapshot of it.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+func (c *Client) RestoreEmailDesignVersionWithBody(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreEmailDesignVersionRequestWithBody(c.Server, designId, version, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RestoreEmailDesignVersion Restore a snapshot
+//
+// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+// same `base_version` check) and takes a `restored` snapshot of it.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+func (c *Client) RestoreEmailDesignVersion(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, body RestoreEmailDesignVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRestoreEmailDesignVersionRequest(c.Server, designId, version, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListEmailImages List the workspace's e-mail images
+//
+// Newest first.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-images (the `ListEmailImages` operationId).
+func (c *Client) ListEmailImages(ctx context.Context, params *ListEmailImagesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListEmailImagesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UploadEmailImageWithBody Upload an e-mail image
+//
+// One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+// JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+// over 40 megapixels or 8,000 pixels on a side are refused before decoding
+// (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+// colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+// as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+// as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+// refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+// (`422 image_too_large`).
+//
+// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+// the workspace's images would exceed the server's limit.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/email-images (the `UploadEmailImage` operationId).
+func (c *Client) UploadEmailImageWithBody(ctx context.Context, params *UploadEmailImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadEmailImageRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteEmailImage Delete an e-mail image
+//
+// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+// not archived uses the image. An image that went out in a sent broadcast needs
+// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+// image. The public URL stops working at once.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Corresponds with DELETE /v1/email-images/{imageId} (the `DeleteEmailImage` operationId).
+func (c *Client) DeleteEmailImage(ctx context.Context, imageId ImageId, params *DeleteEmailImageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteEmailImageRequest(c.Server, imageId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListEmailTemplates List the template gallery
+//
+// The starter designs that ship with the server, in gallery order, with the name and
+// description in `locale` (English when the template has no text in it).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-templates (the `ListEmailTemplates` operationId).
+func (c *Client) ListEmailTemplates(ctx context.Context, params *ListEmailTemplatesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListEmailTemplatesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetEmailTemplate A template with its design
+//
+// The template's design in `locale` (English when the template has no text in it). Its image
+// blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+// public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+// `template`, which copies the files into the workspace's images.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Corresponds with GET /v1/email-templates/{slug} (the `GetEmailTemplate` operationId).
+func (c *Client) GetEmailTemplate(ctx context.Context, slug TemplateSlug, params *GetEmailTemplateParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetEmailTemplateRequest(c.Server, slug, params)
 	if err != nil {
 		return nil, err
 	}
@@ -24977,6 +28182,1019 @@ func NewListDraftsRequest(server string, params *ListDraftsParams) (*http.Reques
 	return req, nil
 }
 
+// NewListEmailDesignsRequest constructs an http.Request for the ListEmailDesigns method
+func NewListEmailDesignsRequest(server string, params *ListEmailDesignsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Archived != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "archived", *params.Archived, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateEmailDesignRequest calls the generic CreateEmailDesign builder with application/json body
+func NewCreateEmailDesignRequest(server string, params *CreateEmailDesignParams, body CreateEmailDesignJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateEmailDesignRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateEmailDesignRequestWithBody constructs an http.Request for the CreateEmailDesign method, with any body, and a specified content type
+func NewCreateEmailDesignRequestWithBody(server string, params *CreateEmailDesignParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRenderEmailDesignRequest calls the generic RenderEmailDesign builder with application/json body
+func NewRenderEmailDesignRequest(server string, params *RenderEmailDesignParams, body RenderEmailDesignJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRenderEmailDesignRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewRenderEmailDesignRequestWithBody constructs an http.Request for the RenderEmailDesign method, with any body, and a specified content type
+func NewRenderEmailDesignRequestWithBody(server string, params *RenderEmailDesignParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/render")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewArchiveEmailDesignRequest constructs an http.Request for the ArchiveEmailDesign method
+func NewArchiveEmailDesignRequest(server string, designId DesignId, params *ArchiveEmailDesignParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetEmailDesignRequest constructs an http.Request for the GetEmailDesign method
+func NewGetEmailDesignRequest(server string, designId DesignId, params *GetEmailDesignParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateEmailDesignRequest calls the generic UpdateEmailDesign builder with application/json body
+func NewUpdateEmailDesignRequest(server string, designId DesignId, params *UpdateEmailDesignParams, body UpdateEmailDesignJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateEmailDesignRequestWithBody(server, designId, params, "application/json", bodyReader)
+}
+
+// NewUpdateEmailDesignRequestWithBody constructs an http.Request for the UpdateEmailDesign method, with any body, and a specified content type
+func NewUpdateEmailDesignRequestWithBody(server string, designId DesignId, params *UpdateEmailDesignParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDuplicateEmailDesignRequest calls the generic DuplicateEmailDesign builder with application/json body
+func NewDuplicateEmailDesignRequest(server string, designId DesignId, params *DuplicateEmailDesignParams, body DuplicateEmailDesignJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewDuplicateEmailDesignRequestWithBody(server, designId, params, "application/json", bodyReader)
+}
+
+// NewDuplicateEmailDesignRequestWithBody constructs an http.Request for the DuplicateEmailDesign method, with any body, and a specified content type
+func NewDuplicateEmailDesignRequestWithBody(server string, designId DesignId, params *DuplicateEmailDesignParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s/duplicate", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListEmailDesignVersionsRequest constructs an http.Request for the ListEmailDesignVersions method
+func NewListEmailDesignVersionsRequest(server string, designId DesignId, params *ListEmailDesignVersionsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s/versions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetEmailDesignVersionRequest constructs an http.Request for the GetEmailDesignVersion method
+func NewGetEmailDesignVersionRequest(server string, designId DesignId, version DesignVersion, params *GetEmailDesignVersionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "version", version, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s/versions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRestoreEmailDesignVersionRequest calls the generic RestoreEmailDesignVersion builder with application/json body
+func NewRestoreEmailDesignVersionRequest(server string, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, body RestoreEmailDesignVersionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewRestoreEmailDesignVersionRequestWithBody(server, designId, version, params, "application/json", bodyReader)
+}
+
+// NewRestoreEmailDesignVersionRequestWithBody constructs an http.Request for the RestoreEmailDesignVersion method, with any body, and a specified content type
+func NewRestoreEmailDesignVersionRequestWithBody(server string, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "designId", designId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "version", version, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-designs/%s/versions/%s/restore", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListEmailImagesRequest constructs an http.Request for the ListEmailImages method
+func NewListEmailImagesRequest(server string, params *ListEmailImagesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-images")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUploadEmailImageRequestWithBody constructs an http.Request for the UploadEmailImage method, with any body, and a specified content type
+func NewUploadEmailImageRequestWithBody(server string, params *UploadEmailImageParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-images")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteEmailImageRequest constructs an http.Request for the DeleteEmailImage method
+func NewDeleteEmailImageRequest(server string, imageId ImageId, params *DeleteEmailImageParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "imageId", imageId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-images/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Force != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "force", *params.Force, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListEmailTemplatesRequest constructs an http.Request for the ListEmailTemplates method
+func NewListEmailTemplatesRequest(server string, params *ListEmailTemplatesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-templates")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetEmailTemplateRequest constructs an http.Request for the GetEmailTemplate method
+func NewGetEmailTemplateRequest(server string, slug TemplateSlug, params *GetEmailTemplateParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "slug", slug, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/email-templates/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Locale != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locale", *params.Locale, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListEventsRequest constructs an http.Request for the ListEvents method
 func NewListEventsRequest(server string, params *ListEventsParams) (*http.Request, error) {
 	var err error
@@ -31619,6 +35837,287 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/drafts (the `ListDrafts` operationId).
 	ListDraftsWithResponse(ctx context.Context, params *ListDraftsParams, reqEditors ...RequestEditorFn) (*ListDraftsResponse, error)
+
+	// ListEmailDesignsWithResponse List e-mail designs
+	//
+	// Most recently saved first, without their documents. Archived designs are left out unless
+	// `archived=true`, which lists only them. `q` matches the name.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-designs (the `ListEmailDesigns` operationId).
+	ListEmailDesignsWithResponse(ctx context.Context, params *ListEmailDesignsParams, reqEditors ...RequestEditorFn) (*ListEmailDesignsResponse, error)
+
+	// CreateEmailDesignWithBodyWithResponse Create an e-mail design
+	//
+	// From a `document`, from a gallery `template` (its files become the workspace's images,
+	// reused when the same file is already there), or empty when neither is given. `inbox_id`
+	// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+	// the render's `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+	CreateEmailDesignWithBodyWithResponse(ctx context.Context, params *CreateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateEmailDesignResponse, error)
+
+	// CreateEmailDesignWithResponse Create an e-mail design
+	//
+	// From a `document`, from a gallery `template` (its files become the workspace's images,
+	// reused when the same file is already there), or empty when neither is given. `inbox_id`
+	// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+	// the render's `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+	CreateEmailDesignWithResponse(ctx context.Context, params *CreateEmailDesignParams, body CreateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateEmailDesignResponse, error)
+
+	// RenderEmailDesignWithBodyWithResponse Render a design
+	//
+	// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+	// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+	// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+	// without them sample values are used. `dark: true` renders the dark palette as the page's
+	// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+	// and preference pages point at an example token.
+	//
+	// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+	// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+	// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+	// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+	// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+	// refused (`422 html_too_large`). At most 120 renders a minute per caller
+	// (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+	RenderEmailDesignWithBodyWithResponse(ctx context.Context, params *RenderEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderEmailDesignResponse, error)
+
+	// RenderEmailDesignWithResponse Render a design
+	//
+	// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+	// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+	// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+	// without them sample values are used. `dark: true` renders the dark palette as the page's
+	// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+	// and preference pages point at an example token.
+	//
+	// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+	// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+	// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+	// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+	// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+	// refused (`422 html_too_large`). At most 120 renders a minute per caller
+	// (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+	RenderEmailDesignWithResponse(ctx context.Context, params *RenderEmailDesignParams, body RenderEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderEmailDesignResponse, error)
+
+	// ArchiveEmailDesignWithResponse Archive an e-mail design
+	//
+	// Hides the design from the default list; it keeps its document and versions, and saving it
+	// again brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/email-designs/{designId} (the `ArchiveEmailDesign` operationId).
+	ArchiveEmailDesignWithResponse(ctx context.Context, designId DesignId, params *ArchiveEmailDesignParams, reqEditors ...RequestEditorFn) (*ArchiveEmailDesignResponse, error)
+
+	// GetEmailDesignWithResponse An e-mail design
+	//
+	// The design with its document (upgraded to the newest `schema`) and the render's
+	// `warnings`.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-designs/{designId} (the `GetEmailDesign` operationId).
+	GetEmailDesignWithResponse(ctx context.Context, designId DesignId, params *GetEmailDesignParams, reqEditors ...RequestEditorFn) (*GetEmailDesignResponse, error)
+
+	// UpdateEmailDesignWithBodyWithResponse Save an e-mail design
+	//
+	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+	// from; when the design has moved on since, nothing is saved and the answer is
+	// `409 version_conflict` with the current design in `design`. Each save increases
+	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+	// `snapshot` is true. Saving an archived design brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+	UpdateEmailDesignWithBodyWithResponse(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateEmailDesignResponse, error)
+
+	// UpdateEmailDesignWithResponse Save an e-mail design
+	//
+	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+	// from; when the design has moved on since, nothing is saved and the answer is
+	// `409 version_conflict` with the current design in `design`. Each save increases
+	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+	// `snapshot` is true. Saving an archived design brings it back.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+	UpdateEmailDesignWithResponse(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, body UpdateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateEmailDesignResponse, error)
+
+	// DuplicateEmailDesignWithBodyWithResponse Copy an e-mail design
+	//
+	// A new design with the same inbox and document, named `name` or "<name> (copy)".
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+	DuplicateEmailDesignWithBodyWithResponse(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DuplicateEmailDesignResponse, error)
+
+	// DuplicateEmailDesignWithResponse Copy an e-mail design
+	//
+	// A new design with the same inbox and document, named `name` or "<name> (copy)".
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+	DuplicateEmailDesignWithResponse(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, body DuplicateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*DuplicateEmailDesignResponse, error)
+
+	// ListEmailDesignVersionsWithResponse List a design's snapshots
+	//
+	// The kept snapshots, newest first, without their documents (at most 50).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-designs/{designId}/versions (the `ListEmailDesignVersions` operationId).
+	ListEmailDesignVersionsWithResponse(ctx context.Context, designId DesignId, params *ListEmailDesignVersionsParams, reqEditors ...RequestEditorFn) (*ListEmailDesignVersionsResponse, error)
+
+	// GetEmailDesignVersionWithResponse A snapshot with its document
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-designs/{designId}/versions/{version} (the `GetEmailDesignVersion` operationId).
+	GetEmailDesignVersionWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *GetEmailDesignVersionParams, reqEditors ...RequestEditorFn) (*GetEmailDesignVersionResponse, error)
+
+	// RestoreEmailDesignVersionWithBodyWithResponse Restore a snapshot
+	//
+	// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+	// same `base_version` check) and takes a `restored` snapshot of it.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+	RestoreEmailDesignVersionWithBodyWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreEmailDesignVersionResponse, error)
+
+	// RestoreEmailDesignVersionWithResponse Restore a snapshot
+	//
+	// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+	// same `base_version` check) and takes a `restored` snapshot of it.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+	RestoreEmailDesignVersionWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, body RestoreEmailDesignVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreEmailDesignVersionResponse, error)
+
+	// ListEmailImagesWithResponse List the workspace's e-mail images
+	//
+	// Newest first.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-images (the `ListEmailImages` operationId).
+	ListEmailImagesWithResponse(ctx context.Context, params *ListEmailImagesParams, reqEditors ...RequestEditorFn) (*ListEmailImagesResponse, error)
+
+	// UploadEmailImageWithBodyWithResponse Upload an e-mail image
+	//
+	// One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+	// JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+	// over 40 megapixels or 8,000 pixels on a side are refused before decoding
+	// (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+	// colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+	// as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+	// as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+	// refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+	// (`422 image_too_large`).
+	//
+	// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+	// the workspace's images would exceed the server's limit.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/email-images (the `UploadEmailImage` operationId).
+	UploadEmailImageWithBodyWithResponse(ctx context.Context, params *UploadEmailImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadEmailImageResponse, error)
+
+	// DeleteEmailImageWithResponse Delete an e-mail image
+	//
+	// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+	// not archived uses the image. An image that went out in a sent broadcast needs
+	// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+	// image. The public URL stops working at once.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/email-images/{imageId} (the `DeleteEmailImage` operationId).
+	DeleteEmailImageWithResponse(ctx context.Context, imageId ImageId, params *DeleteEmailImageParams, reqEditors ...RequestEditorFn) (*DeleteEmailImageResponse, error)
+
+	// ListEmailTemplatesWithResponse List the template gallery
+	//
+	// The starter designs that ship with the server, in gallery order, with the name and
+	// description in `locale` (English when the template has no text in it).
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-templates (the `ListEmailTemplates` operationId).
+	ListEmailTemplatesWithResponse(ctx context.Context, params *ListEmailTemplatesParams, reqEditors ...RequestEditorFn) (*ListEmailTemplatesResponse, error)
+
+	// GetEmailTemplateWithResponse A template with its design
+	//
+	// The template's design in `locale` (English when the template has no text in it). Its image
+	// blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+	// public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+	// `template`, which copies the files into the workspace's images.
+	//
+	// Owners, admins and API keys. Scope: `broadcasts:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/email-templates/{slug} (the `GetEmailTemplate` operationId).
+	GetEmailTemplateWithResponse(ctx context.Context, slug TemplateSlug, params *GetEmailTemplateParams, reqEditors ...RequestEditorFn) (*GetEmailTemplateResponse, error)
 
 	// ListEventsWithResponse Events after a cursor
 	//
@@ -40027,6 +44526,1104 @@ func (r ListDraftsResponse) ContentType() string {
 	return ""
 }
 
+type ListEmailDesignsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesignPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListEmailDesignsResponse) GetJSON200() *EmailDesignPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListEmailDesignsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListEmailDesignsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListEmailDesignsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListEmailDesignsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListEmailDesignsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListEmailDesignsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListEmailDesignsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListEmailDesignsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *EmailDesign
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *EmailDesignProblem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *EmailDesignProblem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateEmailDesignResponse) GetJSON201() *EmailDesign {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON413() *EmailDesignProblem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateEmailDesignResponse) GetApplicationproblemJSON422() *EmailDesignProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RenderEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesignRender
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *EmailDesignProblem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *EmailDesignProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RenderEmailDesignResponse) GetJSON200() *EmailDesignRender {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON413() *EmailDesignProblem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON422() *EmailDesignProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r RenderEmailDesignResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r RenderEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RenderEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RenderEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RenderEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ArchiveEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ArchiveEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ArchiveEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ArchiveEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ArchiveEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ArchiveEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ArchiveEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ArchiveEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesign
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetEmailDesignResponse) GetJSON200() *EmailDesign {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesign
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *EmailDesignProblem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *EmailDesignProblem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *EmailDesignProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateEmailDesignResponse) GetJSON200() *EmailDesign {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON409() *EmailDesignProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON413() *EmailDesignProblem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UpdateEmailDesignResponse) GetApplicationproblemJSON422() *EmailDesignProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DuplicateEmailDesignResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *EmailDesign
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r DuplicateEmailDesignResponse) GetJSON201() *EmailDesign {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r DuplicateEmailDesignResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DuplicateEmailDesignResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DuplicateEmailDesignResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DuplicateEmailDesignResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DuplicateEmailDesignResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DuplicateEmailDesignResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DuplicateEmailDesignResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DuplicateEmailDesignResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListEmailDesignVersionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesignVersionList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListEmailDesignVersionsResponse) GetJSON200() *EmailDesignVersionList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListEmailDesignVersionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListEmailDesignVersionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListEmailDesignVersionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListEmailDesignVersionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListEmailDesignVersionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListEmailDesignVersionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListEmailDesignVersionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetEmailDesignVersionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesignVersionDetail
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetEmailDesignVersionResponse) GetJSON200() *EmailDesignVersionDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetEmailDesignVersionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetEmailDesignVersionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetEmailDesignVersionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetEmailDesignVersionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetEmailDesignVersionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEmailDesignVersionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEmailDesignVersionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetEmailDesignVersionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RestoreEmailDesignVersionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailDesign
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *EmailDesignProblem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *EmailDesignProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RestoreEmailDesignVersionResponse) GetJSON200() *EmailDesign {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON409() *EmailDesignProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r RestoreEmailDesignVersionResponse) GetApplicationproblemJSON422() *EmailDesignProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r RestoreEmailDesignVersionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RestoreEmailDesignVersionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RestoreEmailDesignVersionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RestoreEmailDesignVersionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListEmailImagesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailImagePage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListEmailImagesResponse) GetJSON200() *EmailImagePage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListEmailImagesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListEmailImagesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListEmailImagesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListEmailImagesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListEmailImagesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListEmailImagesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListEmailImagesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UploadEmailImageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailImage
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *EmailImage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON415 the response for an HTTP 415 `application/problem+json` response
+	ApplicationproblemJSON415 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UploadEmailImageResponse) GetJSON200() *EmailImage {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r UploadEmailImageResponse) GetJSON201() *EmailImage {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON415 returns the response for an HTTP 415 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON415() *Problem {
+	return r.ApplicationproblemJSON415
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UploadEmailImageResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UploadEmailImageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UploadEmailImageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UploadEmailImageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UploadEmailImageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteEmailImageResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *EmailImageProblem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r DeleteEmailImageResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteEmailImageResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteEmailImageResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteEmailImageResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteEmailImageResponse) GetApplicationproblemJSON409() *EmailImageProblem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteEmailImageResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteEmailImageResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteEmailImageResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteEmailImageResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListEmailTemplatesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailTemplateList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListEmailTemplatesResponse) GetJSON200() *EmailTemplateList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListEmailTemplatesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListEmailTemplatesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListEmailTemplatesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListEmailTemplatesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListEmailTemplatesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListEmailTemplatesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListEmailTemplatesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetEmailTemplateResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *EmailTemplateDetail
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetEmailTemplateResponse) GetJSON200() *EmailTemplateDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetEmailTemplateResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetEmailTemplateResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetEmailTemplateResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetEmailTemplateResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetEmailTemplateResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetEmailTemplateResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetEmailTemplateResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetEmailTemplateResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListEventsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -48177,6 +53774,407 @@ func (c *ClientWithResponses) ListDraftsWithResponse(ctx context.Context, params
 	return ParseListDraftsResponse(rsp)
 }
 
+// ListEmailDesignsWithResponse List e-mail designs
+//
+// Most recently saved first, without their documents. Archived designs are left out unless
+// `archived=true`, which lists only them. `q` matches the name.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-designs (the `ListEmailDesigns` operationId).
+func (c *ClientWithResponses) ListEmailDesignsWithResponse(ctx context.Context, params *ListEmailDesignsParams, reqEditors ...RequestEditorFn) (*ListEmailDesignsResponse, error) {
+	rsp, err := c.ListEmailDesigns(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListEmailDesignsResponse(rsp)
+}
+
+// CreateEmailDesignWithBodyWithResponse Create an e-mail design
+//
+// From a `document`, from a gallery `template` (its files become the workspace's images,
+// reused when the same file is already there), or empty when neither is given. `inbox_id`
+// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+// the render's `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+func (c *ClientWithResponses) CreateEmailDesignWithBodyWithResponse(ctx context.Context, params *CreateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateEmailDesignResponse, error) {
+	rsp, err := c.CreateEmailDesignWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateEmailDesignResponse(rsp)
+}
+
+// CreateEmailDesignWithResponse Create an e-mail design
+//
+// From a `document`, from a gallery `template` (its files become the workspace's images,
+// reused when the same file is already there), or empty when neither is given. `inbox_id`
+// ties the design to an inbox; without it the design is workspace-wide. The answer carries
+// the render's `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs (the `CreateEmailDesign` operationId).
+func (c *ClientWithResponses) CreateEmailDesignWithResponse(ctx context.Context, params *CreateEmailDesignParams, body CreateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateEmailDesignResponse, error) {
+	rsp, err := c.CreateEmailDesign(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateEmailDesignResponse(rsp)
+}
+
+// RenderEmailDesignWithBodyWithResponse Render a design
+//
+// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+// without them sample values are used. `dark: true` renders the dark palette as the page's
+// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+// and preference pages point at an example token.
+//
+// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+// refused (`422 html_too_large`). At most 120 renders a minute per caller
+// (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+func (c *ClientWithResponses) RenderEmailDesignWithBodyWithResponse(ctx context.Context, params *RenderEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RenderEmailDesignResponse, error) {
+	rsp, err := c.RenderEmailDesignWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderEmailDesignResponse(rsp)
+}
+
+// RenderEmailDesignWithResponse Render a design
+//
+// Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+// HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+// language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+// without them sample values are used. `dark: true` renders the dark palette as the page's
+// own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+// and preference pages point at an example token.
+//
+// Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+// `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+// 102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+// not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+// (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+// refused (`422 html_too_large`). At most 120 renders a minute per caller
+// (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/render (the `RenderEmailDesign` operationId).
+func (c *ClientWithResponses) RenderEmailDesignWithResponse(ctx context.Context, params *RenderEmailDesignParams, body RenderEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*RenderEmailDesignResponse, error) {
+	rsp, err := c.RenderEmailDesign(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRenderEmailDesignResponse(rsp)
+}
+
+// ArchiveEmailDesignWithResponse Archive an e-mail design
+//
+// Hides the design from the default list; it keeps its document and versions, and saving it
+// again brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/email-designs/{designId} (the `ArchiveEmailDesign` operationId).
+func (c *ClientWithResponses) ArchiveEmailDesignWithResponse(ctx context.Context, designId DesignId, params *ArchiveEmailDesignParams, reqEditors ...RequestEditorFn) (*ArchiveEmailDesignResponse, error) {
+	rsp, err := c.ArchiveEmailDesign(ctx, designId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseArchiveEmailDesignResponse(rsp)
+}
+
+// GetEmailDesignWithResponse An e-mail design
+//
+// The design with its document (upgraded to the newest `schema`) and the render's
+// `warnings`.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-designs/{designId} (the `GetEmailDesign` operationId).
+func (c *ClientWithResponses) GetEmailDesignWithResponse(ctx context.Context, designId DesignId, params *GetEmailDesignParams, reqEditors ...RequestEditorFn) (*GetEmailDesignResponse, error) {
+	rsp, err := c.GetEmailDesign(ctx, designId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEmailDesignResponse(rsp)
+}
+
+// UpdateEmailDesignWithBodyWithResponse Save an e-mail design
+//
+// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+// from; when the design has moved on since, nothing is saved and the answer is
+// `409 version_conflict` with the current design in `design`. Each save increases
+// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+// `snapshot` is true. Saving an archived design brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+func (c *ClientWithResponses) UpdateEmailDesignWithBodyWithResponse(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateEmailDesignResponse, error) {
+	rsp, err := c.UpdateEmailDesignWithBody(ctx, designId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateEmailDesignResponse(rsp)
+}
+
+// UpdateEmailDesignWithResponse Save an e-mail design
+//
+// Replaces the name, inbox and document. `base_version` is the `version` the edit started
+// from; when the design has moved on since, nothing is saved and the answer is
+// `409 version_conflict` with the current design in `design`. Each save increases
+// `version` by one and takes a snapshot when the newest is older than 10 minutes or
+// `snapshot` is true. Saving an archived design brings it back.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/email-designs/{designId} (the `UpdateEmailDesign` operationId).
+func (c *ClientWithResponses) UpdateEmailDesignWithResponse(ctx context.Context, designId DesignId, params *UpdateEmailDesignParams, body UpdateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateEmailDesignResponse, error) {
+	rsp, err := c.UpdateEmailDesign(ctx, designId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateEmailDesignResponse(rsp)
+}
+
+// DuplicateEmailDesignWithBodyWithResponse Copy an e-mail design
+//
+// A new design with the same inbox and document, named `name` or "<name> (copy)".
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+func (c *ClientWithResponses) DuplicateEmailDesignWithBodyWithResponse(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*DuplicateEmailDesignResponse, error) {
+	rsp, err := c.DuplicateEmailDesignWithBody(ctx, designId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDuplicateEmailDesignResponse(rsp)
+}
+
+// DuplicateEmailDesignWithResponse Copy an e-mail design
+//
+// A new design with the same inbox and document, named `name` or "<name> (copy)".
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/{designId}/duplicate (the `DuplicateEmailDesign` operationId).
+func (c *ClientWithResponses) DuplicateEmailDesignWithResponse(ctx context.Context, designId DesignId, params *DuplicateEmailDesignParams, body DuplicateEmailDesignJSONRequestBody, reqEditors ...RequestEditorFn) (*DuplicateEmailDesignResponse, error) {
+	rsp, err := c.DuplicateEmailDesign(ctx, designId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDuplicateEmailDesignResponse(rsp)
+}
+
+// ListEmailDesignVersionsWithResponse List a design's snapshots
+//
+// The kept snapshots, newest first, without their documents (at most 50).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-designs/{designId}/versions (the `ListEmailDesignVersions` operationId).
+func (c *ClientWithResponses) ListEmailDesignVersionsWithResponse(ctx context.Context, designId DesignId, params *ListEmailDesignVersionsParams, reqEditors ...RequestEditorFn) (*ListEmailDesignVersionsResponse, error) {
+	rsp, err := c.ListEmailDesignVersions(ctx, designId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListEmailDesignVersionsResponse(rsp)
+}
+
+// GetEmailDesignVersionWithResponse A snapshot with its document
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-designs/{designId}/versions/{version} (the `GetEmailDesignVersion` operationId).
+func (c *ClientWithResponses) GetEmailDesignVersionWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *GetEmailDesignVersionParams, reqEditors ...RequestEditorFn) (*GetEmailDesignVersionResponse, error) {
+	rsp, err := c.GetEmailDesignVersion(ctx, designId, version, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEmailDesignVersionResponse(rsp)
+}
+
+// RestoreEmailDesignVersionWithBodyWithResponse Restore a snapshot
+//
+// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+// same `base_version` check) and takes a `restored` snapshot of it.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+func (c *ClientWithResponses) RestoreEmailDesignVersionWithBodyWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RestoreEmailDesignVersionResponse, error) {
+	rsp, err := c.RestoreEmailDesignVersionWithBody(ctx, designId, version, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreEmailDesignVersionResponse(rsp)
+}
+
+// RestoreEmailDesignVersionWithResponse Restore a snapshot
+//
+// Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+// same `base_version` check) and takes a `restored` snapshot of it.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-designs/{designId}/versions/{version}/restore (the `RestoreEmailDesignVersion` operationId).
+func (c *ClientWithResponses) RestoreEmailDesignVersionWithResponse(ctx context.Context, designId DesignId, version DesignVersion, params *RestoreEmailDesignVersionParams, body RestoreEmailDesignVersionJSONRequestBody, reqEditors ...RequestEditorFn) (*RestoreEmailDesignVersionResponse, error) {
+	rsp, err := c.RestoreEmailDesignVersion(ctx, designId, version, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRestoreEmailDesignVersionResponse(rsp)
+}
+
+// ListEmailImagesWithResponse List the workspace's e-mail images
+//
+// Newest first.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-images (the `ListEmailImages` operationId).
+func (c *ClientWithResponses) ListEmailImagesWithResponse(ctx context.Context, params *ListEmailImagesParams, reqEditors ...RequestEditorFn) (*ListEmailImagesResponse, error) {
+	rsp, err := c.ListEmailImages(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListEmailImagesResponse(rsp)
+}
+
+// UploadEmailImageWithBodyWithResponse Upload an e-mail image
+//
+// One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+// JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+// over 40 megapixels or 8,000 pixels on a side are refused before decoding
+// (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+// colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+// as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+// as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+// refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+// (`422 image_too_large`).
+//
+// The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+// the workspace's images would exceed the server's limit.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/email-images (the `UploadEmailImage` operationId).
+func (c *ClientWithResponses) UploadEmailImageWithBodyWithResponse(ctx context.Context, params *UploadEmailImageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadEmailImageResponse, error) {
+	rsp, err := c.UploadEmailImageWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadEmailImageResponse(rsp)
+}
+
+// DeleteEmailImageWithResponse Delete an e-mail image
+//
+// Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+// not archived uses the image. An image that went out in a sent broadcast needs
+// `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+// image. The public URL stops working at once.
+//
+// Owners, admins and API keys. Scope: `broadcasts:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/email-images/{imageId} (the `DeleteEmailImage` operationId).
+func (c *ClientWithResponses) DeleteEmailImageWithResponse(ctx context.Context, imageId ImageId, params *DeleteEmailImageParams, reqEditors ...RequestEditorFn) (*DeleteEmailImageResponse, error) {
+	rsp, err := c.DeleteEmailImage(ctx, imageId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteEmailImageResponse(rsp)
+}
+
+// ListEmailTemplatesWithResponse List the template gallery
+//
+// The starter designs that ship with the server, in gallery order, with the name and
+// description in `locale` (English when the template has no text in it).
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-templates (the `ListEmailTemplates` operationId).
+func (c *ClientWithResponses) ListEmailTemplatesWithResponse(ctx context.Context, params *ListEmailTemplatesParams, reqEditors ...RequestEditorFn) (*ListEmailTemplatesResponse, error) {
+	rsp, err := c.ListEmailTemplates(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListEmailTemplatesResponse(rsp)
+}
+
+// GetEmailTemplateWithResponse A template with its design
+//
+// The template's design in `locale` (English when the template has no text in it). Its image
+// blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+// public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+// `template`, which copies the files into the workspace's images.
+//
+// Owners, admins and API keys. Scope: `broadcasts:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/email-templates/{slug} (the `GetEmailTemplate` operationId).
+func (c *ClientWithResponses) GetEmailTemplateWithResponse(ctx context.Context, slug TemplateSlug, params *GetEmailTemplateParams, reqEditors ...RequestEditorFn) (*GetEmailTemplateResponse, error) {
+	rsp, err := c.GetEmailTemplate(ctx, slug, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetEmailTemplateResponse(rsp)
+}
+
 // ListEventsWithResponse Events after a cursor
 //
 // The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
@@ -55666,6 +61664,885 @@ func ParseListDraftsResponse(rsp *http.Response) (*ListDraftsResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest DraftPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListEmailDesignsResponse parses an HTTP response from a ListEmailDesignsWithResponse call
+func ParseListEmailDesignsResponse(rsp *http.Response) (*ListEmailDesignsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListEmailDesignsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesignPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateEmailDesignResponse parses an HTTP response from a CreateEmailDesignWithResponse call
+func ParseCreateEmailDesignResponse(rsp *http.Response) (*CreateEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest EmailDesign
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRenderEmailDesignResponse parses an HTTP response from a RenderEmailDesignWithResponse call
+func ParseRenderEmailDesignResponse(rsp *http.Response) (*RenderEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RenderEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesignRender
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseArchiveEmailDesignResponse parses an HTTP response from a ArchiveEmailDesignWithResponse call
+func ParseArchiveEmailDesignResponse(rsp *http.Response) (*ArchiveEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ArchiveEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEmailDesignResponse parses an HTTP response from a GetEmailDesignWithResponse call
+func ParseGetEmailDesignResponse(rsp *http.Response) (*GetEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesign
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateEmailDesignResponse parses an HTTP response from a UpdateEmailDesignWithResponse call
+func ParseUpdateEmailDesignResponse(rsp *http.Response) (*UpdateEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesign
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDuplicateEmailDesignResponse parses an HTTP response from a DuplicateEmailDesignWithResponse call
+func ParseDuplicateEmailDesignResponse(rsp *http.Response) (*DuplicateEmailDesignResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DuplicateEmailDesignResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest EmailDesign
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListEmailDesignVersionsResponse parses an HTTP response from a ListEmailDesignVersionsWithResponse call
+func ParseListEmailDesignVersionsResponse(rsp *http.Response) (*ListEmailDesignVersionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListEmailDesignVersionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesignVersionList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEmailDesignVersionResponse parses an HTTP response from a GetEmailDesignVersionWithResponse call
+func ParseGetEmailDesignVersionResponse(rsp *http.Response) (*GetEmailDesignVersionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEmailDesignVersionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesignVersionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRestoreEmailDesignVersionResponse parses an HTTP response from a RestoreEmailDesignVersionWithResponse call
+func ParseRestoreEmailDesignVersionResponse(rsp *http.Response) (*RestoreEmailDesignVersionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RestoreEmailDesignVersionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailDesign
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest EmailDesignProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListEmailImagesResponse parses an HTTP response from a ListEmailImagesWithResponse call
+func ParseListEmailImagesResponse(rsp *http.Response) (*ListEmailImagesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListEmailImagesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailImagePage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUploadEmailImageResponse parses an HTTP response from a UploadEmailImageWithResponse call
+func ParseUploadEmailImageResponse(rsp *http.Response) (*UploadEmailImageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UploadEmailImageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest EmailImage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON415 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteEmailImageResponse parses an HTTP response from a DeleteEmailImageWithResponse call
+func ParseDeleteEmailImageResponse(rsp *http.Response) (*DeleteEmailImageResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteEmailImageResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest EmailImageProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListEmailTemplatesResponse parses an HTTP response from a ListEmailTemplatesWithResponse call
+func ParseListEmailTemplatesResponse(rsp *http.Response) (*ListEmailTemplatesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListEmailTemplatesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailTemplateList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetEmailTemplateResponse parses an HTTP response from a GetEmailTemplateWithResponse call
+func ParseGetEmailTemplateResponse(rsp *http.Response) (*GetEmailTemplateResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetEmailTemplateResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest EmailTemplateDetail
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

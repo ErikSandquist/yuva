@@ -139,6 +139,56 @@ tags:
       `/m/{token}` also takes the RFC 8058 one-click `POST` (`List-Unsubscribe=One-Click`).
       Pending subscriptions are deleted after 30 days, unsubscribed ones and their consent events
       after 3 years.
+  - name: designs
+    description: |
+      E-mail designs for broadcasts, the images they use and the template gallery. A design is an
+      `EmailDesignDocument`: blocks (section, columns, heading, text, image, button, divider, spacer,
+      social, footer) and a theme. The server renders it to table HTML with inline styles and a
+      plain-text part (`POST /v1/email-designs/render`) and always adds the required footer last:
+      the inbox's sender identity (`Inbox.sender`), why the person gets the mail, and the
+      unsubscribe and preference links.
+
+      Owners, admins, API keys and OAuth tokens with `broadcasts:read` or `broadcasts:write`;
+      agents get `403 forbidden`. A key limited to inboxes reads the designs of its inboxes and the
+      workspace-wide ones (no `inbox_id`), and writes only designs of its inboxes; designs of other
+      inboxes answer `404`.
+
+      Rich text (`text.html`, `footer.html` and, without `p` and lists, `heading.text`) is a subset
+      of HTML: `p`, `br`, `strong`, `em`, `u`, `s`, `a` with `href`, `ul`, `ol`, `li`, `code`, and no
+      other attribute. Every write sanitises it and refuses a document whose rich text sanitising
+      would change (`422 invalid_rich_text`, naming the block), so what is stored is exactly what
+      was sent. Links are `https`, `http`, `mailto` or `tel` URLs of at most 2,048 characters.
+      Styles are never stored; the renderer adds them.
+
+      Merge fields `{{ contact.first_name | "there" }}` work in headings, text, button labels,
+      footer text, the preheader and the query of button and link URLs: `contact.name`,
+      `contact.first_name`, `contact.email`, `contact.attributes.<key>`, `inbox.name`,
+      `list.name`, `unsubscribe_url` and `preferences_url`. Unknown fields are refused
+      (`422 unknown_merge_field`); a fallback is at most 100 characters. Values are escaped where
+      they land and never become markup.
+
+      `schema` is the format version of a document. The server upgrades older documents on read and
+      write and refuses newer ones (`422 unsupported_schema`), so an older server never changes a
+      newer document. Invalid documents answer `422 invalid_design` with one entry in `errors` per
+      problem (`block_id`, `field`, `code`); a document over 300 KiB of JSON or 200 blocks answers
+      `413 design_too_large`.
+
+      Saves are optimistic: `PUT` sends the `version` it started from as `base_version`; when
+      someone saved in between it answers `409 version_conflict` with the current design in
+      `design`. The server keeps the newest 50 snapshots of a design (`versions`): one at most every
+      10 minutes of editing, one when a save asks for it (`snapshot: true`) and one on every
+      restore.
+
+      Images are uploaded (PNG, JPEG, GIF, WebP; never SVG), re-encoded without metadata and at
+      most 1,200 pixels wide (WebP is stored as PNG or JPEG) and served publicly at
+      `/i/{token}` (the image's `url`): no cookies, `Cache-Control: public, max-age=31536000,
+      immutable`, an `ETag`, and nothing recorded per request. Designs use only the workspace's
+      own images. The images of a workspace count towards `YUVA_EMAIL_IMAGES_MAX_BYTES`
+      (`409 image_quota`).
+
+      The gallery (`/v1/email-templates`) holds the starter designs that ship with the server
+      (`templates/email` in the repository, MIT) in English, Turkish and German. Their previews are
+      public at `/email-templates/{slug}/{locale}.html` and `/email-templates/{slug}/{locale}.webp`.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -4432,6 +4482,529 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/email-templates:
+    get:
+      operationId: listEmailTemplates
+      summary: List the template gallery
+      description: |
+        The starter designs that ship with the server, in gallery order, with the name and
+        description in `locale` (English when the template has no text in it).
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/TemplateLocale"
+      responses:
+        "200":
+          description: The templates.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailTemplateList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+  /v1/email-templates/{slug}:
+    get:
+      operationId: getEmailTemplate
+      summary: A template with its design
+      description: |
+        The template's design in `locale` (English when the template has no text in it). Its image
+        blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+        public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+        `template`, which copies the files into the workspace's images.
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/TemplateSlug"
+        - $ref: "#/components/parameters/TemplateLocale"
+      responses:
+        "200":
+          description: The template.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailTemplateDetail"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs:
+    get:
+      operationId: listEmailDesigns
+      summary: List e-mail designs
+      description: |
+        Most recently saved first, without their documents. Archived designs are left out unless
+        `archived=true`, which lists only them. `q` matches the name.
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          description: Only the designs of this inbox.
+          schema:
+            type: string
+            format: uuid
+        - name: q
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 200
+        - name: archived
+          in: query
+          schema:
+            type: boolean
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of designs.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesignPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createEmailDesign
+      summary: Create an e-mail design
+      description: |
+        From a `document`, from a gallery `template` (its files become the workspace's images,
+        reused when the same file is already there), or empty when neither is given. `inbox_id`
+        ties the design to an inbox; without it the design is workspace-wide. The answer carries
+        the render's `warnings`.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailDesignCreate"
+      responses:
+        "201":
+          description: The design.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesign"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "422":
+          $ref: "#/components/responses/EmailDesignProblem"
+  /v1/email-designs/render:
+    post:
+      operationId: renderEmailDesign
+      summary: Render a design
+      description: |
+        Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+        HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+        language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+        without them sample values are used. `dark: true` renders the dark palette as the page's
+        own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+        and preference pages point at an example token.
+
+        Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+        `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+        102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+        not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+        (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+        refused (`422 html_too_large`). At most 120 renders a minute per caller
+        (`429 rate_limited`).
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailDesignRenderRequest"
+      responses:
+        "200":
+          description: The rendered mail.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesignRender"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "422":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs/{designId}:
+    get:
+      operationId: getEmailDesign
+      summary: An e-mail design
+      description: |
+        The design with its document (upgraded to the newest `schema`) and the render's
+        `warnings`.
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+      responses:
+        "200":
+          description: The design.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesign"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    put:
+      operationId: updateEmailDesign
+      summary: Save an e-mail design
+      description: |
+        Replaces the name, inbox and document. `base_version` is the `version` the edit started
+        from; when the design has moved on since, nothing is saved and the answer is
+        `409 version_conflict` with the current design in `design`. Each save increases
+        `version` by one and takes a snapshot when the newest is older than 10 minutes or
+        `snapshot` is true. Saving an archived design brings it back.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailDesignUpdate"
+      responses:
+        "200":
+          description: The saved design.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesign"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "413":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "422":
+          $ref: "#/components/responses/EmailDesignProblem"
+    delete:
+      operationId: archiveEmailDesign
+      summary: Archive an e-mail design
+      description: |
+        Hides the design from the default list; it keeps its document and versions, and saving it
+        again brings it back.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+      responses:
+        "204":
+          description: Archived.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs/{designId}/duplicate:
+    post:
+      operationId: duplicateEmailDesign
+      summary: Copy an e-mail design
+      description: |
+        A new design with the same inbox and document, named `name` or "<name> (copy)".
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailDesignDuplicate"
+      responses:
+        "201":
+          description: The copy.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesign"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs/{designId}/versions:
+    get:
+      operationId: listEmailDesignVersions
+      summary: List a design's snapshots
+      description: |
+        The kept snapshots, newest first, without their documents (at most 50).
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+      responses:
+        "200":
+          description: The snapshots.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesignVersionList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs/{designId}/versions/{version}:
+    get:
+      operationId: getEmailDesignVersion
+      summary: A snapshot with its document
+      description: "Owners, admins and API keys. Scope: `broadcasts:read`."
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+        - $ref: "#/components/parameters/DesignVersion"
+      responses:
+        "200":
+          description: The snapshot.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesignVersionDetail"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/email-designs/{designId}/versions/{version}/restore:
+    post:
+      operationId: restoreEmailDesignVersion
+      summary: Restore a snapshot
+      description: |
+        Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+        same `base_version` check) and takes a `restored` snapshot of it.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DesignId"
+        - $ref: "#/components/parameters/DesignVersion"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmailDesignRestore"
+      responses:
+        "200":
+          description: The design.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailDesign"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/EmailDesignProblem"
+        "422":
+          $ref: "#/components/responses/EmailDesignProblem"
+  /v1/email-images:
+    get:
+      operationId: listEmailImages
+      summary: List the workspace's e-mail images
+      description: |
+        Newest first.
+
+        Owners, admins and API keys. Scope: `broadcasts:read`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of images.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailImagePage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: uploadEmailImage
+      summary: Upload an e-mail image
+      description: |
+        One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+        JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+        over 40 megapixels or 8,000 pixels on a side are refused before decoding
+        (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+        colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+        as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+        as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+        refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+        (`422 image_too_large`).
+
+        The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+        the workspace's images would exceed the server's limit.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/EmailImageUpload"
+      responses:
+        "200":
+          description: The same image was already uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailImage"
+        "201":
+          description: The image.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmailImage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/email-images/{imageId}:
+    delete:
+      operationId: deleteEmailImage
+      summary: Delete an e-mail image
+      description: |
+        Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+        not archived uses the image. An image that went out in a sent broadcast needs
+        `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+        image. The public URL stops working at once.
+
+        Owners, admins and API keys. Scope: `broadcasts:write`.
+      tags: [designs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ImageId"
+        - name: force
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "204":
+          description: Deleted.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          description: The image is in use or was sent.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/EmailImageProblem"
   /v1/usage:
     get:
       operationId: getUsage
@@ -7190,6 +7763,42 @@ components:
       schema:
         type: string
         format: uuid
+    DesignId:
+      name: designId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    DesignVersion:
+      name: version
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+    ImageId:
+      name: imageId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TemplateSlug:
+      name: slug
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+        maxLength: 60
+    TemplateLocale:
+      name: locale
+      in: query
+      description: The language of the template's text; English by default.
+      schema:
+        $ref: "#/components/schemas/EmailTemplateLocale"
     SubscriptionId:
       name: subscriptionId
       in: path
@@ -7267,6 +7876,12 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
+    EmailDesignProblem:
+      description: The design was refused; `errors` names each problem.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/EmailDesignProblem"
     IngressRejection:
       description: The message is refused; `reason` is shown to the sender.
       content:
@@ -7632,8 +8247,11 @@ components:
         - `lists:read`: mailing lists, subscriptions, growth, consent exports.
         - `lists:write`: create, change and delete lists; add, unsubscribe and delete
           subscribers; resend confirmations.
-        - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
-          cannot hold them yet.
+        - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
+          gallery.
+        - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
+          images.
+        - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
 
         `lists:*` and `broadcasts:*` are never added to keys made before they existed.
       enum:
@@ -13243,6 +13861,872 @@ components:
             `invite`: only people with an invite (or an existing account) can sign in to the panel.
             `open`: anyone can sign in with an e-mailed code and create a workspace
             (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.
+    EmailColor:
+      type: string
+      pattern: "^#[0-9a-fA-F]{6}$"
+      examples: ["#2563eb"]
+    EmailFont:
+      type: string
+      description: |
+        A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
+        `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
+        `serif` Georgia and Times New Roman, `mono` the platform's monospace font.
+      enum: [system, humanist, geometric, serif, mono]
+      x-enum-varnames: [EmailFontSystem, EmailFontHumanist, EmailFontGeometric, EmailFontSerif, EmailFontMono]
+    EmailUrl:
+      type: string
+      minLength: 1
+      maxLength: 2048
+      description: |
+        An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+        query, where their values are URL-escaped.
+      examples: ["https://example.com/news?ref=mail"]
+    EmailThemeColors:
+      type: object
+      required: [page, card, text, muted, accent, link, border]
+      properties:
+        page:
+          $ref: "#/components/schemas/EmailColor"
+          description: Behind the card.
+        card:
+          $ref: "#/components/schemas/EmailColor"
+          description: The content's background.
+        text:
+          $ref: "#/components/schemas/EmailColor"
+        muted:
+          $ref: "#/components/schemas/EmailColor"
+          description: Secondary text and the required footer.
+        accent:
+          $ref: "#/components/schemas/EmailColor"
+          description: Buttons and highlights.
+        link:
+          $ref: "#/components/schemas/EmailColor"
+        border:
+          $ref: "#/components/schemas/EmailColor"
+          description: Dividers and outlines.
+    EmailThemeDarkColors:
+      type: object
+      description: |
+        Colours for readers in dark mode. A missing one is derived from its light colour: the same
+        hue, dark backgrounds, text raised to 4.5:1 contrast.
+      properties:
+        page:
+          $ref: "#/components/schemas/EmailColor"
+        card:
+          $ref: "#/components/schemas/EmailColor"
+        text:
+          $ref: "#/components/schemas/EmailColor"
+        muted:
+          $ref: "#/components/schemas/EmailColor"
+        accent:
+          $ref: "#/components/schemas/EmailColor"
+        link:
+          $ref: "#/components/schemas/EmailColor"
+        border:
+          $ref: "#/components/schemas/EmailColor"
+    EmailTheme:
+      type: object
+      required: [width, font, colors]
+      properties:
+        width:
+          type: integer
+          format: int32
+          minimum: 480
+          maximum: 720
+          description: The content width in pixels on wide screens; 600 is the usual.
+        direction:
+          type: string
+          enum: [ltr, rtl, auto]
+          x-enum-varnames: [EmailDirectionLtr, EmailDirectionRtl, EmailDirectionAuto]
+          default: auto
+          description: "`rtl` lays the mail out right to left; `auto` lets each text follow its own script."
+        font:
+          $ref: "#/components/schemas/EmailFont"
+        heading_font:
+          $ref: "#/components/schemas/EmailFont"
+          description: Headings; the body font when absent.
+        radius:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 24
+          description: Corner radius of the card, sections, buttons and images in pixels; 0 when absent.
+        colors:
+          $ref: "#/components/schemas/EmailThemeColors"
+        dark:
+          $ref: "#/components/schemas/EmailThemeDarkColors"
+    EmailAlign:
+      type: string
+      description: Mirrored in right-to-left designs.
+      enum: [left, center, right]
+      x-enum-varnames: [EmailAlignLeft, EmailAlignCenter, EmailAlignRight]
+    EmailHide:
+      type: string
+      description: Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+      enum: [none, mobile, desktop]
+      default: none
+      x-enum-varnames: [EmailHideNone, EmailHideMobile, EmailHideDesktop]
+    EmailBlockBase:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: string
+          pattern: "^[A-Za-z0-9_-]{1,32}$"
+          description: Chosen by the client, unique in the document; validation errors and warnings name it.
+        padding:
+          type: array
+          description: Top, right, bottom and left padding in pixels; the block's default when absent.
+          minItems: 4
+          maxItems: 4
+          items:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 64
+        background:
+          $ref: "#/components/schemas/EmailColor"
+        align:
+          $ref: "#/components/schemas/EmailAlign"
+        hide:
+          $ref: "#/components/schemas/EmailHide"
+    EmailSectionBlock:
+      description: A group of blocks on its own background. Sections do not nest.
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, blocks]
+          properties:
+            type:
+              type: string
+              enum: [section]
+              x-enum-varnames: [EmailBlockSection]
+            blocks:
+              type: array
+              maxItems: 100
+              items:
+                $ref: "#/components/schemas/EmailSectionChild"
+            border_radius:
+              type: integer
+              format: int32
+              minimum: 0
+              maximum: 24
+    EmailColumn:
+      type: object
+      required: [width, blocks]
+      properties:
+        width:
+          type: integer
+          format: int32
+          minimum: 10
+          maximum: 90
+          description: Percent of the row; the widths of a row add up to 100.
+        blocks:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/EmailColumnChild"
+    EmailColumnsBlock:
+      description: |
+        Two or three columns side by side that stack on narrow screens (unless `stack` is false).
+        Columns do not nest.
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, columns]
+          properties:
+            type:
+              type: string
+              enum: [columns]
+              x-enum-varnames: [EmailBlockColumns]
+            columns:
+              type: array
+              minItems: 2
+              maxItems: 3
+              items:
+                $ref: "#/components/schemas/EmailColumn"
+            stack:
+              type: boolean
+              default: true
+            gap:
+              type: integer
+              format: int32
+              minimum: 0
+              maximum: 32
+              description: Space between columns in pixels; 16 when absent.
+    EmailHeadingBlock:
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, level, text]
+          properties:
+            type:
+              type: string
+              enum: [heading]
+              x-enum-varnames: [EmailBlockHeading]
+            level:
+              type: integer
+              format: int32
+              enum: [1, 2, 3]
+              x-enum-varnames: [EmailHeading1, EmailHeading2, EmailHeading3]
+            text:
+              type: string
+              minLength: 1
+              maxLength: 1000
+              description: Inline rich text (`strong`, `em`, `u`, `s`, `a`, `br`, `code`) with merge fields.
+            color:
+              $ref: "#/components/schemas/EmailColor"
+              description: The theme's text colour when absent.
+    EmailTextBlock:
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, html]
+          properties:
+            type:
+              type: string
+              enum: [text]
+              x-enum-varnames: [EmailBlockText]
+            html:
+              type: string
+              maxLength: 20000
+              description: Rich text with merge fields.
+            size:
+              type: integer
+              format: int32
+              minimum: 12
+              maximum: 22
+              description: Font size in pixels; 16 when absent.
+            color:
+              $ref: "#/components/schemas/EmailColor"
+              description: The theme's text colour when absent.
+    EmailImageBlock:
+      description: |
+        An uploaded image (`image_id`). Gallery templates name their own files in `asset` instead;
+        a saved design never does. An image block without either renders as an empty frame with
+        the warning `image_missing`.
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type]
+          properties:
+            type:
+              type: string
+              enum: [image]
+              x-enum-varnames: [EmailBlockImage]
+            image_id:
+              type: string
+              format: uuid
+            asset:
+              type: string
+              pattern: "^[a-z0-9]+(-[a-z0-9]+)*\\.(png|jpg|gif)$"
+              description: Templates only; the file in the template's `assets` folder.
+            alt:
+              type: string
+              maxLength: 300
+              description: Required unless `decorative`.
+            decorative:
+              type: boolean
+              description: Says nothing to screen readers (`alt=""`).
+            width:
+              type: integer
+              format: int32
+              minimum: 16
+              maximum: 720
+              description: Display width in pixels; the full content width when absent. The image is stored up to twice as wide for sharp screens.
+            link:
+              $ref: "#/components/schemas/EmailUrl"
+            plate:
+              type: boolean
+              description: Draws a light plate behind the image in dark mode, for dark logos on transparency.
+    EmailButtonBlock:
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, label, url]
+          properties:
+            type:
+              type: string
+              enum: [button]
+              x-enum-varnames: [EmailBlockButton]
+            label:
+              type: string
+              minLength: 1
+              maxLength: 80
+              description: Plain text with merge fields.
+            url:
+              $ref: "#/components/schemas/EmailUrl"
+            color:
+              $ref: "#/components/schemas/EmailColor"
+              description: The theme's accent when absent.
+            text_color:
+              $ref: "#/components/schemas/EmailColor"
+              description: Used when it reads at 4.5:1 on the button; otherwise white or near-black is chosen.
+            full_width:
+              type: boolean
+    EmailDividerBlock:
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type]
+          properties:
+            type:
+              type: string
+              enum: [divider]
+              x-enum-varnames: [EmailBlockDivider]
+            color:
+              $ref: "#/components/schemas/EmailColor"
+              description: The theme's border colour when absent.
+            thickness:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 4
+            width:
+              type: integer
+              format: int32
+              minimum: 10
+              maximum: 100
+              description: Percent of the content width; 100 when absent.
+    EmailSpacerBlock:
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, height]
+          properties:
+            type:
+              type: string
+              enum: [spacer]
+              x-enum-varnames: [EmailBlockSpacer]
+            height:
+              type: integer
+              format: int32
+              minimum: 4
+              maximum: 96
+    EmailSocialNetwork:
+      type: string
+      enum: [website, x, bluesky, mastodon, linkedin, github, youtube, instagram, facebook, tiktok, discord, threads]
+      x-enum-varnames: [SocialWebsite, SocialX, SocialBluesky, SocialMastodon, SocialLinkedin, SocialGithub, SocialYoutube, SocialInstagram, SocialFacebook, SocialTiktok, SocialDiscord, SocialThreads]
+    EmailSocialItem:
+      type: object
+      required: [network, url]
+      properties:
+        network:
+          $ref: "#/components/schemas/EmailSocialNetwork"
+        url:
+          $ref: "#/components/schemas/EmailUrl"
+    EmailSocialBlock:
+      description: Links to profiles, as icons (served by the server) or as text.
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, items]
+          properties:
+            type:
+              type: string
+              enum: [social]
+              x-enum-varnames: [EmailBlockSocial]
+            items:
+              type: array
+              minItems: 1
+              maxItems: 10
+              items:
+                $ref: "#/components/schemas/EmailSocialItem"
+            style:
+              type: string
+              enum: [icons, text]
+              x-enum-varnames: [SocialStyleIcons, SocialStyleText]
+              default: icons
+            color:
+              type: string
+              enum: [dark, light, brand]
+              x-enum-varnames: [SocialColorDark, SocialColorLight, SocialColorBrand]
+              default: dark
+              description: Icon colour; `dark` icons turn light in dark mode.
+    EmailFooterBlock:
+      description: Extra footer text, shown above the required footer that is always added.
+      allOf:
+        - $ref: "#/components/schemas/EmailBlockBase"
+        - type: object
+          required: [type, html]
+          properties:
+            type:
+              type: string
+              enum: [footer]
+              x-enum-varnames: [EmailBlockFooter]
+            html:
+              type: string
+              maxLength: 2000
+              description: Rich text with merge fields.
+    EmailColumnChild:
+      oneOf:
+        - $ref: "#/components/schemas/EmailHeadingBlock"
+        - $ref: "#/components/schemas/EmailTextBlock"
+        - $ref: "#/components/schemas/EmailImageBlock"
+        - $ref: "#/components/schemas/EmailButtonBlock"
+        - $ref: "#/components/schemas/EmailDividerBlock"
+        - $ref: "#/components/schemas/EmailSpacerBlock"
+        - $ref: "#/components/schemas/EmailSocialBlock"
+        - $ref: "#/components/schemas/EmailFooterBlock"
+      discriminator:
+        propertyName: type
+        mapping:
+          heading: "#/components/schemas/EmailHeadingBlock"
+          text: "#/components/schemas/EmailTextBlock"
+          image: "#/components/schemas/EmailImageBlock"
+          button: "#/components/schemas/EmailButtonBlock"
+          divider: "#/components/schemas/EmailDividerBlock"
+          spacer: "#/components/schemas/EmailSpacerBlock"
+          social: "#/components/schemas/EmailSocialBlock"
+          footer: "#/components/schemas/EmailFooterBlock"
+    EmailSectionChild:
+      oneOf:
+        - $ref: "#/components/schemas/EmailColumnsBlock"
+        - $ref: "#/components/schemas/EmailHeadingBlock"
+        - $ref: "#/components/schemas/EmailTextBlock"
+        - $ref: "#/components/schemas/EmailImageBlock"
+        - $ref: "#/components/schemas/EmailButtonBlock"
+        - $ref: "#/components/schemas/EmailDividerBlock"
+        - $ref: "#/components/schemas/EmailSpacerBlock"
+        - $ref: "#/components/schemas/EmailSocialBlock"
+        - $ref: "#/components/schemas/EmailFooterBlock"
+      discriminator:
+        propertyName: type
+        mapping:
+          columns: "#/components/schemas/EmailColumnsBlock"
+          heading: "#/components/schemas/EmailHeadingBlock"
+          text: "#/components/schemas/EmailTextBlock"
+          image: "#/components/schemas/EmailImageBlock"
+          button: "#/components/schemas/EmailButtonBlock"
+          divider: "#/components/schemas/EmailDividerBlock"
+          spacer: "#/components/schemas/EmailSpacerBlock"
+          social: "#/components/schemas/EmailSocialBlock"
+          footer: "#/components/schemas/EmailFooterBlock"
+    EmailBlock:
+      oneOf:
+        - $ref: "#/components/schemas/EmailSectionBlock"
+        - $ref: "#/components/schemas/EmailColumnsBlock"
+        - $ref: "#/components/schemas/EmailHeadingBlock"
+        - $ref: "#/components/schemas/EmailTextBlock"
+        - $ref: "#/components/schemas/EmailImageBlock"
+        - $ref: "#/components/schemas/EmailButtonBlock"
+        - $ref: "#/components/schemas/EmailDividerBlock"
+        - $ref: "#/components/schemas/EmailSpacerBlock"
+        - $ref: "#/components/schemas/EmailSocialBlock"
+        - $ref: "#/components/schemas/EmailFooterBlock"
+      discriminator:
+        propertyName: type
+        mapping:
+          section: "#/components/schemas/EmailSectionBlock"
+          columns: "#/components/schemas/EmailColumnsBlock"
+          heading: "#/components/schemas/EmailHeadingBlock"
+          text: "#/components/schemas/EmailTextBlock"
+          image: "#/components/schemas/EmailImageBlock"
+          button: "#/components/schemas/EmailButtonBlock"
+          divider: "#/components/schemas/EmailDividerBlock"
+          spacer: "#/components/schemas/EmailSpacerBlock"
+          social: "#/components/schemas/EmailSocialBlock"
+          footer: "#/components/schemas/EmailFooterBlock"
+    EmailDesignDocument:
+      type: object
+      description: |
+        An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+        JSON. Nesting is section › columns › blocks at most.
+      required: [schema, theme, blocks]
+      additionalProperties: false
+      properties:
+        schema:
+          type: integer
+          format: int32
+          const: 1
+          x-enum-varnames: [EmailDesignSchema1]
+          description: The document format version.
+        theme:
+          $ref: "#/components/schemas/EmailTheme"
+        preheader:
+          type: string
+          maxLength: 300
+          description: The preview text inboxes show after the subject; a broadcast's own preheader wins.
+        blocks:
+          type: array
+          maxItems: 200
+          items:
+            $ref: "#/components/schemas/EmailBlock"
+    EmailDesignIssue:
+      type: object
+      description: |
+        One problem with a document. Error codes: `required`, `invalid`, `too_long`, `too_many`,
+        `duplicate_id`, `nesting`, `invalid_rich_text`, `invalid_url`, `unknown_merge_field`,
+        `merge_field_in_url`, `foreign_asset`, `asset_not_allowed`, `column_widths`. Warning codes
+        are listed under `renderEmailDesign`.
+      required: [code]
+      properties:
+        block_id:
+          type: string
+          description: The block; absent for the theme and the preheader.
+        field:
+          type: string
+          description: The field, as a dotted path inside the block or the document.
+          examples: [html, theme.colors.text, columns.1.width]
+        code:
+          type: string
+          examples: [invalid_rich_text]
+        detail:
+          type: string
+    EmailDesignProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            errors:
+              type: array
+              items:
+                $ref: "#/components/schemas/EmailDesignIssue"
+            design:
+              $ref: "#/components/schemas/EmailDesign"
+              description: "`version_conflict` only: the design as it is now."
+    EmailDesignSummary:
+      type: object
+      required: [id, name, version, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        inbox_id:
+          type: string
+          format: uuid
+          description: Absent for workspace-wide designs.
+        version:
+          type: integer
+          format: int32
+          description: Increases by one with every save.
+        template_slug:
+          type: string
+          description: The gallery template it was made from.
+        created_by:
+          type: string
+          format: uuid
+          description: The member; absent for keys and members who left.
+        updated_by:
+          type: string
+          format: uuid
+        archived_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    EmailDesign:
+      allOf:
+        - $ref: "#/components/schemas/EmailDesignSummary"
+        - type: object
+          required: [document, warnings]
+          properties:
+            document:
+              $ref: "#/components/schemas/EmailDesignDocument"
+            warnings:
+              type: array
+              description: What the render of the document warns about (see `renderEmailDesign`).
+              items:
+                $ref: "#/components/schemas/EmailDesignIssue"
+    EmailDesignPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailDesignSummary"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    EmailDesignTemplateRef:
+      type: object
+      required: [slug]
+      properties:
+        slug:
+          type: string
+          pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+          maxLength: 60
+        locale:
+          $ref: "#/components/schemas/EmailTemplateLocale"
+    EmailDesignCreate:
+      type: object
+      required: [name]
+      description: At most one of `document` and `template`; with neither the design starts empty.
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        inbox_id:
+          type: string
+          format: uuid
+        document:
+          $ref: "#/components/schemas/EmailDesignDocument"
+        template:
+          $ref: "#/components/schemas/EmailDesignTemplateRef"
+    EmailDesignUpdate:
+      type: object
+      required: [name, document, base_version]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        inbox_id:
+          type: string
+          format: uuid
+          description: Absent makes the design workspace-wide.
+        document:
+          $ref: "#/components/schemas/EmailDesignDocument"
+        base_version:
+          type: integer
+          format: int32
+          minimum: 1
+          description: The `version` this edit started from.
+        snapshot:
+          type: boolean
+          description: Keep a snapshot of this save (`manual`) whatever the time since the last one.
+    EmailDesignDuplicate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+    EmailDesignRestore:
+      type: object
+      required: [base_version]
+      properties:
+        base_version:
+          type: integer
+          format: int32
+          minimum: 1
+    EmailDesignVersionReason:
+      type: string
+      enum: [autosave, test, scheduled, restored, manual]
+      x-enum-varnames: [VersionAutosave, VersionTest, VersionScheduled, VersionRestored, VersionManual]
+    EmailDesignVersion:
+      type: object
+      required: [version, reason, created_at]
+      properties:
+        version:
+          type: integer
+          format: int32
+        reason:
+          $ref: "#/components/schemas/EmailDesignVersionReason"
+        member_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+    EmailDesignVersionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailDesignVersion"
+    EmailDesignVersionDetail:
+      allOf:
+        - $ref: "#/components/schemas/EmailDesignVersion"
+        - type: object
+          required: [document]
+          properties:
+            document:
+              $ref: "#/components/schemas/EmailDesignDocument"
+    EmailDesignRenderRequest:
+      type: object
+      required: [document]
+      properties:
+        document:
+          $ref: "#/components/schemas/EmailDesignDocument"
+        inbox_id:
+          type: string
+          format: uuid
+        list_id:
+          type: string
+          format: uuid
+        contact_id:
+          type: string
+          format: uuid
+        subject:
+          type: string
+          maxLength: 300
+        preheader:
+          type: string
+          maxLength: 300
+          description: Wins over the document's own.
+        dark:
+          type: boolean
+    EmailDesignRender:
+      type: object
+      required: [html, text, size_bytes, warnings]
+      properties:
+        html:
+          type: string
+        text:
+          type: string
+        size_bytes:
+          type: integer
+          format: int64
+          description: The HTML's size in bytes, as Gmail counts it before clipping.
+        warnings:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailDesignIssue"
+    EmailImage:
+      type: object
+      required: [id, url, width, height, size_bytes, content_type, filename, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        url:
+          type: string
+          format: uri
+          description: Public, at `/i/{token}`.
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+        size_bytes:
+          type: integer
+          format: int64
+        content_type:
+          type: string
+          enum: [image/png, image/jpeg, image/gif]
+          x-enum-varnames: [EmailImagePng, EmailImageJpeg, EmailImageGif]
+        filename:
+          type: string
+        sent_at:
+          type: string
+          format: date-time
+          description: When a sent broadcast first used it.
+        created_at:
+          type: string
+          format: date-time
+    EmailImagePage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailImage"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    EmailImageUpload:
+      type: object
+      required: [file]
+      properties:
+        file:
+          type: string
+          format: binary
+    EmailImageUsage:
+      type: object
+      required: [designs]
+      properties:
+        designs:
+          type: array
+          items:
+            type: object
+            required: [id, name]
+            properties:
+              id:
+                type: string
+                format: uuid
+              name:
+                type: string
+    EmailImageProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            used_by:
+              $ref: "#/components/schemas/EmailImageUsage"
+    EmailTemplateLocale:
+      type: string
+      enum: [en, tr, de]
+      x-enum-varnames: [TemplateEn, TemplateTr, TemplateDe]
+    EmailTemplate:
+      type: object
+      required: [slug, category, name, description, locales, preview_url, preview_html_url, added]
+      properties:
+        slug:
+          type: string
+          examples: [newsletter]
+        category:
+          type: string
+          examples: [newsletter]
+        name:
+          type: string
+        description:
+          type: string
+        locales:
+          type: array
+          description: The languages the template has its own text in.
+          items:
+            $ref: "#/components/schemas/EmailTemplateLocale"
+        preview_url:
+          type: string
+          format: uri
+          description: A WebP screenshot, 600 pixels wide at twice the density.
+        preview_html_url:
+          type: string
+          format: uri
+          description: The rendered HTML with sample values.
+        added:
+          type: string
+          format: date
+    EmailTemplateList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/EmailTemplate"
+    EmailTemplateImage:
+      type: object
+      required: [asset, url, width, height]
+      properties:
+        asset:
+          type: string
+        url:
+          type: string
+          format: uri
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+    EmailTemplateDetail:
+      allOf:
+        - $ref: "#/components/schemas/EmailTemplate"
+        - type: object
+          required: [locale, document, images]
+          properties:
+            locale:
+              $ref: "#/components/schemas/EmailTemplateLocale"
+            document:
+              $ref: "#/components/schemas/EmailDesignDocument"
+            images:
+              type: array
+              items:
+                $ref: "#/components/schemas/EmailTemplateImage"
     Problem:
       type: object
       description: An RFC 9457 problem document.
