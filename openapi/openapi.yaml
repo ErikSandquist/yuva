@@ -101,8 +101,22 @@ tags:
     description: Saved answers members insert into replies.
   - name: docs
     description: |
-      Documentation pages on a product's own site: ratings per page, feedback and questions sent
-      from a page, and answers members publish to it.
+      Documentation pages on a product's own site: ratings per page, feedback sent from a page, and
+      counts of the page's discussions.
+  - name: discussions
+    description: |
+      Public discussions on documentation pages, for the team: threads, replies, the moderation
+      queue, accepted answers, and turning a private conversation into a thread. Reading needs
+      `conversations:read`; writing and moderating need a member session. Threads in inboxes the
+      caller cannot see answer `404`.
+  - name: account
+    description: |
+      The reader account: every person (members included) can sign in on the server's own pages and
+      write in discussions on documentation sites. Readers who are not members sign in with
+      `POST /v1/auth/code` and `reader: true`. A site's `<yuva-discussions>` element opens
+      `/account/connect?channel=<key>&origin=<origin>` in a popup, which hands it a reader token
+      (`POST /v1/account/reader-tokens`). These endpoints act on the signed-in person across every
+      workspace and need a person session.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -231,9 +245,10 @@ paths:
       operationId: requestSignInCode
       summary: Request a sign-in code
       description: |
-        Sends a one-time code to the address when it belongs to a member or has a pending invite.
-        The answer is the same either way and takes the same time (the mail is sent after it), so
-        it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+        Sends a one-time code to the address when it belongs to a person (a member, a former member
+        or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+        creates the person on verification. The answer is the same either way and takes the same
+        time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
         most recent code of an address is accepted.
       tags: [auth]
       security: []
@@ -369,9 +384,12 @@ paths:
       operationId: deleteMe
       summary: Delete the signed-in person's account
       description: |
-        Removes the person with their memberships, sessions, passkeys, push subscriptions and
-        sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-        without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+        Removes the person with their memberships, sessions, passkeys, push subscriptions,
+        sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+        wrote stay in their conversations without an author (`author.member_id` absent). As a
+        reader, their discussion posts stay without an author (`author.deleted`), their votes and
+        follows go, and in each workspace the contact linked to them is deleted when it has no
+        conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
         person is the only owner of a workspace: make someone else an owner or delete that
         workspace first. Needs a member session; the body repeats the person's e-mail address.
       tags: [me]
@@ -712,6 +730,216 @@ paths:
         "401":
           $ref: "#/components/responses/Problem"
         "403":
+          $ref: "#/components/responses/Problem"
+  /v1/account:
+    get:
+      operationId: getReaderAccount
+      summary: The signed-in person as a reader
+      description: |
+        The reader account of the signed-in person: the name and initials shown on their posts, their
+        sign-in address and their e-mail settings. Every person has one, members included; `member`
+        says whether they also belong to a workspace (the account page then links to the team panel).
+        Person sessions only.
+      tags: [account]
+      security:
+        - session: []
+      responses:
+        "200":
+          description: The account.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderAccount"
+        "401":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateReaderAccount
+      summary: Change the reader name or e-mail settings
+      description: |
+        `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+        shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+        for every workspace; in-app notifications stay.
+      tags: [account]
+      security:
+        - session: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReaderAccountUpdate"
+      responses:
+        "200":
+          description: The account.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderAccount"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /v1/account/reader-tokens:
+    post:
+      operationId: createReaderToken
+      summary: Hand a reader token to a documentation site
+      description: |
+        Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+        site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+        asks for a token for the chat channel and the origin of the window that opened it, and sends
+        the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+        receives it.
+
+        The origin must be one of the channel's allowed origins, compared exactly
+        (`403 origin_not_allowed`), and the channel must have discussions on
+        (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+
+        The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+        discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+        made it (sign-out), when the account is deleted, or with
+        `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+        the person, created on the first write; a person who is a member of that workspace with
+        access to the inbox writes as that member.
+
+        Person sessions only; like every cookie request it must come from the server's own origin.
+      tags: [account]
+      security:
+        - session: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReaderTokenCreate"
+      responses:
+        "201":
+          description: The token, the origin to post it to and who it signs in.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderToken"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/account/discussions:
+    get:
+      operationId: listReaderDiscussions
+      summary: Threads the reader started or replied to
+      description: |
+        Across every workspace, the threads the person started or wrote in as a reader, most recent
+        activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+        are included, so the reader sees where their writing stands. Person sessions only.
+      tags: [account]
+      security:
+        - session: []
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of threads.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderDiscussionPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /v1/account/following:
+    get:
+      operationId: listReaderFollowing
+      summary: Threads the reader follows
+      description: Across every workspace, most recent activity first. Person sessions only.
+      tags: [account]
+      security:
+        - session: []
+      parameters:
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of threads.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderDiscussionPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /v1/account/following/{discussionId}:
+    delete:
+      operationId: unfollowReaderDiscussion
+      summary: Stop following a thread
+      description: Unknown threads, and threads the person does not follow, answer `404`.
+      tags: [account]
+      security:
+        - session: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "204":
+          description: No longer followed.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/account/notifications:
+    get:
+      operationId: listReaderNotifications
+      summary: The reader's notifications
+      description: |
+        New replies and accepted answers in followed threads, across every workspace, newest first.
+        `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+        Person sessions only.
+      tags: [account]
+      security:
+        - session: []
+      parameters:
+        - name: unread
+          in: query
+          description: "`true` lists only unread notifications."
+          schema:
+            type: boolean
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of notifications.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReaderNotificationPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+  /v1/account/notifications/read:
+    post:
+      operationId: markReaderNotificationsRead
+      summary: Mark notifications read
+      description: The listed notifications, or all of them when `ids` is absent. Person sessions only.
+      tags: [account]
+      security:
+        - session: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReaderNotificationsRead"
+      responses:
+        "204":
+          description: Marked.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
           $ref: "#/components/responses/Problem"
   /v1/workspace:
     get:
@@ -1947,8 +2175,8 @@ paths:
           in: query
           description: |
             Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
-            parameter (`kind=feedback&kind=question`) or give a comma-separated list
-            (`kind=feedback,question`).
+            parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+            (`kind=feedback,conversation`).
           schema:
             type: array
             items:
@@ -1966,9 +2194,8 @@ paths:
         - name: site
           in: query
           description: |
-            Only feedback and questions sent from a page of this site: an origin,
-            `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
-            `question.page_url`.
+            Only conversations sent from a page of this site: an origin, `scheme://host[:port]`,
+            matched against the origin of `page.page_url`.
           schema:
             type: string
             maxLength: 300
@@ -1983,8 +2210,8 @@ paths:
         - name: page
           in: query
           description: |
-            Only feedback and questions sent from this documentation page (a URL; query and
-            fragment are ignored).
+            Only conversations sent from this documentation page (a URL; query and fragment are
+            ignored).
           schema:
             type: string
             maxLength: 2000
@@ -2256,24 +2483,26 @@ paths:
           $ref: "#/components/responses/Problem"
         "409":
           $ref: "#/components/responses/Problem"
-  /v1/conversations/{conversationId}/publish:
+  /v1/conversations/{conversationId}/discussion:
     post:
-      operationId: publishConversation
-      summary: Publish a question and its answer to the page
+      operationId: createDiscussionFromConversation
+      summary: Turn a private conversation into a public thread
       description: |
-        Publishes a `question` conversation to its documentation page as a question and an answer,
-        both as the member wrote them here (usually edited from the thread). The published answer
-        carries no name or address of the visitor; it is listed on the page by
-        `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-        with at least one sent member reply and still be on a `chat` channel that allows the
-        page's origin (`409 not_publishable` otherwise); it publishes once
-        (`409 already_published`; edit the published answer instead).
+        Starts a published thread from a conversation with the text the member supplies: nothing of
+        the conversation itself becomes public, and the conversation stays private and unchanged.
+        The page is `page_url`, else the conversation's page (`page` on the conversation), else
+        `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+        origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+        channel is preferred).
 
-        A published answer is the member's text: retention and contact deletion leave it, and
-        deleting the conversation keeps it without `conversation_id`.
+        The conversation's contact becomes the thread's author only when they are a signed-in
+        reader (linked to a person) or known to the host app (an external id in the inbox);
+        otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+        the accepted answer. The author follows the thread. A conversation becomes one thread
+        (`409 already_discussed`); `conversation_id` on the thread links back.
 
         Member sessions only.
-      tags: [docs]
+      tags: [discussions]
       parameters:
         - $ref: "#/components/parameters/IdempotencyKey"
         - $ref: "#/components/parameters/WorkspaceHeader"
@@ -2283,14 +2512,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PageAnswerCreate"
+              $ref: "#/components/schemas/DiscussionFromConversation"
       responses:
         "201":
-          description: The published answer.
+          description: The thread and its posts.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PageAnswer"
+                $ref: "#/components/schemas/DiscussionDetail"
         "400":
           $ref: "#/components/responses/Problem"
         "401":
@@ -3027,124 +3256,6 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
-  /v1/page-answers:
-    get:
-      operationId: listPageAnswers
-      summary: List published answers
-      description: |
-        Published answers in the inboxes the caller can see, newest first.
-
-        Scope: `conversations:read`.
-      tags: [docs]
-      parameters:
-        - $ref: "#/components/parameters/WorkspaceHeader"
-        - name: inbox_id
-          in: query
-          schema:
-            type: string
-            format: uuid
-        - name: page
-          in: query
-          description: Only this page's answers (a URL; query and fragment are ignored).
-          schema:
-            type: string
-            maxLength: 2000
-        - name: conversation_id
-          in: query
-          description: Only the answer published from this conversation.
-          schema:
-            type: string
-            format: uuid
-        - $ref: "#/components/parameters/Cursor"
-        - $ref: "#/components/parameters/Limit"
-      responses:
-        "200":
-          description: A page of published answers.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PageAnswerPage"
-        "400":
-          $ref: "#/components/responses/Problem"
-        "401":
-          $ref: "#/components/responses/Problem"
-        "403":
-          $ref: "#/components/responses/Problem"
-        "404":
-          $ref: "#/components/responses/Problem"
-  /v1/page-answers/{pageAnswerId}:
-    get:
-      operationId: getPageAnswer
-      summary: Get a published answer
-      description: |
-        An answer in an inbox the caller cannot see answers `404`.
-
-        Scope: `conversations:read`.
-      tags: [docs]
-      parameters:
-        - $ref: "#/components/parameters/WorkspaceHeader"
-        - $ref: "#/components/parameters/PageAnswerId"
-      responses:
-        "200":
-          description: The published answer.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PageAnswer"
-        "401":
-          $ref: "#/components/responses/Problem"
-        "403":
-          $ref: "#/components/responses/Problem"
-        "404":
-          $ref: "#/components/responses/Problem"
-    patch:
-      operationId: updatePageAnswer
-      summary: Edit a published answer
-      description: Members who can see the answer's inbox. Member sessions only.
-      tags: [docs]
-      parameters:
-        - $ref: "#/components/parameters/WorkspaceHeader"
-        - $ref: "#/components/parameters/PageAnswerId"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PageAnswerUpdate"
-      responses:
-        "200":
-          description: The edited answer.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PageAnswer"
-        "400":
-          $ref: "#/components/responses/Problem"
-        "401":
-          $ref: "#/components/responses/Problem"
-        "403":
-          $ref: "#/components/responses/Problem"
-        "404":
-          $ref: "#/components/responses/Problem"
-    delete:
-      operationId: deletePageAnswer
-      summary: Unpublish an answer
-      description: |
-        Removes it from the page. The conversation it came from stays and can be published again.
-        Members who can see the answer's inbox. Member sessions only.
-      tags: [docs]
-      parameters:
-        - $ref: "#/components/parameters/WorkspaceHeader"
-        - $ref: "#/components/parameters/PageAnswerId"
-      responses:
-        "204":
-          description: Unpublished.
-        "401":
-          $ref: "#/components/responses/Problem"
-        "403":
-          $ref: "#/components/responses/Problem"
-        "404":
-          $ref: "#/components/responses/Problem"
   /v1/docs/sites:
     get:
       operationId: listDocsSites
@@ -3153,9 +3264,9 @@ paths:
         A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
         the inboxes the caller can see (or `inbox_id`): every site that has a page
         `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-        questions, published answers), and every origin allowed on a chat channel of those inboxes,
+        discussion threads), and every origin allowed on a chat channel of those inboxes,
         with zeros when nothing came from it yet. The counts are those of
-        `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+        `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
 
         `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
         (the oldest when several do); absent when none does any more.
@@ -3190,19 +3301,21 @@ paths:
   /v1/docs/pages:
     get:
       operationId: listDocsPages
-      summary: Documentation pages with their ratings, feedback and questions
+      summary: Documentation pages with their ratings, feedback and discussions
       description: |
         The pages of the inboxes the caller can see that were rated in the window, have open
-        feedback or questions, or have published answers: `up` and `down` summed over the last
-        `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-        conversations sent from the page, and published answers. A page is per inbox.
+        feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+        (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+        page's threads now: `open_threads` (published, no accepted answer, not locked),
+        `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+        a member, opening posts included). A page is per inbox.
 
         `sort` orders them; ties go to more ratings, then by page:
         - `down` (default): most `down` first.
         - `up`: most `up` first.
         - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
           window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-        - `activity`: most ratings plus open feedback and questions first.
+        - `activity`: most ratings plus open feedback, open threads and pending posts first.
 
         `site` keeps only the pages of that site (origin).
 
@@ -3247,9 +3360,9 @@ paths:
       summary: Documentation pages in total and per day
       description: |
         Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-        included, UTC): ratings, feedback and questions sent from documentation pages (created in
-        the window, not spam, in any status) and answers published in the window, in total and
-        per day. Every day of the window is listed, oldest first, with zeros where nothing
+        included, UTC): ratings and feedback sent from documentation pages (created in the window,
+        not spam, in any status) and discussion threads started in the window (any state), in total
+        and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
         happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
         `site` counts only the pages of that site (origin).
 
@@ -3285,9 +3398,9 @@ paths:
       summary: One documentation page
       description: |
         A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-        ratings per day over the window. Its feedback and questions are
-        `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-        answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+        ratings per day over the window. Its feedback is
+        `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+        `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
         answers `400 validation_failed`.
 
         Scope: `conversations:read`.
@@ -3318,6 +3431,426 @@ paths:
                 $ref: "#/components/schemas/DocsPageDetail"
         "400":
           $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussions:
+    get:
+      operationId: listDiscussions
+      summary: List discussion threads
+      description: |
+        Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+        state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+        and hidden ones too.
+
+        `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+        votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+        unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+        `next_cursor` belongs to the sort and filters it was returned for.
+
+        Scope: `conversations:read`.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - $ref: "#/components/parameters/DocsSiteFilter"
+        - name: page
+          in: query
+          description: Only this page's threads (a URL; query and fragment are ignored).
+          schema:
+            type: string
+            maxLength: 2000
+        - name: state
+          in: query
+          schema:
+            $ref: "#/components/schemas/DiscussionState"
+        - name: answered
+          in: query
+          schema:
+            type: boolean
+        - name: locked
+          in: query
+          schema:
+            type: boolean
+        - name: pending
+          in: query
+          description: "`true`: only threads with posts waiting for a member."
+          schema:
+            type: boolean
+        - name: sort
+          in: query
+          schema:
+            $ref: "#/components/schemas/DiscussionTeamSort"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of threads.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createDiscussion
+      summary: Start a thread as a member
+      description: |
+        A thread on a documentation page, written by the calling member and published at once. The
+        page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+        channel must have discussions on (`403 discussions_off`). The member follows it.
+        Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionCreate"
+      responses:
+        "201":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussions/{discussionId}:
+    get:
+      operationId: getDiscussion
+      summary: A thread with every post
+      description: |
+        The thread and all its replies in every state (pending and hidden included), the accepted
+        answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+
+        Scope: `conversations:read`.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionDetail"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateDiscussion
+      summary: Edit the title, lock or unlock
+      description: |
+        Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+        edits, votes or answers from readers; members still may. Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionUpdate"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussions/{discussionId}/posts:
+    post:
+      operationId: createDiscussionPost
+      summary: Reply as a member
+      description: |
+        A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+        also in locked threads. Replies are one level deep: a reply to a reply answers
+        `400 validation_failed`. Followers are notified. Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionPostCreate"
+      responses:
+        "201":
+          description: The reply.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussions/{discussionId}/answer:
+    put:
+      operationId: acceptDiscussionAnswer
+      summary: Mark the accepted answer
+      description: |
+        Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+        as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+        threads. Followers are told once (`discussion.answered`). Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionAnswer"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: clearDiscussionAnswer
+      summary: Clear the accepted answer
+      description: Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussion-posts:
+    get:
+      operationId: listDiscussionPosts
+      summary: Posts by state (the moderation queue)
+      description: |
+        Posts in the inboxes the caller can see, oldest first, each with its thread. With
+        `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+        for approval (`opening: true`) and replies waiting for approval.
+
+        Scope: `conversations:read`.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: state
+          in: query
+          schema:
+            $ref: "#/components/schemas/DiscussionState"
+        - name: inbox_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - $ref: "#/components/parameters/DocsSiteFilter"
+        - name: page
+          in: query
+          description: Only this page's posts (a URL; query and fragment are ignored).
+          schema:
+            type: string
+            maxLength: 2000
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of posts.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPostPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussion-posts/{postId}:
+    patch:
+      operationId: updateDiscussionPost
+      summary: Approve, hide, or edit a member's own post
+      description: |
+        `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+        from the public (its author no longer sees it either). On the opening post this approves or
+        hides the whole thread. Approving a reply notifies the thread's followers.
+
+        `body` (and `title` on the opening post) edits a post the calling member wrote; other
+        posts answer `403 forbidden`. Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionPostId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionPostUpdate"
+      responses:
+        "200":
+          description: The post.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteDiscussionPost
+      summary: Delete a member's own post
+      description: |
+        As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+        (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussion-posts/{postId}/spam:
+    post:
+      operationId: markDiscussionPostSpam
+      summary: Mark a post as spam
+      description: |
+        Hides the post (the thread, for an opening post) and every post of its author in the
+        workspace still waiting for approval, and makes the author's later posts wait for a member
+        whatever the channel's setting. A member's post answers `400 validation_failed`.
+        Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "200":
+          description: The hidden post.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/discussion-posts/{postId}/vote:
+    put:
+      operationId: voteDiscussionPost
+      summary: Vote for a post as a member
+      description: |
+        One vote per member and post (the opening post votes for the thread); voting again changes
+        nothing. Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "200":
+          description: The post with its vote count.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: unvoteDiscussionPost
+      summary: Take a member's vote back
+      description: Member sessions only.
+      tags: [discussions]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "200":
+          description: The post with its vote count.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
         "401":
           $ref: "#/components/responses/Problem"
         "403":
@@ -4157,21 +4690,31 @@ paths:
           $ref: "#/components/responses/Problem"
         "429":
           $ref: "#/components/responses/Problem"
-  /client/v1/channels/{channel_key}/page-answers:
+  /client/v1/channels/{channel_key}/discussions:
     get:
-      operationId: listClientPageAnswers
-      summary: A documentation page's published answers
+      operationId: listClientDiscussions
+      summary: A documentation page's discussion threads
       description: |
-        The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-        in the channel's inbox, newest first, at most 100, without a session. They carry the
-        member's edited text only: never the visitor's name or address. The page is matched
-        without query and fragment, and its origin must be one of the channel's allowed origins
-        (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+        The published threads of a page in the channel's inbox, without a session. The page is
+        matched without query and fragment, and its origin must be one of the channel's allowed
+        origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+
+        `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+        without an accepted answer only, those nobody replied to first, then newest).
+
+        Authors are shown by display name and initials only. Without `Authorization` the answer may
+        be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+        session of this channel the caller's own threads still waiting for a member are included and
+        `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+        An unknown or expired token answers `401`.
 
         Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
         Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
       tags: [client]
-      security: []
+      security:
+        - {}
+        - readerToken: []
+        - contactSession: []
       parameters:
         - $ref: "#/components/parameters/ChannelKey"
         - name: page
@@ -4181,25 +4724,376 @@ paths:
           schema:
             type: string
             maxLength: 2000
+        - name: sort
+          in: query
+          schema:
+            $ref: "#/components/schemas/DiscussionSort"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
       responses:
         "200":
-          description: The page's published answers.
+          description: A page of threads.
           headers:
             Cache-Control:
-              description: "`public, max-age=60`."
+              description: "`public, max-age=60` without a token, else `private, no-store`."
               schema:
                 type: string
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ClientPageAnswerList"
+                $ref: "#/components/schemas/DiscussionPage"
         "400":
+          $ref: "#/components/responses/Problem"
+        "401":
           $ref: "#/components/responses/Problem"
         "403":
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
         "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/discussions/{discussionId}:
+    get:
+      operationId: getClientDiscussion
+      summary: A thread with its replies
+      description: |
+        A published thread of the channel's inbox on a page the channel serves, with its published
+        replies: the accepted answer first, then oldest first; replies to replies carry
+        `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+        body. Caching, authentication and errors as for the list; with a token the caller's own
+        pending posts (and their own pending thread) are included.
+      tags: [client]
+      security:
+        - {}
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/ChannelKey"
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "200":
+          description: The thread.
+          headers:
+            Cache-Control:
+              description: "`public, max-age=60` without a token, else `private, no-store`."
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionDetail"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussions:
+    post:
+      operationId: createClientDiscussion
+      summary: Start a thread
+      description: |
+        Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+        allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+        an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+        off answers `403 discussions_off`.
+
+        With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+        member (`state: pending`, visible only to its author and members) until one of their posts
+        in the workspace has been approved; identity-token users and members are published at once.
+        `open` publishes everyone at once, except authors whose posts were marked spam. The author
+        follows the thread.
+
+        Rate limited per author and per IP address (`429 rate_limited`).
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientDiscussionCreate"
+      responses:
+        "201":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussions/{discussionId}/posts:
+    post:
+      operationId: createClientDiscussionPost
+      summary: Reply in a thread
+      description: |
+        A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+        level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+        starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+        see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+        The author follows the thread; followers are notified once the reply is published.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/DiscussionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionPostCreate"
+      responses:
+        "201":
+          description: The reply.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussions/{discussionId}/answer:
+    put:
+      operationId: acceptClientDiscussionAnswer
+      summary: Mark the accepted answer
+      description: |
+        The thread's author marks a published reply to the thread itself as its answer, replacing an
+        earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussionAnswer"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: clearClientDiscussionAnswer
+      summary: Clear the accepted answer
+      description: The thread's author only.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "200":
+          description: The thread.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Discussion"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussions/{discussionId}/follow:
+    put:
+      operationId: followClientDiscussion
+      summary: Follow a thread
+      description: |
+        Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+        accepted answer, and readers also see them in their account. Following again changes
+        nothing.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "204":
+          description: Followed.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: unfollowClientDiscussion
+      summary: Stop following a thread
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionId"
+      responses:
+        "204":
+          description: No longer followed.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussion-posts/{postId}:
+    patch:
+      operationId: updateClientDiscussionPost
+      summary: Edit one's own post
+      description: |
+        The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+        `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+        answers `403 forbidden`, a locked thread `403 discussion_locked`.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionPostId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientDiscussionPostUpdate"
+      responses:
+        "200":
+          description: The post.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteClientDiscussionPost
+      summary: Delete one's own post
+      description: |
+        The author deletes a post at any time. A post without replies is removed; one with replies
+        stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+        when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+        accepted answer clears it.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /client/v1/discussion-posts/{postId}/vote:
+    put:
+      operationId: voteClientDiscussionPost
+      summary: Vote for a post
+      description: |
+        One vote per author and post; the opening post's votes are the thread's. Voting again changes
+        nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "200":
+          description: The post with its vote count.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: unvoteClientDiscussionPost
+      summary: Take a vote back
+      tags: [client]
+      security:
+        - readerToken: []
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/DiscussionPostId"
+      responses:
+        "200":
+          description: The post with its vote count.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussionPost"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /client/v1/reader-token:
+    delete:
+      operationId: deleteReaderToken
+      summary: Sign a site out of the reader account
+      description: |
+        Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+        server.
+      tags: [client]
+      security:
+        - readerToken: []
+      responses:
+        "204":
+          description: Ended.
+        "401":
           $ref: "#/components/responses/Problem"
   /client/v1/conversations:
     get:
@@ -4539,48 +5433,6 @@ paths:
         "413":
           $ref: "#/components/responses/Problem"
         "415":
-          $ref: "#/components/responses/Problem"
-        "429":
-          $ref: "#/components/responses/Problem"
-  /client/v1/questions:
-    post:
-      operationId: createClientQuestion
-      summary: Ask a question about a documentation page
-      description: |
-        Starts a conversation of kind `question` on the session's `chat` channel with its first
-        message, for the page in `page_url` (without query and fragment; its origin must be one of
-        the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-        visitor writes is shown on the page unless a member publishes an edited answer. It is
-        answered like any other conversation and listed with the contact's conversations
-        (`kind: question`).
-
-        `email` is the address replies go to while the visitor is away, kept like
-        `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-        `client_id` again answers `201` with the first conversation. `app` channel sessions get
-        `403 forbidden`. Rate limited per IP address and per channel.
-      tags: [client]
-      security:
-        - contactSession: []
-      parameters:
-        - $ref: "#/components/parameters/IdempotencyKey"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ClientQuestionCreate"
-      responses:
-        "201":
-          description: The question conversation and its first message.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ClientConversationCreated"
-        "400":
-          $ref: "#/components/responses/Problem"
-        "401":
-          $ref: "#/components/responses/Problem"
-        "403":
           $ref: "#/components/responses/Problem"
         "429":
           $ref: "#/components/responses/Problem"
@@ -5245,6 +6097,86 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  discussion.created:
+    post:
+      operationId: webhookDiscussionCreated
+      summary: A discussion thread was started
+      description: "Also when it waits for a member (`state: pending`)."
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookDiscussionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  discussion.post_created:
+    post:
+      operationId: webhookDiscussionPostCreated
+      summary: A reply was written in a thread
+      description: "Also when it waits for a member (`state: pending` on `post`)."
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookDiscussionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  discussion.answered:
+    post:
+      operationId: webhookDiscussionAnswered
+      summary: An answer was accepted
+      description: "The accepted reply is in `post`."
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookDiscussionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  discussion.updated:
+    post:
+      operationId: webhookDiscussionUpdated
+      summary: A thread or post was moderated or edited
+      description: "Approved, hidden, marked spam, edited, deleted, locked or unlocked, or the answer cleared."
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookDiscussionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -5278,6 +6210,13 @@ components:
       type: http
       scheme: bearer
       description: A contact session token from `POST /client/v1/session`, `yuva_cs_<secret>`.
+    readerToken:
+      type: http
+      scheme: bearer
+      description: |
+        A reader token from `POST /v1/account/reader-tokens`, `yuva_rd_<secret>`, handed to a
+        documentation site by the server's `/account/connect` popup. It works on the `/client/v1`
+        discussion endpoints of its chat channel only.
   parameters:
     WorkspaceHeader:
       name: Yuva-Workspace
@@ -5441,13 +6380,6 @@ components:
       schema:
         type: string
         format: uuid
-    PageAnswerId:
-      name: pageAnswerId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
     ChannelKey:
       name: channel_key
       in: path
@@ -5456,6 +6388,20 @@ components:
       schema:
         type: string
         maxLength: 200
+    DiscussionId:
+      name: discussionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    DiscussionPostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     DocsSiteFilter:
       name: site
       in: query
@@ -5541,6 +6487,11 @@ components:
       properties:
         email:
           $ref: "#/components/schemas/Email"
+        reader:
+          type: boolean
+          description: |
+            Sign in as a reader (the account page and its `/account/connect` popup): the code is sent
+            to any address, and verifying it creates the person when there is none yet.
     SignInCodeVerify:
       type: object
       required: [email, code]
@@ -6209,7 +7160,7 @@ components:
           type: object
           additionalProperties: true
           description: |
-            WebAuthn options in their JSON form (`{"publicKey": …}`), for
+            WebAuthn options in their JSON form (`{"publicKey": ...}`), for
             `PublicKeyCredential.parseCreationOptionsFromJSON` or
             `parseRequestOptionsFromJSON`.
     PasskeyCeremonyResult:
@@ -6638,7 +7589,7 @@ components:
     Attributes:
       type: object
       additionalProperties: true
-      description: Free-form data about the contact (plan, app version, …), at most 16 KiB.
+      description: Free-form data about the contact (plan, app version, ...), at most 16 KiB.
     UndeliverableEmail:
       type: object
       description: An address that bounced permanently or complained; replies to it are refused.
@@ -6855,7 +7806,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -7003,7 +7954,7 @@ components:
           description: The first 1 KiB of the answer.
         error:
           type: string
-          description: Why the attempt failed (timeout, refused address, non-2xx status, …).
+          description: Why the attempt failed (timeout, refused address, non-2xx status, ...).
     WebhookAttemptList:
       type: object
       required: [items]
@@ -7289,9 +8240,9 @@ components:
         feedback:
           $ref: "#/components/schemas/Feedback"
           description: "`feedback` conversations only: category and what the app sent with it."
-        question:
-          $ref: "#/components/schemas/PageQuestion"
-          description: "`question` conversations only: the page it was asked on."
+        page:
+          $ref: "#/components/schemas/SourcePage"
+          description: The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
         channel_id:
           type: string
           format: uuid
@@ -7533,7 +8484,7 @@ components:
           $ref: "#/components/schemas/AuthorType"
         text:
           type: string
-          description: The plain-text body on one line, cut to 140 characters with `…` when longer.
+          description: The plain-text body on one line, cut to 140 characters with `...` when longer.
         created_at:
           type: string
           format: date-time
@@ -7594,7 +8545,7 @@ components:
           format: uuid
         text:
           type: string
-          description: The plain-text body on one line, cut to 140 characters with `…` when longer.
+          description: The plain-text body on one line, cut to 140 characters with `...` when longer.
         author:
           $ref: "#/components/schemas/MessageAuthor"
         created_at:
@@ -8089,7 +9040,7 @@ components:
           description: The receiving server's `Authentication-Results` header, as received.
         headers:
           type: object
-          description: Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, …).
+          description: Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, ...).
           additionalProperties:
             type: string
     MessageCreate:
@@ -8737,6 +9688,7 @@ components:
         - $ref: "#/components/schemas/ConversationReadEvent"
         - $ref: "#/components/schemas/ContactReadEvent"
         - $ref: "#/components/schemas/ConversationPinEvent"
+        - $ref: "#/components/schemas/DiscussionEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -8757,6 +9709,10 @@ components:
           conversation.read: "#/components/schemas/ConversationReadEvent"
           contact.read: "#/components/schemas/ContactReadEvent"
           conversation.pin: "#/components/schemas/ConversationPinEvent"
+          discussion.created: "#/components/schemas/DiscussionEvent"
+          discussion.post_created: "#/components/schemas/DiscussionEvent"
+          discussion.answered: "#/components/schemas/DiscussionEvent"
+          discussion.updated: "#/components/schemas/DiscussionEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -8797,6 +9753,7 @@ components:
         - $ref: "#/components/schemas/ConversationReadEvent"
         - $ref: "#/components/schemas/ContactReadEvent"
         - $ref: "#/components/schemas/ConversationPinEvent"
+        - $ref: "#/components/schemas/DiscussionEvent"
         - $ref: "#/components/schemas/TypingEvent"
         - $ref: "#/components/schemas/MemberPresenceEvent"
         - $ref: "#/components/schemas/ContactPresenceEvent"
@@ -8823,6 +9780,10 @@ components:
           conversation.read: "#/components/schemas/ConversationReadEvent"
           contact.read: "#/components/schemas/ContactReadEvent"
           conversation.pin: "#/components/schemas/ConversationPinEvent"
+          discussion.created: "#/components/schemas/DiscussionEvent"
+          discussion.post_created: "#/components/schemas/DiscussionEvent"
+          discussion.answered: "#/components/schemas/DiscussionEvent"
+          discussion.updated: "#/components/schemas/DiscussionEvent"
           typing: "#/components/schemas/TypingEvent"
           member.presence: "#/components/schemas/MemberPresenceEvent"
           contact.presence: "#/components/schemas/ContactPresenceEvent"
@@ -8856,7 +9817,7 @@ components:
     ChatChannel:
       type: object
       description: Settings of a `chat` (web widget) channel.
-      required: [public_key, allowed_origins, allow_anonymous, ask_email_offline, greeting, launcher]
+      required: [public_key, allowed_origins, allow_anonymous, ask_email_offline, greeting, launcher, discussions]
       properties:
         public_key:
           type: string
@@ -8879,6 +9840,8 @@ components:
           description: Shown before the first message; the inbox branding greeting when empty.
         launcher:
           $ref: "#/components/schemas/ChatLauncher"
+        discussions:
+          $ref: "#/components/schemas/DiscussionMode"
     ChatChannelInput:
       type: object
       required: [allowed_origins]
@@ -8900,6 +9863,9 @@ components:
           maxLength: 500
         launcher:
           $ref: "#/components/schemas/ChatLauncher"
+        discussions:
+          $ref: "#/components/schemas/DiscussionMode"
+          description: Defaults to `moderated`; on an update, absent keeps the current setting.
     AppPlatform:
       type: string
       enum: [ios, android]
@@ -8940,9 +9906,8 @@ components:
     ConversationKind:
       type: string
       description: |
-        `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-        documentation page and carry `question`; everything else is `conversation`.
-      enum: [conversation, feedback, question]
+        `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
+      enum: [conversation, feedback]
     FeedbackCategory:
       type: string
       enum: [bug, idea, praise, other]
@@ -9079,144 +10044,9 @@ components:
         previous:
           $ref: "#/components/schemas/PageRating"
           description: The visitor's earlier rating of this page, which this one replaces.
-    PageQuestion:
-      type: object
-      description: The documentation page a `question` conversation was asked on.
-      required: [page_url]
-      properties:
-        page_url:
-          type: string
-          description: Without query and fragment.
-        page_title:
-          type: string
-    ClientQuestionCreate:
-      type: object
-      required: [page_url, body]
-      properties:
-        page_url:
-          type: string
-          maxLength: 2000
-          description: The page's absolute URL; query and fragment are dropped.
-        page_title:
-          type: string
-          maxLength: 300
-        subject:
-          type: string
-          maxLength: 500
-        body:
-          type: string
-          minLength: 1
-          maxLength: 65536
-          description: The question.
-        client_id:
-          type: string
-          minLength: 1
-          maxLength: 200
-          description: The first message's `client_id`.
-        email:
-          $ref: "#/components/schemas/Email"
-    ClientPageAnswer:
-      type: object
-      description: A published question and answer, as the member wrote them.
-      required: [id, question, answer, published_at, updated_at]
-      properties:
-        id:
-          type: string
-          format: uuid
-        question:
-          type: string
-        answer:
-          type: string
-        published_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    ClientPageAnswerList:
-      type: object
-      required: [items]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/ClientPageAnswer"
-    PageAnswer:
-      type: object
-      description: A question and answer published to a documentation page.
-      required: [id, inbox_id, channel_id, page, title, question, answer, published_at, updated_at]
-      properties:
-        id:
-          type: string
-          format: uuid
-        inbox_id:
-          type: string
-          format: uuid
-        channel_id:
-          type: string
-          format: uuid
-          description: The chat channel whose pages show it.
-        page:
-          type: string
-          description: The page's URL without query and fragment.
-        title:
-          type: string
-          description: The page's title when it was published; may be empty.
-        question:
-          type: string
-        answer:
-          type: string
-        member_id:
-          type: string
-          format: uuid
-          description: The member who published it; absent once they are removed.
-        conversation_id:
-          type: string
-          format: uuid
-          description: The question it was published from; absent once that conversation is deleted.
-        published_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-    PageAnswerCreate:
-      type: object
-      required: [question, answer]
-      properties:
-        question:
-          type: string
-          minLength: 1
-          maxLength: 2000
-        answer:
-          type: string
-          minLength: 1
-          maxLength: 20000
-    PageAnswerUpdate:
-      type: object
-      properties:
-        question:
-          type: string
-          minLength: 1
-          maxLength: 2000
-        answer:
-          type: string
-          minLength: 1
-          maxLength: 20000
-    PageAnswerPage:
-      type: object
-      required: [items]
-      properties:
-        items:
-          type: array
-          items:
-            $ref: "#/components/schemas/PageAnswer"
-        next_cursor:
-          type: string
-          description: Absent on the last page.
     DocsPage:
       type: object
-      required: [inbox_id, page, title, up, down, open_feedback, open_questions, published_answers]
+      required: [inbox_id, page, title, up, down, open_feedback, open_threads, unanswered_threads, pending_posts]
       properties:
         inbox_id:
           type: string
@@ -9236,15 +10066,18 @@ components:
         open_feedback:
           type: integer
           format: int64
-        open_questions:
+        open_threads:
           type: integer
           format: int64
-        published_answers:
+        unanswered_threads:
+          type: integer
+          format: int64
+        pending_posts:
           type: integer
           format: int64
     DocsSite:
       type: object
-      required: [origin, inbox_id, pages, up, down, open_feedback, open_questions, published_answers]
+      required: [origin, inbox_id, pages, up, down, open_feedback, open_threads, unanswered_threads, pending_posts]
       properties:
         origin:
           type: string
@@ -9271,10 +10104,13 @@ components:
         open_feedback:
           type: integer
           format: int64
-        open_questions:
+        open_threads:
           type: integer
           format: int64
-        published_answers:
+        unanswered_threads:
+          type: integer
+          format: int64
+        pending_posts:
           type: integer
           format: int64
     DocsSiteList:
@@ -9313,7 +10149,7 @@ components:
             $ref: "#/components/schemas/DocsSummaryDay"
     DocsTotals:
       type: object
-      required: [up, down, rated_pages, feedback, questions, published_answers]
+      required: [up, down, rated_pages, feedback, threads, pending_posts]
       properties:
         up:
           type: integer
@@ -9327,15 +10163,15 @@ components:
         feedback:
           type: integer
           format: int64
-        questions:
+        threads:
           type: integer
           format: int64
-        published_answers:
+        pending_posts:
           type: integer
           format: int64
     DocsSummaryDay:
       type: object
-      required: [day, up, down, feedback, questions]
+      required: [day, up, down, feedback, threads]
       properties:
         day:
           type: string
@@ -9349,7 +10185,7 @@ components:
         feedback:
           type: integer
           format: int64
-        questions:
+        threads:
           type: integer
           format: int64
     DocsPageDay:
@@ -9376,6 +10212,593 @@ components:
           description: Days of the window with ratings, oldest first (UTC).
           items:
             $ref: "#/components/schemas/DocsPageDay"
+    SourcePage:
+      type: object
+      description: The documentation page a conversation was sent from.
+      required: [page_url]
+      properties:
+        page_url:
+          type: string
+          description: Without query and fragment.
+        page_title:
+          type: string
+    DiscussionMode:
+      type: string
+      description: |
+        Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+        reader's posts wait for a member until one of theirs in the workspace was approved;
+        identity-token users and members are published at once. `open`: everyone is published at
+        once. Authors whose posts were marked spam always wait.
+      enum: [off, moderated, open]
+    DiscussionState:
+      type: string
+      description: |
+        `published`: public. `pending`: waits for a member; only its author and members see it.
+        `hidden`: a member hid it; only members see it.
+      enum: [published, pending, hidden]
+    DiscussionSort:
+      type: string
+      enum: [new, top, unanswered]
+      default: new
+    DiscussionTeamSort:
+      type: string
+      enum: [activity, new, top]
+      default: activity
+    DiscussionAuthorKind:
+      type: string
+      description: |
+        `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+        `anonymous`: no author to show (threads moved over from published answers).
+      enum: [member, reader, anonymous]
+    DiscussionAuthor:
+      type: object
+      description: |
+        Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+        the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+        given on `/v1` only.
+      required: [kind, initials, deleted]
+      properties:
+        kind:
+          $ref: "#/components/schemas/DiscussionAuthorKind"
+        name:
+          type: string
+          description: Absent when the author has no name (show "Reader") or is deleted.
+        initials:
+          type: string
+          description: One or two letters for an avatar; empty when there is no name.
+        deleted:
+          type: boolean
+        member_id:
+          type: string
+          format: uuid
+        contact_id:
+          type: string
+          format: uuid
+    Discussion:
+      type: object
+      description: |
+        A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+        votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+        `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+        `voted` and `following` on `/client/v1` only (false without a token).
+      required: [id, page, title, opening_post_id, body, body_html, author, state, locked, votes, reply_count, created_at, last_activity_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+          description: The chat channel whose setting applied when it was started.
+        page:
+          type: string
+          description: The page's URL without query and fragment.
+        page_title:
+          type: string
+        title:
+          type: string
+        opening_post_id:
+          type: string
+          format: uuid
+        body:
+          type: string
+          description: Markdown as written; empty once the opening post was deleted.
+        body_html:
+          type: string
+          description: "`body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel=\"nofollow ugc noopener\"`)."
+        author:
+          $ref: "#/components/schemas/DiscussionAuthor"
+        state:
+          $ref: "#/components/schemas/DiscussionState"
+        answer_post_id:
+          type: string
+          format: uuid
+          description: The accepted answer; absent while there is none.
+        answered_at:
+          type: string
+          format: date-time
+        locked:
+          type: boolean
+        votes:
+          type: integer
+          format: int32
+        reply_count:
+          type: integer
+          format: int32
+          description: Published replies, replies to replies included.
+        pending_posts:
+          type: integer
+          format: int32
+          description: Posts waiting for a member, the opening post included.
+        hidden_posts:
+          type: integer
+          format: int32
+        conversation_id:
+          type: string
+          format: uuid
+          description: The conversation it was started from; absent once that is deleted.
+        deleted:
+          type: boolean
+          description: The opening post was deleted by its author; the replies stay.
+        mine:
+          type: boolean
+          description: The caller started it.
+        voted:
+          type: boolean
+        following:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        edited_at:
+          type: string
+          format: date-time
+        last_activity_at:
+          type: string
+          format: date-time
+    DiscussionPost:
+      type: object
+      description: |
+        One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+        reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+      required: [id, discussion_id, opening, body, body_html, author, state, votes, accepted, deleted, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        discussion_id:
+          type: string
+          format: uuid
+        parent_post_id:
+          type: string
+          format: uuid
+        opening:
+          type: boolean
+        body:
+          type: string
+          description: Markdown as written; empty when `deleted`.
+        body_html:
+          type: string
+          description: "`body` rendered to sanitized HTML."
+        author:
+          $ref: "#/components/schemas/DiscussionAuthor"
+        state:
+          $ref: "#/components/schemas/DiscussionState"
+        votes:
+          type: integer
+          format: int32
+        accepted:
+          type: boolean
+          description: It is the thread's accepted answer.
+        deleted:
+          type: boolean
+        mine:
+          type: boolean
+        voted:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        edited_at:
+          type: string
+          format: date-time
+    DiscussionDetail:
+      type: object
+      required: [discussion, posts]
+      properties:
+        discussion:
+          $ref: "#/components/schemas/Discussion"
+        posts:
+          type: array
+          description: The replies, the accepted answer first, then oldest first; not the opening post.
+          items:
+            $ref: "#/components/schemas/DiscussionPost"
+    DiscussionPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Discussion"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    DiscussionPostItem:
+      type: object
+      required: [post, discussion]
+      properties:
+        post:
+          $ref: "#/components/schemas/DiscussionPost"
+        discussion:
+          $ref: "#/components/schemas/Discussion"
+    DiscussionPostPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiscussionPostItem"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    DiscussionCreate:
+      type: object
+      required: [channel_id, page_url, title, body]
+      properties:
+        channel_id:
+          type: string
+          format: uuid
+          description: A chat channel that allows the page's origin.
+        page_url:
+          type: string
+          maxLength: 2000
+        page_title:
+          type: string
+          maxLength: 300
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+          description: Markdown.
+    ClientDiscussionCreate:
+      type: object
+      required: [page_url, title, body]
+      properties:
+        page_url:
+          type: string
+          maxLength: 2000
+          description: The page's absolute URL; query and fragment are dropped.
+        page_title:
+          type: string
+          maxLength: 300
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+          description: Markdown.
+    DiscussionUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        locked:
+          type: boolean
+    DiscussionPostCreate:
+      type: object
+      required: [body]
+      properties:
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+          description: Markdown.
+        parent_post_id:
+          type: string
+          format: uuid
+          description: A reply to the thread (not the opening post) to answer; absent for a reply to the thread.
+    DiscussionPostUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        state:
+          type: string
+          enum: [published, hidden]
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Opening post only.
+    ClientDiscussionPostUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+          description: Opening post only.
+    DiscussionAnswer:
+      type: object
+      required: [post_id]
+      properties:
+        post_id:
+          type: string
+          format: uuid
+    DiscussionFromConversation:
+      type: object
+      required: [title, body]
+      properties:
+        title:
+          type: string
+          minLength: 3
+          maxLength: 200
+        body:
+          type: string
+          minLength: 1
+          maxLength: 20000
+          description: The public question, as the member edits it (Markdown).
+        answer:
+          type: string
+          minLength: 1
+          maxLength: 20000
+          description: Posted by the member and marked as the accepted answer.
+        page_url:
+          type: string
+          maxLength: 2000
+          description: The page, when the conversation has none or another one is meant.
+        page_title:
+          type: string
+          maxLength: 300
+    DiscussionEventData:
+      type: object
+      required: [discussion]
+      properties:
+        discussion:
+          $ref: "#/components/schemas/Discussion"
+        post:
+          $ref: "#/components/schemas/DiscussionPost"
+          description: The post the event is about; absent for changes to the thread alone.
+    DiscussionEvent:
+      type: object
+      description: |
+        `discussion.created`: a thread was started (also when it waits for approval: see `state`).
+        `discussion.post_created`: a reply was written, with the reply in `post`.
+        `discussion.answered`: an answer was accepted, with it in `post`.
+        `discussion.updated`: a post or the thread was approved, hidden, marked spam, edited,
+        deleted, locked or unlocked, or the answer was cleared; `post` names the post when one
+        changed.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [discussion.created, discussion.post_created, discussion.answered, discussion.updated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/DiscussionEventData"
+    WebhookDiscussionPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/DiscussionEventData"
+    ReaderAccount:
+      type: object
+      required: [person_id, email, name, initials, locale, email_notifications, member]
+      properties:
+        person_id:
+          type: string
+          format: uuid
+        email:
+          $ref: "#/components/schemas/Email"
+        name:
+          type: string
+          description: Shown on the person's posts; empty until set.
+        initials:
+          type: string
+        locale:
+          $ref: "#/components/schemas/Locale"
+        email_notifications:
+          type: boolean
+          description: E-mails about followed threads; on by default.
+        member:
+          type: boolean
+          description: The person is a member of at least one workspace.
+    ReaderAccountUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          maxLength: 200
+        email_notifications:
+          type: boolean
+    ReaderTokenCreate:
+      type: object
+      required: [channel_key, origin]
+      properties:
+        channel_key:
+          type: string
+          maxLength: 200
+          description: The chat channel's public key, from the `channel` query parameter of `/account/connect`.
+        origin:
+          $ref: "#/components/schemas/Origin"
+          description: The origin of the page that opened the popup.
+    ReaderToken:
+      type: object
+      required: [token, expires_at, origin, channel_key, reader]
+      properties:
+        token:
+          type: string
+          description: "`yuva_rd_<secret>`, shown once."
+        expires_at:
+          type: string
+          format: date-time
+        origin:
+          $ref: "#/components/schemas/Origin"
+          description: The target origin for `postMessage`, as normalized.
+        channel_key:
+          type: string
+        reader:
+          $ref: "#/components/schemas/ReaderProfile"
+    ReaderProfile:
+      type: object
+      required: [initials]
+      properties:
+        name:
+          type: string
+          description: Absent when the person has no name yet.
+        initials:
+          type: string
+    ReaderDiscussion:
+      type: object
+      description: A thread as the reader's account lists it.
+      required: [id, workspace_name, inbox_name, page, title, state, locked, answered, reply_count, votes, started, following, created_at, last_activity_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_name:
+          type: string
+        inbox_name:
+          type: string
+          description: The product whose documentation it is on.
+        page:
+          type: string
+        page_title:
+          type: string
+        title:
+          type: string
+        state:
+          $ref: "#/components/schemas/DiscussionState"
+        locked:
+          type: boolean
+        answered:
+          type: boolean
+        reply_count:
+          type: integer
+          format: int32
+        votes:
+          type: integer
+          format: int32
+        started:
+          type: boolean
+          description: The reader started it.
+        following:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        last_activity_at:
+          type: string
+          format: date-time
+    ReaderDiscussionPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReaderDiscussion"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    ReaderNotificationKind:
+      type: string
+      description: "`reply`: a new reply in a followed thread. `answer`: an answer was accepted there."
+      enum: [reply, answer]
+    ReaderNotification:
+      type: object
+      required: [id, kind, discussion_id, title, page, inbox_name, excerpt, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/ReaderNotificationKind"
+        discussion_id:
+          type: string
+          format: uuid
+        post_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          description: The thread's title.
+        page:
+          type: string
+        inbox_name:
+          type: string
+        author:
+          $ref: "#/components/schemas/DiscussionAuthor"
+        excerpt:
+          type: string
+          description: The start of the post, at most 200 characters of plain text.
+        created_at:
+          type: string
+          format: date-time
+        read_at:
+          type: string
+          format: date-time
+    ReaderNotificationPage:
+      type: object
+      required: [items, unread]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ReaderNotification"
+        unread:
+          type: integer
+          format: int64
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    ReaderNotificationsRead:
+      type: object
+      properties:
+        ids:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            format: uuid
     TypingCreate:
       type: object
       properties:
@@ -9479,7 +10902,7 @@ components:
             $ref: "#/components/schemas/ClientMember"
     ClientChatSettings:
       type: object
-      required: [greeting, launcher_position, ask_email_offline, allow_anonymous]
+      required: [greeting, launcher_position, ask_email_offline, allow_anonymous, discussions]
       properties:
         greeting:
           type: string
@@ -9493,6 +10916,9 @@ components:
           type: boolean
         allow_anonymous:
           type: boolean
+        discussions:
+          $ref: "#/components/schemas/DiscussionMode"
+          description: "`off` on `app` channels."
     ClientInbox:
       type: object
       description: |
@@ -9606,7 +11032,7 @@ components:
           $ref: "#/components/schemas/AuthorType"
         text:
           type: string
-          description: The plain-text body on one line, cut to 140 characters with `…` when longer.
+          description: The plain-text body on one line, cut to 140 characters with `...` when longer.
         created_at:
           type: string
           format: date-time
@@ -9622,9 +11048,6 @@ components:
         feedback:
           $ref: "#/components/schemas/Feedback"
           description: "`feedback` conversations only."
-        question:
-          $ref: "#/components/schemas/PageQuestion"
-          description: "`question` conversations only."
         subject:
           type: string
         status:

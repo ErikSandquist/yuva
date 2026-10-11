@@ -367,7 +367,6 @@ func (e ConversationEventType) Valid() bool {
 const (
 	ConversationKindConversation ConversationKind = "conversation"
 	ConversationKindFeedback     ConversationKind = "feedback"
-	ConversationKindQuestion     ConversationKind = "question"
 )
 
 // Valid indicates whether the value is a known member of the ConversationKind enum.
@@ -376,8 +375,6 @@ func (e ConversationKind) Valid() bool {
 	case ConversationKindConversation:
 		return true
 	case ConversationKindFeedback:
-		return true
-	case ConversationKindQuestion:
 		return true
 	default:
 		return false
@@ -465,6 +462,153 @@ func (e Direction) Valid() bool {
 	case In:
 		return true
 	case Out:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionAuthorKind.
+const (
+	DiscussionAuthorKindAnonymous DiscussionAuthorKind = "anonymous"
+	DiscussionAuthorKindMember    DiscussionAuthorKind = "member"
+	DiscussionAuthorKindReader    DiscussionAuthorKind = "reader"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionAuthorKind enum.
+func (e DiscussionAuthorKind) Valid() bool {
+	switch e {
+	case DiscussionAuthorKindAnonymous:
+		return true
+	case DiscussionAuthorKindMember:
+		return true
+	case DiscussionAuthorKindReader:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionEventType.
+const (
+	DiscussionEventTypeDiscussionAnswered    DiscussionEventType = "discussion.answered"
+	DiscussionEventTypeDiscussionCreated     DiscussionEventType = "discussion.created"
+	DiscussionEventTypeDiscussionPostCreated DiscussionEventType = "discussion.post_created"
+	DiscussionEventTypeDiscussionUpdated     DiscussionEventType = "discussion.updated"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionEventType enum.
+func (e DiscussionEventType) Valid() bool {
+	switch e {
+	case DiscussionEventTypeDiscussionAnswered:
+		return true
+	case DiscussionEventTypeDiscussionCreated:
+		return true
+	case DiscussionEventTypeDiscussionPostCreated:
+		return true
+	case DiscussionEventTypeDiscussionUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionMode.
+const (
+	DiscussionModeModerated DiscussionMode = "moderated"
+	DiscussionModeOff       DiscussionMode = "off"
+	DiscussionModeOpen      DiscussionMode = "open"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionMode enum.
+func (e DiscussionMode) Valid() bool {
+	switch e {
+	case DiscussionModeModerated:
+		return true
+	case DiscussionModeOff:
+		return true
+	case DiscussionModeOpen:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionPostUpdateState.
+const (
+	DiscussionPostUpdateStateHidden    DiscussionPostUpdateState = "hidden"
+	DiscussionPostUpdateStatePublished DiscussionPostUpdateState = "published"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionPostUpdateState enum.
+func (e DiscussionPostUpdateState) Valid() bool {
+	switch e {
+	case DiscussionPostUpdateStateHidden:
+		return true
+	case DiscussionPostUpdateStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionSort.
+const (
+	DiscussionSortNew        DiscussionSort = "new"
+	DiscussionSortTop        DiscussionSort = "top"
+	DiscussionSortUnanswered DiscussionSort = "unanswered"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionSort enum.
+func (e DiscussionSort) Valid() bool {
+	switch e {
+	case DiscussionSortNew:
+		return true
+	case DiscussionSortTop:
+		return true
+	case DiscussionSortUnanswered:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionState.
+const (
+	DiscussionStateHidden    DiscussionState = "hidden"
+	DiscussionStatePending   DiscussionState = "pending"
+	DiscussionStatePublished DiscussionState = "published"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionState enum.
+func (e DiscussionState) Valid() bool {
+	switch e {
+	case DiscussionStateHidden:
+		return true
+	case DiscussionStatePending:
+		return true
+	case DiscussionStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionTeamSort.
+const (
+	DiscussionTeamSortActivity DiscussionTeamSort = "activity"
+	DiscussionTeamSortNew      DiscussionTeamSort = "new"
+	DiscussionTeamSortTop      DiscussionTeamSort = "top"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionTeamSort enum.
+func (e DiscussionTeamSort) Valid() bool {
+	switch e {
+	case DiscussionTeamSortActivity:
+		return true
+	case DiscussionTeamSortNew:
+		return true
+	case DiscussionTeamSortTop:
 		return true
 	default:
 		return false
@@ -1137,6 +1281,24 @@ func (e Rating) Valid() bool {
 	}
 }
 
+// Defines values for ReaderNotificationKind.
+const (
+	Answer ReaderNotificationKind = "answer"
+	Reply  ReaderNotificationKind = "reply"
+)
+
+// Valid indicates whether the value is a known member of the ReaderNotificationKind enum.
+func (e ReaderNotificationKind) Valid() bool {
+	switch e {
+	case Answer:
+		return true
+	case Reply:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for RealtimeReadyType.
 const (
 	Ready RealtimeReadyType = "ready"
@@ -1298,16 +1460,20 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
-	WebhookEventTypeContactDeleted      WebhookEventType = "contact.deleted"
-	WebhookEventTypeContactUpdated      WebhookEventType = "contact.updated"
-	WebhookEventTypeConversationCreated WebhookEventType = "conversation.created"
-	WebhookEventTypeConversationRated   WebhookEventType = "conversation.rated"
-	WebhookEventTypeConversationUpdated WebhookEventType = "conversation.updated"
-	WebhookEventTypeDraftCreated        WebhookEventType = "draft.created"
-	WebhookEventTypeDraftDeleted        WebhookEventType = "draft.deleted"
-	WebhookEventTypeDraftUpdated        WebhookEventType = "draft.updated"
-	WebhookEventTypeFeedbackCreated     WebhookEventType = "feedback.created"
-	WebhookEventTypeMessageCreated      WebhookEventType = "message.created"
+	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
+	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
+	WebhookEventTypeConversationCreated   WebhookEventType = "conversation.created"
+	WebhookEventTypeConversationRated     WebhookEventType = "conversation.rated"
+	WebhookEventTypeConversationUpdated   WebhookEventType = "conversation.updated"
+	WebhookEventTypeDiscussionAnswered    WebhookEventType = "discussion.answered"
+	WebhookEventTypeDiscussionCreated     WebhookEventType = "discussion.created"
+	WebhookEventTypeDiscussionPostCreated WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionUpdated     WebhookEventType = "discussion.updated"
+	WebhookEventTypeDraftCreated          WebhookEventType = "draft.created"
+	WebhookEventTypeDraftDeleted          WebhookEventType = "draft.deleted"
+	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
+	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
+	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -1322,6 +1488,14 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeConversationRated:
 		return true
 	case WebhookEventTypeConversationUpdated:
+		return true
+	case WebhookEventTypeDiscussionAnswered:
+		return true
+	case WebhookEventTypeDiscussionCreated:
+		return true
+	case WebhookEventTypeDiscussionPostCreated:
+		return true
+	case WebhookEventTypeDiscussionUpdated:
 		return true
 	case WebhookEventTypeDraftCreated:
 		return true
@@ -1582,7 +1756,7 @@ type Attachment struct {
 	Size   int64 `json:"size"`
 }
 
-// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 type Attributes map[string]interface{}
 
 // AuthorType `bot` is an API key. Rows written with a key before bot authors existed have `system`.
@@ -1722,6 +1896,12 @@ type ChatChannel struct {
 	// AskEmailOffline The widget asks for an e-mail address when nobody is available.
 	AskEmailOffline bool `json:"ask_email_offline"`
 
+	// Discussions Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+	// reader's posts wait for a member until one of theirs in the workspace was approved;
+	// identity-token users and members are published at once. `open`: everyone is published at
+	// once. Authors whose posts were marked spam always wait.
+	Discussions DiscussionMode `json:"discussions"`
+
 	// Greeting Shown before the first message; the inbox branding greeting when empty.
 	Greeting string `json:"greeting"`
 
@@ -1740,8 +1920,11 @@ type ChatChannelInput struct {
 	AllowedOrigins []Origin `json:"allowed_origins"`
 
 	// AskEmailOffline Defaults to true.
-	AskEmailOffline *bool   `json:"ask_email_offline,omitempty"`
-	Greeting        *string `json:"greeting,omitempty"`
+	AskEmailOffline *bool `json:"ask_email_offline,omitempty"`
+
+	// Discussions Defaults to `moderated`; on an update, absent keeps the current setting.
+	Discussions *DiscussionMode `json:"discussions,omitempty"`
+	Greeting    *string         `json:"greeting,omitempty"`
 
 	// Launcher The floating launcher. Absent values fall back to the inbox branding.
 	Launcher *ChatLauncher `json:"launcher,omitempty"`
@@ -1772,6 +1955,9 @@ type ClientAttachment struct {
 type ClientChatSettings struct {
 	AllowAnonymous  bool `json:"allow_anonymous"`
 	AskEmailOffline bool `json:"ask_email_offline"`
+
+	// Discussions `off` on `app` channels.
+	Discussions DiscussionMode `json:"discussions"`
 
 	// Greeting The channel greeting, else the inbox branding greeting, else empty.
 	Greeting string `json:"greeting"`
@@ -1812,8 +1998,7 @@ type ClientConversation struct {
 	Feedback *Feedback `json:"feedback,omitempty"`
 	Id       uuid.UUID `json:"id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind          ConversationKind      `json:"kind"`
 	LastMessage   *ClientMessagePreview `json:"last_message,omitempty"`
 	LastMessageAt *time.Time            `json:"last_message_at,omitempty"`
@@ -1822,9 +2007,6 @@ type ClientConversation struct {
 	// (the latest read position of any member, as in the `read` realtime frame). Absent
 	// when no member has read the conversation, and in `async` inboxes.
 	LastReadByMemberAt *time.Time `json:"last_read_by_member_at,omitempty"`
-
-	// Question `question` conversations only.
-	Question *PageQuestion `json:"question,omitempty"`
 
 	// Rating The contact's rating since the last close; absent when they have not rated it.
 	Rating  *Rating            `json:"rating,omitempty"`
@@ -1900,6 +2082,25 @@ type ClientConversationUpdatedEvent struct {
 
 // ClientConversationUpdatedEventType defines model for ClientConversationUpdatedEvent.Type.
 type ClientConversationUpdatedEventType string
+
+// ClientDiscussionCreate defines model for ClientDiscussionCreate.
+type ClientDiscussionCreate struct {
+	// Body Markdown.
+	Body      string  `json:"body"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page's absolute URL; query and fragment are dropped.
+	PageUrl string `json:"page_url"`
+	Title   string `json:"title"`
+}
+
+// ClientDiscussionPostUpdate defines model for ClientDiscussionPostUpdate.
+type ClientDiscussionPostUpdate struct {
+	Body *string `json:"body,omitempty"`
+
+	// Title Opening post only.
+	Title *string `json:"title,omitempty"`
+}
 
 // ClientEmailUpdate defines model for ClientEmailUpdate.
 type ClientEmailUpdate struct {
@@ -2112,22 +2313,8 @@ type ClientMessagePreview struct {
 	CreatedAt  time.Time  `json:"created_at"`
 	Id         uuid.UUID  `json:"id"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
-}
-
-// ClientPageAnswer A published question and answer, as the member wrote them.
-type ClientPageAnswer struct {
-	Answer      string    `json:"answer"`
-	Id          uuid.UUID `json:"id"`
-	PublishedAt time.Time `json:"published_at"`
-	Question    string    `json:"question"`
-	UpdatedAt   time.Time `json:"updated_at"`
-}
-
-// ClientPageAnswerList defines model for ClientPageAnswerList.
-type ClientPageAnswerList struct {
-	Items []ClientPageAnswer `json:"items"`
 }
 
 // ClientPresence Who can answer now, in a `live` inbox.
@@ -2149,23 +2336,6 @@ type ClientPresenceEvent struct {
 
 // ClientPresenceEventType defines model for ClientPresenceEvent.Type.
 type ClientPresenceEventType string
-
-// ClientQuestionCreate defines model for ClientQuestionCreate.
-type ClientQuestionCreate struct {
-	// Body The question.
-	Body string `json:"body"`
-
-	// ClientId The first message's `client_id`.
-	ClientId *string `json:"client_id,omitempty"`
-
-	// Email Examples: owner@example.com
-	Email     *Email  `json:"email,omitempty"`
-	PageTitle *string `json:"page_title,omitempty"`
-
-	// PageUrl The page's absolute URL; query and fragment are dropped.
-	PageUrl string  `json:"page_url"`
-	Subject *string `json:"subject,omitempty"`
-}
 
 // ClientRatingCreate defines model for ClientRatingCreate.
 type ClientRatingCreate struct {
@@ -2281,7 +2451,7 @@ type Contact struct {
 	// conversations the caller can see, spam left out; `last_seen_at` does not depend on the caller.
 	Activity *ContactActivity `json:"activity,omitempty"`
 
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes Attributes `json:"attributes"`
 
 	// Blocked Mail and chat from a blocked contact are refused.
@@ -2318,7 +2488,7 @@ type ContactActivity struct {
 
 // ContactCreate defines model for ContactCreate.
 type ContactCreate struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes  *Attributes   `json:"attributes,omitempty"`
 	Blocked     *bool         `json:"blocked,omitempty"`
 	Emails      *[]Email      `json:"emails,omitempty"`
@@ -2452,7 +2622,7 @@ type ContactSummary struct {
 
 // ContactUpdate defines model for ContactUpdate.
 type ContactUpdate struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes *Attributes `json:"attributes,omitempty"`
 	Blocked    *bool       `json:"blocked,omitempty"`
 
@@ -2497,8 +2667,7 @@ type Conversation struct {
 	Id       uuid.UUID `json:"id"`
 	InboxId  uuid.UUID `json:"inbox_id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind ConversationKind `json:"kind"`
 
 	// Labels Label ids.
@@ -2515,10 +2684,10 @@ type Conversation struct {
 	// anything, and in conversations the contact only reaches by e-mail. A `contact.read`
 	// event tells when it moves.
 	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
-	Priority            Priority   `json:"priority"`
 
-	// Question `question` conversations only: the page it was asked on.
-	Question *PageQuestion `json:"question,omitempty"`
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page     *SourcePage `json:"page,omitempty"`
+	Priority Priority    `json:"priority"`
 
 	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
 	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
@@ -2636,8 +2805,7 @@ type ConversationEvent struct {
 // ConversationEventType defines model for ConversationEvent.Type.
 type ConversationEventType string
 
-// ConversationKind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-// documentation page and carry `question`; everything else is `conversation`.
+// ConversationKind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 type ConversationKind string
 
 // ConversationListItem A conversation with what a list row shows.
@@ -2665,8 +2833,7 @@ type ConversationListItem struct {
 	Id       uuid.UUID `json:"id"`
 	InboxId  uuid.UUID `json:"inbox_id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind ConversationKind `json:"kind"`
 
 	// Labels Label ids.
@@ -2687,12 +2854,12 @@ type ConversationListItem struct {
 	// event tells when it moves.
 	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
 
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page *SourcePage `json:"page,omitempty"`
+
 	// PinnedAt When the calling member pinned it; absent when they did not, and for API keys.
 	PinnedAt *time.Time `json:"pinned_at,omitempty"`
 	Priority Priority   `json:"priority"`
-
-	// Question `question` conversations only: the page it was asked on.
-	Question *PageQuestion `json:"question,omitempty"`
 
 	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
 	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
@@ -2861,20 +3028,280 @@ type CountByID struct {
 // Direction defines model for Direction.
 type Direction string
 
-// DocsPage defines model for DocsPage.
-type DocsPage struct {
-	Down          int64     `json:"down"`
-	InboxId       uuid.UUID `json:"inbox_id"`
-	OpenFeedback  int64     `json:"open_feedback"`
-	OpenQuestions int64     `json:"open_questions"`
+// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+// `voted` and `following` on `/client/v1` only (false without a token).
+type Discussion struct {
+	// AnswerPostId The accepted answer; absent while there is none.
+	AnswerPostId *uuid.UUID `json:"answer_post_id,omitempty"`
+	AnsweredAt   *time.Time `json:"answered_at,omitempty"`
+
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author DiscussionAuthor `json:"author"`
+
+	// Body Markdown as written; empty once the opening post was deleted.
+	Body string `json:"body"`
+
+	// BodyHtml `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow ugc noopener"`).
+	BodyHtml string `json:"body_html"`
+
+	// ChannelId The chat channel whose setting applied when it was started.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ConversationId The conversation it was started from; absent once that is deleted.
+	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
+	CreatedAt      time.Time  `json:"created_at"`
+
+	// Deleted The opening post was deleted by its author; the replies stay.
+	Deleted        *bool      `json:"deleted,omitempty"`
+	EditedAt       *time.Time `json:"edited_at,omitempty"`
+	Following      *bool      `json:"following,omitempty"`
+	HiddenPosts    *int32     `json:"hidden_posts,omitempty"`
+	Id             uuid.UUID  `json:"id"`
+	InboxId        *uuid.UUID `json:"inbox_id,omitempty"`
+	LastActivityAt time.Time  `json:"last_activity_at"`
+	Locked         bool       `json:"locked"`
+
+	// Mine The caller started it.
+	Mine          *bool     `json:"mine,omitempty"`
+	OpeningPostId uuid.UUID `json:"opening_post_id"`
 
 	// Page The page's URL without query and fragment.
-	Page             string `json:"page"`
-	PublishedAnswers int64  `json:"published_answers"`
+	Page      string  `json:"page"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PendingPosts Posts waiting for a member, the opening post included.
+	PendingPosts *int32 `json:"pending_posts,omitempty"`
+
+	// ReplyCount Published replies, replies to replies included.
+	ReplyCount int32 `json:"reply_count"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State DiscussionState `json:"state"`
+	Title string          `json:"title"`
+	Voted *bool           `json:"voted,omitempty"`
+	Votes int32           `json:"votes"`
+}
+
+// DiscussionAnswer defines model for DiscussionAnswer.
+type DiscussionAnswer struct {
+	PostId uuid.UUID `json:"post_id"`
+}
+
+// DiscussionAuthor Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+// given on `/v1` only.
+type DiscussionAuthor struct {
+	ContactId *uuid.UUID `json:"contact_id,omitempty"`
+	Deleted   bool       `json:"deleted"`
+
+	// Initials One or two letters for an avatar; empty when there is no name.
+	Initials string `json:"initials"`
+
+	// Kind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+	// `anonymous`: no author to show (threads moved over from published answers).
+	Kind     DiscussionAuthorKind `json:"kind"`
+	MemberId *uuid.UUID           `json:"member_id,omitempty"`
+
+	// Name Absent when the author has no name (show "Reader") or is deleted.
+	Name *string `json:"name,omitempty"`
+}
+
+// DiscussionAuthorKind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+// `anonymous`: no author to show (threads moved over from published answers).
+type DiscussionAuthorKind string
+
+// DiscussionCreate defines model for DiscussionCreate.
+type DiscussionCreate struct {
+	// Body Markdown.
+	Body string `json:"body"`
+
+	// ChannelId A chat channel that allows the page's origin.
+	ChannelId uuid.UUID `json:"channel_id"`
+	PageTitle *string   `json:"page_title,omitempty"`
+	PageUrl   string    `json:"page_url"`
+	Title     string    `json:"title"`
+}
+
+// DiscussionDetail defines model for DiscussionDetail.
+type DiscussionDetail struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Posts The replies, the accepted answer first, then oldest first; not the opening post.
+	Posts []DiscussionPost `json:"posts"`
+}
+
+// DiscussionEvent `discussion.created`: a thread was started (also when it waits for approval: see `state`).
+// `discussion.post_created`: a reply was written, with the reply in `post`.
+// `discussion.answered`: an answer was accepted, with it in `post`.
+// `discussion.updated`: a post or the thread was approved, hidden, marked spam, edited,
+// deleted, locked or unlocked, or the answer was cleared; `post` names the post when one
+// changed.
+type DiscussionEvent struct {
+	CreatedAt   time.Time           `json:"created_at"`
+	Data        DiscussionEventData `json:"data"`
+	Id          int64               `json:"id"`
+	InboxId     uuid.UUID           `json:"inbox_id"`
+	Type        DiscussionEventType `json:"type"`
+	WorkspaceId uuid.UUID           `json:"workspace_id"`
+}
+
+// DiscussionEventType defines model for DiscussionEvent.Type.
+type DiscussionEventType string
+
+// DiscussionEventData defines model for DiscussionEventData.
+type DiscussionEventData struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Post The post the event is about; absent for changes to the thread alone.
+	Post *DiscussionPost `json:"post,omitempty"`
+}
+
+// DiscussionFromConversation defines model for DiscussionFromConversation.
+type DiscussionFromConversation struct {
+	// Answer Posted by the member and marked as the accepted answer.
+	Answer *string `json:"answer,omitempty"`
+
+	// Body The public question, as the member edits it (Markdown).
+	Body      string  `json:"body"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page, when the conversation has none or another one is meant.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
+}
+
+// DiscussionMode Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+// reader's posts wait for a member until one of theirs in the workspace was approved;
+// identity-token users and members are published at once. `open`: everyone is published at
+// once. Authors whose posts were marked spam always wait.
+type DiscussionMode string
+
+// DiscussionPage defines model for DiscussionPage.
+type DiscussionPage struct {
+	Items []Discussion `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// DiscussionPost One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+// reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+type DiscussionPost struct {
+	// Accepted It is the thread's accepted answer.
+	Accepted bool `json:"accepted"`
+
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author DiscussionAuthor `json:"author"`
+
+	// Body Markdown as written; empty when `deleted`.
+	Body string `json:"body"`
+
+	// BodyHtml `body` rendered to sanitized HTML.
+	BodyHtml     string     `json:"body_html"`
+	CreatedAt    time.Time  `json:"created_at"`
+	Deleted      bool       `json:"deleted"`
+	DiscussionId uuid.UUID  `json:"discussion_id"`
+	EditedAt     *time.Time `json:"edited_at,omitempty"`
+	Id           uuid.UUID  `json:"id"`
+	Mine         *bool      `json:"mine,omitempty"`
+	Opening      bool       `json:"opening"`
+	ParentPostId *uuid.UUID `json:"parent_post_id,omitempty"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State DiscussionState `json:"state"`
+	Voted *bool           `json:"voted,omitempty"`
+	Votes int32           `json:"votes"`
+}
+
+// DiscussionPostCreate defines model for DiscussionPostCreate.
+type DiscussionPostCreate struct {
+	// Body Markdown.
+	Body string `json:"body"`
+
+	// ParentPostId A reply to the thread (not the opening post) to answer; absent for a reply to the thread.
+	ParentPostId *uuid.UUID `json:"parent_post_id,omitempty"`
+}
+
+// DiscussionPostItem defines model for DiscussionPostItem.
+type DiscussionPostItem struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Post One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+	// reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+	Post DiscussionPost `json:"post"`
+}
+
+// DiscussionPostPage defines model for DiscussionPostPage.
+type DiscussionPostPage struct {
+	Items []DiscussionPostItem `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// DiscussionPostUpdate defines model for DiscussionPostUpdate.
+type DiscussionPostUpdate struct {
+	Body  *string                    `json:"body,omitempty"`
+	State *DiscussionPostUpdateState `json:"state,omitempty"`
+
+	// Title Opening post only.
+	Title *string `json:"title,omitempty"`
+}
+
+// DiscussionPostUpdateState defines model for DiscussionPostUpdate.State.
+type DiscussionPostUpdateState string
+
+// DiscussionSort defines model for DiscussionSort.
+type DiscussionSort string
+
+// DiscussionState `published`: public. `pending`: waits for a member; only its author and members see it.
+// `hidden`: a member hid it; only members see it.
+type DiscussionState string
+
+// DiscussionTeamSort defines model for DiscussionTeamSort.
+type DiscussionTeamSort string
+
+// DiscussionUpdate defines model for DiscussionUpdate.
+type DiscussionUpdate struct {
+	Locked *bool   `json:"locked,omitempty"`
+	Title  *string `json:"title,omitempty"`
+}
+
+// DocsPage defines model for DocsPage.
+type DocsPage struct {
+	Down         int64     `json:"down"`
+	InboxId      uuid.UUID `json:"inbox_id"`
+	OpenFeedback int64     `json:"open_feedback"`
+	OpenThreads  int64     `json:"open_threads"`
+
+	// Page The page's URL without query and fragment.
+	Page         string `json:"page"`
+	PendingPosts int64  `json:"pending_posts"`
 
 	// Title The latest title the page sent; empty when none.
-	Title string `json:"title"`
-	Up    int64  `json:"up"`
+	Title             string `json:"title"`
+	UnansweredThreads int64  `json:"unanswered_threads"`
+	Up                int64  `json:"up"`
 }
 
 // DocsPageDay defines model for DocsPageDay.
@@ -2908,17 +3335,18 @@ type DocsSite struct {
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
 	// ChannelName That channel's name; absent with `channel_id`.
-	ChannelName   *string   `json:"channel_name,omitempty"`
-	Down          int64     `json:"down"`
-	InboxId       uuid.UUID `json:"inbox_id"`
-	OpenFeedback  int64     `json:"open_feedback"`
-	OpenQuestions int64     `json:"open_questions"`
+	ChannelName  *string   `json:"channel_name,omitempty"`
+	Down         int64     `json:"down"`
+	InboxId      uuid.UUID `json:"inbox_id"`
+	OpenFeedback int64     `json:"open_feedback"`
+	OpenThreads  int64     `json:"open_threads"`
 
 	// Origin The site, `scheme://host[:port]`.
-	Origin           string `json:"origin"`
-	Pages            int64  `json:"pages"`
-	PublishedAnswers int64  `json:"published_answers"`
-	Up               int64  `json:"up"`
+	Origin            string `json:"origin"`
+	Pages             int64  `json:"pages"`
+	PendingPosts      int64  `json:"pending_posts"`
+	UnansweredThreads int64  `json:"unanswered_threads"`
+	Up                int64  `json:"up"`
 }
 
 // DocsSiteList defines model for DocsSiteList.
@@ -2935,21 +3363,21 @@ type DocsSummary struct {
 
 // DocsSummaryDay defines model for DocsSummaryDay.
 type DocsSummaryDay struct {
-	Day       openapi_types.Date `json:"day"`
-	Down      int64              `json:"down"`
-	Feedback  int64              `json:"feedback"`
-	Questions int64              `json:"questions"`
-	Up        int64              `json:"up"`
+	Day      openapi_types.Date `json:"day"`
+	Down     int64              `json:"down"`
+	Feedback int64              `json:"feedback"`
+	Threads  int64              `json:"threads"`
+	Up       int64              `json:"up"`
 }
 
 // DocsTotals defines model for DocsTotals.
 type DocsTotals struct {
-	Down             int64 `json:"down"`
-	Feedback         int64 `json:"feedback"`
-	PublishedAnswers int64 `json:"published_answers"`
-	Questions        int64 `json:"questions"`
-	RatedPages       int64 `json:"rated_pages"`
-	Up               int64 `json:"up"`
+	Down         int64 `json:"down"`
+	Feedback     int64 `json:"feedback"`
+	PendingPosts int64 `json:"pending_posts"`
+	RatedPages   int64 `json:"rated_pages"`
+	Threads      int64 `json:"threads"`
+	Up           int64 `json:"up"`
 }
 
 // DraftAuthorKind `bot`: written with an API key. `assistant`: written by a member through an OAuth client.
@@ -3578,7 +4006,7 @@ type MentionNote struct {
 	CreatedAt time.Time     `json:"created_at"`
 	Id        uuid.UUID     `json:"id"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
 }
 
@@ -3789,7 +4217,7 @@ type MessageEmailDetail struct {
 	// HasRemoteImages `full_html` or `original_html` loads images from other servers; block them until the member asks.
 	HasRemoteImages bool `json:"has_remote_images"`
 
-	// Headers Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, …).
+	// Headers Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, ...).
 	Headers   map[string]string `json:"headers"`
 	InReplyTo *string           `json:"in_reply_to,omitempty"`
 	MessageId string            `json:"message_id"`
@@ -3851,7 +4279,7 @@ type MessagePreview struct {
 	// change (assignment, status, labels).
 	Kind MessageKind `json:"kind"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
 }
 
@@ -4117,59 +4545,6 @@ type OAuthWorkspaceChoice struct {
 // Examples: https://www.example.com
 type Origin = string
 
-// PageAnswer A question and answer published to a documentation page.
-type PageAnswer struct {
-	Answer string `json:"answer"`
-
-	// ChannelId The chat channel whose pages show it.
-	ChannelId uuid.UUID `json:"channel_id"`
-
-	// ConversationId The question it was published from; absent once that conversation is deleted.
-	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
-	Id             uuid.UUID  `json:"id"`
-	InboxId        uuid.UUID  `json:"inbox_id"`
-
-	// MemberId The member who published it; absent once they are removed.
-	MemberId *uuid.UUID `json:"member_id,omitempty"`
-
-	// Page The page's URL without query and fragment.
-	Page        string    `json:"page"`
-	PublishedAt time.Time `json:"published_at"`
-	Question    string    `json:"question"`
-
-	// Title The page's title when it was published; may be empty.
-	Title     string    `json:"title"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
-
-// PageAnswerCreate defines model for PageAnswerCreate.
-type PageAnswerCreate struct {
-	Answer   string `json:"answer"`
-	Question string `json:"question"`
-}
-
-// PageAnswerPage defines model for PageAnswerPage.
-type PageAnswerPage struct {
-	Items []PageAnswer `json:"items"`
-
-	// NextCursor Absent on the last page.
-	NextCursor *string `json:"next_cursor,omitempty"`
-}
-
-// PageAnswerUpdate defines model for PageAnswerUpdate.
-type PageAnswerUpdate struct {
-	Answer   *string `json:"answer,omitempty"`
-	Question *string `json:"question,omitempty"`
-}
-
-// PageQuestion The documentation page a `question` conversation was asked on.
-type PageQuestion struct {
-	PageTitle *string `json:"page_title,omitempty"`
-
-	// PageUrl Without query and fragment.
-	PageUrl string `json:"page_url"`
-}
-
 // PageRating defines model for PageRating.
 type PageRating string
 
@@ -4196,7 +4571,7 @@ type Passkey struct {
 type PasskeyCeremony struct {
 	CeremonyId string `json:"ceremony_id"`
 
-	// Options WebAuthn options in their JSON form (`{"publicKey": …}`), for
+	// Options WebAuthn options in their JSON form (`{"publicKey": ...}`), for
 	// `PublicKeyCredential.parseCreationOptionsFromJSON` or
 	// `parseRequestOptionsFromJSON`.
 	Options map[string]interface{} `json:"options"`
@@ -4350,6 +4725,141 @@ type RatingStats struct {
 	Inboxes []InboxRatingStats `json:"inboxes"`
 }
 
+// ReaderAccount defines model for ReaderAccount.
+type ReaderAccount struct {
+	// Email Examples: owner@example.com
+	Email Email `json:"email"`
+
+	// EmailNotifications E-mails about followed threads; on by default.
+	EmailNotifications bool   `json:"email_notifications"`
+	Initials           string `json:"initials"`
+
+	// Locale The language of e-mails sent to the person.
+	Locale Locale `json:"locale"`
+
+	// Member The person is a member of at least one workspace.
+	Member bool `json:"member"`
+
+	// Name Shown on the person's posts; empty until set.
+	Name     string    `json:"name"`
+	PersonId uuid.UUID `json:"person_id"`
+}
+
+// ReaderAccountUpdate defines model for ReaderAccountUpdate.
+type ReaderAccountUpdate struct {
+	EmailNotifications *bool   `json:"email_notifications,omitempty"`
+	Name               *string `json:"name,omitempty"`
+}
+
+// ReaderDiscussion A thread as the reader's account lists it.
+type ReaderDiscussion struct {
+	Answered  bool      `json:"answered"`
+	CreatedAt time.Time `json:"created_at"`
+	Following bool      `json:"following"`
+	Id        uuid.UUID `json:"id"`
+
+	// InboxName The product whose documentation it is on.
+	InboxName      string    `json:"inbox_name"`
+	LastActivityAt time.Time `json:"last_activity_at"`
+	Locked         bool      `json:"locked"`
+	Page           string    `json:"page"`
+	PageTitle      *string   `json:"page_title,omitempty"`
+	ReplyCount     int32     `json:"reply_count"`
+
+	// Started The reader started it.
+	Started bool `json:"started"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State         DiscussionState `json:"state"`
+	Title         string          `json:"title"`
+	Votes         int32           `json:"votes"`
+	WorkspaceName string          `json:"workspace_name"`
+}
+
+// ReaderDiscussionPage defines model for ReaderDiscussionPage.
+type ReaderDiscussionPage struct {
+	Items []ReaderDiscussion `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ReaderNotification defines model for ReaderNotification.
+type ReaderNotification struct {
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author       *DiscussionAuthor `json:"author,omitempty"`
+	CreatedAt    time.Time         `json:"created_at"`
+	DiscussionId uuid.UUID         `json:"discussion_id"`
+
+	// Excerpt The start of the post, at most 200 characters of plain text.
+	Excerpt   string    `json:"excerpt"`
+	Id        uuid.UUID `json:"id"`
+	InboxName string    `json:"inbox_name"`
+
+	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+	Kind   ReaderNotificationKind `json:"kind"`
+	Page   string                 `json:"page"`
+	PostId *uuid.UUID             `json:"post_id,omitempty"`
+	ReadAt *time.Time             `json:"read_at,omitempty"`
+
+	// Title The thread's title.
+	Title string `json:"title"`
+}
+
+// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+type ReaderNotificationKind string
+
+// ReaderNotificationPage defines model for ReaderNotificationPage.
+type ReaderNotificationPage struct {
+	Items []ReaderNotification `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+	Unread     int64   `json:"unread"`
+}
+
+// ReaderNotificationsRead defines model for ReaderNotificationsRead.
+type ReaderNotificationsRead struct {
+	Ids *[]uuid.UUID `json:"ids,omitempty"`
+}
+
+// ReaderProfile defines model for ReaderProfile.
+type ReaderProfile struct {
+	Initials string `json:"initials"`
+
+	// Name Absent when the person has no name yet.
+	Name *string `json:"name,omitempty"`
+}
+
+// ReaderToken defines model for ReaderToken.
+type ReaderToken struct {
+	ChannelKey string    `json:"channel_key"`
+	ExpiresAt  time.Time `json:"expires_at"`
+
+	// Origin The target origin for `postMessage`, as normalized.
+	//
+	// Examples: https://www.example.com
+	Origin Origin        `json:"origin"`
+	Reader ReaderProfile `json:"reader"`
+
+	// Token `yuva_rd_<secret>`, shown once.
+	Token string `json:"token"`
+}
+
+// ReaderTokenCreate defines model for ReaderTokenCreate.
+type ReaderTokenCreate struct {
+	// ChannelKey The chat channel's public key, from the `channel` query parameter of `/account/connect`.
+	ChannelKey string `json:"channel_key"`
+
+	// Origin The origin of the page that opened the popup.
+	//
+	// Examples: https://www.example.com
+	Origin Origin `json:"origin"`
+}
+
 // RealtimeMessage One server message on `/v1/realtime`, told apart by `type`.
 type RealtimeMessage struct {
 	union json.RawMessage
@@ -4379,6 +4889,10 @@ type Role string
 type SignInCodeRequest struct {
 	// Email Examples: owner@example.com
 	Email Email `json:"email"`
+
+	// Reader Sign in as a reader (the account page and its `/account/connect` popup): the code is sent
+	// to any address, and verifying it creates the person when there is none yet.
+	Reader *bool `json:"reader,omitempty"`
 }
 
 // SignInCodeVerify defines model for SignInCodeVerify.
@@ -4424,6 +4938,14 @@ type SmtpSettingsInput struct {
 // SmtpTls `starttls` upgrades a plain connection (port 587), `tls` connects with TLS (port 465),
 // `none` sends in the clear (local relays and test servers only).
 type SmtpTls string
+
+// SourcePage The documentation page a conversation was sent from.
+type SourcePage struct {
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl Without query and fragment.
+	PageUrl string `json:"page_url"`
+}
 
 // Stats defines model for Stats.
 type Stats struct {
@@ -4570,7 +5092,7 @@ type WebhookAttempt struct {
 	AttemptedAt time.Time `json:"attempted_at"`
 	DeliveryId  uuid.UUID `json:"delivery_id"`
 
-	// Error Why the attempt failed (timeout, refused address, non-2xx status, …).
+	// Error Why the attempt failed (timeout, refused address, non-2xx status, ...).
 	Error     *string   `json:"error,omitempty"`
 	Id        uuid.UUID `json:"id"`
 	LatencyMs int32     `json:"latency_ms"`
@@ -4593,7 +5115,7 @@ type WebhookAttemptList struct {
 
 // WebhookContact The contact as a host backend needs it.
 type WebhookContact struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes Attributes `json:"attributes"`
 	Emails     []Email    `json:"emails"`
 
@@ -4730,6 +5252,19 @@ type WebhookDeliveryPage struct {
 // WebhookDeliveryState `pending` while attempts remain, `succeeded` after a 2xx answer, `failed` when the retries
 // (about 24 hours) ran out or the endpoint was disabled.
 type WebhookDeliveryState string
+
+// WebhookDiscussionPayload defines model for WebhookDiscussionPayload.
+type WebhookDiscussionPayload struct {
+	Data DiscussionEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
 
 // WebhookEndpoint defines model for WebhookEndpoint.
 type WebhookEndpoint struct {
@@ -4899,6 +5434,12 @@ type Cursor = string
 // DeliveryId defines model for DeliveryId.
 type DeliveryId = uuid.UUID
 
+// DiscussionId defines model for DiscussionId.
+type DiscussionId = uuid.UUID
+
+// DiscussionPostId defines model for DiscussionPostId.
+type DiscussionPostId = uuid.UUID
+
 // DocsDays defines model for DocsDays.
 type DocsDays = int32
 
@@ -4932,9 +5473,6 @@ type OAuthGrantId = uuid.UUID
 // OAuthRequestId defines model for OAuthRequestId.
 type OAuthRequestId = uuid.UUID
 
-// PageAnswerId defines model for PageAnswerId.
-type PageAnswerId = uuid.UUID
-
 // PasskeyId defines model for PasskeyId.
 type PasskeyId = uuid.UUID
 
@@ -4962,10 +5500,17 @@ type WorkspaceHeader = uuid.UUID
 // SignedIn defines model for SignedIn.
 type SignedIn = Me
 
-// ListClientPageAnswersParams defines parameters for ListClientPageAnswers.
-type ListClientPageAnswersParams struct {
+// ListClientDiscussionsParams defines parameters for ListClientDiscussions.
+type ListClientDiscussionsParams struct {
 	// Page The page's URL.
-	Page string `form:"page" json:"page"`
+	Page string          `form:"page" json:"page"`
+	Sort *DiscussionSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -5015,16 +5560,52 @@ type SetClientTypingParams struct {
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
+// CreateClientDiscussionParams defines parameters for CreateClientDiscussion.
+type CreateClientDiscussionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// CreateClientDiscussionPostParams defines parameters for CreateClientDiscussionPost.
+type CreateClientDiscussionPostParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
 // CreateClientFeedbackParams defines parameters for CreateClientFeedback.
 type CreateClientFeedbackParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
-// CreateClientQuestionParams defines parameters for CreateClientQuestion.
-type CreateClientQuestionParams struct {
-	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
-	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+// ListReaderDiscussionsParams defines parameters for ListReaderDiscussions.
+type ListReaderDiscussionsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListReaderFollowingParams defines parameters for ListReaderFollowing.
+type ListReaderFollowingParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListReaderNotificationsParams defines parameters for ListReaderNotifications.
+type ListReaderNotificationsParams struct {
+	// Unread `true` lists only unread notifications.
+	Unread *bool `form:"unread,omitempty" json:"unread,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListApiKeysParams defines parameters for ListApiKeys.
@@ -5253,8 +5834,8 @@ type ListConversationsParams struct {
 	Spam *bool `form:"spam,omitempty" json:"spam,omitempty"`
 
 	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
-	// parameter (`kind=feedback&kind=question`) or give a comma-separated list
-	// (`kind=feedback,question`).
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
 	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
@@ -5262,17 +5843,16 @@ type ListConversationsParams struct {
 	// without a `channel_kind` never match.
 	ChannelKind *[]ChannelKind `form:"channel_kind,omitempty" json:"channel_kind,omitempty"`
 
-	// Site Only feedback and questions sent from a page of this site: an origin,
-	// `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
-	// `question.page_url`.
+	// Site Only conversations sent from a page of this site: an origin, `scheme://host[:port]`,
+	// matched against the origin of `page.page_url`.
 	Site *string `form:"site,omitempty" json:"site,omitempty"`
 
 	// Category Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
 	// `feedback`, `400`).
 	Category *FeedbackCategory `form:"category,omitempty" json:"category,omitempty"`
 
-	// Page Only feedback and questions sent from this documentation page (a URL; query and
-	// fragment are ignored).
+	// Page Only conversations sent from this documentation page (a URL; query and fragment are
+	// ignored).
 	Page *string `form:"page,omitempty" json:"page,omitempty"`
 
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
@@ -5328,6 +5908,15 @@ type UpdateConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// CreateDiscussionFromConversationParams defines parameters for CreateDiscussionFromConversation.
+type CreateDiscussionFromConversationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMessagesParams defines parameters for ListMessages.
 type ListMessagesParams struct {
 	Order *ListMessagesParamsOrder `form:"order,omitempty" json:"order,omitempty"`
@@ -5375,15 +5964,6 @@ type PinConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
-// PublishConversationParams defines parameters for PublishConversation.
-type PublishConversationParams struct {
-	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
-	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
-
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
 // MarkConversationReadParams defines parameters for MarkConversationRead.
 type MarkConversationReadParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -5404,6 +5984,128 @@ type SetMemberTypingParams struct {
 
 // MarkConversationUnreadParams defines parameters for MarkConversationUnread.
 type MarkConversationUnreadParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListDiscussionPostsParams defines parameters for ListDiscussionPosts.
+type ListDiscussionPostsParams struct {
+	State   *DiscussionState `form:"state,omitempty" json:"state,omitempty"`
+	InboxId *uuid.UUID       `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
+	// Page Only this page's posts (a URL; query and fragment are ignored).
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteDiscussionPostParams defines parameters for DeleteDiscussionPost.
+type DeleteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateDiscussionPostParams defines parameters for UpdateDiscussionPost.
+type UpdateDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkDiscussionPostSpamParams defines parameters for MarkDiscussionPostSpam.
+type MarkDiscussionPostSpamParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnvoteDiscussionPostParams defines parameters for UnvoteDiscussionPost.
+type UnvoteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// VoteDiscussionPostParams defines parameters for VoteDiscussionPost.
+type VoteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListDiscussionsParams defines parameters for ListDiscussions.
+type ListDiscussionsParams struct {
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
+	// Page Only this page's threads (a URL; query and fragment are ignored).
+	Page     *string          `form:"page,omitempty" json:"page,omitempty"`
+	State    *DiscussionState `form:"state,omitempty" json:"state,omitempty"`
+	Answered *bool            `form:"answered,omitempty" json:"answered,omitempty"`
+	Locked   *bool            `form:"locked,omitempty" json:"locked,omitempty"`
+
+	// Pending `true`: only threads with posts waiting for a member.
+	Pending *bool               `form:"pending,omitempty" json:"pending,omitempty"`
+	Sort    *DiscussionTeamSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDiscussionParams defines parameters for CreateDiscussion.
+type CreateDiscussionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetDiscussionParams defines parameters for GetDiscussion.
+type GetDiscussionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateDiscussionParams defines parameters for UpdateDiscussion.
+type UpdateDiscussionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ClearDiscussionAnswerParams defines parameters for ClearDiscussionAnswer.
+type ClearDiscussionAnswerParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// AcceptDiscussionAnswerParams defines parameters for AcceptDiscussionAnswer.
+type AcceptDiscussionAnswerParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDiscussionPostParams defines parameters for CreateDiscussionPost.
+type CreateDiscussionPostParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
@@ -5748,44 +6450,6 @@ type RevokeOAuthGrantParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
-// ListPageAnswersParams defines parameters for ListPageAnswers.
-type ListPageAnswersParams struct {
-	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
-
-	// Page Only this page's answers (a URL; query and fragment are ignored).
-	Page *string `form:"page,omitempty" json:"page,omitempty"`
-
-	// ConversationId Only the answer published from this conversation.
-	ConversationId *uuid.UUID `form:"conversation_id,omitempty" json:"conversation_id,omitempty"`
-
-	// Cursor The `next_cursor` of the previous page.
-	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit Page size, 1 to 100; 25 by default.
-	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// DeletePageAnswerParams defines parameters for DeletePageAnswer.
-type DeletePageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// GetPageAnswerParams defines parameters for GetPageAnswer.
-type GetPageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// UpdatePageAnswerParams defines parameters for UpdatePageAnswer.
-type UpdatePageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -5977,6 +6641,62 @@ type WebhookConversationUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookDiscussionAnsweredParams defines parameters for WebhookDiscussionAnswered.
+type WebhookDiscussionAnsweredParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionCreatedParams defines parameters for WebhookDiscussionCreated.
+type WebhookDiscussionCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionPostCreatedParams defines parameters for WebhookDiscussionPostCreated.
+type WebhookDiscussionPostCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionUpdatedParams defines parameters for WebhookDiscussionUpdated.
+type WebhookDiscussionUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookDraftCreatedParams defines parameters for WebhookDraftCreated.
 type WebhookDraftCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -6074,17 +6794,35 @@ type MarkClientConversationReadJSONRequestBody = ClientReadCreate
 // SetClientTypingJSONRequestBody defines body for SetClientTyping for application/json ContentType.
 type SetClientTypingJSONRequestBody = TypingCreate
 
+// UpdateClientDiscussionPostJSONRequestBody defines body for UpdateClientDiscussionPost for application/json ContentType.
+type UpdateClientDiscussionPostJSONRequestBody = ClientDiscussionPostUpdate
+
+// CreateClientDiscussionJSONRequestBody defines body for CreateClientDiscussion for application/json ContentType.
+type CreateClientDiscussionJSONRequestBody = ClientDiscussionCreate
+
+// AcceptClientDiscussionAnswerJSONRequestBody defines body for AcceptClientDiscussionAnswer for application/json ContentType.
+type AcceptClientDiscussionAnswerJSONRequestBody = DiscussionAnswer
+
+// CreateClientDiscussionPostJSONRequestBody defines body for CreateClientDiscussionPost for application/json ContentType.
+type CreateClientDiscussionPostJSONRequestBody = DiscussionPostCreate
+
 // CreateClientFeedbackJSONRequestBody defines body for CreateClientFeedback for application/json ContentType.
 type CreateClientFeedbackJSONRequestBody = ClientFeedbackCreate
 
 // CreateClientFeedbackMultipartRequestBody defines body for CreateClientFeedback for multipart/form-data ContentType.
 type CreateClientFeedbackMultipartRequestBody = ClientFeedbackCreateMultipart
 
-// CreateClientQuestionJSONRequestBody defines body for CreateClientQuestion for application/json ContentType.
-type CreateClientQuestionJSONRequestBody = ClientQuestionCreate
-
 // CreateClientSessionJSONRequestBody defines body for CreateClientSession for application/json ContentType.
 type CreateClientSessionJSONRequestBody = ClientSessionCreate
+
+// UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
+type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
+
+// MarkReaderNotificationsReadJSONRequestBody defines body for MarkReaderNotificationsRead for application/json ContentType.
+type MarkReaderNotificationsReadJSONRequestBody = ReaderNotificationsRead
+
+// CreateReaderTokenJSONRequestBody defines body for CreateReaderToken for application/json ContentType.
+type CreateReaderTokenJSONRequestBody = ReaderTokenCreate
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -6131,6 +6869,9 @@ type BulkUpdateConversationsJSONRequestBody = ConversationBulkUpdate
 // UpdateConversationJSONRequestBody defines body for UpdateConversation for application/json ContentType.
 type UpdateConversationJSONRequestBody = ConversationUpdate
 
+// CreateDiscussionFromConversationJSONRequestBody defines body for CreateDiscussionFromConversation for application/json ContentType.
+type CreateDiscussionFromConversationJSONRequestBody = DiscussionFromConversation
+
 // CreateMessageJSONRequestBody defines body for CreateMessage for application/json ContentType.
 type CreateMessageJSONRequestBody = MessageCreate
 
@@ -6140,14 +6881,26 @@ type CreateMessageMultipartRequestBody = MessageCreateMultipart
 // MoveConversationJSONRequestBody defines body for MoveConversation for application/json ContentType.
 type MoveConversationJSONRequestBody = ConversationMove
 
-// PublishConversationJSONRequestBody defines body for PublishConversation for application/json ContentType.
-type PublishConversationJSONRequestBody = PageAnswerCreate
-
 // MarkConversationReadJSONRequestBody defines body for MarkConversationRead for application/json ContentType.
 type MarkConversationReadJSONRequestBody = ConversationReadCreate
 
 // SetMemberTypingJSONRequestBody defines body for SetMemberTyping for application/json ContentType.
 type SetMemberTypingJSONRequestBody = TypingCreate
+
+// UpdateDiscussionPostJSONRequestBody defines body for UpdateDiscussionPost for application/json ContentType.
+type UpdateDiscussionPostJSONRequestBody = DiscussionPostUpdate
+
+// CreateDiscussionJSONRequestBody defines body for CreateDiscussion for application/json ContentType.
+type CreateDiscussionJSONRequestBody = DiscussionCreate
+
+// UpdateDiscussionJSONRequestBody defines body for UpdateDiscussion for application/json ContentType.
+type UpdateDiscussionJSONRequestBody = DiscussionUpdate
+
+// AcceptDiscussionAnswerJSONRequestBody defines body for AcceptDiscussionAnswer for application/json ContentType.
+type AcceptDiscussionAnswerJSONRequestBody = DiscussionAnswer
+
+// CreateDiscussionPostJSONRequestBody defines body for CreateDiscussionPost for application/json ContentType.
+type CreateDiscussionPostJSONRequestBody = DiscussionPostCreate
 
 // CreateFeedbackJSONRequestBody defines body for CreateFeedback for application/json ContentType.
 type CreateFeedbackJSONRequestBody = FeedbackCreate
@@ -6197,9 +6950,6 @@ type UpdateMessageJSONRequestBody = MessageUpdate
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
-// UpdatePageAnswerJSONRequestBody defines body for UpdatePageAnswer for application/json ContentType.
-type UpdatePageAnswerJSONRequestBody = PageAnswerUpdate
-
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
 type CreateWebhookJSONRequestBody = WebhookEndpointCreate
 
@@ -6226,6 +6976,18 @@ type WebhookConversationRatedJSONRequestBody = WebhookConversationPayload
 
 // WebhookConversationUpdatedJSONRequestBody defines body for WebhookConversationUpdated for application/json ContentType.
 type WebhookConversationUpdatedJSONRequestBody = WebhookConversationPayload
+
+// WebhookDiscussionAnsweredJSONRequestBody defines body for WebhookDiscussionAnswered for application/json ContentType.
+type WebhookDiscussionAnsweredJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionCreatedJSONRequestBody defines body for WebhookDiscussionCreated for application/json ContentType.
+type WebhookDiscussionCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionPostCreatedJSONRequestBody defines body for WebhookDiscussionPostCreated for application/json ContentType.
+type WebhookDiscussionPostCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionUpdatedJSONRequestBody defines body for WebhookDiscussionUpdated for application/json ContentType.
+type WebhookDiscussionUpdatedJSONRequestBody = WebhookDiscussionPayload
 
 // WebhookDraftCreatedJSONRequestBody defines body for WebhookDraftCreated for application/json ContentType.
 type WebhookDraftCreatedJSONRequestBody = WebhookMessagePayload
@@ -6889,6 +7651,32 @@ func (t *RealtimeMessage) MergeConversationPinEvent(v ConversationPinEvent) erro
 	return err
 }
 
+// AsDiscussionEvent returns the union data inside the RealtimeMessage as a DiscussionEvent
+func (t RealtimeMessage) AsDiscussionEvent() (DiscussionEvent, error) {
+	var body DiscussionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionEvent overwrites any union data inside the RealtimeMessage as the provided DiscussionEvent
+func (t *RealtimeMessage) FromDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionEvent performs a merge with any union data inside the RealtimeMessage, using the provided DiscussionEvent
+func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -7077,6 +7865,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsConversationReadEvent()
 	case "conversation.updated":
 		return t.AsConversationEvent()
+	case "discussion.answered":
+		return t.AsDiscussionEvent()
+	case "discussion.created":
+		return t.AsDiscussionEvent()
+	case "discussion.post_created":
+		return t.AsDiscussionEvent()
+	case "discussion.updated":
+		return t.AsDiscussionEvent()
 	case "draft.created":
 		return t.AsDraftEvent()
 	case "draft.deleted":
@@ -7484,6 +8280,32 @@ func (t *StoredEvent) MergeConversationPinEvent(v ConversationPinEvent) error {
 	return err
 }
 
+// AsDiscussionEvent returns the union data inside the StoredEvent as a DiscussionEvent
+func (t StoredEvent) AsDiscussionEvent() (DiscussionEvent, error) {
+	var body DiscussionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionEvent overwrites any union data inside the StoredEvent as the provided DiscussionEvent
+func (t *StoredEvent) FromDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionEvent performs a merge with any union data inside the StoredEvent, using the provided DiscussionEvent
+func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -7514,6 +8336,14 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsConversationReadEvent()
 	case "conversation.updated":
 		return t.AsConversationEvent()
+	case "discussion.answered":
+		return t.AsDiscussionEvent()
+	case "discussion.created":
+		return t.AsDiscussionEvent()
+	case "discussion.post_created":
+		return t.AsDiscussionEvent()
+	case "discussion.updated":
+		return t.AsDiscussionEvent()
 	case "draft.created":
 		return t.AsDraftEvent()
 	case "draft.deleted":
@@ -7650,19 +8480,37 @@ type ClientInterface interface {
 	// Corresponds with GET /client/v1/channels/{channel_key} (the `GetClientChannel` operationId).
 	GetClientChannel(ctx context.Context, channelKey string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListClientPageAnswers A documentation page's published answers
+	// ListClientDiscussions A documentation page's discussion threads
 	//
-	// The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-	// in the channel's inbox, newest first, at most 100, without a session. They carry the
-	// member's edited text only: never the visitor's name or address. The page is matched
-	// without query and fragment, and its origin must be one of the channel's allowed origins
-	// (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+	// The published threads of a page in the channel's inbox, without a session. The page is
+	// matched without query and fragment, and its origin must be one of the channel's allowed
+	// origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+	//
+	// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+	// without an accepted answer only, those nobody replied to first, then newest).
+	//
+	// Authors are shown by display name and initials only. Without `Authorization` the answer may
+	// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+	// session of this channel the caller's own threads still waiting for a member are included and
+	// `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+	// An unknown or expired token answers `401`.
 	//
 	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
 	// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
 	//
-	// Corresponds with GET /client/v1/channels/{channel_key}/page-answers (the `ListClientPageAnswers` operationId).
-	ListClientPageAnswers(ctx context.Context, channelKey ChannelKey, params *ListClientPageAnswersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with GET /client/v1/channels/{channel_key}/discussions (the `ListClientDiscussions` operationId).
+	ListClientDiscussions(ctx context.Context, channelKey ChannelKey, params *ListClientDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientDiscussion A thread with its replies
+	//
+	// A published thread of the channel's inbox on a page the channel serves, with its published
+	// replies: the accepted answer first, then oldest first; replies to replies carry
+	// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+	// body. Caching, authentication and errors as for the list; with a token the caller's own
+	// pending posts (and their own pending thread) are included.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
+	GetClientDiscussion(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePageRatingWithBody Rate a documentation page
 	//
@@ -7881,6 +8729,158 @@ type ClientInterface interface {
 	// Corresponds with POST /client/v1/conversations/{conversationId}/typing (the `SetClientTyping` operationId).
 	SetClientTyping(ctx context.Context, conversationId ConversationId, params *SetClientTypingParams, body SetClientTypingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// DeleteClientDiscussionPost Delete one's own post
+	//
+	// The author deletes a post at any time. A post without replies is removed; one with replies
+	// stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+	// when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+	// accepted answer clears it.
+	//
+	// Corresponds with DELETE /client/v1/discussion-posts/{postId} (the `DeleteClientDiscussionPost` operationId).
+	DeleteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateClientDiscussionPostWithBody Edit one's own post
+	//
+	// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+	// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+	// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+	UpdateClientDiscussionPostWithBody(ctx context.Context, postId DiscussionPostId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateClientDiscussionPost Edit one's own post
+	//
+	// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+	// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+	// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+	UpdateClientDiscussionPost(ctx context.Context, postId DiscussionPostId, body UpdateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnvoteClientDiscussionPost Take a vote back
+	//
+	// Corresponds with DELETE /client/v1/discussion-posts/{postId}/vote (the `UnvoteClientDiscussionPost` operationId).
+	UnvoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// VoteClientDiscussionPost Vote for a post
+	//
+	// One vote per author and post; the opening post's votes are the thread's. Voting again changes
+	// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
+	VoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientDiscussionWithBody Start a thread
+	//
+	// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+	// off answers `403 discussions_off`.
+	//
+	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+	// member (`state: pending`, visible only to its author and members) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at once.
+	// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+	// follows the thread.
+	//
+	// Rate limited per author and per IP address (`429 rate_limited`).
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+	CreateClientDiscussionWithBody(ctx context.Context, params *CreateClientDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientDiscussion Start a thread
+	//
+	// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+	// off answers `403 discussions_off`.
+	//
+	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+	// member (`state: pending`, visible only to its author and members) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at once.
+	// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+	// follows the thread.
+	//
+	// Rate limited per author and per IP address (`429 rate_limited`).
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+	CreateClientDiscussion(ctx context.Context, params *CreateClientDiscussionParams, body CreateClientDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ClearClientDiscussionAnswer Clear the accepted answer
+	//
+	// The thread's author only.
+	//
+	// Corresponds with DELETE /client/v1/discussions/{discussionId}/answer (the `ClearClientDiscussionAnswer` operationId).
+	ClearClientDiscussionAnswer(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AcceptClientDiscussionAnswerWithBody Mark the accepted answer
+	//
+	// The thread's author marks a published reply to the thread itself as its answer, replacing an
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+	AcceptClientDiscussionAnswerWithBody(ctx context.Context, discussionId DiscussionId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AcceptClientDiscussionAnswer Mark the accepted answer
+	//
+	// The thread's author marks a published reply to the thread itself as its answer, replacing an
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+	AcceptClientDiscussionAnswer(ctx context.Context, discussionId DiscussionId, body AcceptClientDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnfollowClientDiscussion Stop following a thread
+	//
+	// Corresponds with DELETE /client/v1/discussions/{discussionId}/follow (the `UnfollowClientDiscussion` operationId).
+	UnfollowClientDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// FollowClientDiscussion Follow a thread
+	//
+	// Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+	// accepted answer, and readers also see them in their account. Following again changes
+	// nothing.
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/follow (the `FollowClientDiscussion` operationId).
+	FollowClientDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientDiscussionPostWithBody Reply in a thread
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+	// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+	// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+	// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+	// The author follows the thread; followers are notified once the reply is published.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+	CreateClientDiscussionPostWithBody(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientDiscussionPost Reply in a thread
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+	// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+	// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+	// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+	// The author follows the thread; followers are notified once the reply is published.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+	CreateClientDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, body CreateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreateClientFeedbackWithBody Send feedback
 	//
 	// Starts a `feedback` conversation on the session's channel with its first message: a
@@ -7937,43 +8937,13 @@ type ClientInterface interface {
 	// Corresponds with POST /client/v1/feedback (the `CreateClientFeedback` operationId).
 	CreateClientFeedback(ctx context.Context, params *CreateClientFeedbackParams, body CreateClientFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateClientQuestionWithBody Ask a question about a documentation page
+	// DeleteReaderToken Sign a site out of the reader account
 	//
-	// Starts a conversation of kind `question` on the session's `chat` channel with its first
-	// message, for the page in `page_url` (without query and fragment; its origin must be one of
-	// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-	// visitor writes is shown on the page unless a member publishes an edited answer. It is
-	// answered like any other conversation and listed with the contact's conversations
-	// (`kind: question`).
+	// Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+	// server.
 	//
-	// `email` is the address replies go to while the visitor is away, kept like
-	// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-	// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-	// `403 forbidden`. Rate limited per IP address and per channel.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-	CreateClientQuestionWithBody(ctx context.Context, params *CreateClientQuestionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreateClientQuestion Ask a question about a documentation page
-	//
-	// Starts a conversation of kind `question` on the session's `chat` channel with its first
-	// message, for the page in `page_url` (without query and fragment; its origin must be one of
-	// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-	// visitor writes is shown on the page unless a member publishes an edited answer. It is
-	// answered like any other conversation and listed with the contact's conversations
-	// (`kind: question`).
-	//
-	// `email` is the address replies go to while the visitor is away, kept like
-	// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-	// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-	// `403 forbidden`. Rate limited per IP address and per channel.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-	CreateClientQuestion(ctx context.Context, params *CreateClientQuestionParams, body CreateClientQuestionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// Corresponds with DELETE /client/v1/reader-token (the `DeleteReaderToken` operationId).
+	DeleteReaderToken(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteClientSession End the contact session
 	//
@@ -8069,6 +9039,140 @@ type ClientInterface interface {
 	// Corresponds with GET /readyz (the `GetReadyz` operationId).
 	GetReadyz(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetReaderAccount The signed-in person as a reader
+	//
+	// The reader account of the signed-in person: the name and initials shown on their posts, their
+	// sign-in address and their e-mail settings. Every person has one, members included; `member`
+	// says whether they also belong to a workspace (the account page then links to the team panel).
+	// Person sessions only.
+	//
+	// Corresponds with GET /v1/account (the `GetReaderAccount` operationId).
+	GetReaderAccount(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateReaderAccountWithBody Change the reader name or e-mail settings
+	//
+	// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+	// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+	// for every workspace; in-app notifications stay.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+	UpdateReaderAccountWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateReaderAccount Change the reader name or e-mail settings
+	//
+	// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+	// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+	// for every workspace; in-app notifications stay.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+	UpdateReaderAccount(ctx context.Context, body UpdateReaderAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListReaderDiscussions Threads the reader started or replied to
+	//
+	// Across every workspace, the threads the person started or wrote in as a reader, most recent
+	// activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+	// are included, so the reader sees where their writing stands. Person sessions only.
+	//
+	// Corresponds with GET /v1/account/discussions (the `ListReaderDiscussions` operationId).
+	ListReaderDiscussions(ctx context.Context, params *ListReaderDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListReaderFollowing Threads the reader follows
+	//
+	// Across every workspace, most recent activity first. Person sessions only.
+	//
+	// Corresponds with GET /v1/account/following (the `ListReaderFollowing` operationId).
+	ListReaderFollowing(ctx context.Context, params *ListReaderFollowingParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnfollowReaderDiscussion Stop following a thread
+	//
+	// Unknown threads, and threads the person does not follow, answer `404`.
+	//
+	// Corresponds with DELETE /v1/account/following/{discussionId} (the `UnfollowReaderDiscussion` operationId).
+	UnfollowReaderDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListReaderNotifications The reader's notifications
+	//
+	// New replies and accepted answers in followed threads, across every workspace, newest first.
+	// `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+	// Person sessions only.
+	//
+	// Corresponds with GET /v1/account/notifications (the `ListReaderNotifications` operationId).
+	ListReaderNotifications(ctx context.Context, params *ListReaderNotificationsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MarkReaderNotificationsReadWithBody Mark notifications read
+	//
+	// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+	MarkReaderNotificationsReadWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MarkReaderNotificationsRead Mark notifications read
+	//
+	// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+	MarkReaderNotificationsRead(ctx context.Context, body MarkReaderNotificationsReadJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateReaderTokenWithBody Hand a reader token to a documentation site
+	//
+	// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+	// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+	// asks for a token for the chat channel and the origin of the window that opened it, and sends
+	// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+	// receives it.
+	//
+	// The origin must be one of the channel's allowed origins, compared exactly
+	// (`403 origin_not_allowed`), and the channel must have discussions on
+	// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+	//
+	// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+	// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+	// made it (sign-out), when the account is deleted, or with
+	// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+	// the person, created on the first write; a person who is a member of that workspace with
+	// access to the inbox writes as that member.
+	//
+	// Person sessions only; like every cookie request it must come from the server's own origin.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+	CreateReaderTokenWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateReaderToken Hand a reader token to a documentation site
+	//
+	// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+	// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+	// asks for a token for the chat channel and the origin of the window that opened it, and sends
+	// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+	// receives it.
+	//
+	// The origin must be one of the channel's allowed origins, compared exactly
+	// (`403 origin_not_allowed`), and the channel must have discussions on
+	// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+	//
+	// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+	// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+	// made it (sign-out), when the account is deleted, or with
+	// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+	// the person, created on the first write; a person who is a member of that workspace with
+	// access to the inbox writes as that member.
+	//
+	// Person sessions only; like every cookie request it must come from the server's own origin.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+	CreateReaderToken(ctx context.Context, body CreateReaderTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListApiKeys List API keys
 	//
 	// Owners and admins only, with a member session. Revoked keys are included.
@@ -8136,9 +9240,10 @@ type ClientInterface interface {
 
 	// RequestSignInCodeWithBody Request a sign-in code
 	//
-	// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-	// The answer is the same either way and takes the same time (the mail is sent after it), so
-	// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+	// Sends a one-time code to the address when it belongs to a person (a member, a former member
+	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+	// creates the person on verification. The answer is the same either way and takes the same
+	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
 	// Takes any type of body and a specified content type.
@@ -8148,9 +9253,10 @@ type ClientInterface interface {
 
 	// RequestSignInCode Request a sign-in code
 	//
-	// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-	// The answer is the same either way and takes the same time (the mail is sent after it), so
-	// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+	// Sends a one-time code to the address when it belongs to a person (a member, a former member
+	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+	// creates the person on verification. The answer is the same either way and takes the same
+	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
 	// Takes a body of the `application/json` content type.
@@ -8626,6 +9732,50 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/conversations/{conversationId} (the `UpdateConversation` operationId).
 	UpdateConversation(ctx context.Context, conversationId ConversationId, params *UpdateConversationParams, body UpdateConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// CreateDiscussionFromConversationWithBody Turn a private conversation into a public thread
+	//
+	// Starts a published thread from a conversation with the text the member supplies: nothing of
+	// the conversation itself becomes public, and the conversation stays private and unchanged.
+	// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+	// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+	// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+	// channel is preferred).
+	//
+	// The conversation's contact becomes the thread's author only when they are a signed-in
+	// reader (linked to a person) or known to the host app (an external id in the inbox);
+	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+	// the accepted answer. The author follows the thread. A conversation becomes one thread
+	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+	CreateDiscussionFromConversationWithBody(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDiscussionFromConversation Turn a private conversation into a public thread
+	//
+	// Starts a published thread from a conversation with the text the member supplies: nothing of
+	// the conversation itself becomes public, and the conversation stays private and unchanged.
+	// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+	// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+	// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+	// channel is preferred).
+	//
+	// The conversation's contact becomes the thread's author only when they are a signed-in
+	// reader (linked to a person) or known to the host app (an external id in the inbox);
+	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+	// the accepted answer. The author follows the thread. A conversation becomes one thread
+	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+	CreateDiscussionFromConversation(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListMessages List a conversation's messages
 	//
 	// Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -8773,46 +9923,6 @@ type ClientInterface interface {
 	// Corresponds with PUT /v1/conversations/{conversationId}/pin (the `PinConversation` operationId).
 	PinConversation(ctx context.Context, conversationId ConversationId, params *PinConversationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PublishConversationWithBody Publish a question and its answer to the page
-	//
-	// Publishes a `question` conversation to its documentation page as a question and an answer,
-	// both as the member wrote them here (usually edited from the thread). The published answer
-	// carries no name or address of the visitor; it is listed on the page by
-	// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-	// with at least one sent member reply and still be on a `chat` channel that allows the
-	// page's origin (`409 not_publishable` otherwise); it publishes once
-	// (`409 already_published`; edit the published answer instead).
-	//
-	// A published answer is the member's text: retention and contact deletion leave it, and
-	// deleting the conversation keeps it without `conversation_id`.
-	//
-	// Member sessions only.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-	PublishConversationWithBody(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// PublishConversation Publish a question and its answer to the page
-	//
-	// Publishes a `question` conversation to its documentation page as a question and an answer,
-	// both as the member wrote them here (usually edited from the thread). The published answer
-	// carries no name or address of the visitor; it is listed on the page by
-	// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-	// with at least one sent member reply and still be on a `chat` channel that allows the
-	// page's origin (`409 not_publishable` otherwise); it publishes once
-	// (`409 already_published`; edit the published answer instead).
-	//
-	// A published answer is the member's text: retention and contact deletion leave it, and
-	// deleting the conversation keeps it without `conversation_id`.
-	//
-	// Member sessions only.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-	PublishConversation(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, body PublishConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// MarkConversationReadWithBody Mark a conversation read
 	//
 	// Moves the calling member's read cursor to `message_id`, or to the latest message, note or
@@ -8877,12 +9987,205 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/conversations/{conversationId}/unread (the `MarkConversationUnread` operationId).
 	MarkConversationUnread(ctx context.Context, conversationId ConversationId, params *MarkConversationUnreadParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListDiscussionPosts Posts by state (the moderation queue)
+	//
+	// Posts in the inboxes the caller can see, oldest first, each with its thread. With
+	// `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+	// for approval (`opening: true`) and replies waiting for approval.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Corresponds with GET /v1/discussion-posts (the `ListDiscussionPosts` operationId).
+	ListDiscussionPosts(ctx context.Context, params *ListDiscussionPostsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteDiscussionPost Delete a member's own post
+	//
+	// As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+	// (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+	//
+	// Corresponds with DELETE /v1/discussion-posts/{postId} (the `DeleteDiscussionPost` operationId).
+	DeleteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *DeleteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateDiscussionPostWithBody Approve, hide, or edit a member's own post
+	//
+	// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+	// from the public (its author no longer sees it either). On the opening post this approves or
+	// hides the whole thread. Approving a reply notifies the thread's followers.
+	//
+	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+	// posts answer `403 forbidden`. Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+	UpdateDiscussionPostWithBody(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateDiscussionPost Approve, hide, or edit a member's own post
+	//
+	// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+	// from the public (its author no longer sees it either). On the opening post this approves or
+	// hides the whole thread. Approving a reply notifies the thread's followers.
+	//
+	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+	// posts answer `403 forbidden`. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+	UpdateDiscussionPost(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, body UpdateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// MarkDiscussionPostSpam Mark a post as spam
+	//
+	// Hides the post (the thread, for an opening post) and every post of its author in the
+	// workspace still waiting for approval, and makes the author's later posts wait for a member
+	// whatever the channel's setting. A member's post answers `400 validation_failed`.
+	// Member sessions only.
+	//
+	// Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
+	MarkDiscussionPostSpam(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnvoteDiscussionPost Take a member's vote back
+	//
+	// Member sessions only.
+	//
+	// Corresponds with DELETE /v1/discussion-posts/{postId}/vote (the `UnvoteDiscussionPost` operationId).
+	UnvoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *UnvoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// VoteDiscussionPost Vote for a post as a member
+	//
+	// One vote per member and post (the opening post votes for the thread); voting again changes
+	// nothing. Member sessions only.
+	//
+	// Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
+	VoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListDiscussions List discussion threads
+	//
+	// Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+	// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+	// and hidden ones too.
+	//
+	// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+	// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+	// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+	// `next_cursor` belongs to the sort and filters it was returned for.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Corresponds with GET /v1/discussions (the `ListDiscussions` operationId).
+	ListDiscussions(ctx context.Context, params *ListDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDiscussionWithBody Start a thread as a member
+	//
+	// A thread on a documentation page, written by the calling member and published at once. The
+	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	// Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+	CreateDiscussionWithBody(ctx context.Context, params *CreateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDiscussion Start a thread as a member
+	//
+	// A thread on a documentation page, written by the calling member and published at once. The
+	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	// Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+	CreateDiscussion(ctx context.Context, params *CreateDiscussionParams, body CreateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetDiscussion A thread with every post
+	//
+	// The thread and all its replies in every state (pending and hidden included), the accepted
+	// answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Corresponds with GET /v1/discussions/{discussionId} (the `GetDiscussion` operationId).
+	GetDiscussion(ctx context.Context, discussionId DiscussionId, params *GetDiscussionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateDiscussionWithBody Edit the title, lock or unlock
+	//
+	// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+	// edits, votes or answers from readers; members still may. Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+	UpdateDiscussionWithBody(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateDiscussion Edit the title, lock or unlock
+	//
+	// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+	// edits, votes or answers from readers; members still may. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+	UpdateDiscussion(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, body UpdateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ClearDiscussionAnswer Clear the accepted answer
+	//
+	// Member sessions only.
+	//
+	// Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
+	ClearDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AcceptDiscussionAnswerWithBody Mark the accepted answer
+	//
+	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+	AcceptDiscussionAnswerWithBody(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// AcceptDiscussionAnswer Mark the accepted answer
+	//
+	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+	AcceptDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDiscussionPostWithBody Reply as a member
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+	// also in locked threads. Replies are one level deep: a reply to a reply answers
+	// `400 validation_failed`. Followers are notified. Member sessions only.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+	CreateDiscussionPostWithBody(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDiscussionPost Reply as a member
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+	// also in locked threads. Replies are one level deep: a reply to a reply answers
+	// `400 validation_failed`. Followers are notified. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+	CreateDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetDocsPage One documentation page
 	//
 	// A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-	// ratings per day over the window. Its feedback and questions are
-	// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-	// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+	// ratings per day over the window. Its feedback is
+	// `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+	// `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
 	// answers `400 validation_failed`.
 	//
 	// Scope: `conversations:read`.
@@ -8890,19 +10193,21 @@ type ClientInterface interface {
 	// Corresponds with GET /v1/docs/page (the `GetDocsPage` operationId).
 	GetDocsPage(ctx context.Context, params *GetDocsPageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListDocsPages Documentation pages with their ratings, feedback and questions
+	// ListDocsPages Documentation pages with their ratings, feedback and discussions
 	//
 	// The pages of the inboxes the caller can see that were rated in the window, have open
-	// feedback or questions, or have published answers: `up` and `down` summed over the last
-	// `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-	// conversations sent from the page, and published answers. A page is per inbox.
+	// feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+	// (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+	// page's threads now: `open_threads` (published, no accepted answer, not locked),
+	// `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+	// a member, opening posts included). A page is per inbox.
 	//
 	// `sort` orders them; ties go to more ratings, then by page:
 	// - `down` (default): most `down` first.
 	// - `up`: most `up` first.
 	// - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
 	//   window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-	// - `activity`: most ratings plus open feedback and questions first.
+	// - `activity`: most ratings plus open feedback, open threads and pending posts first.
 	//
 	// `site` keeps only the pages of that site (origin).
 	//
@@ -8919,9 +10224,9 @@ type ClientInterface interface {
 	// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
 	// the inboxes the caller can see (or `inbox_id`): every site that has a page
 	// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-	// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+	// discussion threads), and every origin allowed on a chat channel of those inboxes,
 	// with zeros when nothing came from it yet. The counts are those of
-	// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+	// `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
 	//
 	// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
 	// (the oldest when several do); absent when none does any more.
@@ -8936,9 +10241,9 @@ type ClientInterface interface {
 	// GetDocsSummary Documentation pages in total and per day
 	//
 	// Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-	// included, UTC): ratings, feedback and questions sent from documentation pages (created in
-	// the window, not spam, in any status) and answers published in the window, in total and
-	// per day. Every day of the window is listed, oldest first, with zeros where nothing
+	// included, UTC): ratings and feedback sent from documentation pages (created in the window,
+	// not spam, in any status) and discussion threads started in the window (any state), in total
+	// and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
 	// happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
 	// `site` counts only the pages of that site (origin).
 	//
@@ -9288,9 +10593,12 @@ type ClientInterface interface {
 
 	// DeleteMeWithBody Delete the signed-in person's account
 	//
-	// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-	// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-	// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+	// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+	// wrote stay in their conversations without an author (`author.member_id` absent). As a
+	// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+	// follows go, and in each workspace the contact linked to them is deleted when it has no
+	// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 	// person is the only owner of a workspace: make someone else an owner or delete that
 	// workspace first. Needs a member session; the body repeats the person's e-mail address.
 	//
@@ -9301,9 +10609,12 @@ type ClientInterface interface {
 
 	// DeleteMe Delete the signed-in person's account
 	//
-	// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-	// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-	// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+	// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+	// wrote stay in their conversations without an author (`author.member_id` absent). As a
+	// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+	// follows go, and in each workspace the contact linked to them is deleted when it has no
+	// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 	// person is the only owner of a workspace: make someone else an owner or delete that
 	// workspace first. Needs a member session; the body repeats the person's e-mail address.
 	//
@@ -9663,50 +10974,6 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/oauth/requests/{oauthRequestId}/deny (the `DenyOAuthRequest` operationId).
 	DenyOAuthRequest(ctx context.Context, oauthRequestId OAuthRequestId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// ListPageAnswers List published answers
-	//
-	// Published answers in the inboxes the caller can see, newest first.
-	//
-	// Scope: `conversations:read`.
-	//
-	// Corresponds with GET /v1/page-answers (the `ListPageAnswers` operationId).
-	ListPageAnswers(ctx context.Context, params *ListPageAnswersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// DeletePageAnswer Unpublish an answer
-	//
-	// Removes it from the page. The conversation it came from stays and can be published again.
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Corresponds with DELETE /v1/page-answers/{pageAnswerId} (the `DeletePageAnswer` operationId).
-	DeletePageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *DeletePageAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPageAnswer Get a published answer
-	//
-	// An answer in an inbox the caller cannot see answers `404`.
-	//
-	// Scope: `conversations:read`.
-	//
-	// Corresponds with GET /v1/page-answers/{pageAnswerId} (the `GetPageAnswer` operationId).
-	GetPageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *GetPageAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdatePageAnswerWithBody Edit a published answer
-	//
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Takes any type of body and a specified content type.
-	//
-	// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-	UpdatePageAnswerWithBody(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// UpdatePageAnswer Edit a published answer
-	//
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Takes a body of the `application/json` content type.
-	//
-	// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-	UpdatePageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, body UpdatePageAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// GetVapidPublicKey The server's Web Push key
 	//
 	// The VAPID public key to pass as `applicationServerKey` to `PushManager.subscribe()`: an
@@ -10000,20 +11267,48 @@ func (c *Client) GetClientChannel(ctx context.Context, channelKey string, reqEdi
 	return c.Client.Do(req)
 }
 
-// ListClientPageAnswers A documentation page's published answers
+// ListClientDiscussions A documentation page's discussion threads
 //
-// The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-// in the channel's inbox, newest first, at most 100, without a session. They carry the
-// member's edited text only: never the visitor's name or address. The page is matched
-// without query and fragment, and its origin must be one of the channel's allowed origins
-// (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+// The published threads of a page in the channel's inbox, without a session. The page is
+// matched without query and fragment, and its origin must be one of the channel's allowed
+// origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+//
+// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+// without an accepted answer only, those nobody replied to first, then newest).
+//
+// Authors are shown by display name and initials only. Without `Authorization` the answer may
+// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+// session of this channel the caller's own threads still waiting for a member are included and
+// `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+// An unknown or expired token answers `401`.
 //
 // Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
 // Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
 //
-// Corresponds with GET /client/v1/channels/{channel_key}/page-answers (the `ListClientPageAnswers` operationId).
-func (c *Client) ListClientPageAnswers(ctx context.Context, channelKey ChannelKey, params *ListClientPageAnswersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListClientPageAnswersRequest(c.Server, channelKey, params)
+// Corresponds with GET /client/v1/channels/{channel_key}/discussions (the `ListClientDiscussions` operationId).
+func (c *Client) ListClientDiscussions(ctx context.Context, channelKey ChannelKey, params *ListClientDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListClientDiscussionsRequest(c.Server, channelKey, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetClientDiscussion A thread with its replies
+//
+// A published thread of the channel's inbox on a page the channel serves, with its published
+// replies: the accepted answer first, then oldest first; replies to replies carry
+// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+// body. Caching, authentication and errors as for the list; with a token the caller's own
+// pending posts (and their own pending thread) are included.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
+func (c *Client) GetClientDiscussion(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientDiscussionRequest(c.Server, channelKey, discussionId)
 	if err != nil {
 		return nil, err
 	}
@@ -10411,6 +11706,298 @@ func (c *Client) SetClientTyping(ctx context.Context, conversationId Conversatio
 	return c.Client.Do(req)
 }
 
+// DeleteClientDiscussionPost Delete one's own post
+//
+// The author deletes a post at any time. A post without replies is removed; one with replies
+// stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+// when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+// accepted answer clears it.
+//
+// Corresponds with DELETE /client/v1/discussion-posts/{postId} (the `DeleteClientDiscussionPost` operationId).
+func (c *Client) DeleteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteClientDiscussionPostRequest(c.Server, postId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateClientDiscussionPostWithBody Edit one's own post
+//
+// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+func (c *Client) UpdateClientDiscussionPostWithBody(ctx context.Context, postId DiscussionPostId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateClientDiscussionPostRequestWithBody(c.Server, postId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateClientDiscussionPost Edit one's own post
+//
+// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+func (c *Client) UpdateClientDiscussionPost(ctx context.Context, postId DiscussionPostId, body UpdateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateClientDiscussionPostRequest(c.Server, postId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnvoteClientDiscussionPost Take a vote back
+//
+// Corresponds with DELETE /client/v1/discussion-posts/{postId}/vote (the `UnvoteClientDiscussionPost` operationId).
+func (c *Client) UnvoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnvoteClientDiscussionPostRequest(c.Server, postId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// VoteClientDiscussionPost Vote for a post
+//
+// One vote per author and post; the opening post's votes are the thread's. Voting again changes
+// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
+func (c *Client) VoteClientDiscussionPost(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoteClientDiscussionPostRequest(c.Server, postId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientDiscussionWithBody Start a thread
+//
+// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+// off answers `403 discussions_off`.
+//
+// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+// member (`state: pending`, visible only to its author and members) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at once.
+// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+// follows the thread.
+//
+// Rate limited per author and per IP address (`429 rate_limited`).
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+func (c *Client) CreateClientDiscussionWithBody(ctx context.Context, params *CreateClientDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientDiscussionRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientDiscussion Start a thread
+//
+// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+// off answers `403 discussions_off`.
+//
+// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+// member (`state: pending`, visible only to its author and members) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at once.
+// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+// follows the thread.
+//
+// Rate limited per author and per IP address (`429 rate_limited`).
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+func (c *Client) CreateClientDiscussion(ctx context.Context, params *CreateClientDiscussionParams, body CreateClientDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientDiscussionRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ClearClientDiscussionAnswer Clear the accepted answer
+//
+// The thread's author only.
+//
+// Corresponds with DELETE /client/v1/discussions/{discussionId}/answer (the `ClearClientDiscussionAnswer` operationId).
+func (c *Client) ClearClientDiscussionAnswer(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewClearClientDiscussionAnswerRequest(c.Server, discussionId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AcceptClientDiscussionAnswerWithBody Mark the accepted answer
+//
+// The thread's author marks a published reply to the thread itself as its answer, replacing an
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+func (c *Client) AcceptClientDiscussionAnswerWithBody(ctx context.Context, discussionId DiscussionId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAcceptClientDiscussionAnswerRequestWithBody(c.Server, discussionId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AcceptClientDiscussionAnswer Mark the accepted answer
+//
+// The thread's author marks a published reply to the thread itself as its answer, replacing an
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+func (c *Client) AcceptClientDiscussionAnswer(ctx context.Context, discussionId DiscussionId, body AcceptClientDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAcceptClientDiscussionAnswerRequest(c.Server, discussionId, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnfollowClientDiscussion Stop following a thread
+//
+// Corresponds with DELETE /client/v1/discussions/{discussionId}/follow (the `UnfollowClientDiscussion` operationId).
+func (c *Client) UnfollowClientDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnfollowClientDiscussionRequest(c.Server, discussionId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// FollowClientDiscussion Follow a thread
+//
+// Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+// accepted answer, and readers also see them in their account. Following again changes
+// nothing.
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/follow (the `FollowClientDiscussion` operationId).
+func (c *Client) FollowClientDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFollowClientDiscussionRequest(c.Server, discussionId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientDiscussionPostWithBody Reply in a thread
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+// The author follows the thread; followers are notified once the reply is published.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+func (c *Client) CreateClientDiscussionPostWithBody(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientDiscussionPostRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientDiscussionPost Reply in a thread
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+// The author follows the thread; followers are notified once the reply is published.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+func (c *Client) CreateClientDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, body CreateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientDiscussionPostRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreateClientFeedbackWithBody Send feedback
 //
 // Starts a `feedback` conversation on the session's channel with its first message: a
@@ -10487,54 +12074,14 @@ func (c *Client) CreateClientFeedback(ctx context.Context, params *CreateClientF
 	return c.Client.Do(req)
 }
 
-// CreateClientQuestionWithBody Ask a question about a documentation page
+// DeleteReaderToken Sign a site out of the reader account
 //
-// Starts a conversation of kind `question` on the session's `chat` channel with its first
-// message, for the page in `page_url` (without query and fragment; its origin must be one of
-// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-// visitor writes is shown on the page unless a member publishes an edited answer. It is
-// answered like any other conversation and listed with the contact's conversations
-// (`kind: question`).
+// Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+// server.
 //
-// `email` is the address replies go to while the visitor is away, kept like
-// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-// `403 forbidden`. Rate limited per IP address and per channel.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-func (c *Client) CreateClientQuestionWithBody(ctx context.Context, params *CreateClientQuestionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateClientQuestionRequestWithBody(c.Server, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// CreateClientQuestion Ask a question about a documentation page
-//
-// Starts a conversation of kind `question` on the session's `chat` channel with its first
-// message, for the page in `page_url` (without query and fragment; its origin must be one of
-// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-// visitor writes is shown on the page unless a member publishes an edited answer. It is
-// answered like any other conversation and listed with the contact's conversations
-// (`kind: question`).
-//
-// `email` is the address replies go to while the visitor is away, kept like
-// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-// `403 forbidden`. Rate limited per IP address and per channel.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-func (c *Client) CreateClientQuestion(ctx context.Context, params *CreateClientQuestionParams, body CreateClientQuestionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateClientQuestionRequest(c.Server, params, body)
+// Corresponds with DELETE /client/v1/reader-token (the `DeleteReaderToken` operationId).
+func (c *Client) DeleteReaderToken(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteReaderTokenRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -10699,6 +12246,250 @@ func (c *Client) GetReadyz(ctx context.Context, reqEditors ...RequestEditorFn) (
 	return c.Client.Do(req)
 }
 
+// GetReaderAccount The signed-in person as a reader
+//
+// The reader account of the signed-in person: the name and initials shown on their posts, their
+// sign-in address and their e-mail settings. Every person has one, members included; `member`
+// says whether they also belong to a workspace (the account page then links to the team panel).
+// Person sessions only.
+//
+// Corresponds with GET /v1/account (the `GetReaderAccount` operationId).
+func (c *Client) GetReaderAccount(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetReaderAccountRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateReaderAccountWithBody Change the reader name or e-mail settings
+//
+// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+// for every workspace; in-app notifications stay.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+func (c *Client) UpdateReaderAccountWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReaderAccountRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateReaderAccount Change the reader name or e-mail settings
+//
+// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+// for every workspace; in-app notifications stay.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+func (c *Client) UpdateReaderAccount(ctx context.Context, body UpdateReaderAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReaderAccountRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListReaderDiscussions Threads the reader started or replied to
+//
+// Across every workspace, the threads the person started or wrote in as a reader, most recent
+// activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+// are included, so the reader sees where their writing stands. Person sessions only.
+//
+// Corresponds with GET /v1/account/discussions (the `ListReaderDiscussions` operationId).
+func (c *Client) ListReaderDiscussions(ctx context.Context, params *ListReaderDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListReaderDiscussionsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListReaderFollowing Threads the reader follows
+//
+// Across every workspace, most recent activity first. Person sessions only.
+//
+// Corresponds with GET /v1/account/following (the `ListReaderFollowing` operationId).
+func (c *Client) ListReaderFollowing(ctx context.Context, params *ListReaderFollowingParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListReaderFollowingRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnfollowReaderDiscussion Stop following a thread
+//
+// Unknown threads, and threads the person does not follow, answer `404`.
+//
+// Corresponds with DELETE /v1/account/following/{discussionId} (the `UnfollowReaderDiscussion` operationId).
+func (c *Client) UnfollowReaderDiscussion(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnfollowReaderDiscussionRequest(c.Server, discussionId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListReaderNotifications The reader's notifications
+//
+// New replies and accepted answers in followed threads, across every workspace, newest first.
+// `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+// Person sessions only.
+//
+// Corresponds with GET /v1/account/notifications (the `ListReaderNotifications` operationId).
+func (c *Client) ListReaderNotifications(ctx context.Context, params *ListReaderNotificationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListReaderNotificationsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MarkReaderNotificationsReadWithBody Mark notifications read
+//
+// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+func (c *Client) MarkReaderNotificationsReadWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMarkReaderNotificationsReadRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MarkReaderNotificationsRead Mark notifications read
+//
+// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+func (c *Client) MarkReaderNotificationsRead(ctx context.Context, body MarkReaderNotificationsReadJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMarkReaderNotificationsReadRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateReaderTokenWithBody Hand a reader token to a documentation site
+//
+// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+// asks for a token for the chat channel and the origin of the window that opened it, and sends
+// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+// receives it.
+//
+// The origin must be one of the channel's allowed origins, compared exactly
+// (`403 origin_not_allowed`), and the channel must have discussions on
+// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+//
+// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+// made it (sign-out), when the account is deleted, or with
+// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+// the person, created on the first write; a person who is a member of that workspace with
+// access to the inbox writes as that member.
+//
+// Person sessions only; like every cookie request it must come from the server's own origin.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+func (c *Client) CreateReaderTokenWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReaderTokenRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateReaderToken Hand a reader token to a documentation site
+//
+// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+// asks for a token for the chat channel and the origin of the window that opened it, and sends
+// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+// receives it.
+//
+// The origin must be one of the channel's allowed origins, compared exactly
+// (`403 origin_not_allowed`), and the channel must have discussions on
+// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+//
+// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+// made it (sign-out), when the account is deleted, or with
+// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+// the person, created on the first write; a person who is a member of that workspace with
+// access to the inbox writes as that member.
+//
+// Person sessions only; like every cookie request it must come from the server's own origin.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+func (c *Client) CreateReaderToken(ctx context.Context, body CreateReaderTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReaderTokenRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListApiKeys List API keys
 //
 // Owners and admins only, with a member session. Revoked keys are included.
@@ -10836,9 +12627,10 @@ func (c *Client) DownloadAttachment(ctx context.Context, attachmentId Attachment
 
 // RequestSignInCodeWithBody Request a sign-in code
 //
-// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-// The answer is the same either way and takes the same time (the mail is sent after it), so
-// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+// Sends a one-time code to the address when it belongs to a person (a member, a former member
+// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+// creates the person on verification. The answer is the same either way and takes the same
+// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
 // Takes any type of body and a specified content type.
@@ -10858,9 +12650,10 @@ func (c *Client) RequestSignInCodeWithBody(ctx context.Context, contentType stri
 
 // RequestSignInCode Request a sign-in code
 //
-// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-// The answer is the same either way and takes the same time (the mail is sent after it), so
-// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+// Sends a one-time code to the address when it belongs to a person (a member, a former member
+// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+// creates the person on verification. The answer is the same either way and takes the same
+// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
 // Takes a body of the `application/json` content type.
@@ -11776,6 +13569,70 @@ func (c *Client) UpdateConversation(ctx context.Context, conversationId Conversa
 	return c.Client.Do(req)
 }
 
+// CreateDiscussionFromConversationWithBody Turn a private conversation into a public thread
+//
+// Starts a published thread from a conversation with the text the member supplies: nothing of
+// the conversation itself becomes public, and the conversation stays private and unchanged.
+// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+// channel is preferred).
+//
+// The conversation's contact becomes the thread's author only when they are a signed-in
+// reader (linked to a person) or known to the host app (an external id in the inbox);
+// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+// the accepted answer. The author follows the thread. A conversation becomes one thread
+// (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+func (c *Client) CreateDiscussionFromConversationWithBody(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionFromConversationRequestWithBody(c.Server, conversationId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDiscussionFromConversation Turn a private conversation into a public thread
+//
+// Starts a published thread from a conversation with the text the member supplies: nothing of
+// the conversation itself becomes public, and the conversation stays private and unchanged.
+// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+// channel is preferred).
+//
+// The conversation's contact becomes the thread's author only when they are a signed-in
+// reader (linked to a person) or known to the host app (an external id in the inbox);
+// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+// the accepted answer. The author follows the thread. A conversation becomes one thread
+// (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+func (c *Client) CreateDiscussionFromConversation(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionFromConversationRequest(c.Server, conversationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListMessages List a conversation's messages
 //
 // Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -11993,66 +13850,6 @@ func (c *Client) PinConversation(ctx context.Context, conversationId Conversatio
 	return c.Client.Do(req)
 }
 
-// PublishConversationWithBody Publish a question and its answer to the page
-//
-// Publishes a `question` conversation to its documentation page as a question and an answer,
-// both as the member wrote them here (usually edited from the thread). The published answer
-// carries no name or address of the visitor; it is listed on the page by
-// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-// with at least one sent member reply and still be on a `chat` channel that allows the
-// page's origin (`409 not_publishable` otherwise); it publishes once
-// (`409 already_published`; edit the published answer instead).
-//
-// A published answer is the member's text: retention and contact deletion leave it, and
-// deleting the conversation keeps it without `conversation_id`.
-//
-// Member sessions only.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-func (c *Client) PublishConversationWithBody(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPublishConversationRequestWithBody(c.Server, conversationId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PublishConversation Publish a question and its answer to the page
-//
-// Publishes a `question` conversation to its documentation page as a question and an answer,
-// both as the member wrote them here (usually edited from the thread). The published answer
-// carries no name or address of the visitor; it is listed on the page by
-// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-// with at least one sent member reply and still be on a `chat` channel that allows the
-// page's origin (`409 not_publishable` otherwise); it publishes once
-// (`409 already_published`; edit the published answer instead).
-//
-// A published answer is the member's text: retention and contact deletion leave it, and
-// deleting the conversation keeps it without `conversation_id`.
-//
-// Member sessions only.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-func (c *Client) PublishConversation(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, body PublishConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPublishConversationRequest(c.Server, conversationId, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // MarkConversationReadWithBody Mark a conversation read
 //
 // Moves the calling member's read cursor to `message_id`, or to the latest message, note or
@@ -12167,12 +13964,385 @@ func (c *Client) MarkConversationUnread(ctx context.Context, conversationId Conv
 	return c.Client.Do(req)
 }
 
+// ListDiscussionPosts Posts by state (the moderation queue)
+//
+// Posts in the inboxes the caller can see, oldest first, each with its thread. With
+// `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+// for approval (`opening: true`) and replies waiting for approval.
+//
+// Scope: `conversations:read`.
+//
+// Corresponds with GET /v1/discussion-posts (the `ListDiscussionPosts` operationId).
+func (c *Client) ListDiscussionPosts(ctx context.Context, params *ListDiscussionPostsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListDiscussionPostsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteDiscussionPost Delete a member's own post
+//
+// As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+// (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+//
+// Corresponds with DELETE /v1/discussion-posts/{postId} (the `DeleteDiscussionPost` operationId).
+func (c *Client) DeleteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *DeleteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteDiscussionPostRequest(c.Server, postId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateDiscussionPostWithBody Approve, hide, or edit a member's own post
+//
+// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+// from the public (its author no longer sees it either). On the opening post this approves or
+// hides the whole thread. Approving a reply notifies the thread's followers.
+//
+// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+// posts answer `403 forbidden`. Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+func (c *Client) UpdateDiscussionPostWithBody(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDiscussionPostRequestWithBody(c.Server, postId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateDiscussionPost Approve, hide, or edit a member's own post
+//
+// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+// from the public (its author no longer sees it either). On the opening post this approves or
+// hides the whole thread. Approving a reply notifies the thread's followers.
+//
+// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+// posts answer `403 forbidden`. Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+func (c *Client) UpdateDiscussionPost(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, body UpdateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDiscussionPostRequest(c.Server, postId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// MarkDiscussionPostSpam Mark a post as spam
+//
+// Hides the post (the thread, for an opening post) and every post of its author in the
+// workspace still waiting for approval, and makes the author's later posts wait for a member
+// whatever the channel's setting. A member's post answers `400 validation_failed`.
+// Member sessions only.
+//
+// Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
+func (c *Client) MarkDiscussionPostSpam(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewMarkDiscussionPostSpamRequest(c.Server, postId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnvoteDiscussionPost Take a member's vote back
+//
+// Member sessions only.
+//
+// Corresponds with DELETE /v1/discussion-posts/{postId}/vote (the `UnvoteDiscussionPost` operationId).
+func (c *Client) UnvoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *UnvoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnvoteDiscussionPostRequest(c.Server, postId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// VoteDiscussionPost Vote for a post as a member
+//
+// One vote per member and post (the opening post votes for the thread); voting again changes
+// nothing. Member sessions only.
+//
+// Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
+func (c *Client) VoteDiscussionPost(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoteDiscussionPostRequest(c.Server, postId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListDiscussions List discussion threads
+//
+// Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+// and hidden ones too.
+//
+// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+// `next_cursor` belongs to the sort and filters it was returned for.
+//
+// Scope: `conversations:read`.
+//
+// Corresponds with GET /v1/discussions (the `ListDiscussions` operationId).
+func (c *Client) ListDiscussions(ctx context.Context, params *ListDiscussionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListDiscussionsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDiscussionWithBody Start a thread as a member
+//
+// A thread on a documentation page, written by the calling member and published at once. The
+// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+// channel must have discussions on (`403 discussions_off`). The member follows it.
+// Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+func (c *Client) CreateDiscussionWithBody(ctx context.Context, params *CreateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDiscussion Start a thread as a member
+//
+// A thread on a documentation page, written by the calling member and published at once. The
+// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+// channel must have discussions on (`403 discussions_off`). The member follows it.
+// Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+func (c *Client) CreateDiscussion(ctx context.Context, params *CreateDiscussionParams, body CreateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetDiscussion A thread with every post
+//
+// The thread and all its replies in every state (pending and hidden included), the accepted
+// answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+//
+// Scope: `conversations:read`.
+//
+// Corresponds with GET /v1/discussions/{discussionId} (the `GetDiscussion` operationId).
+func (c *Client) GetDiscussion(ctx context.Context, discussionId DiscussionId, params *GetDiscussionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDiscussionRequest(c.Server, discussionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateDiscussionWithBody Edit the title, lock or unlock
+//
+// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+// edits, votes or answers from readers; members still may. Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+func (c *Client) UpdateDiscussionWithBody(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDiscussionRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateDiscussion Edit the title, lock or unlock
+//
+// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+// edits, votes or answers from readers; members still may. Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+func (c *Client) UpdateDiscussion(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, body UpdateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateDiscussionRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ClearDiscussionAnswer Clear the accepted answer
+//
+// Member sessions only.
+//
+// Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
+func (c *Client) ClearDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewClearDiscussionAnswerRequest(c.Server, discussionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AcceptDiscussionAnswerWithBody Mark the accepted answer
+//
+// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+// threads. Followers are told once (`discussion.answered`). Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+func (c *Client) AcceptDiscussionAnswerWithBody(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAcceptDiscussionAnswerRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// AcceptDiscussionAnswer Mark the accepted answer
+//
+// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+// threads. Followers are told once (`discussion.answered`). Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+func (c *Client) AcceptDiscussionAnswer(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewAcceptDiscussionAnswerRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDiscussionPostWithBody Reply as a member
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+// also in locked threads. Replies are one level deep: a reply to a reply answers
+// `400 validation_failed`. Followers are notified. Member sessions only.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+func (c *Client) CreateDiscussionPostWithBody(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionPostRequestWithBody(c.Server, discussionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDiscussionPost Reply as a member
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+// also in locked threads. Replies are one level deep: a reply to a reply answers
+// `400 validation_failed`. Followers are notified. Member sessions only.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+func (c *Client) CreateDiscussionPost(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDiscussionPostRequest(c.Server, discussionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetDocsPage One documentation page
 //
 // A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-// ratings per day over the window. Its feedback and questions are
-// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+// ratings per day over the window. Its feedback is
+// `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+// `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
 // answers `400 validation_failed`.
 //
 // Scope: `conversations:read`.
@@ -12190,19 +14360,21 @@ func (c *Client) GetDocsPage(ctx context.Context, params *GetDocsPageParams, req
 	return c.Client.Do(req)
 }
 
-// ListDocsPages Documentation pages with their ratings, feedback and questions
+// ListDocsPages Documentation pages with their ratings, feedback and discussions
 //
 // The pages of the inboxes the caller can see that were rated in the window, have open
-// feedback or questions, or have published answers: `up` and `down` summed over the last
-// `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-// conversations sent from the page, and published answers. A page is per inbox.
+// feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+// (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+// page's threads now: `open_threads` (published, no accepted answer, not locked),
+// `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+// a member, opening posts included). A page is per inbox.
 //
 // `sort` orders them; ties go to more ratings, then by page:
 //   - `down` (default): most `down` first.
 //   - `up`: most `up` first.
 //   - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
 //     window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-//   - `activity`: most ratings plus open feedback and questions first.
+//   - `activity`: most ratings plus open feedback, open threads and pending posts first.
 //
 // `site` keeps only the pages of that site (origin).
 //
@@ -12229,9 +14401,9 @@ func (c *Client) ListDocsPages(ctx context.Context, params *ListDocsPagesParams,
 // A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
 // the inboxes the caller can see (or `inbox_id`): every site that has a page
 // `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+// discussion threads), and every origin allowed on a chat channel of those inboxes,
 // with zeros when nothing came from it yet. The counts are those of
-// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+// `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
 //
 // `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
 // (the oldest when several do); absent when none does any more.
@@ -12256,9 +14428,9 @@ func (c *Client) ListDocsSites(ctx context.Context, params *ListDocsSitesParams,
 // GetDocsSummary Documentation pages in total and per day
 //
 // Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-// included, UTC): ratings, feedback and questions sent from documentation pages (created in
-// the window, not spam, in any status) and answers published in the window, in total and
-// per day. Every day of the window is listed, oldest first, with zeros where nothing
+// included, UTC): ratings and feedback sent from documentation pages (created in the window,
+// not spam, in any status) and discussion threads started in the window (any state), in total
+// and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
 // happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
 // `site` counts only the pages of that site (origin).
 //
@@ -12908,9 +15080,12 @@ func (c *Client) UpdateLabel(ctx context.Context, labelId LabelId, params *Updat
 
 // DeleteMeWithBody Delete the signed-in person's account
 //
-// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+// wrote stay in their conversations without an author (`author.member_id` absent). As a
+// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+// follows go, and in each workspace the contact linked to them is deleted when it has no
+// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 // person is the only owner of a workspace: make someone else an owner or delete that
 // workspace first. Needs a member session; the body repeats the person's e-mail address.
 //
@@ -12931,9 +15106,12 @@ func (c *Client) DeleteMeWithBody(ctx context.Context, contentType string, body 
 
 // DeleteMe Delete the signed-in person's account
 //
-// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+// wrote stay in their conversations without an author (`author.member_id` absent). As a
+// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+// follows go, and in each workspace the contact linked to them is deleted when it has no
+// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 // person is the only owner of a workspace: make someone else an owner or delete that
 // workspace first. Needs a member session; the body repeats the person's e-mail address.
 //
@@ -13673,100 +15851,6 @@ func (c *Client) DenyOAuthRequest(ctx context.Context, oauthRequestId OAuthReque
 	return c.Client.Do(req)
 }
 
-// ListPageAnswers List published answers
-//
-// Published answers in the inboxes the caller can see, newest first.
-//
-// Scope: `conversations:read`.
-//
-// Corresponds with GET /v1/page-answers (the `ListPageAnswers` operationId).
-func (c *Client) ListPageAnswers(ctx context.Context, params *ListPageAnswersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewListPageAnswersRequest(c.Server, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// DeletePageAnswer Unpublish an answer
-//
-// Removes it from the page. The conversation it came from stays and can be published again.
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Corresponds with DELETE /v1/page-answers/{pageAnswerId} (the `DeletePageAnswer` operationId).
-func (c *Client) DeletePageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *DeletePageAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewDeletePageAnswerRequest(c.Server, pageAnswerId, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// GetPageAnswer Get a published answer
-//
-// An answer in an inbox the caller cannot see answers `404`.
-//
-// Scope: `conversations:read`.
-//
-// Corresponds with GET /v1/page-answers/{pageAnswerId} (the `GetPageAnswer` operationId).
-func (c *Client) GetPageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *GetPageAnswerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPageAnswerRequest(c.Server, pageAnswerId, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdatePageAnswerWithBody Edit a published answer
-//
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Takes any type of body and a specified content type.
-//
-// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-func (c *Client) UpdatePageAnswerWithBody(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePageAnswerRequestWithBody(c.Server, pageAnswerId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// UpdatePageAnswer Edit a published answer
-//
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Takes a body of the `application/json` content type.
-//
-// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-func (c *Client) UpdatePageAnswer(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, body UpdatePageAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdatePageAnswerRequest(c.Server, pageAnswerId, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // GetVapidPublicKey The server's Web Push key
 //
 // The VAPID public key to pass as `applicationServerKey` to `PushManager.subscribe()`: an
@@ -14288,8 +16372,8 @@ func NewGetClientChannelRequest(server string, channelKey string) (*http.Request
 	return req, nil
 }
 
-// NewListClientPageAnswersRequest constructs an http.Request for the ListClientPageAnswers method
-func NewListClientPageAnswersRequest(server string, channelKey ChannelKey, params *ListClientPageAnswersParams) (*http.Request, error) {
+// NewListClientDiscussionsRequest constructs an http.Request for the ListClientDiscussions method
+func NewListClientDiscussionsRequest(server string, channelKey ChannelKey, params *ListClientDiscussionsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -14304,7 +16388,7 @@ func NewListClientPageAnswersRequest(server string, channelKey ChannelKey, param
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/client/v1/channels/%s/page-answers", pathParam0)
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/discussions", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -14331,10 +16415,87 @@ func NewListClientPageAnswersRequest(server string, channelKey ChannelKey, param
 			}
 		}
 
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if encoded := queryValues.Encode(); encoded != "" {
 			rawQueryFragments = append(rawQueryFragments, encoded)
 		}
 		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewGetClientDiscussionRequest constructs an http.Request for the GetClientDiscussion method
+func NewGetClientDiscussionRequest(server string, channelKey ChannelKey, discussionId DiscussionId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/discussions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -14905,6 +17066,421 @@ func NewSetClientTypingRequestWithBody(server string, conversationId Conversatio
 	return req, nil
 }
 
+// NewDeleteClientDiscussionPostRequest constructs an http.Request for the DeleteClientDiscussionPost method
+func NewDeleteClientDiscussionPostRequest(server string, postId DiscussionPostId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussion-posts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateClientDiscussionPostRequest calls the generic UpdateClientDiscussionPost builder with application/json body
+func NewUpdateClientDiscussionPostRequest(server string, postId DiscussionPostId, body UpdateClientDiscussionPostJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateClientDiscussionPostRequestWithBody(server, postId, "application/json", bodyReader)
+}
+
+// NewUpdateClientDiscussionPostRequestWithBody constructs an http.Request for the UpdateClientDiscussionPost method, with any body, and a specified content type
+func NewUpdateClientDiscussionPostRequestWithBody(server string, postId DiscussionPostId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussion-posts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUnvoteClientDiscussionPostRequest constructs an http.Request for the UnvoteClientDiscussionPost method
+func NewUnvoteClientDiscussionPostRequest(server string, postId DiscussionPostId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussion-posts/%s/vote", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewVoteClientDiscussionPostRequest constructs an http.Request for the VoteClientDiscussionPost method
+func NewVoteClientDiscussionPostRequest(server string, postId DiscussionPostId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussion-posts/%s/vote", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateClientDiscussionRequest calls the generic CreateClientDiscussion builder with application/json body
+func NewCreateClientDiscussionRequest(server string, params *CreateClientDiscussionParams, body CreateClientDiscussionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClientDiscussionRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateClientDiscussionRequestWithBody constructs an http.Request for the CreateClientDiscussion method, with any body, and a specified content type
+func NewCreateClientDiscussionRequestWithBody(server string, params *CreateClientDiscussionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewClearClientDiscussionAnswerRequest constructs an http.Request for the ClearClientDiscussionAnswer method
+func NewClearClientDiscussionAnswerRequest(server string, discussionId DiscussionId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions/%s/answer", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewAcceptClientDiscussionAnswerRequest calls the generic AcceptClientDiscussionAnswer builder with application/json body
+func NewAcceptClientDiscussionAnswerRequest(server string, discussionId DiscussionId, body AcceptClientDiscussionAnswerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAcceptClientDiscussionAnswerRequestWithBody(server, discussionId, "application/json", bodyReader)
+}
+
+// NewAcceptClientDiscussionAnswerRequestWithBody constructs an http.Request for the AcceptClientDiscussionAnswer method, with any body, and a specified content type
+func NewAcceptClientDiscussionAnswerRequestWithBody(server string, discussionId DiscussionId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions/%s/answer", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewUnfollowClientDiscussionRequest constructs an http.Request for the UnfollowClientDiscussion method
+func NewUnfollowClientDiscussionRequest(server string, discussionId DiscussionId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions/%s/follow", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewFollowClientDiscussionRequest constructs an http.Request for the FollowClientDiscussion method
+func NewFollowClientDiscussionRequest(server string, discussionId DiscussionId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions/%s/follow", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewCreateClientDiscussionPostRequest calls the generic CreateClientDiscussionPost builder with application/json body
+func NewCreateClientDiscussionPostRequest(server string, discussionId DiscussionId, params *CreateClientDiscussionPostParams, body CreateClientDiscussionPostJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClientDiscussionPostRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewCreateClientDiscussionPostRequestWithBody constructs an http.Request for the CreateClientDiscussionPost method, with any body, and a specified content type
+func NewCreateClientDiscussionPostRequestWithBody(server string, discussionId DiscussionId, params *CreateClientDiscussionPostParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/discussions/%s/posts", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewCreateClientFeedbackRequest calls the generic CreateClientFeedback builder with application/json body
 func NewCreateClientFeedbackRequest(server string, params *CreateClientFeedbackParams, body CreateClientFeedbackJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -14960,19 +17536,8 @@ func NewCreateClientFeedbackRequestWithBody(server string, params *CreateClientF
 	return req, nil
 }
 
-// NewCreateClientQuestionRequest calls the generic CreateClientQuestion builder with application/json body
-func NewCreateClientQuestionRequest(server string, params *CreateClientQuestionParams, body CreateClientQuestionJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreateClientQuestionRequestWithBody(server, params, "application/json", bodyReader)
-}
-
-// NewCreateClientQuestionRequestWithBody constructs an http.Request for the CreateClientQuestion method, with any body, and a specified content type
-func NewCreateClientQuestionRequestWithBody(server string, params *CreateClientQuestionParams, contentType string, body io.Reader) (*http.Request, error) {
+// NewDeleteReaderTokenRequest constructs an http.Request for the DeleteReaderToken method
+func NewDeleteReaderTokenRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -14980,7 +17545,7 @@ func NewCreateClientQuestionRequestWithBody(server string, params *CreateClientQ
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/client/v1/questions")
+	operationPath := fmt.Sprintf("/client/v1/reader-token")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -14990,26 +17555,9 @@ func NewCreateClientQuestionRequestWithBody(server string, params *CreateClientQ
 		return nil, err
 	}
 
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.IdempotencyKey != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Idempotency-Key", headerParam0)
-		}
-
 	}
 
 	return req, nil
@@ -15159,6 +17707,397 @@ func NewGetReadyzRequest(server string) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	return req, nil
+}
+
+// NewGetReaderAccountRequest constructs an http.Request for the GetReaderAccount method
+func NewGetReaderAccountRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUpdateReaderAccountRequest calls the generic UpdateReaderAccount builder with application/json body
+func NewUpdateReaderAccountRequest(server string, body UpdateReaderAccountJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateReaderAccountRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewUpdateReaderAccountRequestWithBody constructs an http.Request for the UpdateReaderAccount method, with any body, and a specified content type
+func NewUpdateReaderAccountRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListReaderDiscussionsRequest constructs an http.Request for the ListReaderDiscussions method
+func NewListReaderDiscussionsRequest(server string, params *ListReaderDiscussionsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/discussions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListReaderFollowingRequest constructs an http.Request for the ListReaderFollowing method
+func NewListReaderFollowingRequest(server string, params *ListReaderFollowingParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/following")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUnfollowReaderDiscussionRequest constructs an http.Request for the UnfollowReaderDiscussion method
+func NewUnfollowReaderDiscussionRequest(server string, discussionId DiscussionId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/following/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewListReaderNotificationsRequest constructs an http.Request for the ListReaderNotifications method
+func NewListReaderNotificationsRequest(server string, params *ListReaderNotificationsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/notifications")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Unread != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "unread", *params.Unread, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewMarkReaderNotificationsReadRequest calls the generic MarkReaderNotificationsRead builder with application/json body
+func NewMarkReaderNotificationsReadRequest(server string, body MarkReaderNotificationsReadJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewMarkReaderNotificationsReadRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewMarkReaderNotificationsReadRequestWithBody constructs an http.Request for the MarkReaderNotificationsRead method, with any body, and a specified content type
+func NewMarkReaderNotificationsReadRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/notifications/read")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateReaderTokenRequest calls the generic CreateReaderToken builder with application/json body
+func NewCreateReaderTokenRequest(server string, body CreateReaderTokenJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateReaderTokenRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateReaderTokenRequestWithBody constructs an http.Request for the CreateReaderToken method, with any body, and a specified content type
+func NewCreateReaderTokenRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/account/reader-tokens")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -17471,6 +20410,79 @@ func NewUpdateConversationRequestWithBody(server string, conversationId Conversa
 	return req, nil
 }
 
+// NewCreateDiscussionFromConversationRequest calls the generic CreateDiscussionFromConversation builder with application/json body
+func NewCreateDiscussionFromConversationRequest(server string, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateDiscussionFromConversationRequestWithBody(server, conversationId, params, "application/json", bodyReader)
+}
+
+// NewCreateDiscussionFromConversationRequestWithBody constructs an http.Request for the CreateDiscussionFromConversation method, with any body, and a specified content type
+func NewCreateDiscussionFromConversationRequestWithBody(server string, conversationId ConversationId, params *CreateDiscussionFromConversationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/conversations/%s/discussion", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListMessagesRequest constructs an http.Request for the ListMessages method
 func NewListMessagesRequest(server string, conversationId ConversationId, params *ListMessagesParams) (*http.Request, error) {
 	var err error
@@ -17815,79 +20827,6 @@ func NewPinConversationRequest(server string, conversationId ConversationId, par
 	return req, nil
 }
 
-// NewPublishConversationRequest calls the generic PublishConversation builder with application/json body
-func NewPublishConversationRequest(server string, conversationId ConversationId, params *PublishConversationParams, body PublishConversationJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPublishConversationRequestWithBody(server, conversationId, params, "application/json", bodyReader)
-}
-
-// NewPublishConversationRequestWithBody constructs an http.Request for the PublishConversation method, with any body, and a specified content type
-func NewPublishConversationRequestWithBody(server string, conversationId ConversationId, params *PublishConversationParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "conversationId", conversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/conversations/%s/publish", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.IdempotencyKey != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Idempotency-Key", headerParam0)
-		}
-
-		if params.YuvaWorkspace != nil {
-			var headerParam1 string
-
-			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Yuva-Workspace", headerParam1)
-		}
-
-	}
-
-	return req, nil
-}
-
 // NewMarkConversationReadRequest calls the generic MarkConversationRead builder with application/json body
 func NewMarkConversationReadRequest(server string, conversationId ConversationId, params *MarkConversationReadParams, body MarkConversationReadJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -18064,6 +21003,931 @@ func NewMarkConversationUnreadRequest(server string, conversationId Conversation
 	if err != nil {
 		return nil, err
 	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListDiscussionPostsRequest constructs an http.Request for the ListDiscussionPosts method
+func NewListDiscussionPostsRequest(server string, params *ListDiscussionPostsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteDiscussionPostRequest constructs an http.Request for the DeleteDiscussionPost method
+func NewDeleteDiscussionPostRequest(server string, postId DiscussionPostId, params *DeleteDiscussionPostParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateDiscussionPostRequest calls the generic UpdateDiscussionPost builder with application/json body
+func NewUpdateDiscussionPostRequest(server string, postId DiscussionPostId, params *UpdateDiscussionPostParams, body UpdateDiscussionPostJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateDiscussionPostRequestWithBody(server, postId, params, "application/json", bodyReader)
+}
+
+// NewUpdateDiscussionPostRequestWithBody constructs an http.Request for the UpdateDiscussionPost method, with any body, and a specified content type
+func NewUpdateDiscussionPostRequestWithBody(server string, postId DiscussionPostId, params *UpdateDiscussionPostParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewMarkDiscussionPostSpamRequest constructs an http.Request for the MarkDiscussionPostSpam method
+func NewMarkDiscussionPostSpamRequest(server string, postId DiscussionPostId, params *MarkDiscussionPostSpamParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts/%s/spam", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUnvoteDiscussionPostRequest constructs an http.Request for the UnvoteDiscussionPost method
+func NewUnvoteDiscussionPostRequest(server string, postId DiscussionPostId, params *UnvoteDiscussionPostParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts/%s/vote", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewVoteDiscussionPostRequest constructs an http.Request for the VoteDiscussionPost method
+func NewVoteDiscussionPostRequest(server string, postId DiscussionPostId, params *VoteDiscussionPostParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "postId", postId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussion-posts/%s/vote", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListDiscussionsRequest constructs an http.Request for the ListDiscussions method
+func NewListDiscussionsRequest(server string, params *ListDiscussionsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Page != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Answered != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "answered", *params.Answered, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Locked != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "locked", *params.Locked, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Pending != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "pending", *params.Pending, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Sort != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "sort", *params.Sort, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateDiscussionRequest calls the generic CreateDiscussion builder with application/json body
+func NewCreateDiscussionRequest(server string, params *CreateDiscussionParams, body CreateDiscussionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateDiscussionRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateDiscussionRequestWithBody constructs an http.Request for the CreateDiscussion method, with any body, and a specified content type
+func NewCreateDiscussionRequestWithBody(server string, params *CreateDiscussionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetDiscussionRequest constructs an http.Request for the GetDiscussion method
+func NewGetDiscussionRequest(server string, discussionId DiscussionId, params *GetDiscussionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateDiscussionRequest calls the generic UpdateDiscussion builder with application/json body
+func NewUpdateDiscussionRequest(server string, discussionId DiscussionId, params *UpdateDiscussionParams, body UpdateDiscussionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateDiscussionRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewUpdateDiscussionRequestWithBody constructs an http.Request for the UpdateDiscussion method, with any body, and a specified content type
+func NewUpdateDiscussionRequestWithBody(server string, discussionId DiscussionId, params *UpdateDiscussionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewClearDiscussionAnswerRequest constructs an http.Request for the ClearDiscussionAnswer method
+func NewClearDiscussionAnswerRequest(server string, discussionId DiscussionId, params *ClearDiscussionAnswerParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/answer", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewAcceptDiscussionAnswerRequest calls the generic AcceptDiscussionAnswer builder with application/json body
+func NewAcceptDiscussionAnswerRequest(server string, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewAcceptDiscussionAnswerRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewAcceptDiscussionAnswerRequestWithBody constructs an http.Request for the AcceptDiscussionAnswer method, with any body, and a specified content type
+func NewAcceptDiscussionAnswerRequestWithBody(server string, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/answer", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateDiscussionPostRequest calls the generic CreateDiscussionPost builder with application/json body
+func NewCreateDiscussionPostRequest(server string, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateDiscussionPostRequestWithBody(server, discussionId, params, "application/json", bodyReader)
+}
+
+// NewCreateDiscussionPostRequestWithBody constructs an http.Request for the CreateDiscussionPost method, with any body, and a specified content type
+func NewCreateDiscussionPostRequestWithBody(server string, discussionId DiscussionId, params *CreateDiscussionPostParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "discussionId", discussionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/discussions/%s/posts", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	if params != nil {
 
@@ -21123,283 +24987,6 @@ func NewDenyOAuthRequestRequest(server string, oauthRequestId OAuthRequestId) (*
 	return req, nil
 }
 
-// NewListPageAnswersRequest constructs an http.Request for the ListPageAnswers method
-func NewListPageAnswersRequest(server string, params *ListPageAnswersParams) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/page-answers")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-		// queryValues collects non-styled parameters (passthrough, JSON)
-		// that are safe to round-trip through url.Values.Encode().
-		queryValues := queryURL.Query()
-		// rawQueryFragments collects pre-encoded query fragments from
-		// styled parameters, preserving literal commas as delimiters
-		// per the OpenAPI spec (e.g. "color=blue,black,brown").
-		var rawQueryFragments []string
-
-		if params.InboxId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Page != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "page", *params.Page, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.ConversationId != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "conversation_id", *params.ConversationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Cursor != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if params.Limit != nil {
-
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
-				return nil, err
-			} else {
-				for _, qp := range strings.Split(queryFrag, "&") {
-					rawQueryFragments = append(rawQueryFragments, qp)
-				}
-			}
-
-		}
-
-		if encoded := queryValues.Encode(); encoded != "" {
-			rawQueryFragments = append(rawQueryFragments, encoded)
-		}
-		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.YuvaWorkspace != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Yuva-Workspace", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewDeletePageAnswerRequest constructs an http.Request for the DeletePageAnswer method
-func NewDeletePageAnswerRequest(server string, pageAnswerId PageAnswerId, params *DeletePageAnswerParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageAnswerId", pageAnswerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/page-answers/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.YuvaWorkspace != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Yuva-Workspace", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewGetPageAnswerRequest constructs an http.Request for the GetPageAnswer method
-func NewGetPageAnswerRequest(server string, pageAnswerId PageAnswerId, params *GetPageAnswerParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageAnswerId", pageAnswerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/page-answers/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.YuvaWorkspace != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Yuva-Workspace", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewUpdatePageAnswerRequest calls the generic UpdatePageAnswer builder with application/json body
-func NewUpdatePageAnswerRequest(server string, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, body UpdatePageAnswerJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewUpdatePageAnswerRequestWithBody(server, pageAnswerId, params, "application/json", bodyReader)
-}
-
-// NewUpdatePageAnswerRequestWithBody constructs an http.Request for the UpdatePageAnswer method, with any body, and a specified content type
-func NewUpdatePageAnswerRequestWithBody(server string, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "pageAnswerId", pageAnswerId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/v1/page-answers/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.YuvaWorkspace != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("Yuva-Workspace", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
 // NewGetVapidPublicKeyRequest constructs an http.Request for the GetVapidPublicKey method
 func NewGetVapidPublicKeyRequest(server string) (*http.Request, error) {
 	var err error
@@ -22472,21 +26059,41 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /client/v1/channels/{channel_key} (the `GetClientChannel` operationId).
 	GetClientChannelWithResponse(ctx context.Context, channelKey string, reqEditors ...RequestEditorFn) (*GetClientChannelResponse, error)
 
-	// ListClientPageAnswersWithResponse A documentation page's published answers
+	// ListClientDiscussionsWithResponse A documentation page's discussion threads
 	//
-	// The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-	// in the channel's inbox, newest first, at most 100, without a session. They carry the
-	// member's edited text only: never the visitor's name or address. The page is matched
-	// without query and fragment, and its origin must be one of the channel's allowed origins
-	// (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+	// The published threads of a page in the channel's inbox, without a session. The page is
+	// matched without query and fragment, and its origin must be one of the channel's allowed
+	// origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+	//
+	// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+	// without an accepted answer only, those nobody replied to first, then newest).
+	//
+	// Authors are shown by display name and initials only. Without `Authorization` the answer may
+	// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+	// session of this channel the caller's own threads still waiting for a member are included and
+	// `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+	// An unknown or expired token answers `401`.
 	//
 	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
 	// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /client/v1/channels/{channel_key}/page-answers (the `ListClientPageAnswers` operationId).
-	ListClientPageAnswersWithResponse(ctx context.Context, channelKey ChannelKey, params *ListClientPageAnswersParams, reqEditors ...RequestEditorFn) (*ListClientPageAnswersResponse, error)
+	// Corresponds with GET /client/v1/channels/{channel_key}/discussions (the `ListClientDiscussions` operationId).
+	ListClientDiscussionsWithResponse(ctx context.Context, channelKey ChannelKey, params *ListClientDiscussionsParams, reqEditors ...RequestEditorFn) (*ListClientDiscussionsResponse, error)
+
+	// GetClientDiscussionWithResponse A thread with its replies
+	//
+	// A published thread of the channel's inbox on a page the channel serves, with its published
+	// replies: the accepted answer first, then oldest first; replies to replies carry
+	// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+	// body. Caching, authentication and errors as for the list; with a token the caller's own
+	// pending posts (and their own pending thread) are included.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
+	GetClientDiscussionWithResponse(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*GetClientDiscussionResponse, error)
 
 	// CreatePageRatingWithBodyWithResponse Rate a documentation page
 	//
@@ -22711,6 +26318,170 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /client/v1/conversations/{conversationId}/typing (the `SetClientTyping` operationId).
 	SetClientTypingWithResponse(ctx context.Context, conversationId ConversationId, params *SetClientTypingParams, body SetClientTypingJSONRequestBody, reqEditors ...RequestEditorFn) (*SetClientTypingResponse, error)
 
+	// DeleteClientDiscussionPostWithResponse Delete one's own post
+	//
+	// The author deletes a post at any time. A post without replies is removed; one with replies
+	// stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+	// when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+	// accepted answer clears it.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /client/v1/discussion-posts/{postId} (the `DeleteClientDiscussionPost` operationId).
+	DeleteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*DeleteClientDiscussionPostResponse, error)
+
+	// UpdateClientDiscussionPostWithBodyWithResponse Edit one's own post
+	//
+	// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+	// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+	// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+	UpdateClientDiscussionPostWithBodyWithResponse(ctx context.Context, postId DiscussionPostId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientDiscussionPostResponse, error)
+
+	// UpdateClientDiscussionPostWithResponse Edit one's own post
+	//
+	// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+	// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+	// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+	UpdateClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, body UpdateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientDiscussionPostResponse, error)
+
+	// UnvoteClientDiscussionPostWithResponse Take a vote back
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /client/v1/discussion-posts/{postId}/vote (the `UnvoteClientDiscussionPost` operationId).
+	UnvoteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*UnvoteClientDiscussionPostResponse, error)
+
+	// VoteClientDiscussionPostWithResponse Vote for a post
+	//
+	// One vote per author and post; the opening post's votes are the thread's. Voting again changes
+	// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
+	VoteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*VoteClientDiscussionPostResponse, error)
+
+	// CreateClientDiscussionWithBodyWithResponse Start a thread
+	//
+	// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+	// off answers `403 discussions_off`.
+	//
+	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+	// member (`state: pending`, visible only to its author and members) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at once.
+	// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+	// follows the thread.
+	//
+	// Rate limited per author and per IP address (`429 rate_limited`).
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+	CreateClientDiscussionWithBodyWithResponse(ctx context.Context, params *CreateClientDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientDiscussionResponse, error)
+
+	// CreateClientDiscussionWithResponse Start a thread
+	//
+	// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+	// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+	// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+	// off answers `403 discussions_off`.
+	//
+	// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+	// member (`state: pending`, visible only to its author and members) until one of their posts
+	// in the workspace has been approved; identity-token users and members are published at once.
+	// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+	// follows the thread.
+	//
+	// Rate limited per author and per IP address (`429 rate_limited`).
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+	CreateClientDiscussionWithResponse(ctx context.Context, params *CreateClientDiscussionParams, body CreateClientDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientDiscussionResponse, error)
+
+	// ClearClientDiscussionAnswerWithResponse Clear the accepted answer
+	//
+	// The thread's author only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /client/v1/discussions/{discussionId}/answer (the `ClearClientDiscussionAnswer` operationId).
+	ClearClientDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*ClearClientDiscussionAnswerResponse, error)
+
+	// AcceptClientDiscussionAnswerWithBodyWithResponse Mark the accepted answer
+	//
+	// The thread's author marks a published reply to the thread itself as its answer, replacing an
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+	AcceptClientDiscussionAnswerWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AcceptClientDiscussionAnswerResponse, error)
+
+	// AcceptClientDiscussionAnswerWithResponse Mark the accepted answer
+	//
+	// The thread's author marks a published reply to the thread itself as its answer, replacing an
+	// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+	AcceptClientDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, body AcceptClientDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*AcceptClientDiscussionAnswerResponse, error)
+
+	// UnfollowClientDiscussionWithResponse Stop following a thread
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /client/v1/discussions/{discussionId}/follow (the `UnfollowClientDiscussion` operationId).
+	UnfollowClientDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*UnfollowClientDiscussionResponse, error)
+
+	// FollowClientDiscussionWithResponse Follow a thread
+	//
+	// Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+	// accepted answer, and readers also see them in their account. Following again changes
+	// nothing.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/discussions/{discussionId}/follow (the `FollowClientDiscussion` operationId).
+	FollowClientDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*FollowClientDiscussionResponse, error)
+
+	// CreateClientDiscussionPostWithBodyWithResponse Reply in a thread
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+	// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+	// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+	// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+	// The author follows the thread; followers are notified once the reply is published.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+	CreateClientDiscussionPostWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientDiscussionPostResponse, error)
+
+	// CreateClientDiscussionPostWithResponse Reply in a thread
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+	// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+	// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+	// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+	// The author follows the thread; followers are notified once the reply is published.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+	CreateClientDiscussionPostWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, body CreateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientDiscussionPostResponse, error)
+
 	// CreateClientFeedbackWithBodyWithResponse Send feedback
 	//
 	// Starts a `feedback` conversation on the session's channel with its first message: a
@@ -22767,43 +26538,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /client/v1/feedback (the `CreateClientFeedback` operationId).
 	CreateClientFeedbackWithResponse(ctx context.Context, params *CreateClientFeedbackParams, body CreateClientFeedbackJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientFeedbackResponse, error)
 
-	// CreateClientQuestionWithBodyWithResponse Ask a question about a documentation page
+	// DeleteReaderTokenWithResponse Sign a site out of the reader account
 	//
-	// Starts a conversation of kind `question` on the session's `chat` channel with its first
-	// message, for the page in `page_url` (without query and fragment; its origin must be one of
-	// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-	// visitor writes is shown on the page unless a member publishes an edited answer. It is
-	// answered like any other conversation and listed with the contact's conversations
-	// (`kind: question`).
+	// Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+	// server.
 	//
-	// `email` is the address replies go to while the visitor is away, kept like
-	// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-	// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-	// `403 forbidden`. Rate limited per IP address and per channel.
+	// Returns a wrapper object for the known response body format(s).
 	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-	CreateClientQuestionWithBodyWithResponse(ctx context.Context, params *CreateClientQuestionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientQuestionResponse, error)
-
-	// CreateClientQuestionWithResponse Ask a question about a documentation page
-	//
-	// Starts a conversation of kind `question` on the session's `chat` channel with its first
-	// message, for the page in `page_url` (without query and fragment; its origin must be one of
-	// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-	// visitor writes is shown on the page unless a member publishes an edited answer. It is
-	// answered like any other conversation and listed with the contact's conversations
-	// (`kind: question`).
-	//
-	// `email` is the address replies go to while the visitor is away, kept like
-	// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-	// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-	// `403 forbidden`. Rate limited per IP address and per channel.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-	CreateClientQuestionWithResponse(ctx context.Context, params *CreateClientQuestionParams, body CreateClientQuestionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientQuestionResponse, error)
+	// Corresponds with DELETE /client/v1/reader-token (the `DeleteReaderToken` operationId).
+	DeleteReaderTokenWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteReaderTokenResponse, error)
 
 	// DeleteClientSessionWithResponse End the contact session
 	//
@@ -22907,6 +26650,150 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /readyz (the `GetReadyz` operationId).
 	GetReadyzWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetReadyzResponse, error)
 
+	// GetReaderAccountWithResponse The signed-in person as a reader
+	//
+	// The reader account of the signed-in person: the name and initials shown on their posts, their
+	// sign-in address and their e-mail settings. Every person has one, members included; `member`
+	// says whether they also belong to a workspace (the account page then links to the team panel).
+	// Person sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/account (the `GetReaderAccount` operationId).
+	GetReaderAccountWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetReaderAccountResponse, error)
+
+	// UpdateReaderAccountWithBodyWithResponse Change the reader name or e-mail settings
+	//
+	// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+	// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+	// for every workspace; in-app notifications stay.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+	UpdateReaderAccountWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReaderAccountResponse, error)
+
+	// UpdateReaderAccountWithResponse Change the reader name or e-mail settings
+	//
+	// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+	// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+	// for every workspace; in-app notifications stay.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+	UpdateReaderAccountWithResponse(ctx context.Context, body UpdateReaderAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReaderAccountResponse, error)
+
+	// ListReaderDiscussionsWithResponse Threads the reader started or replied to
+	//
+	// Across every workspace, the threads the person started or wrote in as a reader, most recent
+	// activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+	// are included, so the reader sees where their writing stands. Person sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/account/discussions (the `ListReaderDiscussions` operationId).
+	ListReaderDiscussionsWithResponse(ctx context.Context, params *ListReaderDiscussionsParams, reqEditors ...RequestEditorFn) (*ListReaderDiscussionsResponse, error)
+
+	// ListReaderFollowingWithResponse Threads the reader follows
+	//
+	// Across every workspace, most recent activity first. Person sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/account/following (the `ListReaderFollowing` operationId).
+	ListReaderFollowingWithResponse(ctx context.Context, params *ListReaderFollowingParams, reqEditors ...RequestEditorFn) (*ListReaderFollowingResponse, error)
+
+	// UnfollowReaderDiscussionWithResponse Stop following a thread
+	//
+	// Unknown threads, and threads the person does not follow, answer `404`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/account/following/{discussionId} (the `UnfollowReaderDiscussion` operationId).
+	UnfollowReaderDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*UnfollowReaderDiscussionResponse, error)
+
+	// ListReaderNotificationsWithResponse The reader's notifications
+	//
+	// New replies and accepted answers in followed threads, across every workspace, newest first.
+	// `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+	// Person sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/account/notifications (the `ListReaderNotifications` operationId).
+	ListReaderNotificationsWithResponse(ctx context.Context, params *ListReaderNotificationsParams, reqEditors ...RequestEditorFn) (*ListReaderNotificationsResponse, error)
+
+	// MarkReaderNotificationsReadWithBodyWithResponse Mark notifications read
+	//
+	// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+	MarkReaderNotificationsReadWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MarkReaderNotificationsReadResponse, error)
+
+	// MarkReaderNotificationsReadWithResponse Mark notifications read
+	//
+	// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+	MarkReaderNotificationsReadWithResponse(ctx context.Context, body MarkReaderNotificationsReadJSONRequestBody, reqEditors ...RequestEditorFn) (*MarkReaderNotificationsReadResponse, error)
+
+	// CreateReaderTokenWithBodyWithResponse Hand a reader token to a documentation site
+	//
+	// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+	// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+	// asks for a token for the chat channel and the origin of the window that opened it, and sends
+	// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+	// receives it.
+	//
+	// The origin must be one of the channel's allowed origins, compared exactly
+	// (`403 origin_not_allowed`), and the channel must have discussions on
+	// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+	//
+	// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+	// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+	// made it (sign-out), when the account is deleted, or with
+	// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+	// the person, created on the first write; a person who is a member of that workspace with
+	// access to the inbox writes as that member.
+	//
+	// Person sessions only; like every cookie request it must come from the server's own origin.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+	CreateReaderTokenWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReaderTokenResponse, error)
+
+	// CreateReaderTokenWithResponse Hand a reader token to a documentation site
+	//
+	// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+	// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+	// asks for a token for the chat channel and the origin of the window that opened it, and sends
+	// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+	// receives it.
+	//
+	// The origin must be one of the channel's allowed origins, compared exactly
+	// (`403 origin_not_allowed`), and the channel must have discussions on
+	// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+	//
+	// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+	// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+	// made it (sign-out), when the account is deleted, or with
+	// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+	// the person, created on the first write; a person who is a member of that workspace with
+	// access to the inbox writes as that member.
+	//
+	// Person sessions only; like every cookie request it must come from the server's own origin.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+	CreateReaderTokenWithResponse(ctx context.Context, body CreateReaderTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReaderTokenResponse, error)
+
 	// ListApiKeysWithResponse List API keys
 	//
 	// Owners and admins only, with a member session. Revoked keys are included.
@@ -22980,9 +26867,10 @@ type ClientWithResponsesInterface interface {
 
 	// RequestSignInCodeWithBodyWithResponse Request a sign-in code
 	//
-	// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-	// The answer is the same either way and takes the same time (the mail is sent after it), so
-	// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+	// Sends a one-time code to the address when it belongs to a person (a member, a former member
+	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+	// creates the person on verification. The answer is the same either way and takes the same
+	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -22992,9 +26880,10 @@ type ClientWithResponsesInterface interface {
 
 	// RequestSignInCodeWithResponse Request a sign-in code
 	//
-	// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-	// The answer is the same either way and takes the same time (the mail is sent after it), so
-	// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+	// Sends a one-time code to the address when it belongs to a person (a member, a former member
+	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+	// creates the person on verification. The answer is the same either way and takes the same
+	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -23508,6 +27397,50 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/conversations/{conversationId} (the `UpdateConversation` operationId).
 	UpdateConversationWithResponse(ctx context.Context, conversationId ConversationId, params *UpdateConversationParams, body UpdateConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateConversationResponse, error)
 
+	// CreateDiscussionFromConversationWithBodyWithResponse Turn a private conversation into a public thread
+	//
+	// Starts a published thread from a conversation with the text the member supplies: nothing of
+	// the conversation itself becomes public, and the conversation stays private and unchanged.
+	// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+	// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+	// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+	// channel is preferred).
+	//
+	// The conversation's contact becomes the thread's author only when they are a signed-in
+	// reader (linked to a person) or known to the host app (an external id in the inbox);
+	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+	// the accepted answer. The author follows the thread. A conversation becomes one thread
+	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+	CreateDiscussionFromConversationWithBodyWithResponse(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionFromConversationResponse, error)
+
+	// CreateDiscussionFromConversationWithResponse Turn a private conversation into a public thread
+	//
+	// Starts a published thread from a conversation with the text the member supplies: nothing of
+	// the conversation itself becomes public, and the conversation stays private and unchanged.
+	// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+	// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+	// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+	// channel is preferred).
+	//
+	// The conversation's contact becomes the thread's author only when they are a signed-in
+	// reader (linked to a person) or known to the host app (an external id in the inbox);
+	// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+	// the accepted answer. The author follows the thread. A conversation becomes one thread
+	// (`409 already_discussed`); `conversation_id` on the thread links back.
+	//
+	// Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+	CreateDiscussionFromConversationWithResponse(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionFromConversationResponse, error)
+
 	// ListMessagesWithResponse List a conversation's messages
 	//
 	// Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -23661,46 +27594,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PUT /v1/conversations/{conversationId}/pin (the `PinConversation` operationId).
 	PinConversationWithResponse(ctx context.Context, conversationId ConversationId, params *PinConversationParams, reqEditors ...RequestEditorFn) (*PinConversationResponse, error)
 
-	// PublishConversationWithBodyWithResponse Publish a question and its answer to the page
-	//
-	// Publishes a `question` conversation to its documentation page as a question and an answer,
-	// both as the member wrote them here (usually edited from the thread). The published answer
-	// carries no name or address of the visitor; it is listed on the page by
-	// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-	// with at least one sent member reply and still be on a `chat` channel that allows the
-	// page's origin (`409 not_publishable` otherwise); it publishes once
-	// (`409 already_published`; edit the published answer instead).
-	//
-	// A published answer is the member's text: retention and contact deletion leave it, and
-	// deleting the conversation keeps it without `conversation_id`.
-	//
-	// Member sessions only.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-	PublishConversationWithBodyWithResponse(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishConversationResponse, error)
-
-	// PublishConversationWithResponse Publish a question and its answer to the page
-	//
-	// Publishes a `question` conversation to its documentation page as a question and an answer,
-	// both as the member wrote them here (usually edited from the thread). The published answer
-	// carries no name or address of the visitor; it is listed on the page by
-	// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-	// with at least one sent member reply and still be on a `chat` channel that allows the
-	// page's origin (`409 not_publishable` otherwise); it publishes once
-	// (`409 already_published`; edit the published answer instead).
-	//
-	// A published answer is the member's text: retention and contact deletion leave it, and
-	// deleting the conversation keeps it without `conversation_id`.
-	//
-	// Member sessions only.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-	PublishConversationWithResponse(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, body PublishConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishConversationResponse, error)
-
 	// MarkConversationReadWithBodyWithResponse Mark a conversation read
 	//
 	// Moves the calling member's read cursor to `message_id`, or to the latest message, note or
@@ -23767,12 +27660,221 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/conversations/{conversationId}/unread (the `MarkConversationUnread` operationId).
 	MarkConversationUnreadWithResponse(ctx context.Context, conversationId ConversationId, params *MarkConversationUnreadParams, reqEditors ...RequestEditorFn) (*MarkConversationUnreadResponse, error)
 
+	// ListDiscussionPostsWithResponse Posts by state (the moderation queue)
+	//
+	// Posts in the inboxes the caller can see, oldest first, each with its thread. With
+	// `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+	// for approval (`opening: true`) and replies waiting for approval.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/discussion-posts (the `ListDiscussionPosts` operationId).
+	ListDiscussionPostsWithResponse(ctx context.Context, params *ListDiscussionPostsParams, reqEditors ...RequestEditorFn) (*ListDiscussionPostsResponse, error)
+
+	// DeleteDiscussionPostWithResponse Delete a member's own post
+	//
+	// As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+	// (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/discussion-posts/{postId} (the `DeleteDiscussionPost` operationId).
+	DeleteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *DeleteDiscussionPostParams, reqEditors ...RequestEditorFn) (*DeleteDiscussionPostResponse, error)
+
+	// UpdateDiscussionPostWithBodyWithResponse Approve, hide, or edit a member's own post
+	//
+	// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+	// from the public (its author no longer sees it either). On the opening post this approves or
+	// hides the whole thread. Approving a reply notifies the thread's followers.
+	//
+	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+	// posts answer `403 forbidden`. Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+	UpdateDiscussionPostWithBodyWithResponse(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDiscussionPostResponse, error)
+
+	// UpdateDiscussionPostWithResponse Approve, hide, or edit a member's own post
+	//
+	// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+	// from the public (its author no longer sees it either). On the opening post this approves or
+	// hides the whole thread. Approving a reply notifies the thread's followers.
+	//
+	// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+	// posts answer `403 forbidden`. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+	UpdateDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, body UpdateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDiscussionPostResponse, error)
+
+	// MarkDiscussionPostSpamWithResponse Mark a post as spam
+	//
+	// Hides the post (the thread, for an opening post) and every post of its author in the
+	// workspace still waiting for approval, and makes the author's later posts wait for a member
+	// whatever the channel's setting. A member's post answers `400 validation_failed`.
+	// Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
+	MarkDiscussionPostSpamWithResponse(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*MarkDiscussionPostSpamResponse, error)
+
+	// UnvoteDiscussionPostWithResponse Take a member's vote back
+	//
+	// Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/discussion-posts/{postId}/vote (the `UnvoteDiscussionPost` operationId).
+	UnvoteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *UnvoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*UnvoteDiscussionPostResponse, error)
+
+	// VoteDiscussionPostWithResponse Vote for a post as a member
+	//
+	// One vote per member and post (the opening post votes for the thread); voting again changes
+	// nothing. Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
+	VoteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*VoteDiscussionPostResponse, error)
+
+	// ListDiscussionsWithResponse List discussion threads
+	//
+	// Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+	// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+	// and hidden ones too.
+	//
+	// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+	// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+	// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+	// `next_cursor` belongs to the sort and filters it was returned for.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/discussions (the `ListDiscussions` operationId).
+	ListDiscussionsWithResponse(ctx context.Context, params *ListDiscussionsParams, reqEditors ...RequestEditorFn) (*ListDiscussionsResponse, error)
+
+	// CreateDiscussionWithBodyWithResponse Start a thread as a member
+	//
+	// A thread on a documentation page, written by the calling member and published at once. The
+	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	// Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+	CreateDiscussionWithBodyWithResponse(ctx context.Context, params *CreateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionResponse, error)
+
+	// CreateDiscussionWithResponse Start a thread as a member
+	//
+	// A thread on a documentation page, written by the calling member and published at once. The
+	// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+	// channel must have discussions on (`403 discussions_off`). The member follows it.
+	// Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+	CreateDiscussionWithResponse(ctx context.Context, params *CreateDiscussionParams, body CreateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionResponse, error)
+
+	// GetDiscussionWithResponse A thread with every post
+	//
+	// The thread and all its replies in every state (pending and hidden included), the accepted
+	// answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/discussions/{discussionId} (the `GetDiscussion` operationId).
+	GetDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, params *GetDiscussionParams, reqEditors ...RequestEditorFn) (*GetDiscussionResponse, error)
+
+	// UpdateDiscussionWithBodyWithResponse Edit the title, lock or unlock
+	//
+	// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+	// edits, votes or answers from readers; members still may. Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+	UpdateDiscussionWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDiscussionResponse, error)
+
+	// UpdateDiscussionWithResponse Edit the title, lock or unlock
+	//
+	// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+	// edits, votes or answers from readers; members still may. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+	UpdateDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, body UpdateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDiscussionResponse, error)
+
+	// ClearDiscussionAnswerWithResponse Clear the accepted answer
+	//
+	// Member sessions only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
+	ClearDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*ClearDiscussionAnswerResponse, error)
+
+	// AcceptDiscussionAnswerWithBodyWithResponse Mark the accepted answer
+	//
+	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+	AcceptDiscussionAnswerWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AcceptDiscussionAnswerResponse, error)
+
+	// AcceptDiscussionAnswerWithResponse Mark the accepted answer
+	//
+	// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+	// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+	// threads. Followers are told once (`discussion.answered`). Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+	AcceptDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*AcceptDiscussionAnswerResponse, error)
+
+	// CreateDiscussionPostWithBodyWithResponse Reply as a member
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+	// also in locked threads. Replies are one level deep: a reply to a reply answers
+	// `400 validation_failed`. Followers are notified. Member sessions only.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+	CreateDiscussionPostWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionPostResponse, error)
+
+	// CreateDiscussionPostWithResponse Reply as a member
+	//
+	// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+	// also in locked threads. Replies are one level deep: a reply to a reply answers
+	// `400 validation_failed`. Followers are notified. Member sessions only.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+	CreateDiscussionPostWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionPostResponse, error)
+
 	// GetDocsPageWithResponse One documentation page
 	//
 	// A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-	// ratings per day over the window. Its feedback and questions are
-	// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-	// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+	// ratings per day over the window. Its feedback is
+	// `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+	// `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
 	// answers `400 validation_failed`.
 	//
 	// Scope: `conversations:read`.
@@ -23782,19 +27884,21 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /v1/docs/page (the `GetDocsPage` operationId).
 	GetDocsPageWithResponse(ctx context.Context, params *GetDocsPageParams, reqEditors ...RequestEditorFn) (*GetDocsPageResponse, error)
 
-	// ListDocsPagesWithResponse Documentation pages with their ratings, feedback and questions
+	// ListDocsPagesWithResponse Documentation pages with their ratings, feedback and discussions
 	//
 	// The pages of the inboxes the caller can see that were rated in the window, have open
-	// feedback or questions, or have published answers: `up` and `down` summed over the last
-	// `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-	// conversations sent from the page, and published answers. A page is per inbox.
+	// feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+	// (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+	// page's threads now: `open_threads` (published, no accepted answer, not locked),
+	// `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+	// a member, opening posts included). A page is per inbox.
 	//
 	// `sort` orders them; ties go to more ratings, then by page:
 	// - `down` (default): most `down` first.
 	// - `up`: most `up` first.
 	// - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
 	//   window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-	// - `activity`: most ratings plus open feedback and questions first.
+	// - `activity`: most ratings plus open feedback, open threads and pending posts first.
 	//
 	// `site` keeps only the pages of that site (origin).
 	//
@@ -23813,9 +27917,9 @@ type ClientWithResponsesInterface interface {
 	// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
 	// the inboxes the caller can see (or `inbox_id`): every site that has a page
 	// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-	// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+	// discussion threads), and every origin allowed on a chat channel of those inboxes,
 	// with zeros when nothing came from it yet. The counts are those of
-	// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+	// `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
 	//
 	// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
 	// (the oldest when several do); absent when none does any more.
@@ -23832,9 +27936,9 @@ type ClientWithResponsesInterface interface {
 	// GetDocsSummaryWithResponse Documentation pages in total and per day
 	//
 	// Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-	// included, UTC): ratings, feedback and questions sent from documentation pages (created in
-	// the window, not spam, in any status) and answers published in the window, in total and
-	// per day. Every day of the window is listed, oldest first, with zeros where nothing
+	// included, UTC): ratings and feedback sent from documentation pages (created in the window,
+	// not spam, in any status) and discussion threads started in the window (any state), in total
+	// and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
 	// happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
 	// `site` counts only the pages of that site (origin).
 	//
@@ -24216,9 +28320,12 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteMeWithBodyWithResponse Delete the signed-in person's account
 	//
-	// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-	// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-	// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+	// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+	// wrote stay in their conversations without an author (`author.member_id` absent). As a
+	// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+	// follows go, and in each workspace the contact linked to them is deleted when it has no
+	// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 	// person is the only owner of a workspace: make someone else an owner or delete that
 	// workspace first. Needs a member session; the body repeats the person's e-mail address.
 	//
@@ -24229,9 +28336,12 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteMeWithResponse Delete the signed-in person's account
 	//
-	// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-	// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-	// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+	// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+	// wrote stay in their conversations without an author (`author.member_id` absent). As a
+	// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+	// follows go, and in each workspace the contact linked to them is deleted when it has no
+	// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 	// person is the only owner of a workspace: make someone else an owner or delete that
 	// workspace first. Needs a member session; the body repeats the person's e-mail address.
 	//
@@ -24633,56 +28743,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/oauth/requests/{oauthRequestId}/deny (the `DenyOAuthRequest` operationId).
 	DenyOAuthRequestWithResponse(ctx context.Context, oauthRequestId OAuthRequestId, reqEditors ...RequestEditorFn) (*DenyOAuthRequestResponse, error)
 
-	// ListPageAnswersWithResponse List published answers
-	//
-	// Published answers in the inboxes the caller can see, newest first.
-	//
-	// Scope: `conversations:read`.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /v1/page-answers (the `ListPageAnswers` operationId).
-	ListPageAnswersWithResponse(ctx context.Context, params *ListPageAnswersParams, reqEditors ...RequestEditorFn) (*ListPageAnswersResponse, error)
-
-	// DeletePageAnswerWithResponse Unpublish an answer
-	//
-	// Removes it from the page. The conversation it came from stays and can be published again.
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with DELETE /v1/page-answers/{pageAnswerId} (the `DeletePageAnswer` operationId).
-	DeletePageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *DeletePageAnswerParams, reqEditors ...RequestEditorFn) (*DeletePageAnswerResponse, error)
-
-	// GetPageAnswerWithResponse Get a published answer
-	//
-	// An answer in an inbox the caller cannot see answers `404`.
-	//
-	// Scope: `conversations:read`.
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /v1/page-answers/{pageAnswerId} (the `GetPageAnswer` operationId).
-	GetPageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *GetPageAnswerParams, reqEditors ...RequestEditorFn) (*GetPageAnswerResponse, error)
-
-	// UpdatePageAnswerWithBodyWithResponse Edit a published answer
-	//
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-	UpdatePageAnswerWithBodyWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePageAnswerResponse, error)
-
-	// UpdatePageAnswerWithResponse Edit a published answer
-	//
-	// Members who can see the answer's inbox. Member sessions only.
-	//
-	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-	UpdatePageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, body UpdatePageAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePageAnswerResponse, error)
-
 	// GetVapidPublicKeyWithResponse The server's Web Push key
 	//
 	// The VAPID public key to pass as `applicationServerKey` to `PushManager.subscribe()`: an
@@ -25078,18 +29138,20 @@ func (r GetClientChannelResponse) ContentType() string {
 	return ""
 }
 
-// ListClientPageAnswersResponse200Headers the declared response headers of an HTTP 200 response for ListClientPageAnswers
-type ListClientPageAnswersResponse200Headers struct {
+// ListClientDiscussionsResponse200Headers the declared response headers of an HTTP 200 response for ListClientDiscussions
+type ListClientDiscussionsResponse200Headers struct {
 	CacheControl *string
 }
 
-type ListClientPageAnswersResponse struct {
+type ListClientDiscussionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *ClientPageAnswerList
+	JSON200 *DiscussionPage
 	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
 	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
 	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
 	ApplicationproblemJSON403 *Problem
 	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
@@ -25097,41 +29159,46 @@ type ListClientPageAnswersResponse struct {
 	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
 	ApplicationproblemJSON429 *Problem
 	// Headers200 the parsed response headers for an HTTP 200 response
-	Headers200 *ListClientPageAnswersResponse200Headers
+	Headers200 *ListClientDiscussionsResponse200Headers
 }
 
 // GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListClientPageAnswersResponse) GetJSON200() *ClientPageAnswerList {
+func (r ListClientDiscussionsResponse) GetJSON200() *DiscussionPage {
 	return r.JSON200
 }
 
 // GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r ListClientPageAnswersResponse) GetApplicationproblemJSON400() *Problem {
+func (r ListClientDiscussionsResponse) GetApplicationproblemJSON400() *Problem {
 	return r.ApplicationproblemJSON400
 }
 
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListClientDiscussionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
 // GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r ListClientPageAnswersResponse) GetApplicationproblemJSON403() *Problem {
+func (r ListClientDiscussionsResponse) GetApplicationproblemJSON403() *Problem {
 	return r.ApplicationproblemJSON403
 }
 
 // GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r ListClientPageAnswersResponse) GetApplicationproblemJSON404() *Problem {
+func (r ListClientDiscussionsResponse) GetApplicationproblemJSON404() *Problem {
 	return r.ApplicationproblemJSON404
 }
 
 // GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
-func (r ListClientPageAnswersResponse) GetApplicationproblemJSON429() *Problem {
+func (r ListClientDiscussionsResponse) GetApplicationproblemJSON429() *Problem {
 	return r.ApplicationproblemJSON429
 }
 
 // GetBody returns the raw response body bytes
-func (r ListClientPageAnswersResponse) GetBody() []byte {
+func (r ListClientDiscussionsResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r ListClientPageAnswersResponse) Status() string {
+func (r ListClientDiscussionsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -25139,7 +29206,7 @@ func (r ListClientPageAnswersResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r ListClientPageAnswersResponse) StatusCode() int {
+func (r ListClientDiscussionsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -25147,7 +29214,83 @@ func (r ListClientPageAnswersResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListClientPageAnswersResponse) ContentType() string {
+func (r ListClientDiscussionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetClientDiscussionResponse200Headers the declared response headers of an HTTP 200 response for GetClientDiscussion
+type GetClientDiscussionResponse200Headers struct {
+	CacheControl *string
+}
+
+type GetClientDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionDetail
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetClientDiscussionResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetClientDiscussionResponse) GetJSON200() *DiscussionDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetClientDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetClientDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetClientDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetClientDiscussionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetClientDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientDiscussionResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -25872,6 +30015,647 @@ func (r SetClientTypingResponse) ContentType() string {
 	return ""
 }
 
+type DeleteClientDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteClientDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteClientDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteClientDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteClientDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteClientDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteClientDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateClientDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateClientDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateClientDiscussionPostResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateClientDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateClientDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateClientDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateClientDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateClientDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateClientDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnvoteClientDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnvoteClientDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnvoteClientDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnvoteClientDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnvoteClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnvoteClientDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnvoteClientDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnvoteClientDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnvoteClientDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type VoteClientDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r VoteClientDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r VoteClientDiscussionPostResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r VoteClientDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r VoteClientDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r VoteClientDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r VoteClientDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClientDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Discussion
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateClientDiscussionResponse) GetJSON201() *Discussion {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateClientDiscussionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClientDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClientDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClientDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClientDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ClearClientDiscussionAnswerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Discussion
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ClearClientDiscussionAnswerResponse) GetJSON200() *Discussion {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ClearClientDiscussionAnswerResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ClearClientDiscussionAnswerResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ClearClientDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ClearClientDiscussionAnswerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ClearClientDiscussionAnswerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ClearClientDiscussionAnswerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ClearClientDiscussionAnswerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AcceptClientDiscussionAnswerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Discussion
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r AcceptClientDiscussionAnswerResponse) GetJSON200() *Discussion {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r AcceptClientDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r AcceptClientDiscussionAnswerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AcceptClientDiscussionAnswerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AcceptClientDiscussionAnswerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AcceptClientDiscussionAnswerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnfollowClientDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnfollowClientDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnfollowClientDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnfollowClientDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnfollowClientDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnfollowClientDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnfollowClientDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnfollowClientDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type FollowClientDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r FollowClientDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r FollowClientDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r FollowClientDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r FollowClientDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r FollowClientDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r FollowClientDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r FollowClientDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClientDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *DiscussionPost
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateClientDiscussionPostResponse) GetJSON201() *DiscussionPost {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClientDiscussionPostResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateClientDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateClientDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClientDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateClientDiscussionPostResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClientDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClientDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClientDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClientDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreateClientFeedbackResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -25955,53 +30739,25 @@ func (r CreateClientFeedbackResponse) ContentType() string {
 	return ""
 }
 
-type CreateClientQuestionResponse struct {
+type DeleteReaderTokenResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *ClientConversationCreated
-	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
-	ApplicationproblemJSON400 *Problem
 	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
 	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
-	ApplicationproblemJSON429 *Problem
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r CreateClientQuestionResponse) GetJSON201() *ClientConversationCreated {
-	return r.JSON201
-}
-
-// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r CreateClientQuestionResponse) GetApplicationproblemJSON400() *Problem {
-	return r.ApplicationproblemJSON400
 }
 
 // GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r CreateClientQuestionResponse) GetApplicationproblemJSON401() *Problem {
+func (r DeleteReaderTokenResponse) GetApplicationproblemJSON401() *Problem {
 	return r.ApplicationproblemJSON401
 }
 
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r CreateClientQuestionResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
-func (r CreateClientQuestionResponse) GetApplicationproblemJSON429() *Problem {
-	return r.ApplicationproblemJSON429
-}
-
 // GetBody returns the raw response body bytes
-func (r CreateClientQuestionResponse) GetBody() []byte {
+func (r DeleteReaderTokenResponse) GetBody() []byte {
 	return r.Body
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateClientQuestionResponse) Status() string {
+func (r DeleteReaderTokenResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -26009,7 +30765,7 @@ func (r CreateClientQuestionResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateClientQuestionResponse) StatusCode() int {
+func (r DeleteReaderTokenResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -26017,7 +30773,7 @@ func (r CreateClientQuestionResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateClientQuestionResponse) ContentType() string {
+func (r DeleteReaderTokenResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -26286,6 +31042,439 @@ func (r GetReadyzResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetReadyzResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetReaderAccountResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReaderAccount
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetReaderAccountResponse) GetJSON200() *ReaderAccount {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetReaderAccountResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r GetReaderAccountResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetReaderAccountResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetReaderAccountResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetReaderAccountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateReaderAccountResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReaderAccount
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateReaderAccountResponse) GetJSON200() *ReaderAccount {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateReaderAccountResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateReaderAccountResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateReaderAccountResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateReaderAccountResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateReaderAccountResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateReaderAccountResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListReaderDiscussionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReaderDiscussionPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListReaderDiscussionsResponse) GetJSON200() *ReaderDiscussionPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListReaderDiscussionsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListReaderDiscussionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r ListReaderDiscussionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListReaderDiscussionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListReaderDiscussionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListReaderDiscussionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListReaderFollowingResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReaderDiscussionPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListReaderFollowingResponse) GetJSON200() *ReaderDiscussionPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListReaderFollowingResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListReaderFollowingResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r ListReaderFollowingResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListReaderFollowingResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListReaderFollowingResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListReaderFollowingResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnfollowReaderDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnfollowReaderDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnfollowReaderDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnfollowReaderDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnfollowReaderDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnfollowReaderDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnfollowReaderDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListReaderNotificationsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ReaderNotificationPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListReaderNotificationsResponse) GetJSON200() *ReaderNotificationPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListReaderNotificationsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListReaderNotificationsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r ListReaderNotificationsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListReaderNotificationsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListReaderNotificationsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListReaderNotificationsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MarkReaderNotificationsReadResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r MarkReaderNotificationsReadResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r MarkReaderNotificationsReadResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetBody returns the raw response body bytes
+func (r MarkReaderNotificationsReadResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r MarkReaderNotificationsReadResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MarkReaderNotificationsReadResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MarkReaderNotificationsReadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateReaderTokenResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *ReaderToken
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateReaderTokenResponse) GetJSON201() *ReaderToken {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateReaderTokenResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateReaderTokenResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateReaderTokenResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateReaderTokenResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateReaderTokenResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateReaderTokenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateReaderTokenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateReaderTokenResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -28601,6 +33790,82 @@ func (r UpdateConversationResponse) ContentType() string {
 	return ""
 }
 
+type CreateDiscussionFromConversationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *DiscussionDetail
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateDiscussionFromConversationResponse) GetJSON201() *DiscussionDetail {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateDiscussionFromConversationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateDiscussionFromConversationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateDiscussionFromConversationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateDiscussionFromConversationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateDiscussionFromConversationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListMessagesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -28967,82 +34232,6 @@ func (r PinConversationResponse) ContentType() string {
 	return ""
 }
 
-type PublishConversationResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON201 the response for an HTTP 201 `application/json` response
-	JSON201 *PageAnswer
-	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
-	ApplicationproblemJSON400 *Problem
-	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
-	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *Problem
-	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
-	ApplicationproblemJSON409 *Problem
-}
-
-// GetJSON201 returns the response for an HTTP 201 `application/json` response
-func (r PublishConversationResponse) GetJSON201() *PageAnswer {
-	return r.JSON201
-}
-
-// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r PublishConversationResponse) GetApplicationproblemJSON400() *Problem {
-	return r.ApplicationproblemJSON400
-}
-
-// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r PublishConversationResponse) GetApplicationproblemJSON401() *Problem {
-	return r.ApplicationproblemJSON401
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r PublishConversationResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r PublishConversationResponse) GetApplicationproblemJSON404() *Problem {
-	return r.ApplicationproblemJSON404
-}
-
-// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
-func (r PublishConversationResponse) GetApplicationproblemJSON409() *Problem {
-	return r.ApplicationproblemJSON409
-}
-
-// GetBody returns the raw response body bytes
-func (r PublishConversationResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r PublishConversationResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r PublishConversationResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r PublishConversationResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type MarkConversationReadResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -29230,6 +34419,861 @@ func (r MarkConversationUnreadResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r MarkConversationUnreadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListDiscussionPostsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPostPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListDiscussionPostsResponse) GetJSON200() *DiscussionPostPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListDiscussionPostsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListDiscussionPostsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListDiscussionPostsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListDiscussionPostsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListDiscussionPostsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListDiscussionPostsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListDiscussionPostsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListDiscussionPostsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateDiscussionPostResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type MarkDiscussionPostSpamResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r MarkDiscussionPostSpamResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r MarkDiscussionPostSpamResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r MarkDiscussionPostSpamResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r MarkDiscussionPostSpamResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r MarkDiscussionPostSpamResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r MarkDiscussionPostSpamResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r MarkDiscussionPostSpamResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r MarkDiscussionPostSpamResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r MarkDiscussionPostSpamResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnvoteDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UnvoteDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnvoteDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnvoteDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnvoteDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnvoteDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnvoteDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnvoteDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnvoteDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type VoteDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPost
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r VoteDiscussionPostResponse) GetJSON200() *DiscussionPost {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r VoteDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r VoteDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r VoteDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r VoteDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r VoteDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r VoteDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r VoteDiscussionPostResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListDiscussionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListDiscussionsResponse) GetJSON200() *DiscussionPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListDiscussionsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListDiscussionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListDiscussionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListDiscussionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListDiscussionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListDiscussionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListDiscussionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListDiscussionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Discussion
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateDiscussionResponse) GetJSON201() *Discussion {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateDiscussionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DiscussionDetail
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetDiscussionResponse) GetJSON200() *DiscussionDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateDiscussionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Discussion
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateDiscussionResponse) GetJSON200() *Discussion {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateDiscussionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateDiscussionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateDiscussionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateDiscussionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateDiscussionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateDiscussionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateDiscussionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateDiscussionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ClearDiscussionAnswerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Discussion
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ClearDiscussionAnswerResponse) GetJSON200() *Discussion {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ClearDiscussionAnswerResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ClearDiscussionAnswerResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ClearDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ClearDiscussionAnswerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ClearDiscussionAnswerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ClearDiscussionAnswerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ClearDiscussionAnswerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type AcceptDiscussionAnswerResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Discussion
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r AcceptDiscussionAnswerResponse) GetJSON200() *Discussion {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r AcceptDiscussionAnswerResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r AcceptDiscussionAnswerResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r AcceptDiscussionAnswerResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r AcceptDiscussionAnswerResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r AcceptDiscussionAnswerResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateDiscussionPostResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *DiscussionPost
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateDiscussionPostResponse) GetJSON201() *DiscussionPost {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateDiscussionPostResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateDiscussionPostResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateDiscussionPostResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateDiscussionPostResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateDiscussionPostResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateDiscussionPostResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateDiscussionPostResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateDiscussionPostResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -32688,261 +38732,6 @@ func (r DenyOAuthRequestResponse) ContentType() string {
 	return ""
 }
 
-type ListPageAnswersResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *PageAnswerPage
-	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
-	ApplicationproblemJSON400 *Problem
-	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
-	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *Problem
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r ListPageAnswersResponse) GetJSON200() *PageAnswerPage {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r ListPageAnswersResponse) GetApplicationproblemJSON400() *Problem {
-	return r.ApplicationproblemJSON400
-}
-
-// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r ListPageAnswersResponse) GetApplicationproblemJSON401() *Problem {
-	return r.ApplicationproblemJSON401
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r ListPageAnswersResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r ListPageAnswersResponse) GetApplicationproblemJSON404() *Problem {
-	return r.ApplicationproblemJSON404
-}
-
-// GetBody returns the raw response body bytes
-func (r ListPageAnswersResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r ListPageAnswersResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ListPageAnswersResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ListPageAnswersResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type DeletePageAnswerResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
-	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *Problem
-}
-
-// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r DeletePageAnswerResponse) GetApplicationproblemJSON401() *Problem {
-	return r.ApplicationproblemJSON401
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r DeletePageAnswerResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r DeletePageAnswerResponse) GetApplicationproblemJSON404() *Problem {
-	return r.ApplicationproblemJSON404
-}
-
-// GetBody returns the raw response body bytes
-func (r DeletePageAnswerResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r DeletePageAnswerResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r DeletePageAnswerResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r DeletePageAnswerResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type GetPageAnswerResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *PageAnswer
-	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
-	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *Problem
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetPageAnswerResponse) GetJSON200() *PageAnswer {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r GetPageAnswerResponse) GetApplicationproblemJSON401() *Problem {
-	return r.ApplicationproblemJSON401
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r GetPageAnswerResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r GetPageAnswerResponse) GetApplicationproblemJSON404() *Problem {
-	return r.ApplicationproblemJSON404
-}
-
-// GetBody returns the raw response body bytes
-func (r GetPageAnswerResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPageAnswerResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPageAnswerResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetPageAnswerResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type UpdatePageAnswerResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *PageAnswer
-	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
-	ApplicationproblemJSON400 *Problem
-	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
-	ApplicationproblemJSON401 *Problem
-	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
-	ApplicationproblemJSON403 *Problem
-	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
-	ApplicationproblemJSON404 *Problem
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r UpdatePageAnswerResponse) GetJSON200() *PageAnswer {
-	return r.JSON200
-}
-
-// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
-func (r UpdatePageAnswerResponse) GetApplicationproblemJSON400() *Problem {
-	return r.ApplicationproblemJSON400
-}
-
-// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
-func (r UpdatePageAnswerResponse) GetApplicationproblemJSON401() *Problem {
-	return r.ApplicationproblemJSON401
-}
-
-// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
-func (r UpdatePageAnswerResponse) GetApplicationproblemJSON403() *Problem {
-	return r.ApplicationproblemJSON403
-}
-
-// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
-func (r UpdatePageAnswerResponse) GetApplicationproblemJSON404() *Problem {
-	return r.ApplicationproblemJSON404
-}
-
-// GetBody returns the raw response body bytes
-func (r UpdatePageAnswerResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r UpdatePageAnswerResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r UpdatePageAnswerResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdatePageAnswerResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type GetVapidPublicKeyResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -34028,26 +39817,52 @@ func (c *ClientWithResponses) GetClientChannelWithResponse(ctx context.Context, 
 	return ParseGetClientChannelResponse(rsp)
 }
 
-// ListClientPageAnswersWithResponse A documentation page's published answers
+// ListClientDiscussionsWithResponse A documentation page's discussion threads
 //
-// The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-// in the channel's inbox, newest first, at most 100, without a session. They carry the
-// member's edited text only: never the visitor's name or address. The page is matched
-// without query and fragment, and its origin must be one of the channel's allowed origins
-// (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+// The published threads of a page in the channel's inbox, without a session. The page is
+// matched without query and fragment, and its origin must be one of the channel's allowed
+// origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+//
+// `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+// without an accepted answer only, those nobody replied to first, then newest).
+//
+// Authors are shown by display name and initials only. Without `Authorization` the answer may
+// be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+// session of this channel the caller's own threads still waiting for a member are included and
+// `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+// An unknown or expired token answers `401`.
 //
 // Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
 // Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /client/v1/channels/{channel_key}/page-answers (the `ListClientPageAnswers` operationId).
-func (c *ClientWithResponses) ListClientPageAnswersWithResponse(ctx context.Context, channelKey ChannelKey, params *ListClientPageAnswersParams, reqEditors ...RequestEditorFn) (*ListClientPageAnswersResponse, error) {
-	rsp, err := c.ListClientPageAnswers(ctx, channelKey, params, reqEditors...)
+// Corresponds with GET /client/v1/channels/{channel_key}/discussions (the `ListClientDiscussions` operationId).
+func (c *ClientWithResponses) ListClientDiscussionsWithResponse(ctx context.Context, channelKey ChannelKey, params *ListClientDiscussionsParams, reqEditors ...RequestEditorFn) (*ListClientDiscussionsResponse, error) {
+	rsp, err := c.ListClientDiscussions(ctx, channelKey, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseListClientPageAnswersResponse(rsp)
+	return ParseListClientDiscussionsResponse(rsp)
+}
+
+// GetClientDiscussionWithResponse A thread with its replies
+//
+// A published thread of the channel's inbox on a page the channel serves, with its published
+// replies: the accepted answer first, then oldest first; replies to replies carry
+// `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+// body. Caching, authentication and errors as for the list; with a token the caller's own
+// pending posts (and their own pending thread) are included.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
+func (c *ClientWithResponses) GetClientDiscussionWithResponse(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*GetClientDiscussionResponse, error) {
+	rsp, err := c.GetClientDiscussion(ctx, channelKey, discussionId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientDiscussionResponse(rsp)
 }
 
 // CreatePageRatingWithBodyWithResponse Rate a documentation page
@@ -34375,6 +40190,254 @@ func (c *ClientWithResponses) SetClientTypingWithResponse(ctx context.Context, c
 	return ParseSetClientTypingResponse(rsp)
 }
 
+// DeleteClientDiscussionPostWithResponse Delete one's own post
+//
+// The author deletes a post at any time. A post without replies is removed; one with replies
+// stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+// when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+// accepted answer clears it.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /client/v1/discussion-posts/{postId} (the `DeleteClientDiscussionPost` operationId).
+func (c *ClientWithResponses) DeleteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*DeleteClientDiscussionPostResponse, error) {
+	rsp, err := c.DeleteClientDiscussionPost(ctx, postId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteClientDiscussionPostResponse(rsp)
+}
+
+// UpdateClientDiscussionPostWithBodyWithResponse Edit one's own post
+//
+// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+func (c *ClientWithResponses) UpdateClientDiscussionPostWithBodyWithResponse(ctx context.Context, postId DiscussionPostId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientDiscussionPostResponse, error) {
+	rsp, err := c.UpdateClientDiscussionPostWithBody(ctx, postId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateClientDiscussionPostResponse(rsp)
+}
+
+// UpdateClientDiscussionPostWithResponse Edit one's own post
+//
+// The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+// `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+// answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /client/v1/discussion-posts/{postId} (the `UpdateClientDiscussionPost` operationId).
+func (c *ClientWithResponses) UpdateClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, body UpdateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientDiscussionPostResponse, error) {
+	rsp, err := c.UpdateClientDiscussionPost(ctx, postId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateClientDiscussionPostResponse(rsp)
+}
+
+// UnvoteClientDiscussionPostWithResponse Take a vote back
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /client/v1/discussion-posts/{postId}/vote (the `UnvoteClientDiscussionPost` operationId).
+func (c *ClientWithResponses) UnvoteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*UnvoteClientDiscussionPostResponse, error) {
+	rsp, err := c.UnvoteClientDiscussionPost(ctx, postId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnvoteClientDiscussionPostResponse(rsp)
+}
+
+// VoteClientDiscussionPostWithResponse Vote for a post
+//
+// One vote per author and post; the opening post's votes are the thread's. Voting again changes
+// nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/discussion-posts/{postId}/vote (the `VoteClientDiscussionPost` operationId).
+func (c *ClientWithResponses) VoteClientDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, reqEditors ...RequestEditorFn) (*VoteClientDiscussionPostResponse, error) {
+	rsp, err := c.VoteClientDiscussionPost(ctx, postId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoteClientDiscussionPostResponse(rsp)
+}
+
+// CreateClientDiscussionWithBodyWithResponse Start a thread
+//
+// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+// off answers `403 discussions_off`.
+//
+// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+// member (`state: pending`, visible only to its author and members) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at once.
+// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+// follows the thread.
+//
+// Rate limited per author and per IP address (`429 rate_limited`).
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+func (c *ClientWithResponses) CreateClientDiscussionWithBodyWithResponse(ctx context.Context, params *CreateClientDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientDiscussionResponse, error) {
+	rsp, err := c.CreateClientDiscussionWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientDiscussionResponse(rsp)
+}
+
+// CreateClientDiscussionWithResponse Start a thread
+//
+// Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+// allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+// an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+// off answers `403 discussions_off`.
+//
+// With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+// member (`state: pending`, visible only to its author and members) until one of their posts
+// in the workspace has been approved; identity-token users and members are published at once.
+// `open` publishes everyone at once, except authors whose posts were marked spam. The author
+// follows the thread.
+//
+// Rate limited per author and per IP address (`429 rate_limited`).
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/discussions (the `CreateClientDiscussion` operationId).
+func (c *ClientWithResponses) CreateClientDiscussionWithResponse(ctx context.Context, params *CreateClientDiscussionParams, body CreateClientDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientDiscussionResponse, error) {
+	rsp, err := c.CreateClientDiscussion(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientDiscussionResponse(rsp)
+}
+
+// ClearClientDiscussionAnswerWithResponse Clear the accepted answer
+//
+// The thread's author only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /client/v1/discussions/{discussionId}/answer (the `ClearClientDiscussionAnswer` operationId).
+func (c *ClientWithResponses) ClearClientDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*ClearClientDiscussionAnswerResponse, error) {
+	rsp, err := c.ClearClientDiscussionAnswer(ctx, discussionId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseClearClientDiscussionAnswerResponse(rsp)
+}
+
+// AcceptClientDiscussionAnswerWithBodyWithResponse Mark the accepted answer
+//
+// The thread's author marks a published reply to the thread itself as its answer, replacing an
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+func (c *ClientWithResponses) AcceptClientDiscussionAnswerWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AcceptClientDiscussionAnswerResponse, error) {
+	rsp, err := c.AcceptClientDiscussionAnswerWithBody(ctx, discussionId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAcceptClientDiscussionAnswerResponse(rsp)
+}
+
+// AcceptClientDiscussionAnswerWithResponse Mark the accepted answer
+//
+// The thread's author marks a published reply to the thread itself as its answer, replacing an
+// earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/answer (the `AcceptClientDiscussionAnswer` operationId).
+func (c *ClientWithResponses) AcceptClientDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, body AcceptClientDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*AcceptClientDiscussionAnswerResponse, error) {
+	rsp, err := c.AcceptClientDiscussionAnswer(ctx, discussionId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAcceptClientDiscussionAnswerResponse(rsp)
+}
+
+// UnfollowClientDiscussionWithResponse Stop following a thread
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /client/v1/discussions/{discussionId}/follow (the `UnfollowClientDiscussion` operationId).
+func (c *ClientWithResponses) UnfollowClientDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*UnfollowClientDiscussionResponse, error) {
+	rsp, err := c.UnfollowClientDiscussion(ctx, discussionId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnfollowClientDiscussionResponse(rsp)
+}
+
+// FollowClientDiscussionWithResponse Follow a thread
+//
+// Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+// accepted answer, and readers also see them in their account. Following again changes
+// nothing.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/discussions/{discussionId}/follow (the `FollowClientDiscussion` operationId).
+func (c *ClientWithResponses) FollowClientDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*FollowClientDiscussionResponse, error) {
+	rsp, err := c.FollowClientDiscussion(ctx, discussionId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseFollowClientDiscussionResponse(rsp)
+}
+
+// CreateClientDiscussionPostWithBodyWithResponse Reply in a thread
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+// The author follows the thread; followers are notified once the reply is published.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+func (c *ClientWithResponses) CreateClientDiscussionPostWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientDiscussionPostResponse, error) {
+	rsp, err := c.CreateClientDiscussionPostWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientDiscussionPostResponse(rsp)
+}
+
+// CreateClientDiscussionPostWithResponse Reply in a thread
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+// level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+// starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+// see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+// The author follows the thread; followers are notified once the reply is published.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/discussions/{discussionId}/posts (the `CreateClientDiscussionPost` operationId).
+func (c *ClientWithResponses) CreateClientDiscussionPostWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateClientDiscussionPostParams, body CreateClientDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientDiscussionPostResponse, error) {
+	rsp, err := c.CreateClientDiscussionPost(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientDiscussionPostResponse(rsp)
+}
+
 // CreateClientFeedbackWithBodyWithResponse Send feedback
 //
 // Starts a `feedback` conversation on the session's channel with its first message: a
@@ -34443,54 +40506,20 @@ func (c *ClientWithResponses) CreateClientFeedbackWithResponse(ctx context.Conte
 	return ParseCreateClientFeedbackResponse(rsp)
 }
 
-// CreateClientQuestionWithBodyWithResponse Ask a question about a documentation page
+// DeleteReaderTokenWithResponse Sign a site out of the reader account
 //
-// Starts a conversation of kind `question` on the session's `chat` channel with its first
-// message, for the page in `page_url` (without query and fragment; its origin must be one of
-// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-// visitor writes is shown on the page unless a member publishes an edited answer. It is
-// answered like any other conversation and listed with the contact's conversations
-// (`kind: question`).
+// Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+// server.
 //
-// `email` is the address replies go to while the visitor is away, kept like
-// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-// `403 forbidden`. Rate limited per IP address and per channel.
+// Returns a wrapper object for the known response body format(s).
 //
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-func (c *ClientWithResponses) CreateClientQuestionWithBodyWithResponse(ctx context.Context, params *CreateClientQuestionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientQuestionResponse, error) {
-	rsp, err := c.CreateClientQuestionWithBody(ctx, params, contentType, body, reqEditors...)
+// Corresponds with DELETE /client/v1/reader-token (the `DeleteReaderToken` operationId).
+func (c *ClientWithResponses) DeleteReaderTokenWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*DeleteReaderTokenResponse, error) {
+	rsp, err := c.DeleteReaderToken(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateClientQuestionResponse(rsp)
-}
-
-// CreateClientQuestionWithResponse Ask a question about a documentation page
-//
-// Starts a conversation of kind `question` on the session's `chat` channel with its first
-// message, for the page in `page_url` (without query and fragment; its origin must be one of
-// the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-// visitor writes is shown on the page unless a member publishes an edited answer. It is
-// answered like any other conversation and listed with the contact's conversations
-// (`kind: question`).
-//
-// `email` is the address replies go to while the visitor is away, kept like
-// `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-// `client_id` again answers `201` with the first conversation. `app` channel sessions get
-// `403 forbidden`. Rate limited per IP address and per channel.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /client/v1/questions (the `CreateClientQuestion` operationId).
-func (c *ClientWithResponses) CreateClientQuestionWithResponse(ctx context.Context, params *CreateClientQuestionParams, body CreateClientQuestionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientQuestionResponse, error) {
-	rsp, err := c.CreateClientQuestion(ctx, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreateClientQuestionResponse(rsp)
+	return ParseDeleteReaderTokenResponse(rsp)
 }
 
 // DeleteClientSessionWithResponse End the contact session
@@ -34631,6 +40660,216 @@ func (c *ClientWithResponses) GetReadyzWithResponse(ctx context.Context, reqEdit
 	return ParseGetReadyzResponse(rsp)
 }
 
+// GetReaderAccountWithResponse The signed-in person as a reader
+//
+// The reader account of the signed-in person: the name and initials shown on their posts, their
+// sign-in address and their e-mail settings. Every person has one, members included; `member`
+// says whether they also belong to a workspace (the account page then links to the team panel).
+// Person sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/account (the `GetReaderAccount` operationId).
+func (c *ClientWithResponses) GetReaderAccountWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetReaderAccountResponse, error) {
+	rsp, err := c.GetReaderAccount(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetReaderAccountResponse(rsp)
+}
+
+// UpdateReaderAccountWithBodyWithResponse Change the reader name or e-mail settings
+//
+// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+// for every workspace; in-app notifications stay.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+func (c *ClientWithResponses) UpdateReaderAccountWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReaderAccountResponse, error) {
+	rsp, err := c.UpdateReaderAccountWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReaderAccountResponse(rsp)
+}
+
+// UpdateReaderAccountWithResponse Change the reader name or e-mail settings
+//
+// `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+// shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+// for every workspace; in-app notifications stay.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/account (the `UpdateReaderAccount` operationId).
+func (c *ClientWithResponses) UpdateReaderAccountWithResponse(ctx context.Context, body UpdateReaderAccountJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReaderAccountResponse, error) {
+	rsp, err := c.UpdateReaderAccount(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReaderAccountResponse(rsp)
+}
+
+// ListReaderDiscussionsWithResponse Threads the reader started or replied to
+//
+// Across every workspace, the threads the person started or wrote in as a reader, most recent
+// activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+// are included, so the reader sees where their writing stands. Person sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/account/discussions (the `ListReaderDiscussions` operationId).
+func (c *ClientWithResponses) ListReaderDiscussionsWithResponse(ctx context.Context, params *ListReaderDiscussionsParams, reqEditors ...RequestEditorFn) (*ListReaderDiscussionsResponse, error) {
+	rsp, err := c.ListReaderDiscussions(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListReaderDiscussionsResponse(rsp)
+}
+
+// ListReaderFollowingWithResponse Threads the reader follows
+//
+// Across every workspace, most recent activity first. Person sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/account/following (the `ListReaderFollowing` operationId).
+func (c *ClientWithResponses) ListReaderFollowingWithResponse(ctx context.Context, params *ListReaderFollowingParams, reqEditors ...RequestEditorFn) (*ListReaderFollowingResponse, error) {
+	rsp, err := c.ListReaderFollowing(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListReaderFollowingResponse(rsp)
+}
+
+// UnfollowReaderDiscussionWithResponse Stop following a thread
+//
+// Unknown threads, and threads the person does not follow, answer `404`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/account/following/{discussionId} (the `UnfollowReaderDiscussion` operationId).
+func (c *ClientWithResponses) UnfollowReaderDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*UnfollowReaderDiscussionResponse, error) {
+	rsp, err := c.UnfollowReaderDiscussion(ctx, discussionId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnfollowReaderDiscussionResponse(rsp)
+}
+
+// ListReaderNotificationsWithResponse The reader's notifications
+//
+// New replies and accepted answers in followed threads, across every workspace, newest first.
+// `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+// Person sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/account/notifications (the `ListReaderNotifications` operationId).
+func (c *ClientWithResponses) ListReaderNotificationsWithResponse(ctx context.Context, params *ListReaderNotificationsParams, reqEditors ...RequestEditorFn) (*ListReaderNotificationsResponse, error) {
+	rsp, err := c.ListReaderNotifications(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListReaderNotificationsResponse(rsp)
+}
+
+// MarkReaderNotificationsReadWithBodyWithResponse Mark notifications read
+//
+// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+func (c *ClientWithResponses) MarkReaderNotificationsReadWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*MarkReaderNotificationsReadResponse, error) {
+	rsp, err := c.MarkReaderNotificationsReadWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMarkReaderNotificationsReadResponse(rsp)
+}
+
+// MarkReaderNotificationsReadWithResponse Mark notifications read
+//
+// The listed notifications, or all of them when `ids` is absent. Person sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/account/notifications/read (the `MarkReaderNotificationsRead` operationId).
+func (c *ClientWithResponses) MarkReaderNotificationsReadWithResponse(ctx context.Context, body MarkReaderNotificationsReadJSONRequestBody, reqEditors ...RequestEditorFn) (*MarkReaderNotificationsReadResponse, error) {
+	rsp, err := c.MarkReaderNotificationsRead(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMarkReaderNotificationsReadResponse(rsp)
+}
+
+// CreateReaderTokenWithBodyWithResponse Hand a reader token to a documentation site
+//
+// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+// asks for a token for the chat channel and the origin of the window that opened it, and sends
+// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+// receives it.
+//
+// The origin must be one of the channel's allowed origins, compared exactly
+// (`403 origin_not_allowed`), and the channel must have discussions on
+// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+//
+// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+// made it (sign-out), when the account is deleted, or with
+// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+// the person, created on the first write; a person who is a member of that workspace with
+// access to the inbox writes as that member.
+//
+// Person sessions only; like every cookie request it must come from the server's own origin.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+func (c *ClientWithResponses) CreateReaderTokenWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReaderTokenResponse, error) {
+	rsp, err := c.CreateReaderTokenWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateReaderTokenResponse(rsp)
+}
+
+// CreateReaderTokenWithResponse Hand a reader token to a documentation site
+//
+// Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+// site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+// asks for a token for the chat channel and the origin of the window that opened it, and sends
+// the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+// receives it.
+//
+// The origin must be one of the channel's allowed origins, compared exactly
+// (`403 origin_not_allowed`), and the channel must have discussions on
+// (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+//
+// The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+// discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+// made it (sign-out), when the account is deleted, or with
+// `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+// the person, created on the first write; a person who is a member of that workspace with
+// access to the inbox writes as that member.
+//
+// Person sessions only; like every cookie request it must come from the server's own origin.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/account/reader-tokens (the `CreateReaderToken` operationId).
+func (c *ClientWithResponses) CreateReaderTokenWithResponse(ctx context.Context, body CreateReaderTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReaderTokenResponse, error) {
+	rsp, err := c.CreateReaderToken(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateReaderTokenResponse(rsp)
+}
+
 // ListApiKeysWithResponse List API keys
 //
 // Owners and admins only, with a member session. Revoked keys are included.
@@ -34746,9 +40985,10 @@ func (c *ClientWithResponses) DownloadAttachmentWithResponse(ctx context.Context
 
 // RequestSignInCodeWithBodyWithResponse Request a sign-in code
 //
-// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-// The answer is the same either way and takes the same time (the mail is sent after it), so
-// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+// Sends a one-time code to the address when it belongs to a person (a member, a former member
+// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+// creates the person on verification. The answer is the same either way and takes the same
+// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
@@ -34764,9 +41004,10 @@ func (c *ClientWithResponses) RequestSignInCodeWithBodyWithResponse(ctx context.
 
 // RequestSignInCodeWithResponse Request a sign-in code
 //
-// Sends a one-time code to the address when it belongs to a member or has a pending invite.
-// The answer is the same either way and takes the same time (the mail is sent after it), so
-// it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+// Sends a one-time code to the address when it belongs to a person (a member, a former member
+// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+// creates the person on verification. The answer is the same either way and takes the same
+// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
@@ -35544,6 +41785,62 @@ func (c *ClientWithResponses) UpdateConversationWithResponse(ctx context.Context
 	return ParseUpdateConversationResponse(rsp)
 }
 
+// CreateDiscussionFromConversationWithBodyWithResponse Turn a private conversation into a public thread
+//
+// Starts a published thread from a conversation with the text the member supplies: nothing of
+// the conversation itself becomes public, and the conversation stays private and unchanged.
+// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+// channel is preferred).
+//
+// The conversation's contact becomes the thread's author only when they are a signed-in
+// reader (linked to a person) or known to the host app (an external id in the inbox);
+// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+// the accepted answer. The author follows the thread. A conversation becomes one thread
+// (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+func (c *ClientWithResponses) CreateDiscussionFromConversationWithBodyWithResponse(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionFromConversationResponse, error) {
+	rsp, err := c.CreateDiscussionFromConversationWithBody(ctx, conversationId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionFromConversationResponse(rsp)
+}
+
+// CreateDiscussionFromConversationWithResponse Turn a private conversation into a public thread
+//
+// Starts a published thread from a conversation with the text the member supplies: nothing of
+// the conversation itself becomes public, and the conversation stays private and unchanged.
+// The page is `page_url`, else the conversation's page (`page` on the conversation), else
+// `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+// origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+// channel is preferred).
+//
+// The conversation's contact becomes the thread's author only when they are a signed-in
+// reader (linked to a person) or known to the host app (an external id in the inbox);
+// otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+// the accepted answer. The author follows the thread. A conversation becomes one thread
+// (`409 already_discussed`); `conversation_id` on the thread links back.
+//
+// Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/conversations/{conversationId}/discussion (the `CreateDiscussionFromConversation` operationId).
+func (c *ClientWithResponses) CreateDiscussionFromConversationWithResponse(ctx context.Context, conversationId ConversationId, params *CreateDiscussionFromConversationParams, body CreateDiscussionFromConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionFromConversationResponse, error) {
+	rsp, err := c.CreateDiscussionFromConversation(ctx, conversationId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionFromConversationResponse(rsp)
+}
+
 // ListMessagesWithResponse List a conversation's messages
 //
 // Messages, notes and events, oldest first by default. With `order=desc` the newest come
@@ -35739,58 +42036,6 @@ func (c *ClientWithResponses) PinConversationWithResponse(ctx context.Context, c
 	return ParsePinConversationResponse(rsp)
 }
 
-// PublishConversationWithBodyWithResponse Publish a question and its answer to the page
-//
-// Publishes a `question` conversation to its documentation page as a question and an answer,
-// both as the member wrote them here (usually edited from the thread). The published answer
-// carries no name or address of the visitor; it is listed on the page by
-// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-// with at least one sent member reply and still be on a `chat` channel that allows the
-// page's origin (`409 not_publishable` otherwise); it publishes once
-// (`409 already_published`; edit the published answer instead).
-//
-// A published answer is the member's text: retention and contact deletion leave it, and
-// deleting the conversation keeps it without `conversation_id`.
-//
-// Member sessions only.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-func (c *ClientWithResponses) PublishConversationWithBodyWithResponse(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PublishConversationResponse, error) {
-	rsp, err := c.PublishConversationWithBody(ctx, conversationId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePublishConversationResponse(rsp)
-}
-
-// PublishConversationWithResponse Publish a question and its answer to the page
-//
-// Publishes a `question` conversation to its documentation page as a question and an answer,
-// both as the member wrote them here (usually edited from the thread). The published answer
-// carries no name or address of the visitor; it is listed on the page by
-// `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-// with at least one sent member reply and still be on a `chat` channel that allows the
-// page's origin (`409 not_publishable` otherwise); it publishes once
-// (`409 already_published`; edit the published answer instead).
-//
-// A published answer is the member's text: retention and contact deletion leave it, and
-// deleting the conversation keeps it without `conversation_id`.
-//
-// Member sessions only.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with POST /v1/conversations/{conversationId}/publish (the `PublishConversation` operationId).
-func (c *ClientWithResponses) PublishConversationWithResponse(ctx context.Context, conversationId ConversationId, params *PublishConversationParams, body PublishConversationJSONRequestBody, reqEditors ...RequestEditorFn) (*PublishConversationResponse, error) {
-	rsp, err := c.PublishConversation(ctx, conversationId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePublishConversationResponse(rsp)
-}
-
 // MarkConversationReadWithBodyWithResponse Mark a conversation read
 //
 // Moves the calling member's read cursor to `message_id`, or to the latest message, note or
@@ -35887,12 +42132,329 @@ func (c *ClientWithResponses) MarkConversationUnreadWithResponse(ctx context.Con
 	return ParseMarkConversationUnreadResponse(rsp)
 }
 
+// ListDiscussionPostsWithResponse Posts by state (the moderation queue)
+//
+// Posts in the inboxes the caller can see, oldest first, each with its thread. With
+// `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+// for approval (`opening: true`) and replies waiting for approval.
+//
+// Scope: `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/discussion-posts (the `ListDiscussionPosts` operationId).
+func (c *ClientWithResponses) ListDiscussionPostsWithResponse(ctx context.Context, params *ListDiscussionPostsParams, reqEditors ...RequestEditorFn) (*ListDiscussionPostsResponse, error) {
+	rsp, err := c.ListDiscussionPosts(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListDiscussionPostsResponse(rsp)
+}
+
+// DeleteDiscussionPostWithResponse Delete a member's own post
+//
+// As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+// (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/discussion-posts/{postId} (the `DeleteDiscussionPost` operationId).
+func (c *ClientWithResponses) DeleteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *DeleteDiscussionPostParams, reqEditors ...RequestEditorFn) (*DeleteDiscussionPostResponse, error) {
+	rsp, err := c.DeleteDiscussionPost(ctx, postId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteDiscussionPostResponse(rsp)
+}
+
+// UpdateDiscussionPostWithBodyWithResponse Approve, hide, or edit a member's own post
+//
+// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+// from the public (its author no longer sees it either). On the opening post this approves or
+// hides the whole thread. Approving a reply notifies the thread's followers.
+//
+// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+// posts answer `403 forbidden`. Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+func (c *ClientWithResponses) UpdateDiscussionPostWithBodyWithResponse(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDiscussionPostResponse, error) {
+	rsp, err := c.UpdateDiscussionPostWithBody(ctx, postId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDiscussionPostResponse(rsp)
+}
+
+// UpdateDiscussionPostWithResponse Approve, hide, or edit a member's own post
+//
+// `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+// from the public (its author no longer sees it either). On the opening post this approves or
+// hides the whole thread. Approving a reply notifies the thread's followers.
+//
+// `body` (and `title` on the opening post) edits a post the calling member wrote; other
+// posts answer `403 forbidden`. Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/discussion-posts/{postId} (the `UpdateDiscussionPost` operationId).
+func (c *ClientWithResponses) UpdateDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *UpdateDiscussionPostParams, body UpdateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDiscussionPostResponse, error) {
+	rsp, err := c.UpdateDiscussionPost(ctx, postId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDiscussionPostResponse(rsp)
+}
+
+// MarkDiscussionPostSpamWithResponse Mark a post as spam
+//
+// Hides the post (the thread, for an opening post) and every post of its author in the
+// workspace still waiting for approval, and makes the author's later posts wait for a member
+// whatever the channel's setting. A member's post answers `400 validation_failed`.
+// Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussion-posts/{postId}/spam (the `MarkDiscussionPostSpam` operationId).
+func (c *ClientWithResponses) MarkDiscussionPostSpamWithResponse(ctx context.Context, postId DiscussionPostId, params *MarkDiscussionPostSpamParams, reqEditors ...RequestEditorFn) (*MarkDiscussionPostSpamResponse, error) {
+	rsp, err := c.MarkDiscussionPostSpam(ctx, postId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMarkDiscussionPostSpamResponse(rsp)
+}
+
+// UnvoteDiscussionPostWithResponse Take a member's vote back
+//
+// Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/discussion-posts/{postId}/vote (the `UnvoteDiscussionPost` operationId).
+func (c *ClientWithResponses) UnvoteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *UnvoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*UnvoteDiscussionPostResponse, error) {
+	rsp, err := c.UnvoteDiscussionPost(ctx, postId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnvoteDiscussionPostResponse(rsp)
+}
+
+// VoteDiscussionPostWithResponse Vote for a post as a member
+//
+// One vote per member and post (the opening post votes for the thread); voting again changes
+// nothing. Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/discussion-posts/{postId}/vote (the `VoteDiscussionPost` operationId).
+func (c *ClientWithResponses) VoteDiscussionPostWithResponse(ctx context.Context, postId DiscussionPostId, params *VoteDiscussionPostParams, reqEditors ...RequestEditorFn) (*VoteDiscussionPostResponse, error) {
+	rsp, err := c.VoteDiscussionPost(ctx, postId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoteDiscussionPostResponse(rsp)
+}
+
+// ListDiscussionsWithResponse List discussion threads
+//
+// Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+// state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+// and hidden ones too.
+//
+// `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+// votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+// unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+// `next_cursor` belongs to the sort and filters it was returned for.
+//
+// Scope: `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/discussions (the `ListDiscussions` operationId).
+func (c *ClientWithResponses) ListDiscussionsWithResponse(ctx context.Context, params *ListDiscussionsParams, reqEditors ...RequestEditorFn) (*ListDiscussionsResponse, error) {
+	rsp, err := c.ListDiscussions(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListDiscussionsResponse(rsp)
+}
+
+// CreateDiscussionWithBodyWithResponse Start a thread as a member
+//
+// A thread on a documentation page, written by the calling member and published at once. The
+// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+// channel must have discussions on (`403 discussions_off`). The member follows it.
+// Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+func (c *ClientWithResponses) CreateDiscussionWithBodyWithResponse(ctx context.Context, params *CreateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionResponse, error) {
+	rsp, err := c.CreateDiscussionWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionResponse(rsp)
+}
+
+// CreateDiscussionWithResponse Start a thread as a member
+//
+// A thread on a documentation page, written by the calling member and published at once. The
+// page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+// channel must have discussions on (`403 discussions_off`). The member follows it.
+// Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions (the `CreateDiscussion` operationId).
+func (c *ClientWithResponses) CreateDiscussionWithResponse(ctx context.Context, params *CreateDiscussionParams, body CreateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionResponse, error) {
+	rsp, err := c.CreateDiscussion(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionResponse(rsp)
+}
+
+// GetDiscussionWithResponse A thread with every post
+//
+// The thread and all its replies in every state (pending and hidden included), the accepted
+// answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+//
+// Scope: `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/discussions/{discussionId} (the `GetDiscussion` operationId).
+func (c *ClientWithResponses) GetDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, params *GetDiscussionParams, reqEditors ...RequestEditorFn) (*GetDiscussionResponse, error) {
+	rsp, err := c.GetDiscussion(ctx, discussionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDiscussionResponse(rsp)
+}
+
+// UpdateDiscussionWithBodyWithResponse Edit the title, lock or unlock
+//
+// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+// edits, votes or answers from readers; members still may. Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+func (c *ClientWithResponses) UpdateDiscussionWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDiscussionResponse, error) {
+	rsp, err := c.UpdateDiscussionWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDiscussionResponse(rsp)
+}
+
+// UpdateDiscussionWithResponse Edit the title, lock or unlock
+//
+// Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+// edits, votes or answers from readers; members still may. Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/discussions/{discussionId} (the `UpdateDiscussion` operationId).
+func (c *ClientWithResponses) UpdateDiscussionWithResponse(ctx context.Context, discussionId DiscussionId, params *UpdateDiscussionParams, body UpdateDiscussionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDiscussionResponse, error) {
+	rsp, err := c.UpdateDiscussion(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateDiscussionResponse(rsp)
+}
+
+// ClearDiscussionAnswerWithResponse Clear the accepted answer
+//
+// Member sessions only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/discussions/{discussionId}/answer (the `ClearDiscussionAnswer` operationId).
+func (c *ClientWithResponses) ClearDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, params *ClearDiscussionAnswerParams, reqEditors ...RequestEditorFn) (*ClearDiscussionAnswerResponse, error) {
+	rsp, err := c.ClearDiscussionAnswer(ctx, discussionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseClearDiscussionAnswerResponse(rsp)
+}
+
+// AcceptDiscussionAnswerWithBodyWithResponse Mark the accepted answer
+//
+// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+// threads. Followers are told once (`discussion.answered`). Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+func (c *ClientWithResponses) AcceptDiscussionAnswerWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*AcceptDiscussionAnswerResponse, error) {
+	rsp, err := c.AcceptDiscussionAnswerWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAcceptDiscussionAnswerResponse(rsp)
+}
+
+// AcceptDiscussionAnswerWithResponse Mark the accepted answer
+//
+// Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+// as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+// threads. Followers are told once (`discussion.answered`). Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/discussions/{discussionId}/answer (the `AcceptDiscussionAnswer` operationId).
+func (c *ClientWithResponses) AcceptDiscussionAnswerWithResponse(ctx context.Context, discussionId DiscussionId, params *AcceptDiscussionAnswerParams, body AcceptDiscussionAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*AcceptDiscussionAnswerResponse, error) {
+	rsp, err := c.AcceptDiscussionAnswer(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseAcceptDiscussionAnswerResponse(rsp)
+}
+
+// CreateDiscussionPostWithBodyWithResponse Reply as a member
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+// also in locked threads. Replies are one level deep: a reply to a reply answers
+// `400 validation_failed`. Followers are notified. Member sessions only.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+func (c *ClientWithResponses) CreateDiscussionPostWithBodyWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDiscussionPostResponse, error) {
+	rsp, err := c.CreateDiscussionPostWithBody(ctx, discussionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionPostResponse(rsp)
+}
+
+// CreateDiscussionPostWithResponse Reply as a member
+//
+// A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+// also in locked threads. Replies are one level deep: a reply to a reply answers
+// `400 validation_failed`. Followers are notified. Member sessions only.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/discussions/{discussionId}/posts (the `CreateDiscussionPost` operationId).
+func (c *ClientWithResponses) CreateDiscussionPostWithResponse(ctx context.Context, discussionId DiscussionId, params *CreateDiscussionPostParams, body CreateDiscussionPostJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDiscussionPostResponse, error) {
+	rsp, err := c.CreateDiscussionPost(ctx, discussionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDiscussionPostResponse(rsp)
+}
+
 // GetDocsPageWithResponse One documentation page
 //
 // A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-// ratings per day over the window. Its feedback and questions are
-// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+// ratings per day over the window. Its feedback is
+// `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+// `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
 // answers `400 validation_failed`.
 //
 // Scope: `conversations:read`.
@@ -35908,19 +42470,21 @@ func (c *ClientWithResponses) GetDocsPageWithResponse(ctx context.Context, param
 	return ParseGetDocsPageResponse(rsp)
 }
 
-// ListDocsPagesWithResponse Documentation pages with their ratings, feedback and questions
+// ListDocsPagesWithResponse Documentation pages with their ratings, feedback and discussions
 //
 // The pages of the inboxes the caller can see that were rated in the window, have open
-// feedback or questions, or have published answers: `up` and `down` summed over the last
-// `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-// conversations sent from the page, and published answers. A page is per inbox.
+// feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+// (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+// page's threads now: `open_threads` (published, no accepted answer, not locked),
+// `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+// a member, opening posts included). A page is per inbox.
 //
 // `sort` orders them; ties go to more ratings, then by page:
 //   - `down` (default): most `down` first.
 //   - `up`: most `up` first.
 //   - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
 //     window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-//   - `activity`: most ratings plus open feedback and questions first.
+//   - `activity`: most ratings plus open feedback, open threads and pending posts first.
 //
 // `site` keeps only the pages of that site (origin).
 //
@@ -35945,9 +42509,9 @@ func (c *ClientWithResponses) ListDocsPagesWithResponse(ctx context.Context, par
 // A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
 // the inboxes the caller can see (or `inbox_id`): every site that has a page
 // `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+// discussion threads), and every origin allowed on a chat channel of those inboxes,
 // with zeros when nothing came from it yet. The counts are those of
-// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+// `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
 //
 // `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
 // (the oldest when several do); absent when none does any more.
@@ -35970,9 +42534,9 @@ func (c *ClientWithResponses) ListDocsSitesWithResponse(ctx context.Context, par
 // GetDocsSummaryWithResponse Documentation pages in total and per day
 //
 // Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-// included, UTC): ratings, feedback and questions sent from documentation pages (created in
-// the window, not spam, in any status) and answers published in the window, in total and
-// per day. Every day of the window is listed, oldest first, with zeros where nothing
+// included, UTC): ratings and feedback sent from documentation pages (created in the window,
+// not spam, in any status) and discussion threads started in the window (any state), in total
+// and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
 // happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
 // `site` counts only the pages of that site (origin).
 //
@@ -36534,9 +43098,12 @@ func (c *ClientWithResponses) UpdateLabelWithResponse(ctx context.Context, label
 
 // DeleteMeWithBodyWithResponse Delete the signed-in person's account
 //
-// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+// wrote stay in their conversations without an author (`author.member_id` absent). As a
+// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+// follows go, and in each workspace the contact linked to them is deleted when it has no
+// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 // person is the only owner of a workspace: make someone else an owner or delete that
 // workspace first. Needs a member session; the body repeats the person's e-mail address.
 //
@@ -36553,9 +43120,12 @@ func (c *ClientWithResponses) DeleteMeWithBodyWithResponse(ctx context.Context, 
 
 // DeleteMeWithResponse Delete the signed-in person's account
 //
-// Removes the person with their memberships, sessions, passkeys, push subscriptions and
-// sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-// without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+// Removes the person with their memberships, sessions, passkeys, push subscriptions,
+// sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+// wrote stay in their conversations without an author (`author.member_id` absent). As a
+// reader, their discussion posts stay without an author (`author.deleted`), their votes and
+// follows go, and in each workspace the contact linked to them is deleted when it has no
+// conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
 // person is the only owner of a workspace: make someone else an owner or delete that
 // workspace first. Needs a member session; the body repeats the person's e-mail address.
 //
@@ -37185,86 +43755,6 @@ func (c *ClientWithResponses) DenyOAuthRequestWithResponse(ctx context.Context, 
 	return ParseDenyOAuthRequestResponse(rsp)
 }
 
-// ListPageAnswersWithResponse List published answers
-//
-// Published answers in the inboxes the caller can see, newest first.
-//
-// Scope: `conversations:read`.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /v1/page-answers (the `ListPageAnswers` operationId).
-func (c *ClientWithResponses) ListPageAnswersWithResponse(ctx context.Context, params *ListPageAnswersParams, reqEditors ...RequestEditorFn) (*ListPageAnswersResponse, error) {
-	rsp, err := c.ListPageAnswers(ctx, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseListPageAnswersResponse(rsp)
-}
-
-// DeletePageAnswerWithResponse Unpublish an answer
-//
-// Removes it from the page. The conversation it came from stays and can be published again.
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with DELETE /v1/page-answers/{pageAnswerId} (the `DeletePageAnswer` operationId).
-func (c *ClientWithResponses) DeletePageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *DeletePageAnswerParams, reqEditors ...RequestEditorFn) (*DeletePageAnswerResponse, error) {
-	rsp, err := c.DeletePageAnswer(ctx, pageAnswerId, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseDeletePageAnswerResponse(rsp)
-}
-
-// GetPageAnswerWithResponse Get a published answer
-//
-// An answer in an inbox the caller cannot see answers `404`.
-//
-// Scope: `conversations:read`.
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /v1/page-answers/{pageAnswerId} (the `GetPageAnswer` operationId).
-func (c *ClientWithResponses) GetPageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *GetPageAnswerParams, reqEditors ...RequestEditorFn) (*GetPageAnswerResponse, error) {
-	rsp, err := c.GetPageAnswer(ctx, pageAnswerId, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPageAnswerResponse(rsp)
-}
-
-// UpdatePageAnswerWithBodyWithResponse Edit a published answer
-//
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-func (c *ClientWithResponses) UpdatePageAnswerWithBodyWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdatePageAnswerResponse, error) {
-	rsp, err := c.UpdatePageAnswerWithBody(ctx, pageAnswerId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdatePageAnswerResponse(rsp)
-}
-
-// UpdatePageAnswerWithResponse Edit a published answer
-//
-// Members who can see the answer's inbox. Member sessions only.
-//
-// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /v1/page-answers/{pageAnswerId} (the `UpdatePageAnswer` operationId).
-func (c *ClientWithResponses) UpdatePageAnswerWithResponse(ctx context.Context, pageAnswerId PageAnswerId, params *UpdatePageAnswerParams, body UpdatePageAnswerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdatePageAnswerResponse, error) {
-	rsp, err := c.UpdatePageAnswer(ctx, pageAnswerId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseUpdatePageAnswerResponse(rsp)
-}
-
 // GetVapidPublicKeyWithResponse The server's Web Push key
 //
 // The VAPID public key to pass as `applicationServerKey` to `PushManager.subscribe()`: an
@@ -37767,22 +44257,22 @@ func ParseGetClientChannelResponse(rsp *http.Response) (*GetClientChannelRespons
 	return response, nil
 }
 
-// ParseListClientPageAnswersResponse parses an HTTP response from a ListClientPageAnswersWithResponse call
-func ParseListClientPageAnswersResponse(rsp *http.Response) (*ListClientPageAnswersResponse, error) {
+// ParseListClientDiscussionsResponse parses an HTTP response from a ListClientDiscussionsWithResponse call
+func ParseListClientDiscussionsResponse(rsp *http.Response) (*ListClientDiscussionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &ListClientPageAnswersResponse{
+	response := &ListClientDiscussionsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest ClientPageAnswerList
+		var dest DiscussionPage
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -37794,6 +44284,13 @@ func ParseListClientPageAnswersResponse(rsp *http.Response) (*ListClientPageAnsw
 			return nil, err
 		}
 		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
 		var dest Problem
@@ -37820,7 +44317,74 @@ func ParseListClientPageAnswersResponse(rsp *http.Response) (*ListClientPageAnsw
 
 	switch {
 	case rsp.StatusCode == 200:
-		var headers ListClientPageAnswersResponse200Headers
+		var headers ListClientDiscussionsResponse200Headers
+		if values := rsp.Header.Values("Cache-Control"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Cache-Control", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.CacheControl = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetClientDiscussionResponse parses an HTTP response from a GetClientDiscussionWithResponse call
+func ParseGetClientDiscussionResponse(rsp *http.Response) (*GetClientDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetClientDiscussionResponse200Headers
 		if values := rsp.Header.Values("Cache-Control"); len(values) > 0 {
 			var value string
 			if err := runtime.BindStyledParameterWithOptions("simple", "Cache-Control", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
@@ -38408,6 +44972,506 @@ func ParseSetClientTypingResponse(rsp *http.Response) (*SetClientTypingResponse,
 	return response, nil
 }
 
+// ParseDeleteClientDiscussionPostResponse parses an HTTP response from a DeleteClientDiscussionPostWithResponse call
+func ParseDeleteClientDiscussionPostResponse(rsp *http.Response) (*DeleteClientDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteClientDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateClientDiscussionPostResponse parses an HTTP response from a UpdateClientDiscussionPostWithResponse call
+func ParseUpdateClientDiscussionPostResponse(rsp *http.Response) (*UpdateClientDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateClientDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnvoteClientDiscussionPostResponse parses an HTTP response from a UnvoteClientDiscussionPostWithResponse call
+func ParseUnvoteClientDiscussionPostResponse(rsp *http.Response) (*UnvoteClientDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnvoteClientDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseVoteClientDiscussionPostResponse parses an HTTP response from a VoteClientDiscussionPostWithResponse call
+func ParseVoteClientDiscussionPostResponse(rsp *http.Response) (*VoteClientDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &VoteClientDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClientDiscussionResponse parses an HTTP response from a CreateClientDiscussionWithResponse call
+func ParseCreateClientDiscussionResponse(rsp *http.Response) (*CreateClientDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClientDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseClearClientDiscussionAnswerResponse parses an HTTP response from a ClearClientDiscussionAnswerWithResponse call
+func ParseClearClientDiscussionAnswerResponse(rsp *http.Response) (*ClearClientDiscussionAnswerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ClearClientDiscussionAnswerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAcceptClientDiscussionAnswerResponse parses an HTTP response from a AcceptClientDiscussionAnswerWithResponse call
+func ParseAcceptClientDiscussionAnswerResponse(rsp *http.Response) (*AcceptClientDiscussionAnswerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AcceptClientDiscussionAnswerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnfollowClientDiscussionResponse parses an HTTP response from a UnfollowClientDiscussionWithResponse call
+func ParseUnfollowClientDiscussionResponse(rsp *http.Response) (*UnfollowClientDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnfollowClientDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseFollowClientDiscussionResponse parses an HTTP response from a FollowClientDiscussionWithResponse call
+func ParseFollowClientDiscussionResponse(rsp *http.Response) (*FollowClientDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &FollowClientDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClientDiscussionPostResponse parses an HTTP response from a CreateClientDiscussionPostWithResponse call
+func ParseCreateClientDiscussionPostResponse(rsp *http.Response) (*CreateClientDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClientDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreateClientFeedbackResponse parses an HTTP response from a CreateClientFeedbackWithResponse call
 func ParseCreateClientFeedbackResponse(rsp *http.Response) (*CreateClientFeedbackResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -38476,33 +45540,22 @@ func ParseCreateClientFeedbackResponse(rsp *http.Response) (*CreateClientFeedbac
 	return response, nil
 }
 
-// ParseCreateClientQuestionResponse parses an HTTP response from a CreateClientQuestionWithResponse call
-func ParseCreateClientQuestionResponse(rsp *http.Response) (*CreateClientQuestionResponse, error) {
+// ParseDeleteReaderTokenResponse parses an HTTP response from a DeleteReaderTokenWithResponse call
+func ParseDeleteReaderTokenResponse(rsp *http.Response) (*DeleteReaderTokenResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateClientQuestionResponse{
+	response := &DeleteReaderTokenResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest ClientConversationCreated
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
+	case rsp.StatusCode == 204:
+		break // No content-type
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem
@@ -38510,20 +45563,6 @@ func ParseCreateClientQuestionResponse(rsp *http.Response) (*CreateClientQuestio
 			return nil, err
 		}
 		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON429 = &dest
 
 	}
 
@@ -38720,6 +45759,325 @@ func ParseGetReadyzResponse(rsp *http.Response) (*GetReadyzResponse, error) {
 			return nil, err
 		}
 		response.ApplicationproblemJSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetReaderAccountResponse parses an HTTP response from a GetReaderAccountWithResponse call
+func ParseGetReaderAccountResponse(rsp *http.Response) (*GetReaderAccountResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetReaderAccountResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReaderAccount
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateReaderAccountResponse parses an HTTP response from a UpdateReaderAccountWithResponse call
+func ParseUpdateReaderAccountResponse(rsp *http.Response) (*UpdateReaderAccountResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateReaderAccountResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReaderAccount
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListReaderDiscussionsResponse parses an HTTP response from a ListReaderDiscussionsWithResponse call
+func ParseListReaderDiscussionsResponse(rsp *http.Response) (*ListReaderDiscussionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListReaderDiscussionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReaderDiscussionPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListReaderFollowingResponse parses an HTTP response from a ListReaderFollowingWithResponse call
+func ParseListReaderFollowingResponse(rsp *http.Response) (*ListReaderFollowingResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListReaderFollowingResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReaderDiscussionPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnfollowReaderDiscussionResponse parses an HTTP response from a UnfollowReaderDiscussionWithResponse call
+func ParseUnfollowReaderDiscussionResponse(rsp *http.Response) (*UnfollowReaderDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnfollowReaderDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListReaderNotificationsResponse parses an HTTP response from a ListReaderNotificationsWithResponse call
+func ParseListReaderNotificationsResponse(rsp *http.Response) (*ListReaderNotificationsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListReaderNotificationsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReaderNotificationPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMarkReaderNotificationsReadResponse parses an HTTP response from a MarkReaderNotificationsReadWithResponse call
+func ParseMarkReaderNotificationsReadResponse(rsp *http.Response) (*MarkReaderNotificationsReadResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MarkReaderNotificationsReadResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateReaderTokenResponse parses an HTTP response from a CreateReaderTokenWithResponse call
+func ParseCreateReaderTokenResponse(rsp *http.Response) (*CreateReaderTokenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateReaderTokenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest ReaderToken
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 
@@ -40534,6 +47892,67 @@ func ParseUpdateConversationResponse(rsp *http.Response) (*UpdateConversationRes
 	return response, nil
 }
 
+// ParseCreateDiscussionFromConversationResponse parses an HTTP response from a CreateDiscussionFromConversationWithResponse call
+func ParseCreateDiscussionFromConversationResponse(rsp *http.Response) (*CreateDiscussionFromConversationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateDiscussionFromConversationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest DiscussionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListMessagesResponse parses an HTTP response from a ListMessagesWithResponse call
 func ParseListMessagesResponse(rsp *http.Response) (*ListMessagesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -40825,67 +48244,6 @@ func ParsePinConversationResponse(rsp *http.Response) (*PinConversationResponse,
 	return response, nil
 }
 
-// ParsePublishConversationResponse parses an HTTP response from a PublishConversationWithResponse call
-func ParsePublishConversationResponse(rsp *http.Response) (*PublishConversationResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &PublishConversationResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
-		var dest PageAnswer
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON201 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON409 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseMarkConversationReadResponse parses an HTTP response from a MarkConversationReadWithResponse call
 func ParseMarkConversationReadResponse(rsp *http.Response) (*MarkConversationReadResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -41010,6 +48368,669 @@ func ParseMarkConversationUnreadResponse(rsp *http.Response) (*MarkConversationU
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListDiscussionPostsResponse parses an HTTP response from a ListDiscussionPostsWithResponse call
+func ParseListDiscussionPostsResponse(rsp *http.Response) (*ListDiscussionPostsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListDiscussionPostsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPostPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteDiscussionPostResponse parses an HTTP response from a DeleteDiscussionPostWithResponse call
+func ParseDeleteDiscussionPostResponse(rsp *http.Response) (*DeleteDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateDiscussionPostResponse parses an HTTP response from a UpdateDiscussionPostWithResponse call
+func ParseUpdateDiscussionPostResponse(rsp *http.Response) (*UpdateDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseMarkDiscussionPostSpamResponse parses an HTTP response from a MarkDiscussionPostSpamWithResponse call
+func ParseMarkDiscussionPostSpamResponse(rsp *http.Response) (*MarkDiscussionPostSpamResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &MarkDiscussionPostSpamResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnvoteDiscussionPostResponse parses an HTTP response from a UnvoteDiscussionPostWithResponse call
+func ParseUnvoteDiscussionPostResponse(rsp *http.Response) (*UnvoteDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnvoteDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseVoteDiscussionPostResponse parses an HTTP response from a VoteDiscussionPostWithResponse call
+func ParseVoteDiscussionPostResponse(rsp *http.Response) (*VoteDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &VoteDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListDiscussionsResponse parses an HTTP response from a ListDiscussionsWithResponse call
+func ParseListDiscussionsResponse(rsp *http.Response) (*ListDiscussionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListDiscussionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateDiscussionResponse parses an HTTP response from a CreateDiscussionWithResponse call
+func ParseCreateDiscussionResponse(rsp *http.Response) (*CreateDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDiscussionResponse parses an HTTP response from a GetDiscussionWithResponse call
+func ParseGetDiscussionResponse(rsp *http.Response) (*GetDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DiscussionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateDiscussionResponse parses an HTTP response from a UpdateDiscussionWithResponse call
+func ParseUpdateDiscussionResponse(rsp *http.Response) (*UpdateDiscussionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateDiscussionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseClearDiscussionAnswerResponse parses an HTTP response from a ClearDiscussionAnswerWithResponse call
+func ParseClearDiscussionAnswerResponse(rsp *http.Response) (*ClearDiscussionAnswerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ClearDiscussionAnswerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseAcceptDiscussionAnswerResponse parses an HTTP response from a AcceptDiscussionAnswerWithResponse call
+func ParseAcceptDiscussionAnswerResponse(rsp *http.Response) (*AcceptDiscussionAnswerResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &AcceptDiscussionAnswerResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Discussion
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateDiscussionPostResponse parses an HTTP response from a CreateDiscussionPostWithResponse call
+func ParseCreateDiscussionPostResponse(rsp *http.Response) (*CreateDiscussionPostResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateDiscussionPostResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest DiscussionPost
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem
@@ -43703,204 +51724,6 @@ func ParseDenyOAuthRequestResponse(rsp *http.Response) (*DenyOAuthRequestRespons
 	return response, nil
 }
 
-// ParseListPageAnswersResponse parses an HTTP response from a ListPageAnswersWithResponse call
-func ParseListPageAnswersResponse(rsp *http.Response) (*ListPageAnswersResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ListPageAnswersResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PageAnswerPage
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseDeletePageAnswerResponse parses an HTTP response from a DeletePageAnswerWithResponse call
-func ParseDeletePageAnswerResponse(rsp *http.Response) (*DeletePageAnswerResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &DeletePageAnswerResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case rsp.StatusCode == 204:
-		break // No content-type
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPageAnswerResponse parses an HTTP response from a GetPageAnswerWithResponse call
-func ParseGetPageAnswerResponse(rsp *http.Response) (*GetPageAnswerResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPageAnswerResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PageAnswer
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseUpdatePageAnswerResponse parses an HTTP response from a UpdatePageAnswerWithResponse call
-func ParseUpdatePageAnswerResponse(rsp *http.Response) (*UpdatePageAnswerResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &UpdatePageAnswerResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest PageAnswer
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON400 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON401 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON403 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
-		var dest Problem
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.ApplicationproblemJSON404 = &dest
-
-	}
-
-	return response, nil
-}
-
 // ParseGetVapidPublicKeyResponse parses an HTTP response from a GetVapidPublicKeyWithResponse call
 func ParseGetVapidPublicKeyResponse(rsp *http.Response) (*GetVapidPublicKeyResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -44783,6 +52606,26 @@ type WebhookInitiatorInterface interface {
 
 	WebhookConversationUpdated(ctx context.Context, targetURL string, params *WebhookConversationUpdatedParams, body WebhookConversationUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// WebhookDiscussionAnsweredWithBody fires the discussion.answered webhook with any body
+	WebhookDiscussionAnsweredWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionAnsweredParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookDiscussionAnswered(ctx context.Context, targetURL string, params *WebhookDiscussionAnsweredParams, body WebhookDiscussionAnsweredJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookDiscussionCreatedWithBody fires the discussion.created webhook with any body
+	WebhookDiscussionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookDiscussionCreated(ctx context.Context, targetURL string, params *WebhookDiscussionCreatedParams, body WebhookDiscussionCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookDiscussionPostCreatedWithBody fires the discussion.post_created webhook with any body
+	WebhookDiscussionPostCreatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookDiscussionPostCreated(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, body WebhookDiscussionPostCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookDiscussionUpdatedWithBody fires the discussion.updated webhook with any body
+	WebhookDiscussionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookDiscussionUpdated(ctx context.Context, targetURL string, params *WebhookDiscussionUpdatedParams, body WebhookDiscussionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookDraftCreatedWithBody fires the draft.created webhook with any body
 	WebhookDraftCreatedWithBody(ctx context.Context, targetURL string, params *WebhookDraftCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -44919,6 +52762,102 @@ func (p *WebhookInitiator) WebhookConversationUpdatedWithBody(ctx context.Contex
 
 func (p *WebhookInitiator) WebhookConversationUpdated(ctx context.Context, targetURL string, params *WebhookConversationUpdatedParams, body WebhookConversationUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookConversationUpdatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionAnsweredWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionAnsweredParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionAnsweredWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionAnswered(ctx context.Context, targetURL string, params *WebhookDiscussionAnsweredParams, body WebhookDiscussionAnsweredJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionAnsweredWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionCreatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionCreated(ctx context.Context, targetURL string, params *WebhookDiscussionCreatedParams, body WebhookDiscussionCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionPostCreatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionPostCreatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionPostCreated(ctx context.Context, targetURL string, params *WebhookDiscussionPostCreatedParams, body WebhookDiscussionPostCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionPostCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookDiscussionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionUpdatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookDiscussionUpdated(ctx context.Context, targetURL string, params *WebhookDiscussionUpdatedParams, body WebhookDiscussionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookDiscussionUpdatedWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -45306,6 +53245,250 @@ func NewWebhookConversationUpdatedWebhookRequest(targetURL string, params *Webho
 
 // NewWebhookConversationUpdatedWebhookRequestWithBody builds a POST request for the conversation.updated webhook with any body
 func NewWebhookConversationUpdatedWebhookRequestWithBody(targetURL string, params *WebhookConversationUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookDiscussionAnsweredWebhookRequest builds a application/json POST request for the discussion.answered webhook
+func NewWebhookDiscussionAnsweredWebhookRequest(targetURL string, params *WebhookDiscussionAnsweredParams, body WebhookDiscussionAnsweredJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookDiscussionAnsweredWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookDiscussionAnsweredWebhookRequestWithBody builds a POST request for the discussion.answered webhook with any body
+func NewWebhookDiscussionAnsweredWebhookRequestWithBody(targetURL string, params *WebhookDiscussionAnsweredParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookDiscussionCreatedWebhookRequest builds a application/json POST request for the discussion.created webhook
+func NewWebhookDiscussionCreatedWebhookRequest(targetURL string, params *WebhookDiscussionCreatedParams, body WebhookDiscussionCreatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookDiscussionCreatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookDiscussionCreatedWebhookRequestWithBody builds a POST request for the discussion.created webhook with any body
+func NewWebhookDiscussionCreatedWebhookRequestWithBody(targetURL string, params *WebhookDiscussionCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookDiscussionPostCreatedWebhookRequest builds a application/json POST request for the discussion.post_created webhook
+func NewWebhookDiscussionPostCreatedWebhookRequest(targetURL string, params *WebhookDiscussionPostCreatedParams, body WebhookDiscussionPostCreatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookDiscussionPostCreatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookDiscussionPostCreatedWebhookRequestWithBody builds a POST request for the discussion.post_created webhook with any body
+func NewWebhookDiscussionPostCreatedWebhookRequestWithBody(targetURL string, params *WebhookDiscussionPostCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookDiscussionUpdatedWebhookRequest builds a application/json POST request for the discussion.updated webhook
+func NewWebhookDiscussionUpdatedWebhookRequest(targetURL string, params *WebhookDiscussionUpdatedParams, body WebhookDiscussionUpdatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookDiscussionUpdatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookDiscussionUpdatedWebhookRequestWithBody builds a POST request for the discussion.updated webhook with any body
+func NewWebhookDiscussionUpdatedWebhookRequestWithBody(targetURL string, params *WebhookDiscussionUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

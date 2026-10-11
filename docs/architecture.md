@@ -111,7 +111,7 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 | Prefix | Used by | Auth |
 |---|---|---|
 | `/v1` | panel, host backends, scripts | member session cookie, or workspace API key |
-| `/client/v1` | widget, mobile SDKs | channel public key + contact session |
+| `/client/v1` | widget, mobile SDKs | channel public key + contact session, or a reader token on the discussion endpoints |
 | `/ingress/email` | edge Worker, MTAs | HMAC signature over the raw message |
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
 | `/v1/realtime`, `/client/v1/realtime` | panel, widget, SDKs | as above |
@@ -918,48 +918,34 @@ serve both.
   `feedback` conversation like the app's, with `page_url`, `page_title` and `rating` in its
   feedback metadata and category `other` unless the visitor picked one. It is answered like any
   feedback; replies reach the visitor by e-mail when they allowed it.
-- **Page questions.** `<yuva-page-questions>` lists the answers published on the page and lets a
-  visitor ask a question, which starts a conversation of kind `question` with `page_url` and
-  `page_title` (`POST /client/v1/questions`), from a visitor session, with an optional e-mail
-  address for the answer. Conversations keep `page_url` and `page_title` as columns for both page
-  feedback and questions, so the panel filters and counts them per page. Questions are private
-  conversations: nothing a visitor writes is ever shown on the page by itself.
-- **Published answers.** A member who answered a question publishes it to the page
-  (`POST /v1/conversations/{id}/publish`): the question and the answer as the member edits them,
-  stored as a `page_answers` row (workspace, inbox, channel, page, page title, question, answer,
-  the member, the source conversation, published and updated times), with no name or address of
-  the visitor. A conversation publishes once, while it is still on a chat channel that allows the
-  page's origin; deleting that channel removes its ratings and answers.
-  Members edit, unpublish (delete) and list them per page under the same inbox access as the
-  conversation. `GET /client/v1/channels/{key}/page-answers?page=` returns a page's published
-  answers newest first without a session and is cacheable for a minute. A published answer is the
-  member's text, so retention and contact deletion leave it; deleting the source conversation
-  keeps it without the link.
+- **Page questions (M11, replaced by discussions).** Until M12 a visitor could ask a private
+  question from a page (a conversation of kind `question`) and members published an edited
+  question and answer back to the page (`page_answers`). Migration 00029 turned every published
+  answer into a discussion and every `question` conversation into an ordinary `conversation`;
+  conversations keep `page_url` and `page_title` as columns (page feedback uses them too) and show
+  them as `page` on the conversation, so the panel still filters and counts conversations per page.
 - **Sites.** A site is the origin of page URLs, per inbox: one product's documentation.
   `GET /v1/docs/sites` lists every origin that has pages in the window (as `GET /v1/docs/pages`
   counts them) and every origin allowed on a chat channel of the visible inboxes, with zeros for
   a site added but not yet used, named by the chat channel that allows it, with its page count and
   summed counts. `site=<origin>` narrows `GET /v1/docs/pages`, `/v1/docs/summary`,
-  `/v1/docs/page` and `GET /v1/conversations` to one site.
-- **Panel.** A Docs view is per site: it starts from the sites list and lists pages of the inboxes the member can see with their up and down
-  counts over a window (7, 30 or 90 days), the share of `down`, open feedback and questions and
-  the number of published answers (`GET /v1/docs/pages`), sorted by most `down` (default), most
-  `up`, most helpful (share of `up`, first among pages with at least 5 ratings in the window, so
-  a single `up` never leads) or most activity (ratings plus open feedback and questions). The list
-  is an aggregate, so its cursor is a position within one sort and window. Above it, totals over
-  the window and a zero-filled series per day of ratings, page feedback and questions
-  (`GET /v1/docs/summary`) feed the charts. A site picker at the top of the Docs column (all sites,
-  or each site by its channel name and host, from `GET /v1/docs/sites`) passes `site=` to the list,
-  the summary and the page; changing it while a page is open goes back to the overview. A page shows its ratings per day
-  (`GET /v1/docs/page`), its feedback and questions (`GET /v1/conversations?page=`) and its
-  published answers (`GET /v1/page-answers?page=`). In a `question` conversation the composer has
-  a second send action, "Send and publish to page" (⌥/Alt + ⌘/Ctrl + Enter), which posts the reply
-  at once, without the undo hold, and then opens the Publish dialog with that reply as the answer.
-  While the question has a member reply and no published answer, a banner at the top of the thread
-  says "Answered privately — not on the page yet" with a Publish button; once published it says
-  "On the page" with a link to the page, Edit and Unpublish. P publishes or edits.
-- Ratings are counters, so they send no events or webhooks; page feedback and questions are
-  conversations and send the same ones as any conversation and feedback.
+  `/v1/docs/page`, `GET /v1/discussions` and `GET /v1/conversations` to one site.
+- **Panel.** A Docs view is per site: it starts from the sites list and lists pages of the inboxes
+  the member can see with their up and down counts over a window (7, 30 or 90 days), the share of
+  `down`, open feedback and the page's discussion counts now: open threads (published, no
+  accepted answer, not locked), unanswered threads (open and nobody replied) and pending posts
+  (`GET /v1/docs/pages`), sorted by most `down` (default), most `up`, most helpful (share of `up`,
+  first among pages with at least 5 ratings in the window, so a single `up` never leads) or most
+  activity (ratings plus open feedback, open threads and pending posts). The list is an
+  aggregate, so its cursor is a position within one sort and window. Above it, totals over the
+  window and a zero-filled series per day of ratings, page feedback and new threads
+  (`GET /v1/docs/summary`) feed the charts. A site picker at the top of the Docs column (all
+  sites, or each site by its channel name and host, from `GET /v1/docs/sites`) passes `site=` to
+  the list, the summary and the page; changing it while a page is open goes back to the overview.
+  A page shows its ratings per day (`GET /v1/docs/page`), its feedback
+  (`GET /v1/conversations?page=`) and its threads (`GET /v1/discussions?page=`).
+- Ratings are counters, so they send no events or webhooks; page feedback is a conversation and
+  sends the same ones as any conversation and feedback.
 
 ### Discussions (M12)
 
@@ -967,39 +953,112 @@ Discussions replace page questions and published answers. A documentation page g
 discussion area like GitHub Discussions: threads, replies, votes, an accepted answer, followers.
 Private help stays private: page feedback, live chat and e-mail are unchanged. Decisions:
 
-- **Model.** Discussions are not conversations: a conversation is one contact and the team, private;
-  a discussion is public and has many authors. Tables `discussions` (workspace, inbox, channel,
-  page, title, body, author, state `open|answered|locked|hidden`, `answer_post_id`, vote count,
-  reply count, last activity) and `discussion_posts` (discussion, author, body as Markdown, one level
-  of replies through `parent_post_id`, state `published|pending|hidden`, edited time), plus
-  `discussion_votes` and `discussion_follows`. An author is a member or a contact; every row has
-  `workspace_id` and every query filters by it.
-- **Migration.** `question` conversations and `page_answers` go away: each published answer becomes a
-  discussion (the question as its body, the answer as an accepted post by the publishing member),
-  unpublished questions stay as ordinary conversations. `kind=question`, `/publish` and the
-  page-answers endpoints are removed from the contract; this is pre-1.0 and they shipped in M11.
-- **Readers.** A reader is a person with a server-wide account (`persons`, the table members sign in
+- **Model.** Discussions are not conversations: a conversation is one contact and the team,
+  private; a discussion is public and has many authors. `discussions` (workspace, inbox, channel,
+  page, page title, title, opening post, state, `locked_at`, `answer_post_id`, `answered_at`,
+  votes, reply count, pending and hidden counts, source conversation, last activity) and
+  `discussion_posts` (discussion, author, body as Markdown, `opening`, `parent_post_id`, state
+  `published|pending|hidden`, votes, edited and deleted times), plus `discussion_votes` and
+  `discussion_follows`. The thread's body, author and votes are those of its **opening post**, a
+  post like the replies, so editing, deleting, voting and moderating work the same for both;
+  `discussions.state` follows the opening post's state and is changed with it in one transaction.
+  Replies are one level deep: a reply to the thread has no parent, a reply to a reply points at
+  it, and a reply to a reply to a reply is refused. The accepted answer is a published reply to the
+  thread. State `open|answered|locked|hidden` from the plan is split into `state`
+  (`published|pending|hidden`), `answer_post_id` and `locked_at`, since a thread can be answered and
+  locked at once. Every table has `workspace_id`; every query filters by it.
+- **Authors.** A post's author is a member or a contact (`author_type` `member|contact|anonymous`,
+  with the ids nulled on delete: a removed member or a deleted reader shows as deleted, like
+  deleted members in conversations). The public sees a display name and initials only: a member's
+  name, a reader's person name (live, so renaming the account renames their posts), else the
+  contact's name; no e-mail addresses, ids or avatars from elsewhere. `anonymous` is used only for
+  threads migrated from published answers, whose visitor was never named.
+- **Bodies** are stored as Markdown and served with `body_html`, rendered on the server by goldmark
+  (no raw HTML, GitHub-flavoured tables, strikethrough and autolinks) and sanitized with
+  bluemonday's UGC policy (`rel="nofollow ugc noopener"`), so every client can show it without a
+  Markdown library. Titles 3 to 200 characters, bodies up to 20,000.
+- **Migration.** Each `page_answers` row became a published discussion on its page, inbox and
+  channel: the question as an `anonymous` opening post, the answer as an accepted reply by the
+  publishing member (`anonymous` once that member is gone), `conversation_id` kept. Every
+  `question` conversation became `conversation`, keeping its page columns (see "Documentation
+  pages"). `kind=question`, `/v1/conversations/{id}/publish`, `/v1/page-answers*`,
+  `/client/v1/questions` and `/client/v1/channels/{key}/page-answers` are removed from the
+  contract and `page_answers` is dropped; this is pre-1.0 and they shipped in M11.
+- **Readers.** A reader is a person with a server-wide account (`people`, the table members sign in
   with): one account per Yuva server, signing in by e-mail code or passkey on the server's own page,
-  never on the documentation site. The element opens `/account/connect` in a popup; the server
-  hands the element a short-lived reader token by `postMessage` to an origin the channel allows. In
-  each workspace a reader appears as a contact linked to the person (`contacts.person_id`, created
-  on first post); workspaces never see each other's data about a reader. Host apps with their own
-  login keep using identity tokens, which also let a user post.
+  never on the documentation site. `POST /v1/auth/code` with `reader: true` sends a code to any
+  address (same rate limits; the code row records it) and verifying that code creates the person,
+  which is the only open sign-up; a member signing in there is the same person. The reader's
+  account page and its popup are panel routes (`/account`, `/account/connect`) served like the
+  OAuth consent page, with the person's session cookie.
+- **Reader tokens.** `<yuva-discussions>` opens `/account/connect?channel=<key>&origin=<origin>` in
+  a popup. Once signed in, the page calls `POST /v1/account/reader-tokens` with the key and the
+  origin; the server refuses an origin that is not exactly one of the channel's allowed origins
+  (`403 origin_not_allowed`) or a channel with discussions off, and the page posts the token to
+  `window.opener` with that origin as `targetOrigin`, so no other page can receive it. A token
+  (`yuva_rd_…`, stored as a hash in `reader_tokens` with the workspace, channel, person and the
+  session that made it) lives 24 hours, is bound to its channel (its origin check is the
+  channel's, like a contact session), and ends with that session (sign-out), with the account,
+  or with `DELETE /client/v1/reader-token`. When it expires the element opens the popup again,
+  which answers at once while the person is still signed in on the server.
+- **Readers in a workspace.** A reader token acts in its channel's workspace as the contact linked to
+  the person (`contacts.person_id`, unique per workspace), created on the first write: a contact of
+  the workspace with the person's e-mail address and no person is linked, else a new contact is
+  made with that address and the person's name. So the team sees the name and e-mail address of
+  readers who write in their workspace, and the connect page says so; other workspaces see
+  nothing of it. A person who is a member of that workspace with access to the inbox writes as that
+  member instead. Host apps with their own login keep using identity tokens: a contact session
+  started with an identity token writes as its contact; anonymous visitor sessions only read.
 - **Reading is public** and needs no session: `GET /client/v1/channels/{key}/discussions?page=` and
-  `…/discussions/{id}`, cacheable for a minute, authors shown by display name and avatar only.
-- **Writing** needs a reader token, an identity token or a member. Per chat channel
-  `discussions: off|moderated|open` (default `moderated`: a reader's first post waits for a member;
-  members' and identity-token users' posts are published at once). Members hide, lock, mark spam,
-  mark the accepted answer and edit titles. Rate limits per person and IP as for session starts.
-- **Notifications.** Followers (the author follows by default) get one e-mail per thread per delay
-  for new replies and the accepted answer, with a one-click unsubscribe, and see them in the reader
-  account. Members see new threads and pending posts in the panel.
-- **Reader account (new UI).** `/account` on the server, in `web/`, separate from the team panel:
-  my discussions, followed threads, notifications, e-mail settings, delete account. A person who
-  is also a member reaches the team panel from it.
-- **Team panel.** A Discussions view per site and page (the Docs site picker), a moderation queue,
-  replying as a member, accepting an answer, and turning a private conversation into a discussion
-  (the member edits what becomes public).
+  `…/discussions/{id}`, cacheable for a minute, authors shown by display name and initials only. A
+  reader token or contact session of that channel adds the caller's own pending posts and the
+  `mine`, `voted` and `following` flags, and the answer is then `private, no-store`. Threads are
+  listed per inbox and page, so two chat channels of one inbox that allow the same origin show the
+  same threads; the channel decides whether discussions are on.
+- **Writing** needs a reader token, an identity-token contact session or a member (`/v1`). Per chat
+  channel `discussions: off|moderated|open` (default `moderated`). Moderated: a reader's post waits
+  (`pending`) until one of their posts in the workspace has been approved, after which they publish
+  at once; identity-token users and members publish at once. Open: everyone publishes at once.
+  Marking a post spam hides it and the author's other pending posts and sets
+  `contacts.discussions_blocked_at`, after which the author's posts always wait. Pending posts are
+  seen only by their author and members, hidden ones only by members. Authors edit their posts for
+  30 minutes (members their own without limit) and delete them at any time: a post with replies
+  stays as deleted without body or author, the thread goes when nobody else wrote in it. A locked
+  thread takes nothing from readers (posts, edits, votes, answers); members still may. The thread's
+  author or a member accepts an answer. Rate limits: 10 posts a minute and 60 an hour per author,
+  and the client write limits per IP address and channel.
+- **Team.** `/v1/discussions` lists threads per inbox, site, page and state; `/v1/discussion-posts`
+  with `state=pending` is the moderation queue. Members approve or hide posts (`PATCH`), mark spam,
+  lock and retitle threads, reply, vote, accept and clear answers, and start threads. Reading needs
+  `conversations:read` (keys and tokens too); writing needs a member session. Agents see the
+  threads of their inboxes only; another inbox or workspace answers `404`.
+- **From a conversation.** `POST /v1/conversations/{id}/discussion` starts a published thread with
+  the title and body the member writes (and optionally an accepted answer by the member); nothing
+  of the conversation becomes public. Its contact is the author only when it is linked to a person
+  or has an external id in the inbox (they are a known user and can see and edit the thread);
+  otherwise the member is. One thread per conversation.
+- **Notifications.** Followers are contacts (members see threads in the panel). An author follows
+  their thread and any thread they reply to. A published reply (on creation or on approval) and an
+  accepted answer add a `reader_notifications` row for every follower linked to a person (except
+  the author) and queue a River job per follower and thread, unique by its arguments for
+  `YUVA_DISCUSSION_EMAIL_DELAY` (10 minutes by default). The job sends at most one e-mail per
+  follower and thread per delay, listing the replies and the answer since the last e-mail, through
+  the server's own mailer in the person's locale (else the contact's, else the inbox's), to the
+  person's address when they kept `email_notifications` on, or to an identity-token contact's first
+  address. Each e-mail carries `List-Unsubscribe` with `List-Unsubscribe-Post: List-Unsubscribe=One-Click`
+  (RFC 8058) pointing at `/u/{token}`: the token seals the workspace, thread and contact under the
+  master key like rating links; opening the page changes nothing and its button (or the one-click
+  POST) unfollows. Reader notifications are kept 90 days.
+- **Events.** `discussion.created`, `discussion.post_created`, `discussion.answered` and
+  `discussion.updated` (moderation, edits, deletes, lock, a cleared answer) are stored events for
+  members who can see the inbox and webhook types under Standard Webhooks like the others, with
+  `{discussion, post}` as data. Pending posts send them too, with their state.
+- **Reader account.** `/account` on the server, in `web/`, separate from the team panel:
+  my discussions, followed threads, notifications, e-mail settings, delete account
+  (`/v1/account*`, `DELETE /v1/me`). A person who is also a member reaches the team panel from it.
+- **Docs counts.** `/v1/docs/pages` and `/v1/docs/sites` count open threads, unanswered threads and
+  pending posts per page instead of open questions and published answers; `/v1/docs/summary`
+  counts new threads per day and pending posts now.
 - **UI for sites.** `<yuva-discussions>` (web component, Shadow DOM, in `/yuva-docs.js` and
   `useyuva/docs`, replacing `<yuva-page-questions>`; Nuxt and React wrappers as today) and a
   shadcn registry for React sites that want the code in their own design system: components built
@@ -1067,7 +1126,11 @@ now; per-channel limits can narrow them later.
   repeats their e-mail address), an operator with `yuva person delete --email <address> --yes`.
   It is refused (`409 last_owner`) while the person is the only owner of a workspace. Otherwise
   the person goes with their memberships, sessions, passkeys, push subscriptions and sign-in
-  codes; messages they wrote stay without an author, shown as a deleted member.
+  codes; messages they wrote stay without an author, shown as a deleted member. As a reader they
+  also lose their reader tokens, notifications, votes and follows; their discussion posts stay
+  without an author, shown as a deleted reader; in each workspace the contact linked to them is
+  deleted when it has no conversations and no external ids (it existed only for their posts), else
+  only unlinked, so the workspace keeps its own record of a customer.
 - Contact deletion and export through the API, for GDPR and KVKK requests. A host backend deletes
   a user who deleted their account with `DELETE /v1/contacts/by-external-id?inbox_id=&external_id=`
   (an API key or an owner or admin): the contact goes with all their conversations, messages,
@@ -1099,6 +1162,13 @@ now; per-channel limits can narrow them later.
     these rows belong to a person (or, for `login_codes`, an e-mail address before sign-in), not
     to a workspace. Their queries are scoped by the person id, the e-mail address or a secret
     hash instead; everything a person may do in a workspace goes through their `members` row.
+  - The reader account endpoints (`/v1/account/*`) list a person's discussions, follows and
+    notifications across every workspace. `reader_tokens` and `reader_notifications` carry
+    `workspace_id` (and every write and workspace-side read filters by it), but these account
+    reads are scoped by the person id instead (through `contacts.person_id` or the row's own
+    `person_id`), leaving out deleted workspaces, like `/v1/me` lists a person's memberships. A
+    reader token is looked up by its hash before its workspace is known, like a contact session.
+    `people.reader_email_notifications` is a person-level setting.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
 - Usage counters (conversations, messages, members, storage) recorded per workspace per month.
