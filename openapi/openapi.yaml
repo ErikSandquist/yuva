@@ -1945,12 +1945,39 @@ paths:
             default: false
         - name: kind
           in: query
-          description: Only conversations of this kind, e.g. `feedback` for the feedback view.
+          description: |
+            Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+            parameter (`kind=feedback&kind=question`) or give a comma-separated list
+            (`kind=feedback,question`).
           schema:
-            $ref: "#/components/schemas/ConversationKind"
+            type: array
+            items:
+              $ref: "#/components/schemas/ConversationKind"
+        - name: channel_kind
+          in: query
+          description: |
+            Only conversations that started on a channel of these kinds (`channel_kind` on the
+            conversation). Repeat the parameter or give a comma-separated list. Conversations
+            without a `channel_kind` never match.
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/ChannelKind"
+        - name: site
+          in: query
+          description: |
+            Only feedback and questions sent from a page of this site: an origin,
+            `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
+            `question.page_url`.
+          schema:
+            type: string
+            maxLength: 300
+            examples: ["https://docs.example.com"]
         - name: category
           in: query
-          description: Only feedback of this category (implies `kind=feedback`).
+          description: |
+            Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
+            `feedback`, `400`).
           schema:
             $ref: "#/components/schemas/FeedbackCategory"
         - name: page
@@ -3118,6 +3145,48 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/docs/sites:
+    get:
+      operationId: listDocsSites
+      summary: Documentation sites
+      description: |
+        A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+        the inboxes the caller can see (or `inbox_id`): every site that has a page
+        `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+        questions, published answers), and every origin allowed on a chat channel of those inboxes,
+        with zeros when nothing came from it yet. The counts are those of
+        `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+
+        `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+        (the oldest when several do); absent when none does any more.
+
+        Ordered by origin, then inbox. Not paginated.
+
+        Scope: `conversations:read`.
+      tags: [docs]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - $ref: "#/components/parameters/DocsDays"
+      responses:
+        "200":
+          description: The sites.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DocsSiteList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/docs/pages:
     get:
       operationId: listDocsPages
@@ -3135,7 +3204,9 @@ paths:
           window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
         - `activity`: most ratings plus open feedback and questions first.
 
-        `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+        `site` keeps only the pages of that site (origin).
+
+        `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
         another sort answers `400`.
 
         Scope: `conversations:read`.
@@ -3147,6 +3218,7 @@ paths:
           schema:
             type: string
             format: uuid
+        - $ref: "#/components/parameters/DocsSiteFilter"
         - $ref: "#/components/parameters/DocsDays"
         - name: sort
           in: query
@@ -3179,6 +3251,7 @@ paths:
         the window, not spam, in any status) and answers published in the window, in total and
         per day. Every day of the window is listed, oldest first, with zeros where nothing
         happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+        `site` counts only the pages of that site (origin).
 
         Scope: `conversations:read`.
       tags: [docs]
@@ -3189,6 +3262,7 @@ paths:
           schema:
             type: string
             format: uuid
+        - $ref: "#/components/parameters/DocsSiteFilter"
         - $ref: "#/components/parameters/DocsDays"
       responses:
         "200":
@@ -3213,7 +3287,8 @@ paths:
         A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
         ratings per day over the window. Its feedback and questions are
         `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-        answers `GET /v1/page-answers?inbox_id=…&page=…`.
+        answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+        answers `400 validation_failed`.
 
         Scope: `conversations:read`.
       tags: [docs]
@@ -3232,6 +3307,7 @@ paths:
           schema:
             type: string
             maxLength: 2000
+        - $ref: "#/components/parameters/DocsSiteFilter"
         - $ref: "#/components/parameters/DocsDays"
       responses:
         "200":
@@ -5380,6 +5456,16 @@ components:
       schema:
         type: string
         maxLength: 200
+    DocsSiteFilter:
+      name: site
+      in: query
+      description: |
+        Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+        Without it, every site.
+      schema:
+        type: string
+        maxLength: 300
+        examples: ["https://docs.example.com"]
     DocsDays:
       name: days
       in: query
@@ -7210,6 +7296,11 @@ components:
           type: string
           format: uuid
           description: The channel it started on; absent when unknown or removed.
+        channel_kind:
+          $ref: "#/components/schemas/ChannelKind"
+          description: |
+            Read-only: the kind of the channel it started on, kept when that channel is removed or
+            the conversation moves to another inbox. Absent when it started without a channel.
         related_conversation_id:
           type: string
           format: uuid
@@ -9151,6 +9242,49 @@ components:
         published_answers:
           type: integer
           format: int64
+    DocsSite:
+      type: object
+      required: [origin, inbox_id, pages, up, down, open_feedback, open_questions, published_answers]
+      properties:
+        origin:
+          type: string
+          description: The site, `scheme://host[:port]`.
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+          description: The chat channel of the inbox that allows the origin; absent when none does.
+        channel_name:
+          type: string
+          description: That channel's name; absent with `channel_id`.
+        pages:
+          type: integer
+          format: int64
+        up:
+          type: integer
+          format: int64
+        down:
+          type: integer
+          format: int64
+        open_feedback:
+          type: integer
+          format: int64
+        open_questions:
+          type: integer
+          format: int64
+        published_answers:
+          type: integer
+          format: int64
+    DocsSiteList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocsSite"
     DocsPagePage:
       type: object
       required: [items]

@@ -2483,6 +2483,10 @@ type Conversation struct {
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
+
 	// ClosedAt When it was last closed; absent when it never was.
 	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	ContactId uuid.UUID  `json:"contact_id"`
@@ -2643,6 +2647,10 @@ type ConversationListItem struct {
 
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
 
 	// ClosedAt When it was last closed; absent when it never was.
 	ClosedAt *time.Time `json:"closed_at,omitempty"`
@@ -2893,6 +2901,30 @@ type DocsPagePage struct {
 
 // DocsPageSort defines model for DocsPageSort.
 type DocsPageSort string
+
+// DocsSite defines model for DocsSite.
+type DocsSite struct {
+	// ChannelId The chat channel of the inbox that allows the origin; absent when none does.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelName That channel's name; absent with `channel_id`.
+	ChannelName   *string   `json:"channel_name,omitempty"`
+	Down          int64     `json:"down"`
+	InboxId       uuid.UUID `json:"inbox_id"`
+	OpenFeedback  int64     `json:"open_feedback"`
+	OpenQuestions int64     `json:"open_questions"`
+
+	// Origin The site, `scheme://host[:port]`.
+	Origin           string `json:"origin"`
+	Pages            int64  `json:"pages"`
+	PublishedAnswers int64  `json:"published_answers"`
+	Up               int64  `json:"up"`
+}
+
+// DocsSiteList defines model for DocsSiteList.
+type DocsSiteList struct {
+	Items []DocsSite `json:"items"`
+}
 
 // DocsSummary defines model for DocsSummary.
 type DocsSummary struct {
@@ -4870,6 +4902,9 @@ type DeliveryId = uuid.UUID
 // DocsDays defines model for DocsDays.
 type DocsDays = int32
 
+// DocsSiteFilter Examples: https://docs.example.com
+type DocsSiteFilter = string
+
 // IdempotencyKey defines model for IdempotencyKey.
 type IdempotencyKey = string
 
@@ -5217,10 +5252,23 @@ type ListConversationsParams struct {
 	// `false`, spam is left out.
 	Spam *bool `form:"spam,omitempty" json:"spam,omitempty"`
 
-	// Kind Only conversations of this kind, e.g. `feedback` for the feedback view.
-	Kind *ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=question`) or give a comma-separated list
+	// (`kind=feedback,question`).
+	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
 
-	// Category Only feedback of this category (implies `kind=feedback`).
+	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
+	// conversation). Repeat the parameter or give a comma-separated list. Conversations
+	// without a `channel_kind` never match.
+	ChannelKind *[]ChannelKind `form:"channel_kind,omitempty" json:"channel_kind,omitempty"`
+
+	// Site Only feedback and questions sent from a page of this site: an origin,
+	// `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
+	// `question.page_url`.
+	Site *string `form:"site,omitempty" json:"site,omitempty"`
+
+	// Category Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
+	// `feedback`, `400`).
 	Category *FeedbackCategory `form:"category,omitempty" json:"category,omitempty"`
 
 	// Page Only feedback and questions sent from this documentation page (a URL; query and
@@ -5370,6 +5418,10 @@ type GetDocsPageParams struct {
 	// Page The page's URL; query and fragment are ignored.
 	Page string `form:"page" json:"page"`
 
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
 
@@ -5380,6 +5432,10 @@ type GetDocsPageParams struct {
 // ListDocsPagesParams defines parameters for ListDocsPages.
 type ListDocsPagesParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
 
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays     `form:"days,omitempty" json:"days,omitempty"`
@@ -5395,9 +5451,24 @@ type ListDocsPagesParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListDocsSitesParams defines parameters for ListDocsSites.
+type ListDocsSitesParams struct {
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
+	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetDocsSummaryParams defines parameters for GetDocsSummary.
 type GetDocsSummaryParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
 
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
@@ -8811,7 +8882,8 @@ type ClientInterface interface {
 	// A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
 	// ratings per day over the window. Its feedback and questions are
 	// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-	// answers `GET /v1/page-answers?inbox_id=…&page=…`.
+	// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+	// answers `400 validation_failed`.
 	//
 	// Scope: `conversations:read`.
 	//
@@ -8832,13 +8904,34 @@ type ClientInterface interface {
 	//   window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
 	// - `activity`: most ratings plus open feedback and questions first.
 	//
-	// `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+	// `site` keeps only the pages of that site (origin).
+	//
+	// `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
 	// another sort answers `400`.
 	//
 	// Scope: `conversations:read`.
 	//
 	// Corresponds with GET /v1/docs/pages (the `ListDocsPages` operationId).
 	ListDocsPages(ctx context.Context, params *ListDocsPagesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListDocsSites Documentation sites
+	//
+	// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+	// the inboxes the caller can see (or `inbox_id`): every site that has a page
+	// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+	// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+	// with zeros when nothing came from it yet. The counts are those of
+	// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+	//
+	// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+	// (the oldest when several do); absent when none does any more.
+	//
+	// Ordered by origin, then inbox. Not paginated.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Corresponds with GET /v1/docs/sites (the `ListDocsSites` operationId).
+	ListDocsSites(ctx context.Context, params *ListDocsSitesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDocsSummary Documentation pages in total and per day
 	//
@@ -8847,6 +8940,7 @@ type ClientInterface interface {
 	// the window, not spam, in any status) and answers published in the window, in total and
 	// per day. Every day of the window is listed, oldest first, with zeros where nothing
 	// happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+	// `site` counts only the pages of that site (origin).
 	//
 	// Scope: `conversations:read`.
 	//
@@ -12078,7 +12172,8 @@ func (c *Client) MarkConversationUnread(ctx context.Context, conversationId Conv
 // A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
 // ratings per day over the window. Its feedback and questions are
 // `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-// answers `GET /v1/page-answers?inbox_id=…&page=…`.
+// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+// answers `400 validation_failed`.
 //
 // Scope: `conversations:read`.
 //
@@ -12109,7 +12204,9 @@ func (c *Client) GetDocsPage(ctx context.Context, params *GetDocsPageParams, req
 //     window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
 //   - `activity`: most ratings plus open feedback and questions first.
 //
-// `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+// `site` keeps only the pages of that site (origin).
+//
+// `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
 // another sort answers `400`.
 //
 // Scope: `conversations:read`.
@@ -12127,6 +12224,35 @@ func (c *Client) ListDocsPages(ctx context.Context, params *ListDocsPagesParams,
 	return c.Client.Do(req)
 }
 
+// ListDocsSites Documentation sites
+//
+// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+// the inboxes the caller can see (or `inbox_id`): every site that has a page
+// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+// with zeros when nothing came from it yet. The counts are those of
+// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+//
+// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+// (the oldest when several do); absent when none does any more.
+//
+// Ordered by origin, then inbox. Not paginated.
+//
+// Scope: `conversations:read`.
+//
+// Corresponds with GET /v1/docs/sites (the `ListDocsSites` operationId).
+func (c *Client) ListDocsSites(ctx context.Context, params *ListDocsSitesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListDocsSitesRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // GetDocsSummary Documentation pages in total and per day
 //
 // Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
@@ -12134,6 +12260,7 @@ func (c *Client) ListDocsPages(ctx context.Context, params *ListDocsPagesParams,
 // the window, not spam, in any status) and answers published in the window, in total and
 // per day. Every day of the window is listed, oldest first, with zeros where nothing
 // happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+// `site` counts only the pages of that site (origin).
 //
 // Scope: `conversations:read`.
 //
@@ -16924,7 +17051,31 @@ func NewListConversationsRequest(server string, params *ListConversationsParams)
 
 		if params.Kind != nil {
 
-			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "kind", *params.Kind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.ChannelKind != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "channel_kind", *params.ChannelKind, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "array", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -17987,6 +18138,18 @@ func NewGetDocsPageRequest(server string, params *GetDocsPageParams) (*http.Requ
 			}
 		}
 
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
 		if params.Days != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "days", *params.Days, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
@@ -18059,6 +18222,18 @@ func NewListDocsPagesRequest(server string, params *ListDocsPagesParams) (*http.
 		if params.InboxId != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -18145,6 +18320,87 @@ func NewListDocsPagesRequest(server string, params *ListDocsPagesParams) (*http.
 	return req, nil
 }
 
+// NewListDocsSitesRequest constructs an http.Request for the ListDocsSites method
+func NewListDocsSitesRequest(server string, params *ListDocsSitesParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/docs/sites")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Days != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "days", *params.Days, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetDocsSummaryRequest constructs an http.Request for the GetDocsSummary method
 func NewGetDocsSummaryRequest(server string, params *GetDocsSummaryParams) (*http.Request, error) {
 	var err error
@@ -18176,6 +18432,18 @@ func NewGetDocsSummaryRequest(server string, params *GetDocsSummaryParams) (*htt
 		if params.InboxId != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Site != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "site", *params.Site, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
@@ -23504,7 +23772,8 @@ type ClientWithResponsesInterface interface {
 	// A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
 	// ratings per day over the window. Its feedback and questions are
 	// `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-	// answers `GET /v1/page-answers?inbox_id=…&page=…`.
+	// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+	// answers `400 validation_failed`.
 	//
 	// Scope: `conversations:read`.
 	//
@@ -23527,7 +23796,9 @@ type ClientWithResponsesInterface interface {
 	//   window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
 	// - `activity`: most ratings plus open feedback and questions first.
 	//
-	// `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+	// `site` keeps only the pages of that site (origin).
+	//
+	// `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
 	// another sort answers `400`.
 	//
 	// Scope: `conversations:read`.
@@ -23537,6 +23808,27 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /v1/docs/pages (the `ListDocsPages` operationId).
 	ListDocsPagesWithResponse(ctx context.Context, params *ListDocsPagesParams, reqEditors ...RequestEditorFn) (*ListDocsPagesResponse, error)
 
+	// ListDocsSitesWithResponse Documentation sites
+	//
+	// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+	// the inboxes the caller can see (or `inbox_id`): every site that has a page
+	// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+	// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+	// with zeros when nothing came from it yet. The counts are those of
+	// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+	//
+	// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+	// (the oldest when several do); absent when none does any more.
+	//
+	// Ordered by origin, then inbox. Not paginated.
+	//
+	// Scope: `conversations:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/docs/sites (the `ListDocsSites` operationId).
+	ListDocsSitesWithResponse(ctx context.Context, params *ListDocsSitesParams, reqEditors ...RequestEditorFn) (*ListDocsSitesResponse, error)
+
 	// GetDocsSummaryWithResponse Documentation pages in total and per day
 	//
 	// Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
@@ -23544,6 +23836,7 @@ type ClientWithResponsesInterface interface {
 	// the window, not spam, in any status) and answers published in the window, in total and
 	// per day. Every day of the window is listed, oldest first, with zeros where nothing
 	// happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+	// `site` counts only the pages of that site (origin).
 	//
 	// Scope: `conversations:read`.
 	//
@@ -29075,6 +29368,75 @@ func (r ListDocsPagesResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r ListDocsPagesResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListDocsSitesResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DocsSiteList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListDocsSitesResponse) GetJSON200() *DocsSiteList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListDocsSitesResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListDocsSitesResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListDocsSitesResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListDocsSitesResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListDocsSitesResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListDocsSitesResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListDocsSitesResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListDocsSitesResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -35530,7 +35892,8 @@ func (c *ClientWithResponses) MarkConversationUnreadWithResponse(ctx context.Con
 // A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
 // ratings per day over the window. Its feedback and questions are
 // `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-// answers `GET /v1/page-answers?inbox_id=…&page=…`.
+// answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+// answers `400 validation_failed`.
 //
 // Scope: `conversations:read`.
 //
@@ -35559,7 +35922,9 @@ func (c *ClientWithResponses) GetDocsPageWithResponse(ctx context.Context, param
 //     window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
 //   - `activity`: most ratings plus open feedback and questions first.
 //
-// `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+// `site` keeps only the pages of that site (origin).
+//
+// `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
 // another sort answers `400`.
 //
 // Scope: `conversations:read`.
@@ -35575,6 +35940,33 @@ func (c *ClientWithResponses) ListDocsPagesWithResponse(ctx context.Context, par
 	return ParseListDocsPagesResponse(rsp)
 }
 
+// ListDocsSitesWithResponse Documentation sites
+//
+// A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+// the inboxes the caller can see (or `inbox_id`): every site that has a page
+// `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+// questions, published answers), and every origin allowed on a chat channel of those inboxes,
+// with zeros when nothing came from it yet. The counts are those of
+// `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+//
+// `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+// (the oldest when several do); absent when none does any more.
+//
+// Ordered by origin, then inbox. Not paginated.
+//
+// Scope: `conversations:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/docs/sites (the `ListDocsSites` operationId).
+func (c *ClientWithResponses) ListDocsSitesWithResponse(ctx context.Context, params *ListDocsSitesParams, reqEditors ...RequestEditorFn) (*ListDocsSitesResponse, error) {
+	rsp, err := c.ListDocsSites(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListDocsSitesResponse(rsp)
+}
+
 // GetDocsSummaryWithResponse Documentation pages in total and per day
 //
 // Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
@@ -35582,6 +35974,7 @@ func (c *ClientWithResponses) ListDocsPagesWithResponse(ctx context.Context, par
 // the window, not spam, in any status) and answers published in the window, in total and
 // per day. Every day of the window is listed, oldest first, with zeros where nothing
 // happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+// `site` counts only the pages of that site (origin).
 //
 // Scope: `conversations:read`.
 //
@@ -40714,6 +41107,60 @@ func ParseListDocsPagesResponse(rsp *http.Response) (*ListDocsPagesResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest DocsPagePage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListDocsSitesResponse parses an HTTP response from a ListDocsSitesWithResponse call
+func ParseListDocsSitesResponse(rsp *http.Response) (*ListDocsSitesResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListDocsSitesResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocsSiteList
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

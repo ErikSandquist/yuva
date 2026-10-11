@@ -727,7 +727,12 @@ remote images, http(s)):
   read cursors. The list item carries `pinned_at` for the caller, `pinned=true|false` filters on
   it, a mark shows as `unread` until the member reads the conversation or writes in it, and
   `conversation.pin` and `conversation.read` events reach only that member's connections. Pinned
-  conversations of the current filter stand in their own section above the rest. In the middle, the
+  conversations of the current filter stand in their own section above the rest. The list also
+  filters by where a conversation came from: `kind` and `channel_kind` (several values, repeated
+  or comma-separated) and `site`, the origin of a feedback's or question's page. Each conversation
+  carries `channel_kind`, the kind of the channel it started on (stored on the conversation when
+  it is created and kept when the channel goes or the conversation moves), so a row shows its
+  source without another request; a page's URL and title are under `feedback` or `question`. In the middle, the
   open conversation (`/conversations/:id`): a header with the contact, channel, status, assignee
   and the actions (assign or hand off, snooze, labels, close or reopen, more), the thread built on
   shadcn's chat components (message, bubble, marker, attachment, message scroller) with date
@@ -917,7 +922,13 @@ serve both.
   answers newest first without a session and is cacheable for a minute. A published answer is the
   member's text, so retention and contact deletion leave it; deleting the source conversation
   keeps it without the link.
-- **Panel.** A Docs view lists pages of the inboxes the member can see with their up and down
+- **Sites.** A site is the origin of page URLs, per inbox: one product's documentation.
+  `GET /v1/docs/sites` lists every origin that has pages in the window (as `GET /v1/docs/pages`
+  counts them) and every origin allowed on a chat channel of the visible inboxes, with zeros for
+  a site added but not yet used, named by the chat channel that allows it, with its page count and
+  summed counts. `site=<origin>` narrows `GET /v1/docs/pages`, `/v1/docs/summary`,
+  `/v1/docs/page` and `GET /v1/conversations` to one site.
+- **Panel.** A Docs view is per site: it starts from the sites list and lists pages of the inboxes the member can see with their up and down
   counts over a window (7, 30 or 90 days), the share of `down`, open feedback and questions and
   the number of published answers (`GET /v1/docs/pages`), sorted by most `down` (default), most
   `up`, most helpful (share of `up`, first among pages with at least 5 ratings in the window, so
