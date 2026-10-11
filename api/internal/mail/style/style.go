@@ -101,14 +101,17 @@ func (b Button) HTML() string {
 	if b.FullWidth {
 		s.WriteString(` width="100%"`)
 	}
-	s.WriteString(` style="`)
+	var st string
 	if b.Margin != "" {
-		s.WriteString("margin:" + b.Margin + ";")
+		st += "margin:" + b.Margin + ";"
 	}
 	if b.FullWidth {
-		s.WriteString("width:100%;")
+		st += "width:100%;"
 	}
-	s.WriteString(`"><tr><td align="center" bgcolor="` + b.Color + `"`)
+	if st != "" {
+		s.WriteString(` style="` + st + `"`)
+	}
+	s.WriteString(`><tr><td align="center" bgcolor="` + b.Color + `"`)
 	if b.CellClass != "" {
 		s.WriteString(` class="` + b.CellClass + `"`)
 	}
