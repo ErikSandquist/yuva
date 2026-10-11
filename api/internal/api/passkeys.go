@@ -284,7 +284,7 @@ func (s *Server) FinishPasskeySignIn(ctx context.Context, req oas.FinishPasskeyS
 		if err := q.UpdatePasskeyUse(ctx, store.UpdatePasskeyUseParams{PersonID: user.person.ID, ID: row.ID, Credential: data, LastUsedAt: &now}); err != nil {
 			return err
 		}
-		if me, err = buildMe(ctx, q, user.person.ID); err != nil {
+		if me, err = s.buildMe(ctx, q, user.person.ID); err != nil {
 			return err
 		}
 		cookie, err = s.startSession(ctx, q, user.person.ID, methodPasskey)

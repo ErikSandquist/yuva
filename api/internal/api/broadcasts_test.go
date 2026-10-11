@@ -9,6 +9,7 @@ import (
 	"net/mail"
 	"net/textproto"
 	"net/url"
+	"reflect"
 	"regexp"
 	"strings"
 	"sync"
@@ -608,6 +609,23 @@ func TestBroadcastDailyCapAndComplaintRate(t *testing.T) {
 	if ws["daily_limit"] != float64(100) || ws["sent_today"] != float64(50) {
 		t.Fatalf("workspace broadcasts: %v", ws)
 	}
+	meAgreesWithWorkspace(t, bt)
+}
+
+func meAgreesWithWorkspace(t *testing.T, bt broadcastTeam) {
+	t.Helper()
+	ws := bt.owner.expect(http.StatusOK, "GET", "/v1/workspace", nil).body
+	for _, m := range bt.owner.expect(http.StatusOK, "GET", "/v1/me", nil).body["memberships"].([]any) {
+		mw := m.(map[string]any)["workspace"].(map[string]any)
+		if mw["id"] != ws["id"] {
+			continue
+		}
+		if !reflect.DeepEqual(mw, ws) {
+			t.Fatalf("/v1/me workspace %v, /v1/workspace %v", mw, ws)
+		}
+		return
+	}
+	t.Fatalf("no membership for workspace %v", ws["id"])
 }
 
 func TestBroadcastComplaintRateSuspends(t *testing.T) {
@@ -634,6 +652,7 @@ func TestBroadcastComplaintRateSuspends(t *testing.T) {
 	if ws["status"] != "suspended" {
 		t.Fatalf("workspace not suspended: %v", ws)
 	}
+	meAgreesWithWorkspace(t, bt)
 	bt.owner.expectProblem(http.StatusForbidden, "broadcasts_suspended", "POST", "/v1/broadcasts/"+id+"/resume", nil)
 	if err := h.srv.OperatorApproveBroadcasts(context.Background(), uuid.MustParse(bt.ws), ""); err != nil {
 		t.Fatal(err)

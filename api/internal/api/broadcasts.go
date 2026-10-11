@@ -854,12 +854,16 @@ func (s *Server) RequestBroadcastApproval(ctx context.Context, req oas.RequestBr
 
 // workspaceBody is the workspace with its broadcast status, limit and today's count.
 func (s *Server) workspaceBody(ctx context.Context, w store.Workspace) (oas.Workspace, error) {
+	return s.workspaceBodyQ(ctx, s.st.Queries, w)
+}
+
+func (s *Server) workspaceBodyQ(ctx context.Context, q *store.Queries, w store.Workspace) (oas.Workspace, error) {
 	out := oas.Workspace{Id: w.ID, Name: w.Name, RetentionDays: w.RetentionDays, BotsMaySend: w.BotsMaySend, CreatedAt: w.CreatedAt}
 	out.Broadcasts = oas.WorkspaceBroadcasts{
 		Mode: oas.BroadcastsMode(s.broadcastMode()), Status: oas.BroadcastsStatus(w.BroadcastsStatus), Reason: w.BroadcastsStatusReason,
 		StatusAt: w.BroadcastsStatusAt, ByKeys: w.BroadcastsByKeys,
 	}
-	limit, sent, err := s.dailyAllowance(ctx, s.st.Queries, w)
+	limit, sent, err := s.dailyAllowance(ctx, q, w)
 	if err != nil {
 		return out, err
 	}

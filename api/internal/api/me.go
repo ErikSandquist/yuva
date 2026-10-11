@@ -12,7 +12,7 @@ func validLocale(l oas.Locale) bool { return l == oas.En || l == oas.Tr }
 
 func validRole(r oas.Role) bool { return r == oas.Owner || r == oas.Admin || r == oas.Agent }
 
-func buildMe(ctx context.Context, q *store.Queries, personID uuid.UUID) (oas.Me, error) {
+func (s *Server) buildMe(ctx context.Context, q *store.Queries, personID uuid.UUID) (oas.Me, error) {
 	p, err := q.GetPerson(ctx, personID)
 	if err != nil {
 		return oas.Me{}, err
@@ -28,17 +28,21 @@ func buildMe(ctx context.Context, q *store.Queries, personID uuid.UUID) (oas.Me,
 		Memberships: make([]oas.Membership, 0, len(rows)),
 	}
 	for _, r := range rows {
-		me.Memberships = append(me.Memberships, oas.Membership{
-			MemberId:  r.MemberID,
-			Role:      oas.Role(r.Role),
-			Workspace: oas.Workspace{Id: r.WorkspaceID, Name: r.WorkspaceName, RetentionDays: r.WorkspaceRetentionDays, BotsMaySend: r.WorkspaceBotsMaySend, CreatedAt: r.WorkspaceCreatedAt},
-		})
+		w, err := q.GetWorkspace(ctx, r.WorkspaceID)
+		if err != nil {
+			return oas.Me{}, err
+		}
+		ws, err := s.workspaceBodyQ(ctx, q, w)
+		if err != nil {
+			return oas.Me{}, err
+		}
+		me.Memberships = append(me.Memberships, oas.Membership{MemberId: r.MemberID, Role: oas.Role(r.Role), Workspace: ws})
 	}
 	return me, nil
 }
 
 func (s *Server) GetMe(ctx context.Context, _ oas.GetMeRequestObject) (oas.GetMeResponseObject, error) {
-	me, err := buildMe(ctx, s.st.Queries, principalFrom(ctx).personID)
+	me, err := s.buildMe(ctx, s.st.Queries, principalFrom(ctx).personID)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +80,7 @@ func (s *Server) UpdateMe(ctx context.Context, req oas.UpdateMeRequestObject) (o
 			s.memberPresence(ctx, m.WorkspaceID, m.ID)
 		}
 	}
-	me, err := buildMe(ctx, s.st.Queries, personID)
+	me, err := s.buildMe(ctx, s.st.Queries, personID)
 	if err != nil {
 		return nil, err
 	}
