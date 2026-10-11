@@ -1193,7 +1193,21 @@ Decisions:
   (`PUT /client/v1/subscriptions/{list}`). Double
   opt-in mails a link to `/s/{token}`, a server-rendered page like `/r/{token}` whose button confirms
   (opening it changes nothing). Host backends use `/v1/lists/{id}/subscriptions`; the panel imports CSV
-  files asynchronously with progress.
+  files (below).
+- **Importing.** A CSV upload (`/v1/lists/{id}/imports`, at most 20 MiB and `YUVA_IMPORT_MAX_ROWS` rows,
+  default and maximum 100,000, one running import per workspace) needs the importer's attestation and where
+  people agreed, both stored on every consent event with the import's id. The file goes to object storage
+  and is first validated without writing anything: the encoding (UTF-8 with or without BOM, UTF-16 with
+  BOM, else Windows-1254 when the bytes include a letter only Turkish uses there, else Windows-1252), the
+  delimiter (`,`, `;` or tab) from the header row, a guessed column mapping and the counts a member
+  confirms. It refuses invalid addresses, domains that take no mail (no MX or a null MX), role addresses,
+  duplicates and every opted-out, unsubscribed or suppressed address. Importing writes 1,000 rows per
+  transaction and snoozes every ~30 s; progress reaches `/v1/realtime` only (`list_import.progress` at
+  most once a second, `list_import.updated` on each state change), never as stored events, webhooks or a
+  `subscription.*` event per row. Imports send no welcome mail; in re-confirm mode every row becomes
+  `pending` and gets a confirmation, spread over the days by the workspace's daily broadcast limit. The
+  upload is deleted when the import ends, refused rows stay 7 days for the error CSV, and an import never
+  started is cancelled after 7 days.
 - **Unsubscribing.** Every broadcast and welcome mail carries `List-Unsubscribe` with
   `List-Unsubscribe-Post: List-Unsubscribe=One-Click` (RFC 8058) and footer links to `/m/{token}`: a page
   with "unsubscribe from this list", the inbox's public lists and "unsubscribe from everything"; opening it
