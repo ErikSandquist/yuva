@@ -16,14 +16,16 @@ Keep this table current when a command changes.
 |---|---|---|
 | `openapi/` | yuva-api | `REDOCLY_TELEMETRY=off npx --yes @redocly/cli@2.54.3 lint --config openapi/redocly.yaml --format=stylish openapi/openapi.yaml` |
 | `api/`, `sdk/go` | yuva-api | in `api/`: `go generate ./... && go vet ./... && go test ./... && go build ./...` (tests that need Postgres run when `YUVA_TEST_DATABASE_URL` is set, as in CI, and skip otherwise); in `sdk/go/`: `go generate ./... && go vet ./... && go test ./... && go build ./...` |
-| `web/` | yuva-panel | in `web/`: `npm run -s extract && npx lingui compile --strict && npm run -s build` |
-| `edge/` | yuva-edge | in `edge/`: `bun run check` |
-| `sdk/js` | yuva-widget | in `sdk/js/`: `bun run check && bun run build` (reports the gzip size) |
+| `web/` | yuva-panel | in `web/`: `npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build` |
+| `edge/` | yuva-edge | in `edge/`: `bun run check` (oxfmt check, oxlint, tsc, tests) |
+| `sdk/js` | yuva-widget | in `sdk/js/`: `bun run check && bun run build` (`check` runs oxfmt check, oxlint, Lingui compile, tsc and tests; `build` reports the gzip size) |
 | `sdk/swift` | yuva-mobile | on the Mac, at the root: `swift build && swift test`; in `sdk/swift/Example/`: `xcodebuild -project YuvaExample.xcodeproj -scheme YuvaExample -destination "generic/platform=iOS Simulator" build` |
 | `sdk/kotlin` | yuva-mobile | in `sdk/kotlin/` on the Mac (JDK 21 as `JAVA_HOME`, `ANDROID_HOME` set), never on a machine without swap: `./gradlew check :sample:assembleDebug` |
 | `docs/`, site | yuva-docs | links resolve; every documented endpoint exists in `openapi/` |
-| `site/` | yuva-docs | in `site/`: `bun run i18n && bun run build && bun run links` (Lingui extract and `compile --strict`, Astro static build, link check over `dist/`) |
+| `site/` | yuva-docs | in `site/`: `bun run format:check && bun run lint && bun run i18n && bun run build && bun run links` (oxfmt check, oxlint, Lingui extract and `compile --strict`, Astro static build, link check over `dist/`) |
 
+- TypeScript and JavaScript are formatted by oxfmt and linted by oxlint with the root `.oxfmtrc.json` and
+  `.oxlintrc.json` (no semicolons, double quotes); `format` in a part rewrites its files.
 - OpenAPI is 3.1: no `nullable`. Contract first: change the spec, lint, regenerate, then implement.
 - Migrations: `api/internal/store/migrations/000NN_name.sql` (goose). Take the next free number
   only when you start writing it; never renumber one that is pushed.

@@ -11,7 +11,10 @@
     "astro": "astro",
     "i18n": "lingui extract --clean && lingui compile --strict && bun scripts/i18n-check.ts",
     "links": "bun scripts/check-links.ts",
-    "check": "bun run i18n && bun run build && bun run links"
+    "check": "bun run format:check && bun run lint && bun run i18n && bun run build && bun run links",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.2",
@@ -41,6 +44,8 @@
     "@types/node": "24",
     "geist": "^1.7.2",
     "opentype.js": "2.0.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
     "typescript": "~6"
   }
 }

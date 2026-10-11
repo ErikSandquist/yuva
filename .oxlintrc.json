@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "oxc",
+    "react"
+  ],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "**/*.gen.*",
+    "**/next-env.d.ts",
+    "**/src/locales/*/*.js",
+    "**/src/locales/*/*.ts",
+    "**/dist/",
+    "**/.astro/",
+    "**/.nuxt/",
+    "**/.output/",
+    "**/.next/",
+    "**/.source/"
+  ]
+}
