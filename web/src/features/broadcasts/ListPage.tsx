@@ -30,9 +30,9 @@ function Tiles({ list }: { list: MailingList }) {
   const { t, i18n } = useLingui()
   const fmt = new Intl.NumberFormat(i18n.locale)
   const tiles: [string, string, string?][] = [
-    [fmt.format(list.counts.subscribed), t`subscribed`, "text-success"],
+    [fmt.format(list.counts.subscribed), t`subscribed now`, "text-success"],
     [fmt.format(list.counts.pending), t`waiting for confirmation`, list.counts.pending ? "text-warning" : undefined],
-    [fmt.format(list.counts.unsubscribed), t`unsubscribed`],
+    [fmt.format(list.counts.unsubscribed), t`unsubscribed now`],
   ]
   return (
     <div className="grid grid-cols-3 gap-2" data-testid="list-tiles">

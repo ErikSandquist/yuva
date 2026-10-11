@@ -32,10 +32,10 @@ export function Growth({ list }: { list: MailingList }) {
       ? new Intl.NumberFormat(i18n.locale, { style: "percent" }).format(g.confirmation_rate)
       : "–"
   const tiles: [string, string, string?][] = [
-    [fmt.format(sum("new")), t`new`],
-    [fmt.format(sum("confirmed")), t`confirmed`, "text-success"],
-    [fmt.format(sum("unsubscribed")), t`unsubscribed`],
-    [rate, t`confirmed their address`],
+    [fmt.format(sum("new")), t`new in the last ${days} days`],
+    [fmt.format(sum("confirmed")), t`confirmed in the last ${days} days`, "text-success"],
+    [fmt.format(sum("unsubscribed")), t`unsubscribed in the last ${days} days`],
+    [rate, t`confirmed their address in the last ${days} days`],
   ]
   return (
     <Section

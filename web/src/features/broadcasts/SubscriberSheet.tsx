@@ -71,7 +71,9 @@ function EventItem({ e }: { e: ConsentEvent }) {
           {formatDateTime(e.created_at, i18n.locale)}
         </time>
       </span>
-      <span className="font-mono text-caption text-faint">{e.source}</span>
+      <span className="text-caption text-faint" data-testid="consent-source">
+        {text.consentSource[e.source] ?? e.source}
+      </span>
       {rows.length > 0 && (
         <dl className="mt-1 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-small">
           {rows.map(([k, v]) => (

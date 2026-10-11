@@ -1303,10 +1303,6 @@ msgstr "Confirmation asked"
 msgid "Confirmation mail sent"
 msgstr "Confirmation mail sent"
 
-#: src/features/broadcasts/Growth.tsx
-msgid "confirmed"
-msgstr "confirmed"
-
 #: src/components/common/text.ts
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1314,8 +1310,12 @@ msgid "Confirmed"
 msgstr "Confirmed"
 
 #: src/features/broadcasts/Growth.tsx
-msgid "confirmed their address"
-msgstr "confirmed their address"
+msgid "confirmed in the last {days} days"
+msgstr "confirmed in the last {days} days"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "confirmed their address in the last {days} days"
+msgstr "confirmed their address in the last {days} days"
 
 #: src/features/account/ConnectPage.tsx
 #: src/features/inbox/SidePanels.tsx
@@ -2763,6 +2763,10 @@ msgstr "Light"
 msgid "Light appearance"
 msgstr "Light appearance"
 
+#: src/components/common/text.ts
+msgid "Link in a mail"
+msgstr "Link in a mail"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Links"
 msgstr "Links"
@@ -2870,6 +2874,10 @@ msgstr "Low"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Lowercase letters, digits and dashes."
 msgstr "Lowercase letters, digits and dashes."
+
+#: src/components/common/text.ts
+msgid "Mail from Yuva"
+msgstr "Mail from Yuva"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
@@ -3202,10 +3210,6 @@ msgid "never used"
 msgstr "never used"
 
 #: src/features/broadcasts/Growth.tsx
-msgid "new"
-msgstr "new"
-
-#: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "New"
 
@@ -3252,6 +3256,10 @@ msgstr "new discussions"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
 msgstr "New identity secret"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "new in the last {days} days"
+msgstr "new in the last {days} days"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -5114,6 +5122,10 @@ msgstr "Signed HTTP calls to your backend when conversations, messages, feedback
 msgid "Signed-in user"
 msgstr "Signed-in user"
 
+#: src/components/common/text.ts
+msgid "Signed-in user on your site or app"
+msgstr "Signed-in user on your site or app"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "signed-in users only"
 msgstr "signed-in users only"
@@ -5209,6 +5221,10 @@ msgstr "Sort conversations your way"
 msgid "Spam"
 msgstr "Spam"
 
+#: src/components/common/text.ts
+msgid "Spam report"
+msgstr "Spam report"
+
 #: src/features/setup/previews.tsx
 msgid "Start a discussion"
 msgstr "Start a discussion"
@@ -5279,10 +5295,6 @@ msgstr "Subject"
 msgid "Subscribe form"
 msgstr "Subscribe form"
 
-#: src/features/broadcasts/ListPage.tsx
-msgid "subscribed"
-msgstr "subscribed"
-
 #: src/components/common/text.ts
 msgid "Subscribed"
 msgstr "Subscribed"
@@ -5291,6 +5303,10 @@ msgstr "Subscribed"
 msgctxt "consent event"
 msgid "Subscribed"
 msgstr "Subscribed"
+
+#: src/features/broadcasts/ListPage.tsx
+msgid "subscribed now"
+msgstr "subscribed now"
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -6024,16 +6040,19 @@ msgstr "Unsubscribe {0}?"
 msgid "Unsubscribe link"
 msgstr "Unsubscribe link"
 
-#: src/features/broadcasts/Growth.tsx
-#: src/features/broadcasts/ListPage.tsx
-msgid "unsubscribed"
-msgstr "unsubscribed"
-
 #: src/components/common/text.ts
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribed"
 msgstr "Unsubscribed"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "unsubscribed in the last {days} days"
+msgstr "unsubscribed in the last {days} days"
+
+#: src/features/broadcasts/ListPage.tsx
+msgid "unsubscribed now"
+msgstr "unsubscribed now"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."

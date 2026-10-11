@@ -1303,10 +1303,6 @@ msgstr "Onay isteniyor"
 msgid "Confirmation mail sent"
 msgstr "Onay e-postası gönderildi"
 
-#: src/features/broadcasts/Growth.tsx
-msgid "confirmed"
-msgstr "onaylandı"
-
 #: src/components/common/text.ts
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
@@ -1314,8 +1310,12 @@ msgid "Confirmed"
 msgstr "Onaylandı"
 
 #: src/features/broadcasts/Growth.tsx
-msgid "confirmed their address"
-msgstr "adresini onayladı"
+msgid "confirmed in the last {days} days"
+msgstr "son {days} günde onaylayan"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "confirmed their address in the last {days} days"
+msgstr "son {days} günde adresini onaylayan"
 
 #: src/features/account/ConnectPage.tsx
 #: src/features/inbox/SidePanels.tsx
@@ -2763,6 +2763,10 @@ msgstr "Açık"
 msgid "Light appearance"
 msgstr "Açık tema"
 
+#: src/components/common/text.ts
+msgid "Link in a mail"
+msgstr "E-postadaki bağlantı"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Links"
 msgstr "Bağlantılar"
@@ -2870,6 +2874,10 @@ msgstr "Düşük"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Lowercase letters, digits and dashes."
 msgstr "Küçük harf, rakam ve tire."
+
+#: src/components/common/text.ts
+msgid "Mail from Yuva"
+msgstr "Yuva'nın gönderdiği e-posta"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
@@ -3202,10 +3210,6 @@ msgid "never used"
 msgstr "hiç kullanılmadı"
 
 #: src/features/broadcasts/Growth.tsx
-msgid "new"
-msgstr "yeni"
-
-#: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Yeni"
 
@@ -3252,6 +3256,10 @@ msgstr "yeni tartışma"
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "New identity secret"
 msgstr "Yeni kimlik anahtarı"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "new in the last {days} days"
+msgstr "son {days} günde yeni"
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
@@ -5114,6 +5122,10 @@ msgstr "Konuşmalar, mesajlar, geri bildirimler veya kişiler değiştiğinde ar
 msgid "Signed-in user"
 msgstr "Oturum açmış kullanıcı"
 
+#: src/components/common/text.ts
+msgid "Signed-in user on your site or app"
+msgstr "Sitenizde veya uygulamanızda oturum açmış kullanıcı"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "signed-in users only"
 msgstr "yalnızca oturum açmış kullanıcılar"
@@ -5209,6 +5221,10 @@ msgstr "Konuşmaları kendine göre ayır"
 msgid "Spam"
 msgstr "Spam"
 
+#: src/components/common/text.ts
+msgid "Spam report"
+msgstr "Spam bildirimi"
+
 #: src/features/setup/previews.tsx
 msgid "Start a discussion"
 msgstr "Tartışma başlat"
@@ -5279,10 +5295,6 @@ msgstr "Konu"
 msgid "Subscribe form"
 msgstr "Abonelik formu"
 
-#: src/features/broadcasts/ListPage.tsx
-msgid "subscribed"
-msgstr "abone"
-
 #: src/components/common/text.ts
 msgid "Subscribed"
 msgstr "Abone"
@@ -5291,6 +5303,10 @@ msgstr "Abone"
 msgctxt "consent event"
 msgid "Subscribed"
 msgstr "Abone oldu"
+
+#: src/features/broadcasts/ListPage.tsx
+msgid "subscribed now"
+msgstr "şu an abone"
 
 #: src/features/broadcasts/ListPage.tsx
 #: src/features/broadcasts/Subscribers.tsx
@@ -6024,16 +6040,19 @@ msgstr "{0} adresinin aboneliği sonlandırılsın mı?"
 msgid "Unsubscribe link"
 msgstr "Abonelikten çıkma bağlantısı"
 
-#: src/features/broadcasts/Growth.tsx
-#: src/features/broadcasts/ListPage.tsx
-msgid "unsubscribed"
-msgstr "ayrıldı"
-
 #: src/components/common/text.ts
 #: src/features/broadcasts/Growth.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Unsubscribed"
 msgstr "Ayrıldı"
+
+#: src/features/broadcasts/Growth.tsx
+msgid "unsubscribed in the last {days} days"
+msgstr "son {days} günde abonelikten çıkan"
+
+#: src/features/broadcasts/ListPage.tsx
+msgid "unsubscribed now"
+msgstr "şu an abonelikten çıkmış"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Until they click the link they stay waiting for confirmation and get no other mail. Unconfirmed subscriptions are deleted after 30 days."
