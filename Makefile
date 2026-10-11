@@ -6,6 +6,8 @@ build: web widget
 	fi
 	@if [ -f sdk/js/dist/yuva.js ] && [ -f sdk/js/dist/yuva-chat.js ] && [ -f sdk/js/dist/yuva-docs.js ]; then \
 		cp sdk/js/dist/yuva.js sdk/js/dist/yuva-chat.js sdk/js/dist/yuva-docs.js api/internal/widget/dist/; \
+		rm -rf api/internal/widget/dist/widget; \
+		if [ -d sdk/js/dist/widget ]; then cp -R sdk/js/dist/widget api/internal/widget/dist/; fi; \
 	fi
 	cd api && CGO_ENABLED=0 go build -trimpath -o ../bin/yuva ./cmd/yuva
 

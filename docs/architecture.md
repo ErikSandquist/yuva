@@ -583,7 +583,10 @@ body is the members' replies) and push payloads stay text.
 loaded by one script tag. Two layouts: a floating launcher for websites, and `embedded` for an
 inline thread inside a product's own panel.
 
-- The server hosts the widget scripts itself at `/yuva.js` and `/yuva-chat.js`.
+- The server hosts the widget scripts itself at `/yuva.js`, `/yuva-chat.js` and `/yuva-docs.js` (cached
+  five minutes, ETag). What a script loads on first use (the discussion thread, composer and preview of
+  `/yuva-docs.js`) is a content-hashed chunk at `/widget/<name>-<hash>.js`, cached as immutable; a
+  request for a previous build's hash of a known chunk is redirected to the current one.
 - Public channel settings come from `GET /client/v1/channels/{key}` without creating a contact.
 
 - A `chat` channel has a public key (not a secret; it is embedded in pages and can be rotated), the

@@ -318,6 +318,7 @@ func (s *Server) Handler() http.Handler {
 		for _, name := range widget.Files {
 			mux.Handle("GET /"+name, widget.Handler(name))
 		}
+		mux.Handle("GET /widget/{file}", widget.Chunks())
 	}
 	var panel http.Handler
 	if !s.noPanel {

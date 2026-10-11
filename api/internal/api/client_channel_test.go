@@ -7,6 +7,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/productdevbook/yuva/api/internal/widget"
 )
 
 func contactCount(t *testing.T, ct chatTeam) int {
@@ -141,6 +143,27 @@ func TestWidgetScripts(t *testing.T) {
 		if res.StatusCode != http.StatusNotModified {
 			t.Fatalf("%s with a matching ETag: %d", name, res.StatusCode)
 		}
+	}
+	for _, name := range widget.ChunkNames() {
+		req, _ := http.NewRequest("GET", h.url+"/widget/"+name, nil)
+		req.Header.Set("Origin", "https://any.example")
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Body.Close()
+		if res.StatusCode != http.StatusOK || !strings.HasPrefix(res.Header.Get("Content-Type"), "text/javascript") ||
+			res.Header.Get("Access-Control-Allow-Origin") != "*" || res.Header.Get("Cache-Control") != "public, max-age=31536000, immutable" {
+			t.Fatalf("/widget/%s: %d %v", name, res.StatusCode, res.Header)
+		}
+	}
+	res, err := http.Get(h.url + "/widget/unknown-0000.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	res.Body.Close()
+	if res.StatusCode != http.StatusNotFound || res.Header.Get("Access-Control-Allow-Origin") != "*" {
+		t.Fatalf("unknown chunk: %d %v", res.StatusCode, res.Header)
 	}
 }
 

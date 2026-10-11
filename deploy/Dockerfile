@@ -23,6 +23,8 @@ RUN if [ -f /tmp/web-dist/index.html ]; then \
     fi; \
     if [ -f /tmp/widget-dist/yuva.js ] && [ -f /tmp/widget-dist/yuva-chat.js ] && [ -f /tmp/widget-dist/yuva-docs.js ]; then \
       cp /tmp/widget-dist/yuva.js /tmp/widget-dist/yuva-chat.js /tmp/widget-dist/yuva-docs.js internal/widget/dist/; \
+      rm -rf internal/widget/dist/widget; \
+      if [ -d /tmp/widget-dist/widget ]; then cp -R /tmp/widget-dist/widget internal/widget/dist/; fi; \
     fi
 ARG VERSION=dev
 ARG TARGETOS TARGETARCH
