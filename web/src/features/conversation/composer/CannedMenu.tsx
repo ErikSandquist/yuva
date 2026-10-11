@@ -14,9 +14,9 @@ export function slashToken(text: string, caret: number) {
 }
 
 export function useCannedMatches(query: string | null) {
-  const canned = useCannedReplies().data ?? []
+  const canned = useCannedReplies().data
   return useMemo(() => {
-    if (query === null) return []
+    if (query === null || !canned) return []
     const q = query.toLowerCase()
     return canned.filter((c) => c.shortcut.startsWith(q) || c.title.toLowerCase().includes(q)).slice(0, 8)
   }, [canned, query])

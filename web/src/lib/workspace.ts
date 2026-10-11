@@ -83,21 +83,23 @@ export function useChannel(id: string | undefined) {
   })
 }
 
+const channelLists = (results: { data?: Channel[] }[]) => results.map((r) => r.data)
+
 export function useChannelMap() {
   const { workspaceId: ws } = useSession()
   const inboxes = useInboxes().data ?? []
-  const results = useQueries({
+  const lists = useQueries({
     queries: inboxes.map((i) => ({
       queryKey: keys.channels(ws, i.id),
       queryFn: () =>
         unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: i.id } } })).then((r) => r.items),
       staleTime: 5 * 60_000,
     })),
+    combine: channelLists,
   })
-  const stamp = results.map((r) => r.dataUpdatedAt).join(",")
   return useMemo(() => {
     const map = new Map<string, Channel>()
-    for (const r of results) for (const ch of r.data ?? []) map.set(ch.id, ch)
+    for (const list of lists) for (const ch of list ?? []) map.set(ch.id, ch)
     return map
-  }, [stamp])
+  }, [lists])
 }
