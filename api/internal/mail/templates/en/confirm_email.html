@@ -1,0 +1,5 @@
+{{template "heading" "Confirm your e-mail address"}}
+<p style="margin:0;">You left this address in a conversation with <strong>{{.Inbox}}</strong>. Confirm it to receive and answer replies by e-mail.</p>
+{{template "button" (button .URL "Confirm e-mail address")}}
+{{template "fallback" (button .URL "Or open this link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">The link is valid for {{.Hours}} hours. If you did not leave this address, ignore this e-mail and nothing will be linked to it.</p>

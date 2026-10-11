@@ -48,7 +48,7 @@ func (s *Server) requestEmailConfirmation(ctx context.Context, q *store.Queries,
 	}); err != nil {
 		return nil, err
 	}
-	msg, err := mail.Render("confirm_email", inbox.DefaultLocale, map[string]any{
+	msg, err := mail.RenderAs(inboxMailBrand(inbox), "confirm_email", inbox.DefaultLocale, map[string]any{
 		"Inbox": inbox.Name, "URL": s.auth.PublicURL + emailConfirmPath + "?token=" + url.QueryEscape(token),
 		"Hours": int(emailConfirmTTL / time.Hour),
 	})

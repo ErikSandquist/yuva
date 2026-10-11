@@ -545,6 +545,22 @@ old (or ahead) is refused as a replay, and a notification counts only for a mess
 and for its recipients. Undeliverable addresses are shown on the
 contact, replies to them are refused until a member clears them.
 
+Mail the server writes itself (sign-in code and pause notice, invite, member notification, address
+confirmation, discussion digest, rating request) is `multipart/alternative`: the text part from
+`api/internal/mail/templates/<locale>/<name>.txt`, unchanged, and an HTML part from `<name>.html`
+in the same locale (en, tr, de; English when the locale has no text template) inside one shared
+layout (`templates/layout.html`, Go `html/template`, so every value is escaped). The layout is
+table-based with inline CSS, at most 560px wide, a system font stack, no remote images, fonts or
+tracking; a `prefers-color-scheme` media query is the only `<style>` and only darkens it. Mail to
+members and people signing in carries the "Yuva" wordmark in the panel's brand colour; mail sent to
+a contact on behalf of an inbox (address confirmation, discussion digest, rating request) carries
+the inbox's name and `branding.color` (else `#2563eb`) and never names Yuva, with a readable
+button and text colour derived from it. `List-Unsubscribe` links also appear as footer links. Both
+parts are quoted-printable UTF-8 through the server mailer (`YUVA_SMTP_*`); the rating request goes
+out through the inbox's e-mail channel like a reply, its HTML stored as the message e-mail's
+`full_html` while the message itself stays text. The continuity mail renders only its subject (its
+body is the members' replies) and push payloads stay text.
+
 ### Live chat and async messaging (web)
 
 `sdk/js` ships a framework-free web component, `<yuva-chat>`, in Shadow DOM, translated with Lingui,

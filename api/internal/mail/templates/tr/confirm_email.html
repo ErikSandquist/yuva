@@ -1,0 +1,5 @@
+{{template "heading" "E-posta adresinizi onaylayın"}}
+<p style="margin:0;">Bu adresi <strong>{{.Inbox}}</strong> ile bir yazışmada bıraktınız. Yanıtları e-postayla almak ve yanıtlamak için onaylayın.</p>
+{{template "button" (button .URL "E-posta adresimi onayla")}}
+{{template "fallback" (button .URL "Ya da bu bağlantıyı açın:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Bağlantı {{.Hours}} saat geçerlidir. Bu adresi siz bırakmadıysanız bu e-postayı yok sayın; adrese hiçbir şey bağlanmaz.</p>

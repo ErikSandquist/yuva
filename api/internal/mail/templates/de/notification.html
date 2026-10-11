@@ -1,0 +1,17 @@
+{{template "heading" (or (and (or .Messages .Assigned) (print (or .Contact "Ein Besucher") " wartet auf eine Antwort")) "Sie wurden in einer Notiz erwähnt")}}
+{{- if .Assigned}}
+<p style="margin:0 0 16px 0;">{{if .AssignedBy}}<strong>{{.AssignedBy}}</strong> hat Ihnen{{else}}Ihnen wurde{{end}} eine Unterhaltung in <strong>{{.Inbox}}</strong> zugewiesen{{if .Subject}}: {{.Subject}}{{end}}.</p>
+{{- end}}
+{{- if .Messages}}
+<p style="margin:0;">{{if .Contact}}<strong>{{.Contact}}</strong>{{else}}Ein Besucher{{end}} schrieb{{if and .Subject (not .Assigned)}} zu „{{.Subject}}“{{end}}:</p>
+{{range .Messages}}{{template "quote" .}}{{end}}
+{{- if .More}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">…und {{.More}} weitere.</p>
+{{- end}}
+{{- end}}
+{{- range .Mentions}}
+<p style="margin:0;">{{if .By}}<strong>{{.By}}</strong>{{else}}Jemand{{end}} hat Sie in einer Notiz erwähnt:</p>
+{{template "quote" .Text}}
+{{- end}}
+{{template "button" (button .URL "Unterhaltung öffnen")}}
+{{define "notification.footer"}}Sie erhalten diese E-Mail, weil die Unterhaltung nach {{.Minutes}} Minuten noch ungelesen war. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Wählen Sie, welche E-Mails Sie erhalten</a>{{end}}

@@ -1,0 +1,15 @@
+{{if or .Messages .Assigned}}{{.Inbox}}: {{if .Contact}}{{.Contact}}{{else}}ein Besucher{{end}} wartet auf eine Antwort{{else}}{{.Inbox}}: Sie wurden in einer Notiz erwähnt{{end}}
+
+{{if .Assigned}}{{if .AssignedBy}}{{.AssignedBy}} hat Ihnen{{else}}Ihnen wurde{{end}} eine Unterhaltung in {{.Inbox}} zugewiesen{{if .Subject}}: {{.Subject}}{{end}}.
+
+{{end}}{{if .Messages}}{{if .Contact}}{{.Contact}}{{else}}Ein Besucher{{end}} schrieb{{if and .Subject (not .Assigned)}} zu „{{.Subject}}“{{end}}:
+{{range .Messages}}
+> {{.}}{{end}}
+{{if .More}}…und {{.More}} weitere.
+{{end}}
+{{end}}{{range .Mentions}}{{if .By}}{{.By}}{{else}}Jemand{{end}} hat Sie in einer Notiz erwähnt:
+> {{.Text}}
+
+{{end}}Unterhaltung öffnen: {{.URL}}
+
+Sie erhalten diese E-Mail, weil die Unterhaltung nach {{.Minutes}} Minuten noch ungelesen war. Wählen Sie, welche E-Mails Sie erhalten: {{.SettingsURL}}

@@ -1,0 +1,17 @@
+{{template "heading" (or (and (or .Messages .Assigned) (print (or .Contact "A visitor") " is waiting for an answer")) "You were mentioned in a note")}}
+{{- if .Assigned}}
+<p style="margin:0 0 16px 0;">{{if .AssignedBy}}<strong>{{.AssignedBy}}</strong> assigned you{{else}}You were assigned{{end}} a conversation in <strong>{{.Inbox}}</strong>{{if .Subject}}: {{.Subject}}{{end}}.</p>
+{{- end}}
+{{- if .Messages}}
+<p style="margin:0;">{{if .Contact}}<strong>{{.Contact}}</strong>{{else}}A visitor{{end}} wrote{{if and .Subject (not .Assigned)}} about “{{.Subject}}”{{end}}:</p>
+{{range .Messages}}{{template "quote" .}}{{end}}
+{{- if .More}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">…and {{.More}} more.</p>
+{{- end}}
+{{- end}}
+{{- range .Mentions}}
+<p style="margin:0;">{{if .By}}<strong>{{.By}}</strong>{{else}}Someone{{end}} mentioned you in a note:</p>
+{{template "quote" .Text}}
+{{- end}}
+{{template "button" (button .URL "Open the conversation")}}
+{{define "notification.footer"}}You get this e-mail because it was still unread after {{.Minutes}} minutes. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Choose which e-mails you get</a>{{end}}

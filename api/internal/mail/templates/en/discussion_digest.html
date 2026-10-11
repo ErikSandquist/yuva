@@ -1,0 +1,17 @@
+{{template "heading" .Title}}
+{{- if .Answer}}
+<p style="margin:0;">An answer was accepted{{if .Answer.Author}}, written by <strong>{{.Answer.Author}}</strong>{{end}}:</p>
+{{template "answer" .Answer.Text}}
+{{- end}}
+{{- if .Posts}}
+<p style="margin:0 0 4px 0;">New replies:</p>
+{{- range .Posts}}
+<p style="margin:12px 0 0 0;"><strong>{{.Author}}</strong> wrote:</p>
+{{template "quote" .Text}}
+{{- end}}
+{{- if .More}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">…and {{.More}} more.</p>
+{{- end}}
+{{- end}}
+{{template "button" (button .URL "Read the thread")}}
+{{define "discussion_digest.footer"}}You get this e-mail because you follow this thread on {{.Inbox}}'s documentation. <a href="{{.UnsubscribeURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Stop following it</a>{{if .SettingsURL}} · <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Choose which e-mails you get</a>{{end}}{{end}}

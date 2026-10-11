@@ -1,0 +1,17 @@
+{{template "heading" .Title}}
+{{- if .Answer}}
+<p style="margin:0;">Eine Antwort wurde angenommen{{if .Answer.Author}}, geschrieben von <strong>{{.Answer.Author}}</strong>{{end}}:</p>
+{{template "answer" .Answer.Text}}
+{{- end}}
+{{- if .Posts}}
+<p style="margin:0 0 4px 0;">Neue Antworten:</p>
+{{- range .Posts}}
+<p style="margin:12px 0 0 0;"><strong>{{.Author}}</strong> schrieb:</p>
+{{template "quote" .Text}}
+{{- end}}
+{{- if .More}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">…und {{.More}} weitere.</p>
+{{- end}}
+{{- end}}
+{{template "button" (button .URL "Zum Thema")}}
+{{define "discussion_digest.footer"}}Sie erhalten diese E-Mail, weil Sie diesem Thema in der Dokumentation von {{.Inbox}} folgen. <a href="{{.UnsubscribeURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Nicht mehr folgen</a>{{if .SettingsURL}} · <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Wählen Sie, welche E-Mails Sie erhalten</a>{{end}}{{end}}

@@ -1,0 +1,5 @@
+{{template "heading" "Bestätigen Sie Ihre E-Mail-Adresse"}}
+<p style="margin:0;">Sie haben diese Adresse in einer Unterhaltung mit <strong>{{.Inbox}}</strong> angegeben. Bestätigen Sie sie, um Antworten per E-Mail zu erhalten und zu beantworten.</p>
+{{template "button" (button .URL "E-Mail-Adresse bestätigen")}}
+{{template "fallback" (button .URL "Oder öffnen Sie diesen Link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Der Link ist {{.Hours}} Stunden gültig. Wenn Sie diese Adresse nicht angegeben haben, ignorieren Sie diese E-Mail; dann wird nichts mit ihr verknüpft.</p>

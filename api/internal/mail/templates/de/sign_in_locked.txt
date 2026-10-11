@@ -1,0 +1,8 @@
+Anmeldecodes für Ihr Yuva-Konto sind pausiert
+
+Für diese Adresse wurden in den letzten {{.Hours}} Stunden {{.Failures}} falsche Anmeldecodes
+eingegeben. Deshalb sind Anmeldecodes für sie pausiert, bis in diesem Zeitraum weniger als
+{{.Failures}} falsche Codes liegen. Passkeys funktionieren weiterhin.
+
+Wenn Sie das nicht waren, versucht vielleicht jemand, in Ihr Konto zu gelangen. Sie müssen nichts
+tun: Die Codes, die dafür nötig wären, werden nur an diese Adresse gesendet.

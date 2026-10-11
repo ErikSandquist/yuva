@@ -390,8 +390,8 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 	if me.InReplyTo != nil {
 		out.InReplyTo = *me.InReplyTo
 	}
-	if msg.Html != nil && len(msgs) == 1 {
-		out.HTML = *msg.Html
+	if me.FullHtml != nil && len(msgs) == 1 {
+		out.HTML = *me.FullHtml
 	}
 	for _, m := range msgs {
 		atts, err := s.st.ListAttachmentsOfMessage(ctx, store.ListAttachmentsOfMessageParams{WorkspaceID: workspaceID, MessageID: m.ID})

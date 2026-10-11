@@ -161,7 +161,7 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 		unsubscribe := s.auth.PublicURL + unsubscribePathPrefix + s.unsubscribeToken(a)
 		data["Inbox"], data["Title"], data["Posts"] = in.Name, d.Title, list
 		data["URL"], data["UnsubscribeURL"], data["SettingsURL"] = d.Page+"#yuva-discussion-"+d.ID.String(), unsubscribe, settings
-		m, err := mail.Render("discussion_digest", locale, data)
+		m, err := mail.RenderAs(inboxMailBrand(in), "discussion_digest", locale, data)
 		if err != nil {
 			return err
 		}

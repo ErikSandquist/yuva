@@ -1,0 +1,6 @@
+{{template "heading" (print "Join " .Workspace " on Yuva")}}
+<p style="margin:0 0 8px 0;">{{if .Inviter}}<strong>{{.Inviter}}</strong> invited you{{else}}You are invited{{end}} to answer customers in <strong>{{.Workspace}}</strong> on Yuva as {{if eq .Role "owner"}}an owner{{else if eq .Role "admin"}}an admin{{else}}an agent{{end}}.</p>
+<p style="margin:0;">Sign in with this e-mail address to accept.</p>
+{{template "button" (button .URL "Sign in to accept")}}
+{{template "fallback" (button .URL "Or open this link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">The invitation expires in {{.Days}} days.</p>

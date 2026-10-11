@@ -1,0 +1,6 @@
+{{template "heading" (print "Yuva'da " .Workspace " çalışma alanına katılın")}}
+<p style="margin:0 0 8px 0;">{{if .Inviter}}<strong>{{.Inviter}}</strong> sizi{{else}}Siz{{end}} Yuva'da <strong>{{.Workspace}}</strong> çalışma alanına {{if eq .Role "owner"}}sahip{{else if eq .Role "admin"}}yönetici{{else}}temsilci{{end}} olarak davet {{if .Inviter}}etti{{else}}edildiniz{{end}}.</p>
+<p style="margin:0;">Daveti kabul etmek için bu e-posta adresiyle giriş yapın.</p>
+{{template "button" (button .URL "Giriş yapıp daveti kabul edin")}}
+{{template "fallback" (button .URL "Ya da bu bağlantıyı açın:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Davet {{.Days}} gün içinde geçersiz olur.</p>

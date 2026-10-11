@@ -1,0 +1,7 @@
+Sie sind zu {{.Workspace}} auf Yuva eingeladen
+
+{{if .Inviter}}{{.Inviter}} hat Sie eingeladen{{else}}Sie sind eingeladen{{end}}, in {{.Workspace}} auf Yuva Kundenanfragen zu beantworten, in der Rolle {{if eq .Role "owner"}}Inhaber{{else if eq .Role "admin"}}Administrator{{else}}Agent{{end}}.
+
+Melden Sie sich mit dieser E-Mail-Adresse an, um die Einladung anzunehmen: {{.URL}}
+
+Die Einladung läuft in {{.Days}} Tagen ab.

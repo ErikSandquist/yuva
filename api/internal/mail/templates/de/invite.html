@@ -1,0 +1,6 @@
+{{template "heading" (print "Einladung zu " .Workspace " auf Yuva")}}
+<p style="margin:0 0 8px 0;">{{if .Inviter}}<strong>{{.Inviter}}</strong> hat Sie eingeladen{{else}}Sie sind eingeladen{{end}}, in <strong>{{.Workspace}}</strong> auf Yuva Kundenanfragen zu beantworten, in der Rolle {{if eq .Role "owner"}}Inhaber{{else if eq .Role "admin"}}Administrator{{else}}Agent{{end}}.</p>
+<p style="margin:0;">Melden Sie sich mit dieser E-Mail-Adresse an, um die Einladung anzunehmen.</p>
+{{template "button" (button .URL "Anmelden und annehmen")}}
+{{template "fallback" (button .URL "Oder öffnen Sie diesen Link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Die Einladung läuft in {{.Days}} Tagen ab.</p>

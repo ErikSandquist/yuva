@@ -1,0 +1,17 @@
+{{template "heading" (or (and (or .Messages .Assigned) (print (or .Contact "Bir ziyaretçi") " yanıt bekliyor")) "Bir notta sizden bahsedildi")}}
+{{- if .Assigned}}
+<p style="margin:0 0 16px 0;">{{if .AssignedBy}}<strong>{{.AssignedBy}}</strong> size <strong>{{.Inbox}}</strong> gelen kutusunda bir konuşma atadı{{else}}<strong>{{.Inbox}}</strong> gelen kutusunda size bir konuşma atandı{{end}}{{if .Subject}}: {{.Subject}}{{end}}.</p>
+{{- end}}
+{{- if .Messages}}
+<p style="margin:0;">{{if .Contact}}<strong>{{.Contact}}</strong>{{else}}Bir ziyaretçi{{end}} yazdı{{if and .Subject (not .Assigned)}} (“{{.Subject}}”){{end}}:</p>
+{{range .Messages}}{{template "quote" .}}{{end}}
+{{- if .More}}
+<p class="y-muted" style="margin:0 0 16px 0;font-size:13px;color:#71717a;">…ve {{.More}} mesaj daha.</p>
+{{- end}}
+{{- end}}
+{{- range .Mentions}}
+<p style="margin:0;">{{if .By}}<strong>{{.By}}</strong>{{else}}Biri{{end}} bir notta sizden bahsetti:</p>
+{{template "quote" .Text}}
+{{- end}}
+{{template "button" (button .URL "Konuşmayı açın")}}
+{{define "notification.footer"}}Bu e-postayı, konuşma {{.Minutes}} dakika boyunca okunmadığı için alıyorsunuz. <a href="{{.SettingsURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Hangi e-postaları alacağınızı seçin</a>{{end}}

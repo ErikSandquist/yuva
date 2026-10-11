@@ -1,0 +1,9 @@
+Bestätigen Sie Ihre E-Mail-Adresse für {{.Inbox}}
+
+Sie haben diese Adresse in einer Unterhaltung mit {{.Inbox}} angegeben. Bestätigen Sie sie, um
+Antworten per E-Mail zu erhalten und zu beantworten:
+
+    {{.URL}}
+
+Der Link ist {{.Hours}} Stunden gültig. Wenn Sie diese Adresse nicht angegeben haben, ignorieren Sie
+diese E-Mail; dann wird nichts mit ihr verknüpft.

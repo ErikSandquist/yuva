@@ -138,7 +138,7 @@ func (s *Server) RequestRating(ctx context.Context, workspaceID, conversationID 
 			locale = *ct.Locale
 		}
 		link := s.auth.PublicURL + ratingPathPrefix + s.ratingToken(c) + "?rating="
-		msg, err := mail.Render("rating_request", locale, map[string]string{
+		msg, err := mail.RenderAs(inboxMailBrand(in), "rating_request", locale, map[string]string{
 			"Inbox": in.Name, "GoodURL": link + string(oas.Good), "BadURL": link + string(oas.Bad),
 		})
 		if err != nil {
@@ -154,7 +154,9 @@ func (s *Server) RequestRating(ctx context.Context, workspaceID, conversationID 
 		if err != nil {
 			return err
 		}
-		summary, err := s.queueEmail(ctx, q, events, plan, row)
+		mailed := row
+		mailed.Html = &msg.HTML
+		summary, err := s.queueEmail(ctx, q, events, plan, mailed)
 		if err != nil {
 			return err
 		}
@@ -286,6 +288,15 @@ func (s *Server) ratingTarget(ctx context.Context, q *store.Queries, token strin
 		return c, in, false, err
 	}
 	return c, in, c.ClosedAt != nil && c.ClosedAt.UnixMicro() == ref.closedAt.UnixMicro(), nil
+}
+
+func inboxMailBrand(in store.Inbox) mail.Brand {
+	b := mail.Brand{Name: in.Name, Color: defaultBrandColor}
+	var br oas.InboxBranding
+	if json.Unmarshal(in.Branding, &br) == nil && br.Color != nil && colorPattern.MatchString(*br.Color) {
+		b.Color = *br.Color
+	}
+	return b
 }
 
 func ratingViewFor(in store.Inbox) ratingView {
