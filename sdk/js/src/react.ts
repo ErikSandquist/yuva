@@ -66,7 +66,9 @@ export function useConversations(): ConversationsResult {
   const [state, setState] = useState<ListState<ClientConversation>>(initial)
   const cursor = useRef<string | undefined>(undefined)
   const current = useRef(state)
-  current.current = state
+  useEffect(() => {
+    current.current = state
+  })
 
   const load = useCallback(
     async (more: boolean) => {
@@ -87,6 +89,7 @@ export function useConversations(): ConversationsResult {
   )
 
   useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- fetching from the client is syncing with an external system
     void load(false)
     const offSession = client.on("session", ({ renewed }) => void (renewed && load(false)))
     const offEvent = client.on("event", (message) => {
@@ -194,6 +197,7 @@ export function useMessages(conversationId: string | null | undefined): Messages
   )
 
   useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- fetching from the client is syncing with an external system
     void load(false)
     if (!conversationId) return
     const offSession = client.on("session", ({ renewed }) => void (renewed && load(false)))
@@ -255,9 +259,11 @@ export interface YuvaDiscussionsProps extends YuvaDocsProps {
 type Handlers = Record<string, ((detail: never) => void) | undefined>
 
 function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): ReactElement {
-  const ref = useRef<HTMLElement | null>(null)
+  const [element, setElement] = useState<HTMLElement | null>(null)
   const latest = useRef(handlers)
-  latest.current = handlers
+  useEffect(() => {
+    latest.current = handlers
+  })
   const { channel, server, locale, dir, page, pageTitle, identityToken, className, style } = props
 
   useEffect(() => {
@@ -265,7 +271,6 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
   }, [])
 
   useEffect(() => {
-    const element = ref.current
     if (!element) return
     const attributes: Record<string, string | undefined> = {
       server,
@@ -280,10 +285,9 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
       if (value) element.setAttribute(name, value)
       else element.removeAttribute(name)
     }
-  }, [channel, server, locale, dir, page, pageTitle, identityToken])
+  }, [element, channel, server, locale, dir, page, pageTitle, identityToken])
 
   useEffect(() => {
-    const element = ref.current
     if (!element || typeof identityToken !== "function") return
     let current = true
     void customElements.whenDefined(tag).then(() => {
@@ -295,11 +299,10 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
     return () => {
       current = false
     }
-  }, [tag, identityToken])
+  }, [element, tag, identityToken])
 
   const events = Object.keys(handlers).join(" ")
   useEffect(() => {
-    const element = ref.current
     if (!element) return
     const listeners = events.split(" ").map((type) => {
       const listener = (event: Event) => latest.current[type]?.((event as CustomEvent).detail as never)
@@ -307,9 +310,9 @@ function useDocsElement(tag: string, props: YuvaDocsProps, handlers: Handlers): 
       return () => element.removeEventListener(type, listener)
     })
     return () => listeners.forEach((off) => off())
-  }, [events])
+  }, [element, events])
 
-  return createElement(tag, { ref, className, style })
+  return createElement(tag, { ref: setElement, className, style })
 }
 
 export function YuvaPageFeedback({ onRating, onFeedback, ...props }: YuvaPageFeedbackProps): ReactElement {
