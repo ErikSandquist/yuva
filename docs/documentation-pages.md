@@ -32,8 +32,7 @@ can serve both.
 Put them in the template every docs page shares, after the article. Your Yuva server hosts
 `/yuva-docs.js`.
 
-npm has them as `useyuva/docs`, `useyuva/react` and `useyuva/nuxt` from the release after `useyuva` 0.0.6. Until
-then, use the hosted script or depend on `sdk/js` by path, as the examples do.
+npm has them as `useyuva/docs`, `useyuva/react` and `useyuva/nuxt` (`useyuva` 0.0.7 and later).
 
 ### Nuxt Content
 
@@ -170,8 +169,7 @@ const tr: Partial<YuvaDiscussionsLabels> = {
 ```
 
 The components use logical spacing (`ps-`, `border-s`, `text-start`), so they work under
-`dir="rtl"`. Like the elements, they need `useyuva` from the release after 0.0.6; until then depend
-on `sdk/js` by path, as the example does.
+`dir="rtl"`. Like the elements, they need `useyuva` 0.0.7 or later.
 
 ### Other generators
 

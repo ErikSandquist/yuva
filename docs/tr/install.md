@@ -34,7 +34,7 @@ services:
     restart: unless-stopped
 
   yuva:
-    image: ghcr.io/productdevbook/yuva:0.0.6
+    image: ghcr.io/productdevbook/yuva:0.0.7
     env_file: .env
     environment:
       YUVA_DATABASE_URL: postgres://yuva:${POSTGRES_PASSWORD}@db:5432/yuva?sslmode=disable
@@ -77,7 +77,7 @@ YUVA_SMTP_FROM=Yuva <yuva@example.com>
 ### 3. Başlatın
 
 ```sh
-docker run --rm ghcr.io/productdevbook/yuva:0.0.6 vapid-keys >> .env
+docker run --rm ghcr.io/productdevbook/yuva:0.0.7 vapid-keys >> .env
 docker compose up -d
 curl -s http://127.0.0.1:8080/readyz     # {"status":"ok"}
 ```
@@ -194,7 +194,7 @@ programıdır; [operatör komutlarını](operations.md#operatör-komutları) da 
 derlemek için sürüm etiketini checkout edip şunu çalıştırın:
 
 ```sh
-docker build -f deploy/Dockerfile --build-arg VERSION=0.0.6 -t ghcr.io/productdevbook/yuva:0.0.6 .
+docker build -f deploy/Dockerfile --build-arg VERSION=0.0.7 -t ghcr.io/productdevbook/yuva:0.0.7 .
 ```
 
 Depodaki `deploy/compose.yaml` yalnızca geliştirme içindir. Production'da çalıştırmayın.

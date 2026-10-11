@@ -33,9 +33,7 @@ Verwenden Sie einen Chat-Kanal, eingerichtet wie für das
 Setzen Sie sie in die Vorlage, die alle Doku-Seiten teilen, nach dem Artikel. Ihr Yuva-Server
 liefert `/yuva-docs.js` aus.
 
-Auf npm gibt es sie als `useyuva/docs`, `useyuva/react` und `useyuva/nuxt` ab dem Release nach `useyuva` 0.0.6.
-Bis dahin nutzen Sie das gehostete Skript oder binden `sdk/js` per Pfad ein, wie es die Beispiele
-tun.
+Auf npm gibt es sie als `useyuva/docs`, `useyuva/react` und `useyuva/nuxt` (`useyuva` 0.0.7 und neuer).
 
 ### Nuxt Content
 
@@ -178,8 +176,7 @@ const tr: Partial<YuvaDiscussionsLabels> = {
 ```
 
 Die Komponenten verwenden logische Abstände (`ps-`, `border-s`, `text-start`) und funktionieren
-deshalb auch unter `dir="rtl"`. Wie die Elemente brauchen sie `useyuva` aus dem Release nach 0.0.6;
-bis dahin hängen Sie wie das Beispiel per Pfad von `sdk/js` ab.
+deshalb auch unter `dir="rtl"`. Wie die Elemente brauchen sie `useyuva` 0.0.7 oder neuer.
 
 ### Andere Generatoren
 

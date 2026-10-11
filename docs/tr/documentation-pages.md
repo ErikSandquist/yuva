@@ -33,9 +33,7 @@ kullanın; tek bir kanal ikisine de hizmet edebilir.
 Bunları her doküman sayfasının paylaştığı şablona, makalenin arkasına koyun. `/yuva-docs.js`
 dosyasını Yuva sunucunuz sunar.
 
-npm'de `useyuva` 0.0.6'dan sonraki sürümden itibaren `useyuva/docs`, `useyuva/react` ve `useyuva/nuxt` olarak
-bulunurlar. O zamana kadar sunucudaki betiği kullanın ya da örneklerdeki gibi `sdk/js`'e yol
-üzerinden bağımlı olun.
+npm'de `useyuva/docs`, `useyuva/react` ve `useyuva/nuxt` olarak bulunurlar (`useyuva` 0.0.7 ve sonrası).
 
 ### Nuxt Content
 
@@ -175,8 +173,7 @@ const tr: Partial<YuvaDiscussionsLabels> = {
 ```
 
 Bileşenler mantıksal boşluklar kullanır (`ps-`, `border-s`, `text-start`), bu yüzden `dir="rtl"`
-altında da çalışır. Öğeler gibi `useyuva`'nın 0.0.6'dan sonraki sürümüne ihtiyaç duyarlar; o zamana
-kadar örnekteki gibi `sdk/js`'e yol üzerinden bağlanın.
+altında da çalışır. Öğeler gibi `useyuva` 0.0.7 ya da sonrasını isterler.
 
 ### Diğer site üreticileri
 
