@@ -17,8 +17,10 @@ Kanals (`yuva_pk_…`). Der Schlüssel ist kein Geheimnis.
 ```
 
 Das zeigt einen schwebenden Launcher. Mit einem Bundler: `npm install useyuva`,
-`import "useyuva/chat"` und das Attribut `server` setzen. Sendet Ihre Website eine Content Security
-Policy, erlauben Sie Ihren Yuva-Server in `script-src` und `connect-src` (`https://` und `wss://`).
+`import "useyuva/chat"` und das Attribut `server` setzen. In Nuxt: `modules: ["useyuva/nuxt"]`,
+`yuva: { server, channel }` in der `nuxt.config` und `<YuvaChat />`. Sendet Ihre Website eine
+Content Security Policy, erlauben Sie Ihren Yuva-Server in `script-src` und `connect-src`
+(`https://` und `wss://`).
 
 ## 3. Angemeldete Nutzer
 

@@ -28,36 +28,32 @@ kullanın; tek bir kanal ikisine de hizmet edebilir.
 Bunları her doküman sayfasının paylaştığı şablona, makalenin arkasına koyun. `/yuva-docs.js`
 dosyasını Yuva sunucunuz sunar.
 
-npm'de `useyuva` 0.0.6'dan sonraki sürümden itibaren `useyuva/docs` ve `useyuva/react` olarak
+npm'de `useyuva` 0.0.6'dan sonraki sürümden itibaren `useyuva/docs`, `useyuva/react` ve `useyuva/nuxt` olarak
 bulunurlar. O zamana kadar sunucudaki betiği kullanın ya da örneklerdeki gibi `sdk/js`'e yol
 üzerinden bağımlı olun.
 
 ### Nuxt Content
 
 Çalıştırılabilir örnek: [`examples/nuxt-content`](../../examples/nuxt-content)
-([nasıl çalıştırılır](../../examples/README.md#nuxt-content)). Eklenecek satırlar:
-
-```ts
-// app/plugins/yuva.client.ts
-import "useyuva/docs";
-export default defineNuxtPlugin(() => {});
-```
+([nasıl çalıştırılır](../../examples/README.md#nuxt-content)). Modülü ekleyin:
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  vue: { compilerOptions: { isCustomElement: (tag) => tag.startsWith("yuva-") } },
-  runtimeConfig: { public: { yuvaChannel: "", yuvaServer: "" } },
+  modules: ["@nuxt/content", "useyuva/nuxt"],
+  yuva: { server: "https://support.example.com", channel: "yuva_pk_xxxxxxxxxxxxxxxx" },
 });
 ```
 
 ```vue
 <!-- app/pages/[...slug].vue, <ContentRenderer> sonrasına -->
-<yuva-page-questions :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
-<yuva-page-feedback :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
+<YuvaPageQuestions :page-title="page.title" />
+<YuvaPageFeedback :page-title="page.title" />
 ```
 
-`config`, `useRuntimeConfig().public` değeridir. Yeni bir sitede `nuxt build` "Nuxt Content
+`NUXT_PUBLIC_YUVA_SERVER` ve `NUXT_PUBLIC_YUVA_CHANNEL`, çalışma anında `yuva` değerlerinin yerine
+geçer. Bileşenler sunucuda render edilir ve öğeleri tarayıcıda yükler; bu yüzden `nuxt generate` de
+çalışır. Olaylar `@rating`, `@feedback` ve `@question`'dır. Yeni bir sitede `nuxt build` "Nuxt Content
 requires better-sqlite3" hatasıyla durur: paketi kurun ya da örnekteki gibi
 `content.experimental.sqliteConnector: "native"` atayın. Sayfa bir `content` koleksiyonunu sorgular;
 onu örneğin [`content.config.ts`](../../examples/nuxt-content/content.config.ts) dosyasındaki gibi
@@ -99,7 +95,7 @@ atayın.
 Betiği (ya da `useyuva/docs`'u) yükleyin ve öğeleri makalenin altına koyun:
 
 - **Starlight**: öğeleri override edilmiş bir `Footer`'a ekleyin.
-- **VitePress**: `doc-after` slot'unu kullanın; `isCustomElement`'ı Nuxt'taki gibi atayın.
+- **VitePress**: `doc-after` slot'unu kullanın; `yuva-` etiketlerini özel öğe yapın (`vue.template.compilerOptions.isCustomElement`).
 - **Docusaurus**: `DocItem/Footer`'ı swizzle edin (wrap).
 - **MkDocs, Hugo, Jekyll ve diğerleri**: [düz HTML](#düz-html) gibi.
 

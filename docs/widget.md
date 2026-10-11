@@ -17,8 +17,9 @@ a secret.
 ```
 
 This shows a floating launcher. With a bundler: `npm install useyuva`, `import "useyuva/chat"` and
-set the `server` attribute. If your site sends a Content Security Policy, allow your Yuva server in
-`script-src` and `connect-src` (`https://` and `wss://`).
+set the `server` attribute. In Nuxt: `modules: ["useyuva/nuxt"]`, `yuva: { server, channel }` in
+`nuxt.config` and `<YuvaChat />`. If your site sends a Content Security Policy, allow your Yuva
+server in `script-src` and `connect-src` (`https://` and `wss://`).
 
 ## 3. Signed-in users
 

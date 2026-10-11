@@ -8,6 +8,7 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/chat` | The `<yuva-chat>` web component, built on that client. Browser only. |
 | `useyuva/docs` | `<yuva-page-feedback>` and `<yuva-page-questions>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`. React 18+ is an optional peer. |
+| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback` and `YuvaPageQuestions` components, configured once in `nuxt.config`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
 
 ```sh
@@ -95,6 +96,23 @@ and `page-title`, which default to the URL without query and fragment and `docum
 follow client-side navigation. Events: `yuva-rating` (`{ page, rating, previous }`),
 `yuva-feedback` (`{ page, rating, conversation_id }`) and `yuva-question` (`{ page, conversation_id }`).
 In React use `YuvaPageFeedback` and `YuvaPageQuestions` from `useyuva/react`.
+
+## Nuxt
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ["useyuva/nuxt"],
+  yuva: { server: "https://support.example.com", channel: "yuva_pk_…" },
+});
+```
+
+`NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL` and `NUXT_PUBLIC_YUVA_LOCALE` override the
+options at runtime. `<YuvaChat />`, `<YuvaPageFeedback />` and `<YuvaPageQuestions />` are
+auto-imported, render on the server and load their element in the browser when they mount. Props
+are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);
+events are `@rating`, `@feedback`, `@question` and `@unread`. `yuva-*` tags are custom elements in
+your templates.
 
 ## React
 

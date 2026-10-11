@@ -40,6 +40,12 @@ check(
   }),
 );
 
+const transpiler = new Bun.Transpiler({ loader: "ts", target: "node" });
+for (const name of ["nuxt/module", "nuxt/runtime/components"]) {
+  const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text());
+  await Bun.write(`dist/esm/${name}.js`, code.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'));
+}
+
 const tsc = Bun.spawnSync(["bunx", "tsc", "-p", "tsconfig.build.json"], { stdout: "inherit", stderr: "inherit" });
 if (tsc.exitCode !== 0) process.exit(tsc.exitCode ?? 1);
 
@@ -49,7 +55,7 @@ for await (const path of new Bun.Glob("dist/types/**/*.d.ts").scan()) {
   await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'));
 }
 
-for (const name of ["yuva.js", "yuva-chat.js", "yuva-docs.js", "esm/index.js", "esm/chat.js", "esm/docs.js", "esm/react.js", "esm/api.js"]) {
+for (const name of ["yuva.js", "yuva-chat.js", "yuva-docs.js", "esm/index.js", "esm/chat.js", "esm/docs.js", "esm/react.js", "esm/api.js", "esm/nuxt/module.js", "esm/nuxt/runtime/components.js"]) {
   const bytes = await Bun.file(`dist/${name}`).bytes();
   const gzip = Bun.gzipSync(bytes, { level: 9 }).length;
   console.log(`dist/${name}  ${bytes.length} B  gzip ${gzip} B`);

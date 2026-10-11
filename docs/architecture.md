@@ -265,6 +265,8 @@ close to other names, and the `@yuva` scope belongs to someone else), MIT, versi
   identity tokens, conversations, messages, attachments, typing, read state, realtime with resume.
 - `useyuva/chat`: the `<yuva-chat>` element, built on that client; the script-tag build stays.
 - `useyuva/react`: `YuvaProvider`, `useConversations`, `useMessages` (React is an optional peer).
+- `useyuva/nuxt`: a Nuxt module with `YuvaChat`, `YuvaPageFeedback` and `YuvaPageQuestions`
+  components (`@nuxt/kit` and Vue are optional peers).
 - `useyuva/api`: a typed `/v1` client for TypeScript backends, generated from the contract.
 `sdk/go` gets a `/v1` client generated from the contract (`sdk/go/client`), next to `identity` and
 `webhook`.

@@ -1,18 +1,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2026-10-01",
-  modules: ["@nuxt/content"],
+  modules: ["@nuxt/content", "useyuva/nuxt"],
   content: {
     experimental: { sqliteConnector: "native" },
-  },
-  vue: {
-    compilerOptions: {
-      isCustomElement: (tag) => tag.startsWith("yuva-"),
-    },
-  },
-  runtimeConfig: {
-    public: {
-      yuvaChannel: "",
-      yuvaServer: "",
-    },
   },
 });

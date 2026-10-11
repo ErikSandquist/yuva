@@ -1,7 +1,7 @@
 {
   "name": "useyuva",
   "version": "0.0.6",
-  "description": "Yuva for the web: a headless client for contacts, the <yuva-chat> element, documentation page feedback and questions, React hooks and a typed /v1 client.",
+  "description": "Yuva for the web: a headless client for contacts, the <yuva-chat> element, documentation page feedback and questions, React hooks, a Nuxt module and a typed /v1 client.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,7 +15,8 @@
     "support",
     "live-chat",
     "web-component",
-    "customer-messaging"
+    "customer-messaging",
+    "nuxt"
   ],
   "type": "module",
   "sideEffects": [
@@ -46,6 +47,14 @@
       "types": "./dist/types/api.d.ts",
       "default": "./dist/esm/api.js"
     },
+    "./nuxt": {
+      "types": "./dist/types/nuxt/module.d.ts",
+      "default": "./dist/esm/nuxt/module.js"
+    },
+    "./nuxt/components": {
+      "types": "./dist/types/nuxt/runtime/components.d.ts",
+      "default": "./dist/esm/nuxt/runtime/components.js"
+    },
     "./package.json": "./package.json"
   },
   "types": "./dist/types/index.d.ts",
@@ -70,10 +79,18 @@
     "openapi-fetch": "0.17.0"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "@nuxt/kit": ">=3.15.0",
+    "react": ">=18",
+    "vue": ">=3.5.0"
   },
   "peerDependenciesMeta": {
+    "@nuxt/kit": {
+      "optional": true
+    },
     "react": {
+      "optional": true
+    },
+    "vue": {
       "optional": true
     }
   },
@@ -83,10 +100,13 @@
     "@lingui/conf": "^6.9.0",
     "@lingui/format-po": "^6.9.0",
     "@lingui/native-tools": "^0.1.5",
+    "@nuxt/kit": "4.6.1",
+    "@nuxt/schema": "4.6.1",
     "@types/bun": "^1.4.2",
     "@types/react": "19.2.2",
     "happy-dom": "^20.14.5",
     "react": "19.2.0",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vue": "3.5.43"
   }
 }

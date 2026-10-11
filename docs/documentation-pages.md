@@ -28,35 +28,31 @@ can serve both.
 Put them in the template every docs page shares, after the article. Your Yuva server hosts
 `/yuva-docs.js`.
 
-npm has them as `useyuva/docs` and `useyuva/react` from the release after `useyuva` 0.0.6. Until
+npm has them as `useyuva/docs`, `useyuva/react` and `useyuva/nuxt` from the release after `useyuva` 0.0.6. Until
 then, use the hosted script or depend on `sdk/js` by path, as the examples do.
 
 ### Nuxt Content
 
 Runnable example: [`examples/nuxt-content`](../examples/nuxt-content)
-([how to run it](../examples/README.md#nuxt-content)). The lines to add:
-
-```ts
-// app/plugins/yuva.client.ts
-import "useyuva/docs";
-export default defineNuxtPlugin(() => {});
-```
+([how to run it](../examples/README.md#nuxt-content)). Add the module:
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  vue: { compilerOptions: { isCustomElement: (tag) => tag.startsWith("yuva-") } },
-  runtimeConfig: { public: { yuvaChannel: "", yuvaServer: "" } },
+  modules: ["@nuxt/content", "useyuva/nuxt"],
+  yuva: { server: "https://support.example.com", channel: "yuva_pk_xxxxxxxxxxxxxxxx" },
 });
 ```
 
 ```vue
 <!-- app/pages/[...slug].vue, after <ContentRenderer> -->
-<yuva-page-questions :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
-<yuva-page-feedback :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
+<YuvaPageQuestions :page-title="page.title" />
+<YuvaPageFeedback :page-title="page.title" />
 ```
 
-`config` is `useRuntimeConfig().public`. On a fresh site, `nuxt build` fails with "Nuxt Content
+`NUXT_PUBLIC_YUVA_SERVER` and `NUXT_PUBLIC_YUVA_CHANNEL` override `yuva` at runtime. The components
+render on the server and load the elements in the browser, so `nuxt generate` works as well. Events
+are `@rating`, `@feedback` and `@question`. On a fresh site, `nuxt build` fails with "Nuxt Content
 requires better-sqlite3": install it, or set `content.experimental.sqliteConnector: "native"` as the
 example does. The page queries a `content` collection; define it as in the example's
 [`content.config.ts`](../examples/nuxt-content/content.config.ts).
@@ -96,7 +92,7 @@ second copy of React; set `turbopack.root` as in the example's `next.config.mjs`
 Load the script (or `useyuva/docs`) and put the elements under the article:
 
 - **Starlight**: add the elements to an overridden `Footer`.
-- **VitePress**: use the `doc-after` slot; set `isCustomElement` as for Nuxt.
+- **VitePress**: use the `doc-after` slot; make `yuva-` tags custom elements (`vue.template.compilerOptions.isCustomElement`).
 - **Docusaurus**: swizzle `DocItem/Footer` (wrap).
 - **MkDocs, Hugo, Jekyll and others**: as [plain HTML](#plain-html).
 

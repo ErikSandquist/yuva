@@ -15,9 +15,9 @@ your own code. The walkthroughs are the [Headless guide](../docs/headless.md) an
 
 The JS examples point at the SDK in this repository (`file:../../sdk/js`); build it once with
 `bun install && bun run build` in `sdk/js`. In your own project, depend on `useyuva` from npm
-instead (`useyuva/docs` and the docs components in `useyuva/react` arrive in the release after
-0.0.6). The Go example uses `sdk/go` through a `replace` directive in its
-`go.mod`; drop that line in your own module.
+instead (`useyuva/docs`, the docs components in `useyuva/react` and `useyuva/nuxt` arrive in the
+release after 0.0.6). The Go example uses `sdk/go` through a `replace` directive in its `go.mod`;
+drop that line in your own module.
 
 ## headless-chat
 

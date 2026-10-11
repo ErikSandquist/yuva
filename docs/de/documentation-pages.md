@@ -28,36 +28,32 @@ Verwenden Sie einen Chat-Kanal, eingerichtet wie für das
 Setzen Sie sie in die Vorlage, die alle Doku-Seiten teilen, nach dem Artikel. Ihr Yuva-Server
 liefert `/yuva-docs.js` aus.
 
-Auf npm gibt es sie als `useyuva/docs` und `useyuva/react` ab dem Release nach `useyuva` 0.0.6.
+Auf npm gibt es sie als `useyuva/docs`, `useyuva/react` und `useyuva/nuxt` ab dem Release nach `useyuva` 0.0.6.
 Bis dahin nutzen Sie das gehostete Skript oder binden `sdk/js` per Pfad ein, wie es die Beispiele
 tun.
 
 ### Nuxt Content
 
 Lauffähiges Beispiel: [`examples/nuxt-content`](../../examples/nuxt-content)
-([so starten Sie es](../../examples/README.md#nuxt-content)). Die Zeilen, die Sie ergänzen:
-
-```ts
-// app/plugins/yuva.client.ts
-import "useyuva/docs";
-export default defineNuxtPlugin(() => {});
-```
+([so starten Sie es](../../examples/README.md#nuxt-content)). Binden Sie das Modul ein:
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  vue: { compilerOptions: { isCustomElement: (tag) => tag.startsWith("yuva-") } },
-  runtimeConfig: { public: { yuvaChannel: "", yuvaServer: "" } },
+  modules: ["@nuxt/content", "useyuva/nuxt"],
+  yuva: { server: "https://support.example.com", channel: "yuva_pk_xxxxxxxxxxxxxxxx" },
 });
 ```
 
 ```vue
 <!-- app/pages/[...slug].vue, nach <ContentRenderer> -->
-<yuva-page-questions :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
-<yuva-page-feedback :channel="config.yuvaChannel" :server="config.yuvaServer" :page-title="page.title" />
+<YuvaPageQuestions :page-title="page.title" />
+<YuvaPageFeedback :page-title="page.title" />
 ```
 
-`config` ist `useRuntimeConfig().public`. Auf einer frischen Seite scheitert `nuxt build` mit „Nuxt
+`NUXT_PUBLIC_YUVA_SERVER` und `NUXT_PUBLIC_YUVA_CHANNEL` überschreiben `yuva` zur Laufzeit. Die
+Komponenten rendern auf dem Server und laden die Elemente im Browser, daher funktioniert auch
+`nuxt generate`. Die Events heißen `@rating`, `@feedback` und `@question`. Auf einer frischen Seite scheitert `nuxt build` mit „Nuxt
 Content requires better-sqlite3“: Installieren Sie es, oder setzen Sie
 `content.experimental.sqliteConnector: "native"` wie im Beispiel. Die Seite fragt eine
 `content`-Collection ab; definieren Sie sie wie in der
@@ -99,7 +95,7 @@ Pfad aus `sdk/js` verlinkt, kann Next eine zweite Kopie von React laden; setzen 
 Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie die Elemente unter den Artikel:
 
 - **Starlight**: die Elemente in einen überschriebenen `Footer` einfügen.
-- **VitePress**: den Slot `doc-after` nutzen; `isCustomElement` wie bei Nuxt setzen.
+- **VitePress**: den Slot `doc-after` nutzen; `yuva-`-Tags zu Custom Elements machen (`vue.template.compilerOptions.isCustomElement`).
 - **Docusaurus**: `DocItem/Footer` swizzlen (wrap).
 - **MkDocs, Hugo, Jekyll und andere**: wie [reines HTML](#reines-html).
 

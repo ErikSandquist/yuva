@@ -17,8 +17,9 @@ anahtarını (`yuva_pk_…`) kopyalayın. Anahtar gizli değildir.
 ```
 
 Bu, köşede yüzen bir düğme gösterir. Bundler ile: `npm install useyuva`, `import "useyuva/chat"` ve
-`server` niteliğini atayın. Siteniz Content Security Policy gönderiyorsa Yuva sunucunuza
-`script-src` ve `connect-src` içinde izin verin (`https://` ve `wss://`).
+`server` niteliğini atayın. Nuxt'ta: `nuxt.config` içinde `modules: ["useyuva/nuxt"]`,
+`yuva: { server, channel }` ve `<YuvaChat />`. Siteniz Content Security Policy gönderiyorsa Yuva
+sunucunuza `script-src` ve `connect-src` içinde izin verin (`https://` ve `wss://`).
 
 ## 3. Oturum açmış kullanıcılar
 

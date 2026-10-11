@@ -10,7 +10,8 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": { "#imports": ["./src/nuxt/runtime/imports.d.ts"] }
   },
   "include": ["src", "test", "scripts", "lingui.config.ts"]
 }
