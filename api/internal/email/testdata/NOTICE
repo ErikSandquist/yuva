@@ -6,3 +6,5 @@ The fixtures in this directory were written for Yuva and contain no copied mater
   should remain visible after quote and signature stripping.
 - ses_bounce.json: an Amazon SES bounce notification shaped after the notification format AWS
   documents, with placeholder addresses and ids filled in by the tests.
+- arf_abuse.eml: an abuse report in the Abuse Reporting Format (RFC 5965), written after the format
+  the RFC describes, with example addresses and invented ids.

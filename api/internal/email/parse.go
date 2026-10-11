@@ -39,6 +39,7 @@ type Message struct {
 	AuthResults string
 	Headers     map[string]string
 	Bounce      *Bounce
+	Feedback    *Feedback
 }
 
 const (
@@ -89,8 +90,9 @@ func Parse(raw []byte) (*Message, error) {
 	m.Attachments = attachments(env)
 	if env.Root != nil {
 		m.Bounce = parseBounce(env.Root)
+		m.Feedback = parseFeedback(env.Root)
 	}
-	if m.Bounce != nil {
+	if m.Bounce != nil || m.Feedback != nil {
 		m.Auto = true
 	}
 	return m, nil
