@@ -59,6 +59,20 @@ export function YuvaDiscussions({
 
 type View = { kind: "list" } | { kind: "new" } | { kind: "thread"; id: string }
 
+const hashPrefix = "#yuva-discussion-"
+
+function linkedDiscussion(): string {
+  const hash = window.location.hash
+  return hash.startsWith(hashPrefix) ? decodeURIComponent(hash.slice(hashPrefix.length)) : ""
+}
+
+function clearLink() {
+  if (!linkedDiscussion()) return
+  const url = new URL(window.location.href)
+  url.hash = ""
+  window.history.replaceState(window.history.state, "", url.href)
+}
+
 function Discussions({
   page: pageProp,
   pageTitle,
@@ -81,7 +95,20 @@ function Discussions({
     setView({ kind: "list" })
   }, [pageProp, pageTitle])
 
+  React.useEffect(() => {
+    const open = () => {
+      const id = linkedDiscussion()
+      if (!id) return
+      setView({ kind: "thread", id })
+      top.current?.scrollIntoView({ block: "start" })
+    }
+    open()
+    window.addEventListener("hashchange", open)
+    return () => window.removeEventListener("hashchange", open)
+  }, [pageProp])
+
   const go = (next: View) => {
+    if (next.kind !== "thread") clearLink()
     setView(next)
     top.current?.scrollIntoView({ block: "nearest" })
   }
