@@ -31,6 +31,7 @@ import { pageLabel } from "@/features/docs/PageContext"
 import { AuthorName, PostBody, StateTag, TeamTag, ThreadTags, useModeration } from "@/features/docs/discussions/parts"
 import { useAnswer, useDiscussion, useReply, useUpdateDiscussion } from "@/features/docs/discussions/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useResetState } from "@/hooks/use-reset-state"
 import { isGone, type Discussion, type DiscussionPost } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
@@ -366,13 +367,12 @@ export function ThreadPane() {
   const authorName = useAuthorName()
   const [editing, setEditing] = useState(false)
   const [replyTo, setReplyTo] = useState<DiscussionPost | null>(null)
-  const [cursor, setCursor] = useState(-1)
+  const [cursor, setCursor] = useResetState(-1, discussionId)
   const input = useRef<HTMLTextAreaElement>(null)
   const list = useRef<HTMLDivElement>(null)
 
   const groups = useMemo(() => orderPosts(detail.data?.posts ?? []), [detail.data?.posts])
   const flat = useMemo(() => (d ? [openingPost(d), ...groups.flatMap((g) => [g.post, ...g.replies])] : []), [d, groups])
-  useEffect(() => setCursor(-1), [discussionId])
   useEffect(() => {
     if (cursor >= 0)
       list.current?.querySelectorAll("[data-post-id]")[cursor]?.scrollIntoView({ block: "nearest", behavior: "smooth" })

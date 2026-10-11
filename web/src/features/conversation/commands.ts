@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
+
+import { useLatest } from "@/hooks/use-latest"
 
 export type CommandName =
   | "reply"
@@ -17,14 +19,13 @@ type Handlers = Partial<Record<CommandName, () => void>>
 let active: { current: Handlers } | null = null
 
 export function useCommandHandlers(handlers: Handlers) {
-  const ref = useRef(handlers)
-  ref.current = handlers
+  const ref = useLatest(handlers)
   useEffect(() => {
     active = ref
     return () => {
       if (active === ref) active = null
     }
-  }, [])
+  }, [ref])
 }
 
 export function runCommand(name: CommandName) {

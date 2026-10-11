@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useContactDirectory, type DirectoryFilter } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useResetState } from "@/hooks/use-reset-state"
 import type { Contact } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -88,9 +89,8 @@ export function ContactsColumn() {
   const [filter, setFilter] = useState<DirectoryFilter>("all")
   const directory = useContactDirectory(query, filter)
   const items = directory.data?.pages.flatMap((p) => p.items) ?? []
-  const [cursor, setCursor] = useState(-1)
+  const [cursor, setCursor] = useResetState(-1, `${filter} ${query}`)
   const list = useRef<HTMLUListElement>(null)
-  useEffect(() => setCursor(-1), [query, filter])
 
   useHotkeys({
     j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),

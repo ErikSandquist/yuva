@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { CheckIcon, EyeOffIcon, ShieldAlertIcon } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine } from "@/components/common"
@@ -16,6 +16,7 @@ import { threadLink, useQueue } from "@/features/docs/discussions/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Card, EmptyRow } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useResetState } from "@/hooks/use-reset-state"
 import type { DiscussionPostItem } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -112,20 +113,17 @@ export function QueuePane() {
   const queue = useQueue({ inbox_id: inboxId, site })
   const items = queue.data?.pages.flatMap((p) => p.items) ?? []
   const moderation = useModeration()
-  const [cursor, setCursor] = useState(-1)
+  const [picked, setCursor] = useResetState(-1, JSON.stringify([inboxId, site]))
+  const cursor = Math.min(picked, items.length - 1)
   const list = useRef<HTMLUListElement>(null)
-  useEffect(() => setCursor(-1), [inboxId, site])
-  useEffect(() => {
-    if (cursor >= items.length) setCursor(items.length - 1)
-  }, [cursor, items.length])
   useEffect(() => {
     if (cursor >= 0)
       list.current?.querySelectorAll("[data-testid=queue-item]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
   const target = items[Math.max(0, cursor)]
   const act = (to: "published" | "hidden" | "spam") => target && moderation.act(target.post, to)
-  const down = () => setCursor((i) => Math.min(items.length - 1, i + 1))
-  const up = () => setCursor((i) => Math.max(0, i - 1))
+  const down = () => setCursor(Math.min(items.length - 1, cursor + 1))
+  const up = () => setCursor(Math.max(0, cursor - 1))
   useHotkeys({
     [DISCUSSION_KEYS.next]: down,
     [DISCUSSION_KEYS.previous]: up,

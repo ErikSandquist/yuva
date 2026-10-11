@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useState } from "react"
 
 import { ErrorLine } from "@/components/common"
 import { EmailHtml, knownHeight, placedContentIds, useDark } from "@/components/common/EmailHtml"
@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useMessageEmail } from "@/features/conversation/queries"
 import { useNear } from "@/hooks/use-near"
+import { useResetState } from "@/hooks/use-reset-state"
 import { attachmentUrl, type Message } from "@/lib/api"
 import { useEmailView } from "@/lib/emailView"
 import { useSession } from "@/lib/session"
@@ -19,14 +20,13 @@ function isInlineImage(a: Message["attachments"][number]) {
 
 export function useMail(m: Message, expandQuoted: boolean) {
   const { workspaceId } = useSession()
-  const [quotedOwn, setQuotedOwn] = useState<boolean | null>(null)
+  const [quotedOwn, setQuotedOwn] = useResetState<boolean | null>(null, expandQuoted)
   const [images, setImages] = useState(false)
   const [originalOwn, setOriginalOwn] = useState<boolean | null>(null)
   const [asSent, setAsSent] = useState(false)
   const dark = useDark()
   const preferred = useEmailView()
-  const slot = useRef<HTMLDivElement>(null)
-  useEffect(() => setQuotedOwn(null), [expandQuoted])
+  const [slot, setSlot] = useState<HTMLDivElement | null>(null)
   const quotedWanted = !!m.email?.quoted && (quotedOwn ?? expandQuoted)
   const wantOriginal = !!m.html && !!m.email?.raw && (originalOwn ?? preferred === "original")
   const near = useNear(slot, wantOriginal && originalOwn === null)
@@ -51,7 +51,7 @@ export function useMail(m: Message, expandQuoted: boolean) {
   }, [html, inline, m.attachments])
   return {
     m,
-    slot,
+    slot: setSlot,
     dark,
     waiting,
     originalHtml,
@@ -85,15 +85,12 @@ export function mailSurface(mail: Mail) {
 }
 
 export function MailBody({ mail }: { mail: Mail }) {
-  const { waiting, originalHtml, html, text, images, inline } = mail
+  const { waiting, originalHtml, html, text, images, inline, slot, heightKey } = mail
   return (
     <>
       {waiting ? (
-        <div ref={mail.slot} className="w-full" data-testid="original-loading">
-          <Skeleton
-            className="w-full rounded-none"
-            style={{ height: knownHeight(mail.heightKey) ?? ORIGINAL_HEIGHT }}
-          />
+        <div ref={slot} className="w-full" data-testid="original-loading">
+          <Skeleton className="w-full rounded-none" style={{ height: knownHeight(heightKey) ?? ORIGINAL_HEIGHT }} />
         </div>
       ) : originalHtml ? (
         <EmailHtml
@@ -102,7 +99,7 @@ export function MailBody({ mail }: { mail: Mail }) {
           inline={inline}
           original
           asSent={mail.asSent}
-          heightKey={mail.heightKey}
+          heightKey={heightKey}
           initialHeight={ORIGINAL_HEIGHT}
         />
       ) : html ? (

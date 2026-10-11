@@ -1,19 +1,15 @@
-import { useEffect, useState, type RefObject } from "react"
+import { useEffect, useState } from "react"
 
-export function useNear(ref: RefObject<Element | null>, active: boolean, margin = "800px") {
+export function useNear(el: Element | null, active: boolean, margin = "800px") {
   const [near, setNear] = useState(false)
+  const observable = typeof IntersectionObserver !== "undefined"
   useEffect(() => {
-    const el = ref.current
-    if (!active || near || !el) return
-    if (typeof IntersectionObserver === "undefined") {
-      setNear(true)
-      return
-    }
+    if (!active || near || !el || !observable) return
     const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && setNear(true), {
       rootMargin: margin,
     })
     io.observe(el)
     return () => io.disconnect()
-  }, [ref, active, near, margin])
-  return near
+  }, [el, active, near, margin, observable])
+  return near || (!observable && active && !!el)
 }

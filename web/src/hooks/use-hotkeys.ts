@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
+
+import { useLatest } from "@/hooks/use-latest"
 
 type HotkeyMap = Record<string, (e: KeyboardEvent) => void>
 
@@ -37,8 +39,7 @@ if (typeof window !== "undefined") {
 }
 
 export function useHotkeys(map: HotkeyMap, enabled = true) {
-  const ref = useRef(map)
-  ref.current = map
+  const ref = useLatest(map)
   useEffect(() => {
     if (!enabled) return
     const onKey = (e: KeyboardEvent) => {
@@ -51,5 +52,5 @@ export function useHotkeys(map: HotkeyMap, enabled = true) {
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [enabled])
+  }, [enabled, ref])
 }

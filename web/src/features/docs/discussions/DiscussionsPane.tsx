@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { GlobeIcon, HourglassIcon } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { Link, useNavigate } from "react-router"
 
 import { ErrorLine, hostOf } from "@/components/common"
@@ -23,6 +23,7 @@ import {
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Card, EmptyRow } from "@/features/settings/ui"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useResetState } from "@/hooks/use-reset-state"
 import type { DiscussionTeamSort } from "@/lib/api"
 import type { DiscussionFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
@@ -43,10 +44,8 @@ export function ThreadList({
   const navigate = useNavigate()
   const list = useDiscussions(filters)
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
-  const [cursor, setCursor] = useState(-1)
+  const [cursor, setCursor] = useResetState(-1, JSON.stringify(filters))
   const ref = useRef<HTMLUListElement>(null)
-  const key = JSON.stringify(filters)
-  useEffect(() => setCursor(-1), [key])
   const down = () => setCursor((i) => Math.min(items.length - 1, i + 1))
   const up = () => setCursor((i) => Math.max(0, i - 1))
   useHotkeys(
