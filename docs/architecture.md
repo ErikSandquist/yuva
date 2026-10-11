@@ -1260,9 +1260,18 @@ Decisions:
   counted since it started or was last resumed; a workspace whose 30-day complaint rate reaches 0.3% (over
   at least 1,000 mails) or bounce rate 8% (over at least 2,000) is suspended from sending and its running
   broadcasts pause. ARF reports count only from a sender whose trusted DMARC result is `pass`.
-- **Deliverability.** A check sends a probe through the broadcast account to the channel's own address
-  and reads the trusted `Authentication-Results` (SPF, DKIM, DMARC, alignment, whether the DKIM signature
-  covers the list headers) plus DNS. A channel may also have its own DKIM key, signed by Yuva.
+- **Deliverability.** A check (six an hour per channel) sends a probe through the broadcast account to
+  the channel's own address; ingress knows it by its token (in the Message-ID or `X-Yuva-Probe`), never
+  makes it a conversation, and reads only the trusted `Authentication-Results` (SPF, each DKIM signature
+  with its domain and alignment, DMARC, whether the aligned signature's `h=` covers `List-Unsubscribe` and
+  `List-Unsubscribe-Post`) plus DNS (SPF, DMARC policy, MX of the reply domain, the Yuva DKIM record).
+  Each channel keeps its latest result; a probe not back after 10 minutes reads as `timeout`, and the
+  panel polls. The review warns when the channel was never checked, the check did not finish or cannot be
+  verified, DMARC is missing, DKIM is not aligned with `From` or the list headers are unsigned, and blocks
+  when no DKIM signature passed. A channel may have its own DKIM key (RSA 2048, private key sealed under
+  the master key, only the DNS record shown; enabling needs that record in DNS, a new sending domain turns
+  it off, deleting allows a new key). Yuva then signs broadcasts, tests, probes, confirmation and welcome
+  mail over the list headers; support replies keep their provider's signature.
 - **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` and
   opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a
   `broadcast_reply` marker; someone else's reply opens their own conversation; automatic replies are only
