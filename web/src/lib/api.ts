@@ -112,6 +112,24 @@ export type UnsubscribeReason = S["UnsubscribeReason"]
 export type ConsentEvent = S["ConsentEvent"]
 export type ConsentEventKind = S["ConsentEventKind"]
 export type ContactSubscription = S["ContactSubscription"]
+export type EmailTemplate = S["EmailTemplate"]
+export type EmailTemplateLocale = S["EmailTemplateLocale"]
+export type EmailDesign = S["EmailDesign"]
+export type EmailDesignSummary = S["EmailDesignSummary"]
+export type EmailDesignDocument = S["EmailDesignDocument"]
+export type EmailDesignIssue = S["EmailDesignIssue"]
+export type EmailDesignRender = S["EmailDesignRender"]
+export type EmailDesignVersion = S["EmailDesignVersion"]
+export type EmailDesignProblem = S["EmailDesignProblem"]
+export type EmailImage = S["EmailImage"]
+export type EmailImageProblem = S["EmailImageProblem"]
+export type EmailTheme = S["EmailTheme"]
+export type EmailThemeColors = S["EmailThemeColors"]
+export type EmailFont = S["EmailFont"]
+export type EmailBlock = S["EmailBlock"]
+export type EmailSectionChild = S["EmailSectionChild"]
+export type EmailColumnChild = S["EmailColumnChild"]
+export type EmailSocialNetwork = S["EmailSocialNetwork"]
 type Problem = S["Problem"]
 export type RealtimeMessage = S["RealtimeMessage"]
 export type ConversationQuery = NonNullable<paths["/v1/conversations"]["get"]["parameters"]["query"]>
@@ -120,12 +138,14 @@ export class ApiError extends Error {
   status: number
   code?: string
   detail?: string
+  body?: unknown
 
   constructor(status: number, problem?: Partial<Problem>) {
     super(problem?.detail ?? problem?.title ?? `HTTP ${status}`)
     this.status = status
     this.code = problem?.code
     this.detail = problem?.detail
+    this.body = problem
   }
 }
 

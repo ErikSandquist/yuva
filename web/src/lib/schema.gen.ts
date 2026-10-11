@@ -2421,12 +2421,14 @@ export interface paths {
          *
          *     Answers `201` for a new subscription and `200` with the existing one when the address is
          *     already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-         *     `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-         *     (only the person can come back: send `confirmed: false` to mail them a confirmation),
-         *     `409 opted_out` when it unsubscribed from everything, complained or was erased after
-         *     objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-         *     `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-         *     mails today.
+         *     `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+         *     with `confirmed: true` also when it asked again and waits for its confirmation: only the
+         *     person can come back, by asking on a form or in the app and confirming the mail they get;
+         *     no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+         *     everything, complained or was erased after objecting, `409 suppressed` when mail to it
+         *     bounced or was reported as spam, `400 validation_failed` without `consent` or
+         *     `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+         *     got 3 confirmation mails today.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2464,8 +2466,8 @@ export interface paths {
         /**
          * Unsubscribe a subscriber
          * @description The only change a member or key can make is `state: unsubscribed`; anything that would
-         *     make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-         *     `consent.confirmed: false` to mail the person a confirmation).
+         *     make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+         *     never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2517,6 +2519,312 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the template gallery
+         * @description The starter designs that ship with the server, in gallery order, with the name and
+         *     description in `locale` (English when the template has no text in it).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailTemplates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-templates/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A template with its design
+         * @description The template's design in `locale` (English when the template has no text in it). Its image
+         *     blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+         *     public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+         *     `template`, which copies the files into the workspace's images.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailTemplate"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List e-mail designs
+         * @description Most recently saved first, without their documents. Archived designs are left out unless
+         *     `archived=true`, which lists only them. `q` matches the name.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailDesigns"];
+        put?: never;
+        /**
+         * Create an e-mail design
+         * @description From a `document`, from a gallery `template` (its files become the workspace's images,
+         *     reused when the same file is already there), or empty when neither is given. `inbox_id`
+         *     ties the design to an inbox; without it the design is workspace-wide. The answer carries
+         *     the render's `warnings`.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["createEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Render a design
+         * @description Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+         *     HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+         *     language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+         *     without them sample values are used. `dark: true` renders the dark palette as the page's
+         *     own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+         *     and preference pages point at an example token.
+         *
+         *     Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+         *     `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+         *     102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+         *     not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+         *     (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+         *     refused (`422 html_too_large`). At most 120 renders a minute per caller
+         *     (`429 rate_limited`).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        post: operations["renderEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An e-mail design
+         * @description The design with its document (upgraded to the newest `schema`) and the render's
+         *     `warnings`.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailDesign"];
+        /**
+         * Save an e-mail design
+         * @description Replaces the name, inbox and document. `base_version` is the `version` the edit started
+         *     from; when the design has moved on since, nothing is saved and the answer is
+         *     `409 version_conflict` with the current design in `design`. Each save increases
+         *     `version` by one and takes a snapshot when the newest is older than 10 minutes or
+         *     `snapshot` is true. Saving an archived design brings it back.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        put: operations["updateEmailDesign"];
+        post?: never;
+        /**
+         * Archive an e-mail design
+         * @description Hides the design from the default list; it keeps its document and versions, and saving it
+         *     again brings it back.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        delete: operations["archiveEmailDesign"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/duplicate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Copy an e-mail design
+         * @description A new design with the same inbox and document, named `name` or "<name> (copy)".
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["duplicateEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a design's snapshots
+         * @description The kept snapshots, newest first, without their documents (at most 50).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailDesignVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A snapshot with its document
+         * @description Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailDesignVersion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions/{version}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore a snapshot
+         * @description Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+         *     same `base_version` check) and takes a `restored` snapshot of it.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["restoreEmailDesignVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the workspace's e-mail images
+         * @description Newest first.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailImages"];
+        put?: never;
+        /**
+         * Upload an e-mail image
+         * @description One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+         *     JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+         *     over 40 megapixels or 8,000 pixels on a side are refused before decoding
+         *     (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+         *     colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+         *     as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+         *     as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+         *     refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+         *     (`422 image_too_large`).
+         *
+         *     The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+         *     the workspace's images would exceed the server's limit.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["uploadEmailImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-images/{imageId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete an e-mail image
+         * @description Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+         *     not archived uses the image. An image that went out in a sent broadcast needs
+         *     `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+         *     image. The public URL stops working at once.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        delete: operations["deleteEmailImage"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2887,7 +3195,8 @@ export interface paths {
          * @description The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
          *     holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
          *     agents and API keys limited to inboxes see the events of the inboxes they can access, and
-         *     `contact.updated` and `contact.deleted` also need `contacts:read`.
+         *     `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+         *     `subscription.updated` `lists:read`.
          *
          *     Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
          *     `next` and send it as `after` on the next call; `next` is the last event returned, or a
@@ -3231,7 +3540,8 @@ export interface paths {
          *     after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
          *     (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
          *     channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-         *     address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+         *     address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+         *     seconds until the hour ends); confirmation mails are
          *     capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
          *     without changing the answer.
          *
@@ -3458,8 +3768,9 @@ export interface paths {
          *     with only an address the user typed, it is `pending` and a confirmation mail goes out.
          *     Anonymous visitor sessions answer `403 identity_required` (they use the form);
          *     a contact without an address `409 no_email`; a list that is not a public list of the inbox
-         *     `404`. Already subscribed or pending: the current state, nothing sent. An address that
-         *     bounced or complained stays `pending` and gets nothing.
+         *     `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+         *     user left before becomes `pending` with a confirmation mail. An address that bounced or
+         *     complained stays `pending` and gets nothing.
          */
         put: operations["subscribeClient"];
         post?: never;
@@ -4551,8 +4862,11 @@ export interface components {
          *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
          *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
          *       subscribers; resend confirmations.
-         *     - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
-         *       cannot hold them yet.
+         *     - `broadcasts:read`: e-mail designs, their snapshots and renders, images, the template
+         *       gallery.
+         *     - `broadcasts:write`: create, save, copy, archive and restore designs; upload and delete
+         *       images.
+         *     - `broadcasts:send`: reserved for sending broadcasts; keys cannot hold it yet.
          *
          *     `lists:*` and `broadcasts:*` are never added to keys made before they existed.
          * @enum {string}
@@ -7962,6 +8276,539 @@ export interface components {
              */
             signup: "invite" | "open";
         };
+        /** @example #2563eb */
+        EmailColor: string;
+        /**
+         * @description A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
+         *     `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
+         *     `serif` Georgia and Times New Roman, `mono` the platform's monospace font.
+         * @enum {string}
+         */
+        EmailFont: "system" | "humanist" | "geometric" | "serif" | "mono";
+        /**
+         * @description An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+         *     query, where their values are URL-escaped.
+         * @example https://example.com/news?ref=mail
+         */
+        EmailUrl: string;
+        EmailThemeColors: {
+            /** @description Behind the card. */
+            page: components["schemas"]["EmailColor"];
+            /** @description The content's background. */
+            card: components["schemas"]["EmailColor"];
+            text: components["schemas"]["EmailColor"];
+            /** @description Secondary text and the required footer. */
+            muted: components["schemas"]["EmailColor"];
+            /** @description Buttons and highlights. */
+            accent: components["schemas"]["EmailColor"];
+            link: components["schemas"]["EmailColor"];
+            /** @description Dividers and outlines. */
+            border: components["schemas"]["EmailColor"];
+        };
+        /**
+         * @description Colours for readers in dark mode. A missing one is derived from its light colour: the same
+         *     hue, dark backgrounds, text raised to 4.5:1 contrast.
+         */
+        EmailThemeDarkColors: {
+            page?: components["schemas"]["EmailColor"];
+            card?: components["schemas"]["EmailColor"];
+            text?: components["schemas"]["EmailColor"];
+            muted?: components["schemas"]["EmailColor"];
+            accent?: components["schemas"]["EmailColor"];
+            link?: components["schemas"]["EmailColor"];
+            border?: components["schemas"]["EmailColor"];
+        };
+        EmailTheme: {
+            /**
+             * Format: int32
+             * @description The content width in pixels on wide screens; 600 is the usual.
+             */
+            width: number;
+            /**
+             * @description `rtl` lays the mail out right to left; `auto` lets each text follow its own script.
+             * @default auto
+             * @enum {string}
+             */
+            direction: "ltr" | "rtl" | "auto";
+            font: components["schemas"]["EmailFont"];
+            /** @description Headings; the body font when absent. */
+            heading_font?: components["schemas"]["EmailFont"];
+            /**
+             * Format: int32
+             * @description Corner radius of the card, sections, buttons and images in pixels; 0 when absent.
+             */
+            radius?: number;
+            colors: components["schemas"]["EmailThemeColors"];
+            dark?: components["schemas"]["EmailThemeDarkColors"];
+        };
+        /**
+         * @description Mirrored in right-to-left designs.
+         * @enum {string}
+         */
+        EmailAlign: "left" | "center" | "right";
+        /**
+         * @description Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+         * @default none
+         * @enum {string}
+         */
+        EmailHide: "none" | "mobile" | "desktop";
+        EmailBlockBase: {
+            /** @description Chosen by the client, unique in the document; validation errors and warnings name it. */
+            id: string;
+            /** @description Top, right, bottom and left padding in pixels; the block's default when absent. */
+            padding?: number[];
+            background?: components["schemas"]["EmailColor"];
+            align?: components["schemas"]["EmailAlign"];
+            hide?: components["schemas"]["EmailHide"];
+        };
+        /** @description A group of blocks on its own background. Sections do not nest. */
+        EmailSectionBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "section";
+            blocks: components["schemas"]["EmailSectionChild"][];
+            /** Format: int32 */
+            border_radius?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "section";
+        };
+        EmailColumn: {
+            /**
+             * Format: int32
+             * @description Percent of the row; the widths of a row add up to 100.
+             */
+            width: number;
+            blocks: components["schemas"]["EmailColumnChild"][];
+        };
+        /**
+         * @description Two or three columns side by side that stack on narrow screens (unless `stack` is false).
+         *     Columns do not nest.
+         */
+        EmailColumnsBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "columns";
+            columns: components["schemas"]["EmailColumn"][];
+            /** @default true */
+            stack: boolean;
+            /**
+             * Format: int32
+             * @description Space between columns in pixels; 16 when absent.
+             */
+            gap?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "columns";
+        };
+        EmailHeadingBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "heading";
+            /**
+             * Format: int32
+             * @enum {integer}
+             */
+            level: 1 | 2 | 3;
+            /** @description Inline rich text (`strong`, `em`, `u`, `s`, `a`, `br`, `code`) with merge fields. */
+            text: string;
+            /** @description The theme's text colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "heading";
+        };
+        EmailTextBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "text";
+            /** @description Rich text with merge fields. */
+            html: string;
+            /**
+             * Format: int32
+             * @description Font size in pixels; 16 when absent.
+             */
+            size?: number;
+            /** @description The theme's text colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+        };
+        /**
+         * @description An uploaded image (`image_id`). Gallery templates name their own files in `asset` instead;
+         *     a saved design never does. An image block without either renders as an empty frame with
+         *     the warning `image_missing`.
+         */
+        EmailImageBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "image";
+            /** Format: uuid */
+            image_id?: string;
+            /** @description Templates only; the file in the template's `assets` folder. */
+            asset?: string;
+            /** @description Required unless `decorative`. */
+            alt?: string;
+            /** @description Says nothing to screen readers (`alt=""`). */
+            decorative?: boolean;
+            /**
+             * Format: int32
+             * @description Display width in pixels; the full content width when absent. The image is stored up to twice as wide for sharp screens.
+             */
+            width?: number;
+            link?: components["schemas"]["EmailUrl"];
+            /** @description Draws a light plate behind the image in dark mode, for dark logos on transparency. */
+            plate?: boolean;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "image";
+        };
+        EmailButtonBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "button";
+            /** @description Plain text with merge fields. */
+            label: string;
+            url: components["schemas"]["EmailUrl"];
+            /** @description The theme's accent when absent. */
+            color?: components["schemas"]["EmailColor"];
+            /** @description Used when it reads at 4.5:1 on the button; otherwise white or near-black is chosen. */
+            text_color?: components["schemas"]["EmailColor"];
+            full_width?: boolean;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "button";
+        };
+        EmailDividerBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "divider";
+            /** @description The theme's border colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+            /** Format: int32 */
+            thickness?: number;
+            /**
+             * Format: int32
+             * @description Percent of the content width; 100 when absent.
+             */
+            width?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "divider";
+        };
+        EmailSpacerBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "spacer";
+            /** Format: int32 */
+            height: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "spacer";
+        };
+        /** @enum {string} */
+        EmailSocialNetwork: "website" | "x" | "bluesky" | "mastodon" | "linkedin" | "github" | "youtube" | "instagram" | "facebook" | "tiktok" | "discord" | "threads";
+        EmailSocialItem: {
+            network: components["schemas"]["EmailSocialNetwork"];
+            url: components["schemas"]["EmailUrl"];
+        };
+        /** @description Links to profiles, as icons (served by the server) or as text. */
+        EmailSocialBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "social";
+            items: components["schemas"]["EmailSocialItem"][];
+            /**
+             * @default icons
+             * @enum {string}
+             */
+            style: "icons" | "text";
+            /**
+             * @description Icon colour; `dark` icons turn light in dark mode.
+             * @default dark
+             * @enum {string}
+             */
+            color: "dark" | "light" | "brand";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "social";
+        };
+        /** @description Extra footer text, shown above the required footer that is always added. */
+        EmailFooterBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "footer";
+            /** @description Rich text with merge fields. */
+            html: string;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "footer";
+        };
+        EmailColumnChild: components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        EmailSectionChild: components["schemas"]["EmailColumnsBlock"] | components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        EmailBlock: components["schemas"]["EmailSectionBlock"] | components["schemas"]["EmailColumnsBlock"] | components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        /**
+         * @description An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+         *     JSON. Nesting is section › columns › blocks at most.
+         */
+        EmailDesignDocument: {
+            /**
+             * Format: int32
+             * @description The document format version.
+             * @constant
+             */
+            schema: 1;
+            theme: components["schemas"]["EmailTheme"];
+            /** @description The preview text inboxes show after the subject; a broadcast's own preheader wins. */
+            preheader?: string;
+            blocks: components["schemas"]["EmailBlock"][];
+        };
+        /**
+         * @description One problem with a document. Error codes: `required`, `invalid`, `too_long`, `too_many`,
+         *     `duplicate_id`, `nesting`, `invalid_rich_text`, `invalid_url`, `unknown_merge_field`,
+         *     `merge_field_in_url`, `foreign_asset`, `asset_not_allowed`, `column_widths`. Warning codes
+         *     are listed under `renderEmailDesign`.
+         */
+        EmailDesignIssue: {
+            /** @description The block; absent for the theme and the preheader. */
+            block_id?: string;
+            /**
+             * @description The field, as a dotted path inside the block or the document.
+             * @example html
+             * @example theme.colors.text
+             * @example columns.1.width
+             */
+            field?: string;
+            /** @example invalid_rich_text */
+            code: string;
+            detail?: string;
+        };
+        EmailDesignProblem: components["schemas"]["Problem"] & {
+            errors?: components["schemas"]["EmailDesignIssue"][];
+            /** @description `version_conflict` only: the design as it is now. */
+            design?: components["schemas"]["EmailDesign"];
+        };
+        EmailDesignSummary: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /**
+             * Format: uuid
+             * @description Absent for workspace-wide designs.
+             */
+            inbox_id?: string;
+            /**
+             * Format: int32
+             * @description Increases by one with every save.
+             */
+            version: number;
+            /** @description The gallery template it was made from. */
+            template_slug?: string;
+            /**
+             * Format: uuid
+             * @description The member; absent for keys and members who left.
+             */
+            created_by?: string;
+            /** Format: uuid */
+            updated_by?: string;
+            /** Format: date-time */
+            archived_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        EmailDesign: components["schemas"]["EmailDesignSummary"] & {
+            document: components["schemas"]["EmailDesignDocument"];
+            /** @description What the render of the document warns about (see `renderEmailDesign`). */
+            warnings: components["schemas"]["EmailDesignIssue"][];
+        };
+        EmailDesignPage: {
+            items: components["schemas"]["EmailDesignSummary"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        EmailDesignTemplateRef: {
+            slug: string;
+            locale?: components["schemas"]["EmailTemplateLocale"];
+        };
+        /** @description At most one of `document` and `template`; with neither the design starts empty. */
+        EmailDesignCreate: {
+            name: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            document?: components["schemas"]["EmailDesignDocument"];
+            template?: components["schemas"]["EmailDesignTemplateRef"];
+        };
+        EmailDesignUpdate: {
+            name: string;
+            /**
+             * Format: uuid
+             * @description Absent makes the design workspace-wide.
+             */
+            inbox_id?: string;
+            document: components["schemas"]["EmailDesignDocument"];
+            /**
+             * Format: int32
+             * @description The `version` this edit started from.
+             */
+            base_version: number;
+            /** @description Keep a snapshot of this save (`manual`) whatever the time since the last one. */
+            snapshot?: boolean;
+        };
+        EmailDesignDuplicate: {
+            name?: string;
+        };
+        EmailDesignRestore: {
+            /** Format: int32 */
+            base_version: number;
+        };
+        /** @enum {string} */
+        EmailDesignVersionReason: "autosave" | "test" | "scheduled" | "restored" | "manual";
+        EmailDesignVersion: {
+            /** Format: int32 */
+            version: number;
+            reason: components["schemas"]["EmailDesignVersionReason"];
+            /** Format: uuid */
+            member_id?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        EmailDesignVersionList: {
+            items: components["schemas"]["EmailDesignVersion"][];
+        };
+        EmailDesignVersionDetail: components["schemas"]["EmailDesignVersion"] & {
+            document: components["schemas"]["EmailDesignDocument"];
+        };
+        EmailDesignRenderRequest: {
+            document: components["schemas"]["EmailDesignDocument"];
+            /** Format: uuid */
+            inbox_id?: string;
+            /** Format: uuid */
+            list_id?: string;
+            /** Format: uuid */
+            contact_id?: string;
+            subject?: string;
+            /** @description Wins over the document's own. */
+            preheader?: string;
+            dark?: boolean;
+        };
+        EmailDesignRender: {
+            html: string;
+            text: string;
+            /**
+             * Format: int64
+             * @description The HTML's size in bytes, as Gmail counts it before clipping.
+             */
+            size_bytes: number;
+            warnings: components["schemas"]["EmailDesignIssue"][];
+        };
+        EmailImage: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Format: uri
+             * @description Public, at `/i/{token}`.
+             */
+            url: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+            /** Format: int64 */
+            size_bytes: number;
+            /** @enum {string} */
+            content_type: "image/png" | "image/jpeg" | "image/gif";
+            filename: string;
+            /**
+             * Format: date-time
+             * @description When a sent broadcast first used it.
+             */
+            sent_at?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        EmailImagePage: {
+            items: components["schemas"]["EmailImage"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        EmailImageUpload: {
+            /** Format: binary */
+            file: string;
+        };
+        EmailImageUsage: {
+            designs: {
+                /** Format: uuid */
+                id: string;
+                name: string;
+            }[];
+        };
+        EmailImageProblem: components["schemas"]["Problem"] & {
+            used_by?: components["schemas"]["EmailImageUsage"];
+        };
+        /** @enum {string} */
+        EmailTemplateLocale: "en" | "tr" | "de";
+        EmailTemplate: {
+            /** @example newsletter */
+            slug: string;
+            /** @example newsletter */
+            category: string;
+            name: string;
+            description: string;
+            /** @description The languages the template has its own text in. */
+            locales: components["schemas"]["EmailTemplateLocale"][];
+            /**
+             * Format: uri
+             * @description A WebP screenshot, 600 pixels wide at twice the density.
+             */
+            preview_url: string;
+            /**
+             * Format: uri
+             * @description The rendered HTML with sample values.
+             */
+            preview_html_url: string;
+            /** Format: date */
+            added: string;
+        };
+        EmailTemplateList: {
+            items: components["schemas"]["EmailTemplate"][];
+        };
+        EmailTemplateImage: {
+            asset: string;
+            /** Format: uri */
+            url: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+        };
+        EmailTemplateDetail: components["schemas"]["EmailTemplate"] & {
+            locale: components["schemas"]["EmailTemplateLocale"];
+            document: components["schemas"]["EmailDesignDocument"];
+            images: components["schemas"]["EmailTemplateImage"][];
+        };
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -7990,6 +8837,15 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["Problem"];
+            };
+        };
+        /** @description The design was refused; `errors` names each problem. */
+        EmailDesignProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["EmailDesignProblem"];
             };
         };
         /** @description The message is refused; `reason` is shown to the sender. */
@@ -8048,6 +8904,12 @@ export interface components {
         /** @description The chat channel's public key. */
         ChannelKey: string;
         ListId: string;
+        DesignId: string;
+        DesignVersion: number;
+        ImageId: string;
+        TemplateSlug: string;
+        /** @description The language of the template's text; English by default. */
+        TemplateLocale: components["schemas"]["EmailTemplateLocale"];
         SubscriptionId: string;
         /** @description `csv` (the default) or `json`. */
         ConsentFormat: "csv" | "json";
@@ -12227,6 +13089,508 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+        };
+    };
+    listEmailTemplates: {
+        parameters: {
+            query?: {
+                /** @description The language of the template's text; English by default. */
+                locale?: components["parameters"]["TemplateLocale"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The templates. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailTemplateList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    getEmailTemplate: {
+        parameters: {
+            query?: {
+                /** @description The language of the template's text; English by default. */
+                locale?: components["parameters"]["TemplateLocale"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                slug: components["parameters"]["TemplateSlug"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The template. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailTemplateDetail"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listEmailDesigns: {
+        parameters: {
+            query?: {
+                /** @description Only the designs of this inbox. */
+                inbox_id?: string;
+                q?: string;
+                archived?: boolean;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of designs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignCreate"];
+            };
+        };
+        responses: {
+            /** @description The design. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    renderEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignRenderRequest"];
+            };
+        };
+        responses: {
+            /** @description The rendered mail. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignRender"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignUpdate"];
+            };
+        };
+        responses: {
+            /** @description The saved design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["EmailDesignProblem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    archiveEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Archived. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    duplicateEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignDuplicate"];
+            };
+        };
+        responses: {
+            /** @description The copy. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listEmailDesignVersions: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The snapshots. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignVersionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getEmailDesignVersion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+                version: components["parameters"]["DesignVersion"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The snapshot. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignVersionDetail"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    restoreEmailDesignVersion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+                version: components["parameters"]["DesignVersion"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignRestore"];
+            };
+        };
+        responses: {
+            /** @description The design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    listEmailImages: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of images. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImagePage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    uploadEmailImage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["EmailImageUpload"];
+            };
+        };
+        responses: {
+            /** @description The same image was already uploaded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImage"];
+                };
+            };
+            /** @description The image. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    deleteEmailImage: {
+        parameters: {
+            query?: {
+                force?: boolean;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                imageId: components["parameters"]["ImageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description The image is in use or was sent. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["EmailImageProblem"];
+                };
+            };
         };
     };
     getUsage: {
