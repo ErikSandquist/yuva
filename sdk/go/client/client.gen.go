@@ -23,6 +23,9 @@ import (
 
 // Defines values for ApiKeyScope.
 const (
+	BroadcastsRead     ApiKeyScope = "broadcasts:read"
+	BroadcastsSend     ApiKeyScope = "broadcasts:send"
+	BroadcastsWrite    ApiKeyScope = "broadcasts:write"
 	CannedRepliesWrite ApiKeyScope = "canned_replies:write"
 	ContactsRead       ApiKeyScope = "contacts:read"
 	ContactsWrite      ApiKeyScope = "contacts:write"
@@ -33,6 +36,8 @@ const (
 	InboxesManage      ApiKeyScope = "inboxes:manage"
 	InboxesRead        ApiKeyScope = "inboxes:read"
 	LabelsWrite        ApiKeyScope = "labels:write"
+	ListsRead          ApiKeyScope = "lists:read"
+	ListsWrite         ApiKeyScope = "lists:write"
 	MessagesWrite      ApiKeyScope = "messages:write"
 	NotesWrite         ApiKeyScope = "notes:write"
 	WebhooksManage     ApiKeyScope = "webhooks:manage"
@@ -42,6 +47,12 @@ const (
 // Valid indicates whether the value is a known member of the ApiKeyScope enum.
 func (e ApiKeyScope) Valid() bool {
 	switch e {
+	case BroadcastsRead:
+		return true
+	case BroadcastsSend:
+		return true
+	case BroadcastsWrite:
+		return true
 	case CannedRepliesWrite:
 		return true
 	case ContactsRead:
@@ -61,6 +72,10 @@ func (e ApiKeyScope) Valid() bool {
 	case InboxesRead:
 		return true
 	case LabelsWrite:
+		return true
+	case ListsRead:
+		return true
+	case ListsWrite:
 		return true
 	case MessagesWrite:
 		return true
@@ -279,6 +294,36 @@ const (
 func (e ClientTypingEventType) Valid() bool {
 	switch e {
 	case ClientTypingEventTypeTyping:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ConsentEventKind.
+const (
+	ConsentEventKindComplained       ConsentEventKind = "complained"
+	ConsentEventKindConfirmationSent ConsentEventKind = "confirmation_sent"
+	ConsentEventKindConfirmed        ConsentEventKind = "confirmed"
+	ConsentEventKindRequested        ConsentEventKind = "requested"
+	ConsentEventKindSubscribed       ConsentEventKind = "subscribed"
+	ConsentEventKindUnsubscribed     ConsentEventKind = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the ConsentEventKind enum.
+func (e ConsentEventKind) Valid() bool {
+	switch e {
+	case ConsentEventKindComplained:
+		return true
+	case ConsentEventKindConfirmationSent:
+		return true
+	case ConsentEventKindConfirmed:
+		return true
+	case ConsentEventKindRequested:
+		return true
+	case ConsentEventKindSubscribed:
+		return true
+	case ConsentEventKindUnsubscribed:
 		return true
 	default:
 		return false
@@ -1371,6 +1416,75 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for SubscriptionEventType.
+const (
+	SubscriptionEventTypeSubscriptionCreated SubscriptionEventType = "subscription.created"
+	SubscriptionEventTypeSubscriptionUpdated SubscriptionEventType = "subscription.updated"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionEventType enum.
+func (e SubscriptionEventType) Valid() bool {
+	switch e {
+	case SubscriptionEventTypeSubscriptionCreated:
+		return true
+	case SubscriptionEventTypeSubscriptionUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SubscriptionSource.
+const (
+	SubscriptionSourceApi         SubscriptionSource = "api"
+	SubscriptionSourceForm        SubscriptionSource = "form"
+	SubscriptionSourceIdentity    SubscriptionSource = "identity"
+	SubscriptionSourceImport      SubscriptionSource = "import"
+	SubscriptionSourceMember      SubscriptionSource = "member"
+	SubscriptionSourcePreferences SubscriptionSource = "preferences"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionSource enum.
+func (e SubscriptionSource) Valid() bool {
+	switch e {
+	case SubscriptionSourceApi:
+		return true
+	case SubscriptionSourceForm:
+		return true
+	case SubscriptionSourceIdentity:
+		return true
+	case SubscriptionSourceImport:
+		return true
+	case SubscriptionSourceMember:
+		return true
+	case SubscriptionSourcePreferences:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SubscriptionState.
+const (
+	SubscriptionStatePending      SubscriptionState = "pending"
+	SubscriptionStateSubscribed   SubscriptionState = "subscribed"
+	SubscriptionStateUnsubscribed SubscriptionState = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionState enum.
+func (e SubscriptionState) Valid() bool {
+	switch e {
+	case SubscriptionStatePending:
+		return true
+	case SubscriptionStateSubscribed:
+		return true
+	case SubscriptionStateUnsubscribed:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for TypingAuthorType.
 const (
 	TypingAuthorTypeContact TypingAuthorType = "contact"
@@ -1416,6 +1530,42 @@ func (e UndeliverableEmailReason) Valid() bool {
 	case UndeliverableEmailReasonBounce:
 		return true
 	case UndeliverableEmailReasonComplaint:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for UnsubscribeReason.
+const (
+	UnsubscribeReasonApi         UnsubscribeReason = "api"
+	UnsubscribeReasonClient      UnsubscribeReason = "client"
+	UnsubscribeReasonComplaint   UnsubscribeReason = "complaint"
+	UnsubscribeReasonErasure     UnsubscribeReason = "erasure"
+	UnsubscribeReasonLink        UnsubscribeReason = "link"
+	UnsubscribeReasonMember      UnsubscribeReason = "member"
+	UnsubscribeReasonOneClick    UnsubscribeReason = "one_click"
+	UnsubscribeReasonPreferences UnsubscribeReason = "preferences"
+)
+
+// Valid indicates whether the value is a known member of the UnsubscribeReason enum.
+func (e UnsubscribeReason) Valid() bool {
+	switch e {
+	case UnsubscribeReasonApi:
+		return true
+	case UnsubscribeReasonClient:
+		return true
+	case UnsubscribeReasonComplaint:
+		return true
+	case UnsubscribeReasonErasure:
+		return true
+	case UnsubscribeReasonLink:
+		return true
+	case UnsubscribeReasonMember:
+		return true
+	case UnsubscribeReasonOneClick:
+		return true
+	case UnsubscribeReasonPreferences:
 		return true
 	default:
 		return false
@@ -1492,6 +1642,8 @@ const (
 	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
 	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
 	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
+	WebhookEventTypeSubscriptionCreated   WebhookEventType = "subscription.created"
+	WebhookEventTypeSubscriptionUpdated   WebhookEventType = "subscription.updated"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -1525,6 +1677,10 @@ func (e WebhookEventType) Valid() bool {
 		return true
 	case WebhookEventTypeMessageCreated:
 		return true
+	case WebhookEventTypeSubscriptionCreated:
+		return true
+	case WebhookEventTypeSubscriptionUpdated:
+		return true
 	default:
 		return false
 	}
@@ -1557,6 +1713,24 @@ func (e Weekday) Valid() bool {
 	case Tue:
 		return true
 	case Wed:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ConsentFormat.
+const (
+	ConsentFormatCsv  ConsentFormat = "csv"
+	ConsentFormatJson ConsentFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ConsentFormat enum.
+func (e ConsentFormat) Valid() bool {
+	switch e {
+	case ConsentFormatCsv:
+		return true
+	case ConsentFormatJson:
 		return true
 	default:
 		return false
@@ -1617,6 +1791,24 @@ func (e ListContactsParamsSort) Valid() bool {
 	}
 }
 
+// Defines values for ExportContactConsentParamsFormat.
+const (
+	ExportContactConsentParamsFormatCsv  ExportContactConsentParamsFormat = "csv"
+	ExportContactConsentParamsFormatJson ExportContactConsentParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ExportContactConsentParamsFormat enum.
+func (e ExportContactConsentParamsFormat) Valid() bool {
+	switch e {
+	case ExportContactConsentParamsFormatCsv:
+		return true
+	case ExportContactConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListMessagesParamsOrder.
 const (
 	ListMessagesParamsOrderAsc  ListMessagesParamsOrder = "asc"
@@ -1629,6 +1821,42 @@ func (e ListMessagesParamsOrder) Valid() bool {
 	case ListMessagesParamsOrderAsc:
 		return true
 	case ListMessagesParamsOrderDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ExportListConsentParamsFormat.
+const (
+	ExportListConsentParamsFormatCsv  ExportListConsentParamsFormat = "csv"
+	ExportListConsentParamsFormatJson ExportListConsentParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ExportListConsentParamsFormat enum.
+func (e ExportListConsentParamsFormat) Valid() bool {
+	switch e {
+	case ExportListConsentParamsFormatCsv:
+		return true
+	case ExportListConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMailingListGrowthParamsDays.
+const (
+	N30 GetMailingListGrowthParamsDays = 30
+	N90 GetMailingListGrowthParamsDays = 90
+)
+
+// Valid indicates whether the value is a known member of the GetMailingListGrowthParamsDays enum.
+func (e GetMailingListGrowthParamsDays) Valid() bool {
+	switch e {
+	case N30:
+		return true
+	case N90:
 		return true
 	default:
 		return false
@@ -1719,6 +1947,13 @@ type ApiKeyList struct {
 //	  - `webhooks:manage`: webhooks, their deliveries and attempts.
 //	  - `workspace:manage`: update the workspace, usage.
 //	  - `feedback:write`: feedback.
+//	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
+//	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
+//	    subscribers; resend confirmations.
+//	  - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
+//	    cannot hold them yet.
+//
+// `lists:*` and `broadcasts:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -2247,6 +2482,21 @@ type ClientInboxUpdatedEvent struct {
 // ClientInboxUpdatedEventType defines model for ClientInboxUpdatedEvent.Type.
 type ClientInboxUpdatedEventType string
 
+// ClientMailingList defines model for ClientMailingList.
+type ClientMailingList struct {
+	Description string    `json:"description"`
+	DoubleOptIn bool      `json:"double_opt_in"`
+	Id          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+}
+
+// ClientMailingLists defines model for ClientMailingLists.
+type ClientMailingLists struct {
+	// FormToken Send it back with the form, 2 seconds to 2 hours from now.
+	FormToken string              `json:"form_token"`
+	Lists     []ClientMailingList `json:"lists"`
+}
+
 // ClientMember What a contact may see of a member.
 type ClientMember struct {
 	// Initials Up to two letters for an avatar; empty when the name is.
@@ -2445,6 +2695,61 @@ type ClientSessionInfo struct {
 	VisitorId *string `json:"visitor_id,omitempty"`
 }
 
+// ClientSubscription defines model for ClientSubscription.
+type ClientSubscription struct {
+	List ClientMailingList `json:"list"`
+
+	// State Absent when the contact never subscribed to the list.
+	State *SubscriptionState `json:"state,omitempty"`
+}
+
+// ClientSubscriptionAccepted defines model for ClientSubscriptionAccepted.
+type ClientSubscriptionAccepted struct {
+	// Confirmation At least one of the lists has double opt-in, so tell the visitor to check their inbox.
+	Confirmation bool `json:"confirmation"`
+}
+
+// ClientSubscriptionCreate defines model for ClientSubscriptionCreate.
+type ClientSubscriptionCreate struct {
+	// ConsentText The consent label exactly as the visitor saw it.
+	ConsentText string      `json:"consent_text"`
+	Email       string      `json:"email"`
+	FormToken   string      `json:"form_token"`
+	ListIds     []uuid.UUID `json:"list_ids"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Name   *string      `json:"name,omitempty"`
+
+	// PageUrl The page with the form.
+	PageUrl string `json:"page_url"`
+
+	// Website A honeypot field hidden from people; leave it empty.
+	Website *string `json:"website,omitempty"`
+}
+
+// ClientSubscriptionList defines model for ClientSubscriptionList.
+type ClientSubscriptionList struct {
+	Items []ClientSubscription `json:"items"`
+}
+
+// ClientSubscriptionPut defines model for ClientSubscriptionPut.
+type ClientSubscriptionPut struct {
+	// ConsentText The label the user agreed to.
+	ConsentText string  `json:"consent_text"`
+	PageUrl     *string `json:"page_url,omitempty"`
+}
+
+// ClientSubscriptionStatus defines model for ClientSubscriptionStatus.
+type ClientSubscriptionStatus struct {
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+}
+
 // ClientTyping defines model for ClientTyping.
 type ClientTyping struct {
 	Author         ClientMessageAuthor `json:"author"`
@@ -2462,6 +2767,91 @@ type ClientTypingEvent struct {
 
 // ClientTypingEventType defines model for ClientTypingEvent.Type.
 type ClientTypingEventType string
+
+// ConsentEvent defines model for ConsentEvent.
+type ConsentEvent struct {
+	ApiKeyId    *uuid.UUID `json:"api_key_id,omitempty"`
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
+	// ConsentText The label the person agreed to, as the form or the API caller sent it.
+	ConsentText *string   `json:"consent_text,omitempty"`
+	CreatedAt   time.Time `json:"created_at"`
+
+	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token.
+	Detail map[string]interface{} `json:"detail"`
+	Id     uuid.UUID              `json:"id"`
+
+	// Ip The client's IP address, when the person acted.
+	Ip *string `json:"ip,omitempty"`
+
+	// Kind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+	// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+	// proof), `unsubscribed`, `complained`.
+	Kind     ConsentEventKind `json:"kind"`
+	MemberId *uuid.UUID       `json:"member_id,omitempty"`
+
+	// PageUrl The page the person subscribed on, or the one the API caller declared.
+	PageUrl *string `json:"page_url,omitempty"`
+
+	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+	Source         string    `json:"source"`
+	SubscriptionId uuid.UUID `json:"subscription_id"`
+	UserAgent      *string   `json:"user_agent,omitempty"`
+}
+
+// ConsentEventKind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+// proof), `unsubscribed`, `complained`.
+type ConsentEventKind string
+
+// ConsentExport defines model for ConsentExport.
+type ConsentExport struct {
+	Items []ConsentRecord `json:"items"`
+}
+
+// ConsentRecord One consent event with its subscription, list and the subscription's current state.
+type ConsentRecord struct {
+	ApiKeyId    *uuid.UUID             `json:"api_key_id,omitempty"`
+	Commercial  bool                   `json:"commercial"`
+	ConsentAt   *time.Time             `json:"consent_at,omitempty"`
+	ConsentText *string                `json:"consent_text,omitempty"`
+	ContactId   uuid.UUID              `json:"contact_id"`
+	Detail      map[string]interface{} `json:"detail"`
+
+	// Email Examples: owner@example.com
+	Email   Email     `json:"email"`
+	EventAt time.Time `json:"event_at"`
+	EventId uuid.UUID `json:"event_id"`
+
+	// EventKind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+	// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+	// proof), `unsubscribed`, `complained`.
+	EventKind   ConsentEventKind `json:"event_kind"`
+	EventSource string           `json:"event_source"`
+	Ip          *string          `json:"ip,omitempty"`
+	ListId      uuid.UUID        `json:"list_id"`
+	ListName    string           `json:"list_name"`
+	MemberId    *uuid.UUID       `json:"member_id,omitempty"`
+	PageUrl     *string          `json:"page_url,omitempty"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State          SubscriptionState `json:"state"`
+	SubscriptionId uuid.UUID         `json:"subscription_id"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UserAgent         *string            `json:"user_agent,omitempty"`
+}
 
 // Contact defines model for Contact.
 type Contact struct {
@@ -2620,6 +3010,45 @@ type ContactRef struct {
 
 	// MergedIntoId Set on `contact.deleted` when the contact was merged into this one.
 	MergedIntoId *uuid.UUID `json:"merged_into_id,omitempty"`
+}
+
+// ContactSubscription defines model for ContactSubscription.
+type ContactSubscription struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email          `json:"email"`
+	Id     uuid.UUID      `json:"id"`
+	List   MailingListRef `json:"list"`
+	ListId uuid.UUID      `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// ContactSubscriptionList defines model for ContactSubscriptionList.
+type ContactSubscriptionList struct {
+	Items []ContactSubscription `json:"items"`
 }
 
 // ContactSummary How the team has served the contact, over all their conversations the caller can see (spam
@@ -3659,6 +4088,11 @@ type Inbox struct {
 	Mode InboxMode `json:"mode"`
 	Name string    `json:"name"`
 
+	// Sender Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+	// Regulation on Commercial Communication): the legal name, a postal address, a registration
+	// such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+	Sender InboxSender `json:"sender"`
+
 	// Slug Examples: acme-app
 	Slug Slug `json:"slug"`
 
@@ -3791,6 +4225,24 @@ type InboxRef struct {
 	Id uuid.UUID `json:"id"`
 }
 
+// InboxSender Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+// Regulation on Commercial Communication): the legal name, a postal address, a registration
+// such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+type InboxSender struct {
+	Contact       *string `json:"contact,omitempty"`
+	LegalName     *string `json:"legal_name,omitempty"`
+	PostalAddress *string `json:"postal_address,omitempty"`
+	Registration  *string `json:"registration,omitempty"`
+}
+
+// InboxSenderUpdate The given fields change; `null` or an empty string clears one.
+type InboxSenderUpdate struct {
+	Contact       nullable.Nullable[string] `json:"contact,omitempty"`
+	LegalName     nullable.Nullable[string] `json:"legal_name,omitempty"`
+	PostalAddress nullable.Nullable[string] `json:"postal_address,omitempty"`
+	Registration  nullable.Nullable[string] `json:"registration,omitempty"`
+}
+
 // InboxUpdate defines model for InboxUpdate.
 type InboxUpdate struct {
 	AskForRating *bool          `json:"ask_for_rating,omitempty"`
@@ -3811,6 +4263,9 @@ type InboxUpdate struct {
 	// time instead.
 	Mode *InboxMode `json:"mode,omitempty"`
 	Name *string    `json:"name,omitempty"`
+
+	// Sender Owners, admins and keys with `inboxes:manage`.
+	Sender *InboxSenderUpdate `json:"sender,omitempty"`
 
 	// Slug Examples: acme-app
 	Slug     *Slug   `json:"slug,omitempty"`
@@ -3922,6 +4377,102 @@ type LanguageTag = string
 
 // Locale The language of e-mails sent to the person.
 type Locale string
+
+// MailingList defines model for MailingList.
+type MailingList struct {
+	ArchivedAt *time.Time `json:"archived_at,omitempty"`
+
+	// ChannelId The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// Commercial Marketing content. Off for service announcements to existing users; it changes no sending rule and is part of the consent export.
+	Commercial bool              `json:"commercial"`
+	Counts     MailingListCounts `json:"counts"`
+	CreatedAt  time.Time         `json:"created_at"`
+
+	// Description Shown on subscribe forms and the preference page.
+	Description string `json:"description"`
+
+	// DoubleOptIn Form subscribers confirm by mail before they are subscribed.
+	DoubleOptIn bool      `json:"double_opt_in"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+
+	// Public Offered on subscribe forms and the preference page; private lists are filled by the API and members only.
+	Public bool `json:"public"`
+
+	// SenderReady `channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out.
+	SenderReady bool      `json:"sender_ready"`
+	UpdatedAt   time.Time `json:"updated_at"`
+
+	// Welcome Send a receipt with an unsubscribe link right after someone subscribes.
+	Welcome bool `json:"welcome"`
+}
+
+// MailingListCounts defines model for MailingListCounts.
+type MailingListCounts struct {
+	Pending      int64 `json:"pending"`
+	Subscribed   int64 `json:"subscribed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// MailingListCreate defines model for MailingListCreate.
+type MailingListCreate struct {
+	ChannelId   *uuid.UUID `json:"channel_id,omitempty"`
+	Commercial  *bool      `json:"commercial,omitempty"`
+	Description *string    `json:"description,omitempty"`
+	DoubleOptIn *bool      `json:"double_opt_in,omitempty"`
+	InboxId     uuid.UUID  `json:"inbox_id"`
+	Name        string     `json:"name"`
+	Public      *bool      `json:"public,omitempty"`
+	Welcome     *bool      `json:"welcome,omitempty"`
+}
+
+// MailingListGrowth defines model for MailingListGrowth.
+type MailingListGrowth struct {
+	ConfirmationRate *float64               `json:"confirmation_rate,omitempty"`
+	Days             []MailingListGrowthDay `json:"days"`
+}
+
+// MailingListGrowthDay defines model for MailingListGrowthDay.
+type MailingListGrowthDay struct {
+	Confirmed int64              `json:"confirmed"`
+	Date      openapi_types.Date `json:"date"`
+
+	// New Subscriptions created that day, in any state.
+	New          int64 `json:"new"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// MailingListPage defines model for MailingListPage.
+type MailingListPage struct {
+	Items []MailingList `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// MailingListRef defines model for MailingListRef.
+type MailingListRef struct {
+	Id      uuid.UUID `json:"id"`
+	InboxId uuid.UUID `json:"inbox_id"`
+	Name    string    `json:"name"`
+}
+
+// MailingListUpdate defines model for MailingListUpdate.
+type MailingListUpdate struct {
+	Archived *bool `json:"archived,omitempty"`
+
+	// ChannelId `null` leaves the list without a sending channel.
+	ChannelId   nullable.Nullable[uuid.UUID] `json:"channel_id,omitempty"`
+	Commercial  *bool                        `json:"commercial,omitempty"`
+	Description *string                      `json:"description,omitempty"`
+	DoubleOptIn *bool                        `json:"double_opt_in,omitempty"`
+	Name        *string                      `json:"name,omitempty"`
+	Public      *bool                        `json:"public,omitempty"`
+	Welcome     *bool                        `json:"welcome,omitempty"`
+}
 
 // Me defines model for Me.
 type Me struct {
@@ -5002,6 +5553,164 @@ type StoredEvent struct {
 	union json.RawMessage
 }
 
+// Subscription defines model for Subscription.
+type Subscription struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email     `json:"email"`
+	Id     uuid.UUID `json:"id"`
+	ListId uuid.UUID `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// SubscriptionConsent How the person agreed, as the caller declares it; stored as proof.
+type SubscriptionConsent struct {
+	// Confirmed `true`: the person already agreed. `false`: mail them a confirmation first.
+	Confirmed  bool       `json:"confirmed"`
+	Ip         *string    `json:"ip,omitempty"`
+	ObtainedAt *time.Time `json:"obtained_at,omitempty"`
+	PageUrl    *string    `json:"page_url,omitempty"`
+
+	// Reference Your own record of the consent, such as an order or sign-up id.
+	Reference *string `json:"reference,omitempty"`
+
+	// Text The statement the person agreed to.
+	Text *string `json:"text,omitempty"`
+}
+
+// SubscriptionContact defines model for SubscriptionContact.
+type SubscriptionContact struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// SubscriptionCreate Name the person with `email`, `contact_id` or `external_id` (at least one).
+type SubscriptionCreate struct {
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
+	Attributes *Attributes `json:"attributes,omitempty"`
+
+	// Consent How the person agreed, as the caller declares it; stored as proof.
+	Consent   SubscriptionConsent `json:"consent"`
+	ContactId *uuid.UUID          `json:"contact_id,omitempty"`
+	Email     *string             `json:"email,omitempty"`
+
+	// ExternalId The host app's id for the person in the list's inbox.
+	ExternalId *string `json:"external_id,omitempty"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Name   *string      `json:"name,omitempty"`
+}
+
+// SubscriptionDetail defines model for SubscriptionDetail.
+type SubscriptionDetail struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email          `json:"email"`
+	Events []ConsentEvent `json:"events"`
+	Id     uuid.UUID      `json:"id"`
+	ListId uuid.UUID      `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// SubscriptionEvent `subscription.created`: someone subscribed (any state). `subscription.updated`: the state
+// changed (confirmed, unsubscribed, subscribed again). Delivered to callers who hold
+// `lists:read` and can see the list's inbox.
+type SubscriptionEvent struct {
+	CreatedAt   time.Time             `json:"created_at"`
+	Data        SubscriptionEventData `json:"data"`
+	Id          int64                 `json:"id"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        SubscriptionEventType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// SubscriptionEventType defines model for SubscriptionEvent.Type.
+type SubscriptionEventType string
+
+// SubscriptionEventData defines model for SubscriptionEventData.
+type SubscriptionEventData struct {
+	List MailingListRef `json:"list"`
+
+	// PreviousState `subscription.updated` only: the state before.
+	PreviousState *SubscriptionState `json:"previous_state,omitempty"`
+	Subscription  Subscription       `json:"subscription"`
+}
+
+// SubscriptionPage defines model for SubscriptionPage.
+type SubscriptionPage struct {
+	Items []Subscription `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// SubscriptionSource How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+// or `preferences` (the person on the `/m/` page).
+type SubscriptionSource string
+
+// SubscriptionState `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+// complaint) ended it; only the person subscribes again.
+type SubscriptionState string
+
+// SubscriptionUpdate defines model for SubscriptionUpdate.
+type SubscriptionUpdate struct {
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+}
+
 // Typing defines model for Typing.
 type Typing struct {
 	Author         TypingAuthor `json:"author"`
@@ -5056,6 +5765,11 @@ type UndeliverableEmail struct {
 
 // UndeliverableEmailReason defines model for UndeliverableEmail.Reason.
 type UndeliverableEmailReason string
+
+// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+// person reported a mail as spam), `erasure`.
+type UnsubscribeReason string
 
 // UsageList defines model for UsageList.
 type UsageList struct {
@@ -5409,6 +6123,32 @@ type WebhookPayloadBase struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookSubscriptionData defines model for WebhookSubscriptionData.
+type WebhookSubscriptionData struct {
+	// Contact The contact as a host backend needs it.
+	Contact WebhookContact `json:"contact"`
+	List    MailingListRef `json:"list"`
+
+	// PreviousState `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	PreviousState *SubscriptionState `json:"previous_state,omitempty"`
+	Subscription  Subscription       `json:"subscription"`
+}
+
+// WebhookSubscriptionPayload defines model for WebhookSubscriptionPayload.
+type WebhookSubscriptionPayload struct {
+	Data WebhookSubscriptionData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // Weekday defines model for Weekday.
 type Weekday string
 
@@ -5462,6 +6202,9 @@ type ChannelId = uuid.UUID
 // ChannelKey defines model for ChannelKey.
 type ChannelKey = string
 
+// ConsentFormat defines model for ConsentFormat.
+type ConsentFormat string
+
 // ContactId defines model for ContactId.
 type ContactId = uuid.UUID
 
@@ -5501,6 +6244,9 @@ type LabelId = uuid.UUID
 // Limit defines model for Limit.
 type Limit = int32
 
+// ListId defines model for ListId.
+type ListId = uuid.UUID
+
 // MemberId defines model for MemberId.
 type MemberId = uuid.UUID
 
@@ -5521,6 +6267,9 @@ type PushSubscriptionId = uuid.UUID
 
 // Search defines model for Search.
 type Search = string
+
+// SubscriptionId defines model for SubscriptionId.
+type SubscriptionId = uuid.UUID
 
 // WebhookId defines model for WebhookId.
 type WebhookId = uuid.UUID
@@ -5614,6 +6363,12 @@ type CreateClientDiscussionPostParams struct {
 
 // CreateClientFeedbackParams defines parameters for CreateClientFeedback.
 type CreateClientFeedbackParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// SubscribeClientParams defines parameters for SubscribeClient.
+type SubscribeClientParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
@@ -5812,6 +6567,18 @@ type UpdateContactParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ExportContactConsentParams defines parameters for ExportContactConsent.
+type ExportContactConsentParams struct {
+	// Format `csv` (the default) or `json`.
+	Format *ExportContactConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportContactConsentParamsFormat defines parameters for ExportContactConsent.
+type ExportContactConsentParamsFormat string
+
 // MergeContactParams defines parameters for MergeContact.
 type MergeContactParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -5847,6 +6614,12 @@ type DeleteContactNoteParams struct {
 
 // GetContactPresenceParams defines parameters for GetContactPresence.
 type GetContactPresenceParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListContactSubscriptionsParams defines parameters for ListContactSubscriptions.
+type ListContactSubscriptionsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -6382,6 +7155,123 @@ type UpdateLabelParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListMailingListsParams defines parameters for ListMailingLists.
+type ListMailingListsParams struct {
+	InboxId  *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Archived *bool      `form:"archived,omitempty" json:"archived,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMailingListParams defines parameters for CreateMailingList.
+type CreateMailingListParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMailingListParams defines parameters for DeleteMailingList.
+type DeleteMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMailingListParams defines parameters for GetMailingList.
+type GetMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMailingListParams defines parameters for UpdateMailingList.
+type UpdateMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportListConsentParams defines parameters for ExportListConsent.
+type ExportListConsentParams struct {
+	// Format `csv` (the default) or `json`.
+	Format *ExportListConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+	Since  *time.Time                     `form:"since,omitempty" json:"since,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportListConsentParamsFormat defines parameters for ExportListConsent.
+type ExportListConsentParamsFormat string
+
+// GetMailingListGrowthParams defines parameters for GetMailingListGrowth.
+type GetMailingListGrowthParams struct {
+	Days *GetMailingListGrowthParamsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMailingListGrowthParamsDays defines parameters for GetMailingListGrowth.
+type GetMailingListGrowthParamsDays int32
+
+// ListSubscriptionsParams defines parameters for ListSubscriptions.
+type ListSubscriptionsParams struct {
+	State *SubscriptionState `form:"state,omitempty" json:"state,omitempty"`
+	Q     *string            `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateSubscriptionParams defines parameters for CreateSubscription.
+type CreateSubscriptionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteSubscriptionParams defines parameters for DeleteSubscription.
+type DeleteSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetSubscriptionParams defines parameters for GetSubscription.
+type GetSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateSubscriptionParams defines parameters for UpdateSubscription.
+type UpdateSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResendSubscriptionConfirmationParams defines parameters for ResendSubscriptionConfirmation.
+type ResendSubscriptionConfirmationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMentionsParams defines parameters for ListMentions.
 type ListMentionsParams struct {
 	// Cursor The `next_cursor` of the previous page.
@@ -6807,8 +7697,39 @@ type WebhookMessageCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookSubscriptionCreatedParams defines parameters for WebhookSubscriptionCreated.
+type WebhookSubscriptionCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookSubscriptionUpdatedParams defines parameters for WebhookSubscriptionUpdated.
+type WebhookSubscriptionUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
+
+// CreateClientSubscriptionJSONRequestBody defines body for CreateClientSubscription for application/json ContentType.
+type CreateClientSubscriptionJSONRequestBody = ClientSubscriptionCreate
 
 // SetClientContactEmailJSONRequestBody defines body for SetClientContactEmail for application/json ContentType.
 type SetClientContactEmailJSONRequestBody = ClientEmailUpdate
@@ -6854,6 +7775,9 @@ type CreateClientFeedbackMultipartRequestBody = ClientFeedbackCreateMultipart
 
 // CreateClientSessionJSONRequestBody defines body for CreateClientSession for application/json ContentType.
 type CreateClientSessionJSONRequestBody = ClientSessionCreate
+
+// SubscribeClientJSONRequestBody defines body for SubscribeClient for application/json ContentType.
+type SubscribeClientJSONRequestBody = ClientSubscriptionPut
 
 // UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
 type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
@@ -6963,6 +7887,18 @@ type CreateLabelJSONRequestBody = LabelCreate
 // UpdateLabelJSONRequestBody defines body for UpdateLabel for application/json ContentType.
 type UpdateLabelJSONRequestBody = LabelUpdate
 
+// CreateMailingListJSONRequestBody defines body for CreateMailingList for application/json ContentType.
+type CreateMailingListJSONRequestBody = MailingListCreate
+
+// UpdateMailingListJSONRequestBody defines body for UpdateMailingList for application/json ContentType.
+type UpdateMailingListJSONRequestBody = MailingListUpdate
+
+// CreateSubscriptionJSONRequestBody defines body for CreateSubscription for application/json ContentType.
+type CreateSubscriptionJSONRequestBody = SubscriptionCreate
+
+// UpdateSubscriptionJSONRequestBody defines body for UpdateSubscription for application/json ContentType.
+type UpdateSubscriptionJSONRequestBody = SubscriptionUpdate
+
 // DeleteMeJSONRequestBody defines body for DeleteMe for application/json ContentType.
 type DeleteMeJSONRequestBody = AccountDeletion
 
@@ -7046,6 +7982,12 @@ type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
+
+// WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
+type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
+
+// WebhookSubscriptionUpdatedJSONRequestBody defines body for WebhookSubscriptionUpdated for application/json ContentType.
+type WebhookSubscriptionUpdatedJSONRequestBody = WebhookSubscriptionPayload
 
 // AsClientConversationCreatedEvent returns the union data inside the ClientRealtimeMessage as a ClientConversationCreatedEvent
 func (t ClientRealtimeMessage) AsClientConversationCreatedEvent() (ClientConversationCreatedEvent, error) {
@@ -7720,6 +8662,32 @@ func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsSubscriptionEvent returns the union data inside the RealtimeMessage as a SubscriptionEvent
+func (t RealtimeMessage) AsSubscriptionEvent() (SubscriptionEvent, error) {
+	var body SubscriptionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubscriptionEvent overwrites any union data inside the RealtimeMessage as the provided SubscriptionEvent
+func (t *RealtimeMessage) FromSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubscriptionEvent performs a merge with any union data inside the RealtimeMessage, using the provided SubscriptionEvent
+func (t *RealtimeMessage) MergeSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -7940,6 +8908,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsRealtimeReady()
 	case "resync_required":
 		return t.AsRealtimeResyncRequired()
+	case "subscription.created":
+		return t.AsSubscriptionEvent()
+	case "subscription.updated":
+		return t.AsSubscriptionEvent()
 	case "typing":
 		return t.AsTypingEvent()
 	case "viewing":
@@ -8349,6 +9321,32 @@ func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsSubscriptionEvent returns the union data inside the StoredEvent as a SubscriptionEvent
+func (t StoredEvent) AsSubscriptionEvent() (SubscriptionEvent, error) {
+	var body SubscriptionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubscriptionEvent overwrites any union data inside the StoredEvent as the provided SubscriptionEvent
+func (t *StoredEvent) FromSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubscriptionEvent performs a merge with any union data inside the StoredEvent, using the provided SubscriptionEvent
+func (t *StoredEvent) MergeSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -8405,6 +9403,10 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageCreatedEvent()
 	case "message.updated":
 		return t.AsMessageUpdatedEvent()
+	case "subscription.created":
+		return t.AsSubscriptionEvent()
+	case "subscription.updated":
+		return t.AsSubscriptionEvent()
 	default:
 		return nil, errors.New("unknown discriminator value: " + discriminator)
 	}
@@ -8555,6 +9557,17 @@ type ClientInterface interface {
 	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
 	GetClientDiscussion(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListClientMailingLists The public mailing lists a form may offer
+	//
+	// The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+	// `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/lists (the `ListClientMailingLists` operationId).
+	ListClientMailingLists(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreatePageRatingWithBody Rate a documentation page
 	//
 	// Counts one `up` or `down` for a documentation page on a `chat` channel's public key, without
@@ -8596,6 +9609,74 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 	CreatePageRating(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientSubscriptionWithBody Subscribe from a form
+	//
+	// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+	// answer is the same `202` for an address that is new, already subscribed, waiting for its
+	// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+	// address is known: `confirmation` only says whether any of the lists asks the person to
+	// confirm by mail. What happens:
+	//
+	// - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+	//   on a list without it, `subscribed` at once with the list's welcome mail;
+	// - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+	//   becomes `pending` and gets a confirmation (only the person can come back);
+	// - a subscribed or undeliverable address changes nothing.
+	//
+	// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+	// visitor ticked, stored with `page_url`, the IP address and the user agent.
+	//
+	// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+	// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+	// without changing the answer.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// An `app` channel's key answers `404`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+	CreateClientSubscriptionWithBody(ctx context.Context, channelKey ChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateClientSubscription Subscribe from a form
+	//
+	// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+	// answer is the same `202` for an address that is new, already subscribed, waiting for its
+	// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+	// address is known: `confirmation` only says whether any of the lists asks the person to
+	// confirm by mail. What happens:
+	//
+	// - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+	//   on a list without it, `subscribed` at once with the list's welcome mail;
+	// - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+	//   becomes `pending` and gets a confirmation (only the person can come back);
+	// - a subscribed or undeliverable address changes nothing.
+	//
+	// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+	// visitor ticked, stored with `page_url`, the IP address and the user agent.
+	//
+	// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+	// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+	// without changing the answer.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// An `app` channel's key answers `404`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+	CreateClientSubscription(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SetClientContactEmailWithBody Leave an e-mail address for replies
 	//
@@ -9067,6 +10148,56 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /client/v1/session (the `CreateClientSession` operationId).
 	CreateClientSession(ctx context.Context, body CreateClientSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListClientSubscriptions The session contact's subscriptions
+	//
+	// Every public, unarchived list of the session's inbox with the contact's state on it
+	// (absent when the contact never subscribed), for a toggle in the widget or the app.
+	//
+	// Corresponds with GET /client/v1/subscriptions (the `ListClientSubscriptions` operationId).
+	ListClientSubscriptions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UnsubscribeClient Unsubscribe the session contact
+	//
+	// Unsubscribes the session's contact from a public list of the session's inbox at once.
+	// Nothing to unsubscribe is not an error.
+	//
+	// Corresponds with DELETE /client/v1/subscriptions/{listId} (the `UnsubscribeClient` operationId).
+	UnsubscribeClient(ctx context.Context, listId ListId, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SubscribeClientWithBody Subscribe the session contact
+	//
+	// Subscribes the signed-in user of the host app (a session started with an identity token)
+	// to a public list of the session's inbox. When the contact has a known address (an
+	// identity token with `email_verified: true`, or one a member or an e-mail conversation
+	// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+	// bounced or complained stays `pending` and gets nothing.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+	SubscribeClientWithBody(ctx context.Context, listId ListId, params *SubscribeClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SubscribeClient Subscribe the session contact
+	//
+	// Subscribes the signed-in user of the host app (a session started with an identity token)
+	// to a public list of the session's inbox. When the contact has a known address (an
+	// identity token with `email_verified: true`, or one a member or an e-mail conversation
+	// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+	// bounced or complained stays `pending` and gets nothing.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+	SubscribeClient(ctx context.Context, listId ListId, params *SubscribeClientParams, body SubscribeClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetHealthz Liveness
 	//
@@ -9574,6 +10705,17 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/contacts/{contactId} (the `UpdateContact` operationId).
 	UpdateContact(ctx context.Context, contactId ContactId, params *UpdateContactParams, body UpdateContactJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ExportContactConsent Export a contact's consent records
+	//
+	// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+	// first, in the rows of `exportListConsent`: for answering a data subject's access request
+	// (GDPR Art. 15, KVKK Art. 11).
+	//
+	// Scopes: `contacts:read` and `lists:read`.
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
+	ExportContactConsent(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// MergeContactWithBody Merge another contact into this one
 	//
 	// Owners, admins and API keys not limited to inboxes. The contact in the path keeps its id and gains the source's
@@ -9658,6 +10800,15 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/contacts/{contactId}/presence (the `GetContactPresence` operationId).
 	GetContactPresence(ctx context.Context, contactId ContactId, params *GetContactPresenceParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListContactSubscriptions A contact's subscriptions
+	//
+	// The contact's subscriptions to the lists of the inboxes the caller can see.
+	//
+	// Scopes: `contacts:read` and `lists:read`.
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/subscriptions (the `ListContactSubscriptions` operationId).
+	ListContactSubscriptions(ctx context.Context, contactId ContactId, params *ListContactSubscriptionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetContactSummary How the team served a contact
 	//
@@ -10640,6 +11791,237 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/labels/{labelId} (the `UpdateLabel` operationId).
 	UpdateLabel(ctx context.Context, labelId LabelId, params *UpdateLabelParams, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListMailingLists List mailing lists
+	//
+	// The lists of the inboxes the caller can see, newest first, with their subscription counts.
+	// Archived lists are left out unless `archived=true`, which lists only them.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists (the `ListMailingLists` operationId).
+	ListMailingLists(ctx context.Context, params *ListMailingListsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMailingListWithBody Create a mailing list
+	//
+	// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+	// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+	// account (`409 email_channel_required`). A list without one still takes subscribers from the
+	// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+	// inbox (`409 name_taken`).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+	CreateMailingListWithBody(ctx context.Context, params *CreateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateMailingList Create a mailing list
+	//
+	// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+	// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+	// account (`409 email_channel_required`). A list without one still takes subscribers from the
+	// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+	// inbox (`409 name_taken`).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+	CreateMailingList(ctx context.Context, params *CreateMailingListParams, body CreateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteMailingList Delete a mailing list
+	//
+	// Deletes the list with its subscriptions and their consent events. Addresses that had
+	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+	// member or a key.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Corresponds with DELETE /v1/lists/{listId} (the `DeleteMailingList` operationId).
+	DeleteMailingList(ctx context.Context, listId ListId, params *DeleteMailingListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMailingList A mailing list
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId} (the `GetMailingList` operationId).
+	GetMailingList(ctx context.Context, listId ListId, params *GetMailingListParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMailingListWithBody Update a mailing list
+	//
+	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+	// `archived: true` hides it from forms, the preference page and the default list.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+	UpdateMailingListWithBody(ctx context.Context, listId ListId, params *UpdateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateMailingList Update a mailing list
+	//
+	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+	// `archived: true` hides it from forms, the preference page and the default list.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+	UpdateMailingList(ctx context.Context, listId ListId, params *UpdateMailingListParams, body UpdateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ExportListConsent Export a list's consent records
+	//
+	// One row per consent event of the list's subscriptions, with the subscription's address and
+	// current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+	// records or an upload to a registry such as İYS. `since` keeps the events from then on.
+	// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+	// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
+	ExportListConsent(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMailingListGrowth How a list grew
+	//
+	// Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+	// subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+	// period's subscriptions that needed a confirmation and got one; absent when none needed one.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
+	GetMailingListGrowth(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListSubscriptions List a list's subscriptions
+	//
+	// Newest first. `q` matches the address or the contact's name.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/subscriptions (the `ListSubscriptions` operationId).
+	ListSubscriptions(ctx context.Context, listId ListId, params *ListSubscriptionsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSubscriptionWithBody Add a subscriber
+	//
+	// Adds an address (or a contact's first address) to the list, for host backends and members
+	// who collected consent themselves. The caller declares it in `consent`:
+	//
+	// - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+	//   reference to your own record). The subscription is `subscribed` at once and the list's
+	//   welcome mail is sent.
+	// - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+	//   nothing is sent to them until they confirm.
+	//
+	// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+	// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+	// contact keeps what it has (only an empty name and missing locale are filled).
+	//
+	// Answers `201` for a new subscription and `200` with the existing one when the address is
+	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+	// mails today.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+	CreateSubscriptionWithBody(ctx context.Context, listId ListId, params *CreateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateSubscription Add a subscriber
+	//
+	// Adds an address (or a contact's first address) to the list, for host backends and members
+	// who collected consent themselves. The caller declares it in `consent`:
+	//
+	// - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+	//   reference to your own record). The subscription is `subscribed` at once and the list's
+	//   welcome mail is sent.
+	// - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+	//   nothing is sent to them until they confirm.
+	//
+	// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+	// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+	// contact keeps what it has (only an empty name and missing locale are filled).
+	//
+	// Answers `201` for a new subscription and `200` with the existing one when the address is
+	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+	// mails today.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+	CreateSubscription(ctx context.Context, listId ListId, params *CreateSubscriptionParams, body CreateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteSubscription Delete a subscription
+	//
+	// Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+	// address opted out, so it cannot be added back by a member or a key.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Corresponds with DELETE /v1/lists/{listId}/subscriptions/{subscriptionId} (the `DeleteSubscription` operationId).
+	DeleteSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *DeleteSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetSubscription A subscription with its consent events
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
+	GetSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSubscriptionWithBody Unsubscribe a subscriber
+	//
+	// The only change a member or key can make is `state: unsubscribed`; anything that would
+	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+	// `consent.confirmed: false` to mail the person a confirmation).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+	UpdateSubscriptionWithBody(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateSubscription Unsubscribe a subscriber
+	//
+	// The only change a member or key can make is `state: unsubscribed`; anything that would
+	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+	// `consent.confirmed: false` to mail the person a confirmation).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+	UpdateSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, body UpdateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ResendSubscriptionConfirmation Mail the confirmation again
+	//
+	// Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+	// otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+	// a list without a usable e-mail channel answers `409 email_channel_required`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
+	ResendSubscriptionConfirmation(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// DeleteMeWithBody Delete the signed-in person's account
 	//
 	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
@@ -11403,6 +12785,27 @@ func (c *Client) GetClientDiscussion(ctx context.Context, channelKey ChannelKey,
 	return c.Client.Do(req)
 }
 
+// ListClientMailingLists The public mailing lists a form may offer
+//
+// The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+// `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/lists (the `ListClientMailingLists` operationId).
+func (c *Client) ListClientMailingLists(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListClientMailingListsRequest(c.Server, channelKey)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // CreatePageRatingWithBody Rate a documentation page
 //
 // Counts one `up` or `down` for a documentation page on a `chat` channel's public key, without
@@ -11455,6 +12858,94 @@ func (c *Client) CreatePageRatingWithBody(ctx context.Context, channelKey Channe
 // Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 func (c *Client) CreatePageRating(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreatePageRatingRequest(c.Server, channelKey, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientSubscriptionWithBody Subscribe from a form
+//
+// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+// answer is the same `202` for an address that is new, already subscribed, waiting for its
+// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+// address is known: `confirmation` only says whether any of the lists asks the person to
+// confirm by mail. What happens:
+//
+//   - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+//     on a list without it, `subscribed` at once with the list's welcome mail;
+//   - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+//     becomes `pending` and gets a confirmation (only the person can come back);
+//   - a subscribed or undeliverable address changes nothing.
+//
+// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+// visitor ticked, stored with `page_url`, the IP address and the user agent.
+//
+// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+// without changing the answer.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// An `app` channel's key answers `404`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+func (c *Client) CreateClientSubscriptionWithBody(ctx context.Context, channelKey ChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientSubscriptionRequestWithBody(c.Server, channelKey, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateClientSubscription Subscribe from a form
+//
+// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+// answer is the same `202` for an address that is new, already subscribed, waiting for its
+// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+// address is known: `confirmation` only says whether any of the lists asks the person to
+// confirm by mail. What happens:
+//
+//   - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+//     on a list without it, `subscribed` at once with the list's welcome mail;
+//   - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+//     becomes `pending` and gets a confirmation (only the person can come back);
+//   - a subscribed or undeliverable address changes nothing.
+//
+// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+// visitor ticked, stored with `page_url`, the IP address and the user agent.
+//
+// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+// without changing the answer.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// An `app` channel's key answers `404`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+func (c *Client) CreateClientSubscription(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateClientSubscriptionRequest(c.Server, channelKey, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12286,6 +13777,96 @@ func (c *Client) CreateClientSessionWithBody(ctx context.Context, contentType st
 // Corresponds with POST /client/v1/session (the `CreateClientSession` operationId).
 func (c *Client) CreateClientSession(ctx context.Context, body CreateClientSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateClientSessionRequest(c.Server, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListClientSubscriptions The session contact's subscriptions
+//
+// Every public, unarchived list of the session's inbox with the contact's state on it
+// (absent when the contact never subscribed), for a toggle in the widget or the app.
+//
+// Corresponds with GET /client/v1/subscriptions (the `ListClientSubscriptions` operationId).
+func (c *Client) ListClientSubscriptions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListClientSubscriptionsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UnsubscribeClient Unsubscribe the session contact
+//
+// Unsubscribes the session's contact from a public list of the session's inbox at once.
+// Nothing to unsubscribe is not an error.
+//
+// Corresponds with DELETE /client/v1/subscriptions/{listId} (the `UnsubscribeClient` operationId).
+func (c *Client) UnsubscribeClient(ctx context.Context, listId ListId, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUnsubscribeClientRequest(c.Server, listId)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SubscribeClientWithBody Subscribe the session contact
+//
+// Subscribes the signed-in user of the host app (a session started with an identity token)
+// to a public list of the session's inbox. When the contact has a known address (an
+// identity token with `email_verified: true`, or one a member or an e-mail conversation
+// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+// bounced or complained stays `pending` and gets nothing.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+func (c *Client) SubscribeClientWithBody(ctx context.Context, listId ListId, params *SubscribeClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSubscribeClientRequestWithBody(c.Server, listId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SubscribeClient Subscribe the session contact
+//
+// Subscribes the signed-in user of the host app (a session started with an identity token)
+// to a public list of the session's inbox. When the contact has a known address (an
+// identity token with `email_verified: true`, or one a member or an e-mail conversation
+// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+// bounced or complained stays `pending` and gets nothing.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+func (c *Client) SubscribeClient(ctx context.Context, listId ListId, params *SubscribeClientParams, body SubscribeClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSubscribeClientRequest(c.Server, listId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -13282,6 +14863,27 @@ func (c *Client) UpdateContact(ctx context.Context, contactId ContactId, params 
 	return c.Client.Do(req)
 }
 
+// ExportContactConsent Export a contact's consent records
+//
+// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+// first, in the rows of `exportListConsent`: for answering a data subject's access request
+// (GDPR Art. 15, KVKK Art. 11).
+//
+// Scopes: `contacts:read` and `lists:read`.
+//
+// Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
+func (c *Client) ExportContactConsent(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewExportContactConsentRequest(c.Server, contactId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // MergeContactWithBody Merge another contact into this one
 //
 // Owners, admins and API keys not limited to inboxes. The contact in the path keeps its id and gains the source's
@@ -13427,6 +15029,25 @@ func (c *Client) DeleteContactNote(ctx context.Context, contactId ContactId, not
 // Corresponds with GET /v1/contacts/{contactId}/presence (the `GetContactPresence` operationId).
 func (c *Client) GetContactPresence(ctx context.Context, contactId ContactId, params *GetContactPresenceParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetContactPresenceRequest(c.Server, contactId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListContactSubscriptions A contact's subscriptions
+//
+// The contact's subscriptions to the lists of the inboxes the caller can see.
+//
+// Scopes: `contacts:read` and `lists:read`.
+//
+// Corresponds with GET /v1/contacts/{contactId}/subscriptions (the `ListContactSubscriptions` operationId).
+func (c *Client) ListContactSubscriptions(ctx context.Context, contactId ContactId, params *ListContactSubscriptionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListContactSubscriptionsRequest(c.Server, contactId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -15168,6 +16789,407 @@ func (c *Client) UpdateLabel(ctx context.Context, labelId LabelId, params *Updat
 	return c.Client.Do(req)
 }
 
+// ListMailingLists List mailing lists
+//
+// The lists of the inboxes the caller can see, newest first, with their subscription counts.
+// Archived lists are left out unless `archived=true`, which lists only them.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists (the `ListMailingLists` operationId).
+func (c *Client) ListMailingLists(ctx context.Context, params *ListMailingListsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMailingListsRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMailingListWithBody Create a mailing list
+//
+// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+// account (`409 email_channel_required`). A list without one still takes subscribers from the
+// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+// inbox (`409 name_taken`).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+func (c *Client) CreateMailingListWithBody(ctx context.Context, params *CreateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMailingListRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateMailingList Create a mailing list
+//
+// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+// account (`409 email_channel_required`). A list without one still takes subscribers from the
+// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+// inbox (`409 name_taken`).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+func (c *Client) CreateMailingList(ctx context.Context, params *CreateMailingListParams, body CreateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateMailingListRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteMailingList Delete a mailing list
+//
+// Deletes the list with its subscriptions and their consent events. Addresses that had
+// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+// member or a key.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Corresponds with DELETE /v1/lists/{listId} (the `DeleteMailingList` operationId).
+func (c *Client) DeleteMailingList(ctx context.Context, listId ListId, params *DeleteMailingListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteMailingListRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMailingList A mailing list
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId} (the `GetMailingList` operationId).
+func (c *Client) GetMailingList(ctx context.Context, listId ListId, params *GetMailingListParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMailingListRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMailingListWithBody Update a mailing list
+//
+// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+// `archived: true` hides it from forms, the preference page and the default list.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+func (c *Client) UpdateMailingListWithBody(ctx context.Context, listId ListId, params *UpdateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMailingListRequestWithBody(c.Server, listId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateMailingList Update a mailing list
+//
+// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+// `archived: true` hides it from forms, the preference page and the default list.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+func (c *Client) UpdateMailingList(ctx context.Context, listId ListId, params *UpdateMailingListParams, body UpdateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateMailingListRequest(c.Server, listId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ExportListConsent Export a list's consent records
+//
+// One row per consent event of the list's subscriptions, with the subscription's address and
+// current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+// records or an upload to a registry such as İYS. `since` keeps the events from then on.
+// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
+func (c *Client) ExportListConsent(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewExportListConsentRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMailingListGrowth How a list grew
+//
+// Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+// subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+// period's subscriptions that needed a confirmation and got one; absent when none needed one.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
+func (c *Client) GetMailingListGrowth(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMailingListGrowthRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListSubscriptions List a list's subscriptions
+//
+// Newest first. `q` matches the address or the contact's name.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/subscriptions (the `ListSubscriptions` operationId).
+func (c *Client) ListSubscriptions(ctx context.Context, listId ListId, params *ListSubscriptionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListSubscriptionsRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateSubscriptionWithBody Add a subscriber
+//
+// Adds an address (or a contact's first address) to the list, for host backends and members
+// who collected consent themselves. The caller declares it in `consent`:
+//
+//   - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+//     reference to your own record). The subscription is `subscribed` at once and the list's
+//     welcome mail is sent.
+//   - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+//     nothing is sent to them until they confirm.
+//
+// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+// contact keeps what it has (only an empty name and missing locale are filled).
+//
+// Answers `201` for a new subscription and `200` with the existing one when the address is
+// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+// mails today.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+func (c *Client) CreateSubscriptionWithBody(ctx context.Context, listId ListId, params *CreateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubscriptionRequestWithBody(c.Server, listId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateSubscription Add a subscriber
+//
+// Adds an address (or a contact's first address) to the list, for host backends and members
+// who collected consent themselves. The caller declares it in `consent`:
+//
+//   - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+//     reference to your own record). The subscription is `subscribed` at once and the list's
+//     welcome mail is sent.
+//   - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+//     nothing is sent to them until they confirm.
+//
+// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+// contact keeps what it has (only an empty name and missing locale are filled).
+//
+// Answers `201` for a new subscription and `200` with the existing one when the address is
+// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+// mails today.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+func (c *Client) CreateSubscription(ctx context.Context, listId ListId, params *CreateSubscriptionParams, body CreateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateSubscriptionRequest(c.Server, listId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteSubscription Delete a subscription
+//
+// Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+// address opted out, so it cannot be added back by a member or a key.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Corresponds with DELETE /v1/lists/{listId}/subscriptions/{subscriptionId} (the `DeleteSubscription` operationId).
+func (c *Client) DeleteSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *DeleteSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteSubscriptionRequest(c.Server, listId, subscriptionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetSubscription A subscription with its consent events
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
+func (c *Client) GetSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetSubscriptionRequest(c.Server, listId, subscriptionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSubscriptionWithBody Unsubscribe a subscriber
+//
+// The only change a member or key can make is `state: unsubscribed`; anything that would
+// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+// `consent.confirmed: false` to mail the person a confirmation).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+func (c *Client) UpdateSubscriptionWithBody(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSubscriptionRequestWithBody(c.Server, listId, subscriptionId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateSubscription Unsubscribe a subscriber
+//
+// The only change a member or key can make is `state: unsubscribed`; anything that would
+// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+// `consent.confirmed: false` to mail the person a confirmation).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+func (c *Client) UpdateSubscription(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, body UpdateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateSubscriptionRequest(c.Server, listId, subscriptionId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ResendSubscriptionConfirmation Mail the confirmation again
+//
+// Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+// otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+// a list without a usable e-mail channel answers `409 email_channel_required`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
+func (c *Client) ResendSubscriptionConfirmation(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResendSubscriptionConfirmationRequest(c.Server, listId, subscriptionId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // DeleteMeWithBody Delete the signed-in person's account
 //
 // Removes the person with their memberships, sessions, passkeys, push subscriptions,
@@ -16651,6 +18673,40 @@ func NewGetClientDiscussionRequest(server string, channelKey ChannelKey, discuss
 	return req, nil
 }
 
+// NewListClientMailingListsRequest constructs an http.Request for the ListClientMailingLists method
+func NewListClientMailingListsRequest(server string, channelKey ChannelKey) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/lists", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewCreatePageRatingRequest calls the generic CreatePageRating builder with application/json body
 func NewCreatePageRatingRequest(server string, channelKey ChannelKey, body CreatePageRatingJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -16679,6 +18735,53 @@ func NewCreatePageRatingRequestWithBody(server string, channelKey ChannelKey, co
 	}
 
 	operationPath := fmt.Sprintf("/client/v1/channels/%s/page-ratings", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewCreateClientSubscriptionRequest calls the generic CreateClientSubscription builder with application/json body
+func NewCreateClientSubscriptionRequest(server string, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateClientSubscriptionRequestWithBody(server, channelKey, "application/json", bodyReader)
+}
+
+// NewCreateClientSubscriptionRequestWithBody constructs an http.Request for the CreateClientSubscription method, with any body, and a specified content type
+func NewCreateClientSubscriptionRequestWithBody(server string, channelKey ChannelKey, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channel_key", channelKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/channels/%s/subscriptions", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -17798,6 +19901,129 @@ func NewCreateClientSessionRequestWithBody(server string, contentType string, bo
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
+// NewListClientSubscriptionsRequest constructs an http.Request for the ListClientSubscriptions method
+func NewListClientSubscriptionsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/subscriptions")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewUnsubscribeClientRequest constructs an http.Request for the UnsubscribeClient method
+func NewUnsubscribeClientRequest(server string, listId ListId) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/subscriptions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
+// NewSubscribeClientRequest calls the generic SubscribeClient builder with application/json body
+func NewSubscribeClientRequest(server string, listId ListId, params *SubscribeClientParams, body SubscribeClientJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSubscribeClientRequestWithBody(server, listId, params, "application/json", bodyReader)
+}
+
+// NewSubscribeClientRequestWithBody constructs an http.Request for the SubscribeClient method, with any body, and a specified content type
+func NewSubscribeClientRequestWithBody(server string, listId ListId, params *SubscribeClientParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/client/v1/subscriptions/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+	}
 
 	return req, nil
 }
@@ -19656,6 +21882,82 @@ func NewUpdateContactRequestWithBody(server string, contactId ContactId, params 
 	return req, nil
 }
 
+// NewExportContactConsentRequest constructs an http.Request for the ExportContactConsent method
+func NewExportContactConsentRequest(server string, contactId ContactId, params *ExportContactConsentParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "contactId", contactId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/contacts/%s/consent", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Format != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "format", *params.Format, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewMergeContactRequest calls the generic MergeContact builder with application/json body
 func NewMergeContactRequest(server string, contactId ContactId, params *MergeContactParams, body MergeContactJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -19952,6 +22254,55 @@ func NewGetContactPresenceRequest(server string, contactId ContactId, params *Ge
 	}
 
 	operationPath := fmt.Sprintf("/v1/contacts/%s/presence", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListContactSubscriptionsRequest constructs an http.Request for the ListContactSubscriptions method
+func NewListContactSubscriptionsRequest(server string, contactId ContactId, params *ListContactSubscriptionsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "contactId", contactId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/contacts/%s/subscriptions", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -23769,6 +26120,934 @@ func NewUpdateLabelRequestWithBody(server string, labelId LabelId, params *Updat
 	return req, nil
 }
 
+// NewListMailingListsRequest constructs an http.Request for the ListMailingLists method
+func NewListMailingListsRequest(server string, params *ListMailingListsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.InboxId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "inbox_id", *params.InboxId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "uuid"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Archived != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "archived", *params.Archived, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "boolean", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateMailingListRequest calls the generic CreateMailingList builder with application/json body
+func NewCreateMailingListRequest(server string, params *CreateMailingListParams, body CreateMailingListJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateMailingListRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreateMailingListRequestWithBody constructs an http.Request for the CreateMailingList method, with any body, and a specified content type
+func NewCreateMailingListRequestWithBody(server string, params *CreateMailingListParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteMailingListRequest constructs an http.Request for the DeleteMailingList method
+func NewDeleteMailingListRequest(server string, listId ListId, params *DeleteMailingListParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetMailingListRequest constructs an http.Request for the GetMailingList method
+func NewGetMailingListRequest(server string, listId ListId, params *GetMailingListParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateMailingListRequest calls the generic UpdateMailingList builder with application/json body
+func NewUpdateMailingListRequest(server string, listId ListId, params *UpdateMailingListParams, body UpdateMailingListJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateMailingListRequestWithBody(server, listId, params, "application/json", bodyReader)
+}
+
+// NewUpdateMailingListRequestWithBody constructs an http.Request for the UpdateMailingList method, with any body, and a specified content type
+func NewUpdateMailingListRequestWithBody(server string, listId ListId, params *UpdateMailingListParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewExportListConsentRequest constructs an http.Request for the ExportListConsent method
+func NewExportListConsentRequest(server string, listId ListId, params *ExportListConsentParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/consent-export", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Format != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "format", *params.Format, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Since != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "since", *params.Since, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetMailingListGrowthRequest constructs an http.Request for the GetMailingListGrowth method
+func NewGetMailingListGrowthRequest(server string, listId ListId, params *GetMailingListGrowthParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/growth", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Days != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "days", *params.Days, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListSubscriptionsRequest constructs an http.Request for the ListSubscriptions method
+func NewListSubscriptionsRequest(server string, listId ListId, params *ListSubscriptionsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.State != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "state", *params.State, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Q != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "q", *params.Q, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateSubscriptionRequest calls the generic CreateSubscription builder with application/json body
+func NewCreateSubscriptionRequest(server string, listId ListId, params *CreateSubscriptionParams, body CreateSubscriptionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateSubscriptionRequestWithBody(server, listId, params, "application/json", bodyReader)
+}
+
+// NewCreateSubscriptionRequestWithBody constructs an http.Request for the CreateSubscription method, with any body, and a specified content type
+func NewCreateSubscriptionRequestWithBody(server string, listId ListId, params *CreateSubscriptionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteSubscriptionRequest constructs an http.Request for the DeleteSubscription method
+func NewDeleteSubscriptionRequest(server string, listId ListId, subscriptionId SubscriptionId, params *DeleteSubscriptionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "subscriptionId", subscriptionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetSubscriptionRequest constructs an http.Request for the GetSubscription method
+func NewGetSubscriptionRequest(server string, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "subscriptionId", subscriptionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateSubscriptionRequest calls the generic UpdateSubscription builder with application/json body
+func NewUpdateSubscriptionRequest(server string, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, body UpdateSubscriptionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateSubscriptionRequestWithBody(server, listId, subscriptionId, params, "application/json", bodyReader)
+}
+
+// NewUpdateSubscriptionRequestWithBody constructs an http.Request for the UpdateSubscription method, with any body, and a specified content type
+func NewUpdateSubscriptionRequestWithBody(server string, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "subscriptionId", subscriptionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewResendSubscriptionConfirmationRequest constructs an http.Request for the ResendSubscriptionConfirmation method
+func NewResendSubscriptionConfirmationRequest(server string, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "subscriptionId", subscriptionId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/subscriptions/%s/confirmation", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewDeleteMeRequest calls the generic DeleteMe builder with application/json body
 func NewDeleteMeRequest(server string, body DeleteMeJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -26280,6 +29559,19 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with GET /client/v1/channels/{channel_key}/discussions/{discussionId} (the `GetClientDiscussion` operationId).
 	GetClientDiscussionWithResponse(ctx context.Context, channelKey ChannelKey, discussionId DiscussionId, reqEditors ...RequestEditorFn) (*GetClientDiscussionResponse, error)
 
+	// ListClientMailingListsWithResponse The public mailing lists a form may offer
+	//
+	// The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+	// `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/channels/{channel_key}/lists (the `ListClientMailingLists` operationId).
+	ListClientMailingListsWithResponse(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*ListClientMailingListsResponse, error)
+
 	// CreatePageRatingWithBodyWithResponse Rate a documentation page
 	//
 	// Counts one `up` or `down` for a documentation page on a `chat` channel's public key, without
@@ -26321,6 +29613,74 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /client/v1/channels/{channel_key}/page-ratings (the `CreatePageRating` operationId).
 	CreatePageRatingWithResponse(ctx context.Context, channelKey ChannelKey, body CreatePageRatingJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePageRatingResponse, error)
+
+	// CreateClientSubscriptionWithBodyWithResponse Subscribe from a form
+	//
+	// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+	// answer is the same `202` for an address that is new, already subscribed, waiting for its
+	// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+	// address is known: `confirmation` only says whether any of the lists asks the person to
+	// confirm by mail. What happens:
+	//
+	// - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+	//   on a list without it, `subscribed` at once with the list's welcome mail;
+	// - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+	//   becomes `pending` and gets a confirmation (only the person can come back);
+	// - a subscribed or undeliverable address changes nothing.
+	//
+	// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+	// visitor ticked, stored with `page_url`, the IP address and the user agent.
+	//
+	// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+	// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+	// without changing the answer.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// An `app` channel's key answers `404`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+	CreateClientSubscriptionWithBodyWithResponse(ctx context.Context, channelKey ChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSubscriptionResponse, error)
+
+	// CreateClientSubscriptionWithResponse Subscribe from a form
+	//
+	// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+	// answer is the same `202` for an address that is new, already subscribed, waiting for its
+	// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+	// address is known: `confirmation` only says whether any of the lists asks the person to
+	// confirm by mail. What happens:
+	//
+	// - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+	//   on a list without it, `subscribed` at once with the list's welcome mail;
+	// - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+	//   becomes `pending` and gets a confirmation (only the person can come back);
+	// - a subscribed or undeliverable address changes nothing.
+	//
+	// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+	// visitor ticked, stored with `page_url`, the IP address and the user agent.
+	//
+	// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+	// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+	// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+	// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+	// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+	// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+	// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+	// without changing the answer.
+	//
+	// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+	// An `app` channel's key answers `404`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+	CreateClientSubscriptionWithResponse(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSubscriptionResponse, error)
 
 	// SetClientContactEmailWithBodyWithResponse Leave an e-mail address for replies
 	//
@@ -26816,6 +30176,60 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /client/v1/session (the `CreateClientSession` operationId).
 	CreateClientSessionWithResponse(ctx context.Context, body CreateClientSessionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSessionResponse, error)
+
+	// ListClientSubscriptionsWithResponse The session contact's subscriptions
+	//
+	// Every public, unarchived list of the session's inbox with the contact's state on it
+	// (absent when the contact never subscribed), for a toggle in the widget or the app.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /client/v1/subscriptions (the `ListClientSubscriptions` operationId).
+	ListClientSubscriptionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListClientSubscriptionsResponse, error)
+
+	// UnsubscribeClientWithResponse Unsubscribe the session contact
+	//
+	// Unsubscribes the session's contact from a public list of the session's inbox at once.
+	// Nothing to unsubscribe is not an error.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /client/v1/subscriptions/{listId} (the `UnsubscribeClient` operationId).
+	UnsubscribeClientWithResponse(ctx context.Context, listId ListId, reqEditors ...RequestEditorFn) (*UnsubscribeClientResponse, error)
+
+	// SubscribeClientWithBodyWithResponse Subscribe the session contact
+	//
+	// Subscribes the signed-in user of the host app (a session started with an identity token)
+	// to a public list of the session's inbox. When the contact has a known address (an
+	// identity token with `email_verified: true`, or one a member or an e-mail conversation
+	// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+	// bounced or complained stays `pending` and gets nothing.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+	SubscribeClientWithBodyWithResponse(ctx context.Context, listId ListId, params *SubscribeClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SubscribeClientResponse, error)
+
+	// SubscribeClientWithResponse Subscribe the session contact
+	//
+	// Subscribes the signed-in user of the host app (a session started with an identity token)
+	// to a public list of the session's inbox. When the contact has a known address (an
+	// identity token with `email_verified: true`, or one a member or an e-mail conversation
+	// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+	// bounced or complained stays `pending` and gets nothing.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+	SubscribeClientWithResponse(ctx context.Context, listId ListId, params *SubscribeClientParams, body SubscribeClientJSONRequestBody, reqEditors ...RequestEditorFn) (*SubscribeClientResponse, error)
 
 	// GetHealthzWithResponse Liveness
 	//
@@ -27367,6 +30781,19 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/contacts/{contactId} (the `UpdateContact` operationId).
 	UpdateContactWithResponse(ctx context.Context, contactId ContactId, params *UpdateContactParams, body UpdateContactJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateContactResponse, error)
 
+	// ExportContactConsentWithResponse Export a contact's consent records
+	//
+	// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+	// first, in the rows of `exportListConsent`: for answering a data subject's access request
+	// (GDPR Art. 15, KVKK Art. 11).
+	//
+	// Scopes: `contacts:read` and `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
+	ExportContactConsentWithResponse(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*ExportContactConsentResponse, error)
+
 	// MergeContactWithBodyWithResponse Merge another contact into this one
 	//
 	// Owners, admins and API keys not limited to inboxes. The contact in the path keeps its id and gains the source's
@@ -27457,6 +30884,17 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/contacts/{contactId}/presence (the `GetContactPresence` operationId).
 	GetContactPresenceWithResponse(ctx context.Context, contactId ContactId, params *GetContactPresenceParams, reqEditors ...RequestEditorFn) (*GetContactPresenceResponse, error)
+
+	// ListContactSubscriptionsWithResponse A contact's subscriptions
+	//
+	// The contact's subscriptions to the lists of the inboxes the caller can see.
+	//
+	// Scopes: `contacts:read` and `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/subscriptions (the `ListContactSubscriptions` operationId).
+	ListContactSubscriptionsWithResponse(ctx context.Context, contactId ContactId, params *ListContactSubscriptionsParams, reqEditors ...RequestEditorFn) (*ListContactSubscriptionsResponse, error)
 
 	// GetContactSummaryWithResponse How the team served a contact
 	//
@@ -28509,6 +31947,255 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/labels/{labelId} (the `UpdateLabel` operationId).
 	UpdateLabelWithResponse(ctx context.Context, labelId LabelId, params *UpdateLabelParams, body UpdateLabelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateLabelResponse, error)
 
+	// ListMailingListsWithResponse List mailing lists
+	//
+	// The lists of the inboxes the caller can see, newest first, with their subscription counts.
+	// Archived lists are left out unless `archived=true`, which lists only them.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists (the `ListMailingLists` operationId).
+	ListMailingListsWithResponse(ctx context.Context, params *ListMailingListsParams, reqEditors ...RequestEditorFn) (*ListMailingListsResponse, error)
+
+	// CreateMailingListWithBodyWithResponse Create a mailing list
+	//
+	// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+	// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+	// account (`409 email_channel_required`). A list without one still takes subscribers from the
+	// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+	// inbox (`409 name_taken`).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+	CreateMailingListWithBodyWithResponse(ctx context.Context, params *CreateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMailingListResponse, error)
+
+	// CreateMailingListWithResponse Create a mailing list
+	//
+	// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+	// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+	// account (`409 email_channel_required`). A list without one still takes subscribers from the
+	// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+	// inbox (`409 name_taken`).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+	CreateMailingListWithResponse(ctx context.Context, params *CreateMailingListParams, body CreateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMailingListResponse, error)
+
+	// DeleteMailingListWithResponse Delete a mailing list
+	//
+	// Deletes the list with its subscriptions and their consent events. Addresses that had
+	// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+	// member or a key.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/lists/{listId} (the `DeleteMailingList` operationId).
+	DeleteMailingListWithResponse(ctx context.Context, listId ListId, params *DeleteMailingListParams, reqEditors ...RequestEditorFn) (*DeleteMailingListResponse, error)
+
+	// GetMailingListWithResponse A mailing list
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId} (the `GetMailingList` operationId).
+	GetMailingListWithResponse(ctx context.Context, listId ListId, params *GetMailingListParams, reqEditors ...RequestEditorFn) (*GetMailingListResponse, error)
+
+	// UpdateMailingListWithBodyWithResponse Update a mailing list
+	//
+	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+	// `archived: true` hides it from forms, the preference page and the default list.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+	UpdateMailingListWithBodyWithResponse(ctx context.Context, listId ListId, params *UpdateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMailingListResponse, error)
+
+	// UpdateMailingListWithResponse Update a mailing list
+	//
+	// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+	// `archived: true` hides it from forms, the preference page and the default list.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+	UpdateMailingListWithResponse(ctx context.Context, listId ListId, params *UpdateMailingListParams, body UpdateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMailingListResponse, error)
+
+	// ExportListConsentWithResponse Export a list's consent records
+	//
+	// One row per consent event of the list's subscriptions, with the subscription's address and
+	// current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+	// records or an upload to a registry such as İYS. `since` keeps the events from then on.
+	// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+	// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
+	ExportListConsentWithResponse(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*ExportListConsentResponse, error)
+
+	// GetMailingListGrowthWithResponse How a list grew
+	//
+	// Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+	// subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+	// period's subscriptions that needed a confirmation and got one; absent when none needed one.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
+	GetMailingListGrowthWithResponse(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*GetMailingListGrowthResponse, error)
+
+	// ListSubscriptionsWithResponse List a list's subscriptions
+	//
+	// Newest first. `q` matches the address or the contact's name.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/subscriptions (the `ListSubscriptions` operationId).
+	ListSubscriptionsWithResponse(ctx context.Context, listId ListId, params *ListSubscriptionsParams, reqEditors ...RequestEditorFn) (*ListSubscriptionsResponse, error)
+
+	// CreateSubscriptionWithBodyWithResponse Add a subscriber
+	//
+	// Adds an address (or a contact's first address) to the list, for host backends and members
+	// who collected consent themselves. The caller declares it in `consent`:
+	//
+	// - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+	//   reference to your own record). The subscription is `subscribed` at once and the list's
+	//   welcome mail is sent.
+	// - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+	//   nothing is sent to them until they confirm.
+	//
+	// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+	// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+	// contact keeps what it has (only an empty name and missing locale are filled).
+	//
+	// Answers `201` for a new subscription and `200` with the existing one when the address is
+	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+	// mails today.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+	CreateSubscriptionWithBodyWithResponse(ctx context.Context, listId ListId, params *CreateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubscriptionResponse, error)
+
+	// CreateSubscriptionWithResponse Add a subscriber
+	//
+	// Adds an address (or a contact's first address) to the list, for host backends and members
+	// who collected consent themselves. The caller declares it in `consent`:
+	//
+	// - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+	//   reference to your own record). The subscription is `subscribed` at once and the list's
+	//   welcome mail is sent.
+	// - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+	//   nothing is sent to them until they confirm.
+	//
+	// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+	// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+	// contact keeps what it has (only an empty name and missing locale are filled).
+	//
+	// Answers `201` for a new subscription and `200` with the existing one when the address is
+	// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+	// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+	// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+	// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+	// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+	// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+	// mails today.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+	CreateSubscriptionWithResponse(ctx context.Context, listId ListId, params *CreateSubscriptionParams, body CreateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubscriptionResponse, error)
+
+	// DeleteSubscriptionWithResponse Delete a subscription
+	//
+	// Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+	// address opted out, so it cannot be added back by a member or a key.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/lists/{listId}/subscriptions/{subscriptionId} (the `DeleteSubscription` operationId).
+	DeleteSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *DeleteSubscriptionParams, reqEditors ...RequestEditorFn) (*DeleteSubscriptionResponse, error)
+
+	// GetSubscriptionWithResponse A subscription with its consent events
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
+	GetSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*GetSubscriptionResponse, error)
+
+	// UpdateSubscriptionWithBodyWithResponse Unsubscribe a subscriber
+	//
+	// The only change a member or key can make is `state: unsubscribed`; anything that would
+	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+	// `consent.confirmed: false` to mail the person a confirmation).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+	UpdateSubscriptionWithBodyWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubscriptionResponse, error)
+
+	// UpdateSubscriptionWithResponse Unsubscribe a subscriber
+	//
+	// The only change a member or key can make is `state: unsubscribed`; anything that would
+	// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+	// `consent.confirmed: false` to mail the person a confirmation).
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+	UpdateSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, body UpdateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubscriptionResponse, error)
+
+	// ResendSubscriptionConfirmationWithResponse Mail the confirmation again
+	//
+	// Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+	// otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+	// a list without a usable e-mail channel answers `409 email_channel_required`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
+	ResendSubscriptionConfirmationWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*ResendSubscriptionConfirmationResponse, error)
+
 	// DeleteMeWithBodyWithResponse Delete the signed-in person's account
 	//
 	// Removes the person with their memberships, sessions, passkeys, push subscriptions,
@@ -29523,6 +33210,75 @@ func (r GetClientDiscussionResponse) ContentType() string {
 	return ""
 }
 
+// ListClientMailingListsResponse200Headers the declared response headers of an HTTP 200 response for ListClientMailingLists
+type ListClientMailingListsResponse200Headers struct {
+	CacheControl *string
+}
+
+type ListClientMailingListsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientMailingLists
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ListClientMailingListsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListClientMailingListsResponse) GetJSON200() *ClientMailingLists {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListClientMailingListsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListClientMailingListsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r ListClientMailingListsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r ListClientMailingListsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListClientMailingListsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListClientMailingListsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListClientMailingListsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreatePageRatingResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -29579,6 +33335,75 @@ func (r CreatePageRatingResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreatePageRatingResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateClientSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *ClientSubscriptionAccepted
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CreateClientSubscriptionResponse) GetJSON202() *ClientSubscriptionAccepted {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateClientSubscriptionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateClientSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateClientSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateClientSubscriptionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateClientSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateClientSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateClientSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateClientSubscriptionResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -31179,6 +35004,192 @@ func (r CreateClientSessionResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateClientSessionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListClientSubscriptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientSubscriptionList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListClientSubscriptionsResponse) GetJSON200() *ClientSubscriptionList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListClientSubscriptionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListClientSubscriptionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetBody returns the raw response body bytes
+func (r ListClientSubscriptionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListClientSubscriptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListClientSubscriptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListClientSubscriptionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UnsubscribeClientResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UnsubscribeClientResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UnsubscribeClientResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UnsubscribeClientResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UnsubscribeClientResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UnsubscribeClientResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UnsubscribeClientResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UnsubscribeClientResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SubscribeClientResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ClientSubscriptionStatus
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r SubscribeClientResponse) GetJSON200() *ClientSubscriptionStatus {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SubscribeClientResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SubscribeClientResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SubscribeClientResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SubscribeClientResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r SubscribeClientResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r SubscribeClientResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SubscribeClientResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SubscribeClientResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SubscribeClientResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -33244,6 +37255,82 @@ func (r UpdateContactResponse) ContentType() string {
 	return ""
 }
 
+// ExportContactConsentResponse200Headers the declared response headers of an HTTP 200 response for ExportContactConsent
+type ExportContactConsentResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type ExportContactConsentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ConsentExport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ExportContactConsentResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ExportContactConsentResponse) GetJSON200() *ConsentExport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ExportContactConsentResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ExportContactConsentResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ExportContactConsentResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ExportContactConsentResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ExportContactConsentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ExportContactConsentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ExportContactConsentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ExportContactConsentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type MergeContactResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -33562,6 +37649,68 @@ func (r GetContactPresenceResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetContactPresenceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListContactSubscriptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ContactSubscriptionList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListContactSubscriptionsResponse) GetJSON200() *ContactSubscriptionList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListContactSubscriptionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListContactSubscriptionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListContactSubscriptionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListContactSubscriptionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListContactSubscriptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListContactSubscriptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListContactSubscriptionsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -37174,6 +41323,910 @@ func (r UpdateLabelResponse) ContentType() string {
 	return ""
 }
 
+type ListMailingListsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MailingListPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMailingListsResponse) GetJSON200() *MailingListPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMailingListsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMailingListsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMailingListsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMailingListsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMailingListsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMailingListsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMailingListsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMailingListsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateMailingListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *MailingList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateMailingListResponse) GetJSON201() *MailingList {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateMailingListResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateMailingListResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateMailingListResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateMailingListResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateMailingListResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateMailingListResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateMailingListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateMailingListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateMailingListResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteMailingListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteMailingListResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteMailingListResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteMailingListResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteMailingListResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteMailingListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteMailingListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteMailingListResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMailingListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MailingList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMailingListResponse) GetJSON200() *MailingList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMailingListResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMailingListResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMailingListResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMailingListResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMailingListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMailingListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMailingListResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateMailingListResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MailingList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateMailingListResponse) GetJSON200() *MailingList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateMailingListResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateMailingListResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateMailingListResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateMailingListResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateMailingListResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateMailingListResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateMailingListResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateMailingListResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateMailingListResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// ExportListConsentResponse200Headers the declared response headers of an HTTP 200 response for ExportListConsent
+type ExportListConsentResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type ExportListConsentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ConsentExport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *ExportListConsentResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ExportListConsentResponse) GetJSON200() *ConsentExport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ExportListConsentResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ExportListConsentResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ExportListConsentResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ExportListConsentResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ExportListConsentResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ExportListConsentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ExportListConsentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ExportListConsentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMailingListGrowthResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MailingListGrowth
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMailingListGrowthResponse) GetJSON200() *MailingListGrowth {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetMailingListGrowthResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMailingListGrowthResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMailingListGrowthResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMailingListGrowthResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMailingListGrowthResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMailingListGrowthResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMailingListGrowthResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMailingListGrowthResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListSubscriptionsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *SubscriptionPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListSubscriptionsResponse) GetJSON200() *SubscriptionPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListSubscriptionsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListSubscriptionsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListSubscriptionsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListSubscriptionsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListSubscriptionsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListSubscriptionsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListSubscriptionsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListSubscriptionsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Subscription
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Subscription
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CreateSubscriptionResponse) GetJSON200() *Subscription {
+	return r.JSON200
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateSubscriptionResponse) GetJSON201() *Subscription {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateSubscriptionResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *SubscriptionDetail
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetSubscriptionResponse) GetJSON200() *SubscriptionDetail {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Subscription
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateSubscriptionResponse) GetJSON200() *Subscription {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateSubscriptionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateSubscriptionResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ResendSubscriptionConfirmationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ResendSubscriptionConfirmationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ResendSubscriptionConfirmationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ResendSubscriptionConfirmationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ResendSubscriptionConfirmationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r ResendSubscriptionConfirmationResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r ResendSubscriptionConfirmationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ResendSubscriptionConfirmationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ResendSubscriptionConfirmationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ResendSubscriptionConfirmationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // DeleteMeResponse204Headers the declared response headers of an HTTP 204 response for DeleteMe
 type DeleteMeResponse204Headers struct {
 	SetCookie *string
@@ -40160,6 +45213,25 @@ func (c *ClientWithResponses) GetClientDiscussionWithResponse(ctx context.Contex
 	return ParseGetClientDiscussionResponse(rsp)
 }
 
+// ListClientMailingListsWithResponse The public mailing lists a form may offer
+//
+// The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+// `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/channels/{channel_key}/lists (the `ListClientMailingLists` operationId).
+func (c *ClientWithResponses) ListClientMailingListsWithResponse(ctx context.Context, channelKey ChannelKey, reqEditors ...RequestEditorFn) (*ListClientMailingListsResponse, error) {
+	rsp, err := c.ListClientMailingLists(ctx, channelKey, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListClientMailingListsResponse(rsp)
+}
+
 // CreatePageRatingWithBodyWithResponse Rate a documentation page
 //
 // Counts one `up` or `down` for a documentation page on a `chat` channel's public key, without
@@ -40212,6 +45284,86 @@ func (c *ClientWithResponses) CreatePageRatingWithResponse(ctx context.Context, 
 		return nil, err
 	}
 	return ParseCreatePageRatingResponse(rsp)
+}
+
+// CreateClientSubscriptionWithBodyWithResponse Subscribe from a form
+//
+// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+// answer is the same `202` for an address that is new, already subscribed, waiting for its
+// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+// address is known: `confirmation` only says whether any of the lists asks the person to
+// confirm by mail. What happens:
+//
+//   - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+//     on a list without it, `subscribed` at once with the list's welcome mail;
+//   - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+//     becomes `pending` and gets a confirmation (only the person can come back);
+//   - a subscribed or undeliverable address changes nothing.
+//
+// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+// visitor ticked, stored with `page_url`, the IP address and the user agent.
+//
+// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+// without changing the answer.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// An `app` channel's key answers `404`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+func (c *ClientWithResponses) CreateClientSubscriptionWithBodyWithResponse(ctx context.Context, channelKey ChannelKey, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSubscriptionResponse, error) {
+	rsp, err := c.CreateClientSubscriptionWithBody(ctx, channelKey, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientSubscriptionResponse(rsp)
+}
+
+// CreateClientSubscriptionWithResponse Subscribe from a form
+//
+// A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+// answer is the same `202` for an address that is new, already subscribed, waiting for its
+// confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+// address is known: `confirmation` only says whether any of the lists asks the person to
+// confirm by mail. What happens:
+//
+//   - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+//     on a list without it, `subscribed` at once with the list's welcome mail;
+//   - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+//     becomes `pending` and gets a confirmation (only the person can come back);
+//   - a subscribed or undeliverable address changes nothing.
+//
+// The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+// visitor ticked, stored with `page_url`, the IP address and the user agent.
+//
+// Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+// `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+// after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+// (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+// channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+// address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+// capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+// without changing the answer.
+//
+// Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+// An `app` channel's key answers `404`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /client/v1/channels/{channel_key}/subscriptions (the `CreateClientSubscription` operationId).
+func (c *ClientWithResponses) CreateClientSubscriptionWithResponse(ctx context.Context, channelKey ChannelKey, body CreateClientSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSubscriptionResponse, error) {
+	rsp, err := c.CreateClientSubscription(ctx, channelKey, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateClientSubscriptionResponse(rsp)
 }
 
 // SetClientContactEmailWithBodyWithResponse Leave an e-mail address for replies
@@ -40923,6 +46075,84 @@ func (c *ClientWithResponses) CreateClientSessionWithResponse(ctx context.Contex
 		return nil, err
 	}
 	return ParseCreateClientSessionResponse(rsp)
+}
+
+// ListClientSubscriptionsWithResponse The session contact's subscriptions
+//
+// Every public, unarchived list of the session's inbox with the contact's state on it
+// (absent when the contact never subscribed), for a toggle in the widget or the app.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /client/v1/subscriptions (the `ListClientSubscriptions` operationId).
+func (c *ClientWithResponses) ListClientSubscriptionsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*ListClientSubscriptionsResponse, error) {
+	rsp, err := c.ListClientSubscriptions(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListClientSubscriptionsResponse(rsp)
+}
+
+// UnsubscribeClientWithResponse Unsubscribe the session contact
+//
+// Unsubscribes the session's contact from a public list of the session's inbox at once.
+// Nothing to unsubscribe is not an error.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /client/v1/subscriptions/{listId} (the `UnsubscribeClient` operationId).
+func (c *ClientWithResponses) UnsubscribeClientWithResponse(ctx context.Context, listId ListId, reqEditors ...RequestEditorFn) (*UnsubscribeClientResponse, error) {
+	rsp, err := c.UnsubscribeClient(ctx, listId, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUnsubscribeClientResponse(rsp)
+}
+
+// SubscribeClientWithBodyWithResponse Subscribe the session contact
+//
+// Subscribes the signed-in user of the host app (a session started with an identity token)
+// to a public list of the session's inbox. When the contact has a known address (an
+// identity token with `email_verified: true`, or one a member or an e-mail conversation
+// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+// bounced or complained stays `pending` and gets nothing.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+func (c *ClientWithResponses) SubscribeClientWithBodyWithResponse(ctx context.Context, listId ListId, params *SubscribeClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SubscribeClientResponse, error) {
+	rsp, err := c.SubscribeClientWithBody(ctx, listId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSubscribeClientResponse(rsp)
+}
+
+// SubscribeClientWithResponse Subscribe the session contact
+//
+// Subscribes the signed-in user of the host app (a session started with an identity token)
+// to a public list of the session's inbox. When the contact has a known address (an
+// identity token with `email_verified: true`, or one a member or an e-mail conversation
+// gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+// with only an address the user typed, it is `pending` and a confirmation mail goes out.
+// Anonymous visitor sessions answer `403 identity_required` (they use the form);
+// a contact without an address `409 no_email`; a list that is not a public list of the inbox
+// `404`. Already subscribed or pending: the current state, nothing sent. An address that
+// bounced or complained stays `pending` and gets nothing.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /client/v1/subscriptions/{listId} (the `SubscribeClient` operationId).
+func (c *ClientWithResponses) SubscribeClientWithResponse(ctx context.Context, listId ListId, params *SubscribeClientParams, body SubscribeClientJSONRequestBody, reqEditors ...RequestEditorFn) (*SubscribeClientResponse, error) {
+	rsp, err := c.SubscribeClient(ctx, listId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSubscribeClientResponse(rsp)
 }
 
 // GetHealthzWithResponse Liveness
@@ -41763,6 +46993,25 @@ func (c *ClientWithResponses) UpdateContactWithResponse(ctx context.Context, con
 	return ParseUpdateContactResponse(rsp)
 }
 
+// ExportContactConsentWithResponse Export a contact's consent records
+//
+// Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+// first, in the rows of `exportListConsent`: for answering a data subject's access request
+// (GDPR Art. 15, KVKK Art. 11).
+//
+// Scopes: `contacts:read` and `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/contacts/{contactId}/consent (the `ExportContactConsent` operationId).
+func (c *ClientWithResponses) ExportContactConsentWithResponse(ctx context.Context, contactId ContactId, params *ExportContactConsentParams, reqEditors ...RequestEditorFn) (*ExportContactConsentResponse, error) {
+	rsp, err := c.ExportContactConsent(ctx, contactId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseExportContactConsentResponse(rsp)
+}
+
 // MergeContactWithBodyWithResponse Merge another contact into this one
 //
 // Owners, admins and API keys not limited to inboxes. The contact in the path keeps its id and gains the source's
@@ -41894,6 +47143,23 @@ func (c *ClientWithResponses) GetContactPresenceWithResponse(ctx context.Context
 		return nil, err
 	}
 	return ParseGetContactPresenceResponse(rsp)
+}
+
+// ListContactSubscriptionsWithResponse A contact's subscriptions
+//
+// The contact's subscriptions to the lists of the inboxes the caller can see.
+//
+// Scopes: `contacts:read` and `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/contacts/{contactId}/subscriptions (the `ListContactSubscriptions` operationId).
+func (c *ClientWithResponses) ListContactSubscriptionsWithResponse(ctx context.Context, contactId ContactId, params *ListContactSubscriptionsParams, reqEditors ...RequestEditorFn) (*ListContactSubscriptionsResponse, error) {
+	rsp, err := c.ListContactSubscriptions(ctx, contactId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListContactSubscriptionsResponse(rsp)
 }
 
 // GetContactSummaryWithResponse How the team served a contact
@@ -43397,6 +48663,357 @@ func (c *ClientWithResponses) UpdateLabelWithResponse(ctx context.Context, label
 	return ParseUpdateLabelResponse(rsp)
 }
 
+// ListMailingListsWithResponse List mailing lists
+//
+// The lists of the inboxes the caller can see, newest first, with their subscription counts.
+// Archived lists are left out unless `archived=true`, which lists only them.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists (the `ListMailingLists` operationId).
+func (c *ClientWithResponses) ListMailingListsWithResponse(ctx context.Context, params *ListMailingListsParams, reqEditors ...RequestEditorFn) (*ListMailingListsResponse, error) {
+	rsp, err := c.ListMailingLists(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMailingListsResponse(rsp)
+}
+
+// CreateMailingListWithBodyWithResponse Create a mailing list
+//
+// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+// account (`409 email_channel_required`). A list without one still takes subscribers from the
+// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+// inbox (`409 name_taken`).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+func (c *ClientWithResponses) CreateMailingListWithBodyWithResponse(ctx context.Context, params *CreateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateMailingListResponse, error) {
+	rsp, err := c.CreateMailingListWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMailingListResponse(rsp)
+}
+
+// CreateMailingListWithResponse Create a mailing list
+//
+// A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+// confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+// account (`409 email_channel_required`). A list without one still takes subscribers from the
+// API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+// inbox (`409 name_taken`).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists (the `CreateMailingList` operationId).
+func (c *ClientWithResponses) CreateMailingListWithResponse(ctx context.Context, params *CreateMailingListParams, body CreateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateMailingListResponse, error) {
+	rsp, err := c.CreateMailingList(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateMailingListResponse(rsp)
+}
+
+// DeleteMailingListWithResponse Delete a mailing list
+//
+// Deletes the list with its subscriptions and their consent events. Addresses that had
+// unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+// member or a key.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/lists/{listId} (the `DeleteMailingList` operationId).
+func (c *ClientWithResponses) DeleteMailingListWithResponse(ctx context.Context, listId ListId, params *DeleteMailingListParams, reqEditors ...RequestEditorFn) (*DeleteMailingListResponse, error) {
+	rsp, err := c.DeleteMailingList(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteMailingListResponse(rsp)
+}
+
+// GetMailingListWithResponse A mailing list
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId} (the `GetMailingList` operationId).
+func (c *ClientWithResponses) GetMailingListWithResponse(ctx context.Context, listId ListId, params *GetMailingListParams, reqEditors ...RequestEditorFn) (*GetMailingListResponse, error) {
+	rsp, err := c.GetMailingList(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMailingListResponse(rsp)
+}
+
+// UpdateMailingListWithBodyWithResponse Update a mailing list
+//
+// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+// `archived: true` hides it from forms, the preference page and the default list.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+func (c *ClientWithResponses) UpdateMailingListWithBodyWithResponse(ctx context.Context, listId ListId, params *UpdateMailingListParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateMailingListResponse, error) {
+	rsp, err := c.UpdateMailingListWithBody(ctx, listId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMailingListResponse(rsp)
+}
+
+// UpdateMailingListWithResponse Update a mailing list
+//
+// Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+// `archived: true` hides it from forms, the preference page and the default list.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId} (the `UpdateMailingList` operationId).
+func (c *ClientWithResponses) UpdateMailingListWithResponse(ctx context.Context, listId ListId, params *UpdateMailingListParams, body UpdateMailingListJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMailingListResponse, error) {
+	rsp, err := c.UpdateMailingList(ctx, listId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateMailingListResponse(rsp)
+}
+
+// ExportListConsentWithResponse Export a list's consent records
+//
+// One row per consent event of the list's subscriptions, with the subscription's address and
+// current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+// records or an upload to a registry such as İYS. `since` keeps the events from then on.
+// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
+func (c *ClientWithResponses) ExportListConsentWithResponse(ctx context.Context, listId ListId, params *ExportListConsentParams, reqEditors ...RequestEditorFn) (*ExportListConsentResponse, error) {
+	rsp, err := c.ExportListConsent(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseExportListConsentResponse(rsp)
+}
+
+// GetMailingListGrowthWithResponse How a list grew
+//
+// Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+// subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+// period's subscriptions that needed a confirmation and got one; absent when none needed one.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
+func (c *ClientWithResponses) GetMailingListGrowthWithResponse(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*GetMailingListGrowthResponse, error) {
+	rsp, err := c.GetMailingListGrowth(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMailingListGrowthResponse(rsp)
+}
+
+// ListSubscriptionsWithResponse List a list's subscriptions
+//
+// Newest first. `q` matches the address or the contact's name.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/subscriptions (the `ListSubscriptions` operationId).
+func (c *ClientWithResponses) ListSubscriptionsWithResponse(ctx context.Context, listId ListId, params *ListSubscriptionsParams, reqEditors ...RequestEditorFn) (*ListSubscriptionsResponse, error) {
+	rsp, err := c.ListSubscriptions(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListSubscriptionsResponse(rsp)
+}
+
+// CreateSubscriptionWithBodyWithResponse Add a subscriber
+//
+// Adds an address (or a contact's first address) to the list, for host backends and members
+// who collected consent themselves. The caller declares it in `consent`:
+//
+//   - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+//     reference to your own record). The subscription is `subscribed` at once and the list's
+//     welcome mail is sent.
+//   - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+//     nothing is sent to them until they confirm.
+//
+// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+// contact keeps what it has (only an empty name and missing locale are filled).
+//
+// Answers `201` for a new subscription and `200` with the existing one when the address is
+// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+// mails today.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+func (c *ClientWithResponses) CreateSubscriptionWithBodyWithResponse(ctx context.Context, listId ListId, params *CreateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateSubscriptionResponse, error) {
+	rsp, err := c.CreateSubscriptionWithBody(ctx, listId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSubscriptionResponse(rsp)
+}
+
+// CreateSubscriptionWithResponse Add a subscriber
+//
+// Adds an address (or a contact's first address) to the list, for host backends and members
+// who collected consent themselves. The caller declares it in `consent`:
+//
+//   - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+//     reference to your own record). The subscription is `subscribed` at once and the list's
+//     welcome mail is sent.
+//   - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+//     nothing is sent to them until they confirm.
+//
+// The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+// address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+// contact keeps what it has (only an empty name and missing locale are filled).
+//
+// Answers `201` for a new subscription and `200` with the existing one when the address is
+// already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+// `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+// (only the person can come back: send `confirmed: false` to mail them a confirmation),
+// `409 opted_out` when it unsubscribed from everything, complained or was erased after
+// objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+// `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+// mails today.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions (the `CreateSubscription` operationId).
+func (c *ClientWithResponses) CreateSubscriptionWithResponse(ctx context.Context, listId ListId, params *CreateSubscriptionParams, body CreateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateSubscriptionResponse, error) {
+	rsp, err := c.CreateSubscription(ctx, listId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateSubscriptionResponse(rsp)
+}
+
+// DeleteSubscriptionWithResponse Delete a subscription
+//
+// Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+// address opted out, so it cannot be added back by a member or a key.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/lists/{listId}/subscriptions/{subscriptionId} (the `DeleteSubscription` operationId).
+func (c *ClientWithResponses) DeleteSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *DeleteSubscriptionParams, reqEditors ...RequestEditorFn) (*DeleteSubscriptionResponse, error) {
+	rsp, err := c.DeleteSubscription(ctx, listId, subscriptionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteSubscriptionResponse(rsp)
+}
+
+// GetSubscriptionWithResponse A subscription with its consent events
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/subscriptions/{subscriptionId} (the `GetSubscription` operationId).
+func (c *ClientWithResponses) GetSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *GetSubscriptionParams, reqEditors ...RequestEditorFn) (*GetSubscriptionResponse, error) {
+	rsp, err := c.GetSubscription(ctx, listId, subscriptionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetSubscriptionResponse(rsp)
+}
+
+// UpdateSubscriptionWithBodyWithResponse Unsubscribe a subscriber
+//
+// The only change a member or key can make is `state: unsubscribed`; anything that would
+// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+// `consent.confirmed: false` to mail the person a confirmation).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+func (c *ClientWithResponses) UpdateSubscriptionWithBodyWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSubscriptionResponse, error) {
+	rsp, err := c.UpdateSubscriptionWithBody(ctx, listId, subscriptionId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSubscriptionResponse(rsp)
+}
+
+// UpdateSubscriptionWithResponse Unsubscribe a subscriber
+//
+// The only change a member or key can make is `state: unsubscribed`; anything that would
+// make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+// `consent.confirmed: false` to mail the person a confirmation).
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId}/subscriptions/{subscriptionId} (the `UpdateSubscription` operationId).
+func (c *ClientWithResponses) UpdateSubscriptionWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *UpdateSubscriptionParams, body UpdateSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSubscriptionResponse, error) {
+	rsp, err := c.UpdateSubscription(ctx, listId, subscriptionId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateSubscriptionResponse(rsp)
+}
+
+// ResendSubscriptionConfirmationWithResponse Mail the confirmation again
+//
+// Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+// otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+// a list without a usable e-mail channel answers `409 email_channel_required`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation (the `ResendSubscriptionConfirmation` operationId).
+func (c *ClientWithResponses) ResendSubscriptionConfirmationWithResponse(ctx context.Context, listId ListId, subscriptionId SubscriptionId, params *ResendSubscriptionConfirmationParams, reqEditors ...RequestEditorFn) (*ResendSubscriptionConfirmationResponse, error) {
+	rsp, err := c.ResendSubscriptionConfirmation(ctx, listId, subscriptionId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseResendSubscriptionConfirmationResponse(rsp)
+}
+
 // DeleteMeWithBodyWithResponse Delete the signed-in person's account
 //
 // Removes the person with their memberships, sessions, passkeys, push subscriptions,
@@ -44746,6 +50363,66 @@ func ParseGetClientDiscussionResponse(rsp *http.Response) (*GetClientDiscussionR
 	return response, nil
 }
 
+// ParseListClientMailingListsResponse parses an HTTP response from a ListClientMailingListsWithResponse call
+func ParseListClientMailingListsResponse(rsp *http.Response) (*ListClientMailingListsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListClientMailingListsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientMailingLists
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ListClientMailingListsResponse200Headers
+		if values := rsp.Header.Values("Cache-Control"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Cache-Control", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.CacheControl = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseCreatePageRatingResponse parses an HTTP response from a CreatePageRatingWithResponse call
 func ParseCreatePageRatingResponse(rsp *http.Response) (*CreatePageRatingResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -44762,6 +50439,60 @@ func ParseCreatePageRatingResponse(rsp *http.Response) (*CreatePageRatingRespons
 	switch {
 	case rsp.StatusCode == 204:
 		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateClientSubscriptionResponse parses an HTTP response from a CreateClientSubscriptionWithResponse call
+func ParseCreateClientSubscriptionResponse(rsp *http.Response) (*CreateClientSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateClientSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest ClientSubscriptionAccepted
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Problem
@@ -46048,6 +51779,150 @@ func ParseCreateClientSessionResponse(rsp *http.Response) (*CreateClientSessionR
 			return nil, err
 		}
 		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListClientSubscriptionsResponse parses an HTTP response from a ListClientSubscriptionsWithResponse call
+func ParseListClientSubscriptionsResponse(rsp *http.Response) (*ListClientSubscriptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListClientSubscriptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientSubscriptionList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUnsubscribeClientResponse parses an HTTP response from a UnsubscribeClientWithResponse call
+func ParseUnsubscribeClientResponse(rsp *http.Response) (*UnsubscribeClientResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UnsubscribeClientResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSubscribeClientResponse parses an HTTP response from a SubscribeClientWithResponse call
+func ParseSubscribeClientResponse(rsp *http.Response) (*SubscribeClientResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SubscribeClientResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientSubscriptionStatus
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
 
 	}
 
@@ -47645,6 +53520,76 @@ func ParseUpdateContactResponse(rsp *http.Response) (*UpdateContactResponse, err
 	return response, nil
 }
 
+// ParseExportContactConsentResponse parses an HTTP response from a ExportContactConsentWithResponse call
+func ParseExportContactConsentResponse(rsp *http.Response) (*ExportContactConsentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ExportContactConsentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ConsentExport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case rsp.StatusCode == 200:
+		// Content-type (text/csv) unsupported
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ExportContactConsentResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
 // ParseMergeContactResponse parses an HTTP response from a MergeContactWithResponse call
 func ParseMergeContactResponse(rsp *http.Response) (*MergeContactResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -47866,6 +53811,53 @@ func ParseGetContactPresenceResponse(rsp *http.Response) (*GetContactPresenceRes
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest ContactPresence
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListContactSubscriptionsResponse parses an HTTP response from a ListContactSubscriptionsWithResponse call
+func ParseListContactSubscriptionsResponse(rsp *http.Response) (*ListContactSubscriptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListContactSubscriptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ContactSubscriptionList
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -50699,6 +56691,733 @@ func ParseUpdateLabelResponse(rsp *http.Response) (*UpdateLabelResponse, error) 
 	return response, nil
 }
 
+// ParseListMailingListsResponse parses an HTTP response from a ListMailingListsWithResponse call
+func ParseListMailingListsResponse(rsp *http.Response) (*ListMailingListsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMailingListsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MailingListPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateMailingListResponse parses an HTTP response from a CreateMailingListWithResponse call
+func ParseCreateMailingListResponse(rsp *http.Response) (*CreateMailingListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateMailingListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest MailingList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteMailingListResponse parses an HTTP response from a DeleteMailingListWithResponse call
+func ParseDeleteMailingListResponse(rsp *http.Response) (*DeleteMailingListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteMailingListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMailingListResponse parses an HTTP response from a GetMailingListWithResponse call
+func ParseGetMailingListResponse(rsp *http.Response) (*GetMailingListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMailingListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MailingList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateMailingListResponse parses an HTTP response from a UpdateMailingListWithResponse call
+func ParseUpdateMailingListResponse(rsp *http.Response) (*UpdateMailingListResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateMailingListResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MailingList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseExportListConsentResponse parses an HTTP response from a ExportListConsentWithResponse call
+func ParseExportListConsentResponse(rsp *http.Response) (*ExportListConsentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ExportListConsentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ConsentExport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case rsp.StatusCode == 200:
+		// Content-type (text/csv) unsupported
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers ExportListConsentResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetMailingListGrowthResponse parses an HTTP response from a GetMailingListGrowthWithResponse call
+func ParseGetMailingListGrowthResponse(rsp *http.Response) (*GetMailingListGrowthResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMailingListGrowthResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MailingListGrowth
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListSubscriptionsResponse parses an HTTP response from a ListSubscriptionsWithResponse call
+func ParseListSubscriptionsResponse(rsp *http.Response) (*ListSubscriptionsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListSubscriptionsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest SubscriptionPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateSubscriptionResponse parses an HTTP response from a CreateSubscriptionWithResponse call
+func ParseCreateSubscriptionResponse(rsp *http.Response) (*CreateSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Subscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Subscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteSubscriptionResponse parses an HTTP response from a DeleteSubscriptionWithResponse call
+func ParseDeleteSubscriptionResponse(rsp *http.Response) (*DeleteSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetSubscriptionResponse parses an HTTP response from a GetSubscriptionWithResponse call
+func ParseGetSubscriptionResponse(rsp *http.Response) (*GetSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest SubscriptionDetail
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateSubscriptionResponse parses an HTTP response from a UpdateSubscriptionWithResponse call
+func ParseUpdateSubscriptionResponse(rsp *http.Response) (*UpdateSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Subscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseResendSubscriptionConfirmationResponse parses an HTTP response from a ResendSubscriptionConfirmationWithResponse call
+func ParseResendSubscriptionConfirmationResponse(rsp *http.Response) (*ResendSubscriptionConfirmationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ResendSubscriptionConfirmationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 202:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteMeResponse parses an HTTP response from a DeleteMeWithResponse call
 func ParseDeleteMeResponse(rsp *http.Response) (*DeleteMeResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -53052,6 +59771,16 @@ type WebhookInitiatorInterface interface {
 	WebhookMessageCreatedWithBody(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	WebhookMessageCreated(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, body WebhookMessageCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookSubscriptionCreatedWithBody fires the subscription.created webhook with any body
+	WebhookSubscriptionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookSubscriptionCreated(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, body WebhookSubscriptionCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// WebhookSubscriptionUpdatedWithBody fires the subscription.updated webhook with any body
+	WebhookSubscriptionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookSubscriptionUpdated(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, body WebhookSubscriptionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 func (p *WebhookInitiator) WebhookContactDeletedWithBody(ctx context.Context, targetURL string, params *WebhookContactDeletedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -53380,6 +60109,54 @@ func (p *WebhookInitiator) WebhookMessageCreatedWithBody(ctx context.Context, ta
 
 func (p *WebhookInitiator) WebhookMessageCreated(ctx context.Context, targetURL string, params *WebhookMessageCreatedParams, body WebhookMessageCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewWebhookMessageCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookSubscriptionCreatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookSubscriptionCreatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookSubscriptionCreated(ctx context.Context, targetURL string, params *WebhookSubscriptionCreatedParams, body WebhookSubscriptionCreatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookSubscriptionCreatedWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookSubscriptionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookSubscriptionUpdatedWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookSubscriptionUpdated(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, body WebhookSubscriptionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookSubscriptionUpdatedWebhookRequest(targetURL, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -54196,6 +60973,128 @@ func NewWebhookMessageCreatedWebhookRequest(targetURL string, params *WebhookMes
 
 // NewWebhookMessageCreatedWebhookRequestWithBody builds a POST request for the message.created webhook with any body
 func NewWebhookMessageCreatedWebhookRequestWithBody(targetURL string, params *WebhookMessageCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookSubscriptionCreatedWebhookRequest builds a application/json POST request for the subscription.created webhook
+func NewWebhookSubscriptionCreatedWebhookRequest(targetURL string, params *WebhookSubscriptionCreatedParams, body WebhookSubscriptionCreatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookSubscriptionCreatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookSubscriptionCreatedWebhookRequestWithBody builds a POST request for the subscription.created webhook with any body
+func NewWebhookSubscriptionCreatedWebhookRequestWithBody(targetURL string, params *WebhookSubscriptionCreatedParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
+}
+
+// NewWebhookSubscriptionUpdatedWebhookRequest builds a application/json POST request for the subscription.updated webhook
+func NewWebhookSubscriptionUpdatedWebhookRequest(targetURL string, params *WebhookSubscriptionUpdatedParams, body WebhookSubscriptionUpdatedJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookSubscriptionUpdatedWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookSubscriptionUpdatedWebhookRequestWithBody builds a POST request for the subscription.updated webhook with any body
+func NewWebhookSubscriptionUpdatedWebhookRequestWithBody(targetURL string, params *WebhookSubscriptionUpdatedParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 	_ = err
 

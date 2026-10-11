@@ -117,6 +117,28 @@ tags:
       `/account/connect?channel=<key>&origin=<origin>` in a popup, which hands it a reader token
       (`POST /v1/account/reader-tokens`). These endpoints act on the signed-in person across every
       workspace and need a person session.
+  - name: lists
+    description: |
+      Mailing lists of an inbox, their subscriptions and the consent records behind them. Owners
+      and admins manage lists and subscribers; agents read the lists of the inboxes they can
+      access; lists in inboxes the caller cannot see answer `404`. Keys and tokens need
+      `lists:read` or `lists:write`; neither is added to keys made before they existed.
+
+      A subscription is `pending` (waiting for the person to confirm), `subscribed` or
+      `unsubscribed`. Every change writes an append-only consent event (`ConsentEvent`) with what
+      happened, when and from where. Only the person moves an `unsubscribed` subscription back,
+      through a confirmation mail; members and keys get `409 unsubscribed`. An address that
+      unsubscribed from everything, complained, or belonged to a contact deleted after objecting is
+      remembered as a keyed hash in the workspace and refused with `409 opted_out`.
+
+      Confirmation and welcome mails go out through the list's e-mail channel (`channel_id`),
+      under the inbox's brand, in English, Turkish or German by the contact's locale else the
+      inbox's. Their links lead to two server pages that need no sign-in: `/s/{token}` confirms a
+      subscription and `/m/{token}` unsubscribes from the list, from any of the inbox's public
+      lists, or from everything. Opening either page changes nothing; only its button does.
+      `/m/{token}` also takes the RFC 8058 one-click `POST` (`List-Unsubscribe=One-Click`).
+      Pending subscriptions are deleted after 30 days, unsubscribed ones and their consent events
+      after 3 years.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -2163,6 +2185,68 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/contacts/{contactId}/subscriptions:
+    get:
+      operationId: listContactSubscriptions
+      summary: A contact's subscriptions
+      description: |
+        The contact's subscriptions to the lists of the inboxes the caller can see.
+
+        Scopes: `contacts:read` and `lists:read`.
+      tags: [contacts, lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ContactId"
+      responses:
+        "200":
+          description: The subscriptions, newest first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactSubscriptionList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/contacts/{contactId}/consent:
+    get:
+      operationId: exportContactConsent
+      summary: Export a contact's consent records
+      description: |
+        Every consent event of the contact's subscriptions to the lists the caller can see, oldest
+        first, in the rows of `exportListConsent`: for answering a data subject's access request
+        (GDPR Art. 15, KVKK Art. 11).
+
+        Scopes: `contacts:read` and `lists:read`.
+      tags: [contacts, lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ContactId"
+        - $ref: "#/components/parameters/ConsentFormat"
+      responses:
+        "200":
+          description: The records.
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsentExport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/conversations:
     get:
       operationId: listConversations
@@ -3900,6 +3984,452 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/lists:
+    get:
+      operationId: listMailingLists
+      summary: List mailing lists
+      description: |
+        The lists of the inboxes the caller can see, newest first, with their subscription counts.
+        Archived lists are left out unless `archived=true`, which lists only them.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: inbox_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: archived
+          in: query
+          schema:
+            type: boolean
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of lists.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailingListPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMailingList
+      summary: Create a mailing list
+      description: |
+        A list of an inbox. `channel_id` names the inbox's e-mail channel that sends the list's
+        confirmation and welcome mails; it must be an e-mail channel of the same inbox with an SMTP
+        account (`409 email_channel_required`). A list without one still takes subscribers from the
+        API, but its forms send nothing and its subscriptions stay `pending`. Names are unique per
+        inbox (`409 name_taken`).
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MailingListCreate"
+      responses:
+        "201":
+          description: The list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailingList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}:
+    get:
+      operationId: getMailingList
+      summary: A mailing list
+      description: "Scope: `lists:read`."
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+      responses:
+        "200":
+          description: The list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailingList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMailingList
+      summary: Update a mailing list
+      description: |
+        Changes the given fields. `channel_id: null` leaves the list without a sending channel;
+        `archived: true` hides it from forms, the preference page and the default list.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MailingListUpdate"
+      responses:
+        "200":
+          description: The updated list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailingList"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMailingList
+      summary: Delete a mailing list
+      description: |
+        Deletes the list with its subscriptions and their consent events. Addresses that had
+        unsubscribed from it are remembered as opted out first, so they cannot be added back by a
+        member or a key.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/growth:
+    get:
+      operationId: getMailingListGrowth
+      summary: How a list grew
+      description: |
+        Per UTC day of the last `days` days (30 by default), oldest first and without gaps: new
+        subscriptions, confirmations and unsubscriptions. `confirmation_rate` is the share of the
+        period's subscriptions that needed a confirmation and got one; absent when none needed one.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - name: days
+          in: query
+          schema:
+            type: integer
+            format: int32
+            enum: [30, 90]
+      responses:
+        "200":
+          description: The series.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MailingListGrowth"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: List a list's subscriptions
+      description: |
+        Newest first. `q` matches the address or the contact's name.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - name: state
+          in: query
+          schema:
+            $ref: "#/components/schemas/SubscriptionState"
+        - name: q
+          in: query
+          schema:
+            type: string
+            maxLength: 200
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubscriptionPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createSubscription
+      summary: Add a subscriber
+      description: |
+        Adds an address (or a contact's first address) to the list, for host backends and members
+        who collected consent themselves. The caller declares it in `consent`:
+
+        - `confirmed: true`: the person already agreed (when, the text they saw, where, a
+          reference to your own record). The subscription is `subscribed` at once and the list's
+          welcome mail is sent.
+        - `confirmed: false`: the subscription is `pending` and the person gets a confirmation mail;
+          nothing is sent to them until they confirm.
+
+        The contact is found by `contact_id`, by `external_id` in the list's inbox, or by the
+        address, else created with `name`, `locale`, `external_id` and `attributes`; an existing
+        contact keeps what it has (only an empty name and missing locale are filled).
+
+        Answers `201` for a new subscription and `200` with the existing one when the address is
+        already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
+        `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
+        (only the person can come back: send `confirmed: false` to mail them a confirmation),
+        `409 opted_out` when it unsubscribed from everything, complained or was erased after
+        objecting, `409 suppressed` when mail to it bounced or was reported as spam,
+        `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
+        mails today.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscriptionCreate"
+      responses:
+        "200":
+          description: The address was already on the list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "201":
+          description: The new subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/subscriptions/{subscriptionId}:
+    get:
+      operationId: getSubscription
+      summary: A subscription with its consent events
+      description: "Scope: `lists:read`."
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/SubscriptionId"
+      responses:
+        "200":
+          description: The subscription and its events, oldest first.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubscriptionDetail"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateSubscription
+      summary: Unsubscribe a subscriber
+      description: |
+        The only change a member or key can make is `state: unsubscribed`; anything that would
+        make a subscription `subscribed` answers `409 confirmation_required` (add the address with
+        `consent.confirmed: false` to mail the person a confirmation).
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/SubscriptionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscriptionUpdate"
+      responses:
+        "200":
+          description: The subscription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteSubscription
+      summary: Delete a subscription
+      description: |
+        Deletes the subscription and its consent events. An `unsubscribed` subscription leaves the
+        address opted out, so it cannot be added back by a member or a key.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/SubscriptionId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation:
+    post:
+      operationId: resendSubscriptionConfirmation
+      summary: Mail the confirmation again
+      description: |
+        Queues another confirmation mail for a `pending` subscription (`409 not_pending`
+        otherwise). At most 3 per subscription and day and 10 in all (`429 confirmation_limit`);
+        a list without a usable e-mail channel answers `409 email_channel_required`.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/SubscriptionId"
+      responses:
+        "202":
+          description: Queued.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/consent-export:
+    get:
+      operationId: exportListConsent
+      summary: Export a list's consent records
+      description: |
+        One row per consent event of the list's subscriptions, with the subscription's address and
+        current state, oldest first: proof of consent (GDPR Art. 7(1)) and refusals for your own
+        records or an upload to a registry such as İYS. `since` keeps the events from then on.
+        `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
+        `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ConsentFormat"
+        - name: since
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        "200":
+          description: The records.
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConsentExport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/usage:
     get:
       operationId: getUsage
@@ -4833,6 +5363,94 @@ paths:
           $ref: "#/components/responses/Problem"
         "429":
           $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/lists:
+    get:
+      operationId: listClientMailingLists
+      summary: The public mailing lists a form may offer
+      description: |
+        The public, unarchived lists of the chat channel's inbox, without a session, and a fresh
+        `form_token` for `createClientSubscription`. Never cached (`Cache-Control: no-store`).
+
+        Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+        Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ChannelKey"
+      responses:
+        "200":
+          description: The lists and a form token.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                enum: [no-store]
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientMailingLists"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /client/v1/channels/{channel_key}/subscriptions:
+    post:
+      operationId: createClientSubscription
+      summary: Subscribe from a form
+      description: |
+        A visitor subscribes to public lists of the chat channel's inbox, without a session. The
+        answer is the same `202` for an address that is new, already subscribed, waiting for its
+        confirmation, unsubscribed, opted out or undeliverable, so the form tells nobody whether an
+        address is known: `confirmation` only says whether any of the lists asks the person to
+        confirm by mail. What happens:
+
+        - a new address on a list with double opt-in becomes `pending` and gets a confirmation mail;
+          on a list without it, `subscribed` at once with the list's welcome mail;
+        - a `pending` address gets the confirmation again; an `unsubscribed` or opted-out one
+          becomes `pending` and gets a confirmation (only the person can come back);
+        - a subscribed or undeliverable address changes nothing.
+
+        The confirmation mail repeats nothing the visitor typed. `consent_text` is the label the
+        visitor ticked, stored with `page_url`, the IP address and the user agent.
+
+        Checks: the page's origin must be one of the channel's allowed origins (`400 page_origin`);
+        `form_token` comes from `listClientMailingLists` and is accepted from 2 seconds to 2 hours
+        after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
+        (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
+        channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
+        address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+        capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
+        without changing the answer.
+
+        Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
+        An `app` channel's key answers `404`.
+      tags: [client]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/ChannelKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientSubscriptionCreate"
+      responses:
+        "202":
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientSubscriptionAccepted"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /client/v1/discussions:
     post:
       operationId: createClientDiscussion
@@ -5137,6 +5755,90 @@ paths:
         "204":
           description: Ended.
         "401":
+          $ref: "#/components/responses/Problem"
+  /client/v1/subscriptions:
+    get:
+      operationId: listClientSubscriptions
+      summary: The session contact's subscriptions
+      description: |
+        Every public, unarchived list of the session's inbox with the contact's state on it
+        (absent when the contact never subscribed), for a toggle in the widget or the app.
+      tags: [client]
+      security:
+        - contactSession: []
+      responses:
+        "200":
+          description: The lists and states.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientSubscriptionList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+  /client/v1/subscriptions/{listId}:
+    put:
+      operationId: subscribeClient
+      summary: Subscribe the session contact
+      description: |
+        Subscribes the signed-in user of the host app (a session started with an identity token)
+        to a public list of the session's inbox. When the contact has a known address (an
+        identity token with `email_verified: true`, or one a member or an e-mail conversation
+        gave), the subscription is `subscribed` at once and the list's welcome mail is sent;
+        with only an address the user typed, it is `pending` and a confirmation mail goes out.
+        Anonymous visitor sessions answer `403 identity_required` (they use the form);
+        a contact without an address `409 no_email`; a list that is not a public list of the inbox
+        `404`. Already subscribed or pending: the current state, nothing sent. An address that
+        bounced or complained stays `pending` and gets nothing.
+      tags: [client]
+      security:
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/ListId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientSubscriptionPut"
+      responses:
+        "200":
+          description: The contact's state on the list.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientSubscriptionStatus"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: unsubscribeClient
+      summary: Unsubscribe the session contact
+      description: |
+        Unsubscribes the session's contact from a public list of the session's inbox at once.
+        Nothing to unsubscribe is not an error.
+      tags: [client]
+      security:
+        - contactSession: []
+      parameters:
+        - $ref: "#/components/parameters/ListId"
+      responses:
+        "204":
+          description: Unsubscribed.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
           $ref: "#/components/responses/Problem"
   /client/v1/conversations:
     get:
@@ -6220,6 +6922,51 @@ webhooks:
       responses:
         "200":
           description: Any 2xx answer counts as delivered.
+  subscription.created:
+    post:
+      operationId: webhookSubscriptionCreated
+      summary: A subscription was created
+      description: |
+        Someone subscribed to a list of the endpoint's inbox, in any state (`pending` while
+        waiting for the confirmation). Endpoints limited to an inbox receive the events of that
+        inbox's lists.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookSubscriptionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
+  subscription.updated:
+    post:
+      operationId: webhookSubscriptionUpdated
+      summary: A subscription changed state
+      description: |
+        Confirmed, unsubscribed (with `unsubscribe_reason`) or subscribed again;
+        `previous_state` is the state before.
+      tags: [webhooks]
+      security: []
+      parameters:
+        - $ref: "#/components/parameters/WebhookIdHeader"
+        - $ref: "#/components/parameters/WebhookTimestampHeader"
+        - $ref: "#/components/parameters/WebhookSignatureHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookSubscriptionPayload"
+      responses:
+        "200":
+          description: Any 2xx answer counts as delivered.
 components:
   securitySchemes:
     session:
@@ -6431,6 +7178,27 @@ components:
       schema:
         type: string
         maxLength: 200
+    ListId:
+      name: listId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    SubscriptionId:
+      name: subscriptionId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ConsentFormat:
+      name: format
+      in: query
+      description: "`csv` (the default) or `json`."
+      schema:
+        type: string
+        enum: [csv, json]
     DiscussionId:
       name: discussionId
       in: path
@@ -6856,6 +7624,13 @@ components:
         - `webhooks:manage`: webhooks, their deliveries and attempts.
         - `workspace:manage`: update the workspace, usage.
         - `feedback:write`: feedback.
+        - `lists:read`: mailing lists, subscriptions, growth, consent exports.
+        - `lists:write`: create, change and delete lists; add, unsubscribe and delete
+          subscribers; resend confirmations.
+        - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
+          cannot hold them yet.
+
+        `lists:*` and `broadcasts:*` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -6871,6 +7646,11 @@ components:
         - webhooks:manage
         - workspace:manage
         - feedback:write
+        - lists:read
+        - lists:write
+        - broadcasts:read
+        - broadcasts:write
+        - broadcasts:send
     BotAvatarUrl:
       type: string
       format: uri
@@ -7310,7 +8090,7 @@ components:
           maxLength: 500
     Inbox:
       type: object
-      required: [id, name, slug, branding, default_locale, timezone, mode, business_hours, ask_for_rating, created_at, updated_at]
+      required: [id, name, slug, branding, default_locale, timezone, mode, business_hours, ask_for_rating, sender, created_at, updated_at]
       properties:
         id:
           type: string
@@ -7342,6 +8122,8 @@ components:
             the widget and the mobile SDKs offer it, and e-mail contacts get a request with two
             links after a member's conversation is closed. Off by default. Only conversations
             closed after it was turned on can be rated; turning it off and on again starts over.
+        sender:
+          $ref: "#/components/schemas/InboxSender"
         created_at:
           type: string
           format: date-time
@@ -7407,6 +8189,9 @@ components:
           $ref: "#/components/schemas/BusinessHours"
         ask_for_rating:
           type: boolean
+        sender:
+          $ref: "#/components/schemas/InboxSenderUpdate"
+          description: Owners, admins and keys with `inboxes:manage`.
     InboxCreated:
       type: object
       required: [inbox, identity_secret]
@@ -7864,7 +8649,7 @@ components:
           format: int64
     WebhookEventType:
       type: string
-      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated]
+      enum: [conversation.created, conversation.updated, conversation.rated, message.created, feedback.created, contact.updated, contact.deleted, draft.created, draft.updated, draft.deleted, discussion.created, discussion.post_created, discussion.answered, discussion.updated, subscription.created, subscription.updated]
     WebhookEndpoint:
       type: object
       required: [id, url, description, events, include_notes, enabled, created_at, updated_at]
@@ -9747,6 +10532,7 @@ components:
         - $ref: "#/components/schemas/ContactReadEvent"
         - $ref: "#/components/schemas/ConversationPinEvent"
         - $ref: "#/components/schemas/DiscussionEvent"
+        - $ref: "#/components/schemas/SubscriptionEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -9771,6 +10557,8 @@ components:
           discussion.post_created: "#/components/schemas/DiscussionEvent"
           discussion.answered: "#/components/schemas/DiscussionEvent"
           discussion.updated: "#/components/schemas/DiscussionEvent"
+          subscription.created: "#/components/schemas/SubscriptionEvent"
+          subscription.updated: "#/components/schemas/SubscriptionEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -9812,6 +10600,7 @@ components:
         - $ref: "#/components/schemas/ContactReadEvent"
         - $ref: "#/components/schemas/ConversationPinEvent"
         - $ref: "#/components/schemas/DiscussionEvent"
+        - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/TypingEvent"
         - $ref: "#/components/schemas/MemberPresenceEvent"
         - $ref: "#/components/schemas/ContactPresenceEvent"
@@ -9842,6 +10631,8 @@ components:
           discussion.post_created: "#/components/schemas/DiscussionEvent"
           discussion.answered: "#/components/schemas/DiscussionEvent"
           discussion.updated: "#/components/schemas/DiscussionEvent"
+          subscription.created: "#/components/schemas/SubscriptionEvent"
+          subscription.updated: "#/components/schemas/SubscriptionEvent"
           typing: "#/components/schemas/TypingEvent"
           member.presence: "#/components/schemas/MemberPresenceEvent"
           contact.presence: "#/components/schemas/ContactPresenceEvent"
@@ -10676,6 +11467,638 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/DiscussionEventData"
+    MailingListCounts:
+      type: object
+      required: [subscribed, pending, unsubscribed]
+      properties:
+        subscribed:
+          type: integer
+          format: int64
+        pending:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+    MailingList:
+      type: object
+      required: [id, inbox_id, name, description, double_opt_in, public, commercial, welcome, sender_ready, counts, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+          description: The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
+        name:
+          type: string
+        description:
+          type: string
+          description: Shown on subscribe forms and the preference page.
+        double_opt_in:
+          type: boolean
+          description: Form subscribers confirm by mail before they are subscribed.
+        public:
+          type: boolean
+          description: Offered on subscribe forms and the preference page; private lists are filled by the API and members only.
+        commercial:
+          type: boolean
+          description: Marketing content. Off for service announcements to existing users; it changes no sending rule and is part of the consent export.
+        welcome:
+          type: boolean
+          description: Send a receipt with an unsubscribe link right after someone subscribes.
+        sender_ready:
+          type: boolean
+          description: "`channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out."
+        archived_at:
+          type: string
+          format: date-time
+        counts:
+          $ref: "#/components/schemas/MailingListCounts"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    MailingListRef:
+      type: object
+      required: [id, inbox_id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    MailingListCreate:
+      type: object
+      required: [inbox_id, name]
+      properties:
+        inbox_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        double_opt_in:
+          type: boolean
+          default: true
+        public:
+          type: boolean
+          default: true
+        commercial:
+          type: boolean
+          default: true
+        welcome:
+          type: boolean
+          default: true
+        channel_id:
+          type: string
+          format: uuid
+    MailingListUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          maxLength: 500
+        double_opt_in:
+          type: boolean
+        public:
+          type: boolean
+        commercial:
+          type: boolean
+        welcome:
+          type: boolean
+        channel_id:
+          type: [string, "null"]
+          format: uuid
+          description: "`null` leaves the list without a sending channel."
+        archived:
+          type: boolean
+    MailingListPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MailingList"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    MailingListGrowthDay:
+      type: object
+      required: [date, new, confirmed, unsubscribed]
+      properties:
+        date:
+          type: string
+          format: date
+        new:
+          type: integer
+          format: int64
+          description: Subscriptions created that day, in any state.
+        confirmed:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+    MailingListGrowth:
+      type: object
+      required: [days]
+      properties:
+        days:
+          type: array
+          items:
+            $ref: "#/components/schemas/MailingListGrowthDay"
+        confirmation_rate:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+    SubscriptionState:
+      type: string
+      description: |
+        `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+        `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+        complaint) ended it; only the person subscribes again.
+      enum: [pending, subscribed, unsubscribed]
+    SubscriptionSource:
+      type: string
+      description: |
+        How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+        for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+        or `preferences` (the person on the `/m/` page).
+      enum: [form, identity, api, member, import, preferences]
+    UnsubscribeReason:
+      type: string
+      description: |
+        `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+        (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+        person reported a mail as spam), `erasure`.
+      enum: [link, one_click, preferences, client, member, api, complaint, erasure]
+    SubscriptionContact:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+    Subscription:
+      type: object
+      required: [id, list_id, contact, email, state, source, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        list_id:
+          type: string
+          format: uuid
+        contact:
+          $ref: "#/components/schemas/SubscriptionContact"
+        email:
+          $ref: "#/components/schemas/Email"
+        state:
+          $ref: "#/components/schemas/SubscriptionState"
+        source:
+          $ref: "#/components/schemas/SubscriptionSource"
+        consent_at:
+          type: string
+          format: date-time
+          description: When the person agreed (the confirmation for double opt-in).
+        confirmed_at:
+          type: string
+          format: date-time
+        confirmation_sent_at:
+          type: string
+          format: date-time
+        unsubscribed_at:
+          type: string
+          format: date-time
+        unsubscribe_reason:
+          $ref: "#/components/schemas/UnsubscribeReason"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ConsentEventKind:
+      type: string
+      description: |
+        `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+        confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+        proof), `unsubscribed`, `complained`.
+      enum: [requested, confirmation_sent, confirmed, subscribed, unsubscribed, complained]
+    ConsentEvent:
+      type: object
+      required: [id, subscription_id, kind, source, detail, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        subscription_id:
+          type: string
+          format: uuid
+        kind:
+          $ref: "#/components/schemas/ConsentEventKind"
+        source:
+          type: string
+          description: Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+        ip:
+          type: string
+          description: The client's IP address, when the person acted.
+        user_agent:
+          type: string
+        page_url:
+          type: string
+          description: The page the person subscribed on, or the one the API caller declared.
+        consent_text:
+          type: string
+          description: The label the person agreed to, as the form or the API caller sent it.
+        member_id:
+          type: string
+          format: uuid
+        api_key_id:
+          type: string
+          format: uuid
+        broadcast_id:
+          type: string
+          format: uuid
+        detail:
+          type: object
+          additionalProperties: true
+          description: "More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token."
+        created_at:
+          type: string
+          format: date-time
+    SubscriptionDetail:
+      allOf:
+        - $ref: "#/components/schemas/Subscription"
+        - type: object
+          required: [events]
+          properties:
+            events:
+              type: array
+              items:
+                $ref: "#/components/schemas/ConsentEvent"
+    SubscriptionPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subscription"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    SubscriptionConsent:
+      type: object
+      description: How the person agreed, as the caller declares it; stored as proof.
+      required: [confirmed]
+      properties:
+        confirmed:
+          type: boolean
+          description: "`true`: the person already agreed. `false`: mail them a confirmation first."
+        obtained_at:
+          type: string
+          format: date-time
+        text:
+          type: string
+          maxLength: 2000
+          description: The statement the person agreed to.
+        ip:
+          type: string
+          maxLength: 64
+        page_url:
+          type: string
+          maxLength: 2048
+        reference:
+          type: string
+          maxLength: 500
+          description: Your own record of the consent, such as an order or sign-up id.
+    SubscriptionCreate:
+      type: object
+      required: [consent]
+      description: Name the person with `email`, `contact_id` or `external_id` (at least one).
+      properties:
+        email:
+          type: string
+          maxLength: 320
+        contact_id:
+          type: string
+          format: uuid
+        external_id:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: The host app's id for the person in the list's inbox.
+        name:
+          type: string
+          maxLength: 200
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        attributes:
+          $ref: "#/components/schemas/Attributes"
+        consent:
+          $ref: "#/components/schemas/SubscriptionConsent"
+    SubscriptionUpdate:
+      type: object
+      required: [state]
+      properties:
+        state:
+          $ref: "#/components/schemas/SubscriptionState"
+    ContactSubscription:
+      allOf:
+        - $ref: "#/components/schemas/Subscription"
+        - type: object
+          required: [list]
+          properties:
+            list:
+              $ref: "#/components/schemas/MailingListRef"
+    ContactSubscriptionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactSubscription"
+    ConsentRecord:
+      type: object
+      description: One consent event with its subscription, list and the subscription's current state.
+      required: [list_id, list_name, commercial, subscription_id, contact_id, email, state, source, event_id, event_kind, event_source, event_at, detail]
+      properties:
+        list_id:
+          type: string
+          format: uuid
+        list_name:
+          type: string
+        commercial:
+          type: boolean
+        subscription_id:
+          type: string
+          format: uuid
+        contact_id:
+          type: string
+          format: uuid
+        email:
+          $ref: "#/components/schemas/Email"
+        state:
+          $ref: "#/components/schemas/SubscriptionState"
+        source:
+          $ref: "#/components/schemas/SubscriptionSource"
+        consent_at:
+          type: string
+          format: date-time
+        unsubscribed_at:
+          type: string
+          format: date-time
+        unsubscribe_reason:
+          $ref: "#/components/schemas/UnsubscribeReason"
+        event_id:
+          type: string
+          format: uuid
+        event_kind:
+          $ref: "#/components/schemas/ConsentEventKind"
+        event_source:
+          type: string
+        event_at:
+          type: string
+          format: date-time
+        ip:
+          type: string
+        user_agent:
+          type: string
+        page_url:
+          type: string
+        consent_text:
+          type: string
+        member_id:
+          type: string
+          format: uuid
+        api_key_id:
+          type: string
+          format: uuid
+        detail:
+          type: object
+          additionalProperties: true
+    ConsentExport:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConsentRecord"
+    InboxSender:
+      type: object
+      description: |
+        Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+        Regulation on Commercial Communication): the legal name, a postal address, a registration
+        such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+      properties:
+        legal_name:
+          type: string
+        postal_address:
+          type: string
+        registration:
+          type: string
+        contact:
+          type: string
+    InboxSenderUpdate:
+      type: object
+      description: The given fields change; `null` or an empty string clears one.
+      properties:
+        legal_name:
+          type: [string, "null"]
+          maxLength: 200
+        postal_address:
+          type: [string, "null"]
+          maxLength: 500
+        registration:
+          type: [string, "null"]
+          maxLength: 200
+        contact:
+          type: [string, "null"]
+          maxLength: 320
+    SubscriptionEventData:
+      type: object
+      required: [subscription, list]
+      properties:
+        subscription:
+          $ref: "#/components/schemas/Subscription"
+        list:
+          $ref: "#/components/schemas/MailingListRef"
+        previous_state:
+          $ref: "#/components/schemas/SubscriptionState"
+          description: "`subscription.updated` only: the state before."
+    SubscriptionEvent:
+      type: object
+      description: |
+        `subscription.created`: someone subscribed (any state). `subscription.updated`: the state
+        changed (confirmed, unsubscribed, subscribed again). Delivered to callers who hold
+        `lists:read` and can see the list's inbox.
+      required: [id, type, workspace_id, inbox_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [subscription.created, subscription.updated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/SubscriptionEventData"
+    WebhookSubscriptionData:
+      type: object
+      required: [subscription, list, contact]
+      properties:
+        subscription:
+          $ref: "#/components/schemas/Subscription"
+        list:
+          $ref: "#/components/schemas/MailingListRef"
+        previous_state:
+          $ref: "#/components/schemas/SubscriptionState"
+        contact:
+          $ref: "#/components/schemas/WebhookContact"
+    WebhookSubscriptionPayload:
+      allOf:
+        - $ref: "#/components/schemas/WebhookPayloadBase"
+        - type: object
+          required: [data]
+          properties:
+            data:
+              $ref: "#/components/schemas/WebhookSubscriptionData"
+    ClientMailingList:
+      type: object
+      required: [id, name, description, double_opt_in]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        double_opt_in:
+          type: boolean
+    ClientMailingLists:
+      type: object
+      required: [lists, form_token]
+      properties:
+        lists:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientMailingList"
+        form_token:
+          type: string
+          description: Send it back with the form, 2 seconds to 2 hours from now.
+    ClientSubscriptionCreate:
+      type: object
+      required: [email, list_ids, page_url, consent_text, form_token]
+      properties:
+        email:
+          type: string
+          maxLength: 320
+        name:
+          type: string
+          maxLength: 200
+        list_ids:
+          type: array
+          minItems: 1
+          maxItems: 10
+          uniqueItems: true
+          items:
+            type: string
+            format: uuid
+        locale:
+          $ref: "#/components/schemas/LanguageTag"
+        page_url:
+          type: string
+          maxLength: 2000
+          description: The page with the form.
+        consent_text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: The consent label exactly as the visitor saw it.
+        form_token:
+          type: string
+          maxLength: 500
+        website:
+          type: string
+          maxLength: 500
+          description: A honeypot field hidden from people; leave it empty.
+    ClientSubscriptionAccepted:
+      type: object
+      required: [confirmation]
+      properties:
+        confirmation:
+          type: boolean
+          description: At least one of the lists has double opt-in, so tell the visitor to check their inbox.
+    ClientSubscription:
+      type: object
+      required: [list]
+      properties:
+        list:
+          $ref: "#/components/schemas/ClientMailingList"
+        state:
+          $ref: "#/components/schemas/SubscriptionState"
+          description: Absent when the contact never subscribed to the list.
+    ClientSubscriptionList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClientSubscription"
+    ClientSubscriptionPut:
+      type: object
+      required: [consent_text]
+      properties:
+        consent_text:
+          type: string
+          minLength: 1
+          maxLength: 2000
+          description: The label the user agreed to.
+        page_url:
+          type: string
+          maxLength: 2000
+    ClientSubscriptionStatus:
+      type: object
+      required: [state]
+      properties:
+        state:
+          $ref: "#/components/schemas/SubscriptionState"
     ReaderAccount:
       type: object
       required: [person_id, email, name, initials, locale, email_notifications, member]

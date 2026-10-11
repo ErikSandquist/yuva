@@ -25,6 +25,9 @@ import (
 
 // Defines values for ApiKeyScope.
 const (
+	BroadcastsRead     ApiKeyScope = "broadcasts:read"
+	BroadcastsSend     ApiKeyScope = "broadcasts:send"
+	BroadcastsWrite    ApiKeyScope = "broadcasts:write"
 	CannedRepliesWrite ApiKeyScope = "canned_replies:write"
 	ContactsRead       ApiKeyScope = "contacts:read"
 	ContactsWrite      ApiKeyScope = "contacts:write"
@@ -35,6 +38,8 @@ const (
 	InboxesManage      ApiKeyScope = "inboxes:manage"
 	InboxesRead        ApiKeyScope = "inboxes:read"
 	LabelsWrite        ApiKeyScope = "labels:write"
+	ListsRead          ApiKeyScope = "lists:read"
+	ListsWrite         ApiKeyScope = "lists:write"
 	MessagesWrite      ApiKeyScope = "messages:write"
 	NotesWrite         ApiKeyScope = "notes:write"
 	WebhooksManage     ApiKeyScope = "webhooks:manage"
@@ -44,6 +49,12 @@ const (
 // Valid indicates whether the value is a known member of the ApiKeyScope enum.
 func (e ApiKeyScope) Valid() bool {
 	switch e {
+	case BroadcastsRead:
+		return true
+	case BroadcastsSend:
+		return true
+	case BroadcastsWrite:
+		return true
 	case CannedRepliesWrite:
 		return true
 	case ContactsRead:
@@ -63,6 +74,10 @@ func (e ApiKeyScope) Valid() bool {
 	case InboxesRead:
 		return true
 	case LabelsWrite:
+		return true
+	case ListsRead:
+		return true
+	case ListsWrite:
 		return true
 	case MessagesWrite:
 		return true
@@ -281,6 +296,36 @@ const (
 func (e ClientTypingEventType) Valid() bool {
 	switch e {
 	case ClientTypingEventTypeTyping:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ConsentEventKind.
+const (
+	ConsentEventKindComplained       ConsentEventKind = "complained"
+	ConsentEventKindConfirmationSent ConsentEventKind = "confirmation_sent"
+	ConsentEventKindConfirmed        ConsentEventKind = "confirmed"
+	ConsentEventKindRequested        ConsentEventKind = "requested"
+	ConsentEventKindSubscribed       ConsentEventKind = "subscribed"
+	ConsentEventKindUnsubscribed     ConsentEventKind = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the ConsentEventKind enum.
+func (e ConsentEventKind) Valid() bool {
+	switch e {
+	case ConsentEventKindComplained:
+		return true
+	case ConsentEventKindConfirmationSent:
+		return true
+	case ConsentEventKindConfirmed:
+		return true
+	case ConsentEventKindRequested:
+		return true
+	case ConsentEventKindSubscribed:
+		return true
+	case ConsentEventKindUnsubscribed:
 		return true
 	default:
 		return false
@@ -1373,6 +1418,75 @@ func (e SmtpTls) Valid() bool {
 	}
 }
 
+// Defines values for SubscriptionEventType.
+const (
+	SubscriptionEventTypeSubscriptionCreated SubscriptionEventType = "subscription.created"
+	SubscriptionEventTypeSubscriptionUpdated SubscriptionEventType = "subscription.updated"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionEventType enum.
+func (e SubscriptionEventType) Valid() bool {
+	switch e {
+	case SubscriptionEventTypeSubscriptionCreated:
+		return true
+	case SubscriptionEventTypeSubscriptionUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SubscriptionSource.
+const (
+	SubscriptionSourceApi         SubscriptionSource = "api"
+	SubscriptionSourceForm        SubscriptionSource = "form"
+	SubscriptionSourceIdentity    SubscriptionSource = "identity"
+	SubscriptionSourceImport      SubscriptionSource = "import"
+	SubscriptionSourceMember      SubscriptionSource = "member"
+	SubscriptionSourcePreferences SubscriptionSource = "preferences"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionSource enum.
+func (e SubscriptionSource) Valid() bool {
+	switch e {
+	case SubscriptionSourceApi:
+		return true
+	case SubscriptionSourceForm:
+		return true
+	case SubscriptionSourceIdentity:
+		return true
+	case SubscriptionSourceImport:
+		return true
+	case SubscriptionSourceMember:
+		return true
+	case SubscriptionSourcePreferences:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for SubscriptionState.
+const (
+	SubscriptionStatePending      SubscriptionState = "pending"
+	SubscriptionStateSubscribed   SubscriptionState = "subscribed"
+	SubscriptionStateUnsubscribed SubscriptionState = "unsubscribed"
+)
+
+// Valid indicates whether the value is a known member of the SubscriptionState enum.
+func (e SubscriptionState) Valid() bool {
+	switch e {
+	case SubscriptionStatePending:
+		return true
+	case SubscriptionStateSubscribed:
+		return true
+	case SubscriptionStateUnsubscribed:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for TypingAuthorType.
 const (
 	TypingAuthorTypeContact TypingAuthorType = "contact"
@@ -1418,6 +1532,42 @@ func (e UndeliverableEmailReason) Valid() bool {
 	case UndeliverableEmailReasonBounce:
 		return true
 	case UndeliverableEmailReasonComplaint:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for UnsubscribeReason.
+const (
+	UnsubscribeReasonApi         UnsubscribeReason = "api"
+	UnsubscribeReasonClient      UnsubscribeReason = "client"
+	UnsubscribeReasonComplaint   UnsubscribeReason = "complaint"
+	UnsubscribeReasonErasure     UnsubscribeReason = "erasure"
+	UnsubscribeReasonLink        UnsubscribeReason = "link"
+	UnsubscribeReasonMember      UnsubscribeReason = "member"
+	UnsubscribeReasonOneClick    UnsubscribeReason = "one_click"
+	UnsubscribeReasonPreferences UnsubscribeReason = "preferences"
+)
+
+// Valid indicates whether the value is a known member of the UnsubscribeReason enum.
+func (e UnsubscribeReason) Valid() bool {
+	switch e {
+	case UnsubscribeReasonApi:
+		return true
+	case UnsubscribeReasonClient:
+		return true
+	case UnsubscribeReasonComplaint:
+		return true
+	case UnsubscribeReasonErasure:
+		return true
+	case UnsubscribeReasonLink:
+		return true
+	case UnsubscribeReasonMember:
+		return true
+	case UnsubscribeReasonOneClick:
+		return true
+	case UnsubscribeReasonPreferences:
 		return true
 	default:
 		return false
@@ -1494,6 +1644,8 @@ const (
 	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
 	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
 	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
+	WebhookEventTypeSubscriptionCreated   WebhookEventType = "subscription.created"
+	WebhookEventTypeSubscriptionUpdated   WebhookEventType = "subscription.updated"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -1527,6 +1679,10 @@ func (e WebhookEventType) Valid() bool {
 		return true
 	case WebhookEventTypeMessageCreated:
 		return true
+	case WebhookEventTypeSubscriptionCreated:
+		return true
+	case WebhookEventTypeSubscriptionUpdated:
+		return true
 	default:
 		return false
 	}
@@ -1559,6 +1715,24 @@ func (e Weekday) Valid() bool {
 	case Tue:
 		return true
 	case Wed:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ConsentFormat.
+const (
+	ConsentFormatCsv  ConsentFormat = "csv"
+	ConsentFormatJson ConsentFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ConsentFormat enum.
+func (e ConsentFormat) Valid() bool {
+	switch e {
+	case ConsentFormatCsv:
+		return true
+	case ConsentFormatJson:
 		return true
 	default:
 		return false
@@ -1619,6 +1793,24 @@ func (e ListContactsParamsSort) Valid() bool {
 	}
 }
 
+// Defines values for ExportContactConsentParamsFormat.
+const (
+	ExportContactConsentParamsFormatCsv  ExportContactConsentParamsFormat = "csv"
+	ExportContactConsentParamsFormatJson ExportContactConsentParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ExportContactConsentParamsFormat enum.
+func (e ExportContactConsentParamsFormat) Valid() bool {
+	switch e {
+	case ExportContactConsentParamsFormatCsv:
+		return true
+	case ExportContactConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListMessagesParamsOrder.
 const (
 	ListMessagesParamsOrderAsc  ListMessagesParamsOrder = "asc"
@@ -1631,6 +1823,42 @@ func (e ListMessagesParamsOrder) Valid() bool {
 	case ListMessagesParamsOrderAsc:
 		return true
 	case ListMessagesParamsOrderDesc:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ExportListConsentParamsFormat.
+const (
+	ExportListConsentParamsFormatCsv  ExportListConsentParamsFormat = "csv"
+	ExportListConsentParamsFormatJson ExportListConsentParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ExportListConsentParamsFormat enum.
+func (e ExportListConsentParamsFormat) Valid() bool {
+	switch e {
+	case ExportListConsentParamsFormatCsv:
+		return true
+	case ExportListConsentParamsFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetMailingListGrowthParamsDays.
+const (
+	N30 GetMailingListGrowthParamsDays = 30
+	N90 GetMailingListGrowthParamsDays = 90
+)
+
+// Valid indicates whether the value is a known member of the GetMailingListGrowthParamsDays enum.
+func (e GetMailingListGrowthParamsDays) Valid() bool {
+	switch e {
+	case N30:
+		return true
+	case N90:
 		return true
 	default:
 		return false
@@ -1721,6 +1949,13 @@ type ApiKeyList struct {
 //	  - `webhooks:manage`: webhooks, their deliveries and attempts.
 //	  - `workspace:manage`: update the workspace, usage.
 //	  - `feedback:write`: feedback.
+//	  - `lists:read`: mailing lists, subscriptions, growth, consent exports.
+//	  - `lists:write`: create, change and delete lists; add, unsubscribe and delete
+//	    subscribers; resend confirmations.
+//	  - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
+//	    cannot hold them yet.
+//
+// `lists:*` and `broadcasts:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -2249,6 +2484,21 @@ type ClientInboxUpdatedEvent struct {
 // ClientInboxUpdatedEventType defines model for ClientInboxUpdatedEvent.Type.
 type ClientInboxUpdatedEventType string
 
+// ClientMailingList defines model for ClientMailingList.
+type ClientMailingList struct {
+	Description string    `json:"description"`
+	DoubleOptIn bool      `json:"double_opt_in"`
+	Id          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+}
+
+// ClientMailingLists defines model for ClientMailingLists.
+type ClientMailingLists struct {
+	// FormToken Send it back with the form, 2 seconds to 2 hours from now.
+	FormToken string              `json:"form_token"`
+	Lists     []ClientMailingList `json:"lists"`
+}
+
 // ClientMember What a contact may see of a member.
 type ClientMember struct {
 	// Initials Up to two letters for an avatar; empty when the name is.
@@ -2447,6 +2697,61 @@ type ClientSessionInfo struct {
 	VisitorId *string `json:"visitor_id,omitempty"`
 }
 
+// ClientSubscription defines model for ClientSubscription.
+type ClientSubscription struct {
+	List ClientMailingList `json:"list"`
+
+	// State Absent when the contact never subscribed to the list.
+	State *SubscriptionState `json:"state,omitempty"`
+}
+
+// ClientSubscriptionAccepted defines model for ClientSubscriptionAccepted.
+type ClientSubscriptionAccepted struct {
+	// Confirmation At least one of the lists has double opt-in, so tell the visitor to check their inbox.
+	Confirmation bool `json:"confirmation"`
+}
+
+// ClientSubscriptionCreate defines model for ClientSubscriptionCreate.
+type ClientSubscriptionCreate struct {
+	// ConsentText The consent label exactly as the visitor saw it.
+	ConsentText string      `json:"consent_text"`
+	Email       string      `json:"email"`
+	FormToken   string      `json:"form_token"`
+	ListIds     []uuid.UUID `json:"list_ids"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Name   *string      `json:"name,omitempty"`
+
+	// PageUrl The page with the form.
+	PageUrl string `json:"page_url"`
+
+	// Website A honeypot field hidden from people; leave it empty.
+	Website *string `json:"website,omitempty"`
+}
+
+// ClientSubscriptionList defines model for ClientSubscriptionList.
+type ClientSubscriptionList struct {
+	Items []ClientSubscription `json:"items"`
+}
+
+// ClientSubscriptionPut defines model for ClientSubscriptionPut.
+type ClientSubscriptionPut struct {
+	// ConsentText The label the user agreed to.
+	ConsentText string  `json:"consent_text"`
+	PageUrl     *string `json:"page_url,omitempty"`
+}
+
+// ClientSubscriptionStatus defines model for ClientSubscriptionStatus.
+type ClientSubscriptionStatus struct {
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+}
+
 // ClientTyping defines model for ClientTyping.
 type ClientTyping struct {
 	Author         ClientMessageAuthor `json:"author"`
@@ -2464,6 +2769,91 @@ type ClientTypingEvent struct {
 
 // ClientTypingEventType defines model for ClientTypingEvent.Type.
 type ClientTypingEventType string
+
+// ConsentEvent defines model for ConsentEvent.
+type ConsentEvent struct {
+	ApiKeyId    *uuid.UUID `json:"api_key_id,omitempty"`
+	BroadcastId *uuid.UUID `json:"broadcast_id,omitempty"`
+
+	// ConsentText The label the person agreed to, as the form or the API caller sent it.
+	ConsentText *string   `json:"consent_text,omitempty"`
+	CreatedAt   time.Time `json:"created_at"`
+
+	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token.
+	Detail map[string]interface{} `json:"detail"`
+	Id     uuid.UUID              `json:"id"`
+
+	// Ip The client's IP address, when the person acted.
+	Ip *string `json:"ip,omitempty"`
+
+	// Kind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+	// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+	// proof), `unsubscribed`, `complained`.
+	Kind     ConsentEventKind `json:"kind"`
+	MemberId *uuid.UUID       `json:"member_id,omitempty"`
+
+	// PageUrl The page the person subscribed on, or the one the API caller declared.
+	PageUrl *string `json:"page_url,omitempty"`
+
+	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+	Source         string    `json:"source"`
+	SubscriptionId uuid.UUID `json:"subscription_id"`
+	UserAgent      *string   `json:"user_agent,omitempty"`
+}
+
+// ConsentEventKind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+// proof), `unsubscribed`, `complained`.
+type ConsentEventKind string
+
+// ConsentExport defines model for ConsentExport.
+type ConsentExport struct {
+	Items []ConsentRecord `json:"items"`
+}
+
+// ConsentRecord One consent event with its subscription, list and the subscription's current state.
+type ConsentRecord struct {
+	ApiKeyId    *uuid.UUID             `json:"api_key_id,omitempty"`
+	Commercial  bool                   `json:"commercial"`
+	ConsentAt   *time.Time             `json:"consent_at,omitempty"`
+	ConsentText *string                `json:"consent_text,omitempty"`
+	ContactId   uuid.UUID              `json:"contact_id"`
+	Detail      map[string]interface{} `json:"detail"`
+
+	// Email Examples: owner@example.com
+	Email   Email     `json:"email"`
+	EventAt time.Time `json:"event_at"`
+	EventId uuid.UUID `json:"event_id"`
+
+	// EventKind `requested` (someone asked to subscribe), `confirmation_sent`, `confirmed` (the person
+	// confirmed by mail), `subscribed` (subscribed without a confirmation, with the declared
+	// proof), `unsubscribed`, `complained`.
+	EventKind   ConsentEventKind `json:"event_kind"`
+	EventSource string           `json:"event_source"`
+	Ip          *string          `json:"ip,omitempty"`
+	ListId      uuid.UUID        `json:"list_id"`
+	ListName    string           `json:"list_name"`
+	MemberId    *uuid.UUID       `json:"member_id,omitempty"`
+	PageUrl     *string          `json:"page_url,omitempty"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State          SubscriptionState `json:"state"`
+	SubscriptionId uuid.UUID         `json:"subscription_id"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UserAgent         *string            `json:"user_agent,omitempty"`
+}
 
 // Contact defines model for Contact.
 type Contact struct {
@@ -2622,6 +3012,45 @@ type ContactRef struct {
 
 	// MergedIntoId Set on `contact.deleted` when the contact was merged into this one.
 	MergedIntoId *uuid.UUID `json:"merged_into_id,omitempty"`
+}
+
+// ContactSubscription defines model for ContactSubscription.
+type ContactSubscription struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email          `json:"email"`
+	Id     uuid.UUID      `json:"id"`
+	List   MailingListRef `json:"list"`
+	ListId uuid.UUID      `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// ContactSubscriptionList defines model for ContactSubscriptionList.
+type ContactSubscriptionList struct {
+	Items []ContactSubscription `json:"items"`
 }
 
 // ContactSummary How the team has served the contact, over all their conversations the caller can see (spam
@@ -3661,6 +4090,11 @@ type Inbox struct {
 	Mode InboxMode `json:"mode"`
 	Name string    `json:"name"`
 
+	// Sender Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+	// Regulation on Commercial Communication): the legal name, a postal address, a registration
+	// such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+	Sender InboxSender `json:"sender"`
+
 	// Slug Examples: acme-app
 	Slug Slug `json:"slug"`
 
@@ -3793,6 +4227,24 @@ type InboxRef struct {
 	Id uuid.UUID `json:"id"`
 }
 
+// InboxSender Who sends the inbox's list mail, for the footer the law asks for (CAN-SPAM, CASL, Türkiye's
+// Regulation on Commercial Communication): the legal name, a postal address, a registration
+// such as a MERSİS number or VAT id, and a contact (an e-mail address, phone or URL).
+type InboxSender struct {
+	Contact       *string `json:"contact,omitempty"`
+	LegalName     *string `json:"legal_name,omitempty"`
+	PostalAddress *string `json:"postal_address,omitempty"`
+	Registration  *string `json:"registration,omitempty"`
+}
+
+// InboxSenderUpdate The given fields change; `null` or an empty string clears one.
+type InboxSenderUpdate struct {
+	Contact       nullable.Nullable[string] `json:"contact,omitempty"`
+	LegalName     nullable.Nullable[string] `json:"legal_name,omitempty"`
+	PostalAddress nullable.Nullable[string] `json:"postal_address,omitempty"`
+	Registration  nullable.Nullable[string] `json:"registration,omitempty"`
+}
+
 // InboxUpdate defines model for InboxUpdate.
 type InboxUpdate struct {
 	AskForRating *bool          `json:"ask_for_rating,omitempty"`
@@ -3813,6 +4265,9 @@ type InboxUpdate struct {
 	// time instead.
 	Mode *InboxMode `json:"mode,omitempty"`
 	Name *string    `json:"name,omitempty"`
+
+	// Sender Owners, admins and keys with `inboxes:manage`.
+	Sender *InboxSenderUpdate `json:"sender,omitempty"`
 
 	// Slug Examples: acme-app
 	Slug     *Slug   `json:"slug,omitempty"`
@@ -3924,6 +4379,102 @@ type LanguageTag = string
 
 // Locale The language of e-mails sent to the person.
 type Locale string
+
+// MailingList defines model for MailingList.
+type MailingList struct {
+	ArchivedAt *time.Time `json:"archived_at,omitempty"`
+
+	// ChannelId The inbox's e-mail channel that sends the list's confirmation and welcome mails; absent when none.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// Commercial Marketing content. Off for service announcements to existing users; it changes no sending rule and is part of the consent export.
+	Commercial bool              `json:"commercial"`
+	Counts     MailingListCounts `json:"counts"`
+	CreatedAt  time.Time         `json:"created_at"`
+
+	// Description Shown on subscribe forms and the preference page.
+	Description string `json:"description"`
+
+	// DoubleOptIn Form subscribers confirm by mail before they are subscribed.
+	DoubleOptIn bool      `json:"double_opt_in"`
+	Id          uuid.UUID `json:"id"`
+	InboxId     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+
+	// Public Offered on subscribe forms and the preference page; private lists are filled by the API and members only.
+	Public bool `json:"public"`
+
+	// SenderReady `channel_id` names an e-mail channel with an SMTP account, so the list's mails can go out.
+	SenderReady bool      `json:"sender_ready"`
+	UpdatedAt   time.Time `json:"updated_at"`
+
+	// Welcome Send a receipt with an unsubscribe link right after someone subscribes.
+	Welcome bool `json:"welcome"`
+}
+
+// MailingListCounts defines model for MailingListCounts.
+type MailingListCounts struct {
+	Pending      int64 `json:"pending"`
+	Subscribed   int64 `json:"subscribed"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// MailingListCreate defines model for MailingListCreate.
+type MailingListCreate struct {
+	ChannelId   *uuid.UUID `json:"channel_id,omitempty"`
+	Commercial  *bool      `json:"commercial,omitempty"`
+	Description *string    `json:"description,omitempty"`
+	DoubleOptIn *bool      `json:"double_opt_in,omitempty"`
+	InboxId     uuid.UUID  `json:"inbox_id"`
+	Name        string     `json:"name"`
+	Public      *bool      `json:"public,omitempty"`
+	Welcome     *bool      `json:"welcome,omitempty"`
+}
+
+// MailingListGrowth defines model for MailingListGrowth.
+type MailingListGrowth struct {
+	ConfirmationRate *float64               `json:"confirmation_rate,omitempty"`
+	Days             []MailingListGrowthDay `json:"days"`
+}
+
+// MailingListGrowthDay defines model for MailingListGrowthDay.
+type MailingListGrowthDay struct {
+	Confirmed int64              `json:"confirmed"`
+	Date      openapi_types.Date `json:"date"`
+
+	// New Subscriptions created that day, in any state.
+	New          int64 `json:"new"`
+	Unsubscribed int64 `json:"unsubscribed"`
+}
+
+// MailingListPage defines model for MailingListPage.
+type MailingListPage struct {
+	Items []MailingList `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// MailingListRef defines model for MailingListRef.
+type MailingListRef struct {
+	Id      uuid.UUID `json:"id"`
+	InboxId uuid.UUID `json:"inbox_id"`
+	Name    string    `json:"name"`
+}
+
+// MailingListUpdate defines model for MailingListUpdate.
+type MailingListUpdate struct {
+	Archived *bool `json:"archived,omitempty"`
+
+	// ChannelId `null` leaves the list without a sending channel.
+	ChannelId   nullable.Nullable[uuid.UUID] `json:"channel_id,omitempty"`
+	Commercial  *bool                        `json:"commercial,omitempty"`
+	Description *string                      `json:"description,omitempty"`
+	DoubleOptIn *bool                        `json:"double_opt_in,omitempty"`
+	Name        *string                      `json:"name,omitempty"`
+	Public      *bool                        `json:"public,omitempty"`
+	Welcome     *bool                        `json:"welcome,omitempty"`
+}
 
 // Me defines model for Me.
 type Me struct {
@@ -5004,6 +5555,164 @@ type StoredEvent struct {
 	union json.RawMessage
 }
 
+// Subscription defines model for Subscription.
+type Subscription struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email     `json:"email"`
+	Id     uuid.UUID `json:"id"`
+	ListId uuid.UUID `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// SubscriptionConsent How the person agreed, as the caller declares it; stored as proof.
+type SubscriptionConsent struct {
+	// Confirmed `true`: the person already agreed. `false`: mail them a confirmation first.
+	Confirmed  bool       `json:"confirmed"`
+	Ip         *string    `json:"ip,omitempty"`
+	ObtainedAt *time.Time `json:"obtained_at,omitempty"`
+	PageUrl    *string    `json:"page_url,omitempty"`
+
+	// Reference Your own record of the consent, such as an order or sign-up id.
+	Reference *string `json:"reference,omitempty"`
+
+	// Text The statement the person agreed to.
+	Text *string `json:"text,omitempty"`
+}
+
+// SubscriptionContact defines model for SubscriptionContact.
+type SubscriptionContact struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
+// SubscriptionCreate Name the person with `email`, `contact_id` or `external_id` (at least one).
+type SubscriptionCreate struct {
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
+	Attributes *Attributes `json:"attributes,omitempty"`
+
+	// Consent How the person agreed, as the caller declares it; stored as proof.
+	Consent   SubscriptionConsent `json:"consent"`
+	ContactId *uuid.UUID          `json:"contact_id,omitempty"`
+	Email     *string             `json:"email,omitempty"`
+
+	// ExternalId The host app's id for the person in the list's inbox.
+	ExternalId *string `json:"external_id,omitempty"`
+
+	// Locale A BCP 47 language tag.
+	//
+	// Examples: en, tr
+	Locale *LanguageTag `json:"locale,omitempty"`
+	Name   *string      `json:"name,omitempty"`
+}
+
+// SubscriptionDetail defines model for SubscriptionDetail.
+type SubscriptionDetail struct {
+	ConfirmationSentAt *time.Time `json:"confirmation_sent_at,omitempty"`
+	ConfirmedAt        *time.Time `json:"confirmed_at,omitempty"`
+
+	// ConsentAt When the person agreed (the confirmation for double opt-in).
+	ConsentAt *time.Time          `json:"consent_at,omitempty"`
+	Contact   SubscriptionContact `json:"contact"`
+	CreatedAt time.Time           `json:"created_at"`
+
+	// Email Examples: owner@example.com
+	Email  Email          `json:"email"`
+	Events []ConsentEvent `json:"events"`
+	Id     uuid.UUID      `json:"id"`
+	ListId uuid.UUID      `json:"list_id"`
+
+	// Source How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+	// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+	// or `preferences` (the person on the `/m/` page).
+	Source SubscriptionSource `json:"source"`
+
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+
+	// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+	// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+	// person reported a mail as spam), `erasure`.
+	UnsubscribeReason *UnsubscribeReason `json:"unsubscribe_reason,omitempty"`
+	UnsubscribedAt    *time.Time         `json:"unsubscribed_at,omitempty"`
+	UpdatedAt         time.Time          `json:"updated_at"`
+}
+
+// SubscriptionEvent `subscription.created`: someone subscribed (any state). `subscription.updated`: the state
+// changed (confirmed, unsubscribed, subscribed again). Delivered to callers who hold
+// `lists:read` and can see the list's inbox.
+type SubscriptionEvent struct {
+	CreatedAt   time.Time             `json:"created_at"`
+	Data        SubscriptionEventData `json:"data"`
+	Id          int64                 `json:"id"`
+	InboxId     uuid.UUID             `json:"inbox_id"`
+	Type        SubscriptionEventType `json:"type"`
+	WorkspaceId uuid.UUID             `json:"workspace_id"`
+}
+
+// SubscriptionEventType defines model for SubscriptionEvent.Type.
+type SubscriptionEventType string
+
+// SubscriptionEventData defines model for SubscriptionEventData.
+type SubscriptionEventData struct {
+	List MailingListRef `json:"list"`
+
+	// PreviousState `subscription.updated` only: the state before.
+	PreviousState *SubscriptionState `json:"previous_state,omitempty"`
+	Subscription  Subscription       `json:"subscription"`
+}
+
+// SubscriptionPage defines model for SubscriptionPage.
+type SubscriptionPage struct {
+	Items []Subscription `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// SubscriptionSource How the subscription began: `form` (a subscribe form), `identity` (the widget or an app
+// for a signed-in user), `api` (an API key or OAuth token), `member` (the panel), `import`,
+// or `preferences` (the person on the `/m/` page).
+type SubscriptionSource string
+
+// SubscriptionState `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+// complaint) ended it; only the person subscribes again.
+type SubscriptionState string
+
+// SubscriptionUpdate defines model for SubscriptionUpdate.
+type SubscriptionUpdate struct {
+	// State `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	State SubscriptionState `json:"state"`
+}
+
 // Typing defines model for Typing.
 type Typing struct {
 	Author         TypingAuthor `json:"author"`
@@ -5058,6 +5767,11 @@ type UndeliverableEmail struct {
 
 // UndeliverableEmailReason defines model for UndeliverableEmail.Reason.
 type UndeliverableEmailReason string
+
+// UnsubscribeReason `link` (the unsubscribe page), `one_click` (RFC 8058 from the mail client), `preferences`
+// (the preference page), `client` (the widget or an app), `member`, `api`, `complaint` (the
+// person reported a mail as spam), `erasure`.
+type UnsubscribeReason string
 
 // UsageList defines model for UsageList.
 type UsageList struct {
@@ -5411,6 +6125,32 @@ type WebhookPayloadBase struct {
 	WorkspaceId uuid.UUID        `json:"workspace_id"`
 }
 
+// WebhookSubscriptionData defines model for WebhookSubscriptionData.
+type WebhookSubscriptionData struct {
+	// Contact The contact as a host backend needs it.
+	Contact WebhookContact `json:"contact"`
+	List    MailingListRef `json:"list"`
+
+	// PreviousState `pending`: waiting for the person to confirm by mail (deleted after 30 days).
+	// `subscribed`: the person agreed. `unsubscribed`: the person (or a member, a key, a
+	// complaint) ended it; only the person subscribes again.
+	PreviousState *SubscriptionState `json:"previous_state,omitempty"`
+	Subscription  Subscription       `json:"subscription"`
+}
+
+// WebhookSubscriptionPayload defines model for WebhookSubscriptionPayload.
+type WebhookSubscriptionPayload struct {
+	Data WebhookSubscriptionData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // Weekday defines model for Weekday.
 type Weekday string
 
@@ -5464,6 +6204,9 @@ type ChannelId = uuid.UUID
 // ChannelKey defines model for ChannelKey.
 type ChannelKey = string
 
+// ConsentFormat defines model for ConsentFormat.
+type ConsentFormat string
+
 // ContactId defines model for ContactId.
 type ContactId = uuid.UUID
 
@@ -5503,6 +6246,9 @@ type LabelId = uuid.UUID
 // Limit defines model for Limit.
 type Limit = int32
 
+// ListId defines model for ListId.
+type ListId = uuid.UUID
+
 // MemberId defines model for MemberId.
 type MemberId = uuid.UUID
 
@@ -5523,6 +6269,9 @@ type PushSubscriptionId = uuid.UUID
 
 // Search defines model for Search.
 type Search = string
+
+// SubscriptionId defines model for SubscriptionId.
+type SubscriptionId = uuid.UUID
 
 // WebhookId defines model for WebhookId.
 type WebhookId = uuid.UUID
@@ -5616,6 +6365,12 @@ type CreateClientDiscussionPostParams struct {
 
 // CreateClientFeedbackParams defines parameters for CreateClientFeedback.
 type CreateClientFeedbackParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// SubscribeClientParams defines parameters for SubscribeClient.
+type SubscribeClientParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
@@ -5814,6 +6569,18 @@ type UpdateContactParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ExportContactConsentParams defines parameters for ExportContactConsent.
+type ExportContactConsentParams struct {
+	// Format `csv` (the default) or `json`.
+	Format *ExportContactConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportContactConsentParamsFormat defines parameters for ExportContactConsent.
+type ExportContactConsentParamsFormat string
+
 // MergeContactParams defines parameters for MergeContact.
 type MergeContactParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -5849,6 +6616,12 @@ type DeleteContactNoteParams struct {
 
 // GetContactPresenceParams defines parameters for GetContactPresence.
 type GetContactPresenceParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListContactSubscriptionsParams defines parameters for ListContactSubscriptions.
+type ListContactSubscriptionsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -6384,6 +7157,123 @@ type UpdateLabelParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListMailingListsParams defines parameters for ListMailingLists.
+type ListMailingListsParams struct {
+	InboxId  *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+	Archived *bool      `form:"archived,omitempty" json:"archived,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateMailingListParams defines parameters for CreateMailingList.
+type CreateMailingListParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteMailingListParams defines parameters for DeleteMailingList.
+type DeleteMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMailingListParams defines parameters for GetMailingList.
+type GetMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateMailingListParams defines parameters for UpdateMailingList.
+type UpdateMailingListParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportListConsentParams defines parameters for ExportListConsent.
+type ExportListConsentParams struct {
+	// Format `csv` (the default) or `json`.
+	Format *ExportListConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+	Since  *time.Time                     `form:"since,omitempty" json:"since,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ExportListConsentParamsFormat defines parameters for ExportListConsent.
+type ExportListConsentParamsFormat string
+
+// GetMailingListGrowthParams defines parameters for GetMailingListGrowth.
+type GetMailingListGrowthParams struct {
+	Days *GetMailingListGrowthParamsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMailingListGrowthParamsDays defines parameters for GetMailingListGrowth.
+type GetMailingListGrowthParamsDays int32
+
+// ListSubscriptionsParams defines parameters for ListSubscriptions.
+type ListSubscriptionsParams struct {
+	State *SubscriptionState `form:"state,omitempty" json:"state,omitempty"`
+	Q     *string            `form:"q,omitempty" json:"q,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateSubscriptionParams defines parameters for CreateSubscription.
+type CreateSubscriptionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteSubscriptionParams defines parameters for DeleteSubscription.
+type DeleteSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetSubscriptionParams defines parameters for GetSubscription.
+type GetSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateSubscriptionParams defines parameters for UpdateSubscription.
+type UpdateSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResendSubscriptionConfirmationParams defines parameters for ResendSubscriptionConfirmation.
+type ResendSubscriptionConfirmationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMentionsParams defines parameters for ListMentions.
 type ListMentionsParams struct {
 	// Cursor The `next_cursor` of the previous page.
@@ -6809,8 +7699,39 @@ type WebhookMessageCreatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookSubscriptionCreatedParams defines parameters for WebhookSubscriptionCreated.
+type WebhookSubscriptionCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookSubscriptionUpdatedParams defines parameters for WebhookSubscriptionUpdated.
+type WebhookSubscriptionUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
+
+// CreateClientSubscriptionJSONRequestBody defines body for CreateClientSubscription for application/json ContentType.
+type CreateClientSubscriptionJSONRequestBody = ClientSubscriptionCreate
 
 // SetClientContactEmailJSONRequestBody defines body for SetClientContactEmail for application/json ContentType.
 type SetClientContactEmailJSONRequestBody = ClientEmailUpdate
@@ -6856,6 +7777,9 @@ type CreateClientFeedbackMultipartRequestBody = ClientFeedbackCreateMultipart
 
 // CreateClientSessionJSONRequestBody defines body for CreateClientSession for application/json ContentType.
 type CreateClientSessionJSONRequestBody = ClientSessionCreate
+
+// SubscribeClientJSONRequestBody defines body for SubscribeClient for application/json ContentType.
+type SubscribeClientJSONRequestBody = ClientSubscriptionPut
 
 // UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
 type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
@@ -6965,6 +7889,18 @@ type CreateLabelJSONRequestBody = LabelCreate
 // UpdateLabelJSONRequestBody defines body for UpdateLabel for application/json ContentType.
 type UpdateLabelJSONRequestBody = LabelUpdate
 
+// CreateMailingListJSONRequestBody defines body for CreateMailingList for application/json ContentType.
+type CreateMailingListJSONRequestBody = MailingListCreate
+
+// UpdateMailingListJSONRequestBody defines body for UpdateMailingList for application/json ContentType.
+type UpdateMailingListJSONRequestBody = MailingListUpdate
+
+// CreateSubscriptionJSONRequestBody defines body for CreateSubscription for application/json ContentType.
+type CreateSubscriptionJSONRequestBody = SubscriptionCreate
+
+// UpdateSubscriptionJSONRequestBody defines body for UpdateSubscription for application/json ContentType.
+type UpdateSubscriptionJSONRequestBody = SubscriptionUpdate
+
 // DeleteMeJSONRequestBody defines body for DeleteMe for application/json ContentType.
 type DeleteMeJSONRequestBody = AccountDeletion
 
@@ -7048,6 +7984,12 @@ type WebhookFeedbackCreatedJSONRequestBody = WebhookFeedbackPayload
 
 // WebhookMessageCreatedJSONRequestBody defines body for WebhookMessageCreated for application/json ContentType.
 type WebhookMessageCreatedJSONRequestBody = WebhookMessagePayload
+
+// WebhookSubscriptionCreatedJSONRequestBody defines body for WebhookSubscriptionCreated for application/json ContentType.
+type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
+
+// WebhookSubscriptionUpdatedJSONRequestBody defines body for WebhookSubscriptionUpdated for application/json ContentType.
+type WebhookSubscriptionUpdatedJSONRequestBody = WebhookSubscriptionPayload
 
 // AsClientConversationCreatedEvent returns the union data inside the ClientRealtimeMessage as a ClientConversationCreatedEvent
 func (t ClientRealtimeMessage) AsClientConversationCreatedEvent() (ClientConversationCreatedEvent, error) {
@@ -7722,6 +8664,32 @@ func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsSubscriptionEvent returns the union data inside the RealtimeMessage as a SubscriptionEvent
+func (t RealtimeMessage) AsSubscriptionEvent() (SubscriptionEvent, error) {
+	var body SubscriptionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubscriptionEvent overwrites any union data inside the RealtimeMessage as the provided SubscriptionEvent
+func (t *RealtimeMessage) FromSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubscriptionEvent performs a merge with any union data inside the RealtimeMessage, using the provided SubscriptionEvent
+func (t *RealtimeMessage) MergeSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -7942,6 +8910,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsRealtimeReady()
 	case "resync_required":
 		return t.AsRealtimeResyncRequired()
+	case "subscription.created":
+		return t.AsSubscriptionEvent()
+	case "subscription.updated":
+		return t.AsSubscriptionEvent()
 	case "typing":
 		return t.AsTypingEvent()
 	case "viewing":
@@ -8351,6 +9323,32 @@ func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
 	return err
 }
 
+// AsSubscriptionEvent returns the union data inside the StoredEvent as a SubscriptionEvent
+func (t StoredEvent) AsSubscriptionEvent() (SubscriptionEvent, error) {
+	var body SubscriptionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromSubscriptionEvent overwrites any union data inside the StoredEvent as the provided SubscriptionEvent
+func (t *StoredEvent) FromSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeSubscriptionEvent performs a merge with any union data inside the StoredEvent, using the provided SubscriptionEvent
+func (t *StoredEvent) MergeSubscriptionEvent(v SubscriptionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -8407,6 +9405,10 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageCreatedEvent()
 	case "message.updated":
 		return t.AsMessageUpdatedEvent()
+	case "subscription.created":
+		return t.AsSubscriptionEvent()
+	case "subscription.updated":
+		return t.AsSubscriptionEvent()
 	default:
 		return nil, errors.New("unknown discriminator value: " + discriminator)
 	}
@@ -8436,9 +9438,15 @@ type ServerInterface interface {
 	// GetClientDiscussion A thread with its replies
 	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
 	GetClientDiscussion(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, discussionId DiscussionId)
+	// ListClientMailingLists The public mailing lists a form may offer
+	// (GET /client/v1/channels/{channel_key}/lists)
+	ListClientMailingLists(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
+	// CreateClientSubscription Subscribe from a form
+	// (POST /client/v1/channels/{channel_key}/subscriptions)
+	CreateClientSubscription(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
 	// SetClientContactEmail Leave an e-mail address for replies
 	// (PUT /client/v1/contact/email)
 	SetClientContactEmail(w http.ResponseWriter, r *http.Request)
@@ -8511,6 +9519,15 @@ type ServerInterface interface {
 	// CreateClientSession Start a contact session
 	// (POST /client/v1/session)
 	CreateClientSession(w http.ResponseWriter, r *http.Request)
+	// ListClientSubscriptions The session contact's subscriptions
+	// (GET /client/v1/subscriptions)
+	ListClientSubscriptions(w http.ResponseWriter, r *http.Request)
+	// UnsubscribeClient Unsubscribe the session contact
+	// (DELETE /client/v1/subscriptions/{listId})
+	UnsubscribeClient(w http.ResponseWriter, r *http.Request, listId ListId)
+	// SubscribeClient Subscribe the session contact
+	// (PUT /client/v1/subscriptions/{listId})
+	SubscribeClient(w http.ResponseWriter, r *http.Request, listId ListId, params SubscribeClientParams)
 	// GetHealthz Liveness
 	// (GET /healthz)
 	GetHealthz(w http.ResponseWriter, r *http.Request)
@@ -8616,6 +9633,9 @@ type ServerInterface interface {
 	// UpdateContact Update a contact
 	// (PATCH /v1/contacts/{contactId})
 	UpdateContact(w http.ResponseWriter, r *http.Request, contactId ContactId, params UpdateContactParams)
+	// ExportContactConsent Export a contact's consent records
+	// (GET /v1/contacts/{contactId}/consent)
+	ExportContactConsent(w http.ResponseWriter, r *http.Request, contactId ContactId, params ExportContactConsentParams)
 	// MergeContact Merge another contact into this one
 	// (POST /v1/contacts/{contactId}/merge)
 	MergeContact(w http.ResponseWriter, r *http.Request, contactId ContactId, params MergeContactParams)
@@ -8631,6 +9651,9 @@ type ServerInterface interface {
 	// GetContactPresence Whether a contact is connected
 	// (GET /v1/contacts/{contactId}/presence)
 	GetContactPresence(w http.ResponseWriter, r *http.Request, contactId ContactId, params GetContactPresenceParams)
+	// ListContactSubscriptions A contact's subscriptions
+	// (GET /v1/contacts/{contactId}/subscriptions)
+	ListContactSubscriptions(w http.ResponseWriter, r *http.Request, contactId ContactId, params ListContactSubscriptionsParams)
 	// GetContactSummary How the team served a contact
 	// (GET /v1/contacts/{contactId}/summary)
 	GetContactSummary(w http.ResponseWriter, r *http.Request, contactId ContactId, params GetContactSummaryParams)
@@ -8796,6 +9819,45 @@ type ServerInterface interface {
 	// UpdateLabel Update a label
 	// (PATCH /v1/labels/{labelId})
 	UpdateLabel(w http.ResponseWriter, r *http.Request, labelId LabelId, params UpdateLabelParams)
+	// ListMailingLists List mailing lists
+	// (GET /v1/lists)
+	ListMailingLists(w http.ResponseWriter, r *http.Request, params ListMailingListsParams)
+	// CreateMailingList Create a mailing list
+	// (POST /v1/lists)
+	CreateMailingList(w http.ResponseWriter, r *http.Request, params CreateMailingListParams)
+	// DeleteMailingList Delete a mailing list
+	// (DELETE /v1/lists/{listId})
+	DeleteMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params DeleteMailingListParams)
+	// GetMailingList A mailing list
+	// (GET /v1/lists/{listId})
+	GetMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params GetMailingListParams)
+	// UpdateMailingList Update a mailing list
+	// (PATCH /v1/lists/{listId})
+	UpdateMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params UpdateMailingListParams)
+	// ExportListConsent Export a list's consent records
+	// (GET /v1/lists/{listId}/consent-export)
+	ExportListConsent(w http.ResponseWriter, r *http.Request, listId ListId, params ExportListConsentParams)
+	// GetMailingListGrowth How a list grew
+	// (GET /v1/lists/{listId}/growth)
+	GetMailingListGrowth(w http.ResponseWriter, r *http.Request, listId ListId, params GetMailingListGrowthParams)
+	// ListSubscriptions List a list's subscriptions
+	// (GET /v1/lists/{listId}/subscriptions)
+	ListSubscriptions(w http.ResponseWriter, r *http.Request, listId ListId, params ListSubscriptionsParams)
+	// CreateSubscription Add a subscriber
+	// (POST /v1/lists/{listId}/subscriptions)
+	CreateSubscription(w http.ResponseWriter, r *http.Request, listId ListId, params CreateSubscriptionParams)
+	// DeleteSubscription Delete a subscription
+	// (DELETE /v1/lists/{listId}/subscriptions/{subscriptionId})
+	DeleteSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params DeleteSubscriptionParams)
+	// GetSubscription A subscription with its consent events
+	// (GET /v1/lists/{listId}/subscriptions/{subscriptionId})
+	GetSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params GetSubscriptionParams)
+	// UpdateSubscription Unsubscribe a subscriber
+	// (PATCH /v1/lists/{listId}/subscriptions/{subscriptionId})
+	UpdateSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params UpdateSubscriptionParams)
+	// ResendSubscriptionConfirmation Mail the confirmation again
+	// (POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation)
+	ResendSubscriptionConfirmation(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params ResendSubscriptionConfirmationParams)
 	// DeleteMe Delete the signed-in person's account
 	// (DELETE /v1/me)
 	DeleteMe(w http.ResponseWriter, r *http.Request)
@@ -9119,6 +10181,32 @@ func (siw *ServerInterfaceWrapper) GetClientDiscussion(w http.ResponseWriter, r 
 	handler.ServeHTTP(w, r)
 }
 
+// ListClientMailingLists operation middleware
+func (siw *ServerInterfaceWrapper) ListClientMailingLists(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListClientMailingLists(w, r, channelKey)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // CreatePageRating operation middleware
 func (siw *ServerInterfaceWrapper) CreatePageRating(w http.ResponseWriter, r *http.Request) {
 
@@ -9136,6 +10224,32 @@ func (siw *ServerInterfaceWrapper) CreatePageRating(w http.ResponseWriter, r *ht
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreatePageRating(w, r, channelKey)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClientSubscription operation middleware
+func (siw *ServerInterfaceWrapper) CreateClientSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClientSubscription(w, r, channelKey)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -9903,6 +11017,96 @@ func (siw *ServerInterfaceWrapper) CreateClientSession(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateClientSession(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListClientSubscriptions operation middleware
+func (siw *ServerInterfaceWrapper) ListClientSubscriptions(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListClientSubscriptions(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnsubscribeClient operation middleware
+func (siw *ServerInterfaceWrapper) UnsubscribeClient(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnsubscribeClient(w, r, listId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SubscribeClient operation middleware
+func (siw *ServerInterfaceWrapper) SubscribeClient(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params SubscribeClientParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SubscribeClient(w, r, listId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -11390,6 +12594,69 @@ func (siw *ServerInterfaceWrapper) UpdateContact(w http.ResponseWriter, r *http.
 	handler.ServeHTTP(w, r)
 }
 
+// ExportContactConsent operation middleware
+func (siw *ServerInterfaceWrapper) ExportContactConsent(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "contactId" -------------
+	var contactId ContactId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "contactId", r.PathValue("contactId"), &contactId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "contactId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ExportContactConsentParams
+
+	// ------------- Optional query parameter "format" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "format", r.URL.Query(), &params.Format, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "format"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "format", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ExportContactConsent(w, r, contactId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // MergeContact operation middleware
 func (siw *ServerInterfaceWrapper) MergeContact(w http.ResponseWriter, r *http.Request) {
 
@@ -11685,6 +12952,56 @@ func (siw *ServerInterfaceWrapper) GetContactPresence(w http.ResponseWriter, r *
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetContactPresence(w, r, contactId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListContactSubscriptions operation middleware
+func (siw *ServerInterfaceWrapper) ListContactSubscriptions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "contactId" -------------
+	var contactId ContactId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "contactId", r.PathValue("contactId"), &contactId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "contactId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListContactSubscriptionsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListContactSubscriptions(w, r, contactId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -15273,6 +16590,874 @@ func (siw *ServerInterfaceWrapper) UpdateLabel(w http.ResponseWriter, r *http.Re
 	handler.ServeHTTP(w, r)
 }
 
+// ListMailingLists operation middleware
+func (siw *ServerInterfaceWrapper) ListMailingLists(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMailingListsParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "archived" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "archived", r.URL.Query(), &params.Archived, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "archived"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "archived", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMailingLists(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateMailingList operation middleware
+func (siw *ServerInterfaceWrapper) CreateMailingList(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateMailingListParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateMailingList(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteMailingList operation middleware
+func (siw *ServerInterfaceWrapper) DeleteMailingList(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteMailingListParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteMailingList(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMailingList operation middleware
+func (siw *ServerInterfaceWrapper) GetMailingList(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMailingListParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMailingList(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateMailingList operation middleware
+func (siw *ServerInterfaceWrapper) UpdateMailingList(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateMailingListParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateMailingList(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ExportListConsent operation middleware
+func (siw *ServerInterfaceWrapper) ExportListConsent(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ExportListConsentParams
+
+	// ------------- Optional query parameter "format" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "format", r.URL.Query(), &params.Format, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "format"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "format", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "since" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "since", r.URL.Query(), &params.Since, runtime.BindQueryParameterOptions{Type: "string", Format: "date-time"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "since"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "since", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ExportListConsent(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMailingListGrowth operation middleware
+func (siw *ServerInterfaceWrapper) GetMailingListGrowth(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMailingListGrowthParams
+
+	// ------------- Optional query parameter "days" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "days"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "days", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMailingListGrowth(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListSubscriptions operation middleware
+func (siw *ServerInterfaceWrapper) ListSubscriptions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListSubscriptionsParams
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "q" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "q", r.URL.Query(), &params.Q, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "q"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "q", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListSubscriptions(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateSubscription operation middleware
+func (siw *ServerInterfaceWrapper) CreateSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateSubscription(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteSubscription operation middleware
+func (siw *ServerInterfaceWrapper) DeleteSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "subscriptionId" -------------
+	var subscriptionId SubscriptionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "subscriptionId", r.PathValue("subscriptionId"), &subscriptionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "subscriptionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteSubscription(w, r, listId, subscriptionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetSubscription operation middleware
+func (siw *ServerInterfaceWrapper) GetSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "subscriptionId" -------------
+	var subscriptionId SubscriptionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "subscriptionId", r.PathValue("subscriptionId"), &subscriptionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "subscriptionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetSubscription(w, r, listId, subscriptionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateSubscription operation middleware
+func (siw *ServerInterfaceWrapper) UpdateSubscription(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "subscriptionId" -------------
+	var subscriptionId SubscriptionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "subscriptionId", r.PathValue("subscriptionId"), &subscriptionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "subscriptionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateSubscriptionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateSubscription(w, r, listId, subscriptionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ResendSubscriptionConfirmation operation middleware
+func (siw *ServerInterfaceWrapper) ResendSubscriptionConfirmation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "subscriptionId" -------------
+	var subscriptionId SubscriptionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "subscriptionId", r.PathValue("subscriptionId"), &subscriptionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "subscriptionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ResendSubscriptionConfirmationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ResendSubscriptionConfirmation(w, r, listId, subscriptionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // DeleteMe operation middleware
 func (siw *ServerInterfaceWrapper) DeleteMe(w http.ResponseWriter, r *http.Request) {
 
@@ -17458,6 +19643,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/contacts/{contactId}/notes/{noteId}", wrapper.DeleteContactNote)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/summary", wrapper.GetContactSummary)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/presence", wrapper.GetContactPresence)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/subscriptions", wrapper.ListContactSubscriptions)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/consent", wrapper.ExportContactConsent)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations", wrapper.ListConversations)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations", wrapper.CreateConversation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/counts", wrapper.GetConversationCounts)
@@ -17506,6 +19693,19 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussion-posts/{postId}/spam", wrapper.MarkDiscussionPostSpam)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.UnvoteDiscussionPost)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.VoteDiscussionPost)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists", wrapper.ListMailingLists)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists", wrapper.CreateMailingList)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/lists/{listId}", wrapper.DeleteMailingList)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}", wrapper.GetMailingList)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/lists/{listId}", wrapper.UpdateMailingList)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/growth", wrapper.GetMailingListGrowth)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions", wrapper.ListSubscriptions)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions", wrapper.CreateSubscription)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}", wrapper.DeleteSubscription)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}", wrapper.GetSubscription)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}", wrapper.UpdateSubscription)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation", wrapper.ResendSubscriptionConfirmation)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/consent-export", wrapper.ExportListConsent)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/usage", wrapper.GetUsage)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/feedback", wrapper.CreateFeedback)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/webhooks", wrapper.ListWebhooks)
@@ -17532,6 +19732,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/page-ratings", wrapper.CreatePageRating)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions", wrapper.ListClientDiscussions)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions/{discussionId}", wrapper.GetClientDiscussion)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/lists", wrapper.ListClientMailingLists)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/subscriptions", wrapper.CreateClientSubscription)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions", wrapper.CreateClientDiscussion)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/posts", wrapper.CreateClientDiscussionPost)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/answer", wrapper.ClearClientDiscussionAnswer)
@@ -17543,6 +19745,9 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}/vote", wrapper.UnvoteClientDiscussionPost)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}/vote", wrapper.VoteClientDiscussionPost)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/reader-token", wrapper.DeleteReaderToken)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/subscriptions", wrapper.ListClientSubscriptions)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/subscriptions/{listId}", wrapper.UnsubscribeClient)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/subscriptions/{listId}", wrapper.SubscribeClient)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/conversations", wrapper.ListClientConversations)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/conversations", wrapper.CreateClientConversation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/conversations/{conversationId}", wrapper.GetClientConversation)
@@ -17606,6 +19811,12 @@ type WebhookReceiverInterface interface {
 	// A message was added
 	// HandleWebhookMessageCreatedWebhook handles the POST webhook for message.created.
 	HandleWebhookMessageCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookMessageCreatedParams)
+	// A subscription was created
+	// HandleWebhookSubscriptionCreatedWebhook handles the POST webhook for subscription.created.
+	HandleWebhookSubscriptionCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookSubscriptionCreatedParams)
+	// A subscription changed state
+	// HandleWebhookSubscriptionUpdatedWebhook handles the POST webhook for subscription.updated.
+	HandleWebhookSubscriptionUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookSubscriptionUpdatedParams)
 }
 
 // WebhookReceiverMiddlewareFunc wraps an http.Handler with cross-
@@ -18900,6 +21111,190 @@ func WebhookMessageCreatedWebhookHandler(si WebhookReceiverInterface, errHandler
 	return h
 }
 
+// WebhookSubscriptionCreatedWebhookHandler returns the http.Handler for the subscription.created webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookSubscriptionCreatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookSubscriptionCreatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookSubscriptionCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookSubscriptionUpdatedWebhookHandler returns the http.Handler for the subscription.updated webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookSubscriptionUpdatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookSubscriptionUpdatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookSubscriptionUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
 type IngressRejectionJSONResponse IngressRejection
 
 type ProblemApplicationProblemPlusJSONResponse Problem
@@ -19260,6 +21655,82 @@ func (response GetClientDiscussion429ApplicationProblemPlusJSONResponse) VisitGe
 	return err
 }
 
+type ListClientMailingListsRequestObject struct {
+	ChannelKey ChannelKey `json:"channel_key"`
+}
+
+type ListClientMailingListsResponseObject interface {
+	VisitListClientMailingListsResponse(w http.ResponseWriter) error
+}
+
+type ListClientMailingLists200ResponseHeaders struct {
+	CacheControl *string
+}
+
+type ListClientMailingLists200JSONResponse struct {
+	Body    ClientMailingLists
+	Headers ListClientMailingLists200ResponseHeaders
+}
+
+func (response ListClientMailingLists200JSONResponse) VisitListClientMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientMailingLists403ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListClientMailingLists403ApplicationProblemPlusJSONResponse) VisitListClientMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientMailingLists404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListClientMailingLists404ApplicationProblemPlusJSONResponse) VisitListClientMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientMailingLists429ApplicationProblemPlusJSONResponse Problem
+
+func (response ListClientMailingLists429ApplicationProblemPlusJSONResponse) VisitListClientMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type CreatePageRatingRequestObject struct {
 	ChannelKey ChannelKey `json:"channel_key"`
 	Body       *CreatePageRatingJSONRequestBody
@@ -19324,6 +21795,87 @@ func (response CreatePageRating404ApplicationProblemPlusJSONResponse) VisitCreat
 type CreatePageRating429ApplicationProblemPlusJSONResponse Problem
 
 func (response CreatePageRating429ApplicationProblemPlusJSONResponse) VisitCreatePageRatingResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientSubscriptionRequestObject struct {
+	ChannelKey ChannelKey `json:"channel_key"`
+	Body       *CreateClientSubscriptionJSONRequestBody
+}
+
+type CreateClientSubscriptionResponseObject interface {
+	VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type CreateClientSubscription202JSONResponse ClientSubscriptionAccepted
+
+func (response CreateClientSubscription202JSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientSubscription400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateClientSubscription400ApplicationProblemPlusJSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientSubscription403ApplicationProblemPlusJSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientSubscription404ApplicationProblemPlusJSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientSubscription429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientSubscription429ApplicationProblemPlusJSONResponse) VisitCreateClientSubscriptionResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -21202,6 +23754,213 @@ func (response CreateClientSession429ApplicationProblemPlusJSONResponse) VisitCr
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientSubscriptionsRequestObject struct {
+}
+
+type ListClientSubscriptionsResponseObject interface {
+	VisitListClientSubscriptionsResponse(w http.ResponseWriter) error
+}
+
+type ListClientSubscriptions200JSONResponse ClientSubscriptionList
+
+func (response ListClientSubscriptions200JSONResponse) VisitListClientSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientSubscriptions401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListClientSubscriptions401ApplicationProblemPlusJSONResponse) VisitListClientSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientSubscriptions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListClientSubscriptions403ApplicationProblemPlusJSONResponse) VisitListClientSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnsubscribeClientRequestObject struct {
+	ListId ListId `json:"listId"`
+}
+
+type UnsubscribeClientResponseObject interface {
+	VisitUnsubscribeClientResponse(w http.ResponseWriter) error
+}
+
+type UnsubscribeClient204Response struct {
+}
+
+func (response UnsubscribeClient204Response) VisitUnsubscribeClientResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type UnsubscribeClient401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnsubscribeClient401ApplicationProblemPlusJSONResponse) VisitUnsubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnsubscribeClient403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnsubscribeClient403ApplicationProblemPlusJSONResponse) VisitUnsubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnsubscribeClient404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnsubscribeClient404ApplicationProblemPlusJSONResponse) VisitUnsubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClientRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params SubscribeClientParams
+	Body   *SubscribeClientJSONRequestBody
+}
+
+type SubscribeClientResponseObject interface {
+	VisitSubscribeClientResponse(w http.ResponseWriter) error
+}
+
+type SubscribeClient200JSONResponse ClientSubscriptionStatus
+
+func (response SubscribeClient200JSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClient400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SubscribeClient400ApplicationProblemPlusJSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClient401ApplicationProblemPlusJSONResponse Problem
+
+func (response SubscribeClient401ApplicationProblemPlusJSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClient403ApplicationProblemPlusJSONResponse Problem
+
+func (response SubscribeClient403ApplicationProblemPlusJSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClient404ApplicationProblemPlusJSONResponse Problem
+
+func (response SubscribeClient404ApplicationProblemPlusJSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SubscribeClient409ApplicationProblemPlusJSONResponse Problem
+
+func (response SubscribeClient409ApplicationProblemPlusJSONResponse) VisitSubscribeClientResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -23363,6 +26122,121 @@ func (response UpdateContact409ApplicationProblemPlusJSONResponse) VisitUpdateCo
 	return err
 }
 
+type ExportContactConsentRequestObject struct {
+	ContactId ContactId `json:"contactId"`
+	Params    ExportContactConsentParams
+}
+
+type ExportContactConsentResponseObject interface {
+	VisitExportContactConsentResponse(w http.ResponseWriter) error
+}
+
+type ExportContactConsent200ResponseHeaders struct {
+	ContentDisposition *string
+}
+
+type ExportContactConsent200JSONResponse struct {
+	Body    ConsentExport
+	Headers ExportContactConsent200ResponseHeaders
+}
+
+func (response ExportContactConsent200JSONResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportContactConsent200TextcsvResponse struct {
+	Body          io.Reader
+	Headers       ExportContactConsent200ResponseHeaders
+	ContentLength int64
+}
+
+func (response ExportContactConsent200TextcsvResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/csv")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type ExportContactConsent400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ExportContactConsent400ApplicationProblemPlusJSONResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportContactConsent401ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportContactConsent401ApplicationProblemPlusJSONResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportContactConsent403ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportContactConsent403ApplicationProblemPlusJSONResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportContactConsent404ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportContactConsent404ApplicationProblemPlusJSONResponse) VisitExportContactConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type MergeContactRequestObject struct {
 	ContactId ContactId `json:"contactId"`
 	Params    MergeContactParams
@@ -23726,6 +26600,73 @@ func (response GetContactPresence403ApplicationProblemPlusJSONResponse) VisitGet
 type GetContactPresence404ApplicationProblemPlusJSONResponse Problem
 
 func (response GetContactPresence404ApplicationProblemPlusJSONResponse) VisitGetContactPresenceResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactSubscriptionsRequestObject struct {
+	ContactId ContactId `json:"contactId"`
+	Params    ListContactSubscriptionsParams
+}
+
+type ListContactSubscriptionsResponseObject interface {
+	VisitListContactSubscriptionsResponse(w http.ResponseWriter) error
+}
+
+type ListContactSubscriptions200JSONResponse ContactSubscriptionList
+
+func (response ListContactSubscriptions200JSONResponse) VisitListContactSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactSubscriptions401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListContactSubscriptions401ApplicationProblemPlusJSONResponse) VisitListContactSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactSubscriptions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListContactSubscriptions403ApplicationProblemPlusJSONResponse) VisitListContactSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactSubscriptions404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListContactSubscriptions404ApplicationProblemPlusJSONResponse) VisitListContactSubscriptionsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -27872,6 +30813,1123 @@ func (response UpdateLabel409ApplicationProblemPlusJSONResponse) VisitUpdateLabe
 	return err
 }
 
+type ListMailingListsRequestObject struct {
+	Params ListMailingListsParams
+}
+
+type ListMailingListsResponseObject interface {
+	VisitListMailingListsResponse(w http.ResponseWriter) error
+}
+
+type ListMailingLists200JSONResponse MailingListPage
+
+func (response ListMailingLists200JSONResponse) VisitListMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMailingLists400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMailingLists400ApplicationProblemPlusJSONResponse) VisitListMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMailingLists401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMailingLists401ApplicationProblemPlusJSONResponse) VisitListMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMailingLists403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMailingLists403ApplicationProblemPlusJSONResponse) VisitListMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMailingLists404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMailingLists404ApplicationProblemPlusJSONResponse) VisitListMailingListsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingListRequestObject struct {
+	Params CreateMailingListParams
+	Body   *CreateMailingListJSONRequestBody
+}
+
+type CreateMailingListResponseObject interface {
+	VisitCreateMailingListResponse(w http.ResponseWriter) error
+}
+
+type CreateMailingList201JSONResponse MailingList
+
+func (response CreateMailingList201JSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingList400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateMailingList400ApplicationProblemPlusJSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingList401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMailingList401ApplicationProblemPlusJSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingList403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMailingList403ApplicationProblemPlusJSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingList404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMailingList404ApplicationProblemPlusJSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateMailingList409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateMailingList409ApplicationProblemPlusJSONResponse) VisitCreateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMailingListRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params DeleteMailingListParams
+}
+
+type DeleteMailingListResponseObject interface {
+	VisitDeleteMailingListResponse(w http.ResponseWriter) error
+}
+
+type DeleteMailingList204Response struct {
+}
+
+func (response DeleteMailingList204Response) VisitDeleteMailingListResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteMailingList401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteMailingList401ApplicationProblemPlusJSONResponse) VisitDeleteMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMailingList403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMailingList403ApplicationProblemPlusJSONResponse) VisitDeleteMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteMailingList404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteMailingList404ApplicationProblemPlusJSONResponse) VisitDeleteMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params GetMailingListParams
+}
+
+type GetMailingListResponseObject interface {
+	VisitGetMailingListResponse(w http.ResponseWriter) error
+}
+
+type GetMailingList200JSONResponse MailingList
+
+func (response GetMailingList200JSONResponse) VisitGetMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingList401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMailingList401ApplicationProblemPlusJSONResponse) VisitGetMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingList403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMailingList403ApplicationProblemPlusJSONResponse) VisitGetMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingList404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMailingList404ApplicationProblemPlusJSONResponse) VisitGetMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingListRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params UpdateMailingListParams
+	Body   *UpdateMailingListJSONRequestBody
+}
+
+type UpdateMailingListResponseObject interface {
+	VisitUpdateMailingListResponse(w http.ResponseWriter) error
+}
+
+type UpdateMailingList200JSONResponse MailingList
+
+func (response UpdateMailingList200JSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingList400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateMailingList400ApplicationProblemPlusJSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingList401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMailingList401ApplicationProblemPlusJSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingList403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMailingList403ApplicationProblemPlusJSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingList404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMailingList404ApplicationProblemPlusJSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateMailingList409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateMailingList409ApplicationProblemPlusJSONResponse) VisitUpdateMailingListResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportListConsentRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params ExportListConsentParams
+}
+
+type ExportListConsentResponseObject interface {
+	VisitExportListConsentResponse(w http.ResponseWriter) error
+}
+
+type ExportListConsent200ResponseHeaders struct {
+	ContentDisposition *string
+}
+
+type ExportListConsent200JSONResponse struct {
+	Body    ConsentExport
+	Headers ExportListConsent200ResponseHeaders
+}
+
+func (response ExportListConsent200JSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportListConsent200TextcsvResponse struct {
+	Body          io.Reader
+	Headers       ExportListConsent200ResponseHeaders
+	ContentLength int64
+}
+
+func (response ExportListConsent200TextcsvResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/csv")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type ExportListConsent400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ExportListConsent400ApplicationProblemPlusJSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportListConsent401ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportListConsent401ApplicationProblemPlusJSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportListConsent403ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportListConsent403ApplicationProblemPlusJSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ExportListConsent404ApplicationProblemPlusJSONResponse Problem
+
+func (response ExportListConsent404ApplicationProblemPlusJSONResponse) VisitExportListConsentResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListGrowthRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params GetMailingListGrowthParams
+}
+
+type GetMailingListGrowthResponseObject interface {
+	VisitGetMailingListGrowthResponse(w http.ResponseWriter) error
+}
+
+type GetMailingListGrowth200JSONResponse MailingListGrowth
+
+func (response GetMailingListGrowth200JSONResponse) VisitGetMailingListGrowthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListGrowth400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMailingListGrowth400ApplicationProblemPlusJSONResponse) VisitGetMailingListGrowthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListGrowth401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMailingListGrowth401ApplicationProblemPlusJSONResponse) VisitGetMailingListGrowthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListGrowth403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMailingListGrowth403ApplicationProblemPlusJSONResponse) VisitGetMailingListGrowthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMailingListGrowth404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMailingListGrowth404ApplicationProblemPlusJSONResponse) VisitGetMailingListGrowthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListSubscriptionsRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params ListSubscriptionsParams
+}
+
+type ListSubscriptionsResponseObject interface {
+	VisitListSubscriptionsResponse(w http.ResponseWriter) error
+}
+
+type ListSubscriptions200JSONResponse SubscriptionPage
+
+func (response ListSubscriptions200JSONResponse) VisitListSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListSubscriptions400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListSubscriptions400ApplicationProblemPlusJSONResponse) VisitListSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListSubscriptions401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListSubscriptions401ApplicationProblemPlusJSONResponse) VisitListSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListSubscriptions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListSubscriptions403ApplicationProblemPlusJSONResponse) VisitListSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListSubscriptions404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListSubscriptions404ApplicationProblemPlusJSONResponse) VisitListSubscriptionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscriptionRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params CreateSubscriptionParams
+	Body   *CreateSubscriptionJSONRequestBody
+}
+
+type CreateSubscriptionResponseObject interface {
+	VisitCreateSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type CreateSubscription200JSONResponse Subscription
+
+func (response CreateSubscription200JSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription201JSONResponse Subscription
+
+func (response CreateSubscription201JSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateSubscription400ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateSubscription401ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateSubscription403ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateSubscription404ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateSubscription409ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateSubscription429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateSubscription429ApplicationProblemPlusJSONResponse) VisitCreateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteSubscriptionRequestObject struct {
+	ListId         ListId         `json:"listId"`
+	SubscriptionId SubscriptionId `json:"subscriptionId"`
+	Params         DeleteSubscriptionParams
+}
+
+type DeleteSubscriptionResponseObject interface {
+	VisitDeleteSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type DeleteSubscription204Response struct {
+}
+
+func (response DeleteSubscription204Response) VisitDeleteSubscriptionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteSubscription401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteSubscription401ApplicationProblemPlusJSONResponse) VisitDeleteSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteSubscription403ApplicationProblemPlusJSONResponse) VisitDeleteSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteSubscription404ApplicationProblemPlusJSONResponse) VisitDeleteSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSubscriptionRequestObject struct {
+	ListId         ListId         `json:"listId"`
+	SubscriptionId SubscriptionId `json:"subscriptionId"`
+	Params         GetSubscriptionParams
+}
+
+type GetSubscriptionResponseObject interface {
+	VisitGetSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type GetSubscription200JSONResponse SubscriptionDetail
+
+func (response GetSubscription200JSONResponse) VisitGetSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSubscription401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetSubscription401ApplicationProblemPlusJSONResponse) VisitGetSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSubscription403ApplicationProblemPlusJSONResponse) VisitGetSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSubscription404ApplicationProblemPlusJSONResponse) VisitGetSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscriptionRequestObject struct {
+	ListId         ListId         `json:"listId"`
+	SubscriptionId SubscriptionId `json:"subscriptionId"`
+	Params         UpdateSubscriptionParams
+	Body           *UpdateSubscriptionJSONRequestBody
+}
+
+type UpdateSubscriptionResponseObject interface {
+	VisitUpdateSubscriptionResponse(w http.ResponseWriter) error
+}
+
+type UpdateSubscription200JSONResponse Subscription
+
+func (response UpdateSubscription200JSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscription400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateSubscription400ApplicationProblemPlusJSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscription401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateSubscription401ApplicationProblemPlusJSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscription403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateSubscription403ApplicationProblemPlusJSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscription404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateSubscription404ApplicationProblemPlusJSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateSubscription409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateSubscription409ApplicationProblemPlusJSONResponse) VisitUpdateSubscriptionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResendSubscriptionConfirmationRequestObject struct {
+	ListId         ListId         `json:"listId"`
+	SubscriptionId SubscriptionId `json:"subscriptionId"`
+	Params         ResendSubscriptionConfirmationParams
+}
+
+type ResendSubscriptionConfirmationResponseObject interface {
+	VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error
+}
+
+type ResendSubscriptionConfirmation202Response struct {
+}
+
+func (response ResendSubscriptionConfirmation202Response) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+	w.WriteHeader(202)
+	return nil
+}
+
+type ResendSubscriptionConfirmation401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ResendSubscriptionConfirmation401ApplicationProblemPlusJSONResponse) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResendSubscriptionConfirmation403ApplicationProblemPlusJSONResponse Problem
+
+func (response ResendSubscriptionConfirmation403ApplicationProblemPlusJSONResponse) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResendSubscriptionConfirmation404ApplicationProblemPlusJSONResponse Problem
+
+func (response ResendSubscriptionConfirmation404ApplicationProblemPlusJSONResponse) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResendSubscriptionConfirmation409ApplicationProblemPlusJSONResponse Problem
+
+func (response ResendSubscriptionConfirmation409ApplicationProblemPlusJSONResponse) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResendSubscriptionConfirmation429ApplicationProblemPlusJSONResponse Problem
+
+func (response ResendSubscriptionConfirmation429ApplicationProblemPlusJSONResponse) VisitResendSubscriptionConfirmationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type DeleteMeRequestObject struct {
 	Body *DeleteMeJSONRequestBody
 }
@@ -30992,9 +35050,15 @@ type StrictServerInterface interface {
 	// GetClientDiscussion A thread with its replies
 	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
 	GetClientDiscussion(ctx context.Context, request GetClientDiscussionRequestObject) (GetClientDiscussionResponseObject, error)
+	// ListClientMailingLists The public mailing lists a form may offer
+	// (GET /client/v1/channels/{channel_key}/lists)
+	ListClientMailingLists(ctx context.Context, request ListClientMailingListsRequestObject) (ListClientMailingListsResponseObject, error)
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(ctx context.Context, request CreatePageRatingRequestObject) (CreatePageRatingResponseObject, error)
+	// CreateClientSubscription Subscribe from a form
+	// (POST /client/v1/channels/{channel_key}/subscriptions)
+	CreateClientSubscription(ctx context.Context, request CreateClientSubscriptionRequestObject) (CreateClientSubscriptionResponseObject, error)
 	// SetClientContactEmail Leave an e-mail address for replies
 	// (PUT /client/v1/contact/email)
 	SetClientContactEmail(ctx context.Context, request SetClientContactEmailRequestObject) (SetClientContactEmailResponseObject, error)
@@ -31067,6 +35131,15 @@ type StrictServerInterface interface {
 	// CreateClientSession Start a contact session
 	// (POST /client/v1/session)
 	CreateClientSession(ctx context.Context, request CreateClientSessionRequestObject) (CreateClientSessionResponseObject, error)
+	// ListClientSubscriptions The session contact's subscriptions
+	// (GET /client/v1/subscriptions)
+	ListClientSubscriptions(ctx context.Context, request ListClientSubscriptionsRequestObject) (ListClientSubscriptionsResponseObject, error)
+	// UnsubscribeClient Unsubscribe the session contact
+	// (DELETE /client/v1/subscriptions/{listId})
+	UnsubscribeClient(ctx context.Context, request UnsubscribeClientRequestObject) (UnsubscribeClientResponseObject, error)
+	// SubscribeClient Subscribe the session contact
+	// (PUT /client/v1/subscriptions/{listId})
+	SubscribeClient(ctx context.Context, request SubscribeClientRequestObject) (SubscribeClientResponseObject, error)
 	// GetHealthz Liveness
 	// (GET /healthz)
 	GetHealthz(ctx context.Context, request GetHealthzRequestObject) (GetHealthzResponseObject, error)
@@ -31172,6 +35245,9 @@ type StrictServerInterface interface {
 	// UpdateContact Update a contact
 	// (PATCH /v1/contacts/{contactId})
 	UpdateContact(ctx context.Context, request UpdateContactRequestObject) (UpdateContactResponseObject, error)
+	// ExportContactConsent Export a contact's consent records
+	// (GET /v1/contacts/{contactId}/consent)
+	ExportContactConsent(ctx context.Context, request ExportContactConsentRequestObject) (ExportContactConsentResponseObject, error)
 	// MergeContact Merge another contact into this one
 	// (POST /v1/contacts/{contactId}/merge)
 	MergeContact(ctx context.Context, request MergeContactRequestObject) (MergeContactResponseObject, error)
@@ -31187,6 +35263,9 @@ type StrictServerInterface interface {
 	// GetContactPresence Whether a contact is connected
 	// (GET /v1/contacts/{contactId}/presence)
 	GetContactPresence(ctx context.Context, request GetContactPresenceRequestObject) (GetContactPresenceResponseObject, error)
+	// ListContactSubscriptions A contact's subscriptions
+	// (GET /v1/contacts/{contactId}/subscriptions)
+	ListContactSubscriptions(ctx context.Context, request ListContactSubscriptionsRequestObject) (ListContactSubscriptionsResponseObject, error)
 	// GetContactSummary How the team served a contact
 	// (GET /v1/contacts/{contactId}/summary)
 	GetContactSummary(ctx context.Context, request GetContactSummaryRequestObject) (GetContactSummaryResponseObject, error)
@@ -31352,6 +35431,45 @@ type StrictServerInterface interface {
 	// UpdateLabel Update a label
 	// (PATCH /v1/labels/{labelId})
 	UpdateLabel(ctx context.Context, request UpdateLabelRequestObject) (UpdateLabelResponseObject, error)
+	// ListMailingLists List mailing lists
+	// (GET /v1/lists)
+	ListMailingLists(ctx context.Context, request ListMailingListsRequestObject) (ListMailingListsResponseObject, error)
+	// CreateMailingList Create a mailing list
+	// (POST /v1/lists)
+	CreateMailingList(ctx context.Context, request CreateMailingListRequestObject) (CreateMailingListResponseObject, error)
+	// DeleteMailingList Delete a mailing list
+	// (DELETE /v1/lists/{listId})
+	DeleteMailingList(ctx context.Context, request DeleteMailingListRequestObject) (DeleteMailingListResponseObject, error)
+	// GetMailingList A mailing list
+	// (GET /v1/lists/{listId})
+	GetMailingList(ctx context.Context, request GetMailingListRequestObject) (GetMailingListResponseObject, error)
+	// UpdateMailingList Update a mailing list
+	// (PATCH /v1/lists/{listId})
+	UpdateMailingList(ctx context.Context, request UpdateMailingListRequestObject) (UpdateMailingListResponseObject, error)
+	// ExportListConsent Export a list's consent records
+	// (GET /v1/lists/{listId}/consent-export)
+	ExportListConsent(ctx context.Context, request ExportListConsentRequestObject) (ExportListConsentResponseObject, error)
+	// GetMailingListGrowth How a list grew
+	// (GET /v1/lists/{listId}/growth)
+	GetMailingListGrowth(ctx context.Context, request GetMailingListGrowthRequestObject) (GetMailingListGrowthResponseObject, error)
+	// ListSubscriptions List a list's subscriptions
+	// (GET /v1/lists/{listId}/subscriptions)
+	ListSubscriptions(ctx context.Context, request ListSubscriptionsRequestObject) (ListSubscriptionsResponseObject, error)
+	// CreateSubscription Add a subscriber
+	// (POST /v1/lists/{listId}/subscriptions)
+	CreateSubscription(ctx context.Context, request CreateSubscriptionRequestObject) (CreateSubscriptionResponseObject, error)
+	// DeleteSubscription Delete a subscription
+	// (DELETE /v1/lists/{listId}/subscriptions/{subscriptionId})
+	DeleteSubscription(ctx context.Context, request DeleteSubscriptionRequestObject) (DeleteSubscriptionResponseObject, error)
+	// GetSubscription A subscription with its consent events
+	// (GET /v1/lists/{listId}/subscriptions/{subscriptionId})
+	GetSubscription(ctx context.Context, request GetSubscriptionRequestObject) (GetSubscriptionResponseObject, error)
+	// UpdateSubscription Unsubscribe a subscriber
+	// (PATCH /v1/lists/{listId}/subscriptions/{subscriptionId})
+	UpdateSubscription(ctx context.Context, request UpdateSubscriptionRequestObject) (UpdateSubscriptionResponseObject, error)
+	// ResendSubscriptionConfirmation Mail the confirmation again
+	// (POST /v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation)
+	ResendSubscriptionConfirmation(ctx context.Context, request ResendSubscriptionConfirmationRequestObject) (ResendSubscriptionConfirmationResponseObject, error)
 	// DeleteMe Delete the signed-in person's account
 	// (DELETE /v1/me)
 	DeleteMe(ctx context.Context, request DeleteMeRequestObject) (DeleteMeResponseObject, error)
@@ -31643,6 +35761,32 @@ func (sh *strictHandler) GetClientDiscussion(w http.ResponseWriter, r *http.Requ
 	}
 }
 
+// ListClientMailingLists operation middleware
+func (sh *strictHandler) ListClientMailingLists(w http.ResponseWriter, r *http.Request, channelKey ChannelKey) {
+	var request ListClientMailingListsRequestObject
+
+	request.ChannelKey = channelKey
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListClientMailingLists(ctx, request.(ListClientMailingListsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListClientMailingLists")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListClientMailingListsResponseObject); ok {
+		if err := validResponse.VisitListClientMailingListsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // CreatePageRating operation middleware
 func (sh *strictHandler) CreatePageRating(w http.ResponseWriter, r *http.Request, channelKey ChannelKey) {
 	var request CreatePageRatingRequestObject
@@ -31669,6 +35813,39 @@ func (sh *strictHandler) CreatePageRating(w http.ResponseWriter, r *http.Request
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreatePageRatingResponseObject); ok {
 		if err := validResponse.VisitCreatePageRatingResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateClientSubscription operation middleware
+func (sh *strictHandler) CreateClientSubscription(w http.ResponseWriter, r *http.Request, channelKey ChannelKey) {
+	var request CreateClientSubscriptionRequestObject
+
+	request.ChannelKey = channelKey
+
+	var body CreateClientSubscriptionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateClientSubscription(ctx, request.(CreateClientSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateClientSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateClientSubscriptionResponseObject); ok {
+		if err := validResponse.VisitCreateClientSubscriptionResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -32411,6 +36588,90 @@ func (sh *strictHandler) CreateClientSession(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateClientSessionResponseObject); ok {
 		if err := validResponse.VisitCreateClientSessionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListClientSubscriptions operation middleware
+func (sh *strictHandler) ListClientSubscriptions(w http.ResponseWriter, r *http.Request) {
+	var request ListClientSubscriptionsRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListClientSubscriptions(ctx, request.(ListClientSubscriptionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListClientSubscriptions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListClientSubscriptionsResponseObject); ok {
+		if err := validResponse.VisitListClientSubscriptionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnsubscribeClient operation middleware
+func (sh *strictHandler) UnsubscribeClient(w http.ResponseWriter, r *http.Request, listId ListId) {
+	var request UnsubscribeClientRequestObject
+
+	request.ListId = listId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnsubscribeClient(ctx, request.(UnsubscribeClientRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnsubscribeClient")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnsubscribeClientResponseObject); ok {
+		if err := validResponse.VisitUnsubscribeClientResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SubscribeClient operation middleware
+func (sh *strictHandler) SubscribeClient(w http.ResponseWriter, r *http.Request, listId ListId, params SubscribeClientParams) {
+	var request SubscribeClientRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	var body SubscribeClientJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SubscribeClient(ctx, request.(SubscribeClientRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SubscribeClient")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SubscribeClientResponseObject); ok {
+		if err := validResponse.VisitSubscribeClientResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -33409,6 +37670,33 @@ func (sh *strictHandler) UpdateContact(w http.ResponseWriter, r *http.Request, c
 	}
 }
 
+// ExportContactConsent operation middleware
+func (sh *strictHandler) ExportContactConsent(w http.ResponseWriter, r *http.Request, contactId ContactId, params ExportContactConsentParams) {
+	var request ExportContactConsentRequestObject
+
+	request.ContactId = contactId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ExportContactConsent(ctx, request.(ExportContactConsentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ExportContactConsent")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ExportContactConsentResponseObject); ok {
+		if err := validResponse.VisitExportContactConsentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // MergeContact operation middleware
 func (sh *strictHandler) MergeContact(w http.ResponseWriter, r *http.Request, contactId ContactId, params MergeContactParams) {
 	var request MergeContactRequestObject
@@ -33552,6 +37840,33 @@ func (sh *strictHandler) GetContactPresence(w http.ResponseWriter, r *http.Reque
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetContactPresenceResponseObject); ok {
 		if err := validResponse.VisitGetContactPresenceResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListContactSubscriptions operation middleware
+func (sh *strictHandler) ListContactSubscriptions(w http.ResponseWriter, r *http.Request, contactId ContactId, params ListContactSubscriptionsParams) {
+	var request ListContactSubscriptionsRequestObject
+
+	request.ContactId = contactId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListContactSubscriptions(ctx, request.(ListContactSubscriptionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListContactSubscriptions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListContactSubscriptionsResponseObject); ok {
+		if err := validResponse.VisitListContactSubscriptionsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -35175,6 +39490,387 @@ func (sh *strictHandler) UpdateLabel(w http.ResponseWriter, r *http.Request, lab
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateLabelResponseObject); ok {
 		if err := validResponse.VisitUpdateLabelResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMailingLists operation middleware
+func (sh *strictHandler) ListMailingLists(w http.ResponseWriter, r *http.Request, params ListMailingListsParams) {
+	var request ListMailingListsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMailingLists(ctx, request.(ListMailingListsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMailingLists")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMailingListsResponseObject); ok {
+		if err := validResponse.VisitListMailingListsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateMailingList operation middleware
+func (sh *strictHandler) CreateMailingList(w http.ResponseWriter, r *http.Request, params CreateMailingListParams) {
+	var request CreateMailingListRequestObject
+
+	request.Params = params
+
+	var body CreateMailingListJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateMailingList(ctx, request.(CreateMailingListRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateMailingList")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateMailingListResponseObject); ok {
+		if err := validResponse.VisitCreateMailingListResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteMailingList operation middleware
+func (sh *strictHandler) DeleteMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params DeleteMailingListParams) {
+	var request DeleteMailingListRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteMailingList(ctx, request.(DeleteMailingListRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteMailingList")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteMailingListResponseObject); ok {
+		if err := validResponse.VisitDeleteMailingListResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMailingList operation middleware
+func (sh *strictHandler) GetMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params GetMailingListParams) {
+	var request GetMailingListRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMailingList(ctx, request.(GetMailingListRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMailingList")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMailingListResponseObject); ok {
+		if err := validResponse.VisitGetMailingListResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateMailingList operation middleware
+func (sh *strictHandler) UpdateMailingList(w http.ResponseWriter, r *http.Request, listId ListId, params UpdateMailingListParams) {
+	var request UpdateMailingListRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	var body UpdateMailingListJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateMailingList(ctx, request.(UpdateMailingListRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateMailingList")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateMailingListResponseObject); ok {
+		if err := validResponse.VisitUpdateMailingListResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ExportListConsent operation middleware
+func (sh *strictHandler) ExportListConsent(w http.ResponseWriter, r *http.Request, listId ListId, params ExportListConsentParams) {
+	var request ExportListConsentRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ExportListConsent(ctx, request.(ExportListConsentRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ExportListConsent")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ExportListConsentResponseObject); ok {
+		if err := validResponse.VisitExportListConsentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMailingListGrowth operation middleware
+func (sh *strictHandler) GetMailingListGrowth(w http.ResponseWriter, r *http.Request, listId ListId, params GetMailingListGrowthParams) {
+	var request GetMailingListGrowthRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMailingListGrowth(ctx, request.(GetMailingListGrowthRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMailingListGrowth")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMailingListGrowthResponseObject); ok {
+		if err := validResponse.VisitGetMailingListGrowthResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListSubscriptions operation middleware
+func (sh *strictHandler) ListSubscriptions(w http.ResponseWriter, r *http.Request, listId ListId, params ListSubscriptionsParams) {
+	var request ListSubscriptionsRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListSubscriptions(ctx, request.(ListSubscriptionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListSubscriptions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListSubscriptionsResponseObject); ok {
+		if err := validResponse.VisitListSubscriptionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateSubscription operation middleware
+func (sh *strictHandler) CreateSubscription(w http.ResponseWriter, r *http.Request, listId ListId, params CreateSubscriptionParams) {
+	var request CreateSubscriptionRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	var body CreateSubscriptionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateSubscription(ctx, request.(CreateSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateSubscriptionResponseObject); ok {
+		if err := validResponse.VisitCreateSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteSubscription operation middleware
+func (sh *strictHandler) DeleteSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params DeleteSubscriptionParams) {
+	var request DeleteSubscriptionRequestObject
+
+	request.ListId = listId
+	request.SubscriptionId = subscriptionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteSubscription(ctx, request.(DeleteSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteSubscriptionResponseObject); ok {
+		if err := validResponse.VisitDeleteSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetSubscription operation middleware
+func (sh *strictHandler) GetSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params GetSubscriptionParams) {
+	var request GetSubscriptionRequestObject
+
+	request.ListId = listId
+	request.SubscriptionId = subscriptionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSubscription(ctx, request.(GetSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetSubscriptionResponseObject); ok {
+		if err := validResponse.VisitGetSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateSubscription operation middleware
+func (sh *strictHandler) UpdateSubscription(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params UpdateSubscriptionParams) {
+	var request UpdateSubscriptionRequestObject
+
+	request.ListId = listId
+	request.SubscriptionId = subscriptionId
+	request.Params = params
+
+	var body UpdateSubscriptionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateSubscription(ctx, request.(UpdateSubscriptionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateSubscription")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateSubscriptionResponseObject); ok {
+		if err := validResponse.VisitUpdateSubscriptionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ResendSubscriptionConfirmation operation middleware
+func (sh *strictHandler) ResendSubscriptionConfirmation(w http.ResponseWriter, r *http.Request, listId ListId, subscriptionId SubscriptionId, params ResendSubscriptionConfirmationParams) {
+	var request ResendSubscriptionConfirmationRequestObject
+
+	request.ListId = listId
+	request.SubscriptionId = subscriptionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ResendSubscriptionConfirmation(ctx, request.(ResendSubscriptionConfirmationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ResendSubscriptionConfirmation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ResendSubscriptionConfirmationResponseObject); ok {
+		if err := validResponse.VisitResendSubscriptionConfirmationResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
