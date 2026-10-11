@@ -11,19 +11,11 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 import { Skeleton } from "@/components/ui/skeleton"
 import { useContactDirectory, type DirectoryFilter } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
+import { useDebounced } from "@/hooks/use-debounced"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useResetState } from "@/hooks/use-reset-state"
 import type { Contact } from "@/lib/api"
 import { cn } from "@/lib/utils"
-
-function useDebounced<T>(value: T, ms: number) {
-  const [v, setV] = useState(value)
-  useEffect(() => {
-    const id = setTimeout(() => setV(value), ms)
-    return () => clearTimeout(id)
-  }, [value, ms])
-  return v
-}
 
 function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boolean }) {
   const { t, i18n } = useLingui()
