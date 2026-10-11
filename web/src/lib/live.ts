@@ -52,9 +52,9 @@ function matches(c: Conversation & { pinned_at?: string }, f: ConversationFilter
   if (f.kind?.length && !f.kind.includes(c.kind)) return false
   if (f.category && c.kind !== "feedback") return false
   if (f.channel_kind?.length && !(c.channel_kind && f.channel_kind.includes(c.channel_kind))) return false
-  if (f.site && pageOrigin(c.question?.page_url ?? c.feedback?.page_url) !== f.site) return false
+  if (f.site && pageOrigin(c.page?.page_url ?? c.feedback?.page_url) !== f.site) return false
   if (f.category && c.feedback?.category !== f.category) return false
-  if (f.page && (c.question?.page_url ?? c.feedback?.page_url) !== f.page) return false
+  if (f.page && (c.page?.page_url ?? c.feedback?.page_url) !== f.page) return false
   if (f.inbox_id && c.inbox_id !== f.inbox_id) return false
   if (f.contact_id && c.contact_id !== f.contact_id) return false
   if (f.label_id && !c.labels.includes(f.label_id)) return false
@@ -446,6 +446,13 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
         refreshMentions(qc, ctx.ws)
         refreshDrafts(qc, ctx.ws)
       }
+      return
+    case "discussion.created":
+    case "discussion.post_created":
+    case "discussion.answered":
+    case "discussion.updated":
+      void qc.invalidateQueries({ queryKey: keys.discussions(ctx.ws) })
+      refreshCounts(qc, ctx.ws)
       return
   }
 }

@@ -34,6 +34,10 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "draft.created",
   "draft.updated",
   "draft.deleted",
+  "discussion.created",
+  "discussion.post_created",
+  "discussion.answered",
+  "discussion.updated",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -84,6 +88,10 @@ export function useEnumText() {
       "draft.created": t`A draft was written`,
       "draft.updated": t`A draft was edited`,
       "draft.deleted": t`A draft was discarded`,
+      "discussion.created": t`A discussion started`,
+      "discussion.post_created": t`A reply was written in a discussion`,
+      "discussion.answered": t`A discussion got an accepted answer`,
+      "discussion.updated": t`A discussion changed`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -131,10 +139,12 @@ export function useErrorText() {
       return t`The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first.`
     if (err.code === "email_no_sender")
       return t`The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings.`
-    if (err.code === "not_publishable")
-      return t`This question cannot be published. It needs a reply from a member, and its chat channel must still allow the page's site.`
-    if (err.code === "already_published")
-      return t`This conversation is already published. Edit the published answer instead.`
+    if (err.code === "already_discussed") return t`This conversation is already a discussion.`
+    if (err.code === "no_discussion_channel")
+      return t`No chat channel of this inbox allows the page's site with discussions on. Turn discussions on in the inbox settings.`
+    if (err.code === "discussions_off") return t`Discussions are off on this site's chat channel.`
+    if (err.code === "page_origin") return t`The page is not on a site the chat channel allows.`
+    if (err.code === "origin_not_allowed") return t`This site is not allowed to use this documentation channel.`
     if (err.code === "attachment_type_mismatch")
       return t`A file's content does not match its type. Check the file and try again.`
     switch (err.status) {

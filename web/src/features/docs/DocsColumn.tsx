@@ -1,10 +1,10 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import {
-  BadgeCheckIcon,
   BarChart3Icon,
   GlobeIcon,
-  MessageCircleQuestionMarkIcon,
+  HourglassIcon,
   MessageSquareTextIcon,
+  MessagesSquareIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "lucide-react"
@@ -16,7 +16,7 @@ import { Column, ColumnLink } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { pageLabel } from "@/features/docs/AnswerDialog"
+import { pageLabel } from "@/features/docs/PageContext"
 import {
   docsPageLink,
   SORTS,
@@ -42,8 +42,8 @@ export function DocsGuide() {
     <>
       <p>
         <Trans>
-          Add the page feedback and questions elements to your documentation site, on one of the inbox's chat channels.
-          Ratings, feedback and questions then show up here per page.
+          Add the page feedback and discussions elements to your documentation site, on one of the inbox's chat
+          channels. Ratings, feedback and discussions then show up here per page.
         </Trans>
       </p>
       <a
@@ -119,13 +119,9 @@ function Row({
   const { t, i18n } = useLingui()
   const fmt = new Intl.NumberFormat(i18n.locale)
   const share = helpfulShare(p, i18n.locale)
-  const [up, down, feedback, questions, answers] = [
-    p.up,
-    p.down,
-    p.open_feedback,
-    p.open_questions,
-    p.published_answers,
-  ].map((n) => fmt.format(n))
+  const [up, down, feedback, threads, pending] = [p.up, p.down, p.open_feedback, p.open_threads, p.pending_posts].map(
+    (n) => fmt.format(n)
+  )
   return (
     <li>
       <Link
@@ -166,12 +162,17 @@ function Row({
               className={p.open_feedback ? "text-brand" : undefined}
             />
             <Count
-              n={p.open_questions}
-              icon={MessageCircleQuestionMarkIcon}
-              label={t`${questions} open questions`}
-              className={p.open_questions ? "text-brand" : undefined}
+              n={p.open_threads}
+              icon={MessagesSquareIcon}
+              label={t`${threads} open discussions`}
+              className={p.unanswered_threads ? "text-brand" : undefined}
             />
-            <Count n={p.published_answers} icon={BadgeCheckIcon} label={t`${answers} published answers`} />
+            <Count
+              n={p.pending_posts}
+              icon={HourglassIcon}
+              label={t`${pending} posts waiting for approval`}
+              className={p.pending_posts ? "text-warning" : undefined}
+            />
           </span>
         </span>
         <ShareBar up={p.up} down={p.down} className="mt-0.5" />
@@ -212,7 +213,7 @@ export function DocsSort({ className }: { className?: string }) {
     down: t`Most “not helpful” ratings first`,
     up: t`Most “helpful” ratings first`,
     helpful: t`Highest share of “helpful” first, among pages with at least 5 ratings`,
-    activity: t`Most ratings, open feedback and questions first`,
+    activity: t`Most ratings, open feedback, open discussions and waiting posts first`,
   }
   return (
     <div className={cn("flex flex-wrap gap-1.5", className)} role="toolbar" aria-label={t`Sort`}>

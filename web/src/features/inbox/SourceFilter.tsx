@@ -34,7 +34,7 @@ export function useSourceFilter() {
 
 export function sourceFilters(v: SourceFilterValue): ConversationFilters {
   const f: ConversationFilters = {}
-  if (v.source === "feedback" || v.source === "question") f.kind = [v.source]
+  if (v.source === "feedback") f.kind = [v.source]
   else if (v.source) {
     f.kind = ["conversation"]
     f.channel_kind = [v.source]
@@ -168,7 +168,7 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
               </Choice>
             ))}
             <p className="px-2.5 pt-1 pb-1.5 text-caption text-faint">
-              <Trans>A site shows the feedback and questions sent from its pages.</Trans>
+              <Trans>A site shows the conversations and feedback sent from its pages.</Trans>
             </p>
           </>
         )}

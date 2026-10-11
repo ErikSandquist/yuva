@@ -1,19 +1,12 @@
 import { useLingui } from "@lingui/react/macro"
-import {
-  CodeXmlIcon,
-  MailIcon,
-  MessageCircleIcon,
-  MessageCircleQuestionMarkIcon,
-  MessageSquareMoreIcon,
-  SmartphoneIcon,
-} from "lucide-react"
+import { CodeXmlIcon, MailIcon, MessageCircleIcon, MessageSquareMoreIcon, SmartphoneIcon } from "lucide-react"
 
 import type { Channel, ChannelKind, Conversation } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-export type Source = ChannelKind | "feedback" | "question"
+export type Source = ChannelKind | "feedback"
 
-export const SOURCE_FILTERS: Source[] = ["chat", "email", "app", "feedback", "question"]
+export const SOURCE_FILTERS: Source[] = ["chat", "email", "app", "feedback"]
 
 const icons: Record<Source, React.ComponentType<{ className?: string }>> = {
   chat: MessageCircleIcon,
@@ -21,7 +14,6 @@ const icons: Record<Source, React.ComponentType<{ className?: string }>> = {
   app: SmartphoneIcon,
   api: CodeXmlIcon,
   feedback: MessageSquareMoreIcon,
-  question: MessageCircleQuestionMarkIcon,
 }
 
 export function useSourceText(): Record<Source, string> {
@@ -32,17 +24,16 @@ export function useSourceText(): Record<Source, string> {
     app: t`App`,
     api: t`API`,
     feedback: t`Feedback`,
-    question: t`Question`,
   }
 }
 
 export function sourceOf(c: Conversation, channel?: Channel): Source | undefined {
-  if (c.kind === "feedback" || c.kind === "question") return c.kind
+  if (c.kind === "feedback") return c.kind
   return c.channel_kind ?? channel?.kind
 }
 
 export function pageOf(c: Conversation) {
-  return c.question?.page_url ?? c.feedback?.page_url
+  return c.page?.page_url ?? c.feedback?.page_url
 }
 
 export function originOf(url: string) {

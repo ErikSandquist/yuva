@@ -32,7 +32,6 @@ export const SHORTCUTS = {
   find: "F",
   pin: "p",
   unread: "u",
-  publish: "P",
   docs: "g d",
 } as const
 
@@ -59,7 +58,6 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [[mod, "↵"], t`Send and close`],
         [["⇧", mod, "↵"], t`Send only`],
         [["↵"], t`Send or add the note, in a chat or app conversation (⇧↵ for a new line)`],
-        [[alt, mod, "↵"], t`Send and publish to the page, in a question`],
         [["Tab"], t`Use the suggested reply`],
         [k(SHORTCUTS.discardSuggestion), t`Discard the suggested reply`],
         [k(SHORTCUTS.attach), t`Attach files`],
@@ -83,7 +81,6 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [k(SHORTCUTS.find), t`Search in this conversation`],
         [k(SHORTCUTS.pin), t`Pin to the top of your list, or unpin`],
         [k(SHORTCUTS.unread), t`Mark as unread and go back to the list`],
-        [k(SHORTCUTS.publish), t`Publish a question to its page, or edit the published answer`],
       ],
     },
     {

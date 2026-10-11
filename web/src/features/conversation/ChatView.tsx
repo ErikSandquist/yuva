@@ -38,7 +38,7 @@ import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
 import { ConversationMenu } from "@/features/conversation/ConversationMenu"
 import { CategoryChip } from "@/features/conversation/Feedback"
-import { usePagePublishing } from "@/features/docs/PageContext"
+import { conversationPage, PageLine } from "@/features/docs/PageContext"
 import { CloseButton, HandMenu, LabelsMenu, SnoozeMenu, type HeaderMenu } from "@/features/conversation/HeaderActions"
 import { History } from "@/features/conversation/History"
 import type { ThreadContext } from "@/features/conversation/messages/context"
@@ -235,7 +235,7 @@ function Loaded({
     onQuote: quote,
     onForward: forward,
   }
-  const pagePublishing = usePagePublishing(c, shown, !messages.hasNextPage)
+  const pageLine = !!conversationPage(c)
   const chipLabels = labels.filter((l) => c.labels.includes(l.id))
   const assignee = c.assignee_id ? members.get(c.assignee_id) : undefined
 
@@ -347,7 +347,6 @@ function Loaded({
     [SHORTCUTS.find]: openFind,
     [SHORTCUTS.pin]: togglePin,
     [SHORTCUTS.unread]: markUnread,
-    [SHORTCUTS.publish]: pagePublishing.run,
   })
 
   const sep = <span aria-hidden>·</span>
@@ -506,7 +505,7 @@ function Loaded({
       </header>
       {(chipLabels.length > 0 ||
         (c.kind === "feedback" && c.feedback) ||
-        pagePublishing.line ||
+        pageLine ||
         c.related_conversation_id ||
         viewers.length > 0 ||
         typingMate) && (
@@ -515,9 +514,9 @@ function Loaded({
           data-testid="header-details"
         >
           {c.kind === "feedback" && c.feedback && <CategoryChip category={c.feedback.category} />}
-          {c.kind === "feedback" && c.feedback && pagePublishing.line && sep}
-          {pagePublishing.line}
-          {pagePublishing.line && chipLabels.length > 0 && sep}
+          {c.kind === "feedback" && c.feedback && pageLine && sep}
+          <PageLine c={c} />
+          {pageLine && chipLabels.length > 0 && sep}
           {chipLabels.map((l) => (
             <span
               key={l.id}
@@ -529,7 +528,7 @@ function Loaded({
           ))}
           {c.related_conversation_id && (
             <>
-              {(chipLabels.length > 0 || c.feedback || pagePublishing.line) && sep}
+              {(chipLabels.length > 0 || c.feedback || pageLine) && sep}
               <RelatedLine id={c.related_conversation_id} hrefFor={(id) => `/conversations/${id}`} />
             </>
           )}
@@ -618,7 +617,6 @@ function Loaded({
           </Button>
         </Alert>
       )}
-      {pagePublishing.banner}
       <Thread
         key={c.id}
         items={items}
@@ -658,10 +656,8 @@ function Loaded({
           ctx={ctx}
           actions={actions}
           autoFocus={fine && revision === 0}
-          onPublish={pagePublishing.sendAndPublish}
         />
       </Composer>
-      {pagePublishing.dialogs}
       {!inlinePanel && (
         <ContactSheet contactId={c.contact_id} conversationId={c.id} open={sheet} onOpenChange={setSheet} />
       )}

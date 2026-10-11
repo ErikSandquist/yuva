@@ -75,9 +75,10 @@ export interface paths {
         put?: never;
         /**
          * Request a sign-in code
-         * @description Sends a one-time code to the address when it belongs to a member or has a pending invite.
-         *     The answer is the same either way and takes the same time (the mail is sent after it), so
-         *     it does not reveal whether an address is known. Codes expire after 10 minutes; only the
+         * @description Sends a one-time code to the address when it belongs to a person (a member, a former member
+         *     or a reader) or has a pending invite, or to any address with `reader: true`, whose code
+         *     creates the person on verification. The answer is the same either way and takes the same
+         *     time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
          *     most recent code of an address is accepted.
          */
         post: operations["requestSignInCode"];
@@ -184,9 +185,12 @@ export interface paths {
         post?: never;
         /**
          * Delete the signed-in person's account
-         * @description Removes the person with their memberships, sessions, passkeys, push subscriptions and
-         *     sign-in codes, and clears the cookie. Messages they wrote stay in their conversations
-         *     without an author (`author.member_id` absent). Refused with `409 last_owner` while the
+         * @description Removes the person with their memberships, sessions, passkeys, push subscriptions,
+         *     sign-in codes, reader tokens and reader notifications, and clears the cookie. Messages they
+         *     wrote stay in their conversations without an author (`author.member_id` absent). As a
+         *     reader, their discussion posts stay without an author (`author.deleted`), their votes and
+         *     follows go, and in each workspace the contact linked to them is deleted when it has no
+         *     conversations and no external ids, else only unlinked. Refused with `409 last_owner` while the
          *     person is the only owner of a workspace: make someone else an owner or delete that
          *     workspace first. Needs a member session; the body repeats the person's e-mail address.
          */
@@ -420,6 +424,176 @@ export interface paths {
         get: operations["listMentions"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The signed-in person as a reader
+         * @description The reader account of the signed-in person: the name and initials shown on their posts, their
+         *     sign-in address and their e-mail settings. Every person has one, members included; `member`
+         *     says whether they also belong to a workspace (the account page then links to the team panel).
+         *     Person sessions only.
+         */
+        get: operations["getReaderAccount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Change the reader name or e-mail settings
+         * @description `name` is the person's name (the same as `PATCH /v1/me`), shown on their posts; an empty name
+         *     shows them as "Reader". `email_notifications` turns e-mails about followed threads on or off
+         *     for every workspace; in-app notifications stay.
+         */
+        patch: operations["updateReaderAccount"];
+        trace?: never;
+    };
+    "/v1/account/reader-tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Hand a reader token to a documentation site
+         * @description Called by the server's own `/account/connect?channel=<key>&origin=<origin>` page, which a
+         *     site's `<yuva-discussions>` element opens in a popup. Once the person is signed in, the page
+         *     asks for a token for the chat channel and the origin of the window that opened it, and sends
+         *     the answer to `window.opener` with `postMessage(..., origin)`, so only a page on that origin
+         *     receives it.
+         *
+         *     The origin must be one of the channel's allowed origins, compared exactly
+         *     (`403 origin_not_allowed`), and the channel must have discussions on
+         *     (`403 discussions_off`); an unknown key or an `app` channel's key answers `404`.
+         *
+         *     The token (`yuva_rd_<secret>`) is sent as `Authorization: Bearer` on the `/client/v1`
+         *     discussion endpoints of that channel. It lives 24 hours and ends earlier with the session that
+         *     made it (sign-out), when the account is deleted, or with
+         *     `DELETE /client/v1/reader-token`. In the channel's workspace it acts as the contact linked to
+         *     the person, created on the first write; a person who is a member of that workspace with
+         *     access to the inbox writes as that member.
+         *
+         *     Person sessions only; like every cookie request it must come from the server's own origin.
+         */
+        post: operations["createReaderToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/discussions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Threads the reader started or replied to
+         * @description Across every workspace, the threads the person started or wrote in as a reader, most recent
+         *     activity first. Threads that were hidden, and posts of theirs still waiting for a member,
+         *     are included, so the reader sees where their writing stands. Person sessions only.
+         */
+        get: operations["listReaderDiscussions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/following": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Threads the reader follows
+         * @description Across every workspace, most recent activity first. Person sessions only.
+         */
+        get: operations["listReaderFollowing"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/following/{discussionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Stop following a thread
+         * @description Unknown threads, and threads the person does not follow, answer `404`.
+         */
+        delete: operations["unfollowReaderDiscussion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The reader's notifications
+         * @description New replies and accepted answers in followed threads, across every workspace, newest first.
+         *     `unread` counts the unread ones over all pages. Notifications are kept 90 days.
+         *     Person sessions only.
+         */
+        get: operations["listReaderNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/account/notifications/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark notifications read
+         * @description The listed notifications, or all of them when `ids` is absent. Person sessions only.
+         */
+        post: operations["markReaderNotificationsRead"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1246,7 +1420,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/conversations/{conversationId}/publish": {
+    "/v1/conversations/{conversationId}/discussion": {
         parameters: {
             query?: never;
             header?: never;
@@ -1256,21 +1430,23 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Publish a question and its answer to the page
-         * @description Publishes a `question` conversation to its documentation page as a question and an answer,
-         *     both as the member wrote them here (usually edited from the thread). The published answer
-         *     carries no name or address of the visitor; it is listed on the page by
-         *     `GET /client/v1/channels/{key}/page-answers`. The conversation must be a `question`
-         *     with at least one sent member reply and still be on a `chat` channel that allows the
-         *     page's origin (`409 not_publishable` otherwise); it publishes once
-         *     (`409 already_published`; edit the published answer instead).
+         * Turn a private conversation into a public thread
+         * @description Starts a published thread from a conversation with the text the member supplies: nothing of
+         *     the conversation itself becomes public, and the conversation stays private and unchanged.
+         *     The page is `page_url`, else the conversation's page (`page` on the conversation), else
+         *     `400 validation_failed`; a chat channel of the conversation's inbox must allow the page's
+         *     origin and have discussions on (`409 no_discussion_channel` otherwise; the conversation's own
+         *     channel is preferred).
          *
-         *     A published answer is the member's text: retention and contact deletion leave it, and
-         *     deleting the conversation keeps it without `conversation_id`.
+         *     The conversation's contact becomes the thread's author only when they are a signed-in
+         *     reader (linked to a person) or known to the host app (an external id in the inbox);
+         *     otherwise the calling member is. With `answer`, the member's reply is posted and marked as
+         *     the accepted answer. The author follows the thread. A conversation becomes one thread
+         *     (`409 already_discussed`); `conversation_id` on the thread links back.
          *
          *     Member sessions only.
          */
-        post: operations["publishConversation"];
+        post: operations["createDiscussionFromConversation"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1705,59 +1881,6 @@ export interface paths {
         patch: operations["updateCannedReply"];
         trace?: never;
     };
-    "/v1/page-answers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List published answers
-         * @description Published answers in the inboxes the caller can see, newest first.
-         *
-         *     Scope: `conversations:read`.
-         */
-        get: operations["listPageAnswers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/page-answers/{pageAnswerId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get a published answer
-         * @description An answer in an inbox the caller cannot see answers `404`.
-         *
-         *     Scope: `conversations:read`.
-         */
-        get: operations["getPageAnswer"];
-        put?: never;
-        post?: never;
-        /**
-         * Unpublish an answer
-         * @description Removes it from the page. The conversation it came from stays and can be published again.
-         *     Members who can see the answer's inbox. Member sessions only.
-         */
-        delete: operations["deletePageAnswer"];
-        options?: never;
-        head?: never;
-        /**
-         * Edit a published answer
-         * @description Members who can see the answer's inbox. Member sessions only.
-         */
-        patch: operations["updatePageAnswer"];
-        trace?: never;
-    };
     "/v1/docs/sites": {
         parameters: {
             query?: never;
@@ -1770,9 +1893,9 @@ export interface paths {
          * @description A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
          *     the inboxes the caller can see (or `inbox_id`): every site that has a page
          *     `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
-         *     questions, published answers), and every origin allowed on a chat channel of those inboxes,
+         *     discussion threads), and every origin allowed on a chat channel of those inboxes,
          *     with zeros when nothing came from it yet. The counts are those of
-         *     `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+         *     `GET /v1/docs/pages?site=...` summed: `pages` is how many pages that list has.
          *
          *     `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
          *     (the oldest when several do); absent when none does any more.
@@ -1798,18 +1921,20 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Documentation pages with their ratings, feedback and questions
+         * Documentation pages with their ratings, feedback and discussions
          * @description The pages of the inboxes the caller can see that were rated in the window, have open
-         *     feedback or questions, or have published answers: `up` and `down` summed over the last
-         *     `days` days (today included, UTC), open (status `open`, not spam) feedback and question
-         *     conversations sent from the page, and published answers. A page is per inbox.
+         *     feedback, or have discussion threads: `up` and `down` summed over the last `days` days
+         *     (today included, UTC), open (status `open`, not spam) feedback sent from the page, and the
+         *     page's threads now: `open_threads` (published, no accepted answer, not locked),
+         *     `unanswered_threads` (open threads nobody replied to) and `pending_posts` (posts waiting for
+         *     a member, opening posts included). A page is per inbox.
          *
          *     `sort` orders them; ties go to more ratings, then by page:
          *     - `down` (default): most `down` first.
          *     - `up`: most `up` first.
          *     - `helpful`: highest share of `up` first, among pages with at least 5 ratings in the
          *       window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
-         *     - `activity`: most ratings plus open feedback and questions first.
+         *     - `activity`: most ratings plus open feedback, open threads and pending posts first.
          *
          *     `site` keeps only the pages of that site (origin).
          *
@@ -1837,9 +1962,9 @@ export interface paths {
         /**
          * Documentation pages in total and per day
          * @description Over the inboxes the caller can see (or `inbox_id`) and the last `days` days (today
-         *     included, UTC): ratings, feedback and questions sent from documentation pages (created in
-         *     the window, not spam, in any status) and answers published in the window, in total and
-         *     per day. Every day of the window is listed, oldest first, with zeros where nothing
+         *     included, UTC): ratings and feedback sent from documentation pages (created in the window,
+         *     not spam, in any status) and discussion threads started in the window (any state), in total
+         *     and per day; `pending_posts` is the number of posts waiting for a member now. Every day of the window is listed, oldest first, with zeros where nothing
          *     happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
          *     `site` counts only the pages of that site (origin).
          *
@@ -1864,9 +1989,9 @@ export interface paths {
         /**
          * One documentation page
          * @description A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
-         *     ratings per day over the window. Its feedback and questions are
-         *     `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-         *     answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+         *     ratings per day over the window. Its feedback is
+         *     `GET /v1/conversations?inbox_id=...&page=...&kind=feedback`, its threads
+         *     `GET /v1/discussions?inbox_id=...&page=...`. With `site`, a page on another origin
          *     answers `400 validation_failed`.
          *
          *     Scope: `conversations:read`.
@@ -1875,6 +2000,220 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List discussion threads
+         * @description Threads in the inboxes the caller can see, filtered by inbox, site, page and state. Every
+         *     state is listed unless `state` narrows it, so the panel sees threads waiting for approval
+         *     and hidden ones too.
+         *
+         *     `sort`: `activity` (default, last activity first), `new` (newest first) or `top` (most
+         *     votes first). `answered=false` keeps threads without an accepted answer, `locked` locked or
+         *     unlocked ones, `pending=true` threads with posts waiting for a member (`pending_posts`).
+         *     `next_cursor` belongs to the sort and filters it was returned for.
+         *
+         *     Scope: `conversations:read`.
+         */
+        get: operations["listDiscussions"];
+        put?: never;
+        /**
+         * Start a thread as a member
+         * @description A thread on a documentation page, written by the calling member and published at once. The
+         *     page's origin must be one of the chat channel's allowed origins (`400 page_origin`) and the
+         *     channel must have discussions on (`403 discussions_off`). The member follows it.
+         *     Member sessions only.
+         */
+        post: operations["createDiscussion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A thread with every post
+         * @description The thread and all its replies in every state (pending and hidden included), the accepted
+         *     answer first, then oldest first. A thread in an inbox the caller cannot see answers `404`.
+         *
+         *     Scope: `conversations:read`.
+         */
+        get: operations["getDiscussion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Edit the title, lock or unlock
+         * @description Members edit any thread's title and lock or unlock it. A locked thread takes no replies,
+         *     edits, votes or answers from readers; members still may. Member sessions only.
+         */
+        patch: operations["updateDiscussion"];
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reply as a member
+         * @description A reply to the thread (`parent_post_id` absent) or to one of its replies, published at once,
+         *     also in locked threads. Replies are one level deep: a reply to a reply answers
+         *     `400 validation_failed`. Followers are notified. Member sessions only.
+         */
+        post: operations["createDiscussionPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussions/{discussionId}/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Mark the accepted answer
+         * @description Marks a published reply to the thread itself (not a reply to a reply, not the opening post)
+         *     as its answer, replacing an earlier one (`400 validation_failed` otherwise), also in locked
+         *     threads. Followers are told once (`discussion.answered`). Member sessions only.
+         */
+        put: operations["acceptDiscussionAnswer"];
+        post?: never;
+        /**
+         * Clear the accepted answer
+         * @description Member sessions only.
+         */
+        delete: operations["clearDiscussionAnswer"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussion-posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Posts by state (the moderation queue)
+         * @description Posts in the inboxes the caller can see, oldest first, each with its thread. With
+         *     `state=pending` (the default) this is the moderation queue: opening posts of threads waiting
+         *     for approval (`opening: true`) and replies waiting for approval.
+         *
+         *     Scope: `conversations:read`.
+         */
+        get: operations["listDiscussionPosts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussion-posts/{postId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a member's own post
+         * @description As `DELETE /client/v1/discussion-posts/{postId}`, for a post the calling member wrote
+         *     (`403 forbidden` otherwise; hide other posts instead). Member sessions only.
+         */
+        delete: operations["deleteDiscussionPost"];
+        options?: never;
+        head?: never;
+        /**
+         * Approve, hide, or edit a member's own post
+         * @description `state: published` approves a pending post or shows a hidden one; `state: hidden` hides it
+         *     from the public (its author no longer sees it either). On the opening post this approves or
+         *     hides the whole thread. Approving a reply notifies the thread's followers.
+         *
+         *     `body` (and `title` on the opening post) edits a post the calling member wrote; other
+         *     posts answer `403 forbidden`. Member sessions only.
+         */
+        patch: operations["updateDiscussionPost"];
+        trace?: never;
+    };
+    "/v1/discussion-posts/{postId}/spam": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark a post as spam
+         * @description Hides the post (the thread, for an opening post) and every post of its author in the
+         *     workspace still waiting for approval, and makes the author's later posts wait for a member
+         *     whatever the channel's setting. A member's post answers `400 validation_failed`.
+         *     Member sessions only.
+         */
+        post: operations["markDiscussionPostSpam"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/discussion-posts/{postId}/vote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Vote for a post as a member
+         * @description One vote per member and post (the opening post votes for the thread); voting again changes
+         *     nothing. Member sessions only.
+         */
+        put: operations["voteDiscussionPost"];
+        post?: never;
+        /**
+         * Take a member's vote back
+         * @description Member sessions only.
+         */
+        delete: operations["unvoteDiscussionPost"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2476,7 +2815,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/client/v1/channels/{channel_key}/page-answers": {
+    "/client/v1/channels/{channel_key}/discussions": {
         parameters: {
             query?: never;
             header?: never;
@@ -2484,20 +2823,226 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * A documentation page's published answers
-         * @description The questions and answers members published to a page (`POST /v1/conversations/{id}/publish`)
-         *     in the channel's inbox, newest first, at most 100, without a session. They carry the
-         *     member's edited text only: never the visitor's name or address. The page is matched
-         *     without query and fragment, and its origin must be one of the channel's allowed origins
-         *     (`400 page_origin`). Answers may be cached for a minute (`Cache-Control`).
+         * A documentation page's discussion threads
+         * @description The published threads of a page in the channel's inbox, without a session. The page is
+         *     matched without query and fragment, and its origin must be one of the channel's allowed
+         *     origins (`400 page_origin`). A channel with discussions off answers `403 discussions_off`.
+         *
+         *     `sort`: `new` (default, newest first), `top` (most votes first) or `unanswered` (threads
+         *     without an accepted answer only, those nobody replied to first, then newest).
+         *
+         *     Authors are shown by display name and initials only. Without `Authorization` the answer may
+         *     be cached for a minute (`Cache-Control: public, max-age=60`). With a reader token or a contact
+         *     session of this channel the caller's own threads still waiting for a member are included and
+         *     `mine`, `voted` and `following` are filled in; that answer is not cached (`private, no-store`).
+         *     An unknown or expired token answers `401`.
          *
          *     Browsers must call from one of the channel's allowed origins (`403 origin_not_allowed`).
          *     Rate limited per IP address (`429 rate_limited`). An `app` channel's key answers `404`.
          */
-        get: operations["listClientPageAnswers"];
+        get: operations["listClientDiscussions"];
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/channels/{channel_key}/discussions/{discussionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A thread with its replies
+         * @description A published thread of the channel's inbox on a page the channel serves, with its published
+         *     replies: the accepted answer first, then oldest first; replies to replies carry
+         *     `parent_post_id`. Deleted posts that still have replies stay as `deleted: true` without a
+         *     body. Caching, authentication and errors as for the list; with a token the caller's own
+         *     pending posts (and their own pending thread) are included.
+         */
+        get: operations["getClientDiscussion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/discussions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start a thread
+         * @description Starts a thread on a page of the token's chat channel (`page_url`'s origin must be one of its
+         *     allowed origins, `400 page_origin`). Needs a reader token, or a contact session started with
+         *     an identity token; anonymous visitors get `403 sign_in_required`. A channel with discussions
+         *     off answers `403 discussions_off`.
+         *
+         *     With the channel's `discussions: moderated` (the default) a reader's thread waits for a
+         *     member (`state: pending`, visible only to its author and members) until one of their posts
+         *     in the workspace has been approved; identity-token users and members are published at once.
+         *     `open` publishes everyone at once, except authors whose posts were marked spam. The author
+         *     follows the thread.
+         *
+         *     Rate limited per author and per IP address (`429 rate_limited`).
+         */
+        post: operations["createClientDiscussion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/discussions/{discussionId}/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reply in a thread
+         * @description A reply to the thread (`parent_post_id` absent) or to one of its replies; replies are one
+         *     level deep (`400 validation_failed`). Moderation, authentication and rate limits as for
+         *     starting a thread. A locked thread answers `403 discussion_locked`; a thread the caller cannot
+         *     see (another inbox or channel, hidden, someone else's pending one) answers `404`.
+         *     The author follows the thread; followers are notified once the reply is published.
+         */
+        post: operations["createClientDiscussionPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/discussions/{discussionId}/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Mark the accepted answer
+         * @description The thread's author marks a published reply to the thread itself as its answer, replacing an
+         *     earlier one; anyone else answers `403 forbidden`, a locked thread `403 discussion_locked`.
+         */
+        put: operations["acceptClientDiscussionAnswer"];
+        post?: never;
+        /**
+         * Clear the accepted answer
+         * @description The thread's author only.
+         */
+        delete: operations["clearClientDiscussionAnswer"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/discussions/{discussionId}/follow": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Follow a thread
+         * @description Followers get one e-mail per thread per `YUVA_DISCUSSION_EMAIL_DELAY` for new replies and the
+         *     accepted answer, and readers also see them in their account. Following again changes
+         *     nothing.
+         */
+        put: operations["followClientDiscussion"];
+        post?: never;
+        /** Stop following a thread */
+        delete: operations["unfollowClientDiscussion"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/discussion-posts/{postId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete one's own post
+         * @description The author deletes a post at any time. A post without replies is removed; one with replies
+         *     stays as `deleted: true` without body or author. Deleting the opening post removes the thread
+         *     when nobody else wrote in it, else it stays with the opening post deleted. Removing the
+         *     accepted answer clears it.
+         */
+        delete: operations["deleteClientDiscussionPost"];
+        options?: never;
+        head?: never;
+        /**
+         * Edit one's own post
+         * @description The author edits a post within 30 minutes of writing it (`403 edit_window_closed` after);
+         *     `title` edits the thread's title and is allowed only on the opening post. Someone else's post
+         *     answers `403 forbidden`, a locked thread `403 discussion_locked`.
+         */
+        patch: operations["updateClientDiscussionPost"];
+        trace?: never;
+    };
+    "/client/v1/discussion-posts/{postId}/vote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Vote for a post
+         * @description One vote per author and post; the opening post's votes are the thread's. Voting again changes
+         *     nothing; one's own post answers `403 forbidden`, a locked thread `403 discussion_locked`.
+         */
+        put: operations["voteClientDiscussionPost"];
+        post?: never;
+        /** Take a vote back */
+        delete: operations["unvoteClientDiscussionPost"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/reader-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Sign a site out of the reader account
+         * @description Ends the reader token sent as `Authorization: Bearer`; the account stays signed in on the
+         *     server.
+         */
+        delete: operations["deleteReaderToken"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2682,36 +3227,6 @@ export interface paths {
          *     only with `allow_email`. `page_url` from an `app` channel session answers `400 page_origin`.
          */
         post: operations["createClientFeedback"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/client/v1/questions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Ask a question about a documentation page
-         * @description Starts a conversation of kind `question` on the session's `chat` channel with its first
-         *     message, for the page in `page_url` (without query and fragment; its origin must be one of
-         *     the channel's allowed origins, `400 page_origin`). Questions are private: nothing the
-         *     visitor writes is shown on the page unless a member publishes an edited answer. It is
-         *     answered like any other conversation and listed with the contact's conversations
-         *     (`kind: question`).
-         *
-         *     `email` is the address replies go to while the visitor is away, kept like
-         *     `PUT /client/v1/contact/email`. `client_id` makes the request idempotent: the same
-         *     `client_id` again answers `201` with the first conversation. `app` channel sessions get
-         *     `403 forbidden`. Rate limited per IP address and per channel.
-         */
-        post: operations["createClientQuestion"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3243,6 +3758,86 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "discussion.created": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A discussion thread was started
+         * @description Also when it waits for a member (`state: pending`).
+         */
+        post: operations["webhookDiscussionCreated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "discussion.post_created": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A reply was written in a thread
+         * @description Also when it waits for a member (`state: pending` on `post`).
+         */
+        post: operations["webhookDiscussionPostCreated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "discussion.answered": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * An answer was accepted
+         * @description The accepted reply is in `post`.
+         */
+        post: operations["webhookDiscussionAnswered"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "discussion.updated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A thread or post was moderated or edited
+         * @description Approved, hidden, marked spam, edited, deleted, locked or unlocked, or the answer cleared.
+         */
+        post: operations["webhookDiscussionUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -3260,6 +3855,11 @@ export interface components {
         Email: string;
         SignInCodeRequest: {
             email: components["schemas"]["Email"];
+            /**
+             * @description Sign in as a reader (the account page and its `/account/connect` popup): the code is sent
+             *     to any address, and verifying it creates the person when there is none yet.
+             */
+            reader?: boolean;
         };
         SignInCodeVerify: {
             email: components["schemas"]["Email"];
@@ -3675,7 +4275,7 @@ export interface components {
         PasskeyCeremony: {
             ceremony_id: string;
             /**
-             * @description WebAuthn options in their JSON form (`{"publicKey": …}`), for
+             * @description WebAuthn options in their JSON form (`{"publicKey": ...}`), for
              *     `PublicKeyCredential.parseCreationOptionsFromJSON` or
              *     `parseRequestOptionsFromJSON`.
              */
@@ -3939,7 +4539,7 @@ export interface components {
             /** @description The host app's user id. */
             external_id: string;
         };
-        /** @description Free-form data about the contact (plan, app version, …), at most 16 KiB. */
+        /** @description Free-form data about the contact (plan, app version, ...), at most 16 KiB. */
         Attributes: {
             [key: string]: unknown;
         };
@@ -4074,7 +4674,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -4165,7 +4765,7 @@ export interface components {
             latency_ms: number;
             /** @description The first 1 KiB of the answer. */
             response_body: string;
-            /** @description Why the attempt failed (timeout, refused address, non-2xx status, …). */
+            /** @description Why the attempt failed (timeout, refused address, non-2xx status, ...). */
             error?: string;
         };
         WebhookAttemptList: {
@@ -4319,8 +4919,8 @@ export interface components {
             kind: components["schemas"]["ConversationKind"];
             /** @description `feedback` conversations only: category and what the app sent with it. */
             feedback?: components["schemas"]["Feedback"];
-            /** @description `question` conversations only: the page it was asked on. */
-            question?: components["schemas"]["PageQuestion"];
+            /** @description The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise. */
+            page?: components["schemas"]["SourcePage"];
             /**
              * Format: uuid
              * @description The channel it started on; absent when unknown or removed.
@@ -4483,7 +5083,7 @@ export interface components {
             id: string;
             kind: components["schemas"]["MessageKind"];
             author_type: components["schemas"]["AuthorType"];
-            /** @description The plain-text body on one line, cut to 140 characters with `…` when longer. */
+            /** @description The plain-text body on one line, cut to 140 characters with `...` when longer. */
             text: string;
             /** Format: date-time */
             created_at: string;
@@ -4521,7 +5121,7 @@ export interface components {
         MentionNote: {
             /** Format: uuid */
             id: string;
-            /** @description The plain-text body on one line, cut to 140 characters with `…` when longer. */
+            /** @description The plain-text body on one line, cut to 140 characters with `...` when longer. */
             text: string;
             author: components["schemas"]["MessageAuthor"];
             /** Format: date-time */
@@ -4880,7 +5480,7 @@ export interface components {
             references?: string[];
             /** @description The receiving server's `Authentication-Results` header, as received. */
             authentication_results?: string;
-            /** @description Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, …). */
+            /** @description Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, ...). */
             headers: {
                 [key: string]: string;
             };
@@ -5304,7 +5904,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -5323,7 +5923,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -5358,6 +5958,7 @@ export interface components {
             /** @description Shown before the first message; the inbox branding greeting when empty. */
             greeting: string;
             launcher: components["schemas"]["ChatLauncher"];
+            discussions: components["schemas"]["DiscussionMode"];
         };
         ChatChannelInput: {
             allowed_origins: components["schemas"]["Origin"][];
@@ -5367,6 +5968,8 @@ export interface components {
             ask_email_offline?: boolean;
             greeting?: string;
             launcher?: components["schemas"]["ChatLauncher"];
+            /** @description Defaults to `moderated`; on an update, absent keeps the current setting. */
+            discussions?: components["schemas"]["DiscussionMode"];
         };
         /** @enum {string} */
         AppPlatform: "ios" | "android";
@@ -5392,11 +5995,10 @@ export interface components {
             platforms?: components["schemas"]["AppPlatform"][];
         };
         /**
-         * @description `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-         *     documentation page and carry `question`; everything else is `conversation`.
+         * @description `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
          * @enum {string}
          */
-        ConversationKind: "conversation" | "feedback" | "question";
+        ConversationKind: "conversation" | "feedback";
         /** @enum {string} */
         FeedbackCategory: "bug" | "idea" | "praise" | "other";
         /** @description What a `feedback` conversation was sent with. Absent fields were not sent. */
@@ -5469,82 +6071,6 @@ export interface components {
             /** @description The visitor's earlier rating of this page, which this one replaces. */
             previous?: components["schemas"]["PageRating"];
         };
-        /** @description The documentation page a `question` conversation was asked on. */
-        PageQuestion: {
-            /** @description Without query and fragment. */
-            page_url: string;
-            page_title?: string;
-        };
-        ClientQuestionCreate: {
-            /** @description The page's absolute URL; query and fragment are dropped. */
-            page_url: string;
-            page_title?: string;
-            subject?: string;
-            /** @description The question. */
-            body: string;
-            /** @description The first message's `client_id`. */
-            client_id?: string;
-            email?: components["schemas"]["Email"];
-        };
-        /** @description A published question and answer, as the member wrote them. */
-        ClientPageAnswer: {
-            /** Format: uuid */
-            id: string;
-            question: string;
-            answer: string;
-            /** Format: date-time */
-            published_at: string;
-            /** Format: date-time */
-            updated_at: string;
-        };
-        ClientPageAnswerList: {
-            items: components["schemas"]["ClientPageAnswer"][];
-        };
-        /** @description A question and answer published to a documentation page. */
-        PageAnswer: {
-            /** Format: uuid */
-            id: string;
-            /** Format: uuid */
-            inbox_id: string;
-            /**
-             * Format: uuid
-             * @description The chat channel whose pages show it.
-             */
-            channel_id: string;
-            /** @description The page's URL without query and fragment. */
-            page: string;
-            /** @description The page's title when it was published; may be empty. */
-            title: string;
-            question: string;
-            answer: string;
-            /**
-             * Format: uuid
-             * @description The member who published it; absent once they are removed.
-             */
-            member_id?: string;
-            /**
-             * Format: uuid
-             * @description The question it was published from; absent once that conversation is deleted.
-             */
-            conversation_id?: string;
-            /** Format: date-time */
-            published_at: string;
-            /** Format: date-time */
-            updated_at: string;
-        };
-        PageAnswerCreate: {
-            question: string;
-            answer: string;
-        };
-        PageAnswerUpdate: {
-            question?: string;
-            answer?: string;
-        };
-        PageAnswerPage: {
-            items: components["schemas"]["PageAnswer"][];
-            /** @description Absent on the last page. */
-            next_cursor?: string;
-        };
         DocsPage: {
             /** Format: uuid */
             inbox_id: string;
@@ -5559,9 +6085,11 @@ export interface components {
             /** Format: int64 */
             open_feedback: number;
             /** Format: int64 */
-            open_questions: number;
+            open_threads: number;
             /** Format: int64 */
-            published_answers: number;
+            unanswered_threads: number;
+            /** Format: int64 */
+            pending_posts: number;
         };
         DocsSite: {
             /** @description The site, `scheme://host[:port]`. */
@@ -5584,9 +6112,11 @@ export interface components {
             /** Format: int64 */
             open_feedback: number;
             /** Format: int64 */
-            open_questions: number;
+            open_threads: number;
             /** Format: int64 */
-            published_answers: number;
+            unanswered_threads: number;
+            /** Format: int64 */
+            pending_posts: number;
         };
         DocsSiteList: {
             items: components["schemas"]["DocsSite"][];
@@ -5616,9 +6146,9 @@ export interface components {
             /** Format: int64 */
             feedback: number;
             /** Format: int64 */
-            questions: number;
+            threads: number;
             /** Format: int64 */
-            published_answers: number;
+            pending_posts: number;
         };
         DocsSummaryDay: {
             /** Format: date */
@@ -5630,7 +6160,7 @@ export interface components {
             /** Format: int64 */
             feedback: number;
             /** Format: int64 */
-            questions: number;
+            threads: number;
         };
         DocsPageDay: {
             /** Format: date */
@@ -5644,6 +6174,370 @@ export interface components {
             page: components["schemas"]["DocsPage"];
             /** @description Days of the window with ratings, oldest first (UTC). */
             days: components["schemas"]["DocsPageDay"][];
+        };
+        /** @description The documentation page a conversation was sent from. */
+        SourcePage: {
+            /** @description Without query and fragment. */
+            page_url: string;
+            page_title?: string;
+        };
+        /**
+         * @description Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+         *     reader's posts wait for a member until one of theirs in the workspace was approved;
+         *     identity-token users and members are published at once. `open`: everyone is published at
+         *     once. Authors whose posts were marked spam always wait.
+         * @enum {string}
+         */
+        DiscussionMode: "off" | "moderated" | "open";
+        /**
+         * @description `published`: public. `pending`: waits for a member; only its author and members see it.
+         *     `hidden`: a member hid it; only members see it.
+         * @enum {string}
+         */
+        DiscussionState: "published" | "pending" | "hidden";
+        /**
+         * @default new
+         * @enum {string}
+         */
+        DiscussionSort: "new" | "top" | "unanswered";
+        /**
+         * @default activity
+         * @enum {string}
+         */
+        DiscussionTeamSort: "activity" | "new" | "top";
+        /**
+         * @description `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+         *     `anonymous`: no author to show (threads moved over from published answers).
+         * @enum {string}
+         */
+        DiscussionAuthorKind: "member" | "reader" | "anonymous";
+        /**
+         * @description Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+         *     the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+         *     given on `/v1` only.
+         */
+        DiscussionAuthor: {
+            kind: components["schemas"]["DiscussionAuthorKind"];
+            /** @description Absent when the author has no name (show "Reader") or is deleted. */
+            name?: string;
+            /** @description One or two letters for an avatar; empty when there is no name. */
+            initials: string;
+            deleted: boolean;
+            /** Format: uuid */
+            member_id?: string;
+            /** Format: uuid */
+            contact_id?: string;
+        };
+        /**
+         * @description A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+         *     votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+         *     `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+         *     `voted` and `following` on `/client/v1` only (false without a token).
+         */
+        Discussion: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            /**
+             * Format: uuid
+             * @description The chat channel whose setting applied when it was started.
+             */
+            channel_id?: string;
+            /** @description The page's URL without query and fragment. */
+            page: string;
+            page_title?: string;
+            title: string;
+            /** Format: uuid */
+            opening_post_id: string;
+            /** @description Markdown as written; empty once the opening post was deleted. */
+            body: string;
+            /** @description `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow ugc noopener"`). */
+            body_html: string;
+            author: components["schemas"]["DiscussionAuthor"];
+            state: components["schemas"]["DiscussionState"];
+            /**
+             * Format: uuid
+             * @description The accepted answer; absent while there is none.
+             */
+            answer_post_id?: string;
+            /** Format: date-time */
+            answered_at?: string;
+            locked: boolean;
+            /** Format: int32 */
+            votes: number;
+            /**
+             * Format: int32
+             * @description Published replies, replies to replies included.
+             */
+            reply_count: number;
+            /**
+             * Format: int32
+             * @description Posts waiting for a member, the opening post included.
+             */
+            pending_posts?: number;
+            /** Format: int32 */
+            hidden_posts?: number;
+            /**
+             * Format: uuid
+             * @description The conversation it was started from; absent once that is deleted.
+             */
+            conversation_id?: string;
+            /** @description The opening post was deleted by its author; the replies stay. */
+            deleted?: boolean;
+            /** @description The caller started it. */
+            mine?: boolean;
+            voted?: boolean;
+            following?: boolean;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            edited_at?: string;
+            /** Format: date-time */
+            last_activity_at: string;
+        };
+        /**
+         * @description One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+         *     reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+         */
+        DiscussionPost: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            discussion_id: string;
+            /** Format: uuid */
+            parent_post_id?: string;
+            opening: boolean;
+            /** @description Markdown as written; empty when `deleted`. */
+            body: string;
+            /** @description `body` rendered to sanitized HTML. */
+            body_html: string;
+            author: components["schemas"]["DiscussionAuthor"];
+            state: components["schemas"]["DiscussionState"];
+            /** Format: int32 */
+            votes: number;
+            /** @description It is the thread's accepted answer. */
+            accepted: boolean;
+            deleted: boolean;
+            mine?: boolean;
+            voted?: boolean;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            edited_at?: string;
+        };
+        DiscussionDetail: {
+            discussion: components["schemas"]["Discussion"];
+            /** @description The replies, the accepted answer first, then oldest first; not the opening post. */
+            posts: components["schemas"]["DiscussionPost"][];
+        };
+        DiscussionPage: {
+            items: components["schemas"]["Discussion"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        DiscussionPostItem: {
+            post: components["schemas"]["DiscussionPost"];
+            discussion: components["schemas"]["Discussion"];
+        };
+        DiscussionPostPage: {
+            items: components["schemas"]["DiscussionPostItem"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        DiscussionCreate: {
+            /**
+             * Format: uuid
+             * @description A chat channel that allows the page's origin.
+             */
+            channel_id: string;
+            page_url: string;
+            page_title?: string;
+            title: string;
+            /** @description Markdown. */
+            body: string;
+        };
+        ClientDiscussionCreate: {
+            /** @description The page's absolute URL; query and fragment are dropped. */
+            page_url: string;
+            page_title?: string;
+            title: string;
+            /** @description Markdown. */
+            body: string;
+        };
+        DiscussionUpdate: {
+            title?: string;
+            locked?: boolean;
+        };
+        DiscussionPostCreate: {
+            /** @description Markdown. */
+            body: string;
+            /**
+             * Format: uuid
+             * @description A reply to the thread (not the opening post) to answer; absent for a reply to the thread.
+             */
+            parent_post_id?: string;
+        };
+        DiscussionPostUpdate: {
+            /** @enum {string} */
+            state?: "published" | "hidden";
+            body?: string;
+            /** @description Opening post only. */
+            title?: string;
+        };
+        ClientDiscussionPostUpdate: {
+            body?: string;
+            /** @description Opening post only. */
+            title?: string;
+        };
+        DiscussionAnswer: {
+            /** Format: uuid */
+            post_id: string;
+        };
+        DiscussionFromConversation: {
+            title: string;
+            /** @description The public question, as the member edits it (Markdown). */
+            body: string;
+            /** @description Posted by the member and marked as the accepted answer. */
+            answer?: string;
+            /** @description The page, when the conversation has none or another one is meant. */
+            page_url?: string;
+            page_title?: string;
+        };
+        DiscussionEventData: {
+            discussion: components["schemas"]["Discussion"];
+            /** @description The post the event is about; absent for changes to the thread alone. */
+            post?: components["schemas"]["DiscussionPost"];
+        };
+        /**
+         * @description `discussion.created`: a thread was started (also when it waits for approval: see `state`).
+         *     `discussion.post_created`: a reply was written, with the reply in `post`.
+         *     `discussion.answered`: an answer was accepted, with it in `post`.
+         *     `discussion.updated`: a post or the thread was approved, hidden, marked spam, edited,
+         *     deleted, locked or unlocked, or the answer was cleared; `post` names the post when one
+         *     changed.
+         */
+        DiscussionEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["DiscussionEventData"];
+        };
+        WebhookDiscussionPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["DiscussionEventData"];
+        };
+        ReaderAccount: {
+            /** Format: uuid */
+            person_id: string;
+            email: components["schemas"]["Email"];
+            /** @description Shown on the person's posts; empty until set. */
+            name: string;
+            initials: string;
+            locale: components["schemas"]["Locale"];
+            /** @description E-mails about followed threads; on by default. */
+            email_notifications: boolean;
+            /** @description The person is a member of at least one workspace. */
+            member: boolean;
+        };
+        ReaderAccountUpdate: {
+            name?: string;
+            email_notifications?: boolean;
+        };
+        ReaderTokenCreate: {
+            /** @description The chat channel's public key, from the `channel` query parameter of `/account/connect`. */
+            channel_key: string;
+            /** @description The origin of the page that opened the popup. */
+            origin: components["schemas"]["Origin"];
+        };
+        ReaderToken: {
+            /** @description `yuva_rd_<secret>`, shown once. */
+            token: string;
+            /** Format: date-time */
+            expires_at: string;
+            /** @description The target origin for `postMessage`, as normalized. */
+            origin: components["schemas"]["Origin"];
+            channel_key: string;
+            reader: components["schemas"]["ReaderProfile"];
+        };
+        ReaderProfile: {
+            /** @description Absent when the person has no name yet. */
+            name?: string;
+            initials: string;
+        };
+        /** @description A thread as the reader's account lists it. */
+        ReaderDiscussion: {
+            /** Format: uuid */
+            id: string;
+            workspace_name: string;
+            /** @description The product whose documentation it is on. */
+            inbox_name: string;
+            page: string;
+            page_title?: string;
+            title: string;
+            state: components["schemas"]["DiscussionState"];
+            locked: boolean;
+            answered: boolean;
+            /** Format: int32 */
+            reply_count: number;
+            /** Format: int32 */
+            votes: number;
+            /** @description The reader started it. */
+            started: boolean;
+            following: boolean;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            last_activity_at: string;
+        };
+        ReaderDiscussionPage: {
+            items: components["schemas"]["ReaderDiscussion"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        /**
+         * @description `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+         * @enum {string}
+         */
+        ReaderNotificationKind: "reply" | "answer";
+        ReaderNotification: {
+            /** Format: uuid */
+            id: string;
+            kind: components["schemas"]["ReaderNotificationKind"];
+            /** Format: uuid */
+            discussion_id: string;
+            /** Format: uuid */
+            post_id?: string;
+            /** @description The thread's title. */
+            title: string;
+            page: string;
+            inbox_name: string;
+            author?: components["schemas"]["DiscussionAuthor"];
+            /** @description The start of the post, at most 200 characters of plain text. */
+            excerpt: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            read_at?: string;
+        };
+        ReaderNotificationPage: {
+            items: components["schemas"]["ReaderNotification"][];
+            /** Format: int64 */
+            unread: number;
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        ReaderNotificationsRead: {
+            ids?: string[];
         };
         TypingCreate: {
             /**
@@ -5720,6 +6614,8 @@ export interface components {
             launcher_color?: string;
             ask_email_offline: boolean;
             allow_anonymous: boolean;
+            /** @description `off` on `app` channels. */
+            discussions: components["schemas"]["DiscussionMode"];
         };
         /**
          * @description The inbox's public settings. `live` inboxes carry `presence`; `async` inboxes never do and
@@ -5791,7 +6687,7 @@ export interface components {
             /** Format: uuid */
             id: string;
             author_type: components["schemas"]["AuthorType"];
-            /** @description The plain-text body on one line, cut to 140 characters with `…` when longer. */
+            /** @description The plain-text body on one line, cut to 140 characters with `...` when longer. */
             text: string;
             /** Format: date-time */
             created_at: string;
@@ -5802,8 +6698,6 @@ export interface components {
             kind: components["schemas"]["ConversationKind"];
             /** @description `feedback` conversations only. */
             feedback?: components["schemas"]["Feedback"];
-            /** @description `question` conversations only. */
-            question?: components["schemas"]["PageQuestion"];
             subject: string;
             status: components["schemas"]["ConversationStatus"];
             last_message?: components["schemas"]["ClientMessagePreview"];
@@ -6286,9 +7180,10 @@ export interface components {
         MessageId: string;
         LabelId: string;
         CannedReplyId: string;
-        PageAnswerId: string;
         /** @description The chat channel's public key. */
         ChannelKey: string;
+        DiscussionId: string;
+        DiscussionPostId: string;
         /**
          * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
          *     Without it, every site.
@@ -6902,6 +7797,210 @@ export interface operations {
             400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+        };
+    };
+    getReaderAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The account. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderAccount"];
+                };
+            };
+            401: components["responses"]["Problem"];
+        };
+    };
+    updateReaderAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReaderAccountUpdate"];
+            };
+        };
+        responses: {
+            /** @description The account. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderAccount"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+        };
+    };
+    createReaderToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReaderTokenCreate"];
+            };
+        };
+        responses: {
+            /** @description The token, the origin to post it to and who it signs in. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderToken"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listReaderDiscussions: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of threads. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderDiscussionPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+        };
+    };
+    listReaderFollowing: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of threads. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderDiscussionPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+        };
+    };
+    unfollowReaderDiscussion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No longer followed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listReaderNotifications: {
+        parameters: {
+            query?: {
+                /** @description `true` lists only unread notifications. */
+                unread?: boolean;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of notifications. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReaderNotificationPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+        };
+    };
+    markReaderNotificationsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReaderNotificationsRead"];
+            };
+        };
+        responses: {
+            /** @description Marked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
         };
     };
     getWorkspace: {
@@ -8164,8 +9263,8 @@ export interface operations {
                 spam?: boolean;
                 /**
                  * @description Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
-                 *     parameter (`kind=feedback&kind=question`) or give a comma-separated list
-                 *     (`kind=feedback,question`).
+                 *     parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+                 *     (`kind=feedback,conversation`).
                  */
                 kind?: components["schemas"]["ConversationKind"][];
                 /**
@@ -8175,9 +9274,8 @@ export interface operations {
                  */
                 channel_kind?: components["schemas"]["ChannelKind"][];
                 /**
-                 * @description Only feedback and questions sent from a page of this site: an origin,
-                 *     `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
-                 *     `question.page_url`.
+                 * @description Only conversations sent from a page of this site: an origin, `scheme://host[:port]`,
+                 *     matched against the origin of `page.page_url`.
                  */
                 site?: string;
                 /**
@@ -8186,8 +9284,8 @@ export interface operations {
                  */
                 category?: components["schemas"]["FeedbackCategory"];
                 /**
-                 * @description Only feedback and questions sent from this documentation page (a URL; query and
-                 *     fragment are ignored).
+                 * @description Only conversations sent from this documentation page (a URL; query and fragment are
+                 *     ignored).
                  */
                 page?: string;
                 /**
@@ -8447,7 +9545,7 @@ export interface operations {
             409: components["responses"]["Problem"];
         };
     };
-    publishConversation: {
+    createDiscussionFromConversation: {
         parameters: {
             query?: never;
             header?: {
@@ -8463,17 +9561,17 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["PageAnswerCreate"];
+                "application/json": components["schemas"]["DiscussionFromConversation"];
             };
         };
         responses: {
-            /** @description The published answer. */
+            /** @description The thread and its posts. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageAnswer"];
+                    "application/json": components["schemas"]["DiscussionDetail"];
                 };
             };
             400: components["responses"]["Problem"];
@@ -9179,130 +10277,6 @@ export interface operations {
             409: components["responses"]["Problem"];
         };
     };
-    listPageAnswers: {
-        parameters: {
-            query?: {
-                inbox_id?: string;
-                /** @description Only this page's answers (a URL; query and fragment are ignored). */
-                page?: string;
-                /** @description Only the answer published from this conversation. */
-                conversation_id?: string;
-                /** @description The `next_cursor` of the previous page. */
-                cursor?: components["parameters"]["Cursor"];
-                /** @description Page size, 1 to 100; 25 by default. */
-                limit?: components["parameters"]["Limit"];
-            };
-            header?: {
-                /** @description The workspace to act on; see "Workspace selection". */
-                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description A page of published answers. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PageAnswerPage"];
-                };
-            };
-            400: components["responses"]["Problem"];
-            401: components["responses"]["Problem"];
-            403: components["responses"]["Problem"];
-            404: components["responses"]["Problem"];
-        };
-    };
-    getPageAnswer: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @description The workspace to act on; see "Workspace selection". */
-                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
-            };
-            path: {
-                pageAnswerId: components["parameters"]["PageAnswerId"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description The published answer. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PageAnswer"];
-                };
-            };
-            401: components["responses"]["Problem"];
-            403: components["responses"]["Problem"];
-            404: components["responses"]["Problem"];
-        };
-    };
-    deletePageAnswer: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @description The workspace to act on; see "Workspace selection". */
-                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
-            };
-            path: {
-                pageAnswerId: components["parameters"]["PageAnswerId"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Unpublished. */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            401: components["responses"]["Problem"];
-            403: components["responses"]["Problem"];
-            404: components["responses"]["Problem"];
-        };
-    };
-    updatePageAnswer: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @description The workspace to act on; see "Workspace selection". */
-                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
-            };
-            path: {
-                pageAnswerId: components["parameters"]["PageAnswerId"];
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PageAnswerUpdate"];
-            };
-        };
-        responses: {
-            /** @description The edited answer. */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PageAnswer"];
-                };
-            };
-            400: components["responses"]["Problem"];
-            401: components["responses"]["Problem"];
-            403: components["responses"]["Problem"];
-            404: components["responses"]["Problem"];
-        };
-    };
     listDocsSites: {
         parameters: {
             query?: {
@@ -9444,6 +10418,427 @@ export interface operations {
                 };
             };
             400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listDiscussions: {
+        parameters: {
+            query?: {
+                inbox_id?: string;
+                /**
+                 * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+                 *     Without it, every site.
+                 */
+                site?: components["parameters"]["DocsSiteFilter"];
+                /** @description Only this page's threads (a URL; query and fragment are ignored). */
+                page?: string;
+                state?: components["schemas"]["DiscussionState"];
+                answered?: boolean;
+                locked?: boolean;
+                /** @description `true`: only threads with posts waiting for a member. */
+                pending?: boolean;
+                sort?: components["schemas"]["DiscussionTeamSort"];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of threads. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createDiscussion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionCreate"];
+            };
+        };
+        responses: {
+            /** @description The thread. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getDiscussion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionDetail"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateDiscussion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionUpdate"];
+            };
+        };
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionPostCreate"];
+            };
+        };
+        responses: {
+            /** @description The reply. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    acceptDiscussionAnswer: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionAnswer"];
+            };
+        };
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    clearDiscussionAnswer: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listDiscussionPosts: {
+        parameters: {
+            query?: {
+                state?: components["schemas"]["DiscussionState"];
+                inbox_id?: string;
+                /**
+                 * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+                 *     Without it, every site.
+                 */
+                site?: components["parameters"]["DocsSiteFilter"];
+                /** @description Only this page's posts (a URL; query and fragment are ignored). */
+                page?: string;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of posts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPostPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionPostUpdate"];
+            };
+        };
+        responses: {
+            /** @description The post. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    markDiscussionPostSpam: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The hidden post. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    voteDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The post with its vote count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    unvoteDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The post with its vote count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
@@ -10169,11 +11564,16 @@ export interface operations {
             429: components["responses"]["Problem"];
         };
     };
-    listClientPageAnswers: {
+    listClientDiscussions: {
         parameters: {
             query: {
                 /** @description The page's URL. */
                 page: string;
+                sort?: components["schemas"]["DiscussionSort"];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
             };
             header?: never;
             path: {
@@ -10184,21 +11584,341 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description The page's published answers. */
+            /** @description A page of threads. */
             200: {
                 headers: {
-                    /** @description `public, max-age=60`. */
+                    /** @description `public, max-age=60` without a token, else `private, no-store`. */
                     "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ClientPageAnswerList"];
+                    "application/json": components["schemas"]["DiscussionPage"];
                 };
             };
             400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
+        };
+    };
+    getClientDiscussion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The chat channel's public key. */
+                channel_key: components["parameters"]["ChannelKey"];
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    /** @description `public, max-age=60` without a token, else `private, no-store`. */
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionDetail"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    createClientDiscussion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientDiscussionCreate"];
+            };
+        };
+        responses: {
+            /** @description The thread. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    createClientDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionPostCreate"];
+            };
+        };
+        responses: {
+            /** @description The reply. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    acceptClientDiscussionAnswer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscussionAnswer"];
+            };
+        };
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    clearClientDiscussionAnswer: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The thread. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Discussion"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    followClientDiscussion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Followed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    unfollowClientDiscussion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                discussionId: components["parameters"]["DiscussionId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No longer followed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteClientDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateClientDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClientDiscussionPostUpdate"];
+            };
+        };
+        responses: {
+            /** @description The post. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    voteClientDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The post with its vote count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    unvoteClientDiscussionPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                postId: components["parameters"]["DiscussionPostId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The post with its vote count. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscussionPost"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteReaderToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Ended. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
         };
     };
     listClientConversations: {
@@ -10493,37 +12213,6 @@ export interface operations {
             403: components["responses"]["Problem"];
             413: components["responses"]["Problem"];
             415: components["responses"]["Problem"];
-            429: components["responses"]["Problem"];
-        };
-    };
-    createClientQuestion: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @description Makes a retried request return the first response; see "Idempotency". */
-                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClientQuestionCreate"];
-            };
-        };
-        responses: {
-            /** @description The question conversation and its first message. */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ClientConversationCreated"];
-                };
-            };
-            400: components["responses"]["Problem"];
-            401: components["responses"]["Problem"];
-            403: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
         };
     };
@@ -11213,6 +12902,138 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookMessagePayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookDiscussionCreated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookDiscussionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookDiscussionPostCreated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookDiscussionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookDiscussionAnswered: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookDiscussionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookDiscussionUpdated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookDiscussionPayload"];
             };
         };
         responses: {

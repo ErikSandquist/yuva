@@ -9,18 +9,10 @@ import { Button } from "@/components/ui/button"
 import type { ChartConfig } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CategoryChip } from "@/features/conversation/Feedback"
-import { AnswerCard, pageLabel, useAnswerActions } from "@/features/docs/AnswerDialog"
 import { DailyChart, zeroFill } from "@/features/docs/DailyChart"
 import { DocsGuide, DocsSitePicker, DocsWindow, helpfulShare, usePickedSite } from "@/features/docs/DocsColumn"
-import { PageRatingMark } from "@/features/docs/PageContext"
-import {
-  useDocsDays,
-  useDocsPage,
-  useDocsPages,
-  useDocsSort,
-  useDocsSummary,
-  usePageAnswers,
-} from "@/features/docs/queries"
+import { pageLabel, PageRatingMark } from "@/features/docs/PageContext"
+import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary } from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useConversations } from "@/features/inbox/queries"
 import { Card, EmptyRow, Section } from "@/features/settings/ui"
@@ -39,7 +31,7 @@ export function DocsHome() {
     return (
       <PaneEmpty
         icon={BookOpenTextIcon}
-        title={<Trans>Feedback and questions from your documentation</Trans>}
+        title={<Trans>Feedback and discussions from your documentation</Trans>}
         testId="docs-home"
       >
         <DocsGuide />
@@ -71,7 +63,7 @@ export function DocsOverview() {
   const ratings = useRatingConfig()
   const conversations: ChartConfig = {
     feedback: { label: t`Feedback`, theme: { light: "#c2410c", dark: "#ea580c" } },
-    questions: { label: t`Questions`, theme: { light: "#0891b2", dark: "#0891b2" } },
+    threads: { label: t`Discussions`, theme: { light: "#0891b2", dark: "#0891b2" } },
   }
   const fmt = new Intl.NumberFormat(i18n.locale)
   const s = summary.data
@@ -109,8 +101,12 @@ export function DocsOverview() {
               [fmt.format(s.totals.down), t`not helpful`, "text-destructive"],
               [helpfulShare(s.totals, i18n.locale), t`helpful share`],
               [fmt.format(s.totals.feedback), t`feedback`],
-              [fmt.format(s.totals.questions), t`questions`],
-              [fmt.format(s.totals.published_answers), t`answers published`],
+              [fmt.format(s.totals.threads), t`new discussions`],
+              [
+                fmt.format(s.totals.pending_posts),
+                t`waiting for approval`,
+                s.totals.pending_posts ? "text-warning" : undefined,
+              ],
             ]}
           />
           <Section title={<Trans>Ratings per day</Trans>}>
@@ -118,10 +114,10 @@ export function DocsOverview() {
               <DailyChart rows={s.days} config={ratings} stacked testId="docs-summary-ratings" />
             </Card>
           </Section>
-          <Section title={<Trans>Feedback and questions per day</Trans>}>
+          <Section title={<Trans>Feedback and discussions per day</Trans>}>
             <Card>
               <DailyChart
-                rows={s.days.map(({ day, feedback, questions }) => ({ day, feedback, questions }))}
+                rows={s.days.map(({ day, feedback, threads }) => ({ day, feedback, threads }))}
                 config={conversations}
                 className="h-36"
                 testId="docs-summary-conversations"
@@ -202,7 +198,7 @@ function Conversations({
 }: {
   inboxId: string
   page: string
-  kind: "feedback" | "question"
+  kind: "feedback" | "conversation"
   empty: React.ReactNode
   title: React.ReactNode
 }) {
@@ -241,68 +237,6 @@ function Conversations({
   )
 }
 
-function Answers({ inboxId, page }: { inboxId: string; page: string }) {
-  const answers = usePageAnswers({ inbox_id: inboxId, page })
-  const actions = useAnswerActions()
-  const items = answers.data?.pages.flatMap((p) => p.items) ?? []
-  return (
-    <Section
-      title={<Trans>Published answers</Trans>}
-      description={
-        <Trans>Shown on the page by the questions element, newest first, without the visitor's name or address.</Trans>
-      }
-    >
-      <Card flush data-testid="docs-answers">
-        {answers.isPending ? (
-          <Skeleton className="m-4 h-16" />
-        ) : answers.error ? (
-          <ErrorLine error={answers.error} className="p-4" />
-        ) : items.length === 0 ? (
-          <EmptyRow>
-            <Trans>Nothing published yet. Open a question you answered and publish it to the page.</Trans>
-          </EmptyRow>
-        ) : (
-          <div className="divide-y">
-            {items.map((a) => (
-              <AnswerCard
-                key={a.id}
-                a={a}
-                onEdit={() => actions.edit(a)}
-                onUnpublish={() => actions.unpublish(a)}
-                footer={
-                  a.conversation_id && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      render={<Link to={`/conversations/${a.conversation_id}`} />}
-                      data-testid="answer-conversation"
-                    >
-                      <Trans>Conversation</Trans>
-                    </Button>
-                  )
-                }
-              />
-            ))}
-          </div>
-        )}
-        {answers.hasNextPage && (
-          <div className="flex justify-center border-t p-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => void answers.fetchNextPage()}
-              disabled={answers.isFetchingNextPage}
-            >
-              <Trans>Load more</Trans>
-            </Button>
-          </div>
-        )}
-      </Card>
-      {actions.dialogs}
-    </Section>
-  )
-}
-
 export function DocsPagePane() {
   const { t, i18n } = useLingui()
   const [params] = useSearchParams()
@@ -320,8 +254,8 @@ export function DocsPagePane() {
         [fmt.format(d.down), t`not helpful`, "text-destructive"],
         [helpfulShare(d, i18n.locale), t`helpful share`],
         [fmt.format(d.open_feedback), t`open feedback`],
-        [fmt.format(d.open_questions), t`open questions`],
-        [fmt.format(d.published_answers), t`published answers`],
+        [fmt.format(d.open_threads), t`open discussions`],
+        [fmt.format(d.pending_posts), t`waiting for approval`, d.pending_posts ? "text-warning" : undefined],
       ]
     : []
   return (
@@ -361,9 +295,9 @@ export function DocsPagePane() {
           <Conversations
             inboxId={inboxId}
             page={page}
-            kind="question"
-            title={<Trans>Questions</Trans>}
-            empty={<Trans>No questions from this page.</Trans>}
+            kind="conversation"
+            title={<Trans>Conversations</Trans>}
+            empty={<Trans>No conversations from this page.</Trans>}
           />
           <Conversations
             inboxId={inboxId}
@@ -372,7 +306,6 @@ export function DocsPagePane() {
             title={<Trans>Feedback</Trans>}
             empty={<Trans>No feedback from this page.</Trans>}
           />
-          <Answers inboxId={inboxId} page={page} />
         </>
       )}
     </Pane>
