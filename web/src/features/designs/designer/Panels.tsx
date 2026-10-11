@@ -37,7 +37,7 @@ function PaletteItem({ type, onAdd }: { type: BlockType; onAdd: (type: BlockType
       data-testid={`palette-${type}`}
     >
       <BlockIcon type={type} className="size-5" />
-      <span className="max-w-full truncate">{names[type]}</span>
+      <span className="max-w-full text-center leading-tight text-balance break-words">{names[type]}</span>
     </button>
   )
 }
