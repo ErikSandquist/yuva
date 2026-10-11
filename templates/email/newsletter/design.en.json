@@ -1,0 +1,382 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#eef2f7",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#1d4ed8",
+      "link": "#1d4ed8",
+      "border": "#e2e8f0"
+    }
+  },
+  "preheader": "Smoother routes, cleaner data and a new harbour office: the October letter.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Illustration of a calm harbour at sunrise with layered blue waves",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "issue",
+      "type": "text",
+      "html": "<p><strong>NORTHWIND NEWS · OCTOBER 2026</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Smoother routes, cleaner data and a new harbour office",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Hi {{ contact.first_name | \"there\" }},</p><p>October was busy at Northwind. Here are the three things we are proudest of this month, in about three minutes of reading.</p>",
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "rule0",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card1",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card1-img",
+              "type": "image",
+              "asset": "article-routes.jpg",
+              "alt": "Abstract blue shapes standing for planned delivery routes",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card1-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Routes that plan themselves",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card1-text",
+              "type": "text",
+              "html": "<p>The new planner groups nearby stops and saves drivers an average of 40 minutes a day.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card1-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/1\">Read more →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card2",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card2-img",
+              "type": "image",
+              "asset": "article-data.jpg",
+              "alt": "Abstract indigo shapes standing for tidy records",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card2-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Cleaner customer data",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card2-text",
+              "type": "text",
+              "html": "<p>Duplicate addresses are now merged for you, so every parcel goes to the right door.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card2-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/2\">Read more →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule2",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "card3",
+      "type": "columns",
+      "gap": 24,
+      "padding": [
+        16,
+        32,
+        16,
+        32
+      ],
+      "columns": [
+        {
+          "width": 38,
+          "blocks": [
+            {
+              "id": "card3-img",
+              "type": "image",
+              "asset": "article-office.jpg",
+              "alt": "Abstract golden shapes standing for a new office",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 62,
+          "blocks": [
+            {
+              "id": "card3-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Say hello in the harbour",
+              "padding": [
+                4,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card3-text",
+              "type": "text",
+              "html": "<p>Our new office by the old harbour opens its doors on 6 November. Coffee is on us.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                6,
+                0
+              ]
+            },
+            {
+              "id": "card3-more",
+              "type": "text",
+              "html": "<p><strong><a href=\"https://example.com/news/3\">Read more →</a></strong></p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule",
+      "type": "divider",
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "signoff",
+      "type": "text",
+      "html": "<p>Thanks for reading. Reply to this e-mail if you have a question or an idea; it goes straight to our team.</p>",
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "social",
+      "type": "social",
+      "style": "icons",
+      "color": "dark",
+      "items": [
+        {
+          "network": "website",
+          "url": "https://example.com"
+        },
+        {
+          "network": "mastodon",
+          "url": "https://mastodon.example/@northwind"
+        },
+        {
+          "network": "linkedin",
+          "url": "https://example.com/linkedin"
+        },
+        {
+          "network": "youtube",
+          "url": "https://example.com/youtube"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>You are reading Northwind News, our monthly letter about routes, releases and the people behind them.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

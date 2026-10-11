@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 10,
+    "colors": {
+      "page": "#f1f3f5",
+      "card": "#ffffff",
+      "text": "#18181b",
+      "muted": "#52525b",
+      "accent": "#0369a1",
+      "link": "#0369a1",
+      "border": "#e4e4e7"
+    }
+  },
+  "preheader": "Five things worth knowing from this week, in two minutes.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "date",
+      "type": "text",
+      "html": "<p><strong>WEEKLY DIGEST · 12 OCTOBER 2026</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "This week at Northwind",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>The short version of a long week. Each headline links to the full story.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "rule0",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec0",
+      "type": "heading",
+      "level": 3,
+      "text": "Product",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec0-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/0-0\">Depot reports now arrive on Monday mornings</a></strong><br>One page per depot, waiting in your inbox before the first van leaves.</p><p><strong><a href=\"https://example.com/digest/0-1\">Bulk edit for delivery windows</a></strong><br>Change the window for a whole street in one go.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec1",
+      "type": "heading",
+      "level": 3,
+      "text": "Community",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec1-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/1-0\">Routing meetup in Rotterdam</a></strong><br>Forty dispatchers compared notes on narrow streets and loading bays.</p><p><strong><a href=\"https://example.com/digest/1-1\">Customer story: a bakery that never misses breakfast</a></strong><br>How a family bakery delivers 600 orders before 7:00.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule2",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec2",
+      "type": "heading",
+      "level": 3,
+      "text": "Reading list",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec2-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/2-0\">Why the last mile is the hardest</a></strong><br>A clear essay on where delivery costs really come from.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule-end",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "text",
+      "html": "<p>Was this digest useful? Reply with one word, yes or no; we read every answer.</p>",
+      "size": 14,
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>You get this digest every Monday because you subscribed to the Northwind weekly.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

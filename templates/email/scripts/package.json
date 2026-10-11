@@ -1,0 +1,13 @@
+{
+  "name": "yuva-email-template-previews",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "previews": "bun previews.ts"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "sharp": "0.35.4"
+  }
+}

@@ -9,6 +9,7 @@ in your own apps carry no copyleft obligations.
 | `sdk/` (web widget, shadcn registry, Swift, Kotlin, Go helpers) | [MIT](sdk/LICENSE) | These ship inside your own websites and apps, including App Store and Play builds. |
 | `openapi/` | [MIT](openapi/LICENSE) | Anyone may generate clients from the API contract. |
 | `examples/` | [MIT](examples/LICENSE) | Copy the examples into your own code freely. |
+| `templates/email/` (and its copy in `api/internal/gallery/data/`) | [MIT](templates/email/LICENSE) | Starter e-mail designs: use, change and share them in your own mails. |
 
 A `LICENSE` file inside a directory overrides the root license for that directory.
 
@@ -29,5 +30,5 @@ The AGPL and MIT licenses cover the code, not the Yuva name or logo. See [TRADEM
 ## Third-party code
 
 Dependencies keep their own licenses. A dependency must be compatible with AGPL-3.0 (for the
-server and panel) or MIT (for `sdk/` and `openapi/`). Code copied from another project (fixtures,
+server and panel) or MIT (for `sdk/`, `openapi/` and `templates/email/`). Code copied from another project (fixtures,
 test corpora, snippets) keeps its notice and is listed in `THIRD_PARTY_NOTICES.md` next to it.

@@ -1,0 +1,17 @@
+{
+  "slug": "event",
+  "order": 5,
+  "category": "event",
+  "name": {
+    "en": "Event",
+    "tr": "Etkinlik",
+    "de": "Veranstaltung"
+  },
+  "description": {
+    "en": "A webinar or meetup with date and place, agenda, speaker and a sign-up button.",
+    "tr": "Tarih ve yer, program, konuşmacı ve kayıt düğmesiyle bir webinar ya da buluşma.",
+    "de": "Ein Webinar oder Treffen mit Datum und Ort, Ablauf, Sprecherin und Anmelde-Button."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}

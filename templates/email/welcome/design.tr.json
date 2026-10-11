@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#fbf3ea",
+      "card": "#ffffff",
+      "text": "#1c1917",
+      "muted": "#57534e",
+      "accent": "#c2410c",
+      "link": "#c2410c",
+      "border": "#f0e2d3"
+    }
+  },
+  "preheader": "İlk teslimatınıza üç kısa adım ve bu e-postanın öbür ucunda bir insan.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Turuncu tepelerin üzerinde sıcak bir gün doğumu çizimi",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "{{ contact.first_name | \"Merhaba\" }}, Northwind'e hoş geldiniz",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Aramıza katıldığınız için teşekkürler. Northwind rotalarınızı planlar, müşterilerinizi bilgilendirir ve ilgilenmeniz gereken bir şey olduğunda size haber verir; gününüz zamanında akar.</p>",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "steps",
+      "type": "heading",
+      "level": 2,
+      "text": "Üç adımda başlayın",
+      "padding": [
+        16,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "s1",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s1-n",
+              "type": "heading",
+              "level": 2,
+              "text": "1",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s1-title",
+              "type": "heading",
+              "level": 3,
+              "text": "İlk deponuzu ekleyin",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s1-text",
+              "type": "text",
+              "html": "<p>Araçlarınızın güne nerede başlayıp nerede bitirdiğini söyleyin.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s2-n",
+              "type": "heading",
+              "level": 2,
+              "text": "2",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s2-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Duraklarınızı aktarın",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s2-text",
+              "type": "text",
+              "html": "<p>Bir tablo yükleyin ya da mağazanızı bağlayın; adresleri biz düzenleriz.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s3-n",
+              "type": "heading",
+              "level": 2,
+              "text": "3",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s3-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Yarının rotalarını gönderin",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s3-text",
+              "type": "text",
+              "html": "<p>Sürücüler rotaları telefonlarında görür, müşteriler teslimat saat aralığını alır.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start",
+      "type": "button",
+      "label": "Başlayın",
+      "url": "https://example.com/start",
+      "padding": [
+        24,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "reply",
+      "type": "section",
+      "background": "#fbf1e6",
+      "border_radius": 0,
+      "padding": [
+        16,
+        0,
+        16,
+        0
+      ],
+      "blocks": [
+        {
+          "id": "reply-text",
+          "type": "text",
+          "html": "<p><strong>Bu e-postayı yanıtlamanız yeterli.</strong> Her yanıtı bir insan okur ve genellikle aynı gün size döner.</p>",
+          "size": 15,
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Bir Northwind hesabı oluşturduğunuz için bu karşılama e-postasını aldınız.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

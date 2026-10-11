@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 10,
+    "colors": {
+      "page": "#f1f3f5",
+      "card": "#ffffff",
+      "text": "#18181b",
+      "muted": "#52525b",
+      "accent": "#0369a1",
+      "link": "#0369a1",
+      "border": "#e4e4e7"
+    }
+  },
+  "preheader": "Fünf Dinge aus dieser Woche, die sich lohnen, in zwei Minuten.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "date",
+      "type": "text",
+      "html": "<p><strong>WOCHENÜBERSICHT · 12. OKTOBER 2026</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Diese Woche bei Northwind",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Die kurze Fassung einer langen Woche. Jede Überschrift führt zum ganzen Beitrag.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "rule0",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec0",
+      "type": "heading",
+      "level": 3,
+      "text": "Produkt",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec0-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/0-0\">Depotberichte kommen jetzt montags früh</a></strong><br>Eine Seite pro Depot, im Posteingang, bevor das erste Fahrzeug losfährt.</p><p><strong><a href=\"https://example.com/digest/0-1\">Lieferfenster in einem Rutsch bearbeiten</a></strong><br>Ändern Sie das Fenster für eine ganze Straße auf einmal.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec1",
+      "type": "heading",
+      "level": 3,
+      "text": "Community",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec1-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/1-0\">Routen-Treffen in Rotterdam</a></strong><br>Vierzig Disponentinnen und Disponenten tauschten sich über enge Straßen und Ladezonen aus.</p><p><strong><a href=\"https://example.com/digest/1-1\">Kundengeschichte: eine Bäckerei, die nie das Frühstück verpasst</a></strong><br>Wie eine Familienbäckerei 600 Bestellungen vor 7:00 Uhr ausliefert.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule2",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "sec2",
+      "type": "heading",
+      "level": 3,
+      "text": "Leseliste",
+      "color": "#0369a1",
+      "padding": [
+        8,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "sec2-items",
+      "type": "text",
+      "html": "<p><strong><a href=\"https://example.com/digest/2-0\">Warum die letzte Meile die schwerste ist</a></strong><br>Ein klarer Essay darüber, woher Lieferkosten wirklich kommen.</p>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "rule-end",
+      "type": "divider",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "outro",
+      "type": "text",
+      "html": "<p>War diese Übersicht hilfreich? Antworten Sie mit einem Wort, ja oder nein; wir lesen jede Antwort.</p>",
+      "size": 14,
+      "padding": [
+        8,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Sie erhalten diese Übersicht jeden Montag, weil Sie den Northwind-Wochenbrief abonniert haben.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

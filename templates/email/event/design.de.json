@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#f8f0f4",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#be185d",
+      "link": "#be185d",
+      "border": "#f0dbe5"
+    }
+  },
+  "preheader": "Donnerstag, 19. November, 16:00 Uhr MEZ, online: 45 Minuten über entspanntere Releases, dann Ihre Fragen.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Abstrakte rosa und pflaumenfarbene Formen wie Bühnenlicht",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "kind",
+      "type": "text",
+      "html": "<p><strong>LIVE-WEBINAR · KOSTENLOS</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Entspannter ausliefern: eine Live-Session mit dem Northwind-Team",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Wie liefert man jede Woche aus, ohne die Fahrerinnen und Fahrer zu überraschen? Seien Sie 45 Minuten dabei: was bei uns funktioniert hat, was nicht, und viel Zeit für Ihre Fragen.</p>",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "facts",
+      "type": "columns",
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "when-label",
+              "type": "text",
+              "html": "<p><strong>Wann</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "when-text",
+              "type": "text",
+              "html": "<p>Donnerstag, 19. November 2026<br>16:00 bis 17:00 Uhr MEZ</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "where-label",
+              "type": "text",
+              "html": "<p><strong>Wo</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "where-text",
+              "type": "text",
+              "html": "<p>Online im Browser<br>Den Link erhalten Sie nach der Anmeldung</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "agenda",
+      "type": "heading",
+      "level": 2,
+      "text": "Ablauf",
+      "padding": [
+        16,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "agenda-list",
+      "type": "text",
+      "html": "<ul><li><strong>16:00</strong> Warum Releases riskant wirken</li><li><strong>16:15</strong> Feature-Flags ohne Chaos</li><li><strong>16:35</strong> Der Kundschaft sagen, was sich ändert</li><li><strong>16:45</strong> Ihre Fragen</li></ul>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "speaker",
+      "type": "columns",
+      "stack": false,
+      "gap": 16,
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 22,
+          "blocks": [
+            {
+              "id": "speaker-img",
+              "type": "image",
+              "asset": "speaker.png",
+              "alt": "Gezeichnetes Porträt der Sprecherin",
+              "width": 96,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "width": 78,
+          "blocks": [
+            {
+              "id": "speaker-name",
+              "type": "heading",
+              "level": 3,
+              "text": "Defne Aksoy",
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "speaker-role",
+              "type": "text",
+              "html": "<p>Leiterin Produkt bei Northwind. Hat an einem Freitag ausgeliefert und kann davon erzählen.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rsvp",
+      "type": "button",
+      "label": "Platz sichern",
+      "url": "https://example.com/events/calmer-releases",
+      "full_width": true,
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "html": "<p>Keine Zeit? Melden Sie sich trotzdem an, dann schicken wir Ihnen die Aufzeichnung.</p>",
+      "size": 14,
+      "align": "center",
+      "padding": [
+        4,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Sie erhalten Einladungen, weil Sie Northwind-Veranstaltungen abonniert haben.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

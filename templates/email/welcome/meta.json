@@ -1,0 +1,17 @@
+{
+  "slug": "welcome",
+  "order": 4,
+  "category": "onboarding",
+  "name": {
+    "en": "Welcome",
+    "tr": "Hoş geldiniz",
+    "de": "Willkommen"
+  },
+  "description": {
+    "en": "A greeting with the contact's name, three numbered steps and an invitation to reply.",
+    "tr": "Kişinin adıyla bir karşılama, numaralı üç adım ve yanıt verme daveti.",
+    "de": "Eine Begrüßung mit dem Namen, drei nummerierte Schritte und die Einladung zu antworten."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}

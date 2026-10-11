@@ -1,0 +1,17 @@
+{
+  "slug": "announcement",
+  "order": 3,
+  "category": "announcement",
+  "name": {
+    "en": "Announcement",
+    "tr": "Duyuru",
+    "de": "Ankündigung"
+  },
+  "description": {
+    "en": "One important message with a large heading and one button.",
+    "tr": "Büyük bir başlık ve tek düğmeyle önemli tek bir mesaj.",
+    "de": "Eine wichtige Nachricht mit großer Überschrift und einem Button."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}

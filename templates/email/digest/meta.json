@@ -1,0 +1,17 @@
+{
+  "slug": "digest",
+  "order": 6,
+  "category": "digest",
+  "name": {
+    "en": "Digest",
+    "tr": "Özet",
+    "de": "Übersicht"
+  },
+  "description": {
+    "en": "A compact weekly roundup of linked headlines with one-line summaries.",
+    "tr": "Tek satırlık özetlerle bağlantılı başlıklardan oluşan derli toplu haftalık özet.",
+    "de": "Eine kompakte Wochenübersicht verlinkter Überschriften mit Einzeilern."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}

@@ -1,0 +1,310 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#fbf3ea",
+      "card": "#ffffff",
+      "text": "#1c1917",
+      "muted": "#57534e",
+      "accent": "#c2410c",
+      "link": "#c2410c",
+      "border": "#f0e2d3"
+    }
+  },
+  "preheader": "Drei kurze Schritte bis zur ersten Lieferung, und ein Mensch am anderen Ende dieser E-Mail.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Illustration eines warmen Sonnenaufgangs über orangefarbenen Hügeln",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Willkommen bei Northwind, {{ contact.first_name | \"schön, dass Sie da sind\" }}",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>Schön, dass Sie dabei sind. Northwind plant Ihre Routen, hält Ihre Kundschaft auf dem Laufenden und sagt Ihnen, wenn etwas Ihre Aufmerksamkeit braucht, damit Ihr Tag pünktlich läuft.</p>",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "steps",
+      "type": "heading",
+      "level": 2,
+      "text": "In drei Schritten loslegen",
+      "padding": [
+        16,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "s1",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s1-n",
+              "type": "heading",
+              "level": 2,
+              "text": "1",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s1-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Erstes Depot anlegen",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s1-text",
+              "type": "text",
+              "html": "<p>Sagen Sie uns, wo Ihre Fahrzeuge den Tag beginnen und beenden.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s2-n",
+              "type": "heading",
+              "level": 2,
+              "text": "2",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s2-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Stopps importieren",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s2-text",
+              "type": "text",
+              "html": "<p>Laden Sie eine Tabelle hoch oder verbinden Sie Ihren Shop; wir bringen die Adressen in Ordnung.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "columns",
+      "stack": false,
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 12,
+          "blocks": [
+            {
+              "id": "s3-n",
+              "type": "heading",
+              "level": 2,
+              "text": "3",
+              "color": "#c2410c",
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 88,
+          "blocks": [
+            {
+              "id": "s3-title",
+              "type": "heading",
+              "level": 3,
+              "text": "Routen für morgen senden",
+              "padding": [
+                2,
+                0,
+                4,
+                0
+              ]
+            },
+            {
+              "id": "s3-text",
+              "type": "text",
+              "html": "<p>Fahrerinnen und Fahrer bekommen sie aufs Telefon, Ihre Kundschaft ein Lieferfenster.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "start",
+      "type": "button",
+      "label": "Jetzt starten",
+      "url": "https://example.com/start",
+      "padding": [
+        24,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "reply",
+      "type": "section",
+      "background": "#fbf1e6",
+      "border_radius": 0,
+      "padding": [
+        16,
+        0,
+        16,
+        0
+      ],
+      "blocks": [
+        {
+          "id": "reply-text",
+          "type": "text",
+          "html": "<p><strong>Antworten Sie einfach auf diese E-Mail.</strong> Jede Antwort liest ein Mensch, meist melden wir uns noch am selben Tag.</p>",
+          "size": 15,
+          "align": "center"
+        }
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>Sie erhalten diese Begrüßung, weil Sie ein Northwind-Konto angelegt haben.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

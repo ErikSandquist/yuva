@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "theme": {
+    "width": 600,
+    "direction": "auto",
+    "font": "system",
+    "radius": 12,
+    "colors": {
+      "page": "#f8f0f4",
+      "card": "#ffffff",
+      "text": "#1f2937",
+      "muted": "#4b5563",
+      "accent": "#be185d",
+      "link": "#be185d",
+      "border": "#f0dbe5"
+    }
+  },
+  "preheader": "Thursday 19 November, 16:00 CET, online: 45 minutes on calmer releases, then your questions.",
+  "blocks": [
+    {
+      "id": "logo",
+      "type": "image",
+      "asset": "logo.png",
+      "alt": "Northwind",
+      "width": 150,
+      "align": "left",
+      "plate": true,
+      "padding": [
+        16,
+        24,
+        4,
+        24
+      ]
+    },
+    {
+      "id": "hero",
+      "type": "image",
+      "asset": "hero.jpg",
+      "alt": "Abstract pink and plum shapes like stage lights",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "kind",
+      "type": "text",
+      "html": "<p><strong>LIVE WEBINAR · FREE</strong></p>",
+      "size": 13,
+      "padding": [
+        8,
+        32,
+        0,
+        32
+      ]
+    },
+    {
+      "id": "title",
+      "type": "heading",
+      "level": 1,
+      "text": "Shipping calmer releases: a live session with the Northwind team",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "intro",
+      "type": "text",
+      "html": "<p>How do you ship every week without surprising your drivers? Join us for 45 minutes of what worked for us, what did not, and plenty of time for your questions.</p>",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "facts",
+      "type": "columns",
+      "gap": 12,
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "when-label",
+              "type": "text",
+              "html": "<p><strong>When</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "when-text",
+              "type": "text",
+              "html": "<p>Thursday 19 November 2026<br>16:00 to 17:00 CET</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "width": 50,
+          "blocks": [
+            {
+              "id": "where-label",
+              "type": "text",
+              "html": "<p><strong>Where</strong></p>",
+              "size": 13,
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "where-text",
+              "type": "text",
+              "html": "<p>Online, in your browser<br>The link arrives after you sign up</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rule1",
+      "type": "divider",
+      "padding": [
+        8,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "agenda",
+      "type": "heading",
+      "level": 2,
+      "text": "Agenda",
+      "padding": [
+        16,
+        32,
+        4,
+        32
+      ]
+    },
+    {
+      "id": "agenda-list",
+      "type": "text",
+      "html": "<ul><li><strong>16:00</strong> Why releases feel risky</li><li><strong>16:15</strong> Feature flags without the mess</li><li><strong>16:35</strong> Telling customers what changed</li><li><strong>16:45</strong> Your questions</li></ul>",
+      "size": 15,
+      "padding": [
+        4,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "speaker",
+      "type": "columns",
+      "stack": false,
+      "gap": 16,
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ],
+      "columns": [
+        {
+          "width": 22,
+          "blocks": [
+            {
+              "id": "speaker-img",
+              "type": "image",
+              "asset": "speaker.png",
+              "alt": "Illustrated portrait of the speaker",
+              "width": 96,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "align": "left"
+            }
+          ]
+        },
+        {
+          "width": 78,
+          "blocks": [
+            {
+              "id": "speaker-name",
+              "type": "heading",
+              "level": 3,
+              "text": "Defne Aksoy",
+              "padding": [
+                8,
+                0,
+                2,
+                0
+              ]
+            },
+            {
+              "id": "speaker-role",
+              "type": "text",
+              "html": "<p>Head of Product at Northwind. Has shipped on Fridays and lived to tell the tale.</p>",
+              "size": 15,
+              "padding": [
+                0,
+                0,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rsvp",
+      "type": "button",
+      "label": "Save your seat",
+      "url": "https://example.com/events/calmer-releases",
+      "full_width": true,
+      "padding": [
+        24,
+        32,
+        8,
+        32
+      ]
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "html": "<p>Can't make it? Sign up anyway and we'll send you the recording.</p>",
+      "size": 14,
+      "align": "center",
+      "padding": [
+        4,
+        32,
+        16,
+        32
+      ]
+    },
+    {
+      "id": "footer",
+      "type": "footer",
+      "html": "<p>You get event invitations because you subscribed to Northwind events.</p>",
+      "padding": [
+        16,
+        32,
+        8,
+        32
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "newsletter",
+  "order": 1,
+  "category": "newsletter",
+  "name": {
+    "en": "Newsletter",
+    "tr": "Bülten",
+    "de": "Newsletter"
+  },
+  "description": {
+    "en": "Monthly news with a hero image, three article cards and social links.",
+    "tr": "Kapak görseli, üç makale kartı ve sosyal bağlantılarla aylık haberler.",
+    "de": "Monatliche Neuigkeiten mit Titelbild, drei Artikelkarten und Social-Links."
+  },
+  "author": "Yuva",
+  "added": "2026-10-11"
+}
