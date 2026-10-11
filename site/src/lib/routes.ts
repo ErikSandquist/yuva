@@ -25,7 +25,7 @@ export const brandAssets = {
   logoWhite: "/brand/yuva-logo-white.svg",
 }
 
-export const VERSION = "0.0.7"
+export const VERSION = "0.0.8"
 
 export const REPO = "https://github.com/productdevbook/yuva"
 export const doc = (name: string) => `${REPO}/blob/main/${name}`
