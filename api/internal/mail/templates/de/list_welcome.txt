@@ -1,0 +1,13 @@
+Sie haben {{.List}} abonniert
+
+Sie haben jetzt „{{.List}}“ von {{.Inbox}} abonniert.{{if .Description}}
+
+{{.Description}}{{end}}
+
+Sie können sich jederzeit mit einem Klick abmelden:
+
+Abmelden: {{.UnsubscribeURL}}
+Wählen, welche E-Mails Sie erhalten: {{.ManageURL}}
+
+Sie erhalten diese E-Mail, weil diese Adresse {{.List}} abonniert hat.{{if .Sender}}
+{{.Sender}}{{end}}

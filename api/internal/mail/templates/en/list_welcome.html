@@ -1,0 +1,8 @@
+{{template "heading" "You are subscribed"}}
+<p style="margin:0;">You are now subscribed to <strong>{{.List}}</strong> from <strong>{{.Inbox}}</strong>.</p>
+{{- if .Description}}
+{{template "quote" .Description}}
+{{- end}}
+<p style="margin:16px 0 0 0;">You can leave at any time with one click.</p>
+{{template "button" (button .UnsubscribeURL "Unsubscribe")}}
+{{define "list_welcome.footer"}}You get this e-mail because this address subscribed to {{.List}}. <a href="{{.UnsubscribeURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Unsubscribe</a> · <a href="{{.ManageURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Choose which e-mails you get</a>{{if .Sender}}<br>{{.Sender}}{{end}}{{end}}

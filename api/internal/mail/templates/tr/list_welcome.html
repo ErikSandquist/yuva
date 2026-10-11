@@ -1,0 +1,8 @@
+{{template "heading" "Abone oldunuz"}}
+<p style="margin:0;"><strong>{{.Inbox}}</strong> tarafından gönderilen <strong>{{.List}}</strong> listesine artık abonesiniz.</p>
+{{- if .Description}}
+{{template "quote" .Description}}
+{{- end}}
+<p style="margin:16px 0 0 0;">İstediğiniz zaman tek tıklamayla ayrılabilirsiniz.</p>
+{{template "button" (button .UnsubscribeURL "Abonelikten çık")}}
+{{define "list_welcome.footer"}}Bu e-postayı, bu adres {{.List}} listesine abone olduğu için alıyorsunuz. <a href="{{.UnsubscribeURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Abonelikten çık</a> · <a href="{{.ManageURL}}" target="_blank" style="color:#71717a;text-decoration:underline;">Hangi e-postaları alacağınızı seçin</a>{{if .Sender}}<br>{{.Sender}}{{end}}{{end}}

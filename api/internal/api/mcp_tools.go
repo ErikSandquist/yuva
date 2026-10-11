@@ -222,6 +222,22 @@ type lookupContactIn struct {
 	ExternalID string    `json:"external_id" jsonschema:"the contact's id in the host app of that inbox"`
 }
 
+type mcpMailingList struct {
+	ID          uuid.UUID `json:"id"`
+	InboxID     uuid.UUID `json:"inbox_id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Public      bool      `json:"public"`
+	DoubleOptIn bool      `json:"double_opt_in"`
+	SenderReady bool      `json:"sender_ready"`
+	Subscribed  int64     `json:"subscribed"`
+	Pending     int64     `json:"pending"`
+}
+
+type mailingListsIn struct {
+	InboxID *uuid.UUID `json:"inbox_id,omitempty" jsonschema:"only this inbox's lists"`
+}
+
 type mcpLabel struct {
 	ID    uuid.UUID `json:"id"`
 	Name  string    `json:"name"`
@@ -470,6 +486,23 @@ var mcpTools = append([]mcpTool{
 			out := mcpPage[mcpLabel]{Items: []mcpLabel{}}
 			for _, l := range res.(oas.ListLabels200JSONResponse).Items {
 				out.Items = append(out.Items, mcpLabel{ID: l.Id, Name: l.Name, Color: l.Color})
+			}
+			return out, nil
+		}),
+	defineTool("list_mailing_lists", "List mailing lists",
+		"Lists the mailing lists of the inboxes you can see, with how many people are subscribed and waiting to confirm. Maps to GET /v1/lists.",
+		readOnly, nil, mcpTool{ops: []string{"ListMailingLists"}},
+		func(ctx context.Context, c *mcpCall, in mailingListsIn) (mcpPage[mcpMailingList], error) {
+			res, err := c.s.ListMailingLists(ctx, oas.ListMailingListsRequestObject{Params: oas.ListMailingListsParams{InboxId: in.InboxID, Limit: new(int32(maxPageSize))}})
+			if err != nil {
+				return mcpPage[mcpMailingList]{}, err
+			}
+			out := mcpPage[mcpMailingList]{Items: []mcpMailingList{}}
+			for _, l := range res.(oas.ListMailingLists200JSONResponse).Items {
+				out.Items = append(out.Items, mcpMailingList{
+					ID: l.Id, InboxID: l.InboxId, Name: l.Name, Description: l.Description, Public: l.Public, DoubleOptIn: l.DoubleOptIn,
+					SenderReady: l.SenderReady, Subscribed: l.Counts.Subscribed, Pending: l.Counts.Pending,
+				})
 			}
 			return out, nil
 		}),

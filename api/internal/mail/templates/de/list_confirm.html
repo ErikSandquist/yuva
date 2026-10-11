@@ -1,0 +1,5 @@
+{{template "heading" "Bestätigen Sie Ihr Abonnement"}}
+<p style="margin:0;">Jemand hat darum gebeten, diese Adresse für <strong>{{.List}}</strong> von <strong>{{.Inbox}}</strong> einzutragen. Bestätigen Sie es mit der Schaltfläche unten.</p>
+{{template "button" (button .URL "Abonnement bestätigen")}}
+{{template "fallback" (button .URL "Oder öffnen Sie diesen Link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.</p>

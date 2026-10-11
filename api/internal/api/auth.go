@@ -77,11 +77,13 @@ var operationAccess = map[string]access{
 	"SetInboxNotifications":      accessMember,
 	"DeleteInboxNotifications":   accessMember,
 
-	"CreateClientSession":   accessPublic,
-	"GetClientChannel":      accessPublic,
-	"CreatePageRating":      accessPublic,
-	"ListClientDiscussions": accessPublic,
-	"GetClientDiscussion":   accessPublic,
+	"CreateClientSession":      accessPublic,
+	"GetClientChannel":         accessPublic,
+	"CreatePageRating":         accessPublic,
+	"ListClientDiscussions":    accessPublic,
+	"GetClientDiscussion":      accessPublic,
+	"ListClientMailingLists":   accessPublic,
+	"CreateClientSubscription": accessPublic,
 
 	"CreateClientDiscussion":       accessDiscussant,
 	"CreateClientDiscussionPost":   accessDiscussant,
@@ -116,6 +118,9 @@ var operationAccess = map[string]access{
 	"SetClientContactEmail":       accessContact,
 	"CreateClientFeedback":        accessContact,
 	"DownloadClientAttachment":    accessContact,
+	"ListClientSubscriptions":     accessContact,
+	"SubscribeClient":             accessContact,
+	"UnsubscribeClient":           accessContact,
 
 	"UpdateMember": accessMember,
 	"RemoveMember": accessMember,

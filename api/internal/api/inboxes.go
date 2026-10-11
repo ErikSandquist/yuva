@@ -29,7 +29,7 @@ func inboxBody(in store.Inbox) oas.Inbox {
 	out := oas.Inbox{
 		Id: in.ID, Name: in.Name, Slug: in.Slug, DefaultLocale: in.DefaultLocale, Timezone: in.Timezone,
 		Mode: oas.InboxMode(in.Mode), ExpectedReplyMinutes: in.ExpectedReplyMinutes, AskForRating: in.AskForRating,
-		CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
+		Sender: inboxSenderBody(in), CreatedAt: in.CreatedAt, UpdatedAt: in.UpdatedAt,
 	}
 	_ = json.Unmarshal(in.Branding, &out.Branding)
 	_ = json.Unmarshal(in.BusinessHours, &out.BusinessHours)
@@ -268,6 +268,11 @@ func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObje
 		}
 		if err != nil {
 			return err
+		}
+		if b.Sender != nil {
+			if out, err = s.setInboxSender(ctx, q, out, *b.Sender); err != nil {
+				return err
+			}
 		}
 		events.add(realtime.InboxUpdated, &out.ID, nil, inboxBody(out))
 		return nil

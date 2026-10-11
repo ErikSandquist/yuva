@@ -50,6 +50,11 @@ func (s *Server) recordBounce(ctx context.Context, ws uuid.UUID, messageID *uuid
 			}); err != nil {
 				return err
 			}
+			if r.reason == suppressComplaint {
+				if err := s.complainedAbout(ctx, q, events, ws, r.email); err != nil {
+					return err
+				}
+			}
 			id, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: r.email})
 			if store.IsNotFound(err) {
 				continue

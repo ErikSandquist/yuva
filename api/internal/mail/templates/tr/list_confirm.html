@@ -1,0 +1,5 @@
+{{template "heading" "Aboneliğinizi onaylayın"}}
+<p style="margin:0;">Bu adresin <strong>{{.Inbox}}</strong> tarafından gönderilen <strong>{{.List}}</strong> listesine abone olması istendi. Aşağıdaki düğmeyle onaylayın.</p>
+{{template "button" (button .URL "Aboneliği onayla")}}
+{{template "fallback" (button .URL "Ya da bu bağlantıyı açın:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">Bağlantı 7 gün geçerlidir. Bunu siz istemediyseniz bu e-postayı yok sayın; hiçbir şey olmaz.</p>

@@ -62,10 +62,14 @@ func samples(inbox, text string) map[string]map[string]any {
 		},
 		"rating_request": {"Inbox": inbox, "GoodURL": "https://yuva.example.com/rate/tok?rating=good",
 			"BadURL": "https://yuva.example.com/rate/tok?rating=bad"},
+		"list_confirm": {"Inbox": inbox, "List": "Product news", "URL": "https://yuva.example.com/s/tok"},
+		"list_welcome": {"Inbox": inbox, "List": "Product news", "Description": "One e-mail a month.",
+			"UnsubscribeURL": "https://yuva.example.com/m/tok", "ManageURL": "https://yuva.example.com/m/tok",
+			"Sender": "Acme Ltd, 1 Main Street, Springfield"},
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

@@ -276,7 +276,7 @@ func (s *Server) deletePerson(ctx context.Context, person store.Person) error {
 		if err := q.DeleteLoginCodesByEmail(ctx, person.Email); err != nil {
 			return err
 		}
-		if err := forgetReader(ctx, q, person.ID); err != nil {
+		if err := s.forgetReader(ctx, q, person.ID); err != nil {
 			return err
 		}
 		_, err = q.DeletePerson(ctx, person.ID)

@@ -22,7 +22,10 @@ type Outgoing struct {
 	AutoSubmitted bool
 	Attachments   []Attachment
 	Date          time.Time
+	Headers       []Header
 }
+
+type Header struct{ Name, Value string }
 
 const maxReferences = 20
 
@@ -82,6 +85,9 @@ func Build(o Outgoing) ([]byte, error) {
 	}
 	if o.AutoSubmitted {
 		b = b.Header("Auto-Submitted", "auto-replied").Header("X-Auto-Response-Suppress", "All")
+	}
+	for _, h := range o.Headers {
+		b = b.Header(h.Name, h.Value)
 	}
 	for _, a := range o.Attachments {
 		b = b.AddAttachment(a.Data, a.ContentType, a.Filename)

@@ -1,0 +1,13 @@
+{{.List}} listesine abone oldunuz
+
+{{.Inbox}} tarafından gönderilen "{{.List}}" listesine artık abonesiniz.{{if .Description}}
+
+{{.Description}}{{end}}
+
+İstediğiniz zaman tek tıklamayla ayrılabilirsiniz:
+
+Abonelikten çık: {{.UnsubscribeURL}}
+Hangi e-postaları alacağınızı seçin: {{.ManageURL}}
+
+Bu e-postayı, bu adres {{.List}} listesine abone olduğu için alıyorsunuz.{{if .Sender}}
+{{.Sender}}{{end}}

@@ -1,0 +1,5 @@
+{{template "heading" "Confirm your subscription"}}
+<p style="margin:0;">Someone asked to subscribe this address to <strong>{{.List}}</strong> from <strong>{{.Inbox}}</strong>. Confirm it with the button below.</p>
+{{template "button" (button .URL "Confirm subscription")}}
+{{template "fallback" (button .URL "Or open this link:")}}
+<p class="y-muted" style="margin:16px 0 0 0;font-size:13px;line-height:20px;color:#71717a;">The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.</p>

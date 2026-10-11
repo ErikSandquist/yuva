@@ -10,7 +10,7 @@ import (
 var allScopes = []oas.ApiKeyScope{
 	oas.ConversationsRead, oas.ConversationsWrite, oas.MessagesWrite, oas.DraftsSend, oas.NotesWrite,
 	oas.ContactsRead, oas.ContactsWrite, oas.InboxesRead, oas.InboxesManage, oas.LabelsWrite,
-	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite,
+	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
 }
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage}
@@ -107,6 +107,23 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"ListWebhookAttempts":   {oas.WebhooksManage},
 
 	"CreateFeedback": {oas.FeedbackWrite},
+
+	"ListMailingLists":         {oas.ListsRead},
+	"GetMailingList":           {oas.ListsRead},
+	"GetMailingListGrowth":     {oas.ListsRead},
+	"ListSubscriptions":        {oas.ListsRead},
+	"GetSubscription":          {oas.ListsRead},
+	"ExportListConsent":        {oas.ListsRead},
+	"ListContactSubscriptions": {oas.ContactsRead, oas.ListsRead},
+	"ExportContactConsent":     {oas.ContactsRead, oas.ListsRead},
+
+	"CreateMailingList":              {oas.ListsWrite},
+	"UpdateMailingList":              {oas.ListsWrite},
+	"DeleteMailingList":              {oas.ListsWrite},
+	"CreateSubscription":             {oas.ListsWrite},
+	"UpdateSubscription":             {oas.ListsWrite},
+	"DeleteSubscription":             {oas.ListsWrite},
+	"ResendSubscriptionConfirmation": {oas.ListsWrite},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

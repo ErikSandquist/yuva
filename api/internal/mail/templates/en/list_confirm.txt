@@ -1,0 +1,7 @@
+Confirm your subscription to {{.List}}
+
+Someone asked to subscribe this address to "{{.List}}" from {{.Inbox}}. Confirm it here:
+
+    {{.URL}}
+
+The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.

@@ -394,6 +394,9 @@ func (s *Server) mergeContact(ctx context.Context, q *store.Queries, events *eve
 	if err := moveDiscussions(ctx, q, ws, from, to); err != nil {
 		return err
 	}
+	if err := q.MoveContactSubscriptions(ctx, store.MoveContactSubscriptionsParams{WorkspaceID: ws, FromContact: from, ToContact: to}); err != nil {
+		return err
+	}
 	if _, err := q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: ws, ID: from}); err != nil {
 		return err
 	}

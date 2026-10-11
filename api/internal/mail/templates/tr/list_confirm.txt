@@ -1,0 +1,7 @@
+{{.List}} aboneliğinizi onaylayın
+
+Bu adresin {{.Inbox}} tarafından gönderilen "{{.List}}" listesine abone olması istendi. Buradan onaylayın:
+
+    {{.URL}}
+
+Bağlantı 7 gün geçerlidir. Bunu siz istemediyseniz bu e-postayı yok sayın; hiçbir şey olmaz.

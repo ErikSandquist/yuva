@@ -611,6 +611,9 @@ func (s *Server) deleteContact(ctx context.Context, p principal, id uuid.UUID) e
 		for _, x := range externals {
 			snap.Contact.ExternalIds = append(snap.Contact.ExternalIds, oas.ExternalId{InboxId: x.InboxID, ExternalId: x.ExternalID})
 		}
+		if err := s.rememberContactObjections(ctx, q, p.workspaceID, id); err != nil {
+			return err
+		}
 		if _, err = q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: p.workspaceID, ID: id}); err != nil {
 			return err
 		}
@@ -713,6 +716,9 @@ func (s *Server) MergeContact(ctx context.Context, req oas.MergeContactRequestOb
 			events.conversation(realtime.ConversationUpdated, c, body)
 		}
 		if err := moveDiscussions(ctx, q, p.workspaceID, from, to); err != nil {
+			return err
+		}
+		if err := q.MoveContactSubscriptions(ctx, store.MoveContactSubscriptionsParams{WorkspaceID: p.workspaceID, FromContact: from, ToContact: to}); err != nil {
 			return err
 		}
 		if _, err := q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: p.workspaceID, ID: from}); err != nil {

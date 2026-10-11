@@ -10174,8 +10174,9 @@ type ClientInterface interface {
 	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
 	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
 	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
-	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-	// bounced or complained stays `pending` and gets nothing.
+	// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+	// user left before becomes `pending` with a confirmation mail. An address that bounced or
+	// complained stays `pending` and gets nothing.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -10191,8 +10192,9 @@ type ClientInterface interface {
 	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
 	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
 	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
-	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-	// bounced or complained stays `pending` and gets nothing.
+	// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+	// user left before becomes `pending` with a confirmation mail. An address that bounced or
+	// complained stays `pending` and gets nothing.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -11475,7 +11477,8 @@ type ClientInterface interface {
 	// The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
 	// holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
 	// agents and API keys limited to inboxes see the events of the inboxes they can access, and
-	// `contact.updated` and `contact.deleted` also need `contacts:read`.
+	// `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+	// `subscription.updated` `lists:read`.
 	//
 	// Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
 	// `next` and send it as `after` on the next call; `next` is the last event returned, or a
@@ -13832,8 +13835,9 @@ func (c *Client) UnsubscribeClient(ctx context.Context, listId ListId, reqEditor
 // with only an address the user typed, it is `pending` and a confirmation mail goes out.
 // Anonymous visitor sessions answer `403 identity_required` (they use the form);
 // a contact without an address `409 no_email`; a list that is not a public list of the inbox
-// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-// bounced or complained stays `pending` and gets nothing.
+// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+// user left before becomes `pending` with a confirmation mail. An address that bounced or
+// complained stays `pending` and gets nothing.
 //
 // Takes any type of body and a specified content type.
 //
@@ -13859,8 +13863,9 @@ func (c *Client) SubscribeClientWithBody(ctx context.Context, listId ListId, par
 // with only an address the user typed, it is `pending` and a confirmation mail goes out.
 // Anonymous visitor sessions answer `403 identity_required` (they use the form);
 // a contact without an address `409 no_email`; a list that is not a public list of the inbox
-// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-// bounced or complained stays `pending` and gets nothing.
+// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+// user left before becomes `pending` with a confirmation mail. An address that bounced or
+// complained stays `pending` and gets nothing.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -16193,7 +16198,8 @@ func (c *Client) ListDrafts(ctx context.Context, params *ListDraftsParams, reqEd
 // The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
 // holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
 // agents and API keys limited to inboxes see the events of the inboxes they can access, and
-// `contact.updated` and `contact.deleted` also need `contacts:read`.
+// `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+// `subscription.updated` `lists:read`.
 //
 // Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
 // `next` and send it as `after` on the next call; `next` is the last event returned, or a
@@ -30206,8 +30212,9 @@ type ClientWithResponsesInterface interface {
 	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
 	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
 	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
-	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-	// bounced or complained stays `pending` and gets nothing.
+	// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+	// user left before becomes `pending` with a confirmation mail. An address that bounced or
+	// complained stays `pending` and gets nothing.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -30223,8 +30230,9 @@ type ClientWithResponsesInterface interface {
 	// with only an address the user typed, it is `pending` and a confirmation mail goes out.
 	// Anonymous visitor sessions answer `403 identity_required` (they use the form);
 	// a contact without an address `409 no_email`; a list that is not a public list of the inbox
-	// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-	// bounced or complained stays `pending` and gets nothing.
+	// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+	// user left before becomes `pending` with a confirmation mail. An address that bounced or
+	// complained stays `pending` and gets nothing.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -31603,7 +31611,8 @@ type ClientWithResponsesInterface interface {
 	// The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
 	// holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
 	// agents and API keys limited to inboxes see the events of the inboxes they can access, and
-	// `contact.updated` and `contact.deleted` also need `contacts:read`.
+	// `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+	// `subscription.updated` `lists:read`.
 	//
 	// Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
 	// `next` and send it as `after` on the next call; `next` is the last event returned, or a
@@ -46118,8 +46127,9 @@ func (c *ClientWithResponses) UnsubscribeClientWithResponse(ctx context.Context,
 // with only an address the user typed, it is `pending` and a confirmation mail goes out.
 // Anonymous visitor sessions answer `403 identity_required` (they use the form);
 // a contact without an address `409 no_email`; a list that is not a public list of the inbox
-// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-// bounced or complained stays `pending` and gets nothing.
+// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+// user left before becomes `pending` with a confirmation mail. An address that bounced or
+// complained stays `pending` and gets nothing.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -46141,8 +46151,9 @@ func (c *ClientWithResponses) SubscribeClientWithBodyWithResponse(ctx context.Co
 // with only an address the user typed, it is `pending` and a confirmation mail goes out.
 // Anonymous visitor sessions answer `403 identity_required` (they use the form);
 // a contact without an address `409 no_email`; a list that is not a public list of the inbox
-// `404`. Already subscribed or pending: the current state, nothing sent. An address that
-// bounced or complained stays `pending` and gets nothing.
+// `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+// user left before becomes `pending` with a confirmation mail. An address that bounced or
+// complained stays `pending` and gets nothing.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -48151,7 +48162,8 @@ func (c *ClientWithResponses) ListDraftsWithResponse(ctx context.Context, params
 // The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
 // holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
 // agents and API keys limited to inboxes see the events of the inboxes they can access, and
-// `contact.updated` and `contact.deleted` also need `contacts:read`.
+// `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+// `subscription.updated` `lists:read`.
 //
 // Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
 // `next` and send it as `after` on the next call; `next` is the last event returned, or a

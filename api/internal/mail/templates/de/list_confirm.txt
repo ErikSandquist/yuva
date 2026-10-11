@@ -1,0 +1,7 @@
+Bestätigen Sie Ihr Abonnement von {{.List}}
+
+Jemand hat darum gebeten, diese Adresse für „{{.List}}“ von {{.Inbox}} einzutragen. Bestätigen Sie es hier:
+
+    {{.URL}}
+
+Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.

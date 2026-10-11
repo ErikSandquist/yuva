@@ -247,7 +247,7 @@ func (s *Server) MarkReaderNotificationsRead(ctx context.Context, req oas.MarkRe
 
 // forgetReader removes a person's reader traces from every workspace before the person goes: their
 // posts lose their author, votes and follows go, and contacts that existed only for them are deleted.
-func forgetReader(ctx context.Context, q *store.Queries, personID uuid.UUID) error {
+func (s *Server) forgetReader(ctx context.Context, q *store.Queries, personID uuid.UUID) error {
 	contacts, err := q.ListPersonContacts(ctx, &personID)
 	if err != nil {
 		return err
@@ -262,6 +262,9 @@ func forgetReader(ctx context.Context, q *store.Queries, personID uuid.UUID) err
 			return err
 		}
 		if removable {
+			if err := s.rememberContactObjections(ctx, q, c.WorkspaceID, c.ID); err != nil {
+				return err
+			}
 			_, err = q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: c.WorkspaceID, ID: c.ID})
 		} else {
 			err = q.ClearContactPerson(ctx, store.ClearContactPersonParams{WorkspaceID: c.WorkspaceID, ID: c.ID})

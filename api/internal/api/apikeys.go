@@ -214,7 +214,10 @@ func createAPIKey(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, 
 		}
 	}
 	for _, sc := range spec.Scopes {
-		if !oas.ApiKeyScope(sc).Valid() {
+		if !slices.Contains(allScopes, oas.ApiKeyScope(sc)) {
+			if oas.ApiKeyScope(sc).Valid() {
+				return store.ApiKey{}, "", apiKeySpecError("keys cannot hold " + sc + " yet")
+			}
 			return store.ApiKey{}, "", apiKeySpecError("unknown scope " + sc)
 		}
 	}

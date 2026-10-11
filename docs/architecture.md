@@ -207,7 +207,7 @@ scoped API keys, and every key-authored message names its bot.
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
 before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
-added to existing keys. `yuva api-key create` takes `--scope` (repeatable,
+added to existing keys; keys cannot hold `broadcasts:*` until broadcasts ship (M13.3). `yuva api-key create` takes `--scope` (repeatable,
 default every scope) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
@@ -259,9 +259,8 @@ workspace. The existing `client_id` on messages stays as it is.
 
 **Event feed.** `GET /v1/events?after=<id>&limit=<n>` returns the events realtime and webhooks
 carry, in id order, filtered exactly as the caller's realtime stream is (inbox access, key inbox
-limit, scopes: a caller sees an event only if it holds `conversations:read` (`lists:read` for list and
-subscription events, `broadcasts:read` for broadcast events), and contact events
-also need `contacts:read`). `after` is the last event id the caller handled; the answer carries
+limit, scopes: a caller sees an event only if it holds `conversations:read`; subscription events also
+need `lists:read`, broadcast events `broadcasts:read`, and contact events `contacts:read`). `after` is the last event id the caller handled; the answer carries
 `next` (the last id returned) and `has_more`. Events are kept 7 days (realtime replay uses the same
 rows). An `after` older than the oldest kept event answers `410 cursor_expired`: the caller
 resyncs from the lists and continues from `GET /v1/events/latest`'s id. Keys and tokens open
@@ -1175,18 +1174,22 @@ Decisions:
   consent export), `welcome` (a receipt after subscribing) and the e-mail channel that sends its
   confirmation and welcome mail. Owners and admins manage lists; agents read the lists of their inboxes.
 - **Subscriptions and consent.** `list_subscriptions` (list, contact, address, `pending|subscribed|
-  unsubscribed`, source `form|identity|api|member|import`) and an append-only `consent_events` log (what
+  unsubscribed`, source `form|identity|api|member|import|preferences`) and an append-only `consent_events` log (what
   happened, when, IP, user agent, page, the label the person saw, the member, key or import). Consent is
   never assumed: API calls and imports declare it (an import needs the importer's attestation and where
   people agreed, stored with every row). Only the person moves an `unsubscribed` subscription back, through
   a confirmation. Unsubscribing from all of an inbox's lists, a complaint and deleting a contact who had
   objected leave an `email_optouts` row (a keyed HMAC of the address, nothing else) that the API and imports
-  respect. Pending subscriptions go after 30 days; unsubscribed ones and their events after 3 years.
+  respect. Pending subscriptions go after 30 days (one that was unsubscribed before and asked again returns
+  to `unsubscribed`, so the objection stays); unsubscribed ones and their events after 3 years, leaving an
+  opt-out.
 - **Signing up.** `<yuva-subscribe>` (`/yuva-subscribe.js`, `useyuva/subscribe`, React and Nuxt
   wrappers, shadcn registry items) on an existing chat channel's key and origins; anonymous forms post to
   `POST /client/v1/channels/{key}/subscriptions` with a sealed form token, a honeypot and per-IP,
   per-channel and per-address limits, and get the same answer for every address. Identity-token sessions
-  subscribe at once when their address is verified (`PUT /client/v1/subscriptions/{list}`). Double
+  subscribe at once when the contact has a known address (verified by the token, or given by a member or an
+  e-mail conversation), else through a confirmation, as does a subscription the person left before
+  (`PUT /client/v1/subscriptions/{list}`). Double
   opt-in mails a link to `/s/{token}`, a server-rendered page like `/r/{token}` whose button confirms
   (opening it changes nothing). Host backends use `/v1/lists/{id}/subscriptions`; the panel imports CSV
   files asynchronously with progress.

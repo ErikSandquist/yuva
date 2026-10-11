@@ -80,6 +80,9 @@ func (w *retentionWorker) Work(ctx context.Context, _ *river.Job[jobs.RetentionA
 	if err := w.s.st.DeleteOldReaderNotifications(ctx, now.Add(-readerNotificationsKept)); err != nil {
 		return err
 	}
+	if err := w.s.ExpireSubscriptions(ctx); err != nil {
+		return err
+	}
 	return w.s.ApplyRetention(ctx)
 }
 
