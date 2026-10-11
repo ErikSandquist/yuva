@@ -51,7 +51,7 @@ export function MessageActions({ m, ctx, className }: { m: Message; ctx: ThreadC
     const frame = row.current?.closest<HTMLElement>("[data-slot=message]")
     if (!frame) return
     const busy = () => !!row.current?.querySelector("[aria-expanded=true]")
-    const down = (e: PointerEvent) => {
+    const tap = (e: MouseEvent) => {
       if (!busy()) setTapped(frame.contains(e.target as Node))
     }
     const blur = () =>
@@ -59,10 +59,11 @@ export function MessageActions({ m, ctx, className }: { m: Message; ctx: ThreadC
         const a = document.activeElement
         if (a instanceof HTMLIFrameElement && !busy()) setTapped(frame.contains(a))
       })
-    document.addEventListener("pointerdown", down, true)
+    // On click, not pointerdown: the row moves the message down, and a press that moved would miss its button.
+    document.addEventListener("click", tap, true)
     window.addEventListener("blur", blur)
     return () => {
-      document.removeEventListener("pointerdown", down, true)
+      document.removeEventListener("click", tap, true)
       window.removeEventListener("blur", blur)
     }
   }, [touch])

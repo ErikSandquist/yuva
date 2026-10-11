@@ -313,8 +313,12 @@ function Mail({
         <MessageHeader className={headerClass}>
           <span className="min-w-0 truncate" title={e && !out ? e.from : undefined}>
             {who}
-            {e && !out && e.from !== who && <span className="text-faint"> &lt;{e.from}&gt;</span>}
           </span>
+          {e && !out && e.from !== who && (
+            <span className="max-w-full min-w-0 truncate text-faint" title={e.from}>
+              &lt;{e.from}&gt;
+            </span>
+          )}
           <EmailTags m={m} />
         </MessageHeader>
         <Bubble variant={look.variant} align={align} className={cn("max-w-full", wide && "w-full", look.className)}>
@@ -745,7 +749,7 @@ function DayChip({ items, root }: { items: Message[]; root: React.RefObject<HTML
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center transition-opacity duration-300",
+        "pointer-events-none absolute inset-x-0 top-0 z-10 flex justify-center bg-linear-to-b from-surface from-60% to-transparent pt-2 pb-4 transition-opacity duration-300",
         start && scrolling ? "opacity-100" : "opacity-0"
       )}
       aria-hidden
