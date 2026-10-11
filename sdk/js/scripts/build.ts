@@ -58,7 +58,7 @@ check(
     minify: { syntax: true, whitespace: true },
     naming: { chunk: "[name]-[hash].js" },
     external: [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)],
-    define,
+    define: { "process.env.NODE_ENV": '"production"' },
     plugins: [linguiMacro],
   })
 )

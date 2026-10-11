@@ -7,14 +7,12 @@ import {
   type DiscussionSort,
 } from "../client/api"
 import type { ReaderSession } from "../client/reader"
-import { YuvaDocsElement, el, scriptSrc } from "./base"
+import { YuvaDocsElement, el } from "./base"
 import type { DiscussionsState, Thread, ThreadHost } from "./thread"
 
 export type { DiscussionDetailEvent, DiscussionPostDetail } from "./thread"
 
-type ThreadModule = typeof import("./thread")
-
-declare const YUVA_DOCS_THREAD: string
+export type ThreadModule = typeof import("./thread")
 
 const hashPrefix = "#yuva-discussion-"
 const cacheFor = 60_000
@@ -113,8 +111,7 @@ function excerptOf(html: string): string {
 }
 
 export class YuvaDiscussionsElement extends YuvaDocsElement {
-  static loadThread: () => Promise<ThreadModule> = () =>
-    import(/* @vite-ignore */ new URL(YUVA_DOCS_THREAD, scriptSrc || location.href).href)
+  static loadThread: () => Promise<ThreadModule>
 
   #s: DiscussionsState = {
     view: { kind: "list" },
