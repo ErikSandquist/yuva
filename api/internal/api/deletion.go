@@ -188,6 +188,12 @@ func (s *Server) PurgeWorkspace(ctx context.Context, workspaceID uuid.UUID, budg
 			return out, nil
 		}
 	}
+	uploads, err := s.st.ListImportStorageKeys(ctx, store.ListImportStorageKeysParams{WorkspaceID: workspaceID})
+	if err != nil {
+		return out, err
+	}
+	s.deleteObjects(ctx, uploads)
+	out.Files += len(uploads)
 	if _, err := s.st.PurgeWorkspace(ctx, workspaceID); err != nil {
 		return out, err
 	}

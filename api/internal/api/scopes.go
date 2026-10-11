@@ -118,6 +118,9 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"ListSubscriptions":        {oas.ListsRead},
 	"GetSubscription":          {oas.ListsRead},
 	"ExportListConsent":        {oas.ListsRead},
+	"ListListImports":          {oas.ListsRead},
+	"GetListImport":            {oas.ListsRead},
+	"GetListImportErrors":      {oas.ListsRead},
 	"ListContactSubscriptions": {oas.ContactsRead, oas.ListsRead},
 	"ExportContactConsent":     {oas.ContactsRead, oas.ListsRead},
 
@@ -128,6 +131,10 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateSubscription":             {oas.ListsWrite},
 	"DeleteSubscription":             {oas.ListsWrite},
 	"ResendSubscriptionConfirmation": {oas.ListsWrite},
+	"CreateListImport":               {oas.ListsWrite},
+	"UpdateListImport":               {oas.ListsWrite},
+	"StartListImport":                {oas.ListsWrite},
+	"CancelListImport":               {oas.ListsWrite},
 
 	"ListEmailTemplates":      {oas.BroadcastsRead},
 	"GetEmailTemplate":        {oas.BroadcastsRead},

@@ -240,6 +240,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		OperatorEmails:   cfg.OperatorEmails,
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
+		Imports:             api.ImportSettings{MaxRows: cfg.ImportMaxRows},
 		Broadcasts: api.BroadcastSettings{
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},

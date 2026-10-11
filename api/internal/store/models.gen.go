@@ -574,6 +574,41 @@ type Label struct {
 	CreatedAt   time.Time
 }
 
+type ListImport struct {
+	ID            uuid.UUID
+	WorkspaceID   uuid.UUID
+	ListID        uuid.UUID
+	MemberID      *uuid.UUID
+	ApiKeyID      *uuid.UUID
+	State         string
+	Filename      string
+	StorageKey    *string
+	Encoding      *string
+	Delimiter     *string
+	Columns       []byte
+	Preview       []byte
+	Domains       []byte
+	Attestation   string
+	ConsentSource string
+	Reconfirm     bool
+	RowsTotal     int32
+	RowsDone      int32
+	Counts        []byte
+	Error         *string
+	CreatedAt     time.Time
+	UpdatedAt     time.Time
+	StartedAt     *time.Time
+	FinishedAt    *time.Time
+}
+
+type ListImportError struct {
+	WorkspaceID uuid.UUID
+	ImportID    uuid.UUID
+	Row         int32
+	Email       string
+	Reason      string
+}
+
 type ListSubscription struct {
 	ID                     uuid.UUID
 	WorkspaceID            uuid.UUID

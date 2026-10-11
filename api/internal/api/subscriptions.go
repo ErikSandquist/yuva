@@ -155,6 +155,7 @@ type consentProof struct {
 	source                          string
 	ip, userAgent, pageURL, text    *string
 	memberID, apiKeyID, broadcastID *uuid.UUID
+	importID                        *uuid.UUID
 	detail                          map[string]any
 }
 
@@ -214,11 +215,14 @@ func (s *Server) consentEvent(ctx context.Context, q *store.Queries, sub store.L
 	return q.AddConsentEvent(ctx, store.AddConsentEventParams{
 		ID: newID(), WorkspaceID: sub.WorkspaceID, SubscriptionID: sub.ID, Kind: kind, Source: pr.source,
 		Ip: clip(pr.ip, 64), UserAgent: clip(pr.userAgent, 300), PageUrl: clip(pr.pageURL, 2048), ConsentText: clip(pr.text, 2000),
-		MemberID: pr.memberID, ApiKeyID: pr.apiKeyID, BroadcastID: pr.broadcastID, Detail: mustJSON(detail), CreatedAt: s.now(),
+		MemberID: pr.memberID, ApiKeyID: pr.apiKeyID, ImportID: pr.importID, BroadcastID: pr.broadcastID, Detail: mustJSON(detail), CreatedAt: s.now(),
 	})
 }
 
 func emitSubscription(ctx context.Context, q *store.Queries, events *eventBatch, list store.MailingList, sub store.ListSubscription, previous *string) error {
+	if events.quiet {
+		return nil
+	}
 	body, err := oneSubscription(ctx, q, sub)
 	if err != nil {
 		return err
@@ -283,17 +287,23 @@ func (s *Server) unsubscribe(ctx context.Context, q *store.Queries, events *even
 // subscribeNow makes a subscription `subscribed` without a confirmation mail, recording the
 // given proof, and sends the list's welcome mail.
 func (s *Server) subscribeNow(ctx context.Context, q *store.Queries, events *eventBatch, list store.MailingList, sub store.ListSubscription, consentAt time.Time, pr consentProof) (store.ListSubscription, error) {
+	out, err := s.markSubscribed(ctx, q, events, list, sub, consentAt, pr)
+	if err != nil {
+		return out, err
+	}
+	s.queueWelcome(events, list, out)
+	return out, nil
+}
+
+// markSubscribed is subscribeNow without the welcome mail.
+func (s *Server) markSubscribed(ctx context.Context, q *store.Queries, events *eventBatch, list store.MailingList, sub store.ListSubscription, consentAt time.Time, pr consentProof) (store.ListSubscription, error) {
 	prev := sub.State
 	sub.State, sub.ConsentAt, sub.UnsubscribedAt = subSubscribed, &consentAt, nil
 	out, err := s.saveSubscription(ctx, q, events, list, sub, prev)
 	if err != nil {
 		return out, err
 	}
-	if err := s.consentEvent(ctx, q, out, consentSubscribed, pr); err != nil {
-		return out, err
-	}
-	s.queueWelcome(events, list, out)
-	return out, nil
+	return out, s.consentEvent(ctx, q, out, consentSubscribed, pr)
 }
 
 // confirmListSubscription is the person confirming by mail: the subscription becomes `subscribed`,
@@ -357,10 +367,17 @@ func (s *Server) confirmationAllowed(ws, listID uuid.UUID, email string, channel
 }
 
 func (s *Server) queueConfirmation(ctx context.Context, q *store.Queries, events *eventBatch, sub store.ListSubscription) error {
+	return s.queueConfirmationAt(ctx, q, events, sub, time.Time{})
+}
+
+// queueConfirmationAt queues the confirmation mail to go out at the given time; zero is now.
+func (s *Server) queueConfirmationAt(ctx context.Context, q *store.Queries, events *eventBatch, sub store.ListSubscription, at time.Time) error {
 	if err := q.MarkConfirmationSent(ctx, store.MarkConfirmationSentParams{WorkspaceID: sub.WorkspaceID, ID: sub.ID, Now: s.now()}); err != nil {
 		return err
 	}
-	events.job(ListMailArgs{WorkspaceID: sub.WorkspaceID, SubscriptionID: sub.ID, Mail: listMailConfirm}, listMailOpts())
+	opts := listMailOpts()
+	opts.ScheduledAt = at
+	events.job(ListMailArgs{WorkspaceID: sub.WorkspaceID, SubscriptionID: sub.ID, Mail: listMailConfirm}, opts)
 	return nil
 }
 
@@ -433,51 +450,51 @@ func (s *Server) ListSubscriptions(ctx context.Context, req oas.ListSubscription
 	return oas.ListSubscriptions200JSONResponse{Items: items, NextCursor: next}, nil
 }
 
-// subscriber finds or creates the contact a host backend or member names, and the address to
-// subscribe.
-func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, list store.MailingList, b *oas.SubscriptionCreate) (uuid.UUID, string, error) {
+// subscriber finds or creates the contact a host backend, member or import names, and the
+// address to subscribe; created reports a new contact.
+func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, list store.MailingList, b *oas.SubscriptionCreate) (uuid.UUID, string, bool, error) {
 	ws := p.workspaceID
 	var email string
 	if b.Email != nil {
 		var err error
 		if email, err = subscriptionAddress(*b.Email); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	}
 	var externalID string
 	if b.ExternalId != nil {
 		externalID = strings.TrimSpace(*b.ExternalId)
 		if externalID == "" || len([]rune(externalID)) > 200 {
-			return uuid.Nil(), "", errValidation("external_id must be 1 to 200 characters")
+			return uuid.Nil(), "", false, errValidation("external_id must be 1 to 200 characters")
 		}
 	}
 	name := ""
 	if b.Name != nil {
 		var err error
 		if name, err = trimmed(*b.Name, 0, 200, "name"); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	}
 	if b.Locale != nil && !languagePattern.MatchString(string(*b.Locale)) {
-		return uuid.Nil(), "", errValidation("locale must be a BCP 47 language tag")
+		return uuid.Nil(), "", false, errValidation("locale must be a BCP 47 language tag")
 	}
 	var attrs []byte
 	if b.Attributes != nil {
 		attrs = mustJSON(*b.Attributes)
 		if len(attrs) > maxAttributesBytes {
-			return uuid.Nil(), "", errValidation("attributes must be at most 16 KiB")
+			return uuid.Nil(), "", false, errValidation("attributes must be at most 16 KiB")
 		}
 	}
 	var contactID *uuid.UUID
 	switch {
 	case b.ContactId != nil:
 		if found, err := q.ContactExists(ctx, store.ContactExistsParams{WorkspaceID: ws, ID: *b.ContactId}); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		} else if !found {
-			return uuid.Nil(), "", errContactGone
+			return uuid.Nil(), "", false, errContactGone
 		}
 		if err := visibleContact(ctx, q, p, *b.ContactId); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 		contactID = b.ContactId
 	case externalID != "":
@@ -485,11 +502,11 @@ func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, 
 		if err == nil {
 			contactID = &id
 		} else if !store.IsNotFound(err) {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	}
 	if contactID == nil && email == "" {
-		return uuid.Nil(), "", errValidation("send email, contact_id or external_id")
+		return uuid.Nil(), "", false, errValidation("send email, contact_id or external_id")
 	}
 	if contactID == nil {
 		id, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: email})
@@ -499,7 +516,7 @@ func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, 
 		if err == nil {
 			contactID = &id
 		} else if !store.IsNotFound(err) {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	}
 	if contactID == nil {
@@ -508,31 +525,31 @@ func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, 
 		}
 		c, err := q.CreateContact(ctx, store.CreateContactParams{ID: newID(), WorkspaceID: ws, Name: name, Attributes: attrs, Now: s.now()})
 		if err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 		if b.Locale != nil {
 			if _, err := q.SetContactIdentity(ctx, store.SetContactIdentityParams{
 				WorkspaceID: ws, ID: c.ID, Name: name, Locale: new(string(*b.Locale)), Attributes: attrs, Now: s.now(),
 			}); err != nil {
-				return uuid.Nil(), "", err
+				return uuid.Nil(), "", false, err
 			}
 		}
 		if err := q.AddContactEmail(ctx, store.AddContactEmailParams{WorkspaceID: ws, ContactID: c.ID, Email: email, Position: 0}); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 		if externalID != "" {
 			if err := q.AddContactExternalID(ctx, store.AddContactExternalIDParams{WorkspaceID: ws, InboxID: list.InboxID, ExternalID: externalID, ContactID: c.ID}); err != nil {
-				return uuid.Nil(), "", err
+				return uuid.Nil(), "", false, err
 			}
 		}
 		if err := q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: c.ID}); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
-		return c.ID, email, nil
+		return c.ID, email, true, nil
 	}
 	cur, err := q.LockContact(ctx, store.LockContactParams{WorkspaceID: ws, ID: *contactID})
 	if err != nil {
-		return uuid.Nil(), "", err
+		return uuid.Nil(), "", false, err
 	}
 	if (name != "" && cur.Name == "") || (b.Locale != nil && cur.Locale == nil) {
 		n, loc := cur.Name, cur.Locale
@@ -543,38 +560,38 @@ func (s *Server) subscriber(ctx context.Context, q *store.Queries, p principal, 
 			loc = new(string(*b.Locale))
 		}
 		if _, err := q.SetContactIdentity(ctx, store.SetContactIdentityParams{WorkspaceID: ws, ID: cur.ID, Name: n, Locale: loc, Attributes: cur.Attributes, Now: s.now()}); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	}
 	emails, err := q.ListContactEmails(ctx, store.ListContactEmailsParams{WorkspaceID: ws, ContactIds: []uuid.UUID{cur.ID}})
 	if err != nil {
-		return uuid.Nil(), "", err
+		return uuid.Nil(), "", false, err
 	}
 	if email == "" {
 		if len(emails) == 0 {
-			return uuid.Nil(), "", problem(http.StatusBadRequest, "invalid_email", "the contact has no e-mail address; send email")
+			return uuid.Nil(), "", false, problem(http.StatusBadRequest, "invalid_email", "the contact has no e-mail address; send email")
 		}
-		return cur.ID, emails[0].Email, nil
+		return cur.ID, emails[0].Email, false, nil
 	}
 	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: email}); store.IsNotFound(err) {
 		if err := q.AddContactEmail(ctx, store.AddContactEmailParams{WorkspaceID: ws, ContactID: cur.ID, Email: email, Position: int32(len(emails))}); err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 	} else if err != nil {
-		return uuid.Nil(), "", err
+		return uuid.Nil(), "", false, err
 	}
 	if externalID != "" {
 		inInbox, _, err := externalIDPlaces(ctx, q, ws, list.InboxID, cur.ID)
 		if err != nil {
-			return uuid.Nil(), "", err
+			return uuid.Nil(), "", false, err
 		}
 		if !inInbox {
 			if err := q.AddContactExternalID(ctx, store.AddContactExternalIDParams{WorkspaceID: ws, InboxID: list.InboxID, ExternalID: externalID, ContactID: cur.ID}); err != nil {
-				return uuid.Nil(), "", err
+				return uuid.Nil(), "", false, err
 			}
 		}
 	}
-	return cur.ID, email, nil
+	return cur.ID, email, false, nil
 }
 
 func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscriptionRequestObject) (oas.CreateSubscriptionResponseObject, error) {
@@ -596,7 +613,7 @@ func (s *Server) CreateSubscription(ctx context.Context, req oas.CreateSubscript
 		if err := requireManagerOrKey(p); err != nil {
 			return err
 		}
-		contactID, email, err := s.subscriber(ctx, q, p, list, b)
+		contactID, email, _, err := s.subscriber(ctx, q, p, list, b)
 		if err != nil {
 			return err
 		}
@@ -702,7 +719,7 @@ func consentEventBody(e store.ConsentEvent) oas.ConsentEvent {
 	out := oas.ConsentEvent{
 		Id: e.ID, SubscriptionId: e.SubscriptionID, Kind: oas.ConsentEventKind(e.Kind), Source: e.Source, Ip: e.Ip,
 		UserAgent: e.UserAgent, PageUrl: e.PageUrl, ConsentText: e.ConsentText, MemberId: e.MemberID, ApiKeyId: e.ApiKeyID,
-		BroadcastId: e.BroadcastID, CreatedAt: e.CreatedAt, Detail: map[string]any{},
+		BroadcastId: e.BroadcastID, ImportId: e.ImportID, CreatedAt: e.CreatedAt, Detail: map[string]any{},
 	}
 	_ = json.Unmarshal(e.Detail, &out.Detail)
 	return out

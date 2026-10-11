@@ -4556,6 +4556,250 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/imports:
+    get:
+      operationId: listListImports
+      summary: List a list's CSV imports
+      description: |
+        Newest first.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of imports.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListImportPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createListImport
+      summary: Upload a CSV file of subscribers
+      description: |
+        One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+        declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+        this file agreed to receive {list} from {sender}; I can show how and when"), and
+        `consent_source`, where and when the people agreed. Both are required
+        (`422 attestation_required`) and are stored on the import and on every consent event it
+        writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+        the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+        list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+        optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+        headers.
+
+        The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+        BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+        found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+        that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+        or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+        `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+        limit, 100,000 by default, fails). Start it with `/start`.
+
+        One import per workspace validates or imports at a time (`409 import_running`). A file
+        that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ListImportUpload"
+      responses:
+        "202":
+          description: The import, `validating`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListImport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "415":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/imports/{importId}:
+    get:
+      operationId: getListImport
+      summary: A CSV import
+      description: "Scope: `lists:read`."
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ImportId"
+      responses:
+        "200":
+          description: The import.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListImport"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateListImport
+      summary: Change an import's column mapping
+      description: |
+        Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+        again (the import goes back to `validating`). Exactly one column must be `email`.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ImportId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ListImportMappingUpdate"
+      responses:
+        "200":
+          description: The import, `validating`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListImport"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: cancelListImport
+      summary: Cancel an import
+      description: |
+        Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+        Subscriptions it already added stay, with their consent events. A finished import is left
+        as it is.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ImportId"
+      responses:
+        "204":
+          description: Cancelled.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/imports/{importId}/start:
+    post:
+      operationId: startListImport
+      summary: Start a validated import
+      description: |
+        Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+        email_column_required` when no column is mapped to `email`; `409 import_running` while
+        another import of the workspace runs). Rows are added 1,000 per transaction, each address
+        checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+        `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+        of the workspace or are suppressed are never added. Contacts are found by address or
+        created with the row's name and locale; mapped attributes only fill keys a contact does
+        not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+        mail. The upload is deleted when the import ends; refused rows stay downloadable from
+        `/errors` for 7 days.
+
+        Owners, admins and API keys. Scope: `lists:write`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ImportId"
+      responses:
+        "202":
+          description: The import, `importing`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListImport"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/lists/{listId}/imports/{importId}/errors:
+    get:
+      operationId: getListImportErrors
+      summary: Download an import's refused rows
+      description: |
+        A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+        the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+        `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+        Cells are quoted and formula-like values defused as in the consent export. Filled while
+        the import runs; `404` once it is 7 days past its end.
+
+        Scope: `lists:read`.
+      tags: [lists]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ListId"
+        - $ref: "#/components/parameters/ImportId"
+      responses:
+        "200":
+          description: The refused rows.
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+          content:
+            text/csv:
+              schema:
+                type: string
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/email-templates:
     get:
       operationId: listEmailTemplates
@@ -8366,6 +8610,13 @@ components:
       schema:
         type: string
         format: uuid
+    ImportId:
+      name: importId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     DesignId:
       name: designId
       in: path
@@ -11889,6 +12140,8 @@ components:
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
+        - $ref: "#/components/schemas/ListImportEvent"
+        - $ref: "#/components/schemas/ListImportProgressEvent"
         - $ref: "#/components/schemas/TypingEvent"
         - $ref: "#/components/schemas/MemberPresenceEvent"
         - $ref: "#/components/schemas/ContactPresenceEvent"
@@ -11923,6 +12176,8 @@ components:
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
+          list_import.updated: "#/components/schemas/ListImportEvent"
+          list_import.progress: "#/components/schemas/ListImportProgressEvent"
           typing: "#/components/schemas/TypingEvent"
           member.presence: "#/components/schemas/MemberPresenceEvent"
           contact.presence: "#/components/schemas/ContactPresenceEvent"
@@ -13767,7 +14022,7 @@ components:
           $ref: "#/components/schemas/ConsentEventKind"
         source:
           type: string
-          description: Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+          description: Who or what caused it, such as `form`, `identity`, `api`, `member`, `import`, `link`, `one_click`, `preferences`, `client`, `complaint`.
         ip:
           type: string
           description: The client's IP address, when the person acted.
@@ -13788,10 +14043,14 @@ components:
         broadcast_id:
           type: string
           format: uuid
+        import_id:
+          type: string
+          format: uuid
+          description: The CSV import that wrote it; `consent_text` then holds the importer's attestation.
         detail:
           type: object
           additionalProperties: true
-          description: "More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token."
+          description: "More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token, `import_id` and `consent_source` for an import."
         created_at:
           type: string
           format: date-time
@@ -14042,6 +14301,283 @@ components:
           properties:
             data:
               $ref: "#/components/schemas/WebhookSubscriptionData"
+    ListImportState:
+      type: string
+      description: |
+        `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+        for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+      enum: [validating, ready, importing, done, failed, cancelled]
+    ListImportEncoding:
+      type: string
+      enum: [utf-8, utf-16le, utf-16be, windows-1254, windows-1252]
+    ListImportField:
+      type: string
+      description: |
+        What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+        it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+        column.
+      enum: [email, name, first_name, last_name, locale, external_id, attribute, skip]
+    ListImportColumn:
+      type: object
+      required: [index, header, field]
+      properties:
+        index:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The column's position, from 0.
+        header:
+          type: string
+          description: The column's name in the header row.
+        field:
+          $ref: "#/components/schemas/ListImportField"
+        attribute:
+          type: string
+          pattern: "^[A-Za-z0-9_.-]{1,64}$"
+          description: The attribute key, with `field` `attribute`.
+    ListImportColumnMapping:
+      type: object
+      required: [index, field]
+      properties:
+        index:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 99
+        field:
+          $ref: "#/components/schemas/ListImportField"
+        attribute:
+          type: string
+          pattern: "^[A-Za-z0-9_.-]{1,64}$"
+          description: Required with `field` `attribute`.
+    ListImportMappingUpdate:
+      type: object
+      required: [columns]
+      properties:
+        columns:
+          type: array
+          maxItems: 100
+          description: Columns left out are skipped. Exactly one must be `email`.
+          items:
+            $ref: "#/components/schemas/ListImportColumnMapping"
+    ListImportCounts:
+      type: object
+      description: |
+        `valid` is found by the validation: rows that would be added. The rest are refused rows
+        by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+        importing, `added` and `created_contacts`.
+      required: [valid, existing, invalid_email, no_mail_domain, role_address, duplicate, suppressed, opted_out, unsubscribed, added, created_contacts]
+      properties:
+        valid:
+          type: integer
+          format: int64
+        existing:
+          type: integer
+          format: int64
+        invalid_email:
+          type: integer
+          format: int64
+        no_mail_domain:
+          type: integer
+          format: int64
+          description: The address's domain has no MX, A or AAAA record, or a null MX.
+        role_address:
+          type: integer
+          format: int64
+          description: Such as `postmaster@`, `abuse@`, `noreply@`.
+        duplicate:
+          type: integer
+          format: int64
+          description: The address appears earlier in the file.
+        suppressed:
+          type: integer
+          format: int64
+        opted_out:
+          type: integer
+          format: int64
+        unsubscribed:
+          type: integer
+          format: int64
+          description: The address unsubscribed from this list.
+        added:
+          type: integer
+          format: int64
+        created_contacts:
+          type: integer
+          format: int64
+    ListImport:
+      type: object
+      required: [id, list_id, state, filename, reconfirm, attestation, consent_source, rows_total, rows_done, counts, columns, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        list_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/ListImportState"
+        filename:
+          type: string
+        encoding:
+          $ref: "#/components/schemas/ListImportEncoding"
+        delimiter:
+          type: string
+          description: The column separator found in the header row.
+          enum: [comma, semicolon, tab]
+        reconfirm:
+          type: boolean
+          description: New addresses become `pending` and get a confirmation mail instead of being subscribed.
+        attestation:
+          type: string
+          description: The statement the importer accepted.
+        consent_source:
+          type: string
+          description: Where and when the people in the file agreed, as the importer wrote it.
+        rows_total:
+          type: integer
+          format: int32
+          description: Data rows in the file, empty rows left out; 0 until validated.
+        rows_done:
+          type: integer
+          format: int32
+        counts:
+          $ref: "#/components/schemas/ListImportCounts"
+        columns:
+          type: array
+          description: The file's columns with what each holds; empty until validated.
+          items:
+            $ref: "#/components/schemas/ListImportColumn"
+        preview:
+          type: array
+          description: The first 20 data rows, cells cut at 200 characters; absent once the import ends.
+          items:
+            type: array
+            items:
+              type: string
+        error:
+          type: string
+          description: Why the import failed.
+        member_id:
+          type: string
+          format: uuid
+          description: The member who uploaded it.
+        api_key_id:
+          type: string
+          format: uuid
+          description: The key that uploaded it.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+        errors_until:
+          type: string
+          format: date-time
+          description: When the refused rows (`/errors`) are deleted.
+    ListImportPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ListImport"
+        next_cursor:
+          type: string
+          description: Absent on the last page.
+    ListImportUpload:
+      type: object
+      required: [file, attestation, consent_source]
+      properties:
+        file:
+          type: string
+          format: binary
+        attestation:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        consent_source:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        reconfirm:
+          type: boolean
+        mapping:
+          type: string
+          description: A `ListImportMappingUpdate` as JSON.
+    ListImportProgress:
+      type: object
+      required: [id, list_id, state, rows_total, rows_done, counts]
+      properties:
+        id:
+          type: string
+          format: uuid
+        list_id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/ListImportState"
+        rows_total:
+          type: integer
+          format: int32
+        rows_done:
+          type: integer
+          format: int32
+        counts:
+          $ref: "#/components/schemas/ListImportCounts"
+    ListImportProgressEvent:
+      type: object
+      description: |
+        `list_import.progress`, on `/v1/realtime` only: the progress of an importing CSV file, at
+        most once a second. Not stored, no id, never replayed. Delivered to callers who hold
+        `lists:read` and can see the list's inbox.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [list_import.progress]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/ListImportProgress"
+    ListImportEvent:
+      type: object
+      description: |
+        `list_import.updated`, on `/v1/realtime` only: an import became `ready`, `importing`,
+        `done`, `failed` or `cancelled`. Not stored, no id, never replayed, no webhook; reload the
+        import after a reconnect. Delivered to callers who hold `lists:read` and can see the list's
+        inbox.
+      required: [type, workspace_id, inbox_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [list_import.updated]
+        workspace_id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/ListImport"
     ClientMailingList:
       type: object
       required: [id, name, description, double_opt_in]

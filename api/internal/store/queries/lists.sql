@@ -135,9 +135,9 @@ UPDATE list_subscriptions SET contact_id = @to_contact WHERE workspace_id = @wor
 
 -- name: AddConsentEvent :exec
 INSERT INTO consent_events (id, workspace_id, subscription_id, kind, source, ip, user_agent, page_url, consent_text,
-    member_id, api_key_id, broadcast_id, detail, created_at)
+    member_id, api_key_id, import_id, broadcast_id, detail, created_at)
 VALUES (@id, @workspace_id, @subscription_id, @kind, @source, sqlc.narg(ip), sqlc.narg(user_agent), sqlc.narg(page_url),
-    sqlc.narg(consent_text), sqlc.narg(member_id), sqlc.narg(api_key_id), sqlc.narg(broadcast_id), @detail, @created_at);
+    sqlc.narg(consent_text), sqlc.narg(member_id), sqlc.narg(api_key_id), sqlc.narg(import_id), sqlc.narg(broadcast_id), @detail, @created_at);
 
 -- name: ListConsentEvents :many
 SELECT * FROM consent_events WHERE workspace_id = $1 AND subscription_id = $2 ORDER BY created_at, id;

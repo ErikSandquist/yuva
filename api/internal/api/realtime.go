@@ -307,7 +307,7 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		if requireScope(f.p, oas.ContactsRead) != nil {
 			return false, nil
 		}
-	case eventSubscriptionCreated, eventSubscriptionUpdated:
+	case eventSubscriptionCreated, eventSubscriptionUpdated, eventListImportUpdated, eventListImportProgress:
 		if requireScope(f.p, oas.ListsRead) != nil {
 			return false, nil
 		}

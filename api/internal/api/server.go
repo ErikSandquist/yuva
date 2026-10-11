@@ -69,6 +69,7 @@ type Server struct {
 
 	imagesMax  int64
 	broadcasts BroadcastSettings
+	imports    ImportSettings
 
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
@@ -115,6 +116,7 @@ type Deps struct {
 	// EmailImagesMaxBytes caps a workspace's e-mail images (YUVA_EMAIL_IMAGES_MAX_BYTES); 0 is no limit.
 	EmailImagesMaxBytes int64
 	Broadcasts          BroadcastSettings
+	Imports             ImportSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -218,7 +220,7 @@ func New(d Deps) *Server {
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
 		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
-		broadcasts: d.Broadcasts,
+		broadcasts: d.Broadcasts, imports: importSettings(d.Imports),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -415,7 +417,7 @@ func (s *Server) limitBody(next http.Handler) http.Handler {
 			limit = MaxIngressBytes + 1
 		}
 		if strings.HasPrefix(strings.ToLower(r.Header.Get("Content-Type")), "multipart/form-data") {
-			limit += s.attach.MaxBytes * maxAttachmentsPerMessage
+			limit += max(s.attach.MaxBytes*maxAttachmentsPerMessage, maxImportBytes)
 		}
 		r.Body = http.MaxBytesReader(w, r.Body, limit)
 		next.ServeHTTP(w, r)

@@ -326,12 +326,16 @@ func (s *Server) UpdateMailingList(ctx context.Context, req oas.UpdateMailingLis
 
 func (s *Server) DeleteMailingList(ctx context.Context, req oas.DeleteMailingListRequestObject) (oas.DeleteMailingListResponseObject, error) {
 	p := principalFrom(ctx)
+	var uploads []string
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
 		l, err := visibleList(ctx, q, p, req.ListId, true)
 		if err != nil {
 			return err
 		}
 		if err := requireManagerOrKey(p); err != nil {
+			return err
+		}
+		if uploads, err = q.ListImportStorageKeys(ctx, store.ListImportStorageKeysParams{WorkspaceID: p.workspaceID, ListID: &l.ID}); err != nil {
 			return err
 		}
 		used, err := q.BroadcastUsesList(ctx, store.BroadcastUsesListParams{WorkspaceID: p.workspaceID, ListID: l.ID.String()})
@@ -354,6 +358,7 @@ func (s *Server) DeleteMailingList(ctx context.Context, req oas.DeleteMailingLis
 	if err != nil {
 		return nil, err
 	}
+	s.deleteObjects(ctx, uploads)
 	return oas.DeleteMailingList204Response{}, nil
 }
 

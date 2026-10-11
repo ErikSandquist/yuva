@@ -685,11 +685,11 @@ var (
 	progressSent = map[uuid.UUID]time.Time{}
 )
 
-func (s *Server) progressDue(id uuid.UUID) bool {
+func (s *Server) progressDue(id uuid.UUID, every time.Duration) bool {
 	progressMu.Lock()
 	defer progressMu.Unlock()
 	now := time.Now()
-	if now.Sub(progressSent[id]) < progressEvery {
+	if now.Sub(progressSent[id]) < every {
 		return false
 	}
 	if len(progressSent) > 10000 {
@@ -1058,7 +1058,7 @@ func (s *Server) commitBatch(ctx context.Context, b store.Broadcast, results []d
 	if err := s.checkBroadcastRates(ctx, ws, b.ID); err != nil {
 		return err
 	}
-	if cur, err := s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: b.ID}); err == nil && s.progressDue(b.ID) {
+	if cur, err := s.st.GetBroadcast(ctx, store.GetBroadcastParams{WorkspaceID: ws, ID: b.ID}); err == nil && s.progressDue(b.ID, progressEvery) {
 		s.broadcastProgress(ctx, cur)
 	}
 	return nil

@@ -1679,6 +1679,150 @@ func (e IngressResultStatus) Valid() bool {
 	}
 }
 
+// Defines values for ListImportDelimiter.
+const (
+	Comma     ListImportDelimiter = "comma"
+	Semicolon ListImportDelimiter = "semicolon"
+	Tab       ListImportDelimiter = "tab"
+)
+
+// Valid indicates whether the value is a known member of the ListImportDelimiter enum.
+func (e ListImportDelimiter) Valid() bool {
+	switch e {
+	case Comma:
+		return true
+	case Semicolon:
+		return true
+	case Tab:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportEncoding.
+const (
+	Utf16be     ListImportEncoding = "utf-16be"
+	Utf16le     ListImportEncoding = "utf-16le"
+	Utf8        ListImportEncoding = "utf-8"
+	Windows1252 ListImportEncoding = "windows-1252"
+	Windows1254 ListImportEncoding = "windows-1254"
+)
+
+// Valid indicates whether the value is a known member of the ListImportEncoding enum.
+func (e ListImportEncoding) Valid() bool {
+	switch e {
+	case Utf16be:
+		return true
+	case Utf16le:
+		return true
+	case Utf8:
+		return true
+	case Windows1252:
+		return true
+	case Windows1254:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportEventType.
+const (
+	ListImportUpdated ListImportEventType = "list_import.updated"
+)
+
+// Valid indicates whether the value is a known member of the ListImportEventType enum.
+func (e ListImportEventType) Valid() bool {
+	switch e {
+	case ListImportUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportField.
+const (
+	ListImportFieldAttribute  ListImportField = "attribute"
+	ListImportFieldEmail      ListImportField = "email"
+	ListImportFieldExternalId ListImportField = "external_id"
+	ListImportFieldFirstName  ListImportField = "first_name"
+	ListImportFieldLastName   ListImportField = "last_name"
+	ListImportFieldLocale     ListImportField = "locale"
+	ListImportFieldName       ListImportField = "name"
+	ListImportFieldSkip       ListImportField = "skip"
+)
+
+// Valid indicates whether the value is a known member of the ListImportField enum.
+func (e ListImportField) Valid() bool {
+	switch e {
+	case ListImportFieldAttribute:
+		return true
+	case ListImportFieldEmail:
+		return true
+	case ListImportFieldExternalId:
+		return true
+	case ListImportFieldFirstName:
+		return true
+	case ListImportFieldLastName:
+		return true
+	case ListImportFieldLocale:
+		return true
+	case ListImportFieldName:
+		return true
+	case ListImportFieldSkip:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportProgressEventType.
+const (
+	ListImportProgressEventTypeListImportProgress ListImportProgressEventType = "list_import.progress"
+)
+
+// Valid indicates whether the value is a known member of the ListImportProgressEventType enum.
+func (e ListImportProgressEventType) Valid() bool {
+	switch e {
+	case ListImportProgressEventTypeListImportProgress:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportState.
+const (
+	ListImportStateCancelled  ListImportState = "cancelled"
+	ListImportStateDone       ListImportState = "done"
+	ListImportStateFailed     ListImportState = "failed"
+	ListImportStateImporting  ListImportState = "importing"
+	ListImportStateReady      ListImportState = "ready"
+	ListImportStateValidating ListImportState = "validating"
+)
+
+// Valid indicates whether the value is a known member of the ListImportState enum.
+func (e ListImportState) Valid() bool {
+	switch e {
+	case ListImportStateCancelled:
+		return true
+	case ListImportStateDone:
+		return true
+	case ListImportStateFailed:
+		return true
+	case ListImportStateImporting:
+		return true
+	case ListImportStateReady:
+		return true
+	case ListImportStateValidating:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for Locale.
 const (
 	En Locale = "en"
@@ -2089,13 +2233,13 @@ func (e ReaderNotificationKind) Valid() bool {
 
 // Defines values for RealtimeReadyType.
 const (
-	Ready RealtimeReadyType = "ready"
+	RealtimeReadyTypeReady RealtimeReadyType = "ready"
 )
 
 // Valid indicates whether the value is a known member of the RealtimeReadyType enum.
 func (e RealtimeReadyType) Valid() bool {
 	switch e {
-	case Ready:
+	case RealtimeReadyTypeReady:
 		return true
 	default:
 		return false
@@ -4013,9 +4157,12 @@ type ConsentEvent struct {
 	ConsentText *string   `json:"consent_text,omitempty"`
 	CreatedAt   time.Time `json:"created_at"`
 
-	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token.
+	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token, `import_id` and `consent_source` for an import.
 	Detail map[string]interface{} `json:"detail"`
 	Id     uuid.UUID              `json:"id"`
+
+	// ImportId The CSV import that wrote it; `consent_text` then holds the importer's attestation.
+	ImportId *uuid.UUID `json:"import_id,omitempty"`
 
 	// Ip The client's IP address, when the person acted.
 	Ip *string `json:"ip,omitempty"`
@@ -4029,7 +4176,7 @@ type ConsentEvent struct {
 	// PageUrl The page the person subscribed on, or the one the API caller declared.
 	PageUrl *string `json:"page_url,omitempty"`
 
-	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `import`, `link`, `one_click`, `preferences`, `client`, `complaint`.
 	Source         string    `json:"source"`
 	SubscriptionId uuid.UUID `json:"subscription_id"`
 	UserAgent      *string   `json:"user_agent,omitempty"`
@@ -6463,6 +6610,199 @@ type LabelUpdate struct {
 // Examples: en, tr
 type LanguageTag = string
 
+// ListImport defines model for ListImport.
+type ListImport struct {
+	// ApiKeyId The key that uploaded it.
+	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
+
+	// Attestation The statement the importer accepted.
+	Attestation string `json:"attestation"`
+
+	// Columns The file's columns with what each holds; empty until validated.
+	Columns []ListImportColumn `json:"columns"`
+
+	// ConsentSource Where and when the people in the file agreed, as the importer wrote it.
+	ConsentSource string `json:"consent_source"`
+
+	// Counts `valid` is found by the validation: rows that would be added. The rest are refused rows
+	// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+	// importing, `added` and `created_contacts`.
+	Counts    ListImportCounts `json:"counts"`
+	CreatedAt time.Time        `json:"created_at"`
+
+	// Delimiter The column separator found in the header row.
+	Delimiter *ListImportDelimiter `json:"delimiter,omitempty"`
+	Encoding  *ListImportEncoding  `json:"encoding,omitempty"`
+
+	// Error Why the import failed.
+	Error *string `json:"error,omitempty"`
+
+	// ErrorsUntil When the refused rows (`/errors`) are deleted.
+	ErrorsUntil *time.Time `json:"errors_until,omitempty"`
+	Filename    string     `json:"filename"`
+	FinishedAt  *time.Time `json:"finished_at,omitempty"`
+	Id          uuid.UUID  `json:"id"`
+	ListId      uuid.UUID  `json:"list_id"`
+
+	// MemberId The member who uploaded it.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Preview The first 20 data rows, cells cut at 200 characters; absent once the import ends.
+	Preview *[][]string `json:"preview,omitempty"`
+
+	// Reconfirm New addresses become `pending` and get a confirmation mail instead of being subscribed.
+	Reconfirm bool  `json:"reconfirm"`
+	RowsDone  int32 `json:"rows_done"`
+
+	// RowsTotal Data rows in the file, empty rows left out; 0 until validated.
+	RowsTotal int32      `json:"rows_total"`
+	StartedAt *time.Time `json:"started_at,omitempty"`
+
+	// State `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+	// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+	State     ListImportState `json:"state"`
+	UpdatedAt time.Time       `json:"updated_at"`
+}
+
+// ListImportDelimiter The column separator found in the header row.
+type ListImportDelimiter string
+
+// ListImportColumn defines model for ListImportColumn.
+type ListImportColumn struct {
+	// Attribute The attribute key, with `field` `attribute`.
+	Attribute *string `json:"attribute,omitempty"`
+
+	// Field What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+	// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+	// column.
+	Field ListImportField `json:"field"`
+
+	// Header The column's name in the header row.
+	Header string `json:"header"`
+
+	// Index The column's position, from 0.
+	Index int32 `json:"index"`
+}
+
+// ListImportColumnMapping defines model for ListImportColumnMapping.
+type ListImportColumnMapping struct {
+	// Attribute Required with `field` `attribute`.
+	Attribute *string `json:"attribute,omitempty"`
+
+	// Field What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+	// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+	// column.
+	Field ListImportField `json:"field"`
+	Index int32           `json:"index"`
+}
+
+// ListImportCounts `valid` is found by the validation: rows that would be added. The rest are refused rows
+// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+// importing, `added` and `created_contacts`.
+type ListImportCounts struct {
+	Added           int64 `json:"added"`
+	CreatedContacts int64 `json:"created_contacts"`
+
+	// Duplicate The address appears earlier in the file.
+	Duplicate    int64 `json:"duplicate"`
+	Existing     int64 `json:"existing"`
+	InvalidEmail int64 `json:"invalid_email"`
+
+	// NoMailDomain The address's domain has no MX, A or AAAA record, or a null MX.
+	NoMailDomain int64 `json:"no_mail_domain"`
+	OptedOut     int64 `json:"opted_out"`
+
+	// RoleAddress Such as `postmaster@`, `abuse@`, `noreply@`.
+	RoleAddress int64 `json:"role_address"`
+	Suppressed  int64 `json:"suppressed"`
+
+	// Unsubscribed The address unsubscribed from this list.
+	Unsubscribed int64 `json:"unsubscribed"`
+	Valid        int64 `json:"valid"`
+}
+
+// ListImportEncoding defines model for ListImportEncoding.
+type ListImportEncoding string
+
+// ListImportEvent `list_import.updated`, on `/v1/realtime` only: an import became `ready`, `importing`,
+// `done`, `failed` or `cancelled`. Not stored, no id, never replayed, no webhook; reload the
+// import after a reconnect. Delivered to callers who hold `lists:read` and can see the list's
+// inbox.
+type ListImportEvent struct {
+	CreatedAt   time.Time           `json:"created_at"`
+	Data        ListImport          `json:"data"`
+	InboxId     uuid.UUID           `json:"inbox_id"`
+	Type        ListImportEventType `json:"type"`
+	WorkspaceId uuid.UUID           `json:"workspace_id"`
+}
+
+// ListImportEventType defines model for ListImportEvent.Type.
+type ListImportEventType string
+
+// ListImportField What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+// column.
+type ListImportField string
+
+// ListImportMappingUpdate defines model for ListImportMappingUpdate.
+type ListImportMappingUpdate struct {
+	// Columns Columns left out are skipped. Exactly one must be `email`.
+	Columns []ListImportColumnMapping `json:"columns"`
+}
+
+// ListImportPage defines model for ListImportPage.
+type ListImportPage struct {
+	Items []ListImport `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ListImportProgress defines model for ListImportProgress.
+type ListImportProgress struct {
+	// Counts `valid` is found by the validation: rows that would be added. The rest are refused rows
+	// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+	// importing, `added` and `created_contacts`.
+	Counts    ListImportCounts `json:"counts"`
+	Id        uuid.UUID        `json:"id"`
+	ListId    uuid.UUID        `json:"list_id"`
+	RowsDone  int32            `json:"rows_done"`
+	RowsTotal int32            `json:"rows_total"`
+
+	// State `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+	// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+	State ListImportState `json:"state"`
+}
+
+// ListImportProgressEvent `list_import.progress`, on `/v1/realtime` only: the progress of an importing CSV file, at
+// most once a second. Not stored, no id, never replayed. Delivered to callers who hold
+// `lists:read` and can see the list's inbox.
+type ListImportProgressEvent struct {
+	CreatedAt   time.Time                   `json:"created_at"`
+	Data        ListImportProgress          `json:"data"`
+	InboxId     uuid.UUID                   `json:"inbox_id"`
+	Type        ListImportProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                   `json:"workspace_id"`
+}
+
+// ListImportProgressEventType defines model for ListImportProgressEvent.Type.
+type ListImportProgressEventType string
+
+// ListImportState `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+type ListImportState string
+
+// ListImportUpload defines model for ListImportUpload.
+type ListImportUpload struct {
+	Attestation   string             `json:"attestation"`
+	ConsentSource string             `json:"consent_source"`
+	File          openapi_types.File `json:"file"`
+
+	// Mapping A `ListImportMappingUpdate` as JSON.
+	Mapping   *string `json:"mapping,omitempty"`
+	Reconfirm *bool   `json:"reconfirm,omitempty"`
+}
+
 // Locale The language of e-mails sent to the person.
 type Locale string
 
@@ -8389,6 +8729,9 @@ type IdempotencyKey = string
 // ImageId defines model for ImageId.
 type ImageId = uuid.UUID
 
+// ImportId defines model for ImportId.
+type ImportId = uuid.UUID
+
 // InboxId defines model for InboxId.
 type InboxId = uuid.UUID
 
@@ -9647,6 +9990,54 @@ type GetMailingListGrowthParams struct {
 // GetMailingListGrowthParamsDays defines parameters for GetMailingListGrowth.
 type GetMailingListGrowthParamsDays int32
 
+// ListListImportsParams defines parameters for ListListImports.
+type ListListImportsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateListImportParams defines parameters for CreateListImport.
+type CreateListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelListImportParams defines parameters for CancelListImport.
+type CancelListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetListImportParams defines parameters for GetListImport.
+type GetListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateListImportParams defines parameters for UpdateListImport.
+type UpdateListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetListImportErrorsParams defines parameters for GetListImportErrors.
+type GetListImportErrorsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// StartListImportParams defines parameters for StartListImport.
+type StartListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListSubscriptionsParams defines parameters for ListSubscriptions.
 type ListSubscriptionsParams struct {
 	State *SubscriptionState `form:"state,omitempty" json:"state,omitempty"`
@@ -10371,6 +10762,12 @@ type CreateMailingListJSONRequestBody = MailingListCreate
 
 // UpdateMailingListJSONRequestBody defines body for UpdateMailingList for application/json ContentType.
 type UpdateMailingListJSONRequestBody = MailingListUpdate
+
+// CreateListImportMultipartRequestBody defines body for CreateListImport for multipart/form-data ContentType.
+type CreateListImportMultipartRequestBody = ListImportUpload
+
+// UpdateListImportJSONRequestBody defines body for UpdateListImport for application/json ContentType.
+type UpdateListImportJSONRequestBody = ListImportMappingUpdate
 
 // CreateSubscriptionJSONRequestBody defines body for CreateSubscription for application/json ContentType.
 type CreateSubscriptionJSONRequestBody = SubscriptionCreate
@@ -12284,6 +12681,58 @@ func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) 
 	return err
 }
 
+// AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
+func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
+	var body ListImportEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListImportEvent overwrites any union data inside the RealtimeMessage as the provided ListImportEvent
+func (t *RealtimeMessage) FromListImportEvent(v ListImportEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListImportEvent performs a merge with any union data inside the RealtimeMessage, using the provided ListImportEvent
+func (t *RealtimeMessage) MergeListImportEvent(v ListImportEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsListImportProgressEvent returns the union data inside the RealtimeMessage as a ListImportProgressEvent
+func (t RealtimeMessage) AsListImportProgressEvent() (ListImportProgressEvent, error) {
+	var body ListImportProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListImportProgressEvent overwrites any union data inside the RealtimeMessage as the provided ListImportProgressEvent
+func (t *RealtimeMessage) FromListImportProgressEvent(v ListImportProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListImportProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided ListImportProgressEvent
+func (t *RealtimeMessage) MergeListImportProgressEvent(v ListImportProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -12498,6 +12947,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsInboxUpdatedEvent()
 	case "inbox_access.changed":
 		return t.AsInboxAccessChangedEvent()
+	case "list_import.progress":
+		return t.AsListImportProgressEvent()
+	case "list_import.updated":
+		return t.AsListImportEvent()
 	case "member.presence":
 		return t.AsMemberPresenceEvent()
 	case "message.created":
@@ -13556,6 +14009,27 @@ type ServerInterface interface {
 	// GetMailingListGrowth How a list grew
 	// (GET /v1/lists/{listId}/growth)
 	GetMailingListGrowth(w http.ResponseWriter, r *http.Request, listId ListId, params GetMailingListGrowthParams)
+	// ListListImports List a list's CSV imports
+	// (GET /v1/lists/{listId}/imports)
+	ListListImports(w http.ResponseWriter, r *http.Request, listId ListId, params ListListImportsParams)
+	// CreateListImport Upload a CSV file of subscribers
+	// (POST /v1/lists/{listId}/imports)
+	CreateListImport(w http.ResponseWriter, r *http.Request, listId ListId, params CreateListImportParams)
+	// CancelListImport Cancel an import
+	// (DELETE /v1/lists/{listId}/imports/{importId})
+	CancelListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params CancelListImportParams)
+	// GetListImport A CSV import
+	// (GET /v1/lists/{listId}/imports/{importId})
+	GetListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params GetListImportParams)
+	// UpdateListImport Change an import's column mapping
+	// (PATCH /v1/lists/{listId}/imports/{importId})
+	UpdateListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params UpdateListImportParams)
+	// GetListImportErrors Download an import's refused rows
+	// (GET /v1/lists/{listId}/imports/{importId}/errors)
+	GetListImportErrors(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params GetListImportErrorsParams)
+	// StartListImport Start a validated import
+	// (POST /v1/lists/{listId}/imports/{importId}/start)
+	StartListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params StartListImportParams)
 	// ListSubscriptions List a list's subscriptions
 	// (GET /v1/lists/{listId}/subscriptions)
 	ListSubscriptions(w http.ResponseWriter, r *http.Request, listId ListId, params ListSubscriptionsParams)
@@ -22685,6 +23159,427 @@ func (siw *ServerInterfaceWrapper) GetMailingListGrowth(w http.ResponseWriter, r
 	handler.ServeHTTP(w, r)
 }
 
+// ListListImports operation middleware
+func (siw *ServerInterfaceWrapper) ListListImports(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListListImportsParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListListImports(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateListImport operation middleware
+func (siw *ServerInterfaceWrapper) CreateListImport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateListImportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateListImport(w, r, listId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CancelListImport operation middleware
+func (siw *ServerInterfaceWrapper) CancelListImport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "importId" -------------
+	var importId ImportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "importId", r.PathValue("importId"), &importId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "importId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CancelListImportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CancelListImport(w, r, listId, importId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetListImport operation middleware
+func (siw *ServerInterfaceWrapper) GetListImport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "importId" -------------
+	var importId ImportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "importId", r.PathValue("importId"), &importId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "importId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetListImportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetListImport(w, r, listId, importId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateListImport operation middleware
+func (siw *ServerInterfaceWrapper) UpdateListImport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "importId" -------------
+	var importId ImportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "importId", r.PathValue("importId"), &importId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "importId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateListImportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateListImport(w, r, listId, importId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetListImportErrors operation middleware
+func (siw *ServerInterfaceWrapper) GetListImportErrors(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "importId" -------------
+	var importId ImportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "importId", r.PathValue("importId"), &importId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "importId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetListImportErrorsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetListImportErrors(w, r, listId, importId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// StartListImport operation middleware
+func (siw *ServerInterfaceWrapper) StartListImport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "listId" -------------
+	var listId ListId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "listId", r.PathValue("listId"), &listId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "listId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "importId" -------------
+	var importId ImportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "importId", r.PathValue("importId"), &importId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "importId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StartListImportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.StartListImport(w, r, listId, importId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListSubscriptions operation middleware
 func (siw *ServerInterfaceWrapper) ListSubscriptions(w http.ResponseWriter, r *http.Request) {
 
@@ -25420,6 +26315,13 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}", wrapper.UpdateSubscription)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists/{listId}/subscriptions/{subscriptionId}/confirmation", wrapper.ResendSubscriptionConfirmation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/consent-export", wrapper.ExportListConsent)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/imports", wrapper.ListListImports)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists/{listId}/imports", wrapper.CreateListImport)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/lists/{listId}/imports/{importId}", wrapper.CancelListImport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/imports/{importId}", wrapper.GetListImport)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/lists/{listId}/imports/{importId}", wrapper.UpdateListImport)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/lists/{listId}/imports/{importId}/start", wrapper.StartListImport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/lists/{listId}/imports/{importId}/errors", wrapper.GetListImportErrors)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/email-templates", wrapper.ListEmailTemplates)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/email-templates/{slug}", wrapper.GetEmailTemplate)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/email-designs", wrapper.ListEmailDesigns)
@@ -39859,6 +40761,630 @@ func (response GetMailingListGrowth404ApplicationProblemPlusJSONResponse) VisitG
 	return err
 }
 
+type ListListImportsRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params ListListImportsParams
+}
+
+type ListListImportsResponseObject interface {
+	VisitListListImportsResponse(w http.ResponseWriter) error
+}
+
+type ListListImports200JSONResponse ListImportPage
+
+func (response ListListImports200JSONResponse) VisitListListImportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListListImports400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListListImports400ApplicationProblemPlusJSONResponse) VisitListListImportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListListImports401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListListImports401ApplicationProblemPlusJSONResponse) VisitListListImportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListListImports403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListListImports403ApplicationProblemPlusJSONResponse) VisitListListImportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListListImports404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListListImports404ApplicationProblemPlusJSONResponse) VisitListListImportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImportRequestObject struct {
+	ListId ListId `json:"listId"`
+	Params CreateListImportParams
+	Body   *multipart.Reader
+}
+
+type CreateListImportResponseObject interface {
+	VisitCreateListImportResponse(w http.ResponseWriter) error
+}
+
+type CreateListImport202JSONResponse ListImport
+
+func (response CreateListImport202JSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateListImport400ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport401ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport403ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport404ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport409ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport413ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport413ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(413)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport415ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport415ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(415)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateListImport422ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateListImport422ApplicationProblemPlusJSONResponse) VisitCreateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelListImportRequestObject struct {
+	ListId   ListId   `json:"listId"`
+	ImportId ImportId `json:"importId"`
+	Params   CancelListImportParams
+}
+
+type CancelListImportResponseObject interface {
+	VisitCancelListImportResponse(w http.ResponseWriter) error
+}
+
+type CancelListImport204Response struct {
+}
+
+func (response CancelListImport204Response) VisitCancelListImportResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type CancelListImport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CancelListImport401ApplicationProblemPlusJSONResponse) VisitCancelListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelListImport403ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelListImport403ApplicationProblemPlusJSONResponse) VisitCancelListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelListImport404ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelListImport404ApplicationProblemPlusJSONResponse) VisitCancelListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImportRequestObject struct {
+	ListId   ListId   `json:"listId"`
+	ImportId ImportId `json:"importId"`
+	Params   GetListImportParams
+}
+
+type GetListImportResponseObject interface {
+	VisitGetListImportResponse(w http.ResponseWriter) error
+}
+
+type GetListImport200JSONResponse ListImport
+
+func (response GetListImport200JSONResponse) VisitGetListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetListImport401ApplicationProblemPlusJSONResponse) VisitGetListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImport403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetListImport403ApplicationProblemPlusJSONResponse) VisitGetListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImport404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetListImport404ApplicationProblemPlusJSONResponse) VisitGetListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImportRequestObject struct {
+	ListId   ListId   `json:"listId"`
+	ImportId ImportId `json:"importId"`
+	Params   UpdateListImportParams
+	Body     *UpdateListImportJSONRequestBody
+}
+
+type UpdateListImportResponseObject interface {
+	VisitUpdateListImportResponse(w http.ResponseWriter) error
+}
+
+type UpdateListImport200JSONResponse ListImport
+
+func (response UpdateListImport200JSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateListImport400ApplicationProblemPlusJSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImport401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateListImport401ApplicationProblemPlusJSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImport403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateListImport403ApplicationProblemPlusJSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImport404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateListImport404ApplicationProblemPlusJSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateListImport409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateListImport409ApplicationProblemPlusJSONResponse) VisitUpdateListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImportErrorsRequestObject struct {
+	ListId   ListId   `json:"listId"`
+	ImportId ImportId `json:"importId"`
+	Params   GetListImportErrorsParams
+}
+
+type GetListImportErrorsResponseObject interface {
+	VisitGetListImportErrorsResponse(w http.ResponseWriter) error
+}
+
+type GetListImportErrors200ResponseHeaders struct {
+	ContentDisposition *string
+}
+
+type GetListImportErrors200TextcsvResponse struct {
+	Body          io.Reader
+	Headers       GetListImportErrors200ResponseHeaders
+	ContentLength int64
+}
+
+func (response GetListImportErrors200TextcsvResponse) VisitGetListImportErrorsResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/csv")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type GetListImportErrors401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetListImportErrors401ApplicationProblemPlusJSONResponse) VisitGetListImportErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImportErrors403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetListImportErrors403ApplicationProblemPlusJSONResponse) VisitGetListImportErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetListImportErrors404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetListImportErrors404ApplicationProblemPlusJSONResponse) VisitGetListImportErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImportRequestObject struct {
+	ListId   ListId   `json:"listId"`
+	ImportId ImportId `json:"importId"`
+	Params   StartListImportParams
+}
+
+type StartListImportResponseObject interface {
+	VisitStartListImportResponse(w http.ResponseWriter) error
+}
+
+type StartListImport202JSONResponse ListImport
+
+func (response StartListImport202JSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response StartListImport401ApplicationProblemPlusJSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImport403ApplicationProblemPlusJSONResponse Problem
+
+func (response StartListImport403ApplicationProblemPlusJSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImport404ApplicationProblemPlusJSONResponse Problem
+
+func (response StartListImport404ApplicationProblemPlusJSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImport409ApplicationProblemPlusJSONResponse Problem
+
+func (response StartListImport409ApplicationProblemPlusJSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartListImport422ApplicationProblemPlusJSONResponse Problem
+
+func (response StartListImport422ApplicationProblemPlusJSONResponse) VisitStartListImportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListSubscriptionsRequestObject struct {
 	ListId ListId `json:"listId"`
 	Params ListSubscriptionsParams
@@ -44074,6 +45600,27 @@ type StrictServerInterface interface {
 	// GetMailingListGrowth How a list grew
 	// (GET /v1/lists/{listId}/growth)
 	GetMailingListGrowth(ctx context.Context, request GetMailingListGrowthRequestObject) (GetMailingListGrowthResponseObject, error)
+	// ListListImports List a list's CSV imports
+	// (GET /v1/lists/{listId}/imports)
+	ListListImports(ctx context.Context, request ListListImportsRequestObject) (ListListImportsResponseObject, error)
+	// CreateListImport Upload a CSV file of subscribers
+	// (POST /v1/lists/{listId}/imports)
+	CreateListImport(ctx context.Context, request CreateListImportRequestObject) (CreateListImportResponseObject, error)
+	// CancelListImport Cancel an import
+	// (DELETE /v1/lists/{listId}/imports/{importId})
+	CancelListImport(ctx context.Context, request CancelListImportRequestObject) (CancelListImportResponseObject, error)
+	// GetListImport A CSV import
+	// (GET /v1/lists/{listId}/imports/{importId})
+	GetListImport(ctx context.Context, request GetListImportRequestObject) (GetListImportResponseObject, error)
+	// UpdateListImport Change an import's column mapping
+	// (PATCH /v1/lists/{listId}/imports/{importId})
+	UpdateListImport(ctx context.Context, request UpdateListImportRequestObject) (UpdateListImportResponseObject, error)
+	// GetListImportErrors Download an import's refused rows
+	// (GET /v1/lists/{listId}/imports/{importId}/errors)
+	GetListImportErrors(ctx context.Context, request GetListImportErrorsRequestObject) (GetListImportErrorsResponseObject, error)
+	// StartListImport Start a validated import
+	// (POST /v1/lists/{listId}/imports/{importId}/start)
+	StartListImport(ctx context.Context, request StartListImportRequestObject) (StartListImportResponseObject, error)
 	// ListSubscriptions List a list's subscriptions
 	// (GET /v1/lists/{listId}/subscriptions)
 	ListSubscriptions(ctx context.Context, request ListSubscriptionsRequestObject) (ListSubscriptionsResponseObject, error)
@@ -49199,6 +50746,214 @@ func (sh *strictHandler) GetMailingListGrowth(w http.ResponseWriter, r *http.Req
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetMailingListGrowthResponseObject); ok {
 		if err := validResponse.VisitGetMailingListGrowthResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListListImports operation middleware
+func (sh *strictHandler) ListListImports(w http.ResponseWriter, r *http.Request, listId ListId, params ListListImportsParams) {
+	var request ListListImportsRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListListImports(ctx, request.(ListListImportsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListListImports")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListListImportsResponseObject); ok {
+		if err := validResponse.VisitListListImportsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateListImport operation middleware
+func (sh *strictHandler) CreateListImport(w http.ResponseWriter, r *http.Request, listId ListId, params CreateListImportParams) {
+	var request CreateListImportRequestObject
+
+	request.ListId = listId
+	request.Params = params
+
+	if reader, err := r.MultipartReader(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode multipart body: %w", err))
+		return
+	} else {
+		request.Body = reader
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateListImport(ctx, request.(CreateListImportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateListImport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateListImportResponseObject); ok {
+		if err := validResponse.VisitCreateListImportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CancelListImport operation middleware
+func (sh *strictHandler) CancelListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params CancelListImportParams) {
+	var request CancelListImportRequestObject
+
+	request.ListId = listId
+	request.ImportId = importId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CancelListImport(ctx, request.(CancelListImportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CancelListImport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CancelListImportResponseObject); ok {
+		if err := validResponse.VisitCancelListImportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetListImport operation middleware
+func (sh *strictHandler) GetListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params GetListImportParams) {
+	var request GetListImportRequestObject
+
+	request.ListId = listId
+	request.ImportId = importId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetListImport(ctx, request.(GetListImportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetListImport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetListImportResponseObject); ok {
+		if err := validResponse.VisitGetListImportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateListImport operation middleware
+func (sh *strictHandler) UpdateListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params UpdateListImportParams) {
+	var request UpdateListImportRequestObject
+
+	request.ListId = listId
+	request.ImportId = importId
+	request.Params = params
+
+	var body UpdateListImportJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateListImport(ctx, request.(UpdateListImportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateListImport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateListImportResponseObject); ok {
+		if err := validResponse.VisitUpdateListImportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetListImportErrors operation middleware
+func (sh *strictHandler) GetListImportErrors(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params GetListImportErrorsParams) {
+	var request GetListImportErrorsRequestObject
+
+	request.ListId = listId
+	request.ImportId = importId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetListImportErrors(ctx, request.(GetListImportErrorsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetListImportErrors")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetListImportErrorsResponseObject); ok {
+		if err := validResponse.VisitGetListImportErrorsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// StartListImport operation middleware
+func (sh *strictHandler) StartListImport(w http.ResponseWriter, r *http.Request, listId ListId, importId ImportId, params StartListImportParams) {
+	var request StartListImportRequestObject
+
+	request.ListId = listId
+	request.ImportId = importId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.StartListImport(ctx, request.(StartListImportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "StartListImport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(StartListImportResponseObject); ok {
+		if err := validResponse.VisitStartListImportResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

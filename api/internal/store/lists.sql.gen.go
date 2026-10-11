@@ -14,9 +14,9 @@ import (
 
 const addConsentEvent = `-- name: AddConsentEvent :exec
 INSERT INTO consent_events (id, workspace_id, subscription_id, kind, source, ip, user_agent, page_url, consent_text,
-    member_id, api_key_id, broadcast_id, detail, created_at)
+    member_id, api_key_id, import_id, broadcast_id, detail, created_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
-    $9, $10, $11, $12, $13, $14)
+    $9, $10, $11, $12, $13, $14, $15)
 `
 
 type AddConsentEventParams struct {
@@ -31,6 +31,7 @@ type AddConsentEventParams struct {
 	ConsentText    *string
 	MemberID       *uuid.UUID
 	ApiKeyID       *uuid.UUID
+	ImportID       *uuid.UUID
 	BroadcastID    *uuid.UUID
 	Detail         []byte
 	CreatedAt      time.Time
@@ -49,6 +50,7 @@ func (q *Queries) AddConsentEvent(ctx context.Context, arg AddConsentEventParams
 		arg.ConsentText,
 		arg.MemberID,
 		arg.ApiKeyID,
+		arg.ImportID,
 		arg.BroadcastID,
 		arg.Detail,
 		arg.CreatedAt,

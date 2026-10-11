@@ -22,6 +22,8 @@ type pendingEvent struct {
 type eventBatch struct {
 	items []pendingEvent
 	jobs  []river.InsertManyParams
+	// quiet drops events and keeps jobs: imports write no event or webhook per row.
+	quiet bool
 }
 
 func (b *eventBatch) job(args river.JobArgs, opts *river.InsertOpts) {
@@ -40,6 +42,9 @@ func (b *eventBatch) jobOnce(args river.JobArgs, opts *river.InsertOpts) {
 }
 
 func (b *eventBatch) add(typ string, inboxID, conversationID *uuid.UUID, data any) {
+	if b.quiet {
+		return
+	}
 	b.items = append(b.items, pendingEvent{typ: typ, inboxID: inboxID, conversationID: conversationID, data: mustJSON(data)})
 }
 
