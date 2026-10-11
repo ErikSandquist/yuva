@@ -180,11 +180,16 @@ deshalb auch unter `dir="rtl"`. Wie die Elemente brauchen sie `useyuva` 0.0.7 od
 
 ### Andere Generatoren
 
-Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie die Elemente unter den Artikel:
+Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie beide Elemente unter den Artikel.
+`useyuva/docs` und `useyuva/react` lassen sich beim Server-Rendering importieren; sie registrieren
+die Elemente nur im Browser. Geprüft mit Starlight 0.42, VitePress 1.6 und Docusaurus 3.10.
 
-- **Starlight**: die Elemente in einen überschriebenen `Footer` einfügen.
-- **VitePress**: den Slot `doc-after` nutzen; `yuva-`-Tags zu Custom Elements machen (`vue.template.compilerOptions.isCustomElement`).
-- **Docusaurus**: `DocItem/Footer` swizzlen (wrap).
+- **Starlight**: [`Footer` überschreiben](https://starlight.astro.build/guides/overriding-components/): den Standard-`Footer` rendern, danach beide Elemente
+  und `<script>import "useyuva/docs";</script>`. Astro braucht für Custom Elements keine Einstellung.
+- **VitePress**: [`Layout` umhüllen](https://vitepress.dev/guide/extending-default-theme#layout-slots) und beide Elemente in den Slot `doc-after` setzen;
+  `useyuva/docs` in `.vitepress/theme/index.js` importieren und in der Konfiguration `vue: { template: { compilerOptions: { isCustomElement: (tag) => tag.startsWith("yuva-") } } }` setzen.
+- **Docusaurus**: `DocItem/Footer` [wrappen](https://docusaurus.io/docs/swizzling#wrapping) (`npm run swizzle @docusaurus/theme-classic DocItem/Footer -- --wrap --danger`;
+  die CLI stuft das als unsicher ein) und danach `YuvaPageFeedback` und `YuvaDiscussions` aus `useyuva/react` rendern.
 - **MkDocs, Hugo, Jekyll und andere**: wie [reines HTML](#reines-html).
 
 ## Was Leser und Ihr Team sehen

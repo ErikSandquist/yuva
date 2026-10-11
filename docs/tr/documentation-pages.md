@@ -177,11 +177,16 @@ altında da çalışır. Öğeler gibi `useyuva` 0.0.7 ya da sonrasını isterle
 
 ### Diğer site üreticileri
 
-Betiği (ya da `useyuva/docs`'u) yükleyin ve öğeleri makalenin altına koyun:
+Betiği (ya da `useyuva/docs`'u) yükleyin ve iki öğeyi de makalenin altına koyun. `useyuva/docs` ve
+`useyuva/react` sunucu tarafı render sırasında içe aktarılabilir; öğeleri yalnızca tarayıcıda
+kaydederler. Starlight 0.42, VitePress 1.6 ve Docusaurus 3.10 ile denetlendi.
 
-- **Starlight**: öğeleri override edilmiş bir `Footer`'a ekleyin.
-- **VitePress**: `doc-after` slot'unu kullanın; `yuva-` etiketlerini özel öğe yapın (`vue.template.compilerOptions.isCustomElement`).
-- **Docusaurus**: `DocItem/Footer`'ı swizzle edin (wrap).
+- **Starlight**: [`Footer`'ı override edin](https://starlight.astro.build/guides/overriding-components/): varsayılan `Footer`'ı, ardından iki öğeyi ve
+  `<script>import "useyuva/docs";</script>`'i render edin. Astro özel öğeler için ayar istemez.
+- **VitePress**: [`Layout`'u sarın](https://vitepress.dev/guide/extending-default-theme#layout-slots) ve iki öğeyi `doc-after` slot'una koyun;
+  `.vitepress/theme/index.js` içinde `useyuva/docs`'u içe aktarın ve yapılandırmada `vue: { template: { compilerOptions: { isCustomElement: (tag) => tag.startsWith("yuva-") } } }` ayarlayın.
+- **Docusaurus**: `DocItem/Footer`'ı [sarın](https://docusaurus.io/docs/swizzling#wrapping) (`npm run swizzle @docusaurus/theme-classic DocItem/Footer -- --wrap --danger`;
+  CLI onu güvensiz sayar) ve ardından `useyuva/react`'tan `YuvaPageFeedback` ile `YuvaDiscussions`'ı render edin.
 - **MkDocs, Hugo, Jekyll ve diğerleri**: [düz HTML](#düz-html) gibi.
 
 ## Okuyucular ve ekibiniz ne görür
