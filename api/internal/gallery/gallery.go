@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"embed"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"image"
 	_ "image/gif"
@@ -76,6 +77,9 @@ func Load(fsys fs.FS) ([]Template, error) {
 			continue
 		}
 		b, err := fs.ReadFile(fsys, path.Join(d.Name(), "meta.json"))
+		if errors.Is(err, fs.ErrNotExist) {
+			continue
+		}
 		if err != nil {
 			return nil, fmt.Errorf("%s: %w", d.Name(), err)
 		}

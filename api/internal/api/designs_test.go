@@ -287,6 +287,9 @@ func TestEmailTemplates(t *testing.T) {
 		if res.StatusCode != http.StatusOK || res.Header.Get("Cache-Control") != "public, max-age=31536000, immutable" {
 			t.Errorf("%s: %d %v", path, res.StatusCode, res.Header)
 		}
+		if strings.HasSuffix(path, ".html") && !strings.Contains(res.Header.Get("Content-Security-Policy"), "style-src 'unsafe-inline'") {
+			t.Errorf("%s: CSP %q blocks the preview's styles", path, res.Header.Get("Content-Security-Policy"))
+		}
 	}
 	if res, _ := pub.http.Get(h.url + "/email-templates/newsletter/../../v1/me"); res.StatusCode == http.StatusOK {
 		t.Error("path escaped the gallery")

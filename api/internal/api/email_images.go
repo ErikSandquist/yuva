@@ -244,7 +244,9 @@ func publicImageHeaders(h http.Header, contentType, etag string, size int) {
 	h.Set("Cache-Control", emailImageCache)
 	h.Set("ETag", etag)
 	h.Set("X-Content-Type-Options", "nosniff")
-	h.Set("Content-Security-Policy", "default-src 'none'")
+	if h.Get("Content-Security-Policy") == "" {
+		h.Set("Content-Security-Policy", "default-src 'none'")
+	}
 	h.Set("Cross-Origin-Resource-Policy", "cross-origin")
 	h.Set("Referrer-Policy", "no-referrer")
 }

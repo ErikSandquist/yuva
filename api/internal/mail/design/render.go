@@ -241,7 +241,7 @@ func (r *renderer) document() {
 	h.WriteString("</style>\n</head>\n")
 	h.WriteString("<body" + classAttr(pageCls) + " style=\"margin:0;padding:0;width:100%;background-color:" + r.light.Page + ";-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">\n")
 	if pre := strings.TrimSpace(v.Text(in.Preheader)); pre != "" {
-		h.WriteString("<div style=\"display:none;max-height:0;max-width:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;opacity:0;\">")
+		h.WriteString("<div style=\"display:none;max-height:0;max-width:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;\">")
 		h.WriteString(style.Escape(pre))
 		if n := 150 - len([]rune(pre)); n > 0 {
 			h.WriteString(strings.Repeat("&#847;&zwnj;&nbsp;", n))
@@ -642,7 +642,7 @@ func (r *renderer) image(b Block, bg surface, avail int, align string) {
 	if b.Width == 0 {
 		extra += ` class="y-fluid"`
 	}
-	tag := fmt.Sprintf("<img src=\"%s\" width=\"%d\" alt=\"%s\"%s style=\"display:block;width:100%%;max-width:%dpx;height:auto;border:0;outline:none;text-decoration:none;border-radius:%dpx;%s\">",
+	tag := fmt.Sprintf("<img src=\"%s\" width=\"%d\" alt=\"%s\"%s style=\"display:block;width:100%%;max-width:%dpx;height:auto;border:0;text-decoration:none;border-radius:%dpx;%s\">",
 		style.URLAttr(img.URL), w, style.Escape(alt), extra, w, r.radius, margin)
 	if b.Link != "" {
 		tag = "<a href=\"" + style.URLAttr(r.in.Values.URL(b.Link)) + "\" target=\"_blank\" style=\"text-decoration:none;\">" + tag + "</a>"
