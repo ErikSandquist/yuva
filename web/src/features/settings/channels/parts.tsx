@@ -12,7 +12,10 @@ export function FormBlock({
   action,
   children,
   ...props
-}: { title: React.ReactNode; action?: React.ReactNode; children: React.ReactNode } & Omit<React.ComponentProps<"section">, "title">) {
+}: { title: React.ReactNode; action?: React.ReactNode; children: React.ReactNode } & Omit<
+  React.ComponentProps<"section">,
+  "title"
+>) {
   return (
     <section className="flex min-w-0 flex-col gap-5 border-t pt-5" {...props}>
       <div className="flex items-center justify-between gap-3">

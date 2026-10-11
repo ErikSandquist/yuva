@@ -1,1 +1,1 @@
-export { mount } from "./panel/chat";
+export { mount } from "./panel/chat"

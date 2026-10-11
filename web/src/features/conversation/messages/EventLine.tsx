@@ -15,12 +15,17 @@ export function EventLine({ m, ctx }: { m: Message; ctx: ThreadContext }) {
     const x = id ? ctx.members.get(id) : undefined
     return x ? x.name || x.email : "?"
   }
-  const labelNames = (ids?: string[]) => (ids ?? []).map((id) => ctx.labels.find((l) => l.id === id)?.name ?? "?").join(", ")
+  const labelNames = (ids?: string[]) =>
+    (ids ?? []).map((id) => ctx.labels.find((l) => l.id === id)?.name ?? "?").join(", ")
   let body: React.ReactNode
   switch (e.type) {
     case "assigned": {
       const assignee = memberName(e.assignee_id)
-      body = <Trans>{actor} assigned this to {assignee}</Trans>
+      body = (
+        <Trans>
+          {actor} assigned this to {assignee}
+        </Trans>
+      )
       break
     }
     case "unassigned":
@@ -60,7 +65,12 @@ export function EventLine({ m, ctx }: { m: Message; ctx: ThreadContext }) {
       break
     }
     case "rated":
-      body = e.rating === "bad" ? <Trans>{actor} rated the conversation 👎</Trans> : <Trans>{actor} rated the conversation 👍</Trans>
+      body =
+        e.rating === "bad" ? (
+          <Trans>{actor} rated the conversation 👎</Trans>
+        ) : (
+          <Trans>{actor} rated the conversation 👍</Trans>
+        )
       break
     case "moved": {
       const from = ctx.inboxes.find((i) => i.id === e.previous_inbox_id)?.name ?? t`another inbox`

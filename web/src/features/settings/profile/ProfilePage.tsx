@@ -21,7 +21,9 @@ export function ProfilePage() {
         <Card flush>
           <Rows>
             <li>
-              <Item render={<button type="button" />} className="min-h-[52px] rounded-none text-destructive [button]:hover:bg-muted"
+              <Item
+                render={<button type="button" />}
+                className="min-h-[52px] rounded-none text-destructive [button]:hover:bg-muted"
                 onClick={async () => {
                   await signOut()
                   navigate("/sign-in", { replace: true })
@@ -32,7 +34,11 @@ export function ProfilePage() {
             </li>
             <SettingRow
               title={<Trans>Delete my account</Trans>}
-              hint={<Trans>Removes you from every workspace. Messages you wrote stay, shown as from a deleted member.</Trans>}
+              hint={
+                <Trans>
+                  Removes you from every workspace. Messages you wrote stay, shown as from a deleted member.
+                </Trans>
+              }
             >
               <DeleteAccountButton email={me.person.email} size="sm" />
             </SettingRow>

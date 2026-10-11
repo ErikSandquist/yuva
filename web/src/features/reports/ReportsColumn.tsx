@@ -21,9 +21,27 @@ export function ReportsColumn() {
   const rated = s ? s.ratings.good + s.ratings.bad : 0
   const pct = s && rated ? new Intl.NumberFormat(i18n.locale, { style: "percent" }).format(s.ratings.good / rated) : "–"
   const rows: [string, React.ReactNode, React.ReactNode, React.ReactNode, string][] = [
-    ["today", <BarChart3Icon />, <Trans>Replies and closes</Trans>, s ? t`${fmt.format(s.replies)} replies · ${fmt.format(s.closed)} closed` : " ", "report-link-today"],
-    ["ratings", <ThumbsUpIcon />, <Trans>Ratings</Trans>, s ? (rated ? t`${pct} satisfied` : t`No ratings today`) : " ", "report-link-ratings"],
-    ["members", <UsersIcon />, <Trans>By member</Trans>, s ? t`${fmt.format(s.members.length)} active today` : " ", "report-link-members"],
+    [
+      "today",
+      <BarChart3Icon />,
+      <Trans>Replies and closes</Trans>,
+      s ? t`${fmt.format(s.replies)} replies · ${fmt.format(s.closed)} closed` : " ",
+      "report-link-today",
+    ],
+    [
+      "ratings",
+      <ThumbsUpIcon />,
+      <Trans>Ratings</Trans>,
+      s ? (rated ? t`${pct} satisfied` : t`No ratings today`) : " ",
+      "report-link-ratings",
+    ],
+    [
+      "members",
+      <UsersIcon />,
+      <Trans>By member</Trans>,
+      s ? t`${fmt.format(s.members.length)} active today` : " ",
+      "report-link-members",
+    ],
   ]
   return (
     <Column title={<Trans>Reports</Trans>} testId="reports-panel" actions={<InboxPicker className="max-w-40" />}>

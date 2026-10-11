@@ -24,7 +24,7 @@ function usePwa(): State {
       listeners.add(l)
       return () => listeners.delete(l)
     },
-    () => state,
+    () => state
   )
 }
 

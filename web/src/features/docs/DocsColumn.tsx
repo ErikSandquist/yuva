@@ -1,5 +1,12 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { BadgeCheckIcon, BarChart3Icon, MessageCircleQuestionMarkIcon, MessageSquareTextIcon, ThumbsDownIcon, ThumbsUpIcon } from "lucide-react"
+import {
+  BadgeCheckIcon,
+  BarChart3Icon,
+  MessageCircleQuestionMarkIcon,
+  MessageSquareTextIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+} from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router"
 
@@ -24,10 +31,17 @@ export function DocsGuide() {
     <>
       <p>
         <Trans>
-          Add the page feedback and questions elements to your documentation site, on one of the inbox's chat channels. Ratings, feedback and questions then show up here per page.
+          Add the page feedback and questions elements to your documentation site, on one of the inbox's chat channels.
+          Ratings, feedback and questions then show up here per page.
         </Trans>
       </p>
-      <a href={GUIDE_URL} target="_blank" rel="noreferrer" className="mt-2 inline-block text-brand underline-offset-4 hover:underline" data-testid="docs-guide">
+      <a
+        href={GUIDE_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="mt-2 inline-block text-brand underline-offset-4 hover:underline"
+        data-testid="docs-guide"
+      >
         <Trans>How to add them</Trans>
       </a>
     </>
@@ -37,7 +51,11 @@ export function DocsGuide() {
 export function ShareBar({ up, down, className }: { up: number; down: number; className?: string }) {
   const rated = up + down
   return (
-    <span className={cn("flex h-1 overflow-hidden rounded-full", rated ? "gap-px" : "bg-muted", className)} aria-hidden data-testid="share-bar">
+    <span
+      className={cn("flex h-1 overflow-hidden rounded-full", rated ? "gap-px" : "bg-muted", className)}
+      aria-hidden
+      data-testid="share-bar"
+    >
       {rated > 0 && (
         <>
           {up > 0 && <span className="rounded-full bg-success" style={{ width: `${(up / rated) * 100}%` }} />}
@@ -53,9 +71,22 @@ export function helpfulShare(p: { up: number; down: number }, locale: string) {
   return rated ? new Intl.NumberFormat(locale, { style: "percent" }).format(p.up / rated) : "–"
 }
 
-function Count({ n, icon: Icon, label, className }: { n: number; icon: React.ComponentType<{ className?: string }>; label: string; className?: string }) {
+function Count({
+  n,
+  icon: Icon,
+  label,
+  className,
+}: {
+  n: number
+  icon: React.ComponentType<{ className?: string }>
+  label: string
+  className?: string
+}) {
   return (
-    <span className={cn("inline-flex shrink-0 items-center gap-1 tabular-nums", n === 0 && "opacity-45", className)} title={label}>
+    <span
+      className={cn("inline-flex shrink-0 items-center gap-1 tabular-nums", n === 0 && "opacity-45", className)}
+      title={label}
+    >
       <Icon className="size-3.5" />
       <span className="sr-only">{label}</span>
       <span aria-hidden>{n}</span>
@@ -63,11 +94,27 @@ function Count({ n, icon: Icon, label, className }: { n: number; icon: React.Com
   )
 }
 
-function Row({ p, current, cursor, inboxColor }: { p: DocsPage; current: boolean; cursor: boolean; inboxColor?: string }) {
+function Row({
+  p,
+  current,
+  cursor,
+  inboxColor,
+}: {
+  p: DocsPage
+  current: boolean
+  cursor: boolean
+  inboxColor?: string
+}) {
   const { t, i18n } = useLingui()
   const fmt = new Intl.NumberFormat(i18n.locale)
   const share = helpfulShare(p, i18n.locale)
-  const [up, down, feedback, questions, answers] = [p.up, p.down, p.open_feedback, p.open_questions, p.published_answers].map((n) => fmt.format(n))
+  const [up, down, feedback, questions, answers] = [
+    p.up,
+    p.down,
+    p.open_feedback,
+    p.open_questions,
+    p.published_answers,
+  ].map((n) => fmt.format(n))
   return (
     <li>
       <Link
@@ -75,7 +122,7 @@ function Row({ p, current, cursor, inboxColor }: { p: DocsPage; current: boolean
         className={cn(
           "flex flex-col gap-1 rounded-xl px-2.5 py-2.5 outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",
           current && "bg-muted",
-          cursor && "ring-2 ring-ring",
+          cursor && "ring-2 ring-ring"
         )}
         aria-current={current ? "page" : undefined}
         data-testid="docs-row"
@@ -86,7 +133,11 @@ function Row({ p, current, cursor, inboxColor }: { p: DocsPage; current: boolean
           <span className="flex shrink-0 items-center gap-2.5 text-small">
             <Count n={p.up} icon={ThumbsUpIcon} label={t`${up} helpful`} className="text-success" />
             <Count n={p.down} icon={ThumbsDownIcon} label={t`${down} not helpful`} className="text-destructive" />
-            <span className={cn("w-10 text-end tabular-nums", p.up + p.down ? "text-success" : "text-faint")} title={t`${share} helpful`} data-testid="helpful-share">
+            <span
+              className={cn("w-10 text-end tabular-nums", p.up + p.down ? "text-success" : "text-faint")}
+              title={t`${share} helpful`}
+              data-testid="helpful-share"
+            >
               <span className="sr-only">{t`${share} helpful`}</span>
               <span aria-hidden>{share}</span>
             </span>
@@ -97,8 +148,18 @@ function Row({ p, current, cursor, inboxColor }: { p: DocsPage; current: boolean
             {pageLabel(p.page)}
           </span>
           <span className="flex shrink-0 items-center gap-2.5">
-            <Count n={p.open_feedback} icon={MessageSquareTextIcon} label={t`${feedback} open feedback`} className={p.open_feedback ? "text-brand" : undefined} />
-            <Count n={p.open_questions} icon={MessageCircleQuestionMarkIcon} label={t`${questions} open questions`} className={p.open_questions ? "text-brand" : undefined} />
+            <Count
+              n={p.open_feedback}
+              icon={MessageSquareTextIcon}
+              label={t`${feedback} open feedback`}
+              className={p.open_feedback ? "text-brand" : undefined}
+            />
+            <Count
+              n={p.open_questions}
+              icon={MessageCircleQuestionMarkIcon}
+              label={t`${questions} open questions`}
+              className={p.open_questions ? "text-brand" : undefined}
+            />
             <Count n={p.published_answers} icon={BadgeCheckIcon} label={t`${answers} published answers`} />
           </span>
         </span>
@@ -118,7 +179,11 @@ export function DocsWindow({ className }: { className?: string }) {
       label={t`Ratings over`}
       className={className}
       itemClassName="flex-1"
-      items={WINDOWS.map((d) => ({ value: String(d), label: <Plural value={d} one="# day" other="# days" />, testId: `docs-days-${d}` }))}
+      items={WINDOWS.map((d) => ({
+        value: String(d),
+        label: <Plural value={d} one="# day" other="# days" />,
+        testId: `docs-days-${d}`,
+      }))}
     />
   )
 }
@@ -126,7 +191,12 @@ export function DocsWindow({ className }: { className?: string }) {
 export function DocsSort({ className }: { className?: string }) {
   const { t } = useLingui()
   const [sort, setSort] = useDocsSort()
-  const labels: Record<DocsPageSort, string> = { down: t`Most disliked`, up: t`Most liked`, helpful: t`Most helpful`, activity: t`Most active` }
+  const labels: Record<DocsPageSort, string> = {
+    down: t`Most disliked`,
+    up: t`Most liked`,
+    helpful: t`Most helpful`,
+    activity: t`Most active`,
+  }
   const titles: Record<DocsPageSort, string> = {
     down: t`Most “not helpful” ratings first`,
     up: t`Most “helpful” ratings first`,
@@ -144,7 +214,7 @@ export function DocsSort({ className }: { className?: string }) {
           onClick={() => setSort(k)}
           className={cn(
             "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-            sort === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground",
+            sort === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
           )}
           data-testid={`docs-sort-${k}`}
         >
@@ -181,11 +251,17 @@ export function DocsColumn() {
     Enter: () => cursor >= 0 && items[cursor] && navigate(docsPageLink(items[cursor].inbox_id, items[cursor].page)),
   })
   useEffect(() => {
-    if (cursor >= 0) list.current?.querySelectorAll("[data-testid=docs-row]")[cursor]?.scrollIntoView({ block: "nearest" })
+    if (cursor >= 0)
+      list.current?.querySelectorAll("[data-testid=docs-row]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
 
   return (
-    <Column title={<Trans>Docs</Trans>} testId="docs-panel" actions={<InboxPicker className="max-w-40" />} bodyClassName="px-2">
+    <Column
+      title={<Trans>Docs</Trans>}
+      testId="docs-panel"
+      actions={<InboxPicker className="max-w-40" />}
+      bodyClassName="px-2"
+    >
       <nav aria-label={t`Documentation pages`} className="flex flex-col">
         <DocsWindow className="mx-1 mb-2.5 flex" />
         <DocsSort className="mx-1 mb-2" />
@@ -226,7 +302,12 @@ export function DocsColumn() {
         )}
         {pages.hasNextPage && (
           <div className="mt-2 flex justify-center">
-            <Button variant="ghost" size="sm" onClick={() => void pages.fetchNextPage()} disabled={pages.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void pages.fetchNextPage()}
+              disabled={pages.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           </div>

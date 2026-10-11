@@ -1,29 +1,39 @@
-import { rm } from "node:fs/promises";
-import { linguiMacro } from "./lingui-plugin";
-import pkg from "../package.json";
+import { rm } from "node:fs/promises"
+import { linguiMacro } from "./lingui-plugin"
+import pkg from "../package.json"
 
-process.env.NODE_ENV = "production";
-await rm("dist", { recursive: true, force: true });
+process.env.NODE_ENV = "production"
+await rm("dist", { recursive: true, force: true })
 
-const define = { "process.env.NODE_ENV": '"production"' };
+const define = { "process.env.NODE_ENV": '"production"' }
 
 function check(result: Bun.BuildOutput): void {
-  if (result.success) return;
-  for (const log of result.logs) console.error(log);
-  process.exit(1);
+  if (result.success) return
+  for (const log of result.logs) console.error(log)
+  process.exit(1)
 }
 
 const scripts = [
   { entry: "src/yuva.ts", format: "iife" },
   { entry: "src/yuva-chat.ts", format: "esm" },
   { entry: "src/yuva-docs.ts", format: "iife" },
-] as const;
+] as const
 
 for (const { entry, format } of scripts) {
-  check(await Bun.build({ entrypoints: [entry], outdir: "dist", format, target: "browser", minify: true, define, plugins: [linguiMacro] }));
+  check(
+    await Bun.build({
+      entrypoints: [entry],
+      outdir: "dist",
+      format,
+      target: "browser",
+      minify: true,
+      define,
+      plugins: [linguiMacro],
+    })
+  )
 }
 
-const entries = ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/react.ts", "src/api.ts"];
+const entries = ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/react.ts", "src/api.ts"]
 check(
   await Bun.build({
     entrypoints: entries,
@@ -37,26 +47,37 @@ check(
     external: [...Object.keys(pkg.dependencies), ...Object.keys(pkg.peerDependencies)],
     define,
     plugins: [linguiMacro],
-  }),
-);
+  })
+)
 
-const transpiler = new Bun.Transpiler({ loader: "ts", target: "node" });
+const transpiler = new Bun.Transpiler({ loader: "ts", target: "node" })
 for (const name of ["nuxt/module", "nuxt/runtime/components"]) {
-  const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text());
-  await Bun.write(`dist/esm/${name}.js`, code.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'));
+  const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text())
+  await Bun.write(`dist/esm/${name}.js`, code.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
 
-const tsc = Bun.spawnSync(["bunx", "tsc", "-p", "tsconfig.build.json"], { stdout: "inherit", stderr: "inherit" });
-if (tsc.exitCode !== 0) process.exit(tsc.exitCode ?? 1);
+const tsc = Bun.spawnSync(["bunx", "tsc", "-p", "tsconfig.build.json"], { stdout: "inherit", stderr: "inherit" })
+if (tsc.exitCode !== 0) process.exit(tsc.exitCode ?? 1)
 
 // Node's ESM resolution (moduleResolution node16/nodenext) needs explicit extensions in declarations too.
 for await (const path of new Bun.Glob("dist/types/**/*.d.ts").scan()) {
-  const text = await Bun.file(path).text();
-  await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'));
+  const text = await Bun.file(path).text()
+  await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
 
-for (const name of ["yuva.js", "yuva-chat.js", "yuva-docs.js", "esm/index.js", "esm/chat.js", "esm/docs.js", "esm/react.js", "esm/api.js", "esm/nuxt/module.js", "esm/nuxt/runtime/components.js"]) {
-  const bytes = await Bun.file(`dist/${name}`).bytes();
-  const gzip = Bun.gzipSync(bytes, { level: 9 }).length;
-  console.log(`dist/${name}  ${bytes.length} B  gzip ${gzip} B`);
+for (const name of [
+  "yuva.js",
+  "yuva-chat.js",
+  "yuva-docs.js",
+  "esm/index.js",
+  "esm/chat.js",
+  "esm/docs.js",
+  "esm/react.js",
+  "esm/api.js",
+  "esm/nuxt/module.js",
+  "esm/nuxt/runtime/components.js",
+]) {
+  const bytes = await Bun.file(`dist/${name}`).bytes()
+  const gzip = Bun.gzipSync(bytes, { level: 9 }).length
+  console.log(`dist/${name}  ${bytes.length} B  gzip ${gzip} B`)
 }

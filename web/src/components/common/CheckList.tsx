@@ -1,7 +1,17 @@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
-export function CheckList({ labelId, label, hint, children }: { labelId: string; label: React.ReactNode; hint?: React.ReactNode; children: React.ReactNode }) {
+export function CheckList({
+  labelId,
+  label,
+  hint,
+  children,
+}: {
+  labelId: string
+  label: React.ReactNode
+  hint?: React.ReactNode
+  children: React.ReactNode
+}) {
   return (
     <div className="flex min-w-0 flex-col gap-2" role="group" aria-labelledby={labelId}>
       <span id={labelId} className="text-body font-medium">

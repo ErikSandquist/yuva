@@ -16,7 +16,8 @@ export function IdentitySecret() {
   const [secret, setSecret] = useState<string | null>(null)
   const [confirm, confirmDialog] = useConfirm()
   const rotate = useMutation({
-    mutationFn: () => unwrap(api.POST("/v1/inboxes/{inboxId}/identity-secret", { params: { path: { inboxId: inbox.id } } })),
+    mutationFn: () =>
+      unwrap(api.POST("/v1/inboxes/{inboxId}/identity-secret", { params: { path: { inboxId: inbox.id } } })),
     onSuccess: (r) => setSecret(r.identity_secret),
   })
   return (
@@ -75,7 +76,10 @@ export function DeleteInbox() {
   })
   const name = inbox.name
   return (
-    <Section title={<Trans>Delete inbox</Trans>} description={<Trans>Deletes its channels, conversations, messages and attachments. This cannot be undone.</Trans>}>
+    <Section
+      title={<Trans>Delete inbox</Trans>}
+      description={<Trans>Deletes its channels, conversations, messages and attachments. This cannot be undone.</Trans>}
+    >
       <Card tone="danger">
         <div className="flex flex-wrap items-center gap-3">
           <Button

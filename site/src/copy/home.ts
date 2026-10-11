@@ -52,7 +52,12 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
         { icon: "chat", label: i18n._(msg`Website chat`), href: docs("widget/") },
         { icon: "phone", label: "iOS", href: docs("mobile/") },
         { icon: "phone", label: "Android", href: docs("mobile/") },
-        { icon: "sparkles", label: i18n._(msg`AI assistants (MCP)`), note: "Claude · ChatGPT · Cursor", href: docs("mcp/") },
+        {
+          icon: "sparkles",
+          label: i18n._(msg`AI assistants (MCP)`),
+          note: "Claude · ChatGPT · Cursor",
+          href: docs("mcp/"),
+        },
       ] as { icon: "mail" | "chat" | "phone" | "sparkles"; label: string; note?: string; href: string }[],
       shotAlt: i18n._(
         msg`The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send.`
@@ -65,7 +70,9 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
       steps: [
         {
           title: i18n._(msg`Connect your products`),
-          body: i18n._(msg`Create one inbox per product and give it channels: a support address, a chat widget, an app key, an API.`),
+          body: i18n._(
+            msg`Create one inbox per product and give it channels: a support address, a chat widget, an app key, an API.`
+          ),
         },
         {
           title: i18n._(msg`Answer from one panel`),
@@ -82,7 +89,11 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
       ] as Item[],
       rows: [
         { color: "bg-emerald-500", text: i18n._(msg`Notes stopped syncing after the update`), unread: true },
-        { color: "bg-sky-500", text: i18n._(msg`Can I schedule a newsletter in each subscriber's time zone?`), unread: true },
+        {
+          color: "bg-sky-500",
+          text: i18n._(msg`Can I schedule a newsletter in each subscriber's time zone?`),
+          unread: true,
+        },
         { color: "bg-indigo-500", text: i18n._(msg`Custom domain still shows as unverified`), unread: false },
       ],
     },
@@ -100,15 +111,21 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
           msg`Point a support address at Yuva through a Cloudflare Email Worker, any MTA or a signed HTTP request. Replies go out through each channel's own SMTP account: SES, Postmark or your own relay.`
         ),
         points: [
-          i18n._(msg`Threads follow In-Reply-To and References, and replies find their conversation even when a mail client drops the headers.`),
-          i18n._(msg`Quotes and signatures are stripped from what you read; the full text, sanitized HTML and the original message are kept.`),
+          i18n._(
+            msg`Threads follow In-Reply-To and References, and replies find their conversation even when a mail client drops the headers.`
+          ),
+          i18n._(
+            msg`Quotes and signatures are stripped from what you read; the full text, sanitized HTML and the original message are kept.`
+          ),
           i18n._(msg`Catch-all addresses per domain, and local+tag addresses that reach their channel.`),
         ],
         link: { href: docs("email/"), label: i18n._(msg`E-mail guide`) },
         letter: {
           from: i18n._(msg`Amara Okafor`),
           subject: i18n._(msg`Custom domain still shows as unverified`),
-          body: i18n._(msg`I added the CNAME record two days ago, but the dashboard still says “unverified”. Is there anything else I need to do?`),
+          body: i18n._(
+            msg`I added the CNAME record two days ago, but the dashboard still says “unverified”. Is there anything else I need to do?`
+          ),
           quote: i18n._(msg`On Monday, Paperboat Support wrote: …`),
           marks: [i18n._(msg`quote hidden`), i18n._(msg`threaded`), "DMARC pass"],
         },
@@ -122,10 +139,14 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
         points: [
           i18n._(msg`Shadow DOM: your styles stay out, the widget's styles stay in.`),
           i18n._(msg`Presence, typing and read receipts in live inboxes; an expected reply time in async ones.`),
-          i18n._(msg`When the visitor has left, unread replies follow them by e-mail, and their answer continues the same conversation.`),
+          i18n._(
+            msg`When the visitor has left, unread replies follow them by e-mail, and their answer continues the same conversation.`
+          ),
         ],
         link: { href: docs("widget/"), label: i18n._(msg`Widget guide`) },
-        shotAlt: i18n._(msg`The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online.`),
+        shotAlt: i18n._(
+          msg`The Yuva chat widget open on a newsletter tool's website: the visitor's question and a member's reply, with the member shown online.`
+        ),
       },
       app: {
         tag: i18n._(msg`In-app`),
@@ -134,12 +155,18 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
           msg`Native SDKs for iOS (YuvaKit, SwiftUI) and Android (Kotlin, Jetpack Compose) give your app a conversation list, threads with attachments and a feedback form, or a headless client for your own interface.`
         ),
         points: [
-          i18n._(msg`Feedback with a category (bug, idea, praise, other), screenshots and device details: app version, build, system, device and screen.`),
+          i18n._(
+            msg`Feedback with a category (bug, idea, praise, other), screenshots and device details: app version, build, system, device and screen.`
+          ),
           i18n._(msg`The panel filters feedback by category and counts what is still open.`),
-          i18n._(msg`Users write as themselves through a short-lived token signed by your backend; Yuva never sees your user database.`),
+          i18n._(
+            msg`Users write as themselves through a short-lived token signed by your backend; Yuva never sees your user database.`
+          ),
         ],
         link: { href: docs("mobile/"), label: i18n._(msg`Mobile SDK guide`) },
-        iosAlt: i18n._(msg`The messages screen of the iOS SDK in a sample app, with a feedback thread and a conversation.`),
+        iosAlt: i18n._(
+          msg`The messages screen of the iOS SDK in a sample app, with a feedback thread and a conversation.`
+        ),
       },
       api: {
         title: i18n._(msg`And an API for everything else`),
@@ -163,22 +190,54 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
     panel: {
       kicker: i18n._(msg`The team panel`),
       title: i18n._(msg`Built for the people who answer.`),
-      lead: i18n._(msg`The panel ships inside the binary. It is fast, made for the keyboard, and works on phones as an installable app.`),
+      lead: i18n._(
+        msg`The panel ships inside the binary. It is fast, made for the keyboard, and works on phones as an installable app.`
+      ),
       features: [
-        { icon: "inbox", title: i18n._(msg`Shared inbox`), body: i18n._(msg`All, mine, unassigned, per inbox and per label; open, pending, snoozed and closed.`) },
-        { icon: "assign", title: i18n._(msg`Assignment`), body: i18n._(msg`Assign conversations, set priority and hand over; every change is recorded in the thread.`) },
-        { icon: "note", title: i18n._(msg`Internal notes`), body: i18n._(msg`Notes sit next to the replies and never reach the contact.`) },
-        { icon: "tag", title: i18n._(msg`Labels and canned replies`), body: i18n._(msg`Label conversations and insert saved answers by typing / in the composer.`) },
-        { icon: "bolt", title: i18n._(msg`Realtime`), body: i18n._(msg`New messages, typing and teammates' changes appear live over WebSocket.`) },
-        { icon: "bell", title: i18n._(msg`Notifications`), body: i18n._(msg`Install the panel as an app and get Web Push on phones and desktops, with e-mail as a fallback.`) },
+        {
+          icon: "inbox",
+          title: i18n._(msg`Shared inbox`),
+          body: i18n._(msg`All, mine, unassigned, per inbox and per label; open, pending, snoozed and closed.`),
+        },
+        {
+          icon: "assign",
+          title: i18n._(msg`Assignment`),
+          body: i18n._(msg`Assign conversations, set priority and hand over; every change is recorded in the thread.`),
+        },
+        {
+          icon: "note",
+          title: i18n._(msg`Internal notes`),
+          body: i18n._(msg`Notes sit next to the replies and never reach the contact.`),
+        },
+        {
+          icon: "tag",
+          title: i18n._(msg`Labels and canned replies`),
+          body: i18n._(msg`Label conversations and insert saved answers by typing / in the composer.`),
+        },
+        {
+          icon: "bolt",
+          title: i18n._(msg`Realtime`),
+          body: i18n._(msg`New messages, typing and teammates' changes appear live over WebSocket.`),
+        },
+        {
+          icon: "bell",
+          title: i18n._(msg`Notifications`),
+          body: i18n._(
+            msg`Install the panel as an app and get Web Push on phones and desktops, with e-mail as a fallback.`
+          ),
+        },
       ] as Item[],
-      phoneAlt: i18n._(msg`The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom.`),
+      phoneAlt: i18n._(
+        msg`The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom.`
+      ),
     },
 
     developers: {
       kicker: i18n._(msg`For developers`),
       title: i18n._(msg`Made to be embedded in your products.`),
-      lead: i18n._(msg`Yuva is built for teams that make their own software. Every surface has a typed contract and a small, documented integration.`),
+      lead: i18n._(
+        msg`Yuva is built for teams that make their own software. Every surface has a typed contract and a small, documented integration.`
+      ),
       snippetsLabel: i18n._(msg`Integration examples`),
       snippets: [
         {
@@ -286,15 +345,22 @@ docker compose exec yuva /yuva bootstrap --email you@example.com --workspace "Ex
         msg`A support inbox holds other people's words. Yuva is built with that in mind, and says plainly that it has not had an independent security audit yet.`
       ),
       items: [
-        { icon: "shield",
+        {
+          icon: "shield",
           title: i18n._(msg`Untrusted mail stays inert`),
-          body: i18n._(msg`Incoming HTML is sanitized and shown in a sandboxed frame under a strict Content Security Policy; remote images wait until a member loads them.`),
+          body: i18n._(
+            msg`Incoming HTML is sanitized and shown in a sandboxed frame under a strict Content Security Policy; remote images wait until a member loads them.`
+          ),
         },
-        { icon: "network",
+        {
+          icon: "network",
           title: i18n._(msg`No requests into your network`),
-          body: i18n._(msg`Webhook URLs, SMTP hosts and push endpoints are resolved and refused when they point at private, loopback or cloud metadata addresses.`),
+          body: i18n._(
+            msg`Webhook URLs, SMTP hosts and push endpoints are resolved and refused when they point at private, loopback or cloud metadata addresses.`
+          ),
         },
-        { icon: "trash",
+        {
+          icon: "trash",
           title: i18n._(msg`Data you can delete`),
           body: i18n._(
             msg`Delete a contact, from the panel or by your own user id, and their conversations, messages and files go with them. Nothing goes to third parties except what a channel is set up to send.`
@@ -307,12 +373,16 @@ docker compose exec yuva /yuva bootstrap --email you@example.com --workspace "Ex
     open: {
       kicker: i18n._(msg`Open source and licensing`),
       title: i18n._(msg`Open source, and meant to stay that way.`),
-      lead: i18n._(msg`Yuva uses a split license: the server stays open, and the pieces you embed in your own apps carry no copyleft obligations.`),
+      lead: i18n._(
+        msg`Yuva uses a split license: the server stays open, and the pieces you embed in your own apps carry no copyleft obligations.`
+      ),
       licenses: [
         {
           tag: "AGPL-3.0",
           title: i18n._(msg`Server and panel`),
-          body: i18n._(msg`Use it, change it, run it. If you run a modified Yuva as a network service for other people, you offer them its source.`),
+          body: i18n._(
+            msg`Use it, change it, run it. If you run a modified Yuva as a network service for other people, you offer them its source.`
+          ),
         },
         {
           tag: "MIT",

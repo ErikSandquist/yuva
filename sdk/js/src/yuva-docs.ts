@@ -1,3 +1,3 @@
-import { defineDocs } from "./docs";
+import { defineDocs } from "./docs"
 
-defineDocs();
+defineDocs()

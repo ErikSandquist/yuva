@@ -48,7 +48,9 @@ function Steps({ children }: { children: React.ReactNode[] }) {
     <ol className="flex flex-col" data-testid="assistant-steps">
       {children.map((step, i) => (
         <li key={i} className="relative flex gap-3.5 pb-6 last:pb-0">
-          {i < children.length - 1 && <span aria-hidden className="absolute start-[13px] top-8 bottom-1.5 w-px bg-border" />}
+          {i < children.length - 1 && (
+            <span aria-hidden className="absolute start-[13px] top-8 bottom-1.5 w-px bg-border" />
+          )}
           <span className="grid size-[27px] shrink-0 place-items-center rounded-full border bg-card text-caption font-medium text-muted-foreground tabular-nums">
             {i + 1}
           </span>
@@ -82,7 +84,12 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           <Hint>
             <Trans>
               On Team and Enterprise plans an owner adds it once in{" "}
-              <a href={LINKS.claudeOrgConnectors} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-foreground">
+              <a
+                href={LINKS.claudeOrgConnectors}
+                target="_blank"
+                rel="noreferrer"
+                className="underline underline-offset-2 hover:text-foreground"
+              >
                 Organization settings › Connectors
               </a>
               ; members then find it under Connectors and click Connect.
@@ -107,7 +114,8 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           <Hint>
             <Trans>
               It is added for you in the current project. Add <code className={code}>--scope user</code> for every
-              project, or <code className={code}>--scope project</code> to share it in <code className={code}>.mcp.json</code>.
+              project, or <code className={code}>--scope project</code> to share it in{" "}
+              <code className={code}>.mcp.json</code>.
             </Trans>
           </Hint>
         </>,
@@ -133,7 +141,8 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           <CodeBlock value={s.codex.add} testId="assistant-command" />
           <Hint>
             <Trans>
-              It goes into <code className={code}>~/.codex/config.toml</code>, which the Codex CLI and IDE extension share.
+              It goes into <code className={code}>~/.codex/config.toml</code>, which the Codex CLI and IDE extension
+              share.
             </Trans>
           </Hint>
         </>,
@@ -245,8 +254,8 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           <Hint>
             {canManage ? (
               <Trans>
-                A client that cannot sign in can send an API key as{" "}
-                <code className={code}>Authorization: Bearer</code>. Make one in{" "}
+                A client that cannot sign in can send an API key as <code className={code}>Authorization: Bearer</code>.
+                Make one in{" "}
                 <Link to="/settings/api-keys" className="underline underline-offset-2 hover:text-foreground">
                   API keys
                 </Link>
@@ -254,8 +263,8 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
               </Trans>
             ) : (
               <Trans>
-                A client that cannot sign in can send an API key as{" "}
-                <code className={code}>Authorization: Bearer</code>; an owner or admin makes one.
+                A client that cannot sign in can send an API key as <code className={code}>Authorization: Bearer</code>;
+                an owner or admin makes one.
               </Trans>
             )}
           </Hint>
@@ -289,7 +298,11 @@ function Status({ grants, clientName }: { grants: OAuthGrant[]; clientName: stri
   const latest = [...grants].sort((x, y) => y.created_at.localeCompare(x.created_at))[0]
   if (!latest) {
     return (
-      <div className="flex items-center gap-3 rounded-2xl border border-dashed px-4 py-3.5" data-testid="assistant-status" data-connected="false">
+      <div
+        className="flex items-center gap-3 rounded-2xl border border-dashed px-4 py-3.5"
+        data-testid="assistant-status"
+        data-connected="false"
+      >
         <span className="relative grid size-2 place-items-center">
           <span className="absolute size-2 animate-ping rounded-full bg-faint/40 motion-reduce:hidden" />
           <span className="size-1.5 rounded-full bg-faint" />
@@ -303,7 +316,11 @@ function Status({ grants, clientName }: { grants: OAuthGrant[]; clientName: stri
   const when = formatDateTime(latest.created_at, i18n.locale)
   const name = latest.client.name
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-success/30 bg-success/6 px-4 py-3.5" data-testid="assistant-status" data-connected="true">
+    <div
+      className="flex items-center gap-3 rounded-2xl border border-success/30 bg-success/6 px-4 py-3.5"
+      data-testid="assistant-status"
+      data-connected="true"
+    >
       <CircleCheckIcon className="size-5 shrink-0 text-success" />
       <div className="min-w-0 flex-1">
         <p className="text-body font-medium">
@@ -395,12 +412,18 @@ export function AssistantPage() {
   const mine = grantsFor(a, grants.data ?? [], membership.member_id, fresh)
   const Icon = a.icon
   const descriptions: Record<AssistantId, React.ReactNode> = {
-    claude: <Trans>A custom connector, for claude.ai and Claude Desktop. It acts as you, with the access you allow.</Trans>,
-    "claude-code": <Trans>Search, triage and draft replies from your terminal. It acts as you, with the access you allow.</Trans>,
+    claude: (
+      <Trans>A custom connector, for claude.ai and Claude Desktop. It acts as you, with the access you allow.</Trans>
+    ),
+    "claude-code": (
+      <Trans>Search, triage and draft replies from your terminal. It acts as you, with the access you allow.</Trans>
+    ),
     codex: <Trans>Search, triage and draft replies from Codex. It acts as you, with the access you allow.</Trans>,
     chatgpt: <Trans>A custom MCP server in ChatGPT on the web. It acts as you, with the access you allow.</Trans>,
     cursor: <Trans>Work with conversations from Cursor's agent. It acts as you, with the access you allow.</Trans>,
-    vscode: <Trans>Work with conversations from agent mode in VS Code. It acts as you, with the access you allow.</Trans>,
+    vscode: (
+      <Trans>Work with conversations from agent mode in VS Code. It acts as you, with the access you allow.</Trans>
+    ),
     other: <Trans>Any client that speaks MCP over HTTP. It acts as you, with the access you allow.</Trans>,
   }
   return (
@@ -456,7 +479,12 @@ export function AssistantPage() {
       </Section>
       <Section
         title={<Trans>Suggested scopes</Trans>}
-        description={<Trans>The consent page ticks what the client asks for. Leave out what you do not want it to do; it never gets more than your role allows.</Trans>}
+        description={
+          <Trans>
+            The consent page ticks what the client asks for. Leave out what you do not want it to do; it never gets more
+            than your role allows.
+          </Trans>
+        }
       >
         <Card flush>
           <Rows>

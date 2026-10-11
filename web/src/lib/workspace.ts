@@ -40,7 +40,9 @@ export function useInboxMembers(inboxId: string | undefined) {
   return useQuery({
     queryKey: keys.inboxMembers(ws, inboxId ?? ""),
     queryFn: () =>
-      unwrap(api.GET("/v1/inboxes/{inboxId}/members", { params: { path: { inboxId: inboxId! } } })).then((r) => r.items),
+      unwrap(api.GET("/v1/inboxes/{inboxId}/members", { params: { path: { inboxId: inboxId! } } })).then(
+        (r) => r.items
+      ),
     enabled: !!inboxId,
     staleTime: 60_000,
   })

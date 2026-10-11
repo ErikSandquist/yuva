@@ -6,7 +6,14 @@ import { Link, useNavigate } from "react-router"
 import { ChannelIcon, Dot, ErrorLine, Segmented, toast } from "@/components/common"
 import { formatDate, formatDateTime, formatShort, useEnumText, useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -55,7 +62,13 @@ function UndeliverableNote({ contactId, u }: { contactId: string; u: Undeliverab
       {u.detail && <span className="break-words text-muted-foreground">{u.detail}</span>}
       <span className="flex flex-wrap items-center gap-2 text-muted-foreground">
         <Trans>Replies to this address are refused until you clear it.</Trans>
-        <Button variant="outline" size="sm" onClick={() => clear.mutate(u.email)} disabled={clear.isPending} data-testid="clear-undeliverable">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => clear.mutate(u.email)}
+          disabled={clear.isPending}
+          data-testid="clear-undeliverable"
+        >
           <Trans>Clear</Trans>
         </Button>
       </span>
@@ -90,7 +103,7 @@ function AddAddress({ contact }: { contact: Contact }) {
               setValue("")
               setOpen(false)
             },
-          },
+          }
         )
       }}
     >
@@ -121,7 +134,15 @@ function AddAddress({ contact }: { contact: Contact }) {
   )
 }
 
-export function Identities({ contact, editable, className }: { contact: Contact; editable?: boolean; className?: string }) {
+export function Identities({
+  contact,
+  editable,
+  className,
+}: {
+  contact: Contact
+  editable?: boolean
+  className?: string
+}) {
   const inboxes = useInboxes().data ?? []
   const rows = contact.emails.length + contact.external_ids.length
   return (
@@ -193,7 +214,12 @@ export function Satisfaction({ summary }: { summary?: ContactSummary }) {
       <span className="rounded-full bg-success/10 px-2.5 py-1 text-success">
         <Trans>{good} good</Trans>
       </span>
-      <span className={cn("rounded-full px-2.5 py-1", bad ? "bg-destructive/10 text-destructive" : "bg-muted text-muted-foreground")}>
+      <span
+        className={cn(
+          "rounded-full px-2.5 py-1",
+          bad ? "bg-destructive/10 text-destructive" : "bg-muted text-muted-foreground"
+        )}
+      >
         <Trans>{bad} bad</Trans>
       </span>
     </div>
@@ -202,7 +228,11 @@ export function Satisfaction({ summary }: { summary?: ContactSummary }) {
 
 export type ConversationFilter = "all" | "open" | "done"
 
-export const filterStatus: Record<ConversationFilter, ConversationStatus | undefined> = { all: undefined, open: "open", done: "closed" }
+export const filterStatus: Record<ConversationFilter, ConversationStatus | undefined> = {
+  all: undefined,
+  open: "open",
+  done: "closed",
+}
 
 export function ConversationFilters({
   value,
@@ -223,8 +253,24 @@ export function ConversationFilters({
       value={value}
       onChange={onChange}
       items={[
-        { value: "all", testId: "contact-filter-all", label: <>{t`All`} {count(a?.conversations)}</> },
-        { value: "open", testId: "contact-filter-open", label: <>{t`Open`} {count(a?.open_conversations)}</> },
+        {
+          value: "all",
+          testId: "contact-filter-all",
+          label: (
+            <>
+              {t`All`} {count(a?.conversations)}
+            </>
+          ),
+        },
+        {
+          value: "open",
+          testId: "contact-filter-open",
+          label: (
+            <>
+              {t`Open`} {count(a?.open_conversations)}
+            </>
+          ),
+        },
         { value: "done", testId: "contact-filter-done", label: t`Done` },
       ]}
       itemClassName="gap-1.5"
@@ -257,7 +303,10 @@ export function ConversationRows({
     )
   }
   return (
-    <ul className={cn("flex flex-col", roomy ? "divide-y overflow-hidden rounded-2xl border" : "gap-2")} data-testid="contact-conversations">
+    <ul
+      className={cn("flex flex-col", roomy ? "divide-y overflow-hidden rounded-2xl border" : "gap-2")}
+      data-testid="contact-conversations"
+    >
       {items.map((c) => {
         const inbox = inboxes.find((i) => i.id === c.inbox_id)
         const channel = c.channel_id ? channels.get(c.channel_id) : undefined
@@ -271,7 +320,7 @@ export function ConversationRows({
               className={cn(
                 "flex gap-3 transition-colors hover:bg-muted",
                 roomy ? "px-4 py-3.5" : "rounded-xl border p-3",
-                c.id === currentId && "bg-brand-wash hover:bg-brand-wash",
+                c.id === currentId && "bg-brand-wash hover:bg-brand-wash"
               )}
               data-testid="contact-conversation"
             >
@@ -285,14 +334,23 @@ export function ConversationRows({
                   <span className={cn("min-w-0 flex-1 truncate font-medium", !title && "text-muted-foreground italic")}>
                     {title || <Trans>No subject</Trans>}
                   </span>
-                  <span className={cn("inline-flex shrink-0 items-center gap-1 text-caption", open ? "text-brand" : "text-faint")}>
+                  <span
+                    className={cn(
+                      "inline-flex shrink-0 items-center gap-1 text-caption",
+                      open ? "text-brand" : "text-faint"
+                    )}
+                  >
                     {text.status[c.status]}
                     {rating && <RatingMark rating={rating.rating} comment={rating.comment} />}
                   </span>
                 </span>
-                {roomy && c.subject && c.last_message?.text && <span className="truncate text-small text-muted-foreground">{c.last_message.text}</span>}
+                {roomy && c.subject && c.last_message?.text && (
+                  <span className="truncate text-small text-muted-foreground">{c.last_message.text}</span>
+                )}
                 <span className="flex flex-wrap items-center gap-x-1.5 text-caption text-faint">
-                  <span title={formatDateTime(c.last_activity_at, i18n.locale)}>{formatShort(c.last_activity_at, i18n.locale)}</span>
+                  <span title={formatDateTime(c.last_activity_at, i18n.locale)}>
+                    {formatShort(c.last_activity_at, i18n.locale)}
+                  </span>
                   {inbox && (
                     <>
                       <span aria-hidden>·</span>
@@ -322,7 +380,15 @@ export function sinceText(contact: Contact, locale: string) {
   return formatDate(contact.created_at, locale)
 }
 
-export function NewConversationDialog({ contact, open, onOpenChange }: { contact: Contact; open: boolean; onOpenChange: (open: boolean) => void }) {
+export function NewConversationDialog({
+  contact,
+  open,
+  onOpenChange,
+}: {
+  contact: Contact
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const errorText = useErrorText()
   const navigate = useNavigate()
@@ -335,7 +401,8 @@ export function NewConversationDialog({ contact, open, onOpenChange }: { contact
   const create = useCreateConversation()
   const inbox = inboxId || inboxes[0]?.id || ""
   const channels = [...channelMap.values()].filter((c) => c.inbox_id === inbox)
-  const preferred = channels.find((c) => (contact.emails.length ? c.kind === "email" : c.kind !== "email")) ?? channels[0]
+  const preferred =
+    channels.find((c) => (contact.emails.length ? c.kind === "email" : c.kind !== "email")) ?? channels[0]
   const channel = channels.some((c) => c.id === channelId) ? channelId : (preferred?.id ?? "")
   const text = useEnumText()
   return (
@@ -356,14 +423,20 @@ export function NewConversationDialog({ contact, open, onOpenChange }: { contact
             e.preventDefault()
             if (!inbox) return
             create.mutate(
-              { inbox_id: inbox, contact_id: contact.id, channel_id: channel || undefined, subject: subject.trim() || undefined, assignee_id: membership.member_id },
+              {
+                inbox_id: inbox,
+                contact_id: contact.id,
+                channel_id: channel || undefined,
+                subject: subject.trim() || undefined,
+                assignee_id: membership.member_id,
+              },
               {
                 onSuccess: (c) => {
                   onOpenChange(false)
                   navigate(`/conversations/${c.id}`)
                 },
                 onError: (err) => toast(errorText(err)),
-              },
+              }
             )
           }}
         >
@@ -412,14 +485,25 @@ export function NewConversationDialog({ contact, open, onOpenChange }: { contact
             <Label htmlFor="new-conversation-subject">
               <Trans>Subject</Trans>
             </Label>
-            <Input id="new-conversation-subject" value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={500} className="h-9" />
+            <Input
+              id="new-conversation-subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              maxLength={500}
+              className="h-9"
+            />
           </div>
         </form>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             <Trans>Cancel</Trans>
           </Button>
-          <Button type="submit" form="new-conversation-form" disabled={!inbox || create.isPending} data-testid="new-conversation-create">
+          <Button
+            type="submit"
+            form="new-conversation-form"
+            disabled={!inbox || create.isPending}
+            data-testid="new-conversation-create"
+          >
             <Trans>Start conversation</Trans>
           </Button>
         </DialogFooter>

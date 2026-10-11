@@ -7,10 +7,7 @@ import { cn } from "cn"
 import { buttonVariants, type Button } from "@/components/ui/button"
 import { CheckIcon } from "lucide-react"
 
-function Questionnaire({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Root>) {
+function Questionnaire({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Root>) {
   return (
     <QuestionnairePrimitive.Root
       data-slot="questionnaire"
@@ -20,42 +17,27 @@ function Questionnaire({
   )
 }
 
-function QuestionnaireProgress({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Progress>) {
+function QuestionnaireProgress({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Progress>) {
   return (
     <QuestionnairePrimitive.Progress
       data-slot="questionnaire-progress"
-      className={cn(
-        "min-h-[1lh] w-fit min-w-[14ch] text-xs font-medium text-muted-foreground tabular-nums",
-        className
-      )}
+      className={cn("min-h-[1lh] w-fit min-w-[14ch] text-xs font-medium text-muted-foreground tabular-nums", className)}
       {...props}
     />
   )
 }
 
-function QuestionnaireItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Item>) {
+function QuestionnaireItem({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Item>) {
   return (
     <QuestionnairePrimitive.Item
       data-slot="questionnaire-item"
-      className={cn(
-        "flex min-w-0 flex-col gap-5 border-0 p-0 outline-none",
-        className
-      )}
+      className={cn("flex min-w-0 flex-col gap-5 border-0 p-0 outline-none", className)}
       {...props}
     />
   )
 }
 
-function QuestionnaireTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Title>) {
+function QuestionnaireTitle({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Title>) {
   return (
     <QuestionnairePrimitive.Title
       data-slot="questionnaire-title"
@@ -81,17 +63,11 @@ function QuestionnaireDescription({
   )
 }
 
-function QuestionnaireChoices({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Choices>) {
+function QuestionnaireChoices({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Choices>) {
   return (
     <QuestionnairePrimitive.Choices
       data-slot="questionnaire-choices"
-      className={cn(
-        "group/questionnaire-choices grid min-w-0 gap-3",
-        className
-      )}
+      className={cn("group/questionnaire-choices grid min-w-0 gap-3", className)}
       {...props}
     />
   )
@@ -125,7 +101,10 @@ function QuestionnaireChoice({
           data-slot="questionnaire-choice-indicator-dot"
           className="hidden size-2 rounded-full bg-primary-foreground group-data-[type=checkbox]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
         />
-        <CheckIcon data-slot="questionnaire-choice-indicator-check" className="hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block" />
+        <CheckIcon
+          data-slot="questionnaire-choice-indicator-check"
+          className="hidden size-3.5 group-data-[type=radio]/questionnaire-choice:hidden group-data-checked/questionnaire-choice:block"
+        />
       </span>
       <QuestionnairePrimitive.ChoiceLabel
         data-slot="questionnaire-choice-label"
@@ -141,28 +120,15 @@ function QuestionnaireChoice({
   )
 }
 
-function QuestionnaireChoiceDescription({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+function QuestionnaireChoiceDescription({ className, ...props }: React.ComponentProps<"span">) {
   return (
-    <span
-      data-slot="questionnaire-choice-description"
-      className={cn("text-muted-foreground", className)}
-      {...props}
-    />
+    <span data-slot="questionnaire-choice-description" className={cn("text-muted-foreground", className)} {...props} />
   )
 }
 
-function QuestionnaireInput({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Input>) {
+function QuestionnaireInput({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Input>) {
   return (
-    <div
-      data-slot="questionnaire-input-wrapper"
-      className="group/questionnaire-input relative w-full min-w-0"
-    >
+    <div data-slot="questionnaire-input-wrapper" className="group/questionnaire-input relative w-full min-w-0">
       <QuestionnairePrimitive.Input
         data-slot="questionnaire-input"
         className={cn(
@@ -176,10 +142,7 @@ function QuestionnaireInput({
   )
 }
 
-function QuestionnaireError({
-  className,
-  ...props
-}: React.ComponentProps<typeof QuestionnairePrimitive.Error>) {
+function QuestionnaireError({ className, ...props }: React.ComponentProps<typeof QuestionnairePrimitive.Error>) {
   return (
     <QuestionnairePrimitive.Error
       data-slot="questionnaire-error"
@@ -189,10 +152,7 @@ function QuestionnaireError({
   )
 }
 
-function QuestionnaireActions({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function QuestionnaireActions({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="questionnaire-actions"

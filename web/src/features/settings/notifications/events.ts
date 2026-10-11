@@ -27,7 +27,10 @@ export function useEventText(): Record<EventName, { label: string; hint: string 
       label: t`New conversation in an async inbox`,
       hint: t`The first message of a conversation in an inbox that shows a reply time.`,
     },
-    message_in_my_conversation: { label: t`New message in a conversation assigned to me`, hint: t`A later message from the contact.` },
+    message_in_my_conversation: {
+      label: t`New message in a conversation assigned to me`,
+      hint: t`A later message from the contact.`,
+    },
     message_in_unassigned_conversation: {
       label: t`New message in an unassigned conversation`,
       hint: t`A later message from the contact while nobody is assigned.`,

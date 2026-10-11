@@ -18,7 +18,14 @@ export function CopyButton({ value, className }: { value: string; className?: st
   const { t } = useLingui()
   const [copied, copy] = useCopy()
   return (
-    <Button type="button" variant="outline" size="sm" className={className} onClick={() => void copy(value)} aria-label={t`Copy`}>
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className={className}
+      onClick={() => void copy(value)}
+      aria-label={t`Copy`}
+    >
       {copied ? <CheckIcon /> : <CopyIcon />}
       {copied ? <Trans>Copied</Trans> : <Trans>Copy</Trans>}
     </Button>
@@ -28,7 +35,10 @@ export function CopyButton({ value, className }: { value: string; className?: st
 export function CodeLine({ value, testId }: { value: string; testId?: string }) {
   return (
     <div className="flex min-w-0 items-center gap-2">
-      <code className="min-w-0 flex-1 truncate rounded-xl border bg-surface px-3 py-2 font-mono text-caption" data-testid={testId}>
+      <code
+        className="min-w-0 flex-1 truncate rounded-xl border bg-surface px-3 py-2 font-mono text-caption"
+        data-testid={testId}
+      >
         {value}
       </code>
       <CopyButton value={value} />
@@ -40,7 +50,10 @@ export function CodeBlock({ value, testId }: { value: string; testId?: string })
   return (
     <div className="min-w-0 rounded-xl border bg-surface py-2 ps-3.5 pe-2 after:block after:clear-both">
       <CopyButton value={value} className="float-end ms-3" />
-      <pre className="py-1 font-mono text-caption leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]" data-testid={testId}>
+      <pre
+        className="py-1 font-mono text-caption leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]"
+        data-testid={testId}
+      >
         {value}
       </pre>
     </div>

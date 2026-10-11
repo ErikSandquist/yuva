@@ -1,8 +1,8 @@
-import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
-import { messages as en } from "../locales/en/panel";
-import { messages as tr } from "../locales/tr/panel";
-import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types";
+import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core"
+import { msg } from "@lingui/core/macro"
+import { messages as en } from "../locales/en/panel"
+import { messages as tr } from "../locales/tr/panel"
+import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types"
 import {
   ApiError,
   type ClientAttachment,
@@ -12,36 +12,36 @@ import {
   type ClientMessage,
   type ClientRealtimeMessage,
   type Rating,
-} from "../client/api";
-import { createYuvaClient, randomId, type YuvaClient } from "../client/client";
-import { styles } from "./styles";
-import { richText } from "./text";
+} from "../client/api"
+import { createYuvaClient, randomId, type YuvaClient } from "../client/client"
+import { styles } from "./styles"
+import { richText } from "./text"
 
-const catalogs: Record<string, Messages> = { en, tr };
-const maxFiles = 10;
-const groupGap = 5 * 60_000;
+const catalogs: Record<string, Messages> = { en, tr }
+const maxFiles = 10
+const groupGap = 5 * 60_000
 
-type View = { kind: "list" } | { kind: "thread"; id: string | null };
+type View = { kind: "list" } | { kind: "thread"; id: string | null }
 
 interface Pending {
-  client_id: string;
-  conversation: string | null;
-  body: string;
-  files: File[];
-  state: "sending" | "failed" | "refused";
-  status?: number;
+  client_id: string
+  conversation: string | null
+  body: string
+  files: File[]
+  state: "sending" | "failed" | "refused"
+  status?: number
 }
 
 interface RatingDraft {
-  choice: Rating;
-  state: "choosing" | "sending" | "failed";
+  choice: Rating
+  state: "choosing" | "sending" | "failed"
 }
 
 interface Thread {
-  messages: ClientMessage[];
-  cursor?: string;
-  complete: boolean;
-  loading: boolean;
+  messages: ClientMessage[]
+  cursor?: string
+  complete: boolean
+  loading: boolean
 }
 
 const icons = {
@@ -50,1117 +50,1171 @@ const icons = {
   attach: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5l-8.3 8.3a5 5 0 01-7-7L13 4.5a3.3 3.3 0 014.7 4.7l-8.3 8.3a1.7 1.7 0 01-2.4-2.4L14.5 7.6"/></svg>`,
   send: `<svg class="flip" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.4 20.4l17.5-7.5a1 1 0 000-1.8L3.4 3.6a1 1 0 00-1.4 1.2L4.5 12l-2.5 7.2a1 1 0 001.4 1.2zM4.5 12h7"/></svg>`,
   file: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6v18h12V7z M14 3v4h4"/></svg>`,
-};
+}
 
-function el<K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string): HTMLElementTagNameMap[K] {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (text !== undefined) element.textContent = text;
-  return element;
+function el<K extends keyof HTMLElementTagNameMap>(
+  tag: K,
+  className?: string,
+  text?: string
+): HTMLElementTagNameMap[K] {
+  const element = document.createElement(tag)
+  if (className) element.className = className
+  if (text !== undefined) element.textContent = text
+  return element
 }
 
 function iconButton(icon: string, label: string, onClick: () => void, className = "icon"): HTMLButtonElement {
-  const button = el("button", className);
-  button.type = "button";
-  button.innerHTML = icon;
-  button.setAttribute("aria-label", label);
-  button.title = label;
-  button.addEventListener("click", onClick);
-  return button;
+  const button = el("button", className)
+  button.type = "button"
+  button.innerHTML = icon
+  button.setAttribute("aria-label", label)
+  button.title = label
+  button.addEventListener("click", onClick)
+  return button
 }
 
-const time = (value: string) => Date.parse(value);
-const byCreated = (a: ClientMessage, b: ClientMessage) => time(a.created_at) - time(b.created_at);
+const time = (value: string) => Date.parse(value)
+const byCreated = (a: ClientMessage, b: ClientMessage) => time(a.created_at) - time(b.created_at)
 const byActivity = (a: ClientConversation, b: ClientConversation) =>
-  time(b.last_message_at ?? b.created_at) - time(a.last_message_at ?? a.created_at);
-const authorKey = (m: ClientMessage) => (m.author.type === "contact" ? "contact" : `${m.author.type}:${m.author.name ?? ""}`);
-const isImage = (a: ClientAttachment) => /^image\/(png|jpeg|gif|webp)$/.test(a.content_type);
+  time(b.last_message_at ?? b.created_at) - time(a.last_message_at ?? a.created_at)
+const authorKey = (m: ClientMessage) =>
+  m.author.type === "contact" ? "contact" : `${m.author.type}:${m.author.name ?? ""}`
+const isImage = (a: ClientAttachment) => /^image\/(png|jpeg|gif|webp)$/.test(a.content_type)
 
 export class Chat implements PanelController {
-  #host: PanelHost;
-  #i18n!: I18n;
-  #client: YuvaClient;
-  #inbox: ClientInbox | null = null;
-  #contact: ClientContact | null = null;
-  #phase: "loading" | "ready" | "error" = "loading";
-  #error = "";
-  #starting: Promise<void> | null = null;
-  #beginning: Promise<void> | null = null;
-  #conversations = new Map<string, ClientConversation>();
-  #conversationCursor: string | undefined;
-  #threads = new Map<string, Thread>();
-  #pending: Pending[] = [];
-  #typing = new Map<string, { name: string; timer: ReturnType<typeof setTimeout> }>();
-  #view: View | null = null;
-  #reconnecting = false;
-  #files: File[] = [];
-  #typingSentAt = 0;
-  #typingIdle: ReturnType<typeof setTimeout> | null = null;
-  #blobs = new Map<string, string>();
-  #blobLoads = new Map<string, Promise<string>>();
-  #avatars = new Map<string, boolean>();
-  #emailSaved = false;
-  #emailError = "";
-  #connectedBefore = false;
-  #ratings = new Map<string, RatingDraft>();
-  #rateCard = el("div", "card rate");
-  #rateComment = el("textarea");
-  #rateKey = "";
-  #rateFor: string | null = null;
+  #host: PanelHost
+  #i18n!: I18n
+  #client: YuvaClient
+  #inbox: ClientInbox | null = null
+  #contact: ClientContact | null = null
+  #phase: "loading" | "ready" | "error" = "loading"
+  #error = ""
+  #starting: Promise<void> | null = null
+  #beginning: Promise<void> | null = null
+  #conversations = new Map<string, ClientConversation>()
+  #conversationCursor: string | undefined
+  #threads = new Map<string, Thread>()
+  #pending: Pending[] = []
+  #typing = new Map<string, { name: string; timer: ReturnType<typeof setTimeout> }>()
+  #view: View | null = null
+  #reconnecting = false
+  #files: File[] = []
+  #typingSentAt = 0
+  #typingIdle: ReturnType<typeof setTimeout> | null = null
+  #blobs = new Map<string, string>()
+  #blobLoads = new Map<string, Promise<string>>()
+  #avatars = new Map<string, boolean>()
+  #emailSaved = false
+  #emailError = ""
+  #connectedBefore = false
+  #ratings = new Map<string, RatingDraft>()
+  #rateCard = el("div", "card rate")
+  #rateComment = el("textarea")
+  #rateKey = ""
+  #rateFor: string | null = null
 
-  #header = el("header", "header");
-  #banner = el("div", "banner");
-  #body = el("div", "body");
-  #scroll = el("div", "scroll");
-  #email = el("div", "card");
-  #emailInput = el("input");
-  #composer = el("div", "composer");
-  #chips = el("div", "chips");
-  #textarea = el("textarea");
-  #fileInput = el("input");
-  #sendButton: HTMLButtonElement;
-  #attachButton: HTMLButtonElement;
-  #live = el("div", "sr");
-  #scrollThread: string | null | undefined;
-  #atEnd = true;
+  #header = el("header", "header")
+  #banner = el("div", "banner")
+  #body = el("div", "body")
+  #scroll = el("div", "scroll")
+  #email = el("div", "card")
+  #emailInput = el("input")
+  #composer = el("div", "composer")
+  #chips = el("div", "chips")
+  #textarea = el("textarea")
+  #fileInput = el("input")
+  #sendButton: HTMLButtonElement
+  #attachButton: HTMLButtonElement
+  #live = el("div", "sr")
+  #scrollThread: string | null | undefined
+  #atEnd = true
 
   constructor(host: PanelHost) {
-    this.#host = host;
-    const { server, channel } = host.config();
-    this.#client = createYuvaClient({ server, channel: channel ?? "", identityToken: () => host.identityToken() });
-    this.#client.on("event", (message) => this.#event(message));
+    this.#host = host
+    const { server, channel } = host.config()
+    this.#client = createYuvaClient({ server, channel: channel ?? "", identityToken: () => host.identityToken() })
+    this.#client.on("event", (message) => this.#event(message))
     this.#client.on("connection", ({ state, attempt }) => {
-      if (state !== "reconnecting") return;
-      this.#reconnecting = attempt > 0;
-      this.#renderBanner();
-    });
+      if (state !== "reconnecting") return
+      this.#reconnecting = attempt > 0
+      this.#renderBanner()
+    })
     this.#client.on("session", ({ session, renewed }) => {
-      this.#setInbox(session.inbox);
-      this.#contact = session.contact;
-      if (renewed) void this.#reload();
-    });
-    this.#setLocale();
-    this.#live.setAttribute("aria-live", "polite");
+      this.#setInbox(session.inbox)
+      this.#contact = session.contact
+      if (renewed) void this.#reload()
+    })
+    this.#setLocale()
+    this.#live.setAttribute("aria-live", "polite")
     this.#scroll.addEventListener("scroll", () => {
-      this.#atEnd = this.#scroll.scrollHeight - this.#scroll.scrollTop - this.#scroll.clientHeight < 48;
-      if (this.#scroll.scrollTop < 60 && this.#view?.kind === "thread" && this.#view.id) void this.#loadMessages(this.#view.id, true);
-    });
-    this.#textarea.rows = 1;
+      this.#atEnd = this.#scroll.scrollHeight - this.#scroll.scrollTop - this.#scroll.clientHeight < 48
+      if (this.#scroll.scrollTop < 60 && this.#view?.kind === "thread" && this.#view.id)
+        void this.#loadMessages(this.#view.id, true)
+    })
+    this.#textarea.rows = 1
     this.#textarea.addEventListener("keydown", (event) => {
       if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
-        event.preventDefault();
-        void this.#send();
+        event.preventDefault()
+        void this.#send()
       }
-    });
+    })
     this.#textarea.addEventListener("input", () => {
-      this.#autosize();
-      this.#syncSend();
-      this.#typingInput();
-    });
+      this.#autosize()
+      this.#syncSend()
+      this.#typingInput()
+    })
     this.#textarea.addEventListener("paste", (event) => {
-      const files = Array.from(event.clipboardData?.files ?? []);
-      if (files.length === 0) return;
-      event.preventDefault();
-      this.#addFiles(files);
-    });
-    this.#fileInput.type = "file";
-    this.#fileInput.multiple = true;
-    this.#fileInput.hidden = true;
+      const files = Array.from(event.clipboardData?.files ?? [])
+      if (files.length === 0) return
+      event.preventDefault()
+      this.#addFiles(files)
+    })
+    this.#fileInput.type = "file"
+    this.#fileInput.multiple = true
+    this.#fileInput.hidden = true
     this.#fileInput.addEventListener("change", () => {
-      this.#addFiles(Array.from(this.#fileInput.files ?? []));
-      this.#fileInput.value = "";
-    });
-    this.#attachButton = iconButton(icons.attach, "", () => this.#fileInput.click());
-    this.#sendButton = iconButton(icons.send, "", () => void this.#send(), "icon send");
-    const form = el("form");
+      this.#addFiles(Array.from(this.#fileInput.files ?? []))
+      this.#fileInput.value = ""
+    })
+    this.#attachButton = iconButton(icons.attach, "", () => this.#fileInput.click())
+    this.#sendButton = iconButton(icons.send, "", () => void this.#send(), "icon send")
+    const form = el("form")
     form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      void this.#send();
-    });
-    form.append(this.#attachButton, this.#textarea, this.#sendButton, this.#fileInput);
-    this.#composer.append(this.#chips, form);
+      event.preventDefault()
+      void this.#send()
+    })
+    form.append(this.#attachButton, this.#textarea, this.#sendButton, this.#fileInput)
+    this.#composer.append(this.#chips, form)
 
-    this.#emailInput.type = "email";
-    this.#emailInput.required = true;
-    this.#emailInput.autocomplete = "email";
-    this.#rateComment.rows = 2;
-    this.#rateComment.maxLength = 2000;
-    this.#rateComment.dir = "auto";
+    this.#emailInput.type = "email"
+    this.#emailInput.required = true
+    this.#emailInput.autocomplete = "email"
+    this.#rateComment.rows = 2
+    this.#rateComment.maxLength = 2000
+    this.#rateComment.dir = "auto"
 
-    document.addEventListener("visibilitychange", this.#onVisible);
-    window.addEventListener("online", this.#onVisible);
-    this.#renderAll();
-    void this.#start();
+    document.addEventListener("visibilitychange", this.#onVisible)
+    window.addEventListener("online", this.#onVisible)
+    this.#renderAll()
+    void this.#start()
   }
 
   update(): void {
-    this.#setLocale();
-    this.#renderAll();
+    this.#setLocale()
+    this.#renderAll()
   }
 
   opened(): void {
     if (this.#phase === "error") {
-      this.#starting = null;
-      void this.#start();
-      return;
+      this.#starting = null
+      void this.#start()
+      return
     }
-    if (this.#phase === "ready") void (this.#client.token ? this.#refreshSession() : this.#preview().then(() => this.#render()).catch(() => undefined));
-    this.#render();
-    this.#scrollToEnd();
-    this.#markRead();
-    if (this.#host.config().layout === "launcher") this.#textarea.focus({ preventScroll: true });
+    if (this.#phase === "ready")
+      void (this.#client.token
+        ? this.#refreshSession()
+        : this.#preview()
+            .then(() => this.#render())
+            .catch(() => undefined))
+    this.#render()
+    this.#scrollToEnd()
+    this.#markRead()
+    if (this.#host.config().layout === "launcher") this.#textarea.focus({ preventScroll: true })
   }
 
   closed(): void {
-    this.#stopTyping();
+    this.#stopTyping()
   }
 
   identityChanged(): void {
-    this.#reset();
-    void this.#start();
+    this.#reset()
+    void this.#start()
   }
 
   async signOut(): Promise<void> {
-    const signingOut = this.#client.signOut();
-    this.#reset();
-    await signingOut;
-    if (this.#host.isOpen()) void this.#start();
-    else this.#render();
+    const signingOut = this.#client.signOut()
+    this.#reset()
+    await signingOut
+    if (this.#host.isOpen()) void this.#start()
+    else this.#render()
   }
 
   destroy(): void {
-    this.#client.reset();
-    this.#stopTyping();
-    document.removeEventListener("visibilitychange", this.#onVisible);
-    window.removeEventListener("online", this.#onVisible);
-    for (const url of this.#blobs.values()) URL.revokeObjectURL(url);
+    this.#client.reset()
+    this.#stopTyping()
+    document.removeEventListener("visibilitychange", this.#onVisible)
+    window.removeEventListener("online", this.#onVisible)
+    for (const url of this.#blobs.values()) URL.revokeObjectURL(url)
   }
 
   #reset(): void {
-    this.#client.reset();
-    this.#starting = null;
-    this.#beginning = null;
-    this.#inbox = null;
-    this.#contact = null;
-    this.#phase = "loading";
-    this.#conversations.clear();
-    this.#threads.clear();
-    this.#pending = [];
-    this.#ratings.clear();
-    this.#rateKey = "";
-    this.#view = null;
-    this.#connectedBefore = false;
-    this.#host.setUnread(0);
+    this.#client.reset()
+    this.#starting = null
+    this.#beginning = null
+    this.#inbox = null
+    this.#contact = null
+    this.#phase = "loading"
+    this.#conversations.clear()
+    this.#threads.clear()
+    this.#pending = []
+    this.#ratings.clear()
+    this.#rateKey = ""
+    this.#view = null
+    this.#connectedBefore = false
+    this.#host.setUnread(0)
   }
 
   #onVisible = () => {
-    if (document.visibilityState !== "visible") return;
-    this.#client.reconnect();
-    this.#markRead();
-    void this.#refreshInbox();
-  };
+    if (document.visibilityState !== "visible") return
+    this.#client.reconnect()
+    this.#markRead()
+    void this.#refreshInbox()
+  }
 
   #setLocale(): void {
-    const { locale } = this.#host.config();
-    this.#i18n = setupI18n({ locale, messages: { [locale]: catalogs[locale] ?? en } });
+    const { locale } = this.#host.config()
+    this.#i18n = setupI18n({ locale, messages: { [locale]: catalogs[locale] ?? en } })
   }
 
   #t(descriptor: MessageDescriptor): string {
-    return this.#i18n._(descriptor);
+    return this.#i18n._(descriptor)
   }
-
 
   #start(): Promise<void> {
     this.#starting ??= (async () => {
-      this.#phase = "loading";
-      this.#render();
-      const { channel } = this.#host.config();
-      if (!channel) throw new ApiError(0, "not_configured");
-      if ((await this.#host.identityToken()) || readStored(channel).session) await this.#begin();
+      this.#phase = "loading"
+      this.#render()
+      const { channel } = this.#host.config()
+      if (!channel) throw new ApiError(0, "not_configured")
+      if ((await this.#host.identityToken()) || readStored(channel).session) await this.#begin()
       else {
-        await this.#preview();
-        if (!this.#inbox?.chat.allow_anonymous) throw new ApiError(403, "anonymous_not_allowed");
+        await this.#preview()
+        if (!this.#inbox?.chat.allow_anonymous) throw new ApiError(403, "anonymous_not_allowed")
       }
-      this.#phase = "ready";
+      this.#phase = "ready"
       if (!this.#view) {
-        const list = this.#sorted();
-        this.#view = list.length > 1 ? { kind: "list" } : { kind: "thread", id: list[0]?.id ?? null };
-        if (this.#view.kind === "thread" && this.#view.id) await this.#loadMessages(this.#view.id);
+        const list = this.#sorted()
+        this.#view = list.length > 1 ? { kind: "list" } : { kind: "thread", id: list[0]?.id ?? null }
+        if (this.#view.kind === "thread" && this.#view.id) await this.#loadMessages(this.#view.id)
       }
-      this.#render();
-      this.#scrollToEnd();
-      this.#markRead();
+      this.#render()
+      this.#scrollToEnd()
+      this.#markRead()
     })().catch((error: unknown) => {
-      this.#starting = null;
-      if (this.#refusal(error)) return;
-      this.#phase = "error";
-      this.#error = error instanceof ApiError ? error.code : "error";
-      this.#render();
-    });
-    return this.#starting;
+      this.#starting = null
+      if (this.#refusal(error)) return
+      this.#phase = "error"
+      this.#error = error instanceof ApiError ? error.code : "error"
+      this.#render()
+    })
+    return this.#starting
   }
 
   async #preview(): Promise<void> {
-    const inbox = await this.#fetchInbox();
-    if (!this.#client.token) this.#setInbox(inbox);
+    const inbox = await this.#fetchInbox()
+    if (!this.#client.token) this.#setInbox(inbox)
   }
 
   #fetchInbox(): Promise<ClientInbox> {
-    if (!this.#host.config().channel) throw new ApiError(0, "not_configured");
-    return this.#client.channelSettings();
+    if (!this.#host.config().channel) throw new ApiError(0, "not_configured")
+    return this.#client.channelSettings()
   }
 
   #setInbox(inbox: ClientInbox): void {
-    const { channel } = this.#host.config();
-    this.#inbox = inbox;
-    const launcher = launcherOf(inbox);
-    this.#host.setLauncher(launcher);
-    if (channel) writeStored(channel, { ...readStored(channel), launcher });
+    const { channel } = this.#host.config()
+    this.#inbox = inbox
+    const launcher = launcherOf(inbox)
+    this.#host.setLauncher(launcher)
+    if (channel) writeStored(channel, { ...readStored(channel), launcher })
   }
 
   async #refreshInbox(): Promise<void> {
-    if (this.#phase !== "ready") return;
+    if (this.#phase !== "ready") return
     try {
-      this.#setInbox(await this.#fetchInbox());
-      this.#render();
+      this.#setInbox(await this.#fetchInbox())
+      this.#render()
     } catch (error) {
-      this.#refusal(error, true);
+      this.#refusal(error, true)
     }
   }
 
   #refusal(error: unknown, channelRequest = !this.#client.token): boolean {
-    const refused = error instanceof ApiError && (error.code === "origin_not_allowed" || (error.status === 404 && channelRequest));
-    if (refused) this.#host.refused();
-    return refused;
+    const refused =
+      error instanceof ApiError && (error.code === "origin_not_allowed" || (error.status === 404 && channelRequest))
+    if (refused) this.#host.refused()
+    return refused
   }
 
   #begin(): Promise<void> {
     this.#beginning ??= (async () => {
-      await this.#client.start();
-      await this.#loadConversations();
-      await this.#client.connect();
+      await this.#client.start()
+      await this.#loadConversations()
+      await this.#client.connect()
     })().finally(() => {
-      this.#beginning = null;
-    });
-    return this.#beginning;
+      this.#beginning = null
+    })
+    return this.#beginning
   }
 
   async #refreshSession(): Promise<void> {
     try {
-      await this.#client.refresh();
-      this.#render();
+      await this.#client.refresh()
+      this.#render()
     } catch {}
   }
 
   async #loadConversations(more = false): Promise<void> {
-    const page = await this.#client.listConversations({ limit: 50, cursor: more ? this.#conversationCursor : undefined });
-    if (!more) this.#conversations.clear();
-    for (const conversation of page.items) this.#conversations.set(conversation.id, conversation);
-    this.#conversationCursor = page.next_cursor;
-    this.#syncUnread();
+    const page = await this.#client.listConversations({
+      limit: 50,
+      cursor: more ? this.#conversationCursor : undefined,
+    })
+    if (!more) this.#conversations.clear()
+    for (const conversation of page.items) this.#conversations.set(conversation.id, conversation)
+    this.#conversationCursor = page.next_cursor
+    this.#syncUnread()
   }
 
   async #reload(): Promise<void> {
-    await this.#loadConversations();
-    const current = this.#view?.kind === "thread" ? this.#view.id : null;
-    for (const id of [...this.#threads.keys()]) if (id !== current) this.#threads.delete(id);
+    await this.#loadConversations()
+    const current = this.#view?.kind === "thread" ? this.#view.id : null
+    for (const id of [...this.#threads.keys()]) if (id !== current) this.#threads.delete(id)
     if (current) {
-      this.#threads.delete(current);
-      await this.#loadMessages(current);
+      this.#threads.delete(current)
+      await this.#loadMessages(current)
     }
-    this.#render();
+    this.#render()
   }
 
   async #loadMessages(id: string, older = false): Promise<void> {
-    let thread = this.#threads.get(id);
+    let thread = this.#threads.get(id)
     if (!thread) {
-      thread = { messages: [], complete: false, loading: false };
-      this.#threads.set(id, thread);
+      thread = { messages: [], complete: false, loading: false }
+      this.#threads.set(id, thread)
     }
-    if (thread.loading || (older && (thread.complete || !thread.cursor))) return;
-    thread.loading = true;
-    const before = this.#scroll.scrollHeight - this.#scroll.scrollTop;
+    if (thread.loading || (older && (thread.complete || !thread.cursor))) return
+    thread.loading = true
+    const before = this.#scroll.scrollHeight - this.#scroll.scrollTop
     try {
-      const page = await this.#client.listMessages(id, { order: "desc", limit: 30, cursor: older ? thread.cursor : undefined });
-      const known = new Set(thread.messages.map((m) => m.id));
-      thread.messages = [...thread.messages, ...page.items.filter((m) => !known.has(m.id))].sort(byCreated);
-      thread.cursor = page.next_cursor;
-      thread.complete = !page.next_cursor;
+      const page = await this.#client.listMessages(id, {
+        order: "desc",
+        limit: 30,
+        cursor: older ? thread.cursor : undefined,
+      })
+      const known = new Set(thread.messages.map((m) => m.id))
+      thread.messages = [...thread.messages, ...page.items.filter((m) => !known.has(m.id))].sort(byCreated)
+      thread.cursor = page.next_cursor
+      thread.complete = !page.next_cursor
     } finally {
-      thread.loading = false;
+      thread.loading = false
     }
     if (older) {
-      this.#render();
-      this.#scroll.scrollTop = this.#scroll.scrollHeight - before;
+      this.#render()
+      this.#scroll.scrollTop = this.#scroll.scrollHeight - before
     }
   }
 
   #event(message: ClientRealtimeMessage): void {
     switch (message.type) {
       case "ready":
-        this.#reconnecting = false;
-        this.#renderBanner();
-        if (this.#connectedBefore) void this.#refreshInbox();
-        this.#connectedBefore = true;
-        return;
+        this.#reconnecting = false
+        this.#renderBanner()
+        if (this.#connectedBefore) void this.#refreshInbox()
+        this.#connectedBefore = true
+        return
       case "inbox.updated": {
-        const asked = this.#inbox?.ask_for_rating;
-        this.#setInbox(message.data);
-        if (asked !== undefined && asked !== message.data.ask_for_rating) void this.#loadConversations().then(() => this.#render()).catch(() => undefined);
-        break;
+        const asked = this.#inbox?.ask_for_rating
+        this.#setInbox(message.data)
+        if (asked !== undefined && asked !== message.data.ask_for_rating)
+          void this.#loadConversations()
+            .then(() => this.#render())
+            .catch(() => undefined)
+        break
       }
       case "resync_required":
-        void this.#reload();
-        return;
+        void this.#reload()
+        return
       case "presence":
-        if (this.#inbox) this.#inbox = { ...this.#inbox, presence: message.data };
-        break;
+        if (this.#inbox) this.#inbox = { ...this.#inbox, presence: message.data }
+        break
       case "conversation.created":
-        if (!this.#conversations.has(message.data.id)) this.#conversations.set(message.data.id, message.data);
+        if (!this.#conversations.has(message.data.id)) this.#conversations.set(message.data.id, message.data)
         if (this.#view?.kind === "thread" && this.#view.id === null && this.#conversations.size > 1) {
-          this.#view = this.#pending.some((p) => p.conversation === null) ? this.#view : { kind: "list" };
+          this.#view = this.#pending.some((p) => p.conversation === null) ? this.#view : { kind: "list" }
         }
-        this.#syncUnread();
-        break;
+        this.#syncUnread()
+        break
       case "conversation.updated": {
-        const conversation = this.#conversations.get(message.data.id);
-        const { status, can_rate, rating } = message.data;
-        if (conversation) this.#conversations.set(conversation.id, { ...conversation, status, can_rate, rating });
-        if (!can_rate) this.#ratings.delete(message.data.id);
-        break;
+        const conversation = this.#conversations.get(message.data.id)
+        const { status, can_rate, rating } = message.data
+        if (conversation) this.#conversations.set(conversation.id, { ...conversation, status, can_rate, rating })
+        if (!can_rate) this.#ratings.delete(message.data.id)
+        break
       }
       case "message.created":
       case "message.updated":
-        this.#upsertMessage(message.data, message.type === "message.created");
-        break;
+        this.#upsertMessage(message.data, message.type === "message.created")
+        break
       case "read": {
-        const conversation = this.#conversations.get(message.data.conversation_id);
-        const previous = conversation?.last_read_by_member_at;
+        const conversation = this.#conversations.get(message.data.conversation_id)
+        const previous = conversation?.last_read_by_member_at
         if (conversation && (!previous || time(message.data.read_at) > time(previous))) {
-          this.#conversations.set(conversation.id, { ...conversation, last_read_by_member_at: message.data.read_at });
+          this.#conversations.set(conversation.id, { ...conversation, last_read_by_member_at: message.data.read_at })
         }
-        break;
+        break
       }
       case "typing": {
-        const id = message.data.conversation_id;
-        const previous = this.#typing.get(id);
-        if (previous) clearTimeout(previous.timer);
+        const id = message.data.conversation_id
+        const previous = this.#typing.get(id)
+        if (previous) clearTimeout(previous.timer)
         if (message.data.typing) {
-          const name = message.data.author.name ?? "";
-          this.#typing.set(id, { name, timer: setTimeout(() => this.#typing.delete(id) && this.#render(), 8000) });
-        } else this.#typing.delete(id);
-        break;
+          const name = message.data.author.name ?? ""
+          this.#typing.set(id, { name, timer: setTimeout(() => this.#typing.delete(id) && this.#render(), 8000) })
+        } else this.#typing.delete(id)
+        break
       }
     }
-    this.#render();
+    this.#render()
   }
 
   #upsertMessage(message: ClientMessage, created: boolean): void {
-    const id = message.conversation_id;
-    const thread = this.#threads.get(id);
+    const id = message.conversation_id
+    const thread = this.#threads.get(id)
     if (thread) {
-      const index = thread.messages.findIndex((m) => m.id === message.id);
-      if (index >= 0) thread.messages[index] = message;
-      else thread.messages = [...thread.messages, message].sort(byCreated);
+      const index = thread.messages.findIndex((m) => m.id === message.id)
+      if (index >= 0) thread.messages[index] = message
+      else thread.messages = [...thread.messages, message].sort(byCreated)
     }
-    if (message.client_id) this.#pending = this.#pending.filter((p) => p.client_id !== message.client_id);
-    const conversation = this.#conversations.get(id);
+    if (message.client_id) this.#pending = this.#pending.filter((p) => p.client_id !== message.client_id)
+    const conversation = this.#conversations.get(id)
     if (!conversation) {
       void this.#client
         .getConversation(id)
         .then((c) => {
-          this.#conversations.set(c.id, c);
-          this.#syncUnread();
-          this.#render();
+          this.#conversations.set(c.id, c)
+          this.#syncUnread()
+          this.#render()
         })
-        .catch(() => undefined);
-      return;
+        .catch(() => undefined)
+      return
     }
     if (created) {
-      const text = message.body.replace(/\s+/g, " ").trim();
+      const text = message.body.replace(/\s+/g, " ").trim()
       this.#conversations.set(id, {
         ...conversation,
-        last_message: { id: message.id, author_type: message.author.type, text: text.length > 140 ? `${text.slice(0, 139)}…` : text, created_at: message.created_at },
+        last_message: {
+          id: message.id,
+          author_type: message.author.type,
+          text: text.length > 140 ? `${text.slice(0, 139)}…` : text,
+          created_at: message.created_at,
+        },
         last_message_at: message.created_at,
         unread: conversation.unread || message.author.type !== "contact",
-      });
+      })
       if (message.author.type !== "contact") {
-        const typing = this.#typing.get(id);
-        if (typing) clearTimeout(typing.timer);
-        this.#typing.delete(id);
-        this.#announce(message);
+        const typing = this.#typing.get(id)
+        if (typing) clearTimeout(typing.timer)
+        this.#typing.delete(id)
+        this.#announce(message)
       }
     }
-    this.#syncUnread();
-    this.#markRead();
+    this.#syncUnread()
+    this.#markRead()
   }
 
   #announce(message: ClientMessage): void {
-    this.#live.textContent = `${message.author.name || this.#inbox?.name || ""}: ${message.body.slice(0, 200)}`;
+    this.#live.textContent = `${message.author.name || this.#inbox?.name || ""}: ${message.body.slice(0, 200)}`
   }
 
   #syncUnread(): void {
-    let count = 0;
-    for (const conversation of this.#conversations.values()) if (conversation.unread) count++;
-    this.#host.setUnread(count);
+    let count = 0
+    for (const conversation of this.#conversations.values()) if (conversation.unread) count++
+    this.#host.setUnread(count)
   }
 
   #visibleThread(): string | null {
-    if (!this.#host.isOpen() || document.visibilityState !== "visible") return null;
-    return this.#view?.kind === "thread" ? this.#view.id : null;
+    if (!this.#host.isOpen() || document.visibilityState !== "visible") return null
+    return this.#view?.kind === "thread" ? this.#view.id : null
   }
 
   #markRead(): void {
-    const id = this.#visibleThread();
-    const conversation = id ? this.#conversations.get(id) : undefined;
-    if (!id || !conversation?.unread) return;
-    this.#conversations.set(id, { ...conversation, unread: false });
-    this.#syncUnread();
+    const id = this.#visibleThread()
+    const conversation = id ? this.#conversations.get(id) : undefined
+    if (!id || !conversation?.unread) return
+    this.#conversations.set(id, { ...conversation, unread: false })
+    this.#syncUnread()
     void this.#client.markRead(id).catch(() => {
-      const current = this.#conversations.get(id);
-      if (current) this.#conversations.set(id, { ...current, unread: true });
-      this.#syncUnread();
-    });
+      const current = this.#conversations.get(id)
+      if (current) this.#conversations.set(id, { ...current, unread: true })
+      this.#syncUnread()
+    })
   }
 
-
   #addFiles(files: File[]): void {
-    this.#files = [...this.#files, ...files].slice(0, maxFiles);
-    this.#renderChips();
-    this.#syncSend();
-    this.#textarea.focus();
+    this.#files = [...this.#files, ...files].slice(0, maxFiles)
+    this.#renderChips()
+    this.#syncSend()
+    this.#textarea.focus()
   }
 
   #autosize(): void {
-    this.#textarea.style.blockSize = "";
-    if (this.#textarea.value === "") return;
-    this.#textarea.style.blockSize = "auto";
-    this.#textarea.style.blockSize = `${Math.max(38, Math.min(this.#textarea.scrollHeight, 140))}px`;
+    this.#textarea.style.blockSize = ""
+    if (this.#textarea.value === "") return
+    this.#textarea.style.blockSize = "auto"
+    this.#textarea.style.blockSize = `${Math.max(38, Math.min(this.#textarea.scrollHeight, 140))}px`
   }
 
   #syncSend(): void {
-    this.#sendButton.disabled = this.#textarea.value.trim() === "" && this.#files.length === 0;
+    this.#sendButton.disabled = this.#textarea.value.trim() === "" && this.#files.length === 0
   }
 
   #typingInput(): void {
-    const id = this.#view?.kind === "thread" ? this.#view.id : null;
+    const id = this.#view?.kind === "thread" ? this.#view.id : null
     if (!id || this.#textarea.value.trim() === "") {
-      this.#stopTyping();
-      return;
+      this.#stopTyping()
+      return
     }
     if (Date.now() - this.#typingSentAt > 3000) {
-      this.#typingSentAt = Date.now();
-      void this.#client.setTyping(id, true).catch(() => undefined);
+      this.#typingSentAt = Date.now()
+      void this.#client.setTyping(id, true).catch(() => undefined)
     }
-    if (this.#typingIdle) clearTimeout(this.#typingIdle);
-    this.#typingIdle = setTimeout(() => this.#stopTyping(), 4000);
+    if (this.#typingIdle) clearTimeout(this.#typingIdle)
+    this.#typingIdle = setTimeout(() => this.#stopTyping(), 4000)
   }
 
   #stopTyping(): void {
-    if (this.#typingIdle) clearTimeout(this.#typingIdle);
-    this.#typingIdle = null;
-    if (this.#typingSentAt === 0) return;
-    this.#typingSentAt = 0;
-    const id = this.#view?.kind === "thread" ? this.#view.id : null;
-    if (id) void this.#client.setTyping(id, false).catch(() => undefined);
+    if (this.#typingIdle) clearTimeout(this.#typingIdle)
+    this.#typingIdle = null
+    if (this.#typingSentAt === 0) return
+    this.#typingSentAt = 0
+    const id = this.#view?.kind === "thread" ? this.#view.id : null
+    if (id) void this.#client.setTyping(id, false).catch(() => undefined)
   }
 
   async #send(): Promise<void> {
-    if (this.#phase !== "ready" || this.#view?.kind !== "thread") return;
-    const body = this.#textarea.value.trim();
-    const files = this.#files;
-    if (!body && files.length === 0) return;
-    if (this.#view.id === null && this.#pending.some((p) => p.conversation === null)) return;
-    this.#stopTyping();
-    this.#textarea.value = "";
-    this.#files = [];
-    this.#autosize();
-    this.#renderChips();
-    this.#syncSend();
-    const pending: Pending = { client_id: randomId(), conversation: this.#view.id, body, files, state: "sending" };
-    this.#pending.push(pending);
-    this.#render();
-    this.#scrollToEnd();
-    await this.#deliver(pending);
+    if (this.#phase !== "ready" || this.#view?.kind !== "thread") return
+    const body = this.#textarea.value.trim()
+    const files = this.#files
+    if (!body && files.length === 0) return
+    if (this.#view.id === null && this.#pending.some((p) => p.conversation === null)) return
+    this.#stopTyping()
+    this.#textarea.value = ""
+    this.#files = []
+    this.#autosize()
+    this.#renderChips()
+    this.#syncSend()
+    const pending: Pending = { client_id: randomId(), conversation: this.#view.id, body, files, state: "sending" }
+    this.#pending.push(pending)
+    this.#render()
+    this.#scrollToEnd()
+    await this.#deliver(pending)
   }
 
   async #deliver(pending: Pending): Promise<void> {
-    pending.state = "sending";
-    this.#render();
-    const input = { body: pending.body, files: pending.files, client_id: pending.client_id };
+    pending.state = "sending"
+    this.#render()
+    const input = { body: pending.body, files: pending.files, client_id: pending.client_id }
     try {
       if (pending.conversation === null) {
-        const created = await this.#client.startConversation(input);
-        const id = created.conversation.id;
-        if (!this.#conversations.has(id)) this.#conversations.set(id, created.conversation);
-        if (!this.#threads.has(id)) this.#threads.set(id, { messages: [], complete: true, loading: false });
-        if (this.#view?.kind === "thread" && this.#view.id === null) this.#view = { kind: "thread", id };
-        this.#upsertMessage(created.message, false);
+        const created = await this.#client.startConversation(input)
+        const id = created.conversation.id
+        if (!this.#conversations.has(id)) this.#conversations.set(id, created.conversation)
+        if (!this.#threads.has(id)) this.#threads.set(id, { messages: [], complete: true, loading: false })
+        if (this.#view?.kind === "thread" && this.#view.id === null) this.#view = { kind: "thread", id }
+        this.#upsertMessage(created.message, false)
       } else {
-        const message = await this.#client.sendMessage(pending.conversation, input);
-        this.#upsertMessage(message, true);
+        const message = await this.#client.sendMessage(pending.conversation, input)
+        this.#upsertMessage(message, true)
       }
-      this.#pending = this.#pending.filter((p) => p !== pending);
+      this.#pending = this.#pending.filter((p) => p !== pending)
     } catch (error) {
-      const status = error instanceof ApiError ? error.status : 0;
-      pending.state = status === 413 || status === 415 ? "refused" : "failed";
-      pending.status = status;
+      const status = error instanceof ApiError ? error.status : 0
+      pending.state = status === 413 || status === 415 ? "refused" : "failed"
+      pending.status = status
     }
-    this.#render();
-    this.#scrollToEnd();
+    this.#render()
+    this.#scrollToEnd()
   }
 
   async rate(id: string, rating: Rating, comment?: string): Promise<ClientConversation> {
     try {
-      const conversation = await this.#client.rate(id, rating, comment);
-      this.#conversations.set(conversation.id, conversation);
-      this.#ratings.delete(id);
-      this.#render();
-      return conversation;
+      const conversation = await this.#client.rate(id, rating, comment)
+      this.#conversations.set(conversation.id, conversation)
+      this.#ratings.delete(id)
+      this.#render()
+      return conversation
     } catch (error) {
       if (error instanceof ApiError && error.status === 409) {
-        const current = await this.#client.getConversation(id).catch(() => null);
-        if (current) this.#conversations.set(current.id, current);
-        this.#ratings.delete(id);
-        this.#render();
+        const current = await this.#client.getConversation(id).catch(() => null)
+        if (current) this.#conversations.set(current.id, current)
+        this.#ratings.delete(id)
+        this.#render()
       }
-      throw error;
+      throw error
     }
   }
 
   #choose(id: string, choice: Rating): void {
-    const draft = this.#ratings.get(id);
-    if (draft?.state === "sending") return;
-    this.#ratings.set(id, { choice, state: "choosing" });
-    this.#render();
-    this.#rateComment.focus({ preventScroll: true });
-    if (this.#atEnd) this.#scrollToEnd();
+    const draft = this.#ratings.get(id)
+    if (draft?.state === "sending") return
+    this.#ratings.set(id, { choice, state: "choosing" })
+    this.#render()
+    this.#rateComment.focus({ preventScroll: true })
+    if (this.#atEnd) this.#scrollToEnd()
   }
 
   async #submitRating(id: string, withComment: boolean): Promise<void> {
-    const draft = this.#ratings.get(id);
-    if (!draft || draft.state === "sending") return;
-    draft.state = "sending";
-    this.#render();
+    const draft = this.#ratings.get(id)
+    if (!draft || draft.state === "sending") return
+    draft.state = "sending"
+    this.#render()
     try {
-      await this.rate(id, draft.choice, withComment ? this.#rateComment.value : undefined);
-      this.#rateComment.value = "";
+      await this.rate(id, draft.choice, withComment ? this.#rateComment.value : undefined)
+      this.#rateComment.value = ""
     } catch (error) {
-      if (error instanceof ApiError && error.status === 409) return;
-      draft.state = "failed";
-      this.#render();
+      if (error instanceof ApiError && error.status === 409) return
+      draft.state = "failed"
+      this.#render()
     }
   }
 
   async #saveEmail(): Promise<void> {
-    const email = this.#emailInput.value.trim();
+    const email = this.#emailInput.value.trim()
     if (!email || !this.#emailInput.checkValidity()) {
-      this.#emailError = this.#t(msg`Enter a valid e-mail address.`);
-      this.#renderEmail();
-      return;
+      this.#emailError = this.#t(msg`Enter a valid e-mail address.`)
+      this.#renderEmail()
+      return
     }
     try {
-      this.#contact = await this.#client.setEmail(email);
-      this.#emailSaved = true;
-      this.#emailError = "";
+      this.#contact = await this.#client.setEmail(email)
+      this.#emailSaved = true
+      this.#emailError = ""
     } catch {
-      this.#emailError = this.#t(msg`Could not save your e-mail address. Try again.`);
+      this.#emailError = this.#t(msg`Could not save your e-mail address. Try again.`)
     }
-    this.#renderEmail();
+    this.#renderEmail()
   }
 
   #attachmentUrl(attachment: ClientAttachment): Promise<string> {
-    const cached = this.#blobs.get(attachment.id);
-    if (cached) return Promise.resolve(cached);
-    let load = this.#blobLoads.get(attachment.id);
+    const cached = this.#blobs.get(attachment.id)
+    if (cached) return Promise.resolve(cached)
+    let load = this.#blobLoads.get(attachment.id)
     if (!load) {
       load = this.#client.attachment(attachment.id).then((blob) => {
-        const url = URL.createObjectURL(blob);
-        this.#blobs.set(attachment.id, url);
-        return url;
-      });
-      load.catch(() => this.#blobLoads.delete(attachment.id));
-      this.#blobLoads.set(attachment.id, load);
+        const url = URL.createObjectURL(blob)
+        this.#blobs.set(attachment.id, url)
+        return url
+      })
+      load.catch(() => this.#blobLoads.delete(attachment.id))
+      this.#blobLoads.set(attachment.id, load)
     }
-    return load;
+    return load
   }
 
   async #download(attachment: ClientAttachment): Promise<void> {
-    const url = await this.#attachmentUrl(attachment);
-    const a = el("a");
-    a.href = url;
-    a.download = attachment.filename;
-    a.rel = "noopener";
-    a.click();
+    const url = await this.#attachmentUrl(attachment)
+    const a = el("a")
+    a.href = url
+    a.download = attachment.filename
+    a.rel = "noopener"
+    a.click()
   }
 
-
   #sorted(): ClientConversation[] {
-    return [...this.#conversations.values()].sort(byActivity);
+    return [...this.#conversations.values()].sort(byActivity)
   }
 
   #nobodyAvailable(): boolean {
-    const inbox = this.#inbox;
-    if (!inbox) return false;
-    return !inbox.open_now || inbox.mode === "async" || !inbox.presence?.available;
+    const inbox = this.#inbox
+    if (!inbox) return false
+    return !inbox.open_now || inbox.mode === "async" || !inbox.presence?.available
   }
 
   #scrollToEnd(): void {
-    this.#atEnd = true;
-    this.#scroll.scrollTop = this.#scroll.scrollHeight;
+    this.#atEnd = true
+    this.#scroll.scrollTop = this.#scroll.scrollHeight
     requestAnimationFrame(() => {
-      if (this.#atEnd) this.#scroll.scrollTop = this.#scroll.scrollHeight;
-    });
+      if (this.#atEnd) this.#scroll.scrollTop = this.#scroll.scrollHeight
+    })
   }
 
   #renderAll(): void {
-    this.#textarea.placeholder = this.#t(msg`Write a message…`);
-    this.#textarea.setAttribute("aria-label", this.#t(msg`Message`));
-    this.#attachButton.setAttribute("aria-label", this.#t(msg`Attach files`));
-    this.#attachButton.title = this.#t(msg`Attach files`);
-    this.#sendButton.setAttribute("aria-label", this.#t(msg`Send`));
-    this.#sendButton.title = this.#t(msg`Send`);
-    this.#emailInput.placeholder = this.#t(msg`you@example.com`);
-    this.#emailInput.setAttribute("aria-label", this.#t(msg`E-mail address`));
-    this.#syncSend();
-    this.#renderChips();
-    this.#render();
+    this.#textarea.placeholder = this.#t(msg`Write a message…`)
+    this.#textarea.setAttribute("aria-label", this.#t(msg`Message`))
+    this.#attachButton.setAttribute("aria-label", this.#t(msg`Attach files`))
+    this.#attachButton.title = this.#t(msg`Attach files`)
+    this.#sendButton.setAttribute("aria-label", this.#t(msg`Send`))
+    this.#sendButton.title = this.#t(msg`Send`)
+    this.#emailInput.placeholder = this.#t(msg`you@example.com`)
+    this.#emailInput.setAttribute("aria-label", this.#t(msg`E-mail address`))
+    this.#syncSend()
+    this.#renderChips()
+    this.#render()
   }
 
   #render(): void {
-    const panel = this.#host.panel;
+    const panel = this.#host.panel
     if (panel.childElementCount === 0) {
-      const style = el("style");
-      style.textContent = styles;
-      panel.append(style, this.#header, this.#banner, this.#body, this.#live);
-      this.#header.id = "yuva-title";
-      panel.setAttribute("aria-labelledby", "yuva-title");
+      const style = el("style")
+      style.textContent = styles
+      panel.append(style, this.#header, this.#banner, this.#body, this.#live)
+      this.#header.id = "yuva-title"
+      panel.setAttribute("aria-labelledby", "yuva-title")
     }
-    this.#renderHeader();
-    this.#renderBanner();
+    this.#renderHeader()
+    this.#renderBanner()
     if (this.#phase !== "ready") {
-      this.#scrollThread = undefined;
-      const center = el("div", "center");
-      if (this.#phase === "loading") center.append(el("p", "hint", this.#t(msg`Loading…`)));
+      this.#scrollThread = undefined
+      const center = el("div", "center")
+      if (this.#phase === "loading") center.append(el("p", "hint", this.#t(msg`Loading…`)))
       else {
-        center.append(el("p", "empty", this.#errorText()));
-        const retry = el("button", "primary", this.#t(msg`Try again`));
-        retry.type = "button";
+        center.append(el("p", "empty", this.#errorText()))
+        const retry = el("button", "primary", this.#t(msg`Try again`))
+        retry.type = "button"
         retry.addEventListener("click", () => {
-          this.#starting = null;
-          void this.#start();
-        });
-        center.append(retry);
+          this.#starting = null
+          void this.#start()
+        })
+        center.append(retry)
       }
-      this.#body.replaceChildren(center);
-      return;
+      this.#body.replaceChildren(center)
+      return
     }
-    if (this.#view?.kind === "list") this.#renderList();
-    else this.#renderThread();
+    if (this.#view?.kind === "list") this.#renderList()
+    else this.#renderThread()
   }
 
   #errorText(): string {
     switch (this.#error) {
       case "anonymous_not_allowed":
-        return this.#t(msg`Sign in to chat with us.`);
+        return this.#t(msg`Sign in to chat with us.`)
       case "invalid_identity_token":
-        return this.#t(msg`Your sign-in has expired. Reload the page and try again.`);
+        return this.#t(msg`Your sign-in has expired. Reload the page and try again.`)
       case "rate_limited":
-        return this.#t(msg`Too many attempts. Wait a moment and try again.`);
+        return this.#t(msg`Too many attempts. Wait a moment and try again.`)
       case "network":
-        return this.#t(msg`You seem to be offline.`);
+        return this.#t(msg`You seem to be offline.`)
       default:
-        return this.#t(msg`Chat is not available right now.`);
+        return this.#t(msg`Chat is not available right now.`)
     }
   }
 
   #renderHeader(): void {
-    const { layout } = this.#host.config();
-    const inbox = this.#inbox;
-    const children: Node[] = [];
-    const view = this.#view;
-    if (this.#phase === "ready" && view?.kind === "thread" && (this.#conversations.size > 1 || (view.id === null && this.#conversations.size > 0))) {
+    const { layout } = this.#host.config()
+    const inbox = this.#inbox
+    const children: Node[] = []
+    const view = this.#view
+    if (
+      this.#phase === "ready" &&
+      view?.kind === "thread" &&
+      (this.#conversations.size > 1 || (view.id === null && this.#conversations.size > 0))
+    ) {
       children.push(
         iconButton(icons.back, this.#t(msg`All conversations`), () => {
-          this.#stopTyping();
-          this.#view = { kind: "list" };
-          this.#render();
-        }),
-      );
+          this.#stopTyping()
+          this.#view = { kind: "list" }
+          this.#render()
+        })
+      )
     }
-    const heading = el("div", "heading");
-    heading.append(el("h2", "title", inbox?.name || this.#t(msg`Messages`)));
+    const heading = el("div", "heading")
+    heading.append(el("h2", "title", inbox?.name || this.#t(msg`Messages`)))
     if (inbox) {
-      const status = el("div", "status");
-      const live = inbox.mode === "live" && inbox.open_now && inbox.presence?.available;
+      const status = el("div", "status")
+      const live = inbox.mode === "live" && inbox.open_now && inbox.presence?.available
       if (live) {
-        const avatars = el("div", "avatars");
+        const avatars = el("div", "avatars")
         for (const member of inbox.presence?.members.slice(0, 3) ?? []) {
-          const avatar = el("span", "avatar", member.initials || "•");
-          avatar.title = member.name;
-          avatars.append(avatar);
+          const avatar = el("span", "avatar", member.initials || "•")
+          avatar.title = member.name
+          avatars.append(avatar)
         }
-        status.append(avatars, el("span", "dot"), el("span", "", this.#t(msg`Online`)));
+        status.append(avatars, el("span", "dot"), el("span", "", this.#t(msg`Online`)))
       } else if (!inbox.open_now || inbox.mode === "live") {
-        status.append(el("span", "dot away"), el("span", "", this.#t(msg`We're away right now`)));
+        status.append(el("span", "dot away"), el("span", "", this.#t(msg`We're away right now`)))
       } else {
-        status.append(el("span", "", this.#replyTime(inbox.expected_reply_minutes)));
+        status.append(el("span", "", this.#replyTime(inbox.expected_reply_minutes)))
       }
-      heading.append(status);
+      heading.append(status)
     }
-    children.push(heading);
-    if (layout === "launcher") children.push(iconButton(icons.close, this.#t(msg`Close`), () => this.#host.close()));
-    this.#header.replaceChildren(...children);
+    children.push(heading)
+    if (layout === "launcher") children.push(iconButton(icons.close, this.#t(msg`Close`), () => this.#host.close()))
+    this.#header.replaceChildren(...children)
   }
 
   #replyTime(minutes: number | undefined): string {
-    if (!minutes) return this.#t(msg`We'll reply as soon as we can`);
-    const { locale } = this.#host.config();
-    const [value, unit] = minutes < 60 ? [minutes, "minute"] : minutes < 1440 ? [Math.round(minutes / 60), "hour"] : [Math.round(minutes / 1440), "day"];
-    const duration = new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "long" }).format(value);
-    return this.#t(msg`Usually replies in ${duration}`);
+    if (!minutes) return this.#t(msg`We'll reply as soon as we can`)
+    const { locale } = this.#host.config()
+    const [value, unit] =
+      minutes < 60
+        ? [minutes, "minute"]
+        : minutes < 1440
+          ? [Math.round(minutes / 60), "hour"]
+          : [Math.round(minutes / 1440), "day"]
+    const duration = new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "long" }).format(value)
+    return this.#t(msg`Usually replies in ${duration}`)
   }
 
   #renderBanner(): void {
-    this.#banner.hidden = !this.#reconnecting;
-    this.#banner.textContent = this.#t(msg`Reconnecting…`);
+    this.#banner.hidden = !this.#reconnecting
+    this.#banner.textContent = this.#t(msg`Reconnecting…`)
   }
 
   #renderList(): void {
-    this.#scrollThread = undefined;
-    const { locale } = this.#host.config();
-    const list = el("ul", "list");
-    const today = new Date().toDateString();
+    this.#scrollThread = undefined
+    const { locale } = this.#host.config()
+    const list = el("ul", "list")
+    const today = new Date().toDateString()
     for (const conversation of this.#sorted()) {
-      const button = el("button", conversation.unread ? "item unread" : "item");
-      button.type = "button";
-      const main = el("div", "item-main");
-      const top = el("div", "item-top");
-      top.append(el("span", "item-subject", conversation.subject || this.#inbox?.name || this.#t(msg`Conversation`)));
-      const at = new Date(conversation.last_message_at ?? conversation.created_at);
+      const button = el("button", conversation.unread ? "item unread" : "item")
+      button.type = "button"
+      const main = el("div", "item-main")
+      const top = el("div", "item-top")
+      top.append(el("span", "item-subject", conversation.subject || this.#inbox?.name || this.#t(msg`Conversation`)))
+      const at = new Date(conversation.last_message_at ?? conversation.created_at)
       top.append(
         el(
           "span",
           "item-time",
-          new Intl.DateTimeFormat(locale, at.toDateString() === today ? { timeStyle: "short" } : { month: "short", day: "numeric" }).format(at),
-        ),
-      );
+          new Intl.DateTimeFormat(
+            locale,
+            at.toDateString() === today ? { timeStyle: "short" } : { month: "short", day: "numeric" }
+          ).format(at)
+        )
+      )
       const preview = conversation.last_message
         ? `${conversation.last_message.author_type === "contact" ? this.#t(msg`You:`) + " " : ""}${conversation.last_message.text || this.#t(msg`Attachment`)}`
-        : "";
-      const previewLine = el("div", "item-preview", preview.replace(/\*\*|`/g, ""));
-      previewLine.dir = "auto";
-      main.append(top, previewLine);
-      button.append(main);
-      if (conversation.unread) button.append(el("span", "unread-dot"));
-      button.addEventListener("click", () => void this.#openThread(conversation.id));
-      const item = el("li");
-      item.append(button);
-      list.append(item);
+        : ""
+      const previewLine = el("div", "item-preview", preview.replace(/\*\*|`/g, ""))
+      previewLine.dir = "auto"
+      main.append(top, previewLine)
+      button.append(main)
+      if (conversation.unread) button.append(el("span", "unread-dot"))
+      button.addEventListener("click", () => void this.#openThread(conversation.id))
+      const item = el("li")
+      item.append(button)
+      list.append(item)
     }
     if (this.#conversationCursor) {
-      const more = el("button", "link", this.#t(msg`Show older conversations`));
-      more.type = "button";
-      more.style.margin = "8px auto";
-      more.style.display = "block";
-      more.addEventListener("click", () => void this.#loadConversations(true).then(() => this.#render()));
-      list.append(more);
+      const more = el("button", "link", this.#t(msg`Show older conversations`))
+      more.type = "button"
+      more.style.margin = "8px auto"
+      more.style.display = "block"
+      more.addEventListener("click", () => void this.#loadConversations(true).then(() => this.#render()))
+      list.append(more)
     }
-    const start = el("button", "primary", this.#t(msg`New conversation`));
-    start.type = "button";
+    const start = el("button", "primary", this.#t(msg`New conversation`))
+    start.type = "button"
     start.addEventListener("click", () => {
-      this.#view = { kind: "thread", id: null };
-      this.#render();
-      this.#textarea.focus();
-    });
-    this.#body.replaceChildren(list, start);
+      this.#view = { kind: "thread", id: null }
+      this.#render()
+      this.#textarea.focus()
+    })
+    this.#body.replaceChildren(list, start)
   }
 
   async #openThread(id: string): Promise<void> {
-    this.#view = { kind: "thread", id };
-    this.#render();
-    if (!this.#threads.get(id)?.complete && !this.#threads.get(id)?.messages.length) await this.#loadMessages(id).catch(() => undefined);
-    this.#render();
-    this.#scrollToEnd();
-    this.#markRead();
+    this.#view = { kind: "thread", id }
+    this.#render()
+    if (!this.#threads.get(id)?.complete && !this.#threads.get(id)?.messages.length)
+      await this.#loadMessages(id).catch(() => undefined)
+    this.#render()
+    this.#scrollToEnd()
+    this.#markRead()
   }
 
   #avatar(author: ClientMessage["author"]): HTMLSpanElement {
-    const avatar = el("span", "avatar", author.initials || "");
-    const url = author.avatar_url;
-    const state = url ? this.#avatars.get(url) : false;
-    if (!url || state === false) return avatar;
-    const img = el("img");
-    img.alt = "";
-    img.referrerPolicy = "no-referrer";
+    const avatar = el("span", "avatar", author.initials || "")
+    const url = author.avatar_url
+    const state = url ? this.#avatars.get(url) : false
+    if (!url || state === false) return avatar
+    const img = el("img")
+    img.alt = ""
+    img.referrerPolicy = "no-referrer"
     if (state) {
-      img.src = url;
-      avatar.replaceChildren(img);
-      return avatar;
+      img.src = url
+      avatar.replaceChildren(img)
+      return avatar
     }
     img.addEventListener("load", () => {
-      this.#avatars.set(url, true);
-      if (avatar.isConnected) avatar.replaceChildren(img);
-    });
-    img.addEventListener("error", () => this.#avatars.set(url, false));
-    img.src = url;
-    return avatar;
+      this.#avatars.set(url, true)
+      if (avatar.isConnected) avatar.replaceChildren(img)
+    })
+    img.addEventListener("error", () => this.#avatars.set(url, false))
+    img.src = url
+    return avatar
   }
 
   #renderThread(): void {
-    const view = this.#view;
-    if (view?.kind !== "thread") return;
-    const id = view.id;
-    const sameThread = this.#scrollThread === id;
-    const atEnd = this.#atEnd;
-    const thread = id ? this.#threads.get(id) : undefined;
-    const messages = thread?.messages ?? [];
-    const pending = this.#pending.filter((p) => p.conversation === id);
-    const nodes: Node[] = [];
-    const greeting = this.#inbox?.chat.greeting;
+    const view = this.#view
+    if (view?.kind !== "thread") return
+    const id = view.id
+    const sameThread = this.#scrollThread === id
+    const atEnd = this.#atEnd
+    const thread = id ? this.#threads.get(id) : undefined
+    const messages = thread?.messages ?? []
+    const pending = this.#pending.filter((p) => p.conversation === id)
+    const nodes: Node[] = []
+    const greeting = this.#inbox?.chat.greeting
     if (!thread || thread.complete) {
       if (greeting) {
-        const bubble = el("div", "bubble greeting");
-        bubble.append(richText(greeting));
-        nodes.push(bubble);
+        const bubble = el("div", "bubble greeting")
+        bubble.append(richText(greeting))
+        nodes.push(bubble)
       } else if (messages.length === 0 && pending.length === 0) {
-        const center = el("div", "center");
-        center.append(el("p", "empty", this.#t(msg`No conversations yet`)), el("p", "hint", this.#t(msg`Send us a message and we will reply here.`)));
-        nodes.push(center);
+        const center = el("div", "center")
+        center.append(
+          el("p", "empty", this.#t(msg`No conversations yet`)),
+          el("p", "hint", this.#t(msg`Send us a message and we will reply here.`))
+        )
+        nodes.push(center)
       }
-    } else if (thread.loading) nodes.push(el("p", "hint", this.#t(msg`Loading…`)));
+    } else if (thread.loading) nodes.push(el("p", "hint", this.#t(msg`Loading…`)))
 
     messages.forEach((message, i) => {
-      const previous = messages[i - 1];
-      const next = messages[i + 1] ?? (pending.length > 0 ? null : undefined);
-      const mine = message.author.type === "contact";
-      const starts = !previous || authorKey(previous) !== authorKey(message) || time(message.created_at) - time(previous.created_at) > groupGap;
+      const previous = messages[i - 1]
+      const next = messages[i + 1] ?? (pending.length > 0 ? null : undefined)
+      const mine = message.author.type === "contact"
+      const starts =
+        !previous ||
+        authorKey(previous) !== authorKey(message) ||
+        time(message.created_at) - time(previous.created_at) > groupGap
       const ends =
         next === undefined ||
-        (next === null ? !mine : authorKey(next) !== authorKey(message) || time(next.created_at) - time(message.created_at) > groupGap);
-      if (!mine && starts && message.author.name) nodes.push(el("div", "author", message.author.name));
-      const row = el("div", `row ${mine ? "mine" : "theirs"}${starts && i > 0 ? " group-gap" : ""}`);
+        (next === null
+          ? !mine
+          : authorKey(next) !== authorKey(message) || time(next.created_at) - time(message.created_at) > groupGap)
+      if (!mine && starts && message.author.name) nodes.push(el("div", "author", message.author.name))
+      const row = el("div", `row ${mine ? "mine" : "theirs"}${starts && i > 0 ? " group-gap" : ""}`)
       if (!mine) {
-        const avatar = this.#avatar(message.author);
-        if (!ends) avatar.style.visibility = "hidden";
-        row.append(avatar);
+        const avatar = this.#avatar(message.author)
+        if (!ends) avatar.style.visibility = "hidden"
+        row.append(avatar)
       }
-      const bubble = el("div", "bubble");
-      bubble.dir = "auto";
-      bubble.title = new Date(message.created_at).toLocaleString(this.#host.config().locale);
-      if (message.body.trim()) bubble.append(richText(message.body));
-      if (message.attachments.length > 0) bubble.append(this.#renderAttachments(message.attachments));
-      row.append(bubble);
-      nodes.push(row);
+      const bubble = el("div", "bubble")
+      bubble.dir = "auto"
+      bubble.title = new Date(message.created_at).toLocaleString(this.#host.config().locale)
+      if (message.body.trim()) bubble.append(richText(message.body))
+      if (message.attachments.length > 0) bubble.append(this.#renderAttachments(message.attachments))
+      row.append(bubble)
+      nodes.push(row)
       if (ends) {
-        let meta = this.#formatTime(message.created_at);
+        let meta = this.#formatTime(message.created_at)
         if (mine && i === messages.length - 1 && pending.length === 0) {
-          const readAt = id ? this.#conversations.get(id)?.last_read_by_member_at : undefined;
-          const seen = readAt && time(readAt) >= time(message.created_at);
-          meta += ` · ${seen ? this.#t(msg`Seen`) : this.#t(msg`Sent`)}`;
+          const readAt = id ? this.#conversations.get(id)?.last_read_by_member_at : undefined
+          const seen = readAt && time(readAt) >= time(message.created_at)
+          meta += ` · ${seen ? this.#t(msg`Seen`) : this.#t(msg`Sent`)}`
         }
-        const line = el("div", "meta", meta);
-        if (!mine) line.style.alignSelf = "flex-start";
-        if (!mine) line.style.marginInlineStart = "36px";
-        nodes.push(line);
+        const line = el("div", "meta", meta)
+        if (!mine) line.style.alignSelf = "flex-start"
+        if (!mine) line.style.marginInlineStart = "36px"
+        nodes.push(line)
       }
-    });
+    })
 
-    const conversation = id ? this.#conversations.get(id) : undefined;
-    const rate = conversation ? this.#renderRating(conversation) : null;
-    if (rate) nodes.push(rate);
+    const conversation = id ? this.#conversations.get(id) : undefined
+    const rate = conversation ? this.#renderRating(conversation) : null
+    if (rate) nodes.push(rate)
 
     pending.forEach((item, i) => {
-      const row = el("div", `row mine${i === 0 && messages.length > 0 && messages[messages.length - 1]?.author.type !== "contact" ? " group-gap" : ""}`);
-      const bubble = el("div", "bubble");
-      bubble.dir = "auto";
-      if (item.body) bubble.append(richText(item.body));
+      const row = el(
+        "div",
+        `row mine${i === 0 && messages.length > 0 && messages[messages.length - 1]?.author.type !== "contact" ? " group-gap" : ""}`
+      )
+      const bubble = el("div", "bubble")
+      bubble.dir = "auto"
+      if (item.body) bubble.append(richText(item.body))
       if (item.files.length > 0) {
-        const files = el("div", "files");
-        for (const file of item.files) files.append(el("span", "file", file.name || "image"));
-        bubble.append(files);
+        const files = el("div", "files")
+        for (const file of item.files) files.append(el("span", "file", file.name || "image"))
+        bubble.append(files)
       }
-      row.append(bubble);
-      nodes.push(row);
+      row.append(bubble)
+      nodes.push(row)
       if (item.state === "failed") {
-        const line = el("div", "meta failed", `${this.#t(msg`Not sent.`)} `);
-        const retry = el("button", "link", this.#t(msg`Retry`));
-        retry.type = "button";
-        retry.addEventListener("click", () => void this.#deliver(item));
-        line.append(retry);
-        nodes.push(line);
+        const line = el("div", "meta failed", `${this.#t(msg`Not sent.`)} `)
+        const retry = el("button", "link", this.#t(msg`Retry`))
+        retry.type = "button"
+        retry.addEventListener("click", () => void this.#deliver(item))
+        line.append(retry)
+        nodes.push(line)
       } else if (item.state === "refused") {
-        const reason = item.status === 413 ? this.#t(msg`The file is too large.`) : this.#t(msg`This file type is not accepted.`);
-        nodes.push(el("div", "meta failed", `${this.#t(msg`Not sent.`)} ${reason}`));
-      } else if (i === pending.length - 1) nodes.push(el("div", "meta", this.#t(msg`Sending…`)));
-    });
+        const reason =
+          item.status === 413 ? this.#t(msg`The file is too large.`) : this.#t(msg`This file type is not accepted.`)
+        nodes.push(el("div", "meta failed", `${this.#t(msg`Not sent.`)} ${reason}`))
+      } else if (i === pending.length - 1) nodes.push(el("div", "meta", this.#t(msg`Sending…`)))
+    })
 
-    const typing = id ? this.#typing.get(id) : undefined;
+    const typing = id ? this.#typing.get(id) : undefined
     if (typing) {
-      const line = el("div", "typing");
-      line.append(el("i"), el("i"), el("i"));
-      const name = typing.name;
-      line.append(el("span", "", name ? this.#t(msg`${name} is typing…`) : this.#t(msg`Typing…`)));
-      nodes.push(line);
+      const line = el("div", "typing")
+      line.append(el("i"), el("i"), el("i"))
+      const name = typing.name
+      line.append(el("span", "", name ? this.#t(msg`${name} is typing…`) : this.#t(msg`Typing…`)))
+      nodes.push(line)
     }
 
-    const root = this.#scroll.getRootNode() as Document | ShadowRoot;
-    const focused = root.activeElement === this.#rateComment;
-    const { selectionStart, selectionEnd } = this.#rateComment;
-    this.#scroll.replaceChildren(...nodes);
+    const root = this.#scroll.getRootNode() as Document | ShadowRoot
+    const focused = root.activeElement === this.#rateComment
+    const { selectionStart, selectionEnd } = this.#rateComment
+    this.#scroll.replaceChildren(...nodes)
     if (focused && this.#rateComment.isConnected) {
-      this.#rateComment.focus({ preventScroll: true });
-      this.#rateComment.setSelectionRange(selectionStart, selectionEnd);
+      this.#rateComment.focus({ preventScroll: true })
+      this.#rateComment.setSelectionRange(selectionStart, selectionEnd)
     }
-    this.#renderEmail();
-    if (this.#body.firstChild !== this.#scroll) this.#body.replaceChildren(this.#scroll, this.#email, this.#composer);
-    this.#scrollThread = id;
-    if (!sameThread || atEnd) this.#scrollToEnd();
+    this.#renderEmail()
+    if (this.#body.firstChild !== this.#scroll) this.#body.replaceChildren(this.#scroll, this.#email, this.#composer)
+    this.#scrollThread = id
+    if (!sameThread || atEnd) this.#scrollToEnd()
   }
 
   #renderRating(conversation: ClientConversation): HTMLElement | null {
-    const rated = conversation.status === "closed" ? conversation.rating : undefined;
-    const draft = conversation.can_rate && this.#inbox?.ask_for_rating ? this.#ratings.get(conversation.id) : undefined;
-    if (!rated && !(conversation.can_rate && this.#inbox?.ask_for_rating)) return null;
-    const card = this.#rateCard;
-    const key = [conversation.id, rated, draft?.choice, draft?.state, this.#host.config().locale].join(":");
-    if (key === this.#rateKey) return card;
-    this.#rateKey = key;
+    const rated = conversation.status === "closed" ? conversation.rating : undefined
+    const draft = conversation.can_rate && this.#inbox?.ask_for_rating ? this.#ratings.get(conversation.id) : undefined
+    if (!rated && !(conversation.can_rate && this.#inbox?.ask_for_rating)) return null
+    const card = this.#rateCard
+    const key = [conversation.id, rated, draft?.choice, draft?.state, this.#host.config().locale].join(":")
+    if (key === this.#rateKey) return card
+    this.#rateKey = key
     if (this.#rateFor !== conversation.id) {
-      this.#rateFor = conversation.id;
-      this.#rateComment.value = "";
+      this.#rateFor = conversation.id
+      this.#rateComment.value = ""
     }
-    const question = this.#t(msg`How did we do?`);
-    card.setAttribute("role", "group");
-    card.setAttribute("aria-label", question);
-    const choices = el("div", "choices");
+    const question = this.#t(msg`How did we do?`)
+    card.setAttribute("role", "group")
+    card.setAttribute("aria-label", question)
+    const choices = el("div", "choices")
     for (const value of ["good", "bad"] as const) {
-      if (rated && rated !== value) continue;
-      const button = el("button", "choice", value === "good" ? "👍" : "👎");
-      button.type = "button";
-      const label = value === "good" ? this.#t(msg`Good`) : this.#t(msg`Bad`);
-      button.setAttribute("aria-label", label);
-      button.title = label;
-      button.setAttribute("aria-pressed", String((rated ?? draft?.choice) === value));
-      button.disabled = !!rated || draft?.state === "sending";
-      button.addEventListener("click", () => this.#choose(conversation.id, value));
-      choices.append(button);
+      if (rated && rated !== value) continue
+      const button = el("button", "choice", value === "good" ? "👍" : "👎")
+      button.type = "button"
+      const label = value === "good" ? this.#t(msg`Good`) : this.#t(msg`Bad`)
+      button.setAttribute("aria-label", label)
+      button.title = label
+      button.setAttribute("aria-pressed", String((rated ?? draft?.choice) === value))
+      button.disabled = !!rated || draft?.state === "sending"
+      button.addEventListener("click", () => this.#choose(conversation.id, value))
+      choices.append(button)
     }
     if (rated) {
-      card.replaceChildren(choices, el("p", "", this.#t(msg`Thanks for your feedback`)));
-      return card;
+      card.replaceChildren(choices, el("p", "", this.#t(msg`Thanks for your feedback`)))
+      return card
     }
-    card.replaceChildren(el("p", "", question), choices);
-    if (!draft) return card;
-    this.#rateComment.placeholder = this.#t(msg`Anything you'd like to add? (optional)`);
-    this.#rateComment.setAttribute("aria-label", this.#t(msg`Comment`));
-    this.#rateComment.disabled = draft.state === "sending";
-    const form = el("form");
+    card.replaceChildren(el("p", "", question), choices)
+    if (!draft) return card
+    this.#rateComment.placeholder = this.#t(msg`Anything you'd like to add? (optional)`)
+    this.#rateComment.setAttribute("aria-label", this.#t(msg`Comment`))
+    this.#rateComment.disabled = draft.state === "sending"
+    const form = el("form")
     form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      void this.#submitRating(conversation.id, true);
-    });
-    const skip = el("button", "link", this.#t(msg`Skip`));
-    skip.type = "button";
-    skip.disabled = draft.state === "sending";
-    skip.addEventListener("click", () => void this.#submitRating(conversation.id, false));
-    const send = el("button", "", draft.state === "sending" ? this.#t(msg`Sending…`) : this.#t(msg`Send`));
-    send.type = "submit";
-    send.disabled = draft.state === "sending";
-    const actions = el("div", "actions");
-    actions.append(skip, send);
-    form.append(this.#rateComment, actions);
-    card.append(form);
-    if (draft.state === "failed") card.append(el("p", "error", this.#t(msg`Could not send your rating. Try again.`)));
-    return card;
+      event.preventDefault()
+      void this.#submitRating(conversation.id, true)
+    })
+    const skip = el("button", "link", this.#t(msg`Skip`))
+    skip.type = "button"
+    skip.disabled = draft.state === "sending"
+    skip.addEventListener("click", () => void this.#submitRating(conversation.id, false))
+    const send = el("button", "", draft.state === "sending" ? this.#t(msg`Sending…`) : this.#t(msg`Send`))
+    send.type = "submit"
+    send.disabled = draft.state === "sending"
+    const actions = el("div", "actions")
+    actions.append(skip, send)
+    form.append(this.#rateComment, actions)
+    card.append(form)
+    if (draft.state === "failed") card.append(el("p", "error", this.#t(msg`Could not send your rating. Try again.`)))
+    return card
   }
 
   #renderAttachments(attachments: ClientAttachment[]): HTMLElement {
-    const files = el("div", "files");
+    const files = el("div", "files")
     for (const attachment of attachments) {
       if (isImage(attachment)) {
-        const img = el("img");
-        img.alt = attachment.filename;
-        const cached = this.#blobs.get(attachment.id);
-        if (cached) img.src = cached;
+        const img = el("img")
+        img.alt = attachment.filename
+        const cached = this.#blobs.get(attachment.id)
+        if (cached) img.src = cached
         else
           void this.#attachmentUrl(attachment)
             .then((url) => {
-              img.src = url;
+              img.src = url
             })
-            .catch(() => undefined);
+            .catch(() => undefined)
         img.addEventListener("load", () => {
-          if (this.#atEnd) this.#scroll.scrollTop = this.#scroll.scrollHeight;
-        });
-        img.addEventListener("click", () => void this.#download(attachment));
-        files.append(img);
+          if (this.#atEnd) this.#scroll.scrollTop = this.#scroll.scrollHeight
+        })
+        img.addEventListener("click", () => void this.#download(attachment))
+        files.append(img)
       } else {
-        const button = el("button", "file");
-        button.type = "button";
-        button.innerHTML = icons.file;
-        button.append(el("span", "", attachment.filename));
-        button.addEventListener("click", () => void this.#download(attachment));
-        files.append(button);
+        const button = el("button", "file")
+        button.type = "button"
+        button.innerHTML = icons.file
+        button.append(el("span", "", attachment.filename))
+        button.addEventListener("click", () => void this.#download(attachment))
+        files.append(button)
       }
     }
-    return files;
+    return files
   }
 
   #formatTime(value: string): string {
-    return new Intl.DateTimeFormat(this.#host.config().locale, { timeStyle: "short" }).format(new Date(value));
+    return new Intl.DateTimeFormat(this.#host.config().locale, { timeStyle: "short" }).format(new Date(value))
   }
 
   #renderEmail(): void {
-    const contact = this.#contact;
-    const chat = this.#inbox?.chat;
-    const id = this.#view?.kind === "thread" ? this.#view.id : null;
-    const sent = id !== null || this.#pending.length > 0;
-    const known = contact?.email || contact?.typed_email;
-    const show = !!chat?.ask_email_offline && this.#nobodyAvailable() && sent && (!known || this.#emailSaved);
-    this.#email.hidden = !show;
-    if (!show) return;
+    const contact = this.#contact
+    const chat = this.#inbox?.chat
+    const id = this.#view?.kind === "thread" ? this.#view.id : null
+    const sent = id !== null || this.#pending.length > 0
+    const known = contact?.email || contact?.typed_email
+    const show = !!chat?.ask_email_offline && this.#nobodyAvailable() && sent && (!known || this.#emailSaved)
+    this.#email.hidden = !show
+    if (!show) return
     if (known && this.#emailSaved) {
-      this.#email.replaceChildren(el("p", "", this.#t(msg`Thanks! We'll e-mail you at ${known} if you're gone when we reply.`)));
-      return;
+      this.#email.replaceChildren(
+        el("p", "", this.#t(msg`Thanks! We'll e-mail you at ${known} if you're gone when we reply.`))
+      )
+      return
     }
     if (this.#email.querySelector("form")) {
-      const error = this.#email.querySelector(".error");
-      if (error) error.textContent = this.#emailError;
-      else if (this.#emailError) this.#email.append(el("p", "error", this.#emailError));
-      return;
+      const error = this.#email.querySelector(".error")
+      if (error) error.textContent = this.#emailError
+      else if (this.#emailError) this.#email.append(el("p", "error", this.#emailError))
+      return
     }
-    const form = el("form");
-    form.noValidate = true;
+    const form = el("form")
+    form.noValidate = true
     form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      void this.#saveEmail();
-    });
-    const save = el("button", "", this.#t(msg`Save`));
-    save.type = "submit";
-    form.append(this.#emailInput, save);
-    this.#email.replaceChildren(el("p", "", this.#t(msg`Nobody is available right now. Leave your e-mail and we'll send the reply there too.`)), form);
-    if (this.#emailError) this.#email.append(el("p", "error", this.#emailError));
+      event.preventDefault()
+      void this.#saveEmail()
+    })
+    const save = el("button", "", this.#t(msg`Save`))
+    save.type = "submit"
+    form.append(this.#emailInput, save)
+    this.#email.replaceChildren(
+      el("p", "", this.#t(msg`Nobody is available right now. Leave your e-mail and we'll send the reply there too.`)),
+      form
+    )
+    if (this.#emailError) this.#email.append(el("p", "error", this.#emailError))
   }
 
   #renderChips(): void {
-    this.#chips.hidden = this.#files.length === 0;
+    this.#chips.hidden = this.#files.length === 0
     this.#chips.replaceChildren(
       ...this.#files.map((file, index) => {
-        const chip = el("span", "chip");
+        const chip = el("span", "chip")
         chip.append(
           el("span", "", file.name || "image"),
           iconButton(icons.close, this.#t(msg`Remove ${file.name}`), () => {
-            this.#files = this.#files.filter((_, i) => i !== index);
-            this.#renderChips();
-            this.#syncSend();
-          }),
-        );
-        return chip;
-      }),
-    );
+            this.#files = this.#files.filter((_, i) => i !== index)
+            this.#renderChips()
+            this.#syncSend()
+          })
+        )
+        return chip
+      })
+    )
   }
 }
 
 export function mount(host: PanelHost): PanelController {
-  return new Chat(host);
+  return new Chat(host)
 }

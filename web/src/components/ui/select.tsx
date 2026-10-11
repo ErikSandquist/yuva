@@ -21,7 +21,7 @@ function SelectTrigger({
       className={cn(
         "flex w-fit items-center justify-between gap-2 rounded-xl border border-input bg-background ps-3 pe-2.5 text-body whitespace-nowrap transition-colors outline-none hover:border-foreground/25 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/25 disabled:cursor-not-allowed disabled:opacity-60 aria-invalid:border-destructive data-placeholder:text-faint [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         size === "sm" ? "h-8" : "h-9",
-        className,
+        className
       )}
       {...props}
     >
@@ -48,7 +48,7 @@ function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Prop
     <SelectPrimitive.Item
       className={cn(
         "relative flex w-full cursor-default items-center gap-2 rounded-lg py-1.5 ps-2.5 pe-8 text-body outline-none select-none data-disabled:pointer-events-none data-disabled:opacity-60 data-highlighted:bg-muted data-highlighted:text-foreground data-selected:font-medium",
-        className,
+        className
       )}
       {...props}
     >

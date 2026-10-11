@@ -2,7 +2,14 @@ import { Trans } from "@lingui/react/macro"
 
 import { CopyButton } from "@/components/common/CopyButton"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 export function SecretDialog({
   secret,
@@ -23,7 +30,9 @@ export function SecretDialog({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
-          <code className="min-w-0 flex-1 rounded-xl border bg-surface px-3 py-2 font-mono text-caption break-all">{secret}</code>
+          <code className="min-w-0 flex-1 rounded-xl border bg-surface px-3 py-2 font-mono text-caption break-all">
+            {secret}
+          </code>
           {secret && <CopyButton value={secret} />}
         </div>
         <DialogFooter>

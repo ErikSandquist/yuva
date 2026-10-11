@@ -28,14 +28,20 @@ export function Deliveries({ endpoint }: { endpoint: WebhookEndpoint }) {
     queryFn: ({ pageParam }) =>
       unwrap(
         api.GET("/v1/webhooks/{webhookId}/deliveries", {
-          params: { path: { webhookId: endpoint.id }, query: { cursor: pageParam, limit: 25, ...(state === "all" ? {} : { state }) } },
-        }),
+          params: {
+            path: { webhookId: endpoint.id },
+            query: { cursor: pageParam, limit: 25, ...(state === "all" ? {} : { state }) },
+          },
+        })
       ),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
   })
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
-  const states = [{ value: "all" as const, label: t`All` }, ...DELIVERY_STATES.map((s) => ({ value: s, label: text.delivery[s] }))]
+  const states = [
+    { value: "all" as const, label: t`All` },
+    ...DELIVERY_STATES.map((s) => ({ value: s, label: text.delivery[s] })),
+  ]
   return (
     <Section
       title={<Trans>Deliveries</Trans>}
@@ -58,7 +64,9 @@ export function Deliveries({ endpoint }: { endpoint: WebhookEndpoint }) {
           <Rows>
             {items.map((d) => (
               <li key={d.id}>
-                <Item render={<button type="button" />} className="flex-nowrap rounded-none [button]:hover:bg-muted"
+                <Item
+                  render={<button type="button" />}
+                  className="flex-nowrap rounded-none [button]:hover:bg-muted"
                   onClick={() => setOpen(d.id)}
                   data-testid="delivery-row"
                 >
@@ -87,7 +95,12 @@ export function Deliveries({ endpoint }: { endpoint: WebhookEndpoint }) {
         )}
         {list.hasNextPage && (
           <div className="border-t px-3 py-2">
-            <Button variant="ghost" size="sm" onClick={() => void list.fetchNextPage()} disabled={list.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void list.fetchNextPage()}
+              disabled={list.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           </div>

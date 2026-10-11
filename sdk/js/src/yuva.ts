@@ -1,3 +1,3 @@
-import { define } from "./element";
+import { define } from "./element"
 
-define();
+define()

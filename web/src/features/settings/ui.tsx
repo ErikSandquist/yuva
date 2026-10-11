@@ -30,7 +30,10 @@ export function PageHeader({
       {to && (
         <Link
           to={to.to}
-          className={cn("mb-4.5 w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground", back === undefined ? "hidden phone:inline-flex" : "inline-flex")}
+          className={cn(
+            "mb-4.5 w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground",
+            back === undefined ? "hidden phone:inline-flex" : "inline-flex"
+          )}
           data-testid="settings-back"
         >
           <ArrowLeftIcon className="size-3.5 rtl:rotate-180" />
@@ -84,7 +87,11 @@ type CardProps = {
 }
 
 const cardClass = (p: CardProps) =>
-  cn("flex flex-col overflow-hidden rounded-2xl border bg-card", p.tone === "danger" && "border-destructive/30", p.className)
+  cn(
+    "flex flex-col overflow-hidden rounded-2xl border bg-card",
+    p.tone === "danger" && "border-destructive/30",
+    p.className
+  )
 
 function CardBody(p: CardProps) {
   return (
@@ -95,7 +102,14 @@ function CardBody(p: CardProps) {
   )
 }
 
-export function Card({ children, footer, flush, tone, className, ...rest }: CardProps & Omit<React.ComponentProps<"div">, "children">) {
+export function Card({
+  children,
+  footer,
+  flush,
+  tone,
+  className,
+  ...rest
+}: CardProps & Omit<React.ComponentProps<"div">, "children">) {
   const p = { children, footer, flush, tone, className }
   return (
     <div className={cardClass(p)} {...rest}>
@@ -227,7 +241,12 @@ export function LinkRow({
 }) {
   return (
     <li>
-      <Link to={to} state={state} className="flex min-h-[52px] items-center gap-3 px-4 py-3 transition-colors hover:bg-muted" data-testid={testId}>
+      <Link
+        to={to}
+        state={state}
+        className="flex min-h-[52px] items-center gap-3 px-4 py-3 transition-colors hover:bg-muted"
+        data-testid={testId}
+      >
         {children}
         {value !== undefined && <span className="shrink-0 text-body whitespace-nowrap text-faint">{value}</span>}
         <ChevronRightIcon className="size-4 shrink-0 text-faint rtl:rotate-180" />
@@ -249,12 +268,22 @@ export function EmptyRow({ children }: { children: React.ReactNode }) {
   return <p className="px-4 py-5 text-body text-faint">{children}</p>
 }
 
-export function StatusTag({ tone = "muted", children, ...props }: { tone?: "muted" | "success" | "warning" | "danger"; children: React.ReactNode } & React.ComponentProps<"span">) {
+export function StatusTag({
+  tone = "muted",
+  children,
+  ...props
+}: { tone?: "muted" | "success" | "warning" | "danger"; children: React.ReactNode } & React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-1.5 text-caption font-medium",
-        tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : tone === "danger" ? "text-destructive" : "text-muted-foreground",
+        tone === "success"
+          ? "text-success"
+          : tone === "warning"
+            ? "text-warning"
+            : tone === "danger"
+              ? "text-destructive"
+              : "text-muted-foreground"
       )}
       {...props}
     >
@@ -264,7 +293,6 @@ export function StatusTag({ tone = "muted", children, ...props }: { tone?: "mute
   )
 }
 
-
 export function RowIcon({ children }: { children: React.ReactNode }) {
   return (
     <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] border bg-surface text-small font-medium text-muted-foreground [&_svg]:size-4">
@@ -273,7 +301,17 @@ export function RowIcon({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function SettingRow({ title, hint, children, htmlFor }: { title: React.ReactNode; hint?: React.ReactNode; children?: React.ReactNode; htmlFor?: string }) {
+export function SettingRow({
+  title,
+  hint,
+  children,
+  htmlFor,
+}: {
+  title: React.ReactNode
+  hint?: React.ReactNode
+  children?: React.ReactNode
+  htmlFor?: string
+}) {
   return (
     <li className="flex min-h-[52px] items-center gap-3 px-4 py-3 phone:flex-wrap">
       <Label htmlFor={htmlFor} className="block min-w-0 flex-1 font-normal phone:min-w-[55%]">

@@ -40,7 +40,9 @@ function normalizeOrigin(raw: string): string | null {
   }
 }
 
-export type ChatInputResult = { ok: true; value: ChatChannelInput } | { ok: false; empty: boolean; tooMany: boolean; bad: string[] }
+export type ChatInputResult =
+  | { ok: true; value: ChatChannelInput }
+  | { ok: false; empty: boolean; tooMany: boolean; bad: string[] }
 
 export function chatChannelInput(f: ChatForm): ChatInputResult {
   const lines = f.origins

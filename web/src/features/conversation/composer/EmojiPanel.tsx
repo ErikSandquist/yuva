@@ -6,7 +6,14 @@ import { cn } from "@/lib/utils"
 export default function EmojiPanel({ onPick }: { onPick: (emoji: string) => void }) {
   const { t } = useLingui()
   return (
-    <EmojiPicker.Root locale="en" emojibaseUrl="/emojibase" columns={9} onEmojiSelect={({ emoji }) => onPick(emoji)} className="isolate flex h-[340px] w-full flex-col" data-testid="emoji-picker">
+    <EmojiPicker.Root
+      locale="en"
+      emojibaseUrl="/emojibase"
+      columns={9}
+      onEmojiSelect={({ emoji }) => onPick(emoji)}
+      className="isolate flex h-[340px] w-full flex-col"
+      data-testid="emoji-picker"
+    >
       <EmojiPicker.Search
         name="emoji-search"
         autoFocus
@@ -35,7 +42,10 @@ export default function EmojiPanel({ onPick }: { onPick: (emoji: string) => void
               </div>
             ),
             Emoji: ({ emoji, ...props }) => (
-              <button className={cn("grid size-8 place-items-center rounded-md text-xl", emoji.isActive && "bg-muted")} {...props}>
+              <button
+                className={cn("grid size-8 place-items-center rounded-md text-xl", emoji.isActive && "bg-muted")}
+                {...props}
+              >
                 {emoji.emoji}
               </button>
             ),

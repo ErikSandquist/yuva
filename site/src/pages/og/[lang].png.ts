@@ -11,7 +11,7 @@ export const GET: APIRoute = ({ params }) => {
   const svg = ogSvg(
     i18n._(msg`One inbox for every product you run.`),
     i18n._(msg`Open-source customer messaging`),
-    i18n._(msg`E-mail · live chat · in-app · self-hosted`),
+    i18n._(msg`E-mail · live chat · in-app · self-hosted`)
   )
   return new Response(renderPng(svg, 1200), { headers: { "Content-Type": "image/png" } })
 }

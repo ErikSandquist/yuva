@@ -19,7 +19,11 @@ function Listening() {
   const status = useRealtimeStatus()
   const live = status === "live"
   return (
-    <p className="flex items-center gap-2.5 text-body text-muted-foreground" role="status" data-testid="setup-listening">
+    <p
+      className="flex items-center gap-2.5 text-body text-muted-foreground"
+      role="status"
+      data-testid="setup-listening"
+    >
       <span className="relative flex size-2.5">
         {live && <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand opacity-60" />}
         <span className={cn("relative inline-flex size-2.5 rounded-full", live ? "bg-brand" : "bg-faint")} />
@@ -78,7 +82,12 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   )
 
   return (
-    <SetupLayout step={step} back={first ? undefined : `/setup/${inboxId}/${channelId}`} preview={preview} previewOpen={!!first || kind === "chat"}>
+    <SetupLayout
+      step={step}
+      back={first ? undefined : `/setup/${inboxId}/${channelId}`}
+      preview={preview}
+      previewOpen={!!first || kind === "chat"}
+    >
       {!channel || !kind ? (
         <div className="flex flex-col gap-4">
           <Skeleton className="h-8 w-3/4" />
@@ -89,7 +98,11 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
           <StepHeader icon={<PartyPopperIcon />} title={<Trans>Your first conversation is here</Trans>}>
             <Trans>{name} is ready. Reply to it, and invite your team in Settings › Members when you like.</Trans>
           </StepHeader>
-          <Button size="lg" onClick={() => navigate(`/conversations/${first.id}`)} data-testid="setup-open-conversation">
+          <Button
+            size="lg"
+            onClick={() => navigate(`/conversations/${first.id}`)}
+            data-testid="setup-open-conversation"
+          >
             <Trans>Open the conversation</Trans>
             <ArrowRightIcon className="rtl:rotate-180" />
           </Button>
@@ -108,11 +121,19 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
             }
           >
             {kind === "chat" ? (
-              <Trans>Write in the chat in the preview, or on a page with the snippet, as a visitor would. The conversation appears here the moment it starts.</Trans>
+              <Trans>
+                Write in the chat in the preview, or on a page with the snippet, as a visitor would. The conversation
+                appears here the moment it starts.
+              </Trans>
             ) : kind === "email" ? (
-              <Trans>Write to {channel.email!.address} from any other address. The conversation appears here the moment the mail arrives.</Trans>
+              <Trans>
+                Write to {channel.email!.address} from any other address. The conversation appears here the moment the
+                mail arrives.
+              </Trans>
             ) : (
-              <Trans>Run your app with the SDK and send a message. The conversation appears here the moment it starts.</Trans>
+              <Trans>
+                Run your app with the SDK and send a message. The conversation appears here the moment it starts.
+              </Trans>
             )}
           </StepHeader>
           <div className="flex flex-col gap-6">
@@ -122,7 +143,9 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
                 variant="outline"
                 size="lg"
                 className="self-start"
-                render={<a href={`mailto:${channel.email!.address}?subject=${encodeURIComponent(t`Hello from the setup`)}`} />}
+                render={
+                  <a href={`mailto:${channel.email!.address}?subject=${encodeURIComponent(t`Hello from the setup`)}`} />
+                }
               >
                 <MailIcon />
                 <Trans>Write a test e-mail</Trans>
@@ -137,4 +160,3 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
     </SetupLayout>
   )
 }
-

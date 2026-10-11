@@ -36,7 +36,7 @@ function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boo
         className={cn(
           "flex items-center gap-3 rounded-xl px-2.5 py-2.5 outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",
           current && "bg-muted",
-          cursor && "ring-2 ring-ring",
+          cursor && "ring-2 ring-ring"
         )}
         aria-current={current ? "page" : undefined}
         data-testid="contact-row"
@@ -46,14 +46,24 @@ function Row({ c, current, cursor }: { c: Contact; current: boolean; cursor: boo
           <span className="flex items-center gap-2">
             <span className="min-w-0 flex-1 truncate text-body font-medium">{name}</span>
             {last && (
-              <time className="shrink-0 text-caption text-faint" dateTime={last} title={formatDateTime(last, i18n.locale)}>
+              <time
+                className="shrink-0 text-caption text-faint"
+                dateTime={last}
+                title={formatDateTime(last, i18n.locale)}
+              >
                 {formatShort(last, i18n.locale)}
               </time>
             )}
           </span>
           <span className="flex items-center gap-2">
             <span className="min-w-0 flex-1 truncate text-small text-muted-foreground">
-              {c.emails[0] && c.emails[0] !== name ? c.emails[0] : known ? (c.external_ids[0]?.external_id ?? "") : <Trans>Visitor</Trans>}
+              {c.emails[0] && c.emails[0] !== name ? (
+                c.emails[0]
+              ) : known ? (
+                (c.external_ids[0]?.external_id ?? "")
+              ) : (
+                <Trans>Visitor</Trans>
+              )}
             </span>
             {c.activity && c.activity.open_conversations > 0 && (
               <span className="shrink-0 text-caption text-brand">
@@ -90,11 +100,17 @@ export function ContactsColumn() {
     Enter: () => cursor >= 0 && items[cursor] && navigate(`/contacts/${items[cursor].id}`),
   })
   useEffect(() => {
-    if (cursor >= 0) list.current?.querySelectorAll("[data-testid=contact-row]")[cursor]?.scrollIntoView({ block: "nearest" })
+    if (cursor >= 0)
+      list.current?.querySelectorAll("[data-testid=contact-row]")[cursor]?.scrollIntoView({ block: "nearest" })
   }, [cursor])
 
   const labels: Record<DirectoryFilter, string> = { all: t`All`, open: t`Open`, known: t`Known`, visitor: t`Visitors` }
-  const titles: Record<DirectoryFilter, string | undefined> = { all: undefined, open: t`Has an open conversation`, known: undefined, visitor: undefined }
+  const titles: Record<DirectoryFilter, string | undefined> = {
+    all: undefined,
+    open: t`Has an open conversation`,
+    known: undefined,
+    visitor: undefined,
+  }
 
   return (
     <nav aria-label={t`Contacts`} className="flex h-full min-h-0 flex-col bg-background" data-testid="contacts-page">
@@ -149,7 +165,7 @@ export function ContactsColumn() {
             onClick={() => setFilter(k)}
             className={cn(
               "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-              filter === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground",
+              filter === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
             )}
             data-testid={`contacts-filter-${k}`}
           >
@@ -184,7 +200,12 @@ export function ContactsColumn() {
         )}
         {directory.hasNextPage && (
           <div className="mt-2 flex justify-center">
-            <Button variant="ghost" size="sm" onClick={() => void directory.fetchNextPage()} disabled={directory.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void directory.fetchNextPage()}
+              disabled={directory.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           </div>
@@ -197,7 +218,10 @@ export function ContactsColumn() {
 export function ContactsHome() {
   return (
     <PaneEmpty icon={BookUserIcon} title={<Trans>Pick a contact</Trans>} testId="contacts-home">
-      <Trans>Search by name, e-mail or the id your app gives them, then open one to see their conversations, details and notes.</Trans>
+      <Trans>
+        Search by name, e-mail or the id your app gives them, then open one to see their conversations, details and
+        notes.
+      </Trans>
     </PaneEmpty>
   )
 }

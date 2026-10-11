@@ -20,7 +20,8 @@ export const href = (locale: Locale, rel = "") => `${docsRoot(locale)}${rel}`
 export const englishOnly = ["architecture", "roadmap"]
 
 export const slugOf = (doc: Doc) => doc.id.split("/").at(-1)!
-export const localeOf = (doc: Doc): Locale => locales.find((l) => l !== defaultLocale && doc.id.startsWith(`${l}/`)) ?? defaultLocale
+export const localeOf = (doc: Doc): Locale =>
+  locales.find((l) => l !== defaultLocale && doc.id.startsWith(`${l}/`)) ?? defaultLocale
 const file = (doc: Doc) => doc.filePath ?? `../docs/${doc.id}.md`
 export const editHref = (doc: Doc) => `${REPO}/edit/main/docs/${file(doc).replace(/^(\.\.\/)?docs\//, "")}`
 
@@ -70,7 +71,9 @@ export function updated(doc: Doc) {
 export async function docs(locale: Locale = defaultLocale) {
   const all = await getCollection("docs")
   const english = all.filter((d) => localeOf(d) === defaultLocale)
-  const local = new Map(all.filter((d) => localeOf(d) === locale && locale !== defaultLocale).map((d) => [slugOf(d), d]))
+  const local = new Map(
+    all.filter((d) => localeOf(d) === locale && locale !== defaultLocale).map((d) => [slugOf(d), d])
+  )
   return new Map(english.map((d) => [d.id, (!englishOnly.includes(d.id) && local.get(d.id)) || d]))
 }
 
@@ -109,7 +112,11 @@ export async function nav(locale: Locale): Promise<NavGroup[]> {
       ? { slug, title: t.apiReference, rel: docRel(slug) }
       : { slug, title: title(all.get(slug)!), rel: docRel(slug) }
   return [
-    ...groups.map((g) => ({ key: g.key, title: t.groups[g.key], items: g.slugs.filter((slug) => slug === "api" || all.has(slug)).map(item) })),
+    ...groups.map((g) => ({
+      key: g.key,
+      title: t.groups[g.key],
+      items: g.slugs.filter((slug) => slug === "api" || all.has(slug)).map(item),
+    })),
     ...(rest.length ? [{ key: "more", title: t.groups.more, items: rest.map(item) }] : []),
   ]
 }

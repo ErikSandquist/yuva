@@ -5,7 +5,14 @@ import { useState } from "react"
 import { BotAvatar, CheckItem, CheckList, Dot, ErrorLine } from "@/components/common"
 import { API_KEY_SCOPES, useEnumText, WORKSPACE_WIDE_SCOPES } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Field } from "@/features/settings/ui"
 import { api, unwrap, type ApiKey, type ApiKeyCreate, type ApiKeyScope } from "@/lib/api"
@@ -25,7 +32,15 @@ function toggled<T>(set: Set<T>, v: T, on: boolean) {
   return next
 }
 
-export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | null; onClose: () => void; onCreated: (secret: string) => void }) {
+export function ApiKeyDialog({
+  apiKey,
+  onClose,
+  onCreated,
+}: {
+  apiKey: ApiKey | null
+  onClose: () => void
+  onCreated: (secret: string) => void
+}) {
   const { t } = useLingui()
   const qc = useQueryClient()
   const text = useEnumText()
@@ -49,7 +64,7 @@ export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | 
           api.PATCH("/v1/api-keys/{apiKeyId}", {
             params: { path: { apiKeyId: apiKey.id } },
             body: { name: name.trim(), bot_name: bot.bot_name || null, bot_avatar_url: bot.bot_avatar_url || null },
-          }),
+          })
         )
         return null
       }
@@ -91,15 +106,40 @@ export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | 
               </DialogDescription>
             </DialogHeader>
             <Field label={<Trans>Name</Trans>} htmlFor="key-name">
-              <Input id="key-name" required maxLength={200} value={name} placeholder={t`Production backend`} onChange={(e) => setName(e.target.value)} />
+              <Input
+                id="key-name"
+                required
+                maxLength={200}
+                value={name}
+                placeholder={t`Production backend`}
+                onChange={(e) => setName(e.target.value)}
+              />
             </Field>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label={<Trans>Bot name</Trans>} htmlFor="key-bot-name" hint={<Trans>Shown on its messages. The key's name when empty.</Trans>}>
-                <Input id="key-bot-name" maxLength={200} value={botName} placeholder={name.trim() || t`Billing bot`} onChange={(e) => setBotName(e.target.value)} />
+              <Field
+                label={<Trans>Bot name</Trans>}
+                htmlFor="key-bot-name"
+                hint={<Trans>Shown on its messages. The key's name when empty.</Trans>}
+              >
+                <Input
+                  id="key-bot-name"
+                  maxLength={200}
+                  value={botName}
+                  placeholder={name.trim() || t`Billing bot`}
+                  onChange={(e) => setBotName(e.target.value)}
+                />
               </Field>
-              <Field label={<Trans>Bot avatar</Trans>} htmlFor="key-bot-avatar" hint={<Trans>An https image URL.</Trans>}>
+              <Field
+                label={<Trans>Bot avatar</Trans>}
+                htmlFor="key-bot-avatar"
+                hint={<Trans>An https image URL.</Trans>}
+              >
                 <div className="flex items-center gap-2">
-                  <BotAvatar name={preview} url={avatarUrl.startsWith("https://") ? avatarUrl : undefined} className="size-8" />
+                  <BotAvatar
+                    name={preview}
+                    url={avatarUrl.startsWith("https://") ? avatarUrl : undefined}
+                    className="size-8"
+                  />
                   <Input
                     id="key-bot-avatar"
                     type="url"
@@ -121,7 +161,9 @@ export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | 
                   hint={
                     <p className="text-caption text-muted-foreground">
                       {limited ? (
-                        <Trans>The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace.</Trans>
+                        <Trans>
+                          The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace.
+                        </Trans>
                       ) : (
                         <Trans>None picked: the key sees every inbox.</Trans>
                       )}
@@ -129,7 +171,12 @@ export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | 
                   }
                 >
                   {inboxes.map((i) => (
-                    <CheckItem key={i.id} checked={limit.has(i.id)} onChange={(on) => setLimit((s) => toggled(s, i.id, on))} testId="key-inbox">
+                    <CheckItem
+                      key={i.id}
+                      checked={limit.has(i.id)}
+                      onChange={(on) => setLimit((s) => toggled(s, i.id, on))}
+                      testId="key-inbox"
+                    >
                       <span className="flex items-center gap-2 text-body">
                         <Dot color={i.branding.color} className="size-2" />
                         <span className="truncate">{i.name}</span>
@@ -162,8 +209,19 @@ export function ApiKeyDialog({ apiKey, onClose, onCreated }: { apiKey: ApiKey | 
                     </CheckItem>
                   ))}
                 </CheckList>
-                <Field label={<Trans>Expires (optional)</Trans>} htmlFor="key-expiry" hint={<Trans>The key stops working at the end of this day.</Trans>}>
-                  <Input id="key-expiry" type="date" min={localDate(new Date())} value={expiry} onChange={(e) => setExpiry(e.target.value)} className="sm:max-w-48" />
+                <Field
+                  label={<Trans>Expires (optional)</Trans>}
+                  htmlFor="key-expiry"
+                  hint={<Trans>The key stops working at the end of this day.</Trans>}
+                >
+                  <Input
+                    id="key-expiry"
+                    type="date"
+                    min={localDate(new Date())}
+                    value={expiry}
+                    onChange={(e) => setExpiry(e.target.value)}
+                    className="sm:max-w-48"
+                  />
                 </Field>
               </>
             )}

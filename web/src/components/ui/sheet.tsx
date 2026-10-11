@@ -23,7 +23,7 @@ function SheetContent({
         className={cn(
           "fixed inset-y-0 z-50 flex w-[min(22rem,88vw)] flex-col bg-card text-body text-foreground shadow-[0_0_60px_-20px_rgb(15_23_42/0.4)] outline-none",
           side === "right" ? "right-0 border-l" : "left-0 border-r",
-          className,
+          className
         )}
         {...props}
       >

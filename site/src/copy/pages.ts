@@ -5,7 +5,9 @@ export function blogCopy(i18n: I18n) {
   return {
     title: i18n._(msg`Blog`),
     metaTitle: i18n._(msg`Yuva blog`),
-    description: i18n._(msg`News, release stories and notes from building Yuva, the open-source inbox for every product you run.`),
+    description: i18n._(
+      msg`News, release stories and notes from building Yuva, the open-source inbox for every product you run.`
+    ),
     lead: i18n._(msg`News, release stories and notes from building Yuva.`),
     english: i18n._(msg`Posts are published in English.`),
     rss: i18n._(msg`RSS feed`),

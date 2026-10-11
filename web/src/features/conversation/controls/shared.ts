@@ -16,7 +16,6 @@ export function menuProps(name: MenuName, p: Pick<ControlProps, "openMenu" | "se
   return { open: p.openMenu === name, onOpenChange: (open: boolean) => p.setOpenMenu(open ? name : null) }
 }
 
-
 export const statusIcons: Record<ConversationStatus, React.ComponentType<{ className?: string }>> = {
   open: CircleIcon,
   pending: CircleDashedIcon,

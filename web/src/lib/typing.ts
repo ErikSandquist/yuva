@@ -20,7 +20,11 @@ function authorKey(a: TypingAuthor) {
 
 function changed(conversationId: string) {
   const entries = typists.get(conversationId)
-  if (entries && entries.size > 0) snapshots.set(conversationId, [...entries.values()].map((e) => e.author))
+  if (entries && entries.size > 0)
+    snapshots.set(
+      conversationId,
+      [...entries.values()].map((e) => e.author)
+    )
   else {
     typists.delete(conversationId)
     snapshots.delete(conversationId)

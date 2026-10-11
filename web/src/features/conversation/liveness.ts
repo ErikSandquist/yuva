@@ -32,6 +32,9 @@ export function useLiveIds(items: Conversation[]) {
     queries: contacts.map((id) => contactPresenceQuery(ws, id)),
     combine: (rs) => rs.flatMap((r) => (r.data?.online ? [r.data.contact_id] : [])).join(","),
   })
-  const ids = chats.filter((c) => online.split(",").includes(c.contact_id)).map((c) => c.id).join(",")
+  const ids = chats
+    .filter((c) => online.split(",").includes(c.contact_id))
+    .map((c) => c.id)
+    .join(",")
   return useMemo(() => new Set(ids ? ids.split(",") : []), [ids])
 }

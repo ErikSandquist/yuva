@@ -8,7 +8,8 @@ export function useWebhooks(inboxId?: string) {
   const { workspaceId: ws } = useSession()
   return useQuery({
     queryKey: keys.webhookList(ws, inboxId ?? ""),
-    queryFn: () => unwrap(api.GET("/v1/webhooks", { params: { query: inboxId ? { inbox_id: inboxId } : {} } })).then((r) => r.items),
+    queryFn: () =>
+      unwrap(api.GET("/v1/webhooks", { params: { query: inboxId ? { inbox_id: inboxId } : {} } })).then((r) => r.items),
   })
 }
 

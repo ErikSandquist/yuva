@@ -89,7 +89,7 @@ export function SessionProvider({
       canManage: membership.role === "owner" || membership.role === "admin",
       switchWorkspace: onSwitch,
     }),
-    [me, membership, onSwitch],
+    [me, membership, onSwitch]
   )
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
 }

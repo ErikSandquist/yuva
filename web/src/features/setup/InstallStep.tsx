@@ -37,7 +37,10 @@ export function CodeBlock({ value, label, testId }: { value: string; label: stri
         <span className="text-caption text-faint">{label}</span>
         <CopyButton value={value} className="h-7 border-transparent bg-transparent" />
       </div>
-      <pre className="max-w-full overflow-x-auto px-3.5 py-3 font-mono text-caption leading-5 break-all whitespace-pre-wrap sm:break-normal sm:whitespace-pre" data-testid={testId}>
+      <pre
+        className="max-w-full overflow-x-auto px-3.5 py-3 font-mono text-caption leading-5 break-all whitespace-pre-wrap sm:break-normal sm:whitespace-pre"
+        data-testid={testId}
+      >
         {value}
       </pre>
     </div>
@@ -47,7 +50,9 @@ export function CodeBlock({ value, label, testId }: { value: string; label: stri
 function Numbered({ n, title, children }: { n: number; title: React.ReactNode; children: React.ReactNode }) {
   return (
     <li className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-x-3">
-      <span className="grid size-7 place-items-center rounded-full border text-small font-medium text-muted-foreground">{n}</span>
+      <span className="grid size-7 place-items-center rounded-full border text-small font-medium text-muted-foreground">
+        {n}
+      </span>
       <div className="flex min-w-0 flex-col gap-3 pt-0.5">
         <p className="font-medium">{title}</p>
         {children}
@@ -63,7 +68,10 @@ function IdentitySecret({ secret }: { secret: string }) {
         <Trans>For signed-in users: the identity secret, shown only now</Trans>
       </p>
       <p>
-        <Trans>Your backend signs identity tokens with it so customers write as themselves. Keep it on your server; you can rotate it in the inbox settings.</Trans>
+        <Trans>
+          Your backend signs identity tokens with it so customers write as themselves. Keep it on your server; you can
+          rotate it in the inbox settings.
+        </Trans>
       </p>
       <CodeLine value={secret} />
     </Notice>
@@ -110,13 +118,18 @@ function EmailInstallSteps({ email }: { email: EmailChannel }) {
       <Numbered n={1} title={<Trans>Send mail for {email.address} to Yuva</Trans>}>
         <p className="text-muted-foreground">
           <Trans>
-            With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing rule for
-            the address with the action Send to a Worker. Any other mail server can post each message, signed with
-            YUVA_INGRESS_SECRET, to:
+            With Cloudflare Email Routing, deploy the Email Worker from edge/ of the Yuva repository and add a routing
+            rule for the address with the action Send to a Worker. Any other mail server can post each message, signed
+            with YUVA_INGRESS_SECRET, to:
           </Trans>
         </p>
         <CodeLine value={ingress} testId="setup-ingress" />
-        <a href={`${DOCS}/email.md#inbound`} target="_blank" rel="noreferrer" className="w-fit text-body text-brand underline-offset-4 hover:underline">
+        <a
+          href={`${DOCS}/email.md#inbound`}
+          target="_blank"
+          rel="noreferrer"
+          className="w-fit text-body text-brand underline-offset-4 hover:underline"
+        >
           <Trans>Step-by-step guide</Trans>
         </a>
       </Numbered>
@@ -124,16 +137,23 @@ function EmailInstallSteps({ email }: { email: EmailChannel }) {
         {email.smtp ? (
           <p className="text-muted-foreground">
             <Trans>
-              Replies go out through {email.smtp.host}. Add the SPF and DKIM records your mail provider gives you, so they
-              reach the inbox and not spam.
+              Replies go out through {email.smtp.host}. Add the SPF and DKIM records your mail provider gives you, so
+              they reach the inbox and not spam.
             </Trans>
           </p>
         ) : (
           <Notice tone="warning" className="text-small">
-            <Trans>No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings.</Trans>
+            <Trans>
+              No SMTP account yet: mail arrives, but replies cannot go out until you add one in the inbox settings.
+            </Trans>
           </Notice>
         )}
-        <a href={`${DOCS}/email.md#dns-checklist`} target="_blank" rel="noreferrer" className="w-fit text-body text-brand underline-offset-4 hover:underline">
+        <a
+          href={`${DOCS}/email.md#dns-checklist`}
+          target="_blank"
+          rel="noreferrer"
+          className="w-fit text-body text-brand underline-offset-4 hover:underline"
+        >
           <Trans>DNS checklist</Trans>
         </a>
       </Numbered>
@@ -206,8 +226,17 @@ function AppInstallSteps({ channel, secret }: { channel: Channel; secret?: strin
           items={platforms.map((p) => ({ value: p, label: names[p], testId: `setup-sdk-${p}` }))}
           className="self-start"
         />
-        <CodeBlock value={sdkLines(platform, window.location.origin, app.public_key, version)} label={langs[platform]} testId="setup-sdk" />
-        <a href={`${DOCS}/mobile.md`} target="_blank" rel="noreferrer" className="w-fit text-body text-brand underline-offset-4 hover:underline">
+        <CodeBlock
+          value={sdkLines(platform, window.location.origin, app.public_key, version)}
+          label={langs[platform]}
+          testId="setup-sdk"
+        />
+        <a
+          href={`${DOCS}/mobile.md`}
+          target="_blank"
+          rel="noreferrer"
+          className="w-fit text-body text-brand underline-offset-4 hover:underline"
+        >
           <Trans>Full guide, with the screens and push notifications</Trans>
         </a>
       </Numbered>
@@ -269,7 +298,10 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
             {kind === "email" ? (
               <Trans>Yuva does not run a mail server: your domain's mail is passed to it.</Trans>
             ) : (
-              <Trans>Copy the lines below. They already contain this server's address and the channel's public key, which is not a secret.</Trans>
+              <Trans>
+                Copy the lines below. They already contain this server's address and the channel's public key, which is
+                not a secret.
+              </Trans>
             )}
           </StepHeader>
           <div data-testid={`setup-install-${kind}`}>
@@ -291,4 +323,3 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
     </SetupLayout>
   )
 }
-

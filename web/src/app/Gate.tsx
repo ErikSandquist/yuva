@@ -59,7 +59,10 @@ function WorkspacePicker({ me, onChoose }: { me: Me; onChoose: (id: string) => v
       <ul className="flex flex-col gap-2">
         {me.memberships.map((m) => (
           <li key={m.workspace.id}>
-            <Item render={<button type="button" />} variant="outline" className="flex-nowrap hover:bg-muted [button]:hover:bg-muted"
+            <Item
+              render={<button type="button" />}
+              variant="outline"
+              className="flex-nowrap hover:bg-muted [button]:hover:bg-muted"
               onClick={() => onChoose(m.workspace.id)}
             >
               <span className="flex-1 truncate font-medium">{m.workspace.name}</span>
@@ -91,7 +94,7 @@ export function Gate() {
       choose(id)
       navigate("/")
     },
-    [choose, navigate],
+    [choose, navigate]
   )
 
   if (me.isPending) return <div className="min-h-svh bg-background" />

@@ -22,6 +22,6 @@ export function useListSearch() {
       listeners.add(l)
       return () => listeners.delete(l)
     },
-    () => state,
+    () => state
   )
 }

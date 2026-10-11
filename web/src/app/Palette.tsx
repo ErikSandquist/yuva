@@ -7,7 +7,15 @@ import { isChats, useShell } from "@/app/shell"
 import { Kbd } from "@/components/common"
 import { keyLabel, mod, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText } from "@/components/common/text"
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandItem, CommandList, CommandShortcut } from "@/components/ui/command"
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "@/components/ui/command"
 import { hasCommands, runCommand, type CommandName } from "@/features/conversation/commands"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { focusListSearch, setListQuery } from "@/features/inbox/listSearch"
@@ -48,7 +56,12 @@ function useItems(open: boolean): Item[] {
     }
     if (commands) {
       const act = (name: CommandName, label: string, key?: string) =>
-        list.push({ group: t`This conversation`, label, keys: key ? keyLabel(key) : undefined, run: () => runCommand(name) })
+        list.push({
+          group: t`This conversation`,
+          label,
+          keys: key ? keyLabel(key) : undefined,
+          run: () => runCommand(name),
+        })
       act("reply", t`Write a reply`, SHORTCUTS.reply)
       act("note", t`Write a note for the team`, SHORTCUTS.note)
       act("hand", t`Assign or hand to a teammate`, SHORTCUTS.hand)
@@ -63,7 +76,8 @@ function useItems(open: boolean): Item[] {
       list.push({ group: t`Inbox`, label: t`All inboxes`, run: () => setFilter("") })
       for (const i of inboxes) list.push({ group: t`Inbox`, label: t`Only ${i.name}`, run: () => setFilter(i.id) })
     }
-    const go = (label: string, to: string, keys?: string[]) => list.push({ group: t`Go to`, label, keys, run: () => navigate(to) })
+    const go = (label: string, to: string, keys?: string[]) =>
+      list.push({ group: t`Go to`, label, keys, run: () => navigate(to) })
     list.push({
       group: t`Go to`,
       label: t`Search conversations`,
@@ -168,7 +182,11 @@ export function Palette({ open, onOpenChange }: { open: boolean; onOpenChange: (
             </CommandGroup>
           ))}
           {search.length >= 2 && (
-            <CommandGroup heading={t`Search`} forceMount className="p-0 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-2.5 **:[[cmdk-group-heading]]:pb-1 **:[[cmdk-group-heading]]:text-caption **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-faint">
+            <CommandGroup
+              heading={t`Search`}
+              forceMount
+              className="p-0 **:[[cmdk-group-heading]]:px-3 **:[[cmdk-group-heading]]:pt-2.5 **:[[cmdk-group-heading]]:pb-1 **:[[cmdk-group-heading]]:text-caption **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group-heading]]:text-faint"
+            >
               <CommandItem
                 forceMount
                 value={`search ${search}`}

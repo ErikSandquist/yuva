@@ -10,7 +10,11 @@ export function ChannelSummary({ ch }: { ch: Channel }) {
       <>
         {ch.email.address}
         {" · "}
-        {ch.email.smtp ? <Trans>sends through {ch.email.smtp.host}</Trans> : <Trans>receives only, no SMTP account</Trans>}
+        {ch.email.smtp ? (
+          <Trans>sends through {ch.email.smtp.host}</Trans>
+        ) : (
+          <Trans>receives only, no SMTP account</Trans>
+        )}
       </>
     )
   }
@@ -37,5 +41,11 @@ export function ChannelSummary({ ch }: { ch: Channel }) {
     )
   }
   const count = Object.keys(ch.settings).length
-  return count === 0 ? <Trans>No settings</Trans> : count === 1 ? <Trans>1 setting</Trans> : <Trans>{count} settings</Trans>
+  return count === 0 ? (
+    <Trans>No settings</Trans>
+  ) : count === 1 ? (
+    <Trans>1 setting</Trans>
+  ) : (
+    <Trans>{count} settings</Trans>
+  )
 }

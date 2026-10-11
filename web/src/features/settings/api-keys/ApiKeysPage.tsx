@@ -35,7 +35,13 @@ function BotSending() {
         title={<Trans>Bots may send</Trans>}
         hint={<Trans>When off, API keys can only write drafts, and a member reviews and sends them.</Trans>}
       >
-        <Switch checked={on} disabled={save.isPending || !workspace.data} onCheckedChange={(v) => save.mutate(v)} aria-label={t`Bots may send`} data-testid="bots-may-send" />
+        <Switch
+          checked={on}
+          disabled={save.isPending || !workspace.data}
+          onCheckedChange={(v) => save.mutate(v)}
+          aria-label={t`Bots may send`}
+          data-testid="bots-may-send"
+        />
       </ToggleRow>
       <ErrorLine error={workspace.error ?? save.error} />
     </Card>
@@ -118,7 +124,13 @@ function KeyRow({ k, onEdit, onRevoke }: { k: ApiKey; onEdit: () => void; onRevo
           </dd>
         </dl>
         <p className="text-caption text-faint">
-          {by ? <Trans>Created {created} by {by}</Trans> : <Trans>Created {created}</Trans>}
+          {by ? (
+            <Trans>
+              Created {created} by {by}
+            </Trans>
+          ) : (
+            <Trans>Created {created}</Trans>
+          )}
           {" · "}
           {used ? <Trans>last used {used}</Trans> : <Trans>never used</Trans>}
         </p>
@@ -133,7 +145,11 @@ export function ApiKeysPage() {
   const [editing, setEditing] = useState<ApiKey | "new" | null>(null)
   const [secret, setSecret] = useState<string | null>(null)
   const [confirm, confirmDialog] = useConfirm()
-  const list = useQuery({ queryKey: keys.apiKeys(ws), queryFn: () => unwrap(api.GET("/v1/api-keys")).then((r) => r.items), enabled: canManage })
+  const list = useQuery({
+    queryKey: keys.apiKeys(ws),
+    queryFn: () => unwrap(api.GET("/v1/api-keys")).then((r) => r.items),
+    enabled: canManage,
+  })
   const revoke = useMutation({
     mutationFn: (id: string) => unwrap(api.DELETE("/v1/api-keys/{apiKeyId}", { params: { path: { apiKeyId: id } } })),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.apiKeys(ws) }),

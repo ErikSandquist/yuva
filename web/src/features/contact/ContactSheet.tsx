@@ -27,7 +27,17 @@ import { useSession } from "@/lib/session"
 
 type Tab = "info" | "conversations" | "notes" | "media"
 
-function Body({ contactId, conversationId, onClose, inline }: { contactId: string; conversationId?: string; onClose: () => void; inline?: boolean }) {
+function Body({
+  contactId,
+  conversationId,
+  onClose,
+  inline,
+}: {
+  contactId: string
+  conversationId?: string
+  onClose: () => void
+  inline?: boolean
+}) {
   const Title = inline ? "h2" : SheetTitle
   const Description = inline ? "p" : SheetDescription
   const { t, i18n } = useLingui()
@@ -124,11 +134,22 @@ function Body({ contactId, conversationId, onClose, inline }: { contactId: strin
             label: (
               <>
                 {t`Notes`}
-                {noteCount !== undefined && noteCount !== "0" && <span className="ms-1.5 text-faint tabular-nums">{noteCount}</span>}
+                {noteCount !== undefined && noteCount !== "0" && (
+                  <span className="ms-1.5 text-faint tabular-nums">{noteCount}</span>
+                )}
               </>
             ),
           },
-          ...(conversationId ? [{ value: "media" as const, testId: "contact-tab-media", label: t`Media`, title: t`Media, links and docs` }] : []),
+          ...(conversationId
+            ? [
+                {
+                  value: "media" as const,
+                  testId: "contact-tab-media",
+                  label: t`Media`,
+                  title: t`Media, links and docs`,
+                },
+              ]
+            : []),
         ]}
       />
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
@@ -163,9 +184,19 @@ function Body({ contactId, conversationId, onClose, inline }: { contactId: strin
           <ConversationMedia conversationId={conversationId} />
         ) : (
           <div className="flex flex-col gap-2">
-            <ConversationRows items={conversations.items} currentId={conversationId} pending={conversations.isPending} />
+            <ConversationRows
+              items={conversations.items}
+              currentId={conversationId}
+              pending={conversations.isPending}
+            />
             {conversations.hasNextPage && (
-              <Button variant="ghost" size="sm" className="self-center" onClick={() => void conversations.fetchNextPage()} disabled={conversations.isFetchingNextPage}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="self-center"
+                onClick={() => void conversations.fetchNextPage()}
+                disabled={conversations.isFetchingNextPage}
+              >
                 <Trans>Load more</Trans>
               </Button>
             )}
@@ -201,17 +232,34 @@ export function ContactSheet({
 }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" showCloseButton={false} className="flex w-[420px] max-w-full flex-col gap-0 bg-background p-0 phone:w-full" data-testid="contact-sheet">
+      <SheetContent
+        side="right"
+        showCloseButton={false}
+        className="flex w-[420px] max-w-full flex-col gap-0 bg-background p-0 phone:w-full"
+        data-testid="contact-sheet"
+      >
         {open && <Body contactId={contactId} conversationId={conversationId} onClose={() => onOpenChange(false)} />}
       </SheetContent>
     </Sheet>
   )
 }
 
-export function ContactPanel({ contactId, conversationId, onClose }: { contactId: string; conversationId?: string; onClose: () => void }) {
+export function ContactPanel({
+  contactId,
+  conversationId,
+  onClose,
+}: {
+  contactId: string
+  conversationId?: string
+  onClose: () => void
+}) {
   const { t } = useLingui()
   return (
-    <aside aria-label={t`Contact details`} className="flex h-full min-h-0 flex-col bg-background" data-testid="contact-panel">
+    <aside
+      aria-label={t`Contact details`}
+      className="flex h-full min-h-0 flex-col bg-background"
+      data-testid="contact-panel"
+    >
       <Body contactId={contactId} conversationId={conversationId} onClose={onClose} inline />
     </aside>
   )

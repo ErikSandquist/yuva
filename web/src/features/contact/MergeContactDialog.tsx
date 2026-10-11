@@ -4,7 +4,14 @@ import { useState } from "react"
 
 import { ErrorLine, PersonAvatar } from "@/components/common"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { ContactSearch } from "@/features/contact/ContactSearch"
 import { MergePreview } from "@/features/contact/MergePreview"
 import { useMergeContact } from "@/features/contact/queries"
@@ -20,7 +27,15 @@ function Who({ name }: { name: string }) {
   )
 }
 
-export function MergeContactDialog({ target, open, onOpenChange }: { target: Contact; open: boolean; onOpenChange: (open: boolean) => void }) {
+export function MergeContactDialog({
+  target,
+  open,
+  onOpenChange,
+}: {
+  target: Contact
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const [source, setSource] = useState<Contact | null>(null)
   const merge = useMergeContact(target.id)

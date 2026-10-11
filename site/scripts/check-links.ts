@@ -22,12 +22,18 @@ function resolves(path: string) {
 
 const ids = new Map<string, Set<string>>()
 function idsOf(file: string) {
-  if (!ids.has(file)) ids.set(file, new Set([...readFileSync(file, "utf8").matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]!)))
+  if (!ids.has(file))
+    ids.set(file, new Set([...readFileSync(file, "utf8").matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]!)))
   return ids.get(file)!
 }
 
 const slug = (heading: string) =>
-  heading.toLowerCase().replace(/[`*_]/g, "").replace(/[^\p{L}\p{N}\s-]/gu, "").trim().replace(/\s/g, "-")
+  heading
+    .toLowerCase()
+    .replace(/[`*_]/g, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s/g, "-")
 
 function repoAnchor(file: string, hash: string) {
   const headings = [...readFileSync(file, "utf8").matchAll(/^#{1,6}\s+(.+)$/gm)].map((m) => slug(m[1]!))
@@ -44,7 +50,10 @@ function decode(s: string) {
 
 function split(raw: string) {
   const i = raw.indexOf("#")
-  return (i < 0 ? [decode(raw), undefined] : [decode(raw.slice(0, i)), decode(raw.slice(i + 1))]) as [string, string | undefined]
+  return (i < 0 ? [decode(raw), undefined] : [decode(raw.slice(0, i)), decode(raw.slice(i + 1))]) as [
+    string,
+    string | undefined,
+  ]
 }
 
 let checked = 0
@@ -59,7 +68,8 @@ for (const file of walk(dist)) {
         checked++
         const local = join(repo, target.slice(REPO.length))
         if (!existsSync(local)) broken.push(`${page} -> ${raw} (not in the repository)`)
-        else if (hash && local.endsWith(".md") && !repoAnchor(local, hash)) broken.push(`${page} -> ${raw} (no heading #${hash})`)
+        else if (hash && local.endsWith(".md") && !repoAnchor(local, hash))
+          broken.push(`${page} -> ${raw} (no heading #${hash})`)
         continue
       }
       if (raw.startsWith("#")) {
@@ -104,12 +114,15 @@ for (const name of ["llms.txt", "llms-full.txt"]) {
   }
 }
 
-const guides = readdirSync(join(repo, "docs")).filter((n) => n.endsWith(".md")).map((n) => n.slice(0, -3))
+const guides = readdirSync(join(repo, "docs"))
+  .filter((n) => n.endsWith(".md"))
+  .map((n) => n.slice(0, -3))
 for (const locale of locales) {
   const root = docsRoot(locale)
   for (const slug of guides) {
     checked++
-    if (!resolves(`${root}${slug}/`)) broken.push(`${root}${slug}/ (missing, docs/${slug}.md has no page in this locale)`)
+    if (!resolves(`${root}${slug}/`))
+      broken.push(`${root}${slug}/ (missing, docs/${slug}.md has no page in this locale)`)
   }
   const index = join(dist, root, "search.json")
   if (!existsSync(index)) {
@@ -122,7 +135,8 @@ for (const locale of locales) {
     checked++
     if (!resolves(path)) broken.push(`${root}search.json -> ${entry.href}`)
     else if (hash && !rel.startsWith("api/")) {
-      if (!idsOf(join(dist, path, "index.html")).has(hash)) broken.push(`${root}search.json -> ${entry.href} (no #${hash})`)
+      if (!idsOf(join(dist, path, "index.html")).has(hash))
+        broken.push(`${root}search.json -> ${entry.href} (no #${hash})`)
     }
   }
 }

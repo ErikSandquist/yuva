@@ -21,7 +21,9 @@ export function TeamColumn() {
   const members = useMembers()
   const { counts, load } = useTeamLoad()
   const status = useMemberStatus()
-  const order = [...(members.data ?? [])].sort((a, b) => byPresence(a, b) || (load.get(b.id) ?? 0) - (load.get(a.id) ?? 0))
+  const order = [...(members.data ?? [])].sort(
+    (a, b) => byPresence(a, b) || (load.get(b.id) ?? 0) - (load.get(a.id) ?? 0)
+  )
   return (
     <Column title={<Trans>Team</Trans>} testId="team-panel">
       <div className="grid grid-cols-2 gap-2 px-1 pt-1">
@@ -32,7 +34,9 @@ export function TeamColumn() {
           </span>
         </div>
         <div className="rounded-xl border bg-card px-3 py-2.5">
-          <b className="block text-title tabular-nums">{order.filter((m) => m.online && m.availability === "auto").length}</b>
+          <b className="block text-title tabular-nums">
+            {order.filter((m) => m.online && m.availability === "auto").length}
+          </b>
           <span className="text-caption text-faint">
             <Trans>available now</Trans>
           </span>
@@ -52,10 +56,16 @@ export function TeamColumn() {
               <ColumnLink to={`/team/${m.id}`}>
                 <MemberAvatar name={name} online={m.online} away={m.availability === "away"} className="size-9" />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-body">{m.id === membership.member_id ? t`${name} (you)` : name}</span>
+                  <span className="block truncate text-body">
+                    {m.id === membership.member_id ? t`${name} (you)` : name}
+                  </span>
                   <small className="block truncate text-caption text-faint">{status(m).text}</small>
                 </span>
-                <span className={cn("shrink-0 text-caption tabular-nums", open ? "text-foreground" : "text-faint")} title={t`Open conversations assigned`} data-testid="team-load">
+                <span
+                  className={cn("shrink-0 text-caption tabular-nums", open ? "text-foreground" : "text-faint")}
+                  title={t`Open conversations assigned`}
+                  data-testid="team-load"
+                >
                   <Plural value={open} one="# open" other="# open" />
                 </span>
               </ColumnLink>

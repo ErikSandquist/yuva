@@ -13,7 +13,14 @@ import { AnswerCard, pageLabel, useAnswerActions } from "@/features/docs/AnswerD
 import { DailyChart, zeroFill } from "@/features/docs/DailyChart"
 import { DocsGuide, DocsWindow, helpfulShare } from "@/features/docs/DocsColumn"
 import { PageRatingMark } from "@/features/docs/PageContext"
-import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary, usePageAnswers } from "@/features/docs/queries"
+import {
+  useDocsDays,
+  useDocsPage,
+  useDocsPages,
+  useDocsSort,
+  useDocsSummary,
+  usePageAnswers,
+} from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { useConversations } from "@/features/inbox/queries"
 import { Card, EmptyRow, Section } from "@/features/settings/ui"
@@ -29,7 +36,11 @@ export function DocsHome() {
   const none = !!pages.data && pages.data.pages[0]?.items.length === 0
   if (none) {
     return (
-      <PaneEmpty icon={BookOpenTextIcon} title={<Trans>Feedback and questions from your documentation</Trans>} testId="docs-home">
+      <PaneEmpty
+        icon={BookOpenTextIcon}
+        title={<Trans>Feedback and questions from your documentation</Trans>}
+        testId="docs-home"
+      >
         <DocsGuide />
       </PaneEmpty>
     )
@@ -70,7 +81,11 @@ export function DocsOverview() {
           <Trans>Documentation pages</Trans>
         </h1>
         <p className="mt-1.5 text-reading text-muted-foreground">
-          <Plural value={days} one="The last day, over the inboxes you can see." other="The last # days, over the inboxes you can see." />
+          <Plural
+            value={days}
+            one="The last day, over the inboxes you can see."
+            other="The last # days, over the inboxes you can see."
+          />
         </p>
       </header>
       <DocsWindow className="hidden phone:flex" />
@@ -96,7 +111,12 @@ export function DocsOverview() {
           </Section>
           <Section title={<Trans>Feedback and questions per day</Trans>}>
             <Card>
-              <DailyChart rows={s.days.map(({ day, feedback, questions }) => ({ day, feedback, questions }))} config={conversations} className="h-36" testId="docs-summary-conversations" />
+              <DailyChart
+                rows={s.days.map(({ day, feedback, questions }) => ({ day, feedback, questions }))}
+                config={conversations}
+                className="h-36"
+                testId="docs-summary-conversations"
+              />
             </Card>
           </Section>
         </>
@@ -137,7 +157,11 @@ function ConversationRow({ c }: { c: ConversationListItem }) {
   const name = c.contact.name || c.contact.email || t`Visitor`
   return (
     <li>
-      <Link to={`/conversations/${c.id}`} className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted" data-testid="docs-conversation">
+      <Link
+        to={`/conversations/${c.id}`}
+        className="flex items-center gap-3 px-4 py-3 transition-colors hover:bg-muted"
+        data-testid="docs-conversation"
+      >
         <ContactAvatar id={c.contact_id} name={name} className="size-9 shrink-0" />
         <span className="min-w-0 flex-1">
           <span className="flex items-center gap-2">
@@ -150,7 +174,9 @@ function ConversationRow({ c }: { c: ConversationListItem }) {
             <span className="min-w-0 flex-1 truncate text-muted-foreground">{c.last_message?.text || c.subject}</span>
             {c.feedback?.rating && <PageRatingMark rating={c.feedback.rating} />}
             {c.feedback?.category && c.feedback.category !== "other" && <CategoryChip category={c.feedback.category} />}
-            <span className={cn("shrink-0 text-caption", c.status === "open" ? "text-brand" : "text-faint")}>{text.status[c.status]}</span>
+            <span className={cn("shrink-0 text-caption", c.status === "open" ? "text-brand" : "text-faint")}>
+              {text.status[c.status]}
+            </span>
           </span>
         </span>
       </Link>
@@ -158,7 +184,19 @@ function ConversationRow({ c }: { c: ConversationListItem }) {
   )
 }
 
-function Conversations({ inboxId, page, kind, empty, title }: { inboxId: string; page: string; kind: "feedback" | "question"; empty: React.ReactNode; title: React.ReactNode }) {
+function Conversations({
+  inboxId,
+  page,
+  kind,
+  empty,
+  title,
+}: {
+  inboxId: string
+  page: string
+  kind: "feedback" | "question"
+  empty: React.ReactNode
+  title: React.ReactNode
+}) {
   const list = useConversations({ inbox_id: inboxId, page, kind })
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
   return (
@@ -179,7 +217,12 @@ function Conversations({ inboxId, page, kind, empty, title }: { inboxId: string;
         )}
         {list.hasNextPage && (
           <div className="flex justify-center border-t p-2">
-            <Button variant="ghost" size="sm" onClick={() => void list.fetchNextPage()} disabled={list.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void list.fetchNextPage()}
+              disabled={list.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           </div>
@@ -194,7 +237,12 @@ function Answers({ inboxId, page }: { inboxId: string; page: string }) {
   const actions = useAnswerActions()
   const items = answers.data?.pages.flatMap((p) => p.items) ?? []
   return (
-    <Section title={<Trans>Published answers</Trans>} description={<Trans>Shown on the page by the questions element, newest first, without the visitor's name or address.</Trans>}>
+    <Section
+      title={<Trans>Published answers</Trans>}
+      description={
+        <Trans>Shown on the page by the questions element, newest first, without the visitor's name or address.</Trans>
+      }
+    >
       <Card flush data-testid="docs-answers">
         {answers.isPending ? (
           <Skeleton className="m-4 h-16" />
@@ -214,7 +262,12 @@ function Answers({ inboxId, page }: { inboxId: string; page: string }) {
                 onUnpublish={() => actions.unpublish(a)}
                 footer={
                   a.conversation_id && (
-                    <Button variant="ghost" size="sm" render={<Link to={`/conversations/${a.conversation_id}`} />} data-testid="answer-conversation">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      render={<Link to={`/conversations/${a.conversation_id}`} />}
+                      data-testid="answer-conversation"
+                    >
                       <Trans>Conversation</Trans>
                     </Button>
                   )
@@ -225,7 +278,12 @@ function Answers({ inboxId, page }: { inboxId: string; page: string }) {
         )}
         {answers.hasNextPage && (
           <div className="flex justify-center border-t p-2">
-            <Button variant="ghost" size="sm" onClick={() => void answers.fetchNextPage()} disabled={answers.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => void answers.fetchNextPage()}
+              disabled={answers.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           </div>
@@ -268,7 +326,14 @@ export function DocsPagePane() {
               {inbox.name}
             </span>
           )}
-          <a href={page} target="_blank" rel="noreferrer" className="inline-flex min-w-0 items-center gap-1 break-all text-brand underline-offset-4 hover:underline" dir="ltr" data-testid="docs-page-url">
+          <a
+            href={page}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-w-0 items-center gap-1 break-all text-brand underline-offset-4 hover:underline"
+            dir="ltr"
+            data-testid="docs-page-url"
+          >
             {page}
             <ExternalLinkIcon className="size-3.5 shrink-0" />
           </a>
@@ -283,8 +348,20 @@ export function DocsPagePane() {
           <Section title={<Trans>Ratings per day</Trans>}>
             <Days days={detail.data?.days ?? []} window={days} />
           </Section>
-          <Conversations inboxId={inboxId} page={page} kind="question" title={<Trans>Questions</Trans>} empty={<Trans>No questions from this page.</Trans>} />
-          <Conversations inboxId={inboxId} page={page} kind="feedback" title={<Trans>Feedback</Trans>} empty={<Trans>No feedback from this page.</Trans>} />
+          <Conversations
+            inboxId={inboxId}
+            page={page}
+            kind="question"
+            title={<Trans>Questions</Trans>}
+            empty={<Trans>No questions from this page.</Trans>}
+          />
+          <Conversations
+            inboxId={inboxId}
+            page={page}
+            kind="feedback"
+            title={<Trans>Feedback</Trans>}
+            empty={<Trans>No feedback from this page.</Trans>}
+          />
           <Answers inboxId={inboxId} page={page} />
         </>
       )}

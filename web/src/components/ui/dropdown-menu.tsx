@@ -25,7 +25,13 @@ function DropdownMenuContent({
 }: MenuPrimitive.Popup.Props & Pick<MenuPrimitive.Positioner.Props, "align" | "alignOffset" | "side" | "sideOffset">) {
   return (
     <MenuPrimitive.Portal>
-      <MenuPrimitive.Positioner className="isolate z-50 outline-none" align={align} alignOffset={alignOffset} side={side} sideOffset={sideOffset}>
+      <MenuPrimitive.Positioner
+        className="isolate z-50 outline-none"
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        sideOffset={sideOffset}
+      >
         <MenuPrimitive.Popup className={cn(popupClass, "min-w-44", className)} {...props} />
       </MenuPrimitive.Positioner>
     </MenuPrimitive.Portal>
@@ -33,7 +39,12 @@ function DropdownMenuContent({
 }
 
 function DropdownMenuLabel({ className, ...props }: MenuPrimitive.GroupLabel.Props) {
-  return <MenuPrimitive.GroupLabel className={cn("px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint", className)} {...props} />
+  return (
+    <MenuPrimitive.GroupLabel
+      className={cn("px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint", className)}
+      {...props}
+    />
+  )
 }
 
 function DropdownMenuItem({
@@ -45,7 +56,12 @@ function DropdownMenuItem({
   return (
     <MenuPrimitive.Item
       data-inset={inset}
-      className={cn(itemClass, inset && "ps-8", variant === "destructive" && "text-destructive [&_svg]:text-destructive!", className)}
+      className={cn(
+        itemClass,
+        inset && "ps-8",
+        variant === "destructive" && "text-destructive [&_svg]:text-destructive!",
+        className
+      )}
       {...props}
     />
   )

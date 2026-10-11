@@ -28,7 +28,9 @@ export function useListActions() {
   return {
     pin: (id: string, on: boolean) => {
       applyPin(qc, ws, { conversation_id: id, member_id: me, pinned_at: on ? new Date().toISOString() : undefined })
-      const req = on ? unwrap(api.PUT("/v1/conversations/{conversationId}/pin", path(id))) : unwrap(api.DELETE("/v1/conversations/{conversationId}/pin", path(id)))
+      const req = on
+        ? unwrap(api.PUT("/v1/conversations/{conversationId}/pin", path(id)))
+        : unwrap(api.DELETE("/v1/conversations/{conversationId}/pin", path(id)))
       req.then((pin) => {
         applyPin(qc, ws, pin)
         toast(on ? t`Pinned to the top of your list` : t`Unpinned`)
@@ -36,11 +38,17 @@ export function useListActions() {
     },
     markUnread: (id: string) => {
       applyRead(qc, ws, { conversation_id: id, member_id: me, unread: true })
-      unwrap(api.POST("/v1/conversations/{conversationId}/unread", path(id))).then((read) => applyRead(qc, ws, read), fail)
+      unwrap(api.POST("/v1/conversations/{conversationId}/unread", path(id))).then(
+        (read) => applyRead(qc, ws, read),
+        fail
+      )
     },
     markRead: (id: string) => {
       applyRead(qc, ws, { conversation_id: id, member_id: me, unread: false })
-      unwrap(api.POST("/v1/conversations/{conversationId}/read", path(id))).then((read) => applyRead(qc, ws, read), fail)
+      unwrap(api.POST("/v1/conversations/{conversationId}/read", path(id))).then(
+        (read) => applyRead(qc, ws, read),
+        fail
+      )
     },
   }
 }

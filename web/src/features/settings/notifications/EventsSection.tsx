@@ -5,7 +5,16 @@ import { ErrorLine, Notice } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
-import { DELAYS, EVENTS, sameEvents, toChoice, useEventText, usePlainChoiceText, type Choice, type EventName } from "@/features/settings/notifications/events"
+import {
+  DELAYS,
+  EVENTS,
+  sameEvents,
+  toChoice,
+  useEventText,
+  usePlainChoiceText,
+  type Choice,
+  type EventName,
+} from "@/features/settings/notifications/events"
 import { useSaveSettings } from "@/features/settings/notifications/queries"
 import { Card, Field, Section } from "@/features/settings/ui"
 import type { NotificationChannels, NotificationSettings } from "@/lib/api"
@@ -16,9 +25,16 @@ export function EventsSection({ settings }: { settings: NotificationSettings }) 
   const plain = usePlainChoiceText()
   const save = useSaveSettings()
   const delayText = (m: number) =>
-    new Intl.NumberFormat(i18n.locale, { style: "unit", unit: m % 60 === 0 ? "hour" : "minute", unitDisplay: "long" }).format(m % 60 === 0 ? m / 60 : m)
-  const delays = Object.fromEntries([...new Set([...DELAYS, settings.email_delay_minutes])].sort((a, b) => a - b).map((m) => [String(m), delayText(m)]))
-  const set = (e: EventName, ch: keyof NotificationChannels, on: boolean) => save.mutate({ events: { [e]: { ...settings.events[e], [ch]: on } } })
+    new Intl.NumberFormat(i18n.locale, {
+      style: "unit",
+      unit: m % 60 === 0 ? "hour" : "minute",
+      unitDisplay: "long",
+    }).format(m % 60 === 0 ? m / 60 : m)
+  const delays = Object.fromEntries(
+    [...new Set([...DELAYS, settings.email_delay_minutes])].sort((a, b) => a - b).map((m) => [String(m), delayText(m)])
+  )
+  const set = (e: EventName, ch: keyof NotificationChannels, on: boolean) =>
+    save.mutate({ events: { [e]: { ...settings.events[e], [ch]: on } } })
   return (
     <Section
       title={<Trans>When to notify me</Trans>}
@@ -34,8 +50,16 @@ export function EventsSection({ settings }: { settings: NotificationSettings }) 
       <Card
         flush
         footer={
-          <Field label={<Trans>Send the e-mail after</Trans>} hint={<Trans>An e-mail goes out only if the conversation is still unread by then.</Trans>} className="w-full">
-            <Select value={String(settings.email_delay_minutes)} onValueChange={(v) => save.mutate({ email_delay_minutes: Number(v) })} items={delays}>
+          <Field
+            label={<Trans>Send the e-mail after</Trans>}
+            hint={<Trans>An e-mail goes out only if the conversation is still unread by then.</Trans>}
+            className="w-full"
+          >
+            <Select
+              value={String(settings.email_delay_minutes)}
+              onValueChange={(v) => save.mutate({ email_delay_minutes: Number(v) })}
+              items={delays}
+            >
               <SelectTrigger className="w-full sm:w-56" aria-label={t`Send the e-mail after`}>
                 <SelectValue />
               </SelectTrigger>
@@ -93,8 +117,8 @@ export function EventsSection({ settings }: { settings: NotificationSettings }) 
       <Notice icon={MoonIcon} data-testid="away-hint">
         <p>
           <Trans>
-            While your status is Away, only new messages in conversations assigned to you and new assignments notify you.
-            A conversation you have open in the panel never notifies you.
+            While your status is Away, only new messages in conversations assigned to you and new assignments notify
+            you. A conversation you have open in the panel never notifies you.
           </Trans>
         </p>
       </Notice>

@@ -29,7 +29,7 @@ export function ConversationMedia({ conversationId }: { conversationId: string }
       if (seen.has(url)) return []
       seen.add(url)
       return [{ url, at: m.created_at }]
-    }),
+    })
   )
   if (messages.isPending) return <Skeleton className="h-24 rounded-xl" />
   const empty = media.length + docs.length + links.length === 0
@@ -47,11 +47,28 @@ export function ConversationMedia({ conversationId }: { conversationId: string }
           </SectionTitle>
           <div className="grid grid-cols-3 gap-1.5">
             {media.map(({ a }) => (
-              <a key={a.id} href={attachmentUrl(a, workspaceId)} target="_blank" rel="noreferrer" title={a.filename} className="aspect-square overflow-hidden rounded-lg border bg-surface">
+              <a
+                key={a.id}
+                href={attachmentUrl(a, workspaceId)}
+                target="_blank"
+                rel="noreferrer"
+                title={a.filename}
+                className="aspect-square overflow-hidden rounded-lg border bg-surface"
+              >
                 {a.content_type.startsWith("video/") ? (
-                  <video src={attachmentUrl(a, workspaceId)} preload="metadata" muted className="size-full object-cover" />
+                  <video
+                    src={attachmentUrl(a, workspaceId)}
+                    preload="metadata"
+                    muted
+                    className="size-full object-cover"
+                  />
                 ) : (
-                  <img src={attachmentUrl(a, workspaceId)} alt={a.filename} loading="lazy" className="size-full object-cover" />
+                  <img
+                    src={attachmentUrl(a, workspaceId)}
+                    alt={a.filename}
+                    loading="lazy"
+                    className="size-full object-cover"
+                  />
                 )}
               </a>
             ))}
@@ -66,7 +83,11 @@ export function ConversationMedia({ conversationId }: { conversationId: string }
           <ul className="flex flex-col gap-1">
             {docs.map(({ a, at }) => (
               <li key={a.id}>
-                <a href={attachmentUrl(a, workspaceId)} download={a.filename} className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-body hover:bg-muted">
+                <a
+                  href={attachmentUrl(a, workspaceId)}
+                  download={a.filename}
+                  className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-body hover:bg-muted"
+                >
                   <FileIcon className="size-4 shrink-0 text-faint" />
                   <span className="min-w-0 flex-1 truncate">{a.filename}</span>
                   <span className="shrink-0 text-caption text-faint">
@@ -86,7 +107,12 @@ export function ConversationMedia({ conversationId }: { conversationId: string }
           <ul className="flex flex-col gap-1">
             {links.map(({ url, at }) => (
               <li key={url}>
-                <a href={url} target="_blank" rel="noreferrer noopener" className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-body hover:bg-muted">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-body hover:bg-muted"
+                >
                   <LinkIcon className="size-4 shrink-0 text-faint" />
                   <span className="min-w-0 flex-1 truncate text-brand">{url.replace(/^https?:\/\//, "")}</span>
                   <span className="shrink-0 text-caption text-faint">{formatShort(at, i18n.locale)}</span>
@@ -97,7 +123,13 @@ export function ConversationMedia({ conversationId }: { conversationId: string }
         </section>
       )}
       {messages.hasNextPage && (
-        <Button variant="ghost" size="sm" className="self-center" onClick={() => void messages.fetchNextPage()} disabled={messages.isFetchingNextPage}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="self-center"
+          onClick={() => void messages.fetchNextPage()}
+          disabled={messages.isFetchingNextPage}
+        >
           <Trans>Look in older messages</Trans>
         </Button>
       )}

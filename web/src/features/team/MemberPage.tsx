@@ -72,7 +72,11 @@ export function MemberPage() {
             </p>
           </div>
           {s.conversationId && m.id !== membership.member_id && (
-            <Button variant="outline" render={<Link to={`/conversations/${s.conversationId}`} />} data-testid="member-viewing">
+            <Button
+              variant="outline"
+              render={<Link to={`/conversations/${s.conversationId}`} />}
+              data-testid="member-viewing"
+            >
               <Trans>Open what they see</Trans>
               <ArrowUpRightIcon />
             </Button>
@@ -87,7 +91,13 @@ export function MemberPage() {
       <Section title={<Trans>Open conversations assigned</Trans>}>
         <ConversationRows items={items} roomy pending={open.isPending} />
         {open.hasNextPage && (
-          <Button variant="ghost" size="sm" className="self-center" onClick={() => void open.fetchNextPage()} disabled={open.isFetchingNextPage}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="self-center"
+            onClick={() => void open.fetchNextPage()}
+            disabled={open.isFetchingNextPage}
+          >
             <Trans>Load more</Trans>
           </Button>
         )}

@@ -60,7 +60,10 @@ function DayStats() {
     ])
   }
   return (
-    <div className="mx-auto mt-7 grid max-w-[560px] auto-cols-fr grid-flow-col rounded-2xl border bg-card [&>div+div]:border-s" data-testid="day-stats">
+    <div
+      className="mx-auto mt-7 grid max-w-[560px] auto-cols-fr grid-flow-col rounded-2xl border bg-card [&>div+div]:border-s"
+      data-testid="day-stats"
+    >
       {tiles.map(([value, label], i) => (
         <div key={i} className="grid gap-0.5 px-3 py-4">
           <b className="text-title tabular-nums">{value}</b>
@@ -75,13 +78,22 @@ function EmptyChat() {
   const counts = useCounts().data
   const answered = counts !== undefined && counts.mine + counts.unassigned === 0
   return (
-    <div className="flex min-h-0 flex-1 flex-col items-center justify-center bg-surface px-8 text-center" data-testid="chat-empty">
+    <div
+      className="flex min-h-0 flex-1 flex-col items-center justify-center bg-surface px-8 text-center"
+      data-testid="chat-empty"
+    >
       <div className="mb-5 grid size-16 place-items-center rounded-[20px] bg-brand-wash text-brand">
         {answered ? <CheckIcon className="size-7" /> : <MessagesSquareIcon className="size-7" />}
       </div>
-      <h1 className="text-title">{answered ? <Trans>Everyone has been answered.</Trans> : <Trans>Pick a conversation</Trans>}</h1>
+      <h1 className="text-title">
+        {answered ? <Trans>Everyone has been answered.</Trans> : <Trans>Pick a conversation</Trans>}
+      </h1>
       <p className="mt-1.5 text-body text-muted-foreground">
-        {answered ? <Trans>When a new message arrives, it will be in the list.</Trans> : <Trans>Choose one from the list, or move with ↑ ↓ and open it with Enter.</Trans>}
+        {answered ? (
+          <Trans>When a new message arrives, it will be in the list.</Trans>
+        ) : (
+          <Trans>Choose one from the list, or move with ↑ ↓ and open it with Enter.</Trans>
+        )}
       </p>
       <DayStats />
     </div>

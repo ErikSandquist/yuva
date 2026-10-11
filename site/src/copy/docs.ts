@@ -46,7 +46,10 @@ export function docsCopy(i18n: I18n) {
       popular: i18n._(msg`Popular`),
       quickStart: i18n._(msg`Quick start`),
       steps: {
-        start: { title: i18n._(msg`Run Yuva`), body: i18n._(msg`One Docker image and Postgres, from compose file to the first owner.`) },
+        start: {
+          title: i18n._(msg`Run Yuva`),
+          body: i18n._(msg`One Docker image and Postgres, from compose file to the first owner.`),
+        },
         channels: {
           title: i18n._(msg`Connect your channels`),
           body: i18n._(msg`Your support e-mail, live chat on your sites and messages inside your apps, in one inbox.`),
@@ -59,7 +62,10 @@ export function docsCopy(i18n: I18n) {
     },
     api: {
       description: i18n._(msg`Every Yuva endpoint and webhook event, generated from the OpenAPI 3.1 contract.`),
-      lead: (version: string) => i18n._(msg`Version ${version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language.`),
+      lead: (version: string) =>
+        i18n._(
+          msg`Version ${version} of the API, generated from the OpenAPI contract. Use the contract to generate a client in any language.`
+        ),
       contract: i18n._(msg`OpenAPI contract`),
       overview: i18n._(msg`Overview`),
       authentication: i18n._(msg`Authentication`),
@@ -73,7 +79,13 @@ export function docsCopy(i18n: I18n) {
       response: i18n._(msg`Response`),
       noContent: i18n._(msg`No content`),
       payload: i18n._(msg`Payload`),
-      columns: { name: i18n._(msg`Name`), in: i18n._(msg`In`), type: i18n._(msg`Type`), description: i18n._(msg`Description`), required: i18n._(msg`required`) },
+      columns: {
+        name: i18n._(msg`Name`),
+        in: i18n._(msg`In`),
+        type: i18n._(msg`Type`),
+        description: i18n._(msg`Description`),
+        required: i18n._(msg`required`),
+      },
       auth: {
         session: i18n._(msg`Member session`),
         apiKey: i18n._(msg`API key`),
@@ -82,7 +94,9 @@ export function docsCopy(i18n: I18n) {
       } as Record<string, string>,
       schemas: i18n._(msg`Schemas and every field are in the OpenAPI contract.`),
       eventsDescription: i18n._(msg`The events Yuva sends to your webhook endpoints and the payload of each.`),
-      eventsLead: i18n._(msg`Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide.`),
+      eventsLead: i18n._(
+        msg`Yuva signs every request with Standard Webhooks and retries failed deliveries. Registering an endpoint and verifying a signature are in the webhooks guide.`
+      ),
       webhooksGuide: i18n._(msg`Webhooks guide`),
     },
   }

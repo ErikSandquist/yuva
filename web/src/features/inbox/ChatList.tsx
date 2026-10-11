@@ -30,7 +30,14 @@ import { Alert } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group"
 import { Skeleton } from "@/components/ui/skeleton"
 import { NewConversationDialog } from "@/features/contact/ContactDetails"
@@ -104,14 +111,26 @@ function Preview({ c, current, receipts }: { c: ConversationListItem; current: b
   return (
     <span className="flex min-w-0 items-center gap-1">
       {m.author_type === "bot" && <BotIcon className="size-3.5 shrink-0" aria-label={t`Bot`} data-testid="row-bot" />}
-      {m.author_type === "member" && !receipts && <ReplyIcon className="size-3.5 shrink-0" aria-label={t`Team reply`} />}
-      {(m.author_type === "member" || m.author_type === "bot") && receipts && <Ticks at={m.created_at} readAt={c.last_read_by_contact_at} />}
+      {m.author_type === "member" && !receipts && (
+        <ReplyIcon className="size-3.5 shrink-0" aria-label={t`Team reply`} />
+      )}
+      {(m.author_type === "member" || m.author_type === "bot") && receipts && (
+        <Ticks at={m.created_at} readAt={c.last_read_by_contact_at} />
+      )}
       <span className="truncate">{m.text || c.subject}</span>
     </span>
   )
 }
 
-export function RowMenuItems({ c, Item, onDone }: { c: ConversationListItem; Item: typeof ContextMenuItem; onDone?: () => void }) {
+export function RowMenuItems({
+  c,
+  Item,
+  onDone,
+}: {
+  c: ConversationListItem
+  Item: typeof ContextMenuItem
+  onDone?: () => void
+}) {
   const actions = useListActions()
   return (
     <>
@@ -168,7 +187,7 @@ function Row({
           "group flex w-full items-center gap-3 ps-3 text-start outline-none transition-colors",
           current ? "bg-muted" : "hover:bg-muted/60",
           cursor && !current && "bg-muted/60",
-          cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]",
+          cursor && "shadow-[inset_3px_0_0_var(--brand)] rtl:shadow-[inset_-3px_0_0_var(--brand)]"
         )}
         aria-current={current || undefined}
         data-testid="list-row"
@@ -178,13 +197,30 @@ function Row({
       >
         <span className="relative shrink-0 py-2.5">
           <ContactAvatar id={c.contact.id} name={name} className="size-12" />
-          {live && <span className="absolute end-0 bottom-3 size-3 rounded-full border-2 border-background bg-success" title={t`Online now`} data-testid="row-live" />}
+          {live && (
+            <span
+              className="absolute end-0 bottom-3 size-3 rounded-full border-2 border-background bg-success"
+              title={t`Online now`}
+              data-testid="row-live"
+            />
+          )}
         </span>
         <span className="flex min-w-0 flex-1 flex-col gap-0.5 border-b py-3 pe-3 group-last:border-transparent">
           <span className="flex min-w-0 items-baseline gap-2">
-            <span className={cn("min-w-0 flex-1 truncate text-reading", c.unread ? "font-semibold" : "font-medium")}>{name}</span>
-            {c.pinned_at && <PinIcon className="size-3.5 shrink-0 rotate-45 text-faint" aria-label={t`Pinned`} data-testid="row-pinned" />}
-            <time className={cn("shrink-0 text-caption", c.unread ? "font-medium text-brand" : "text-faint")} dateTime={c.last_activity_at}>
+            <span className={cn("min-w-0 flex-1 truncate text-reading", c.unread ? "font-semibold" : "font-medium")}>
+              {name}
+            </span>
+            {c.pinned_at && (
+              <PinIcon
+                className="size-3.5 shrink-0 rotate-45 text-faint"
+                aria-label={t`Pinned`}
+                data-testid="row-pinned"
+              />
+            )}
+            <time
+              className={cn("shrink-0 text-caption", c.unread ? "font-medium text-brand" : "text-faint")}
+              dateTime={c.last_activity_at}
+            >
               {formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
@@ -200,7 +236,13 @@ function Row({
                 <MemberAvatar name={assignee.name || assignee.email} className="size-[18px]" />
               </span>
             )}
-            {c.unread && <span className="size-2.5 shrink-0 rounded-full bg-brand" aria-label={t`Unread`} data-testid="row-unread" />}
+            {c.unread && (
+              <span
+                className="size-2.5 shrink-0 rounded-full bg-brand"
+                aria-label={t`Unread`}
+                data-testid="row-unread"
+              />
+            )}
           </span>
         </span>
       </ContextMenuTrigger>
@@ -216,12 +258,22 @@ function AwayBanner() {
   const set = useSetAvailability()
   if (me.person.availability !== "away") return null
   return (
-    <Alert role="status" className="mx-3 mb-2 flex items-center gap-2 rounded-xl border-border bg-card py-2 ps-3 pe-2 text-small text-muted-foreground" data-testid="away-banner">
+    <Alert
+      role="status"
+      className="mx-3 mb-2 flex items-center gap-2 rounded-xl border-border bg-card py-2 ps-3 pe-2 text-small text-muted-foreground"
+      data-testid="away-banner"
+    >
       <ClockIcon className="size-3.5 shrink-0" />
       <span className="min-w-0 flex-1">
         <Trans>You are away. Live chat shows nobody available and notifications pause.</Trans>
       </span>
-      <Button variant="outline" size="sm" className="shrink-0" onClick={() => set.mutate("auto")} disabled={set.isPending}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="shrink-0"
+        onClick={() => set.mutate("auto")}
+        disabled={set.isPending}
+      >
         <Trans>I'm back</Trans>
       </Button>
     </Alert>
@@ -244,13 +296,19 @@ function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
       {
         onSuccess: (r) => {
           const done = r.updated.map((c) => c.id)
-          toast(t`${done.length} closed`, () => bulk.mutate({ conversation_ids: done, status: "open" }, { onError: (e) => toast(errorText(e)) }))
+          toast(t`${done.length} closed`, () =>
+            bulk.mutate({ conversation_ids: done, status: "open" }, { onError: (e) => toast(errorText(e)) })
+          )
         },
         onError: (e) => toast(errorText(e)),
-      },
+      }
     )
   return (
-    <Alert role="status" className="mx-3 mb-2 flex flex-wrap items-center gap-2 rounded-xl border-dashed border-border bg-card py-2 ps-3 pe-2 text-small" data-testid="cleanup-banner">
+    <Alert
+      role="status"
+      className="mx-3 mb-2 flex flex-wrap items-center gap-2 rounded-xl border-dashed border-border bg-card py-2 ps-3 pe-2 text-small"
+      data-testid="cleanup-banner"
+    >
       <span className="min-w-0 flex-1">
         <b className="font-medium">
           <Trans>Quick cleanup</Trans>
@@ -263,7 +321,13 @@ function CleanupBanner({ onReview }: { onReview: (id: string) => void }) {
         <Button variant="ghost" size="sm" onClick={() => onReview(items[0].id)}>
           <Trans>Review</Trans>
         </Button>
-        <Button variant="outline" size="sm" onClick={closeAll} disabled={bulk.isPending} data-testid="cleanup-close-all">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={closeAll}
+          disabled={bulk.isPending}
+          data-testid="cleanup-close-all"
+        >
           <Trans>Close all</Trans>
         </Button>
       </span>
@@ -320,16 +384,35 @@ function ListHeader() {
         {membership.workspace.name}
       </span>
       {phone && <TeamMenu />}
-      <Button variant="ghost" size="icon-sm" onClick={() => setStarting(true)} aria-label={t`New conversation`} title={t`New conversation`} data-testid="new-conversation">
+      <Button
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => setStarting(true)}
+        aria-label={t`New conversation`}
+        title={t`New conversation`}
+        data-testid="new-conversation"
+      >
         <MessageSquarePlusIcon />
       </Button>
       {phone && (
-        <Button variant="ghost" size="icon-sm" render={<Link to="/settings" />} aria-label={t`Settings`} title={t`Settings (${mod},)`} data-testid="open-settings">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          render={<Link to="/settings" />}
+          aria-label={t`Settings`}
+          title={t`Settings (${mod},)`}
+          data-testid="open-settings"
+        >
           <SettingsIcon />
         </Button>
       )}
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" />} aria-label={t`Menu`} title={t`Menu`} data-testid="list-menu">
+        <DropdownMenuTrigger
+          render={<Button variant="ghost" size="icon-sm" />}
+          aria-label={t`Menu`}
+          title={t`Menu`}
+          data-testid="list-menu"
+        >
           <EllipsisVerticalIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-56">
@@ -367,7 +450,15 @@ function ListHeader() {
   )
 }
 
-export function ChatList({ currentId, onOpen, active = true }: { currentId: string | null; onOpen: (id: string) => void; active?: boolean }) {
+export function ChatList({
+  currentId,
+  onOpen,
+  active = true,
+}: {
+  currentId: string | null
+  onOpen: (id: string) => void
+  active?: boolean
+}) {
   const { t } = useLingui()
   const { query, focus } = useListSearch()
   const q = useDebounced(query.trim(), 250)
@@ -402,7 +493,10 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
     const el = sentinel.current
     const root = scroller.current
     if (!el || !root || typeof IntersectionObserver === "undefined") return
-    const io = new IntersectionObserver((entries) => setNearEnd(entries.some((e) => e.isIntersecting)), { root, rootMargin: "400px" })
+    const io = new IntersectionObserver((entries) => setNearEnd(entries.some((e) => e.isIntersecting)), {
+      root,
+      rootMargin: "400px",
+    })
     io.observe(el)
     return () => io.disconnect()
   }, [])
@@ -419,7 +513,9 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
   }
 
   const reveal = (id: string) =>
-    requestAnimationFrame(() => scroller.current?.querySelector(`[data-conversation-id="${id}"]`)?.scrollIntoView({ block: "nearest" }))
+    requestAnimationFrame(() =>
+      scroller.current?.querySelector(`[data-conversation-id="${id}"]`)?.scrollIntoView({ block: "nearest" })
+    )
   const index = (id: string | null) => (id ? rows.findIndex((c) => c.id === id) : -1)
   const moveCursor = (d: 1 | -1) => {
     if (rows.length === 0) return
@@ -442,13 +538,16 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
     onOpen(next.id)
     reveal(next.id)
   }
-  useHotkeys({
-    ArrowDown: () => moveCursor(1),
-    ArrowUp: () => moveCursor(-1),
-    Enter: () => cursorId && openCursor(),
-    [SHORTCUTS.next]: () => step(1),
-    [SHORTCUTS.previous]: () => step(-1),
-  }, active)
+  useHotkeys(
+    {
+      ArrowDown: () => moveCursor(1),
+      ArrowUp: () => moveCursor(-1),
+      Enter: () => cursorId && openCursor(),
+      [SHORTCUTS.next]: () => step(1),
+      [SHORTCUTS.previous]: () => step(-1),
+    },
+    active
+  )
 
   const labels: Record<Chip, string> = {
     all: t`All`,
@@ -511,7 +610,12 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
         </InputGroup>
         <InboxPicker className="max-w-36" />
       </div>
-      <div className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5" role="toolbar" aria-label={t`Filter`} data-testid="chips">
+      <div
+        className="flex shrink-0 flex-wrap gap-1.5 px-3 pb-2.5"
+        role="toolbar"
+        aria-label={t`Filter`}
+        data-testid="chips"
+      >
         {CHIPS.map((k) => (
           <button
             key={k}
@@ -520,7 +624,7 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
             onClick={() => setChip(k)}
             className={cn(
               "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-              chip === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground",
+              chip === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
             )}
             data-testid={`chip-${k}`}
           >
@@ -550,17 +654,34 @@ export function ChatList({ currentId, onOpen, active = true }: { currentId: stri
         ) : (
           <>
             {pinnedRows.length > 0 && (
-              <div className="flex items-center gap-1.5 px-4 pt-1 pb-0.5 text-caption font-medium text-faint" data-testid="pinned-heading">
+              <div
+                className="flex items-center gap-1.5 px-4 pt-1 pb-0.5 text-caption font-medium text-faint"
+                data-testid="pinned-heading"
+              >
                 <PinIcon className="size-3 rotate-45" />
                 <Trans>Pinned</Trans>
               </div>
             )}
             {pinnedRows.map((c) => (
-              <Row key={c.id} c={c} current={c.id === currentId} cursor={c.id === cursorId} live={live.has(c.id)} onOpen={() => onOpen(c.id)} />
+              <Row
+                key={c.id}
+                c={c}
+                current={c.id === currentId}
+                cursor={c.id === cursorId}
+                live={live.has(c.id)}
+                onOpen={() => onOpen(c.id)}
+              />
             ))}
             {pinnedRows.length > 0 && mainRows.length > 0 && <div className="mt-1 border-t" role="separator" />}
             {mainRows.map((c) => (
-              <Row key={c.id} c={c} current={c.id === currentId} cursor={c.id === cursorId} live={live.has(c.id)} onOpen={() => onOpen(c.id)} />
+              <Row
+                key={c.id}
+                c={c}
+                current={c.id === currentId}
+                cursor={c.id === cursorId}
+                live={live.has(c.id)}
+                onOpen={() => onOpen(c.id)}
+              />
             ))}
           </>
         )}

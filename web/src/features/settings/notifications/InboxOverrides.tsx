@@ -5,14 +5,32 @@ import { useState } from "react"
 import { Dot, ErrorLine } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { fromChoice, inboxEvents, toChoice, useEventText, usePlainChoiceText, type Choice, type EventName } from "@/features/settings/notifications/events"
+import {
+  fromChoice,
+  inboxEvents,
+  toChoice,
+  useEventText,
+  usePlainChoiceText,
+  type Choice,
+  type EventName,
+} from "@/features/settings/notifications/events"
 import { useSetInboxOverride } from "@/features/settings/notifications/queries"
 import { Card, Section } from "@/features/settings/ui"
 import type { Inbox, InboxNotifications, NotificationEventsUpdate, NotificationSettings } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-function InboxOverride({ inbox, override, settings, onDropDraft }: { inbox: Inbox; override?: InboxNotifications; settings: NotificationSettings; onDropDraft: () => void }) {
+function InboxOverride({
+  inbox,
+  override,
+  settings,
+  onDropDraft,
+}: {
+  inbox: Inbox
+  override?: InboxNotifications
+  settings: NotificationSettings
+  onDropDraft: () => void
+}) {
   const { t } = useLingui()
   const text = useEventText()
   const plain = usePlainChoiceText()
@@ -31,7 +49,13 @@ function InboxOverride({ inbox, override, settings, onDropDraft }: { inbox: Inbo
       <div className="flex items-center gap-2.5 px-5 py-3">
         <Dot color={inbox.branding.color} />
         <span className="min-w-0 flex-1 truncate text-body font-medium">{inbox.name}</span>
-        <Button variant="ghost" size="icon-sm" aria-label={t`Stop overriding ${name}`} disabled={remove.isPending} onClick={() => (override ? remove.mutate() : onDropDraft())}>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label={t`Stop overriding ${name}`}
+          disabled={remove.isPending}
+          onClick={() => (override ? remove.mutate() : onDropDraft())}
+        >
           <Trash2Icon />
         </Button>
       </div>
@@ -43,7 +67,11 @@ function InboxOverride({ inbox, override, settings, onDropDraft }: { inbox: Inbo
           <div key={e} className="flex flex-col gap-2 border-t px-5 py-3 sm:flex-row sm:items-center sm:gap-3">
             <span className="min-w-0 flex-1 text-body">{text[e].label}</span>
             <Select value={value} onValueChange={(v) => change(e, v as Choice)} items={items}>
-              <SelectTrigger size="sm" className={cn("w-full sm:w-60", value === "inherit" && "text-muted-foreground")} aria-label={`${inbox.name}: ${text[e].label}`}>
+              <SelectTrigger
+                size="sm"
+                className={cn("w-full sm:w-60", value === "inherit" && "text-muted-foreground")}
+                aria-label={`${inbox.name}: ${text[e].label}`}
+              >
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -71,7 +99,12 @@ export function InboxOverrides({ settings }: { settings: NotificationSettings })
   const addable = inboxes.filter((i) => !overridden.has(i.id) && !drafts.includes(i.id))
   const addItems = Object.fromEntries(addable.map((i) => [i.id, i.name]))
   return (
-    <Section title={<Trans>Per inbox</Trans>} description={<Trans>Notify differently for one inbox. Anything left on “As above” follows the settings above.</Trans>}>
+    <Section
+      title={<Trans>Per inbox</Trans>}
+      description={
+        <Trans>Notify differently for one inbox. Anything left on “As above” follows the settings above.</Trans>
+      }
+    >
       {shown.length > 0 ? (
         <div className="flex flex-col gap-3" data-testid="inbox-overrides">
           {shown.map((inbox) => (

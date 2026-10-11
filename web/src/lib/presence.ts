@@ -19,7 +19,11 @@ function changed() {
 
 export function applyViewing(v: Viewing) {
   const now = viewers.get(v.conversation_id) ?? []
-  const next = v.viewing ? (now.includes(v.member_id) ? now : [...now, v.member_id]) : now.filter((x) => x !== v.member_id)
+  const next = v.viewing
+    ? now.includes(v.member_id)
+      ? now
+      : [...now, v.member_id]
+    : now.filter((x) => x !== v.member_id)
   if (next.length) viewers.set(v.conversation_id, next)
   else viewers.delete(v.conversation_id)
   changed()
@@ -48,6 +52,6 @@ export function useAllViewers(): Map<string, string[]> {
 
 export function applyPresence(qc: QueryClient, ws: string, p: Presence) {
   qc.setQueryData<Member[]>(keys.members(ws), (old) =>
-    old?.map((m) => (m.id === p.member_id ? { ...m, availability: p.availability, online: p.online } : m)),
+    old?.map((m) => (m.id === p.member_id ? { ...m, availability: p.availability, online: p.online } : m))
   )
 }

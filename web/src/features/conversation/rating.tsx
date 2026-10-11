@@ -12,7 +12,13 @@ export function RatingMark({ rating, comment }: { rating: Rating; comment?: stri
   const { t } = useLingui()
   const label = rating === "good" ? t`Rated good` : t`Rated bad`
   return (
-    <span role="img" aria-label={label} title={comment ? `${label} · “${comment}”` : label} data-testid="rating" data-rating={rating}>
+    <span
+      role="img"
+      aria-label={label}
+      title={comment ? `${label} · “${comment}”` : label}
+      data-testid="rating"
+      data-rating={rating}
+    >
       {rating === "good" ? "👍" : "👎"}
     </span>
   )

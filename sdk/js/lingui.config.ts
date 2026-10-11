@@ -1,6 +1,6 @@
-import { defineConfig } from "@lingui/conf";
-import { formatter } from "@lingui/format-po";
-import { createSwcExtractor } from "@lingui/native-tools";
+import { defineConfig } from "@lingui/conf"
+import { formatter } from "@lingui/format-po"
+import { createSwcExtractor } from "@lingui/native-tools"
 
 export default defineConfig({
   sourceLocale: "en",
@@ -12,4 +12,4 @@ export default defineConfig({
   ],
   format: formatter({ lineNumbers: false }),
   extractors: [createSwcExtractor()],
-});
+})

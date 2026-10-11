@@ -16,7 +16,12 @@ export function SetupPage({ wait }: { wait?: boolean }) {
     if (!SETUP_KINDS.includes(kind as SetupKind)) return <Navigate to={`/setup/${inboxId}`} replace />
     return <AddChannelStep key={kind} inboxId={inboxId} kind={kind as SetupKind} />
   }
-  if (inboxId && channelId) return wait ? <WaitStep inboxId={inboxId} channelId={channelId} /> : <InstallStep inboxId={inboxId} channelId={channelId} />
+  if (inboxId && channelId)
+    return wait ? (
+      <WaitStep inboxId={inboxId} channelId={channelId} />
+    ) : (
+      <InstallStep inboxId={inboxId} channelId={channelId} />
+    )
   if (inboxId) return <ChannelStep inboxId={inboxId} />
   return <NameStep />
 }

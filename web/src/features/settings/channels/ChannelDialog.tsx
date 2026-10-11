@@ -5,7 +5,14 @@ import { useState } from "react"
 import { ErrorLine } from "@/components/common"
 import { CHANNEL_KINDS, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
@@ -16,7 +23,14 @@ import { ChatFields } from "@/features/settings/channels/chat/ChatFields"
 import { chatChannelInput, chatErrorField, chatForm, type ChatForm } from "@/features/settings/channels/chat/form"
 import { ChatInstall } from "@/features/settings/channels/chat/ChatInstall"
 import { EmailFields } from "@/features/settings/channels/email/EmailFields"
-import { emailErrorField, emailForm, emailInput, useEmailFieldErrors, type EmailField, type EmailForm } from "@/features/settings/channels/email/form"
+import {
+  emailErrorField,
+  emailForm,
+  emailInput,
+  useEmailFieldErrors,
+  type EmailField,
+  type EmailForm,
+} from "@/features/settings/channels/email/form"
 import { Field } from "@/features/settings/ui"
 import { api, ApiError, unwrap, type Channel, type ChannelKind } from "@/lib/api"
 import { keys } from "@/lib/keys"
@@ -71,8 +85,18 @@ export function ChannelDialog({
               ? { app: appInput }
               : { settings: settings ?? {} }
       return channel
-        ? unwrap(api.PATCH("/v1/channels/{channelId}", { params: { path: { channelId: channel.id } }, body: { name, ...typed } }))
-        : unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId } }, body: { kind, name, ...typed } }))
+        ? unwrap(
+            api.PATCH("/v1/channels/{channelId}", {
+              params: { path: { channelId: channel.id } },
+              body: { name, ...typed },
+            })
+          )
+        : unwrap(
+            api.POST("/v1/inboxes/{inboxId}/channels", {
+              params: { path: { inboxId } },
+              body: { kind, name, ...typed },
+            })
+          )
     },
     onSuccess: (saved) => {
       void qc.invalidateQueries({ queryKey: keys.channels(ws, inboxId) })
@@ -106,7 +130,12 @@ export function ChannelDialog({
             </DialogHeader>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label={<Trans>Kind</Trans>}>
-                <Select value={kind} onValueChange={(v) => setKind(v as ChannelKind)} items={text.channel} disabled={!!channel}>
+                <Select
+                  value={kind}
+                  onValueChange={(v) => setKind(v as ChannelKind)}
+                  items={text.channel}
+                  disabled={!!channel}
+                >
                   <SelectTrigger className="w-full" aria-label={t`Kind`}>
                     <SelectValue />
                   </SelectTrigger>
@@ -125,12 +154,21 @@ export function ChannelDialog({
                   required
                   maxLength={200}
                   value={name}
-                  placeholder={kind === "chat" ? t`Website chat` : kind === "app" ? t`iOS and Android app` : t`Support e-mail`}
+                  placeholder={
+                    kind === "chat" ? t`Website chat` : kind === "app" ? t`iOS and Android app` : t`Support e-mail`
+                  }
                   onChange={(e) => setName(e.target.value)}
                 />
               </Field>
             </div>
-            {kind === "email" && <EmailFields f={email} set={(patch) => setEmail((f) => ({ ...f, ...patch }))} error={fieldError} taken={taken} />}
+            {kind === "email" && (
+              <EmailFields
+                f={email}
+                set={(patch) => setEmail((f) => ({ ...f, ...patch }))}
+                error={fieldError}
+                taken={taken}
+              />
+            )}
             {kind === "chat" && (
               <>
                 <ChatFields

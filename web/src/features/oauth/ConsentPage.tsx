@@ -72,12 +72,13 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
         api.POST("/v1/oauth/requests/{oauthRequestId}/approve", {
           params: { path: { oauthRequestId: req.id } },
           body: { workspace_id: workspaceId, scopes: chosen },
-        }),
+        })
       ),
     onSuccess: go,
   })
   const deny = useMutation({
-    mutationFn: () => unwrap(api.POST("/v1/oauth/requests/{oauthRequestId}/deny", { params: { path: { oauthRequestId: req.id } } })),
+    mutationFn: () =>
+      unwrap(api.POST("/v1/oauth/requests/{oauthRequestId}/deny", { params: { path: { oauthRequestId: req.id } } })),
     onSuccess: go,
   })
   const error = approve.error ?? deny.error
@@ -95,8 +96,8 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
       </h1>
       <p className="mt-3 text-pretty text-muted-foreground">
         <Trans>
-          It will act as you, <span className="font-medium break-words text-foreground">{email}</span>, with only the access
-          you allow below.
+          It will act as you, <span className="font-medium break-words text-foreground">{email}</span>, with only the
+          access you allow below.
         </Trans>
       </p>
 
@@ -147,7 +148,12 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
                 const w = req.workspaces.find((x) => x.workspace_id === v)
                 if (!w) return
                 setWorkspaceId(w.workspace_id)
-                setScopes(defaultScopes(req, API_KEY_SCOPES.filter((s) => w.scopes.includes(s))))
+                setScopes(
+                  defaultScopes(
+                    req,
+                    API_KEY_SCOPES.filter((s) => w.scopes.includes(s))
+                  )
+                )
               }}
               className="gap-0 divide-y rounded-xl border"
             >
@@ -211,14 +217,22 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
       <ErrorLine error={error} className="mt-5" />
       <div className="mt-6 flex flex-col gap-2.5 sm:flex-row-reverse">
         <Button
-          size="lg" className="sm:flex-1"
+          size="lg"
+          className="sm:flex-1"
           disabled={busy || !workspace || chosen.length === 0}
           onClick={() => approve.mutate()}
           data-testid="consent-approve"
         >
           <Trans>Allow</Trans>
         </Button>
-        <Button variant="outline" size="lg" className="sm:flex-1" disabled={busy} onClick={() => deny.mutate()} data-testid="consent-deny">
+        <Button
+          variant="outline"
+          size="lg"
+          className="sm:flex-1"
+          disabled={busy}
+          onClick={() => deny.mutate()}
+          data-testid="consent-deny"
+        >
           <Trans>Deny</Trans>
         </Button>
       </div>
@@ -229,7 +243,11 @@ function Consent({ req, email }: { req: OAuthRequest; email: string }) {
       )}
       <p className="mt-6 text-caption text-faint">
         <Trans>You can disconnect it at any time in Settings, under Connected apps.</Trans>{" "}
-        <Button variant="link" className="text-muted-foreground underline hover:text-foreground" onClick={() => void signOut()}>
+        <Button
+          variant="link"
+          className="text-muted-foreground underline hover:text-foreground"
+          onClick={() => void signOut()}
+        >
           <Trans>Use another account</Trans>
         </Button>
       </p>
@@ -258,7 +276,8 @@ export function ConsentPage() {
   if (me.isPending) return <div className="min-h-svh bg-background" />
   if (!me.data && !me.error) return <Navigate to={signInPath(location.pathname, location.search)} replace />
   if (!id) return <Expired />
-  if (request.error instanceof ApiError && (request.error.status === 404 || request.error.status === 400)) return <Expired />
+  if (request.error instanceof ApiError && (request.error.status === 404 || request.error.status === 400))
+    return <Expired />
   if (me.error || request.error) {
     return (
       <Ended title={<Trans>Could not reach the server</Trans>}>

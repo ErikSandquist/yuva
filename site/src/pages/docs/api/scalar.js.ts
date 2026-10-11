@@ -4,4 +4,5 @@ import type { APIRoute } from "astro"
 
 const file = path.resolve("node_modules/@scalar/api-reference/dist/browser/standalone.js")
 
-export const GET: APIRoute = () => new Response(fs.readFileSync(file, "utf8"), { headers: { "Content-Type": "text/javascript; charset=utf-8" } })
+export const GET: APIRoute = () =>
+  new Response(fs.readFileSync(file, "utf8"), { headers: { "Content-Type": "text/javascript; charset=utf-8" } })

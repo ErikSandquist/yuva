@@ -44,5 +44,8 @@ export function timeOf(iso: string, locale: string) {
 }
 
 export function baseSubject(s: string) {
-  return s.replace(/^(\s*(re|fwd?|aw|ynt|ilt)\s*:\s*)+/i, "").trim().toLowerCase()
+  return s
+    .replace(/^(\s*(re|fwd?|aw|ynt|ilt)\s*:\s*)+/i, "")
+    .trim()
+    .toLowerCase()
 }

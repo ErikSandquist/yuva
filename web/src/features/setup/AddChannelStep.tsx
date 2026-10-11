@@ -15,7 +15,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { appChannelInput, appForm, type AppForm } from "@/features/settings/channels/app/form"
 import { chatChannelInput, chatErrorField, chatForm, type ChatForm } from "@/features/settings/channels/chat/form"
 import { Sending } from "@/features/settings/channels/email/EmailFields"
-import { emailErrorField, emailForm, emailInput, useEmailFieldErrors, type EmailField, type EmailForm } from "@/features/settings/channels/email/form"
+import {
+  emailErrorField,
+  emailForm,
+  emailInput,
+  useEmailFieldErrors,
+  type EmailField,
+  type EmailForm,
+} from "@/features/settings/channels/email/form"
 import { FieldError } from "@/features/settings/channels/parts"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { Field, ToggleRow } from "@/features/settings/ui"
@@ -66,7 +73,12 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
             ? { chat: chatInput.value }
             : { app: appInput! }
       const channelName = kind === "email" ? name || kindText.email.title : kindText[kind].title
-      return unwrap(api.POST("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId } }, body: { kind, name: channelName, ...typed } }))
+      return unwrap(
+        api.POST("/v1/inboxes/{inboxId}/channels", {
+          params: { path: { inboxId } },
+          body: { kind, name: channelName, ...typed },
+        })
+      )
     },
     onSuccess: (ch) => {
       void qc.invalidateQueries({ queryKey: keys.channels(ws, inboxId) })
@@ -150,7 +162,11 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
       >
         {kind === "chat" && (
           <>
-            <Field label={<Trans>Website addresses</Trans>} htmlFor="setup-origins" hint={<Trans>One per line, up to 20.</Trans>}>
+            <Field
+              label={<Trans>Website addresses</Trans>}
+              htmlFor="setup-origins"
+              hint={<Trans>One per line, up to 20.</Trans>}
+            >
               <Textarea
                 id="setup-origins"
                 autoFocus
@@ -166,7 +182,10 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
               />
               <FieldError id="err-setup-origins">{originsError}</FieldError>
             </Field>
-            <ToggleRow title={<Trans>Allow anonymous visitors</Trans>} hint={<Trans>Anyone on your site can write. Turn it off when only signed-in users may chat.</Trans>}>
+            <ToggleRow
+              title={<Trans>Allow anonymous visitors</Trans>}
+              hint={<Trans>Anyone on your site can write. Turn it off when only signed-in users may chat.</Trans>}
+            >
               <Switch
                 checked={chat.allowAnonymous}
                 onCheckedChange={(allowAnonymous) => setChat((c) => ({ ...c, allowAnonymous }))}
@@ -195,7 +214,12 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
                 {taken ? <Trans>Another channel already receives mail at this address.</Trans> : emailError("address")}
               </FieldError>
             </Field>
-            <Sending f={email} set={(patch) => setEmail((f) => ({ ...f, ...patch }))} error={emailError} taken={taken} />
+            <Sending
+              f={email}
+              set={(patch) => setEmail((f) => ({ ...f, ...patch }))}
+              error={emailError}
+              taken={taken}
+            />
           </>
         )}
         {kind === "app" && (
@@ -206,7 +230,12 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
                   <Label key={p} className="font-normal">
                     <Checkbox
                       checked={app.platforms.includes(p)}
-                      onCheckedChange={(on) => setApp((a) => ({ ...a, platforms: on ? [...a.platforms, p] : a.platforms.filter((x) => x !== p) }))}
+                      onCheckedChange={(on) =>
+                        setApp((a) => ({
+                          ...a,
+                          platforms: on ? [...a.platforms, p] : a.platforms.filter((x) => x !== p),
+                        }))
+                      }
                       aria-invalid={(app.platforms.length === 0 && app.touched) || undefined}
                       data-testid={`setup-platform-${p}`}
                     />
@@ -214,11 +243,17 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
                   </Label>
                 ))}
               </div>
-              <FieldError id="err-setup-platforms">{app.platforms.length === 0 && <Trans>Pick at least one platform.</Trans>}</FieldError>
+              <FieldError id="err-setup-platforms">
+                {app.platforms.length === 0 && <Trans>Pick at least one platform.</Trans>}
+              </FieldError>
             </Field>
             <ToggleRow
               title={<Trans>Allow anonymous users</Trans>}
-              hint={<Trans>People who are not signed in to your app can write without an identity token from your backend.</Trans>}
+              hint={
+                <Trans>
+                  People who are not signed in to your app can write without an identity token from your backend.
+                </Trans>
+              }
             >
               <Switch
                 checked={app.allowAnonymous}

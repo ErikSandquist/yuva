@@ -37,7 +37,14 @@ function InviteForm({ onDone }: { onDone: () => void }) {
     >
       <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto_auto] sm:items-end">
         <Field label={<Trans>E-mail address</Trans>} htmlFor="invite-email">
-          <Input id="invite-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t`teammate@company.com`} />
+          <Input
+            id="invite-email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t`teammate@company.com`}
+          />
         </Field>
         <Field label={<Trans>Role</Trans>}>
           <RoleSelect value={role} onChange={setRole} allowOwner={membership.role === "owner"} label={t`Role`} />
@@ -70,7 +77,10 @@ export function Invites() {
   const qc = useQueryClient()
   const text = useEnumText()
   const { workspaceId: ws, canManage } = useSession()
-  const invites = useQuery({ queryKey: keys.invites(ws), queryFn: () => unwrap(api.GET("/v1/invites")).then((r) => r.items) })
+  const invites = useQuery({
+    queryKey: keys.invites(ws),
+    queryFn: () => unwrap(api.GET("/v1/invites")).then((r) => r.items),
+  })
   const refresh = () => qc.invalidateQueries({ queryKey: keys.invites(ws) })
   const withdraw = useMutation({
     mutationFn: (id: string) => unwrap(api.DELETE("/v1/invites/{inviteId}", { params: { path: { inviteId: id } } })),
@@ -79,7 +89,11 @@ export function Invites() {
   return (
     <Section
       title={<Trans>Invites</Trans>}
-      description={<Trans>An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days.</Trans>}
+      description={
+        <Trans>
+          An invite is accepted when the person signs in with a code sent to that address. It expires after 7 days.
+        </Trans>
+      }
     >
       <Card flush footer={canManage && <InviteForm onDone={() => void refresh()} />}>
         {invites.data && invites.data.length > 0 ? (
@@ -97,7 +111,12 @@ export function Invites() {
                     }
                   />
                   {canManage && (
-                    <Button variant="ghost" size="sm" onClick={() => withdraw.mutate(inv.id)} aria-label={t`Withdraw the invite for ${inv.email}`}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => withdraw.mutate(inv.id)}
+                      aria-label={t`Withdraw the invite for ${inv.email}`}
+                    >
                       <Trans>Withdraw</Trans>
                     </Button>
                   )}

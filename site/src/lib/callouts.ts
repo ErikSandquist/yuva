@@ -10,7 +10,11 @@ export const callouts: HastPluginDefinition = {
       const kind = ctx.textContent(node).match(marker)?.[1]?.toLowerCase()
       if (!kind) return
       ctx.setProperty(node, "className", ["callout", `callout-${kind}`])
-      ctx.setProperty(node, "dataLabel", kind.replace(/^./, (c) => c.toUpperCase()))
+      ctx.setProperty(
+        node,
+        "dataLabel",
+        kind.replace(/^./, (c) => c.toUpperCase())
+      )
     },
   },
   text(node, ctx) {

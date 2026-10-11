@@ -61,14 +61,20 @@ function EndpointCard({ e }: { e: WebhookEndpoint }) {
         <>
           <ErrorLine error={toggle.error ?? rotate.error ?? remove.error} className="min-w-0 flex-1" />
           <div className="ms-auto flex flex-wrap gap-2">
-            <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" disabled={remove.isPending} onClick={() =>
-              confirm({
-                title: <Trans>Remove this endpoint?</Trans>,
-                description: <Trans>Pending deliveries are dropped with it.</Trans>,
-                confirm: <Trans>Remove</Trans>,
-                run: () => remove.mutate(),
-              })
-            }>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-destructive hover:text-destructive"
+              disabled={remove.isPending}
+              onClick={() =>
+                confirm({
+                  title: <Trans>Remove this endpoint?</Trans>,
+                  description: <Trans>Pending deliveries are dropped with it.</Trans>,
+                  confirm: <Trans>Remove</Trans>,
+                  run: () => remove.mutate(),
+                })
+              }
+            >
               <Trans>Remove</Trans>
             </Button>
             <Button
@@ -81,8 +87,8 @@ function EndpointCard({ e }: { e: WebhookEndpoint }) {
                   title: <Trans>Rotate the signing secret?</Trans>,
                   description: (
                     <Trans>
-                      You get a new secret once. For 24 hours every delivery carries two signatures, one with the new and
-                      one with the old secret, so you can update your receiver without losing events.
+                      You get a new secret once. For 24 hours every delivery carries two signatures, one with the new
+                      and one with the old secret, so you can update your receiver without losing events.
                     </Trans>
                   ),
                   confirm: <Trans>Rotate</Trans>,
@@ -102,7 +108,11 @@ function EndpointCard({ e }: { e: WebhookEndpoint }) {
       {!e.enabled && e.disabled_reason && (
         <Notice tone="danger" data-testid="webhook-disabled">
           <p className="font-medium">
-            {disabledAt ? <Trans>Yuva turned this endpoint off on {disabledAt}.</Trans> : <Trans>Yuva turned this endpoint off.</Trans>}
+            {disabledAt ? (
+              <Trans>Yuva turned this endpoint off on {disabledAt}.</Trans>
+            ) : (
+              <Trans>Yuva turned this endpoint off.</Trans>
+            )}
           </p>
           <p className="break-words text-muted-foreground">{e.disabled_reason}</p>
           <p className="text-muted-foreground">
@@ -113,12 +123,20 @@ function EndpointCard({ e }: { e: WebhookEndpoint }) {
       {e.enabled && e.failing_since && (
         <Notice tone="warning" data-testid="webhook-failing">
           <p>
-            <Trans>Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off.</Trans>
+            <Trans>
+              Every attempt has failed since {failingSince}. After 24 hours of failures Yuva turns the endpoint off.
+            </Trans>
           </p>
         </Notice>
       )}
       <ToggleRow title={<Trans>Send events</Trans>} hint={<Trans>While off, no deliveries are made.</Trans>}>
-        <Switch checked={e.enabled} disabled={toggle.isPending} onCheckedChange={(on) => toggle.mutate(on)} aria-label={t`Send events`} data-testid="webhook-enabled" />
+        <Switch
+          checked={e.enabled}
+          disabled={toggle.isPending}
+          onCheckedChange={(on) => toggle.mutate(on)}
+          aria-label={t`Send events`}
+          data-testid="webhook-enabled"
+        />
       </ToggleRow>
       <div className="flex flex-col gap-2">
         <p className="text-body font-medium">
@@ -146,7 +164,11 @@ function EndpointCard({ e }: { e: WebhookEndpoint }) {
       <SecretDialog
         secret={secret}
         title={<Trans>New signing secret</Trans>}
-        description={<Trans>Copy it now and update your receiver; the old secret keeps signing for 24 hours. It is not shown again.</Trans>}
+        description={
+          <Trans>
+            Copy it now and update your receiver; the old secret keeps signing for 24 hours. It is not shown again.
+          </Trans>
+        }
         onClose={() => setSecret(null)}
       />
       {confirmDialog}

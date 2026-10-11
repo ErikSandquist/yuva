@@ -1,5 +1,18 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { EllipsisIcon, FlagIcon, InboxIcon, MailIcon, PinIcon, PinOffIcon, RotateCcwIcon, ShieldAlertIcon, ShieldCheckIcon, TagIcon, UserIcon, UserRoundCheckIcon } from "lucide-react"
+import {
+  EllipsisIcon,
+  FlagIcon,
+  InboxIcon,
+  MailIcon,
+  PinIcon,
+  PinOffIcon,
+  RotateCcwIcon,
+  ShieldAlertIcon,
+  ShieldCheckIcon,
+  TagIcon,
+  UserIcon,
+  UserRoundCheckIcon,
+} from "lucide-react"
 
 import { Dot, Kbd } from "@/components/common"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"

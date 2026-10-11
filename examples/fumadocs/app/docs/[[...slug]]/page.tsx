@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { source } from "@/lib/source"
 import {
   DocsBody,
   DocsDescription,
@@ -6,21 +6,21 @@ import {
   DocsTitle,
   MarkdownCopyButton,
   ViewOptionsPopover,
-} from 'fumadocs-ui/layouts/docs/page';
-import { notFound } from 'next/navigation';
-import { getMDXComponents } from '@/components/mdx';
-import type { Metadata } from 'next';
-import { createRelativeLink } from 'fumadocs-ui/mdx';
-import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from '@/lib/shared';
-import { PageFeedback, PageQuestions } from '@/components/yuva';
+} from "fumadocs-ui/layouts/docs/page"
+import { notFound } from "next/navigation"
+import { getMDXComponents } from "@/components/mdx"
+import type { Metadata } from "next"
+import { createRelativeLink } from "fumadocs-ui/mdx"
+import { getPageImageUrl, getPageMarkdownUrl, gitConfig } from "@/lib/shared"
+import { PageFeedback, PageQuestions } from "@/components/yuva"
 
-export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
-  const params = await props.params;
-  const page = source.getPage(params.slug);
-  if (!page) notFound();
+export default async function Page(props: PageProps<"/docs/[[...slug]]">) {
+  const params = await props.params
+  const page = source.getPage(params.slug)
+  if (!page) notFound()
 
-  const MDX = page.data.body;
-  const markdownUrl = getPageMarkdownUrl(page).url;
+  const MDX = page.data.body
+  const markdownUrl = getPageMarkdownUrl(page).url
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
@@ -44,17 +44,17 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
       <PageQuestions title={page.data.title} />
       <PageFeedback title={page.data.title} />
     </DocsPage>
-  );
+  )
 }
 
 export async function generateStaticParams() {
-  return source.generateParams();
+  return source.generateParams()
 }
 
-export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): Promise<Metadata> {
-  const params = await props.params;
-  const page = source.getPage(params.slug);
-  if (!page) notFound();
+export async function generateMetadata(props: PageProps<"/docs/[[...slug]]">): Promise<Metadata> {
+  const params = await props.params
+  const page = source.getPage(params.slug)
+  if (!page) notFound()
 
   return {
     title: page.data.title,
@@ -62,5 +62,5 @@ export async function generateMetadata(props: PageProps<'/docs/[[...slug]]'>): P
     openGraph: {
       images: getPageImageUrl(page).url,
     },
-  };
+  }
 }

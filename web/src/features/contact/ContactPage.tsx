@@ -26,7 +26,15 @@ import { contactName } from "@/features/contact/Section"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
-function Card({ title, children, className }: { title: React.ReactNode; children: React.ReactNode; className?: string }) {
+function Card({
+  title,
+  children,
+  className,
+}: {
+  title: React.ReactNode
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <section className={cn("rounded-2xl border bg-card px-4 py-3.5", className)}>
       <SectionTitle className="mb-2.5">{title}</SectionTitle>
@@ -135,7 +143,13 @@ export function ContactPage() {
           <ConversationFilters value={filter} onChange={setFilter} contact={c} />
           <ConversationRows items={conversations.items} roomy pending={conversations.isPending} />
           {more && (
-            <Button variant="ghost" size="sm" className="self-center" onClick={() => void conversations.fetchNextPage()} disabled={conversations.isFetchingNextPage}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="self-center"
+              onClick={() => void conversations.fetchNextPage()}
+              disabled={conversations.isFetchingNextPage}
+            >
               <Trans>Load more</Trans>
             </Button>
           )}
@@ -160,10 +174,17 @@ export function ContactPage() {
               <div className="grid grid-cols-3 gap-2" data-testid="contact-summary">
                 <Stat value={fmt.format(c.activity.conversations)} label={<Trans>conversations</Trans>} />
                 <Stat
-                  value={summary?.median_first_reply_seconds !== undefined ? formatDuration(summary.median_first_reply_seconds, i18n.locale) : "—"}
+                  value={
+                    summary?.median_first_reply_seconds !== undefined
+                      ? formatDuration(summary.median_first_reply_seconds, i18n.locale)
+                      : "—"
+                  }
                   label={<Trans>first reply</Trans>}
                 />
-                <Stat value={rated ? `${fmt.format(good)} / ${fmt.format(rated)}` : "—"} label={<Trans>rated good</Trans>} />
+                <Stat
+                  value={rated ? `${fmt.format(good)} / ${fmt.format(rated)}` : "—"}
+                  label={<Trans>rated good</Trans>}
+                />
               </div>
             </Card>
           )}

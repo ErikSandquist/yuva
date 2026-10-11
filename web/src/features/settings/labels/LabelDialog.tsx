@@ -44,11 +44,23 @@ export function LabelDialog({ label, onClose }: { label: Label | null; onClose: 
             <DialogTitle>{label ? <Trans>Edit label</Trans> : <Trans>New label</Trans>}</DialogTitle>
           </DialogHeader>
           <Field label={<Trans>Name</Trans>} htmlFor="label-name">
-            <Input id="label-name" required maxLength={64} value={name} placeholder={t`Billing`} onChange={(e) => setName(e.target.value)} />
+            <Input
+              id="label-name"
+              required
+              maxLength={64}
+              value={name}
+              placeholder={t`Billing`}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Field>
           <Field label={<Trans>Color</Trans>}>
             <div className="flex flex-wrap items-center gap-2">
-              <ToggleGroup value={[color]} onValueChange={(v) => v[0] && setColor(String(v[0]))} aria-label={t`Color`} className="flex-wrap gap-2">
+              <ToggleGroup
+                value={[color]}
+                onValueChange={(v) => v[0] && setColor(String(v[0]))}
+                aria-label={t`Color`}
+                className="flex-wrap gap-2"
+              >
                 {PALETTE.map((c) => (
                   <ToggleGroupItem
                     key={c}

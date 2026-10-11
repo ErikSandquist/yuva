@@ -66,7 +66,9 @@ export function NameStep() {
       }
     >
       <StepHeader title={<Trans>What should customers see?</Trans>}>
-        <Trans>An inbox collects the conversations of one product or brand. Name it after the product your customers know.</Trans>
+        <Trans>
+          An inbox collects the conversations of one product or brand. Name it after the product your customers know.
+        </Trans>
       </StepHeader>
       <form
         className="flex flex-col gap-6"
@@ -100,7 +102,13 @@ export function NameStep() {
             />
           </Field>
           <Field label={<Trans>Time zone</Trans>} htmlFor="setup-zone" hint={<Trans>For business hours</Trans>}>
-            <Input id="setup-zone" list="setup-zones" className="h-10 rounded-xl" value={zone} onChange={(e) => setZone(e.target.value)} />
+            <Input
+              id="setup-zone"
+              list="setup-zones"
+              className="h-10 rounded-xl"
+              value={zone}
+              onChange={(e) => setZone(e.target.value)}
+            />
             <datalist id="setup-zones">
               {zones.map((z) => (
                 <option key={z} value={z} />
@@ -109,7 +117,13 @@ export function NameStep() {
           </Field>
         </div>
         <ErrorLine error={create.error} />
-        <Button type="submit" size="lg" disabled={!name.trim() || create.isPending} className="self-start" data-testid="setup-name-continue">
+        <Button
+          type="submit"
+          size="lg"
+          disabled={!name.trim() || create.isPending}
+          className="self-start"
+          data-testid="setup-name-continue"
+        >
           <Trans>Continue</Trans>
           <ArrowRightIcon className="rtl:rotate-180" />
         </Button>

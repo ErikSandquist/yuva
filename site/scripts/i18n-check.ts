@@ -37,8 +37,7 @@ function shape(icu: string, locale: string) {
             if (!categories.has(k as Intl.LDMLPluralRule))
               problems.push(`plural "${t.arg}" has "${k}", not a category of ${locale}`)
           const optional = used.size <= 2 && keys.includes("other")
-          for (const c of used)
-            if (!keys.includes(c) && !optional) problems.push(`plural "${t.arg}" lacks "${c}"`)
+          for (const c of used) if (!keys.includes(c) && !optional) problems.push(`plural "${t.arg}" lacks "${c}"`)
         }
         for (const c of t.cases) walk(c.tokens)
       }
@@ -73,8 +72,7 @@ for (const locale of locales) {
       const lost = [...want.args].filter((a) => !got.args.has(a))
       const added = [...got.args].filter((a) => !want.args.has(a))
       if (lost.length) issues.push(`lost {${lost.join("}, {")}}: ${JSON.stringify(ref.message)}`)
-      if (added.length)
-        issues.push(`unknown {${added.join("}, {")}}: ${JSON.stringify(ref.message)}`)
+      if (added.length) issues.push(`unknown {${added.join("}, {")}}: ${JSON.stringify(ref.message)}`)
       for (const p of got.problems) issues.push(`${p}: ${JSON.stringify(ref.message)}`)
     } catch (e) {
       issues.push(`invalid ICU (${(e as Error).message}): ${JSON.stringify(entry.translation)}`)

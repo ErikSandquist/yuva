@@ -24,11 +24,21 @@ export function tags(): Tag[] {
       const op = item[method]
       if (!op) continue
       const tag = op.tags?.[0] ?? "other"
-      const entry = { id: op.operationId ?? `${method}-${p}`, method: method.toUpperCase(), path: p, summary: op.summary ?? "", description: op.description ?? "" }
+      const entry = {
+        id: op.operationId ?? `${method}-${p}`,
+        method: method.toUpperCase(),
+        path: p,
+        summary: op.summary ?? "",
+        description: op.description ?? "",
+      }
       byTag.set(tag, [...(byTag.get(tag) ?? []), entry])
     }
   }
   return [...byTag.entries()].map(([name, operations]) => ({ name, operations }))
 }
 
-export const tagTitle = (name: string) => name.replace(/-/g, " ").replace(/\bapi\b/g, "API").replace(/^./, (c) => c.toUpperCase())
+export const tagTitle = (name: string) =>
+  name
+    .replace(/-/g, " ")
+    .replace(/\bapi\b/g, "API")
+    .replace(/^./, (c) => c.toUpperCase())

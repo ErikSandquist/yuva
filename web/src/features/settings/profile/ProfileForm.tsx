@@ -29,7 +29,11 @@ export function ProfileForm() {
     <Section>
       <Card flush>
         <Rows>
-          <SettingRow title={<Trans>Name</Trans>} hint={<Trans>Shown to your team and to contacts</Trans>} htmlFor="name">
+          <SettingRow
+            title={<Trans>Name</Trans>}
+            hint={<Trans>Shown to your team and to contacts</Trans>}
+            htmlFor="name"
+          >
             <Input
               id="name"
               value={name}
@@ -42,7 +46,11 @@ export function ProfileForm() {
           <SettingRow title={<Trans>E-mail</Trans>}>
             <span className="truncate text-body text-faint">{me.person.email}</span>
           </SettingRow>
-          <SettingRow title={<Trans>Panel language</Trans>} hint={<Trans>Also for sign-in and notification e-mails</Trans>} htmlFor="locale">
+          <SettingRow
+            title={<Trans>Panel language</Trans>}
+            hint={<Trans>Also for sign-in and notification e-mails</Trans>}
+            htmlFor="locale"
+          >
             <ChoiceSelect<Locale>
               id="locale"
               label={t`Panel language`}

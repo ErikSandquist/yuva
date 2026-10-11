@@ -27,7 +27,14 @@ function useAuthorLabel() {
   const members = useMemberMap()
   return (a: MessageAuthor) => {
     const member: Member | undefined = a.member_id ? members.get(a.member_id) : undefined
-    const name = a.type === "bot" ? a.name || t`Bot` : a.type === "member" ? (member ? member.name || member.email : t`Deleted member`) : a.name || t`Contact`
+    const name =
+      a.type === "bot"
+        ? a.name || t`Bot`
+        : a.type === "member"
+          ? member
+            ? member.name || member.email
+            : t`Deleted member`
+          : a.name || t`Contact`
     const via = a.via
     return via ? t`${name} via ${via}` : name
   }
@@ -38,7 +45,11 @@ function AuthorFace({ author, label }: { author: MessageAuthor; label: string })
   return <PersonAvatar name={label} className="size-9 bg-mate text-white" />
 }
 
-function MoreButton({ query }: { query: { hasNextPage: boolean; isFetchingNextPage: boolean; fetchNextPage: () => unknown } }) {
+function MoreButton({
+  query,
+}: {
+  query: { hasNextPage: boolean; isFetchingNextPage: boolean; fetchNextPage: () => unknown }
+}) {
   if (!query.hasNextPage) return null
   return (
     <div className="flex justify-center pt-2">
@@ -56,7 +67,11 @@ function MentionRow({ item }: { item: Mention }) {
   const contact = item.conversation.contact.name || item.conversation.contact.email || ""
   return (
     <li data-testid="mention-row" data-seen={item.seen}>
-      <Item render={<Link to={messageLink(item.conversation.id, item.note.id)} />} size="xs" className="flex-nowrap items-start gap-3">
+      <Item
+        render={<Link to={messageLink(item.conversation.id, item.note.id)} />}
+        size="xs"
+        className="flex-nowrap items-start gap-3"
+      >
         <AuthorFace author={item.note.author} label={who} />
         <span className="min-w-0 flex-1">
           <span className="flex items-center gap-2">
@@ -68,9 +83,13 @@ function MentionRow({ item }: { item: Mention }) {
             <time className="shrink-0 text-caption text-faint" dateTime={item.note.created_at}>
               {formatRelative(item.note.created_at, i18n.locale)}
             </time>
-            {!item.seen && <span className="size-2 shrink-0 rounded-full bg-brand" aria-hidden data-testid="mention-unseen" />}
+            {!item.seen && (
+              <span className="size-2 shrink-0 rounded-full bg-brand" aria-hidden data-testid="mention-unseen" />
+            )}
           </span>
-          {item.conversation.subject && <small className="block truncate text-caption text-faint">{item.conversation.subject}</small>}
+          {item.conversation.subject && (
+            <small className="block truncate text-caption text-faint">{item.conversation.subject}</small>
+          )}
           <span className="line-clamp-2 text-small text-muted-foreground">{item.note.text}</span>
         </span>
       </Item>
@@ -87,7 +106,9 @@ export function MentionsPanel() {
       <ErrorLine error={mentions.error} className="px-2.5" />
       {mentions.data && items.length === 0 && (
         <p className="px-2.5 pt-2 text-body text-faint">
-          <Trans>No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here.</Trans>
+          <Trans>
+            No one has mentioned you in a note yet. When a teammate writes @ and your name, the note shows up here.
+          </Trans>
         </p>
       )}
       <ul className="flex flex-col" data-testid="mention-list">
@@ -108,7 +129,11 @@ function DraftRow({ item }: { item: DraftItem }) {
   const contact = item.conversation.contact.name || item.conversation.contact.email || ""
   return (
     <li data-testid="draft-row">
-      <Item render={<Link to={messageLink(item.conversation.id, d.id)} />} size="xs" className="flex-nowrap items-start gap-3">
+      <Item
+        render={<Link to={messageLink(item.conversation.id, d.id)} />}
+        size="xs"
+        className="flex-nowrap items-start gap-3"
+      >
         <ContactAvatar id={item.conversation.contact.id} name={contact} className="size-9" />
         <span className="min-w-0 flex-1">
           <span className="flex items-center gap-2">
@@ -148,12 +173,21 @@ function Drafts() {
       <div className="flex items-center gap-2 pe-1">
         <ColumnHeading>
           <Trans>Drafts waiting</Trans>
-          {total > 0 && <span className="ms-1.5 tabular-nums" data-testid="drafts-total">{total}</span>}
+          {total > 0 && (
+            <span className="ms-1.5 tabular-nums" data-testid="drafts-total">
+              {total}
+            </span>
+          )}
         </ColumnHeading>
         <span className="flex-1" />
         <InboxPicker className="max-w-40" />
       </div>
-      <div className="flex flex-wrap gap-1.5 px-2.5 pb-2" role="toolbar" aria-label={t`Draft author`} data-testid="draft-chips">
+      <div
+        className="flex flex-wrap gap-1.5 px-2.5 pb-2"
+        role="toolbar"
+        aria-label={t`Draft author`}
+        data-testid="draft-chips"
+      >
         {chips.map(([k, label]) => (
           <button
             key={k}
@@ -162,7 +196,7 @@ function Drafts() {
             onClick={() => setAuthor(k)}
             className={cn(
               "h-7 shrink-0 rounded-full px-3 text-small font-medium transition-colors",
-              author === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground",
+              author === k ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
             )}
             data-testid={`draft-chip-${k}`}
           >
@@ -174,7 +208,10 @@ function Drafts() {
       <ErrorLine error={drafts.error} className="px-2.5" />
       {drafts.data && items.length === 0 && (
         <p className="px-2.5 text-body text-faint">
-          <Trans>No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them.</Trans>
+          <Trans>
+            No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or
+            discards them.
+          </Trans>
         </p>
       )}
       <ul className="flex flex-col" data-testid="draft-list">
@@ -210,7 +247,10 @@ export function AssistantsPanel() {
       <ErrorLine error={grants.error} className="px-2.5" />
       {grants.data && items.length === 0 && (
         <p className="px-2.5 text-body text-faint">
-          <Trans>No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and draft replies.</Trans>
+          <Trans>
+            No assistant is connected yet. Connect Claude, ChatGPT, Cursor or another MCP client to let it read and
+            draft replies.
+          </Trans>
         </p>
       )}
       <ul className="flex flex-col" data-testid="assistant-grants">
@@ -220,14 +260,19 @@ export function AssistantsPanel() {
           const used = g.last_used_at ? formatRelative(g.last_used_at, i18n.locale) : null
           return (
             <li key={g.id}>
-              <Item render={<Link to={a ? `/settings/connected-apps/${a.id}` : "/settings/connected-apps"} />} size="xs" className="flex-nowrap gap-3">
+              <Item
+                render={<Link to={a ? `/settings/connected-apps/${a.id}` : "/settings/connected-apps"} />}
+                size="xs"
+                className="flex-nowrap gap-3"
+              >
                 <span className="grid size-9 shrink-0 place-items-center rounded-full border text-faint">
                   <Icon className="size-4" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-body">{g.client.name}</span>
                   <small className="block truncate text-caption text-faint">
-                    {used ? t`Last used ${used}` : t`Not used yet`} · <Plural value={g.requests_this_month} one="# request this month" other="# requests this month" />
+                    {used ? t`Last used ${used}` : t`Not used yet`} ·{" "}
+                    <Plural value={g.requests_this_month} one="# request this month" other="# requests this month" />
                   </small>
                 </span>
               </Item>

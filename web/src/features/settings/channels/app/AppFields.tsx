@@ -23,7 +23,9 @@ export function AppFields({ f, set }: { f: AppForm; set: (patch: Partial<AppForm
             <Label key={p} className="font-normal">
               <Checkbox
                 checked={f.platforms.includes(p)}
-                onCheckedChange={(on) => set({ platforms: on ? [...f.platforms, p] : f.platforms.filter((x) => x !== p) })}
+                onCheckedChange={(on) =>
+                  set({ platforms: on ? [...f.platforms, p] : f.platforms.filter((x) => x !== p) })
+                }
                 aria-invalid={(none && f.touched) || undefined}
               />
               {text.platform[p]}
@@ -34,9 +36,15 @@ export function AppFields({ f, set }: { f: AppForm; set: (patch: Partial<AppForm
       </div>
       <ToggleRow
         title={<Trans>Allow anonymous users</Trans>}
-        hint={<Trans>People who are not signed in to your app can write without an identity token from your backend.</Trans>}
+        hint={
+          <Trans>People who are not signed in to your app can write without an identity token from your backend.</Trans>
+        }
       >
-        <Switch checked={f.allowAnonymous} onCheckedChange={(allowAnonymous) => set({ allowAnonymous })} aria-label={t`Allow anonymous users`} />
+        <Switch
+          checked={f.allowAnonymous}
+          onCheckedChange={(allowAnonymous) => set({ allowAnonymous })}
+          aria-label={t`Allow anonymous users`}
+        />
       </ToggleRow>
     </FormBlock>
   )

@@ -49,7 +49,15 @@ export function useMemberStatus() {
     const away = m.availability === "away"
     const a = activity(m)
     const where = a ? label(a.conversationId) : ""
-    const text = away ? t`Away` : !m.online ? t`Offline` : a ? (a.typing ? t`Typing · ${where}` : t`Looking at ${where}`) : t`Online`
+    const text = away
+      ? t`Away`
+      : !m.online
+        ? t`Offline`
+        : a
+          ? a.typing
+            ? t`Typing · ${where}`
+            : t`Looking at ${where}`
+          : t`Online`
     return { text, conversationId: a && m.online && !away ? a.conversationId : undefined }
   }
 }
@@ -68,7 +76,8 @@ export function TeamSummary({ className }: { className?: string }) {
   const median = stats.median_first_reply_seconds
   const first = median !== undefined ? formatDuration(median, i18n.locale) : ""
   const rated = stats.ratings.good + stats.ratings.bad
-  const satisfied = rated > 0 ? new Intl.NumberFormat(i18n.locale, { style: "percent" }).format(stats.ratings.good / rated) : ""
+  const satisfied =
+    rated > 0 ? new Intl.NumberFormat(i18n.locale, { style: "percent" }).format(stats.ratings.good / rated) : ""
   return (
     <span className={className}>
       <Plural value={replies} one="# reply" other="# replies" />
@@ -111,53 +120,64 @@ export function TeamMenu() {
       >
         {shown.map((m, i) => (
           <span key={m.id} className={cn(i > 0 && "-ms-1.5")}>
-            <MemberAvatar name={m.name || m.email} online={m.online} away={m.availability === "away"} className="ring-2 ring-background" />
+            <MemberAvatar
+              name={m.name || m.email}
+              online={m.online}
+              away={m.availability === "away"}
+              className="ring-2 ring-background"
+            />
           </span>
         ))}
       </PopoverTrigger>
-      <PopoverContent side="bottom" align="end" sideOffset={8} className={cn(popupClass, "w-[300px] max-w-[calc(100vw-24px)] gap-0 rounded-xl p-1.5 ring-0")} data-testid="team-popup">
-            <p className="px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint">
-              <Trans>Team right now</Trans>
-            </p>
-            {order.map((m) => {
-              const name = m.name || m.email
-              const away = m.availability === "away"
-              const { text: what, conversationId } = status(m)
-              const row = (
-                <>
-                  <MemberAvatar name={name} online={m.online} away={away} className="size-[30px]" ring="ring-card" />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-body">{name}</span>
-                    <small className="block truncate text-caption text-faint">{what}</small>
-                  </span>
-                </>
-              )
-              return conversationId ? (
-                <Item
-                  key={m.id}
-                  render={<button type="button" />}
-                  size="xs"
-                  className="flex-nowrap"
-                  onClick={() => {
-                    setOpen(false)
-                    navigate(`/conversations/${conversationId}`)
-                  }}
-                >
-                  {row}
-                </Item>
-              ) : (
-                <div key={m.id} className="flex items-center gap-2.5 px-2.5 py-2">
-                  {row}
-                </div>
-              )
-            })}
-            <Separator className="mx-1.5 my-1 w-auto" />
-            <div className="px-2.5 pt-1 pb-1.5">
-              <span className="block text-body">
-                <Trans>The team today</Trans>
+      <PopoverContent
+        side="bottom"
+        align="end"
+        sideOffset={8}
+        className={cn(popupClass, "w-[300px] max-w-[calc(100vw-24px)] gap-0 rounded-xl p-1.5 ring-0")}
+        data-testid="team-popup"
+      >
+        <p className="px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint">
+          <Trans>Team right now</Trans>
+        </p>
+        {order.map((m) => {
+          const name = m.name || m.email
+          const away = m.availability === "away"
+          const { text: what, conversationId } = status(m)
+          const row = (
+            <>
+              <MemberAvatar name={name} online={m.online} away={away} className="size-[30px]" ring="ring-card" />
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-body">{name}</span>
+                <small className="block truncate text-caption text-faint">{what}</small>
               </span>
-              <TeamSummary className="block text-caption text-faint" />
+            </>
+          )
+          return conversationId ? (
+            <Item
+              key={m.id}
+              render={<button type="button" />}
+              size="xs"
+              className="flex-nowrap"
+              onClick={() => {
+                setOpen(false)
+                navigate(`/conversations/${conversationId}`)
+              }}
+            >
+              {row}
+            </Item>
+          ) : (
+            <div key={m.id} className="flex items-center gap-2.5 px-2.5 py-2">
+              {row}
             </div>
+          )
+        })}
+        <Separator className="mx-1.5 my-1 w-auto" />
+        <div className="px-2.5 pt-1 pb-1.5">
+          <span className="block text-body">
+            <Trans>The team today</Trans>
+          </span>
+          <TeamSummary className="block text-caption text-faint" />
+        </div>
       </PopoverContent>
     </Popover>
   )

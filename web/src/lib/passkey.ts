@@ -11,14 +11,17 @@ export async function signInWithPasskey() {
   const options = (ceremony.options as JSONOptions).publicKey
   const credential = (await navigator.credentials.get({
     publicKey: PublicKeyCredential.parseRequestOptionsFromJSON(
-      options as unknown as PublicKeyCredentialRequestOptionsJSON,
+      options as unknown as PublicKeyCredentialRequestOptionsJSON
     ),
   })) as PublicKeyCredential | null
   if (!credential) throw new Error("cancelled")
   return unwrap(
     api.POST("/v1/auth/passkey", {
-      body: { ceremony_id: ceremony.ceremony_id, credential: credential.toJSON() as unknown as Record<string, unknown> },
-    }),
+      body: {
+        ceremony_id: ceremony.ceremony_id,
+        credential: credential.toJSON() as unknown as Record<string, unknown>,
+      },
+    })
   )
 }
 
@@ -27,7 +30,7 @@ export async function registerPasskey(name: string) {
   const options = (ceremony.options as JSONOptions).publicKey
   const credential = (await navigator.credentials.create({
     publicKey: PublicKeyCredential.parseCreationOptionsFromJSON(
-      options as unknown as PublicKeyCredentialCreationOptionsJSON,
+      options as unknown as PublicKeyCredentialCreationOptionsJSON
     ),
   })) as PublicKeyCredential | null
   if (!credential) throw new Error("cancelled")
@@ -38,6 +41,6 @@ export async function registerPasskey(name: string) {
         name: name || undefined,
         credential: credential.toJSON() as unknown as Record<string, unknown>,
       },
-    }),
+    })
   )
 }

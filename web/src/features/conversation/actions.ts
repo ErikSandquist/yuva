@@ -44,7 +44,9 @@ function restoreDraftOf(id: string, body: string, files: File[]) {
 }
 
 export function useDraftText(id: string) {
-  return useSyncExternalStore(subscribeDrafts, () => (drafts.get(id)?.mode === "message" ? (drafts.get(id)?.body.trim() ?? "") : ""))
+  return useSyncExternalStore(subscribeDrafts, () =>
+    drafts.get(id)?.mode === "message" ? (drafts.get(id)?.body.trim() ?? "") : ""
+  )
 }
 
 export function useDraftRevision(id: string) {
@@ -53,7 +55,14 @@ export function useDraftRevision(id: string) {
 
 export const UNDO_MS = 6000
 
-export type PendingReply = { key: string; body: string; files: File[]; close: boolean; clientId: string; messageId?: string }
+export type PendingReply = {
+  key: string
+  body: string
+  files: File[]
+  close: boolean
+  clientId: string
+  messageId?: string
+}
 
 const pending = new Map<string, PendingReply[]>()
 const pendingListeners = new Set<() => void>()
@@ -73,7 +82,7 @@ export function usePendingReplies(id: string) {
         pendingListeners.delete(l)
       }
     },
-    () => pending.get(id) ?? NO_PENDING,
+    () => pending.get(id) ?? NO_PENDING
   )
 }
 
@@ -96,7 +105,7 @@ function hold(key: string, run: () => void) {
       outbox.delete(key)
       runners.delete(key)
       run()
-    }, UNDO_MS),
+    }, UNDO_MS)
   )
 }
 
@@ -149,10 +158,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
   const patch = (body: ConversationUpdate) => patchConversation(c.id, body).then(apply)
   const failed = (err: unknown) => toast(errorText(err))
   const finish = (body: ConversationUpdate, done: string, revert: ConversationUpdate = revertOf(c)) =>
-    patch(body).then(
-      () => toast(done, () => patch(revert).catch(failed)),
-      failed,
-    )
+    patch(body).then(() => toast(done, () => patch(revert).catch(failed)), failed)
 
   const addMessage = (m: Message) => applyEvent(qc, ctx, { type: "message.created", data: m })
 
@@ -160,14 +166,20 @@ export function useConversationActions(c: Conversation, contactName: string) {
     let sent: Message
     if (suggestion && files.length === 0) {
       const path = { params: { path: { messageId: suggestion.id } } }
-      if (body.trim() !== suggestion.body.trim()) await unwrap(api.PATCH("/v1/messages/{messageId}", { ...path, body: suggestion.html ? { body, html: null } : { body } }))
+      if (body.trim() !== suggestion.body.trim())
+        await unwrap(
+          api.PATCH("/v1/messages/{messageId}", { ...path, body: suggestion.html ? { body, html: null } : { body } })
+        )
       sent = await unwrap(api.POST("/v1/messages/{messageId}/send", path))
     } else {
       sent = await postMessage(c.id, { kind: "message", body: body.trim() || undefined, client_id: clientId, files })
     }
     addMessage(sent)
     onSent?.()
-    if (suggestion && files.length > 0) await api.DELETE("/v1/messages/{messageId}", { params: { path: { messageId: suggestion.id } } }).catch(() => undefined)
+    if (suggestion && files.length > 0)
+      await api
+        .DELETE("/v1/messages/{messageId}", { params: { path: { messageId: suggestion.id } } })
+        .catch(() => undefined)
   }
   const notSent = (req: SendRequest, err: unknown) => {
     restoreDraftOf(c.id, req.body, req.files)
@@ -179,7 +191,8 @@ export function useConversationActions(c: Conversation, contactName: string) {
     live,
     close: () => finish({ status: "closed" }, t`Conversation closed`),
     reopen: () => finish({ status: "open" }, t`Conversation reopened`),
-    snooze: (at: Date, when: string) => finish({ status: "snoozed", snooze_until: at.toISOString() }, t`${first} comes back ${when}`),
+    snooze: (at: Date, when: string) =>
+      finish({ status: "snoozed", snooze_until: at.toISOString() }, t`${first} comes back ${when}`),
     untilReply: () => finish({ status: "pending" }, t`${first} comes back after writing again`),
     hand: (member: Member, note: string) => {
       const name = firstName(member.name || member.email)
@@ -190,13 +203,13 @@ export function useConversationActions(c: Conversation, contactName: string) {
         .then(() => patch({ assignee_id: member.id }))
         .then(
           () => toast(t`Handed to ${name}`, () => patch({ assignee_id: c.assignee_id ?? null }).catch(failed)),
-          failed,
+          failed
         )
     },
     claim: () =>
       patch({ assignee_id: membership.member_id }).then(
         () => toast(t`It is yours now`, () => patch({ assignee_id: c.assignee_id ?? null }).catch(failed)),
-        failed,
+        failed
       ),
     note: (body: string, files: File[], mentions: string[] = []) =>
       postMessage(c.id, {
@@ -217,8 +230,12 @@ export function useConversationActions(c: Conversation, contactName: string) {
       }
       if (live) {
         inLine(c.id, () => deliver(req)).then(
-          () => patch({ status: "closed" }).then(() => toast(t`Sent to ${first} and closed`, () => patch(revertOf(c)).catch(failed)), failed),
-          (err) => notSent(req, err),
+          () =>
+            patch({ status: "closed" }).then(
+              () => toast(t`Sent to ${first} and closed`, () => patch(revertOf(c)).catch(failed)),
+              failed
+            ),
+          (err) => notSent(req, err)
         )
         return undefined
       }
@@ -234,7 +251,11 @@ export function useConversationActions(c: Conversation, contactName: string) {
         messageId: req.suggestion && req.files.length === 0 ? req.suggestion.id : undefined,
       }
       const drop = () => {
-        if (pending.get(c.id)?.some((p) => p.key === key)) setPending(c.id, (pending.get(c.id) ?? []).filter((p) => p.key !== key))
+        if (pending.get(c.id)?.some((p) => p.key === key))
+          setPending(
+            c.id,
+            (pending.get(c.id) ?? []).filter((p) => p.key !== key)
+          )
       }
       setPending(c.id, [...(pending.get(c.id) ?? []), entry])
       hold(key, () => {
@@ -245,7 +266,7 @@ export function useConversationActions(c: Conversation, contactName: string) {
           (err) => {
             drop()
             notSent(req, err)
-          },
+          }
         )
       })
       toast(close ? t`Sent to ${first} and closed` : t`Sent to ${first}`, () => {

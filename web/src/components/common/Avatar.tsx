@@ -2,7 +2,8 @@ import { initials } from "@/components/common/text"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 
-const rootClass = "@container size-7 items-center justify-center bg-muted font-medium text-muted-foreground after:hidden"
+const rootClass =
+  "@container size-7 items-center justify-center bg-muted font-medium text-muted-foreground after:hidden"
 const fallbackClass = "bg-transparent text-[length:38cqw] font-[inherit] text-inherit"
 
 export function PersonAvatar({ name, className }: { name: string; className?: string }) {
@@ -23,11 +24,7 @@ export function colorFor(id: string) {
 
 export function ContactAvatar({ id, name, className }: { id: string; name: string; className?: string }) {
   return (
-    <Avatar
-      aria-hidden
-      className={cn(rootClass, "text-white", className)}
-      style={{ backgroundColor: colorFor(id) }}
-    >
+    <Avatar aria-hidden className={cn(rootClass, "text-white", className)} style={{ backgroundColor: colorFor(id) }}>
       <AvatarFallback className={fallbackClass}>{initials(name)}</AvatarFallback>
     </Avatar>
   )
@@ -58,11 +55,25 @@ export function MemberAvatar({
   const here = online && !away
   return (
     <span className="relative inline-flex shrink-0">
-      <Avatar aria-hidden className={cn(rootClass, "size-[26px] bg-mate text-white", !here && online !== undefined && "opacity-55", className)}>
+      <Avatar
+        aria-hidden
+        className={cn(
+          rootClass,
+          "size-[26px] bg-mate text-white",
+          !here && online !== undefined && "opacity-55",
+          className
+        )}
+      >
         <AvatarFallback className={fallbackClass}>{initials(name)}</AvatarFallback>
       </Avatar>
       {online !== undefined && (
-        <span className={cn("absolute -end-px -bottom-px size-2 rounded-full ring-2", ring, here ? "bg-success" : "bg-faint")} />
+        <span
+          className={cn(
+            "absolute -end-px -bottom-px size-2 rounded-full ring-2",
+            ring,
+            here ? "bg-success" : "bg-faint"
+          )}
+        />
       )}
     </span>
   )

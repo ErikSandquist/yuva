@@ -51,7 +51,7 @@ export function LiveChat({ publicKey, className }: { publicKey: string; classNam
       ref={host}
       className={cn(
         "mx-auto h-[34rem] max-h-[calc(100svh-12rem)] w-full max-w-[24rem] overflow-hidden rounded-2xl border bg-card shadow-[0_1px_2px_rgb(15_23_42/0.04),0_24px_60px_-28px_rgb(15_23_42/0.35)]",
-        className,
+        className
       )}
       data-testid="setup-live-chat"
     />

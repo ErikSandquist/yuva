@@ -34,13 +34,10 @@ export function setTabAlerts(on: boolean) {
 }
 
 export function useTabAlerts() {
-  return useSyncExternalStore(
-    (l) => {
-      listeners.add(l)
-      return () => listeners.delete(l)
-    },
-    read,
-  )
+  return useSyncExternalStore((l) => {
+    listeners.add(l)
+    return () => listeners.delete(l)
+  }, read)
 }
 
 export function notificationPermission(): NotificationPermission | "unsupported" {
@@ -48,7 +45,8 @@ export function notificationPermission(): NotificationPermission | "unsupported"
 }
 
 export function playAlertSound() {
-  const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
+  const Ctx =
+    window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
   if (!Ctx) return
   try {
     const ctx = new Ctx()
@@ -72,9 +70,15 @@ export function playAlertSound() {
   }
 }
 
-function cachedConversation(qc: QueryClient, ws: string, id: string): (Conversation & Partial<ConversationListItem>) | undefined {
+function cachedConversation(
+  qc: QueryClient,
+  ws: string,
+  id: string
+): (Conversation & Partial<ConversationListItem>) | undefined {
   const one = qc.getQueryData<Conversation>(keys.conversation(ws, id))
-  for (const [, data] of qc.getQueriesData<InfiniteData<{ items: ConversationListItem[] }>>({ queryKey: keys.conversationLists(ws) })) {
+  for (const [, data] of qc.getQueriesData<InfiniteData<{ items: ConversationListItem[] }>>({
+    queryKey: keys.conversationLists(ws),
+  })) {
     const item = data?.pages.flatMap((p) => p.items).find((x) => x.id === id)
     if (item) return { ...item, ...one }
   }

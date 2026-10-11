@@ -13,13 +13,19 @@ export function InboxPicker({ className }: { className?: string }) {
   const inboxes = useInboxes().data ?? []
   const [value, set] = useInboxFilter()
   if (inboxes.length < 2) return null
-  const items: Record<string, string> = { [ALL]: t`All inboxes`, ...Object.fromEntries(inboxes.map((i) => [i.id, i.name])) }
+  const items: Record<string, string> = {
+    [ALL]: t`All inboxes`,
+    ...Object.fromEntries(inboxes.map((i) => [i.id, i.name])),
+  }
   return (
     <Select value={value || ALL} items={items} onValueChange={(v) => set(!v || v === ALL ? "" : String(v))}>
       <SelectTrigger
         aria-label={t`Inbox`}
         size="sm"
-        className={cn("max-w-48 border-transparent bg-transparent ps-2 pe-2 text-muted-foreground shadow-none hover:border-transparent hover:bg-muted hover:text-foreground", className)}
+        className={cn(
+          "max-w-48 border-transparent bg-transparent ps-2 pe-2 text-muted-foreground shadow-none hover:border-transparent hover:bg-muted hover:text-foreground",
+          className
+        )}
         data-testid="inbox-picker"
       >
         <SelectValue />

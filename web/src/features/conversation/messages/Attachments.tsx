@@ -66,10 +66,21 @@ function AttachmentChip({ a }: { a: AttachmentItem }) {
   )
 }
 
-export function Attachments({ items, outgoing, className }: { items: AttachmentItem[]; outgoing?: boolean; className?: string }) {
+export function Attachments({
+  items,
+  outgoing,
+  className,
+}: {
+  items: AttachmentItem[]
+  outgoing?: boolean
+  className?: string
+}) {
   if (items.length === 0) return null
   return (
-    <AttachmentGroup className={cn("flex-wrap overflow-visible", outgoing && "justify-end", className)} data-testid="attachments">
+    <AttachmentGroup
+      className={cn("flex-wrap overflow-visible", outgoing && "justify-end", className)}
+      data-testid="attachments"
+    >
       {items.map((a) => (
         <AttachmentChip key={a.id} a={a} />
       ))}

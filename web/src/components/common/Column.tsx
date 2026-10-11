@@ -3,7 +3,19 @@ import { Link, NavLink } from "react-router"
 
 import { cn } from "@/lib/utils"
 
-export function Column({ title, testId, actions, children, bodyClassName }: { title: React.ReactNode; testId: string; actions?: React.ReactNode; children: React.ReactNode; bodyClassName?: string }) {
+export function Column({
+  title,
+  testId,
+  actions,
+  children,
+  bodyClassName,
+}: {
+  title: React.ReactNode
+  testId: string
+  actions?: React.ReactNode
+  children: React.ReactNode
+  bodyClassName?: string
+}) {
   return (
     <section className="flex h-full min-h-0 flex-col bg-background" data-testid={testId}>
       <header className="flex h-15 shrink-0 items-center gap-2 ps-4 pe-2">
@@ -19,7 +31,19 @@ export function ColumnHeading({ children }: { children: React.ReactNode }) {
   return <h3 className="px-2.5 pt-4 pb-1.5 text-caption font-medium text-faint">{children}</h3>
 }
 
-export function ColumnLink({ to, end, state, children, testId }: { to: string; end?: boolean; state?: unknown; children: React.ReactNode; testId?: string }) {
+export function ColumnLink({
+  to,
+  end,
+  state,
+  children,
+  testId,
+}: {
+  to: string
+  end?: boolean
+  state?: unknown
+  children: React.ReactNode
+  testId?: string
+}) {
   return (
     <NavLink
       to={to}
@@ -33,17 +57,48 @@ export function ColumnLink({ to, end, state, children, testId }: { to: string; e
   )
 }
 
-export function Pane({ wide, testId, children, className }: { wide?: boolean; testId?: string; children: React.ReactNode; className?: string }) {
+export function Pane({
+  wide,
+  testId,
+  children,
+  className,
+}: {
+  wide?: boolean
+  testId?: string
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <main className="min-h-0 flex-1 overflow-y-auto bg-background" data-testid={testId}>
-      <div className={cn("mx-auto flex w-full flex-col gap-8 px-6 pt-6 pb-24 phone:px-4 phone:pt-3", wide ? "max-w-[1040px]" : "max-w-[640px]", className)}>{children}</div>
+      <div
+        className={cn(
+          "mx-auto flex w-full flex-col gap-8 px-6 pt-6 pb-24 phone:px-4 phone:pt-3",
+          wide ? "max-w-[1040px]" : "max-w-[640px]",
+          className
+        )}
+      >
+        {children}
+      </div>
     </main>
   )
 }
 
-export function PaneEmpty({ icon: Icon, title, children, testId }: { icon: React.ComponentType<{ className?: string }>; title: React.ReactNode; children?: React.ReactNode; testId?: string }) {
+export function PaneEmpty({
+  icon: Icon,
+  title,
+  children,
+  testId,
+}: {
+  icon: React.ComponentType<{ className?: string }>
+  title: React.ReactNode
+  children?: React.ReactNode
+  testId?: string
+}) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col items-center justify-center bg-surface px-8 text-center" data-testid={testId}>
+    <div
+      className="flex min-h-0 flex-1 flex-col items-center justify-center bg-surface px-8 text-center"
+      data-testid={testId}
+    >
       <div className="mb-5 grid size-16 place-items-center rounded-[20px] bg-brand-wash text-brand">
         <Icon className="size-7" />
       </div>
@@ -57,7 +112,10 @@ export function PaneBack({ to, label, always }: { to: string; label: string; alw
   return (
     <Link
       to={to}
-      className={cn("mb-4.5 w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground", always ? "inline-flex" : "hidden phone:inline-flex")}
+      className={cn(
+        "mb-4.5 w-fit items-center gap-1.5 text-body text-faint transition-colors hover:text-foreground",
+        always ? "inline-flex" : "hidden phone:inline-flex"
+      )}
       data-testid="pane-back"
     >
       <ArrowLeftIcon className="size-3.5 rtl:rotate-180" />

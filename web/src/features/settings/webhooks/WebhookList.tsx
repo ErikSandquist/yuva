@@ -28,8 +28,8 @@ export function WebhookList({ inboxId }: { inboxId?: string }) {
           <Trans>Signed HTTP calls to your backend for this inbox's conversations, messages and feedback.</Trans>
         ) : (
           <Trans>
-            Signed HTTP calls to your backend when conversations, messages, feedback or contacts change. Endpoints of the
-            workspace receive every inbox; inbox endpoints only their inbox.
+            Signed HTTP calls to your backend when conversations, messages, feedback or contacts change. Endpoints of
+            the workspace receive every inbox; inbox endpoints only their inbox.
           </Trans>
         )
       }

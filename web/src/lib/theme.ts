@@ -19,7 +19,8 @@ function apply() {
   const t = read()
   const dark = t === "dark" || (t === "system" && media.matches)
   document.documentElement.classList.toggle("dark", dark)
-  for (const meta of document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')) meta.content = dark ? "#0a0a0c" : "#fbfaf9"
+  for (const meta of document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]'))
+    meta.content = dark ? "#0a0a0c" : "#fbfaf9"
 }
 
 export function setTheme(t: Theme) {
@@ -44,11 +45,8 @@ export function startTheme() {
 }
 
 export function useTheme(): Theme {
-  return useSyncExternalStore(
-    (l) => {
-      listeners.add(l)
-      return () => listeners.delete(l)
-    },
-    read,
-  )
+  return useSyncExternalStore((l) => {
+    listeners.add(l)
+    return () => listeners.delete(l)
+  }, read)
 }

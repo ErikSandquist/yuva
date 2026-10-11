@@ -190,4 +190,4 @@ export const styles = `
 .banner { padding: 6px 12px; background: var(--yuva-soft); color: var(--yuva-muted); font-size: 13px; text-align: center; }
 @media (max-width: 480px) { .composer textarea, .card input, .card textarea { font-size: 16px; } }
 .sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-`;
+`

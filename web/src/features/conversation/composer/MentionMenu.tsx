@@ -12,14 +12,25 @@ export function mentionToken(text: string, caret: number) {
   return { start: caret - m[2].length - 1, query: m[2] }
 }
 
-export function MentionMenu({ items, active, onPick }: { items: Member[]; active: number; onPick: (m: Member) => void }) {
+export function MentionMenu({
+  items,
+  active,
+  onPick,
+}: {
+  items: Member[]
+  active: number
+  onPick: (m: Member) => void
+}) {
   const { t } = useLingui()
   return (
     <Command
       value={items[active]?.id ?? ""}
       shouldFilter={false}
       label={t`Mention a teammate`}
-      className={cn(popupClass, "absolute start-2.5 bottom-full z-20 mb-2 h-auto w-72 max-w-[calc(100%-20px)] rounded-xl! p-1.5")}
+      className={cn(
+        popupClass,
+        "absolute start-2.5 bottom-full z-20 mb-2 h-auto w-72 max-w-[calc(100%-20px)] rounded-xl! p-1.5"
+      )}
       data-testid="mention-menu"
     >
       <CommandList>
@@ -31,7 +42,12 @@ export function MentionMenu({ items, active, onPick }: { items: Member[]; active
             onMouseDown={(e) => e.preventDefault()}
             className="gap-2.5 rounded-lg px-2.5 py-1.5 data-selected:bg-muted"
           >
-            <MemberAvatar name={m.name || m.email} online={m.online} away={m.availability === "away"} ring="ring-card" />
+            <MemberAvatar
+              name={m.name || m.email}
+              online={m.online}
+              away={m.availability === "away"}
+              ring="ring-card"
+            />
             <span className="min-w-0 flex-1">
               <span className="block truncate">{m.name || m.email}</span>
               <small className="block truncate text-caption text-faint">{m.email}</small>

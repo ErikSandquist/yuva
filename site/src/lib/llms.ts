@@ -37,7 +37,9 @@ export async function llmsTxt() {
     "",
     "## Docs",
     "",
-    ...docs.filter((d) => !["architecture", "roadmap"].includes(d.id)).map((d) => `- [${title(d)}](${docUrl(d.id)}): ${description(d)}`),
+    ...docs
+      .filter((d) => !["architecture", "roadmap"].includes(d.id))
+      .map((d) => `- [${title(d)}](${docUrl(d.id)}): ${description(d)}`),
     "",
     "## API",
     "",
@@ -46,7 +48,9 @@ export async function llmsTxt() {
     "",
     "## Optional",
     "",
-    ...docs.filter((d) => ["architecture", "roadmap"].includes(d.id)).map((d) => `- [${title(d)}](${docUrl(d.id)}): ${description(d)}`),
+    ...docs
+      .filter((d) => ["architecture", "roadmap"].includes(d.id))
+      .map((d) => `- [${title(d)}](${docUrl(d.id)}): ${description(d)}`),
     `- [Source code](https://github.com/productdevbook/yuva): the repository, with the server, panel, SDKs and examples.`,
     "",
   ]
@@ -63,7 +67,7 @@ export async function llmsFullTxt() {
   out.push("---", "", `Source: ${absolute("/openapi.yaml")}`, "", `# API endpoints`, "")
   out.push(
     `OpenAPI ${s.openapi}, API version ${s.info?.version}. Base URL: your Yuva server. Schemas and every field are in the contract at ${absolute("/openapi.yaml")}.`,
-    "",
+    ""
   )
   for (const tag of tags()) {
     out.push(`## ${tagTitle(tag.name)}`, "")
@@ -72,7 +76,9 @@ export async function llmsFullTxt() {
       if (op.description) out.push(op.description.trim(), "")
     }
   }
-  const hooks = Object.entries((s.webhooks ?? {}) as Record<string, { post?: { summary?: string; description?: string } }>)
+  const hooks = Object.entries(
+    (s.webhooks ?? {}) as Record<string, { post?: { summary?: string; description?: string } }>
+  )
   if (hooks.length) {
     out.push("## Webhook events", "")
     for (const [name, item] of hooks) {

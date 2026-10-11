@@ -15,8 +15,29 @@ import { ChannelDialog } from "@/features/settings/channels/ChannelDialog"
 import { ChannelSummary } from "@/features/settings/channels/ChannelSummary"
 import { DeleteInbox, IdentitySecret } from "@/features/settings/inboxes/InboxSecurity"
 import { useInbox, useSaveInbox } from "@/features/settings/inboxes/queries"
-import { Card, ChoiceSelect, EmptyRow, PageHeader, Row, RowIcon, Rows, RowText, Section, SettingRow, StatusTag } from "@/features/settings/ui"
-import { api, unwrap, type BusinessHours, type Channel, type ChannelKind, type Inbox, type InboxUpdate, type Weekday } from "@/lib/api"
+import {
+  Card,
+  ChoiceSelect,
+  EmptyRow,
+  PageHeader,
+  Row,
+  RowIcon,
+  Rows,
+  RowText,
+  Section,
+  SettingRow,
+  StatusTag,
+} from "@/features/settings/ui"
+import {
+  api,
+  unwrap,
+  type BusinessHours,
+  type Channel,
+  type ChannelKind,
+  type Inbox,
+  type InboxUpdate,
+  type Weekday,
+} from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 import { useInboxMembers, useMembers } from "@/lib/workspace"
@@ -38,7 +59,8 @@ function useAutosave(inbox: Inbox) {
   const { t } = useLingui()
   const errorText = useErrorText()
   const save = useSaveInbox(inbox)
-  return (body: InboxUpdate) => save.mutate(body, { onSuccess: () => toast(t`Saved`), onError: (e) => toast(errorText(e)) })
+  return (body: InboxUpdate) =>
+    save.mutate(body, { onSuccess: () => toast(t`Saved`), onError: (e) => toast(errorText(e)) })
 }
 
 function channelState(ch: Channel): "ok" | "receive" {
@@ -54,7 +76,10 @@ function Channels({ inbox }: { inbox: Inbox }) {
   const [confirm, confirmDialog] = useConfirm()
   const channels = useQuery({
     queryKey: keys.channels(ws, inbox.id),
-    queryFn: () => unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: inbox.id } } })).then((r) => r.items),
+    queryFn: () =>
+      unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: inbox.id } } })).then(
+        (r) => r.items
+      ),
   })
   const remove = useMutation({
     mutationFn: (id: string) => unwrap(api.DELETE("/v1/channels/{channelId}", { params: { path: { channelId: id } } })),
@@ -132,7 +157,14 @@ function Channels({ inbox }: { inbox: Inbox }) {
       {canManage && (
         <div className="mt-1 flex flex-wrap gap-2">
           {adds.map(([kind, label]) => (
-            <Button key={kind} variant="outline" size="sm" className="bg-card" onClick={() => setEditing({ channel: null, kind })} data-testid={`add-${kind}`}>
+            <Button
+              key={kind}
+              variant="outline"
+              size="sm"
+              className="bg-card"
+              onClick={() => setEditing({ channel: null, kind })}
+              data-testid={`add-${kind}`}
+            >
               + {label}
             </Button>
           ))}
@@ -178,7 +210,15 @@ function CustomerSees({ inbox }: { inbox: Inbox }) {
   const promise = inbox.expected_reply_minutes
   const promises = promise && !PROMISES.includes(promise) ? [...PROMISES, promise].sort((a, b) => a - b) : PROMISES
   const promiseText = (m: number) =>
-    m === 15 ? t`Within minutes` : m === 60 ? t`Within an hour` : m === 240 ? t`Within 4 hours` : m === 1440 ? t`Within a day` : t`Within ${m} minutes`
+    m === 15
+      ? t`Within minutes`
+      : m === 60
+        ? t`Within an hour`
+        : m === 240
+          ? t`Within 4 hours`
+          : m === 1440
+            ? t`Within a day`
+            : t`Within ${m} minutes`
   const branding = (patch: Partial<Inbox["branding"]>) => save({ branding: { ...inbox.branding, ...patch } })
   return (
     <Section title={<Trans>What the customer sees</Trans>}>
@@ -206,7 +246,13 @@ function CustomerSees({ inbox }: { inbox: Inbox }) {
             </SettingRow>
             <SettingRow
               title={<Trans>Online status</Trans>}
-              hint={inbox.mode === "live" ? <Trans>The chat shows who is available and typing</Trans> : <Trans>The chat shows when you usually reply</Trans>}
+              hint={
+                inbox.mode === "live" ? (
+                  <Trans>The chat shows who is available and typing</Trans>
+                ) : (
+                  <Trans>The chat shows when you usually reply</Trans>
+                )
+              }
               htmlFor="inbox-mode"
             >
               <ChoiceSelect<Inbox["mode"]>
@@ -220,18 +266,30 @@ function CustomerSees({ inbox }: { inbox: Inbox }) {
                 ]}
               />
             </SettingRow>
-            <SettingRow title={<Trans>Reply time</Trans>} hint={<Trans>Shown in the chat window</Trans>} htmlFor="inbox-promise">
+            <SettingRow
+              title={<Trans>Reply time</Trans>}
+              hint={<Trans>Shown in the chat window</Trans>}
+              htmlFor="inbox-promise"
+            >
               <ChoiceSelect
                 id="inbox-promise"
                 label={t`Reply time`}
                 value={promise ? String(promise) : "none"}
                 onChange={(v) => save({ expected_reply_minutes: v === "none" ? null : Number(v) })}
-                options={[["none", t`Not shown`] as const, ...promises.map((m) => [String(m), promiseText(m)] as const)]}
+                options={[
+                  ["none", t`Not shown`] as const,
+                  ...promises.map((m) => [String(m), promiseText(m)] as const),
+                ]}
               />
             </SettingRow>
             <SettingRow
               title={<Trans>Ask for a rating after closing</Trans>}
-              hint={<Trans>E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or app.</Trans>}
+              hint={
+                <Trans>
+                  E-mail contacts get a short e-mail with two links; chat and app contacts are asked in the widget or
+                  app.
+                </Trans>
+              }
             >
               <Switch
                 checked={inbox.ask_for_rating}
@@ -264,7 +322,9 @@ function CustomerSees({ inbox }: { inbox: Inbox }) {
                 value={greeting}
                 placeholder={t`Hi! Ask us anything.`}
                 onChange={(e) => setGreeting(e.target.value)}
-                onBlur={() => greeting !== (inbox.branding.greeting ?? "") && branding({ greeting: greeting || undefined })}
+                onBlur={() =>
+                  greeting !== (inbox.branding.greeting ?? "") && branding({ greeting: greeting || undefined })
+                }
                 className="rounded-[10px] bg-background"
               />
             </li>
@@ -280,7 +340,8 @@ type Interval = BusinessHours["intervals"][number]
 function uniform(h: BusinessHours) {
   const first = h.intervals[0]
   const days = new Set(h.intervals.map((i) => i.day))
-  const same = h.intervals.every((i) => i.start === first?.start && i.end === first?.end) && days.size === h.intervals.length
+  const same =
+    h.intervals.every((i) => i.start === first?.start && i.end === first?.end) && days.size === h.intervals.length
   return { same, days, start: first?.start ?? "09:00", end: first?.end ?? "18:00" }
 }
 
@@ -304,13 +365,24 @@ function Hours({ inbox }: { inbox: Inbox }) {
   return (
     <Section
       title={<Trans>Business hours</Trans>}
-      description={!u.same && h.intervals.length > 0 ? <Trans>The hours differ by day; changing them here sets the same hours for every chosen day.</Trans> : undefined}
+      description={
+        !u.same && h.intervals.length > 0 ? (
+          <Trans>The hours differ by day; changing them here sets the same hours for every chosen day.</Trans>
+        ) : undefined
+      }
     >
       <Card flush>
         <fieldset disabled={!canManage}>
           <Rows>
-            <SettingRow title={<Trans>Appear online only in business hours</Trans>} hint={<Trans>Outside them the inbox counts as closed</Trans>}>
-              <Switch checked={h.enabled} onCheckedChange={(on) => write(days, start, end, on)} aria-label={t`Appear online only in business hours`} />
+            <SettingRow
+              title={<Trans>Appear online only in business hours</Trans>}
+              hint={<Trans>Outside them the inbox counts as closed</Trans>}
+            >
+              <Switch
+                checked={h.enabled}
+                onCheckedChange={(on) => write(days, start, end, on)}
+                aria-label={t`Appear online only in business hours`}
+              />
             </SettingRow>
             {h.enabled && (
               <li className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
@@ -337,9 +409,23 @@ function Hours({ inbox }: { inbox: Inbox }) {
                   })}
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <Input type="time" value={start} onChange={(e) => setStart(e.target.value)} onBlur={() => start !== u.start && write(days)} className="h-9 w-auto rounded-[10px] bg-background" aria-label={t`Opens`} />
+                  <Input
+                    type="time"
+                    value={start}
+                    onChange={(e) => setStart(e.target.value)}
+                    onBlur={() => start !== u.start && write(days)}
+                    className="h-9 w-auto rounded-[10px] bg-background"
+                    aria-label={t`Opens`}
+                  />
                   –
-                  <Input type="time" value={end} onChange={(e) => setEnd(e.target.value)} onBlur={() => end !== u.end && write(days)} className="h-9 w-auto rounded-[10px] bg-background" aria-label={t`Closes`} />
+                  <Input
+                    type="time"
+                    value={end}
+                    onChange={(e) => setEnd(e.target.value)}
+                    onBlur={() => end !== u.end && write(days)}
+                    className="h-9 w-auto rounded-[10px] bg-background"
+                    aria-label={t`Closes`}
+                  />
                 </span>
               </li>
             )}
@@ -387,7 +473,10 @@ function WhoCanReply({ inbox }: { inbox: Inbox }) {
     onError: (e) => toast(errorText(e)),
   })
   return (
-    <Section title={<Trans>Who can reply</Trans>} description={<Trans>Owners and admins see every inbox; members see the inboxes they are given.</Trans>}>
+    <Section
+      title={<Trans>Who can reply</Trans>}
+      description={<Trans>Owners and admins see every inbox; members see the inboxes they are given.</Trans>}
+    >
       <Card flush>
         <Rows>
           {members.map((m) => {
@@ -417,7 +506,11 @@ function Developer({ inbox }: { inbox: Inbox }) {
     <Section title={<Trans>For developers</Trans>}>
       <Card flush>
         <Rows>
-          <SettingRow title={<Trans>Slug</Trans>} hint={<Trans>Used in addresses and the widget</Trans>} htmlFor="inbox-slug">
+          <SettingRow
+            title={<Trans>Slug</Trans>}
+            hint={<Trans>Used in addresses and the widget</Trans>}
+            htmlFor="inbox-slug"
+          >
             <Input
               id="inbox-slug"
               className={fieldClass}
@@ -477,7 +570,10 @@ export function InboxWebhooks({ children }: { children: React.ReactNode }) {
     <InboxProvider>
       {(inbox) => (
         <>
-          <PageHeader title={<Trans>Webhooks for {inbox.name}</Trans>} back={{ to: `/settings/inboxes/${inbox.id}`, label: inbox.name }} />
+          <PageHeader
+            title={<Trans>Webhooks for {inbox.name}</Trans>}
+            back={{ to: `/settings/inboxes/${inbox.id}`, label: inbox.name }}
+          />
           {children}
         </>
       )}

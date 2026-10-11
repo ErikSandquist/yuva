@@ -10,7 +10,7 @@ export {
   type YuvaClientEvents,
   type YuvaClientOptions,
   type YuvaStorage,
-} from "./client/client";
+} from "./client/client"
 export {
   ApiError,
   type Fetch,
@@ -34,4 +34,4 @@ export {
   type PageRating,
   type PageRatingCreate,
   type Problem,
-} from "./client/api";
+} from "./client/api"

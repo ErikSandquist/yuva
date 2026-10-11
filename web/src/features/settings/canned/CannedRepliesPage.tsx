@@ -20,7 +20,8 @@ export function CannedRepliesPage() {
   const [editing, setEditing] = useState<CannedReply | "new" | null>(null)
   const [confirm, confirmDialog] = useConfirm()
   const remove = useMutation({
-    mutationFn: (id: string) => unwrap(api.DELETE("/v1/canned-replies/{cannedReplyId}", { params: { path: { cannedReplyId: id } } })),
+    mutationFn: (id: string) =>
+      unwrap(api.DELETE("/v1/canned-replies/{cannedReplyId}", { params: { path: { cannedReplyId: id } } })),
     onSuccess: () => qc.invalidateQueries({ queryKey: keys.cannedReplies(ws) }),
   })
   return (
@@ -60,7 +61,11 @@ export function CannedRepliesPage() {
                       size="icon-sm"
                       aria-label={t`Delete`}
                       onClick={() =>
-                        confirm({ title: <Trans>Delete this canned reply?</Trans>, confirm: <Trans>Delete</Trans>, run: () => remove.mutate(r.id) })
+                        confirm({
+                          title: <Trans>Delete this canned reply?</Trans>,
+                          confirm: <Trans>Delete</Trans>,
+                          run: () => remove.mutate(r.id),
+                        })
                       }
                     >
                       <Trash2Icon />

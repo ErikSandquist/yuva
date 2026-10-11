@@ -13,7 +13,8 @@ export function useSaveSettings() {
   const qc = useQueryClient()
   const { workspaceId: ws } = useSession()
   return useMutation({
-    mutationFn: (body: { events?: NotificationEventsUpdate; email_delay_minutes?: number }) => unwrap(api.PATCH("/v1/me/notifications", { body })),
+    mutationFn: (body: { events?: NotificationEventsUpdate; email_delay_minutes?: number }) =>
+      unwrap(api.PATCH("/v1/me/notifications", { body })),
     onMutate: (body) => {
       const prev = qc.getQueryData<NotificationSettings>(keys.notifications(ws))
       if (prev) {
@@ -38,7 +39,8 @@ export function useSetInboxOverride(inboxId: string) {
   const put = useMutation({
     mutationFn: (events: NotificationEventsUpdate) =>
       unwrap(api.PUT("/v1/me/notifications/inboxes/{inboxId}", { params: { path: { inboxId } }, body: { events } })),
-    onSuccess: (data) => set((prev) => ({ ...prev, inboxes: [...prev.inboxes.filter((o) => o.inbox_id !== inboxId), data] })),
+    onSuccess: (data) =>
+      set((prev) => ({ ...prev, inboxes: [...prev.inboxes.filter((o) => o.inbox_id !== inboxId), data] })),
   })
   const remove = useMutation({
     mutationFn: () => unwrap(api.DELETE("/v1/me/notifications/inboxes/{inboxId}", { params: { path: { inboxId } } })),

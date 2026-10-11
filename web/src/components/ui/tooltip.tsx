@@ -18,7 +18,7 @@ function TooltipContent({
         <TooltipPrimitive.Popup
           className={cn(
             "flex w-fit max-w-xs items-center gap-2 rounded-lg bg-foreground px-2.5 py-1.5 text-caption text-background",
-            className,
+            className
           )}
           {...props}
         />

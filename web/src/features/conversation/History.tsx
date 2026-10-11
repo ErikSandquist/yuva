@@ -27,7 +27,14 @@ export function History({
   const n = others.length
   if (!open) {
     return (
-      <Button variant="ghost" size="sm" className={toggle} onClick={onToggle} aria-expanded={false} data-testid="history-toggle">
+      <Button
+        variant="ghost"
+        size="sm"
+        className={toggle}
+        onClick={onToggle}
+        aria-expanded={false}
+        data-testid="history-toggle"
+      >
         <ClockIcon />
         <Plural value={n} one="# other conversation" other="# other conversations" />
       </Button>
@@ -40,7 +47,11 @@ export function History({
         const date = formatShort(o.last_activity_at, i18n.locale)
         const who = o.last_message?.author_type === "contact" ? first : t`Team`
         return (
-          <Item render={<button type="button" />} variant="outline" size="sm" className="block border-dashed text-small text-muted-foreground hover:border-solid [button]:hover:bg-muted"
+          <Item
+            render={<button type="button" />}
+            variant="outline"
+            size="sm"
+            className="block border-dashed text-small text-muted-foreground hover:border-solid [button]:hover:bg-muted"
             key={o.id}
             onClick={() => navigate(`/conversations/${o.id}`)}
           >
@@ -58,7 +69,14 @@ export function History({
           </Item>
         )
       })}
-      <Button variant="ghost" size="sm" className={toggle} onClick={onToggle} aria-expanded data-testid="history-toggle">
+      <Button
+        variant="ghost"
+        size="sm"
+        className={toggle}
+        onClick={onToggle}
+        aria-expanded
+        data-testid="history-toggle"
+      >
         <Trans>Hide</Trans>
       </Button>
     </div>

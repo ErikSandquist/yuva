@@ -14,7 +14,10 @@ const blog = defineCollection({
 })
 
 const docs = defineCollection({
-  loader: glob({ pattern: ["*.md", ...locales.filter((l) => l !== defaultLocale).map((l) => `${l}/*.md`)], base: "../docs" }),
+  loader: glob({
+    pattern: ["*.md", ...locales.filter((l) => l !== defaultLocale).map((l) => `${l}/*.md`)],
+    base: "../docs",
+  }),
 })
 
 export const collections = { blog, docs }

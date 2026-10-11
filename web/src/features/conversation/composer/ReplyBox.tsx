@@ -47,8 +47,17 @@ function FileThumb({ file }: { file: File }) {
   return <img src={url} alt="" className="size-6 shrink-0 rounded object-cover" />
 }
 
-
-function Suggestion({ m, ctx, onUse, onDiscard }: { m: Message; ctx: ThreadContext; onUse: () => void; onDiscard: () => void }) {
+function Suggestion({
+  m,
+  ctx,
+  onUse,
+  onDiscard,
+}: {
+  m: Message
+  ctx: ThreadContext
+  onUse: () => void
+  onDiscard: () => void
+}) {
   const { t } = useLingui()
   const author = useAuthorName(m, ctx)
   return (
@@ -56,7 +65,13 @@ function Suggestion({ m, ctx, onUse, onDiscard }: { m: Message; ctx: ThreadConte
       className="mx-2.5 mb-2 flex items-start gap-2.5 rounded-xl border border-dashed border-brand/35 bg-brand-wash/60 py-2.5 ps-3 pe-1.5 text-small text-muted-foreground transition-colors hover:border-solid hover:text-foreground"
       data-testid="suggestion"
     >
-      <Item render={<button type="button" />} size="xs" className="min-w-0 flex-1 flex-nowrap items-start p-0 text-small text-inherit [button]:hover:bg-transparent" onClick={onUse} title={t`Use this reply`}>
+      <Item
+        render={<button type="button" />}
+        size="xs"
+        className="min-w-0 flex-1 flex-nowrap items-start p-0 text-small text-inherit [button]:hover:bg-transparent"
+        onClick={onUse}
+        title={t`Use this reply`}
+      >
         {m.author.type === "bot" ? (
           <BotAvatar name={author} url={m.author.avatar_url} className="mt-px size-4" />
         ) : (
@@ -98,7 +113,10 @@ export const ReplyBox = forwardRef<
     autoFocus: boolean
     className?: string
   }
->(function ReplyBox({ c, contactName, via, emailTo, undeliverable, suggestion, ctx, actions, autoFocus, className }, ref) {
+>(function ReplyBox(
+  { c, contactName, via, emailTo, undeliverable, suggestion, ctx, actions, autoFocus, className },
+  ref
+) {
   const { t, i18n } = useLingui()
   const initial = useRef(readDraft(c.id)).current
   const [mode, setMode] = useState(initial.mode)
@@ -158,13 +176,27 @@ export const ReplyBox = forwardRef<
       el.setSelectionRange(next.length, next.length)
     })
   }
-  useImperativeHandle(ref, () => ({ focus, attach: () => fileInput.current?.click(), discardSuggestion: dropSuggestion, quote, addFiles }))
+  useImperativeHandle(ref, () => ({
+    focus,
+    attach: () => fileInput.current?.click(),
+    discardSuggestion: dropSuggestion,
+    quote,
+    addFiles,
+  }))
 
   const at = note ? mentionToken(body, caret) : null
   const people = useAssignableMembers(c.inbox_id).filter((m) => m.id !== membership.member_id)
   const query = at?.query.toLocaleLowerCase() ?? ""
   const mentionMatches = at
-    ? people.filter((m) => (m.name || m.email).toLocaleLowerCase().split(/\s+/).some((w) => w.startsWith(query)) || m.email.startsWith(query)).slice(0, 6)
+    ? people
+        .filter(
+          (m) =>
+            (m.name || m.email)
+              .toLocaleLowerCase()
+              .split(/\s+/)
+              .some((w) => w.startsWith(query)) || m.email.startsWith(query)
+        )
+        .slice(0, 6)
     : []
   const mentionOpen = at !== null && mentionMatches.length > 0 && dismissed !== at.start
   const token = mentionOpen ? null : slashToken(body, caret)
@@ -234,13 +266,15 @@ export const ReplyBox = forwardRef<
       .note(
         saved.body,
         saved.files,
-        tagged.map((x) => x.id),
+        tagged.map((x) => x.id)
       )
       .then(() => {
         setMode("message")
         setMentioned([])
         if (tagged.length) {
-          const names = new Intl.ListFormat(i18n.locale, { type: "conjunction" }).format(tagged.map((x) => firstName(x.label)))
+          const names = new Intl.ListFormat(i18n.locale, { type: "conjunction" }).format(
+            tagged.map((x) => firstName(x.label))
+          )
           toast(t`${names} will be notified`)
         }
       })
@@ -296,14 +330,20 @@ export const ReplyBox = forwardRef<
     }
   }
 
-  const hint = note ? t`The customer does not see this` : emailTo ? t`To: ${emailTo}` : via ? t`Goes out through ${via}` : ""
+  const hint = note
+    ? t`The customer does not see this`
+    : emailTo
+      ? t`To: ${emailTo}`
+      : via
+        ? t`Goes out through ${via}`
+        : ""
 
   return (
     <div
       className={cn(
         "@container/composer relative rounded-2xl border bg-card transition-colors focus-within:border-brand/45",
         note && "border-note-border bg-note focus-within:border-note-ink/40",
-        className,
+        className
       )}
       data-testid="reply-box"
     >
@@ -311,22 +351,24 @@ export const ReplyBox = forwardRef<
         <Tabs value={mode} onValueChange={(v) => focus(v as "message" | "note")} className="gap-0">
           <TabsList aria-label={t`Message type`}>
             {(["message", "note"] as const).map((m) => (
-              <TabsTrigger
-                key={m}
-                value={m}
-                className={cn("flex-none px-3", note && "data-active:text-note-ink")}
-              >
+              <TabsTrigger key={m} value={m} className={cn("flex-none px-3", note && "data-active:text-note-ink")}>
                 {m === "message" ? <Trans>Reply</Trans> : <Trans>Team note</Trans>}
               </TabsTrigger>
             ))}
           </TabsList>
         </Tabs>
-        <span className="ms-auto min-w-0 truncate pe-2 text-caption text-faint" data-testid={!note && emailTo ? "composer-email-to" : undefined}>
+        <span
+          className="ms-auto min-w-0 truncate pe-2 text-caption text-faint"
+          data-testid={!note && emailTo ? "composer-email-to" : undefined}
+        >
           {hint}
         </span>
       </div>
       {!note && undeliverable && (
-        <p className="mx-3 mt-2 rounded-lg bg-destructive/6 px-3 py-2 text-caption text-destructive" data-testid="composer-undeliverable">
+        <p
+          className="mx-3 mt-2 rounded-lg bg-destructive/6 px-3 py-2 text-caption text-destructive"
+          data-testid="composer-undeliverable"
+        >
           <Trans>This address is undeliverable. Clear it in the contact details before you reply.</Trans>
         </p>
       )}
@@ -363,7 +405,10 @@ export const ReplyBox = forwardRef<
       {files.length > 0 && (
         <ul className="flex flex-wrap gap-1.5 px-4 pb-2">
           {files.map((f, i) => (
-            <li key={`${f.name}-${i}`} className="flex max-w-full items-center gap-1.5 rounded-lg border bg-background py-0.5 ps-2 pe-0.5 text-caption">
+            <li
+              key={`${f.name}-${i}`}
+              className="flex max-w-full items-center gap-1.5 rounded-lg border bg-background py-0.5 ps-2 pe-0.5 text-caption"
+            >
               <FileThumb file={f} />
               <span className="max-w-48 truncate">{f.name}</span>
               <span className="text-faint">{formatBytes(f.size, i18n.locale)}</span>
@@ -406,15 +451,23 @@ export const ReplyBox = forwardRef<
         </Button>
         <Popover open={emojiOpen} onOpenChange={setEmojiOpen}>
           <PopoverTrigger
-            render={<Button variant="ghost" size="icon-sm" className="text-faint hover:bg-muted aria-expanded:bg-muted" />}
+            render={
+              <Button variant="ghost" size="icon-sm" className="text-faint hover:bg-muted aria-expanded:bg-muted" />
+            }
             aria-label={t`Emoji`}
             title={t`Emoji`}
             data-testid="emoji-button"
           >
             <SmileIcon />
           </PopoverTrigger>
-          <PopoverContent side="top" align="start" className={cn(popupClass, "w-[min(320px,calc(100vw-24px))] gap-0 overflow-hidden rounded-xl p-0 ring-0")}>
-            <Suspense fallback={<div className="h-[340px]" />}>{emojiOpen && <EmojiPanel onPick={insertEmoji} />}</Suspense>
+          <PopoverContent
+            side="top"
+            align="start"
+            className={cn(popupClass, "w-[min(320px,calc(100vw-24px))] gap-0 overflow-hidden rounded-xl p-0 ring-0")}
+          >
+            <Suspense fallback={<div className="h-[340px]" />}>
+              {emojiOpen && <EmojiPanel onPick={insertEmoji} />}
+            </Suspense>
           </PopoverContent>
         </Popover>
         <Popover open={cannedOpen} onOpenChange={setCannedOpen}>
@@ -428,14 +481,23 @@ export const ReplyBox = forwardRef<
               <Trans>Canned reply</Trans>
             </span>
           </PopoverTrigger>
-          <PopoverContent side="top" align="start" className={cn(popupClass, "w-[min(320px,calc(100vw-48px))] gap-0 rounded-xl p-0 ring-0")}>
+          <PopoverContent
+            side="top"
+            align="start"
+            className={cn(popupClass, "w-[min(320px,calc(100vw-48px))] gap-0 rounded-xl p-0 ring-0")}
+          >
             <Command className="bg-transparent p-1.5" label={t`Canned replies`}>
               <CommandList className="max-h-72">
                 <CommandEmpty className="px-3 py-6 text-faint">
                   <Trans>No canned replies yet. Add them in settings.</Trans>
                 </CommandEmpty>
                 {canned.map((r) => (
-                  <CommandItem key={r.id} value={`${r.title} ${r.shortcut} ${r.id}`} onSelect={() => insertCanned(r)} className="block rounded-lg px-2.5 py-2 data-selected:bg-muted">
+                  <CommandItem
+                    key={r.id}
+                    value={`${r.title} ${r.shortcut} ${r.id}`}
+                    onSelect={() => insertCanned(r)}
+                    className="block rounded-lg px-2.5 py-2 data-selected:bg-muted"
+                  >
                     {r.title}
                     <small className="block truncate text-caption text-faint">{r.body}</small>
                   </CommandItem>
@@ -452,10 +514,20 @@ export const ReplyBox = forwardRef<
           </Button>
         ) : (
           <>
-            <Button variant={actions.chat ? "default" : "outline"} onClick={() => send(false)} disabled={!hasContent} data-testid="composer-send">
+            <Button
+              variant={actions.chat ? "default" : "outline"}
+              onClick={() => send(false)}
+              disabled={!hasContent}
+              data-testid="composer-send"
+            >
               <Trans>Send</Trans>
             </Button>
-            <Button variant={actions.chat ? "outline" : "default"} onClick={() => send(true)} disabled={!hasContent} data-testid="composer-send-close">
+            <Button
+              variant={actions.chat ? "outline" : "default"}
+              onClick={() => send(true)}
+              disabled={!hasContent}
+              data-testid="composer-send-close"
+            >
               <Trans>Send and close</Trans>
             </Button>
           </>

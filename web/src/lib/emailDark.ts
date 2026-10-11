@@ -199,7 +199,13 @@ export function darkBorder(c: Rgb, sentOn: Rgb, bg: Rgb): Rgb {
   return at(hi)
 }
 
-const BORDER_COLOURS = ["border-top-color", "border-right-color", "border-bottom-color", "border-left-color", "outline-color"]
+const BORDER_COLOURS = [
+  "border-top-color",
+  "border-right-color",
+  "border-bottom-color",
+  "border-left-color",
+  "outline-color",
+]
 const TEXT_COLOURS = ["color", "text-decoration-color"]
 
 function convertStyle(el: HTMLElement, name: string, fn: (c: Rgb) => Rgb) {

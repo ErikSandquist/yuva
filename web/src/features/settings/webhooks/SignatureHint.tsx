@@ -12,7 +12,12 @@ export function SignatureHint() {
         <Trans>
           Verify every request before trusting it: the <code className="font-mono">webhook-signature</code> header
           follows the{" "}
-          <a href={STANDARD_WEBHOOKS} target="_blank" rel="noreferrer" className="font-medium text-foreground underline underline-offset-2">
+          <a
+            href={STANDARD_WEBHOOKS}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-foreground underline underline-offset-2"
+          >
             Standard Webhooks
           </a>{" "}
           specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the{" "}

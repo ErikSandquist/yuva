@@ -1,5 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { BookUserIcon, BuildingIcon, DownloadIcon, KeyboardIcon, LanguagesIcon, LogOutIcon, MonitorIcon, MoonIcon, SunIcon, UserIcon } from "lucide-react"
+import {
+  BookUserIcon,
+  BuildingIcon,
+  DownloadIcon,
+  KeyboardIcon,
+  LanguagesIcon,
+  LogOutIcon,
+  MonitorIcon,
+  MoonIcon,
+  SunIcon,
+  UserIcon,
+} from "lucide-react"
 import { useNavigate } from "react-router"
 
 import { useShell } from "@/app/shell"
@@ -34,7 +45,13 @@ function statusClass(a: Availability, live: boolean) {
   return live ? "bg-success" : "bg-faint"
 }
 
-export function UserMenu({ align = "end", side = "bottom" }: { align?: "start" | "end"; side?: "bottom" | "inline-end" | "top" }) {
+export function UserMenu({
+  align = "end",
+  side = "bottom",
+}: {
+  align?: "start" | "end"
+  side?: "bottom" | "inline-end" | "top"
+}) {
   const { t, i18n } = useLingui()
   const { me, membership, switchWorkspace } = useSession()
   const { openShortcuts } = useShell()
@@ -60,7 +77,10 @@ export function UserMenu({ align = "end", side = "bottom" }: { align?: "start" |
       >
         <PersonAvatar name={name} className="size-[30px] bg-muted-foreground text-background" />
         <span
-          className={cn("absolute end-px bottom-px size-[9px] rounded-full ring-2 ring-background", statusClass(availability, live))}
+          className={cn(
+            "absolute end-px bottom-px size-[9px] rounded-full ring-2 ring-background",
+            statusClass(availability, live)
+          )}
           data-testid="availability-dot"
           data-availability={availability}
         />
@@ -88,7 +108,9 @@ export function UserMenu({ align = "end", side = "bottom" }: { align?: "start" |
               <span className="flex flex-col gap-0.5">
                 <Trans>Away</Trans>
                 <span className="text-caption text-muted-foreground">
-                  <Trans>Live chat shows nobody available. Notifications pause, except for conversations assigned to you.</Trans>
+                  <Trans>
+                    Live chat shows nobody available. Notifications pause, except for conversations assigned to you.
+                  </Trans>
                 </span>
               </span>
             </DropdownMenuRadioItem>
@@ -127,7 +149,10 @@ export function UserMenu({ align = "end", side = "bottom" }: { align?: "start" |
               <span className="min-w-0 flex-1 truncate">{membership.workspace.name}</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent className="min-w-56">
-              <DropdownMenuRadioGroup value={membership.workspace.id} onValueChange={(id) => switchWorkspace(String(id))}>
+              <DropdownMenuRadioGroup
+                value={membership.workspace.id}
+                onValueChange={(id) => switchWorkspace(String(id))}
+              >
                 {me.memberships.map((m) => (
                   <DropdownMenuRadioItem key={m.workspace.id} value={m.workspace.id}>
                     <span className="truncate">{m.workspace.name}</span>
@@ -156,7 +181,11 @@ export function UserMenu({ align = "end", side = "bottom" }: { align?: "start" |
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuItem onClick={() => navigate("/contacts")} className="hidden phone:flex" data-testid="menu-contacts">
+        <DropdownMenuItem
+          onClick={() => navigate("/contacts")}
+          className="hidden phone:flex"
+          data-testid="menu-contacts"
+        >
           <BookUserIcon />
           <Trans>Contacts</Trans>
           <span className="ms-auto text-caption text-faint">G C</span>

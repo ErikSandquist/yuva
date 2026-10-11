@@ -4,4 +4,4 @@ export default defineNuxtConfig({
   content: {
     experimental: { sqliteConnector: "native" },
   },
-});
+})

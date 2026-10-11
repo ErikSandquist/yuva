@@ -8,7 +8,9 @@ export const GET: APIRoute = async () => {
   const docs = ["", ...(await ordered()).map((d) => docRel(d.id)), "api/"].map(docsPath)
   const urls = [home, blog, releases, brand, contact, ...docs]
     .flatMap((page) => {
-      const alternates = locales.map((l) => `<xhtml:link rel="alternate" hreflang="${l}" href="${absolute(page[l])}"/>`).join("")
+      const alternates = locales
+        .map((l) => `<xhtml:link rel="alternate" hreflang="${l}" href="${absolute(page[l])}"/>`)
+        .join("")
       return locales.map((l) => `<url><loc>${absolute(page[l])}</loc>${alternates}</url>`)
     })
     .concat(posts)

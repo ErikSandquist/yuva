@@ -23,7 +23,8 @@ export function repoLink(href: string, from: string) {
   const relative = path.relative(repoRoot, absolute)
   if (relative.startsWith("..")) return href
   const anchor = hash ? `#${hash}` : ""
-  if ([docsDir, ...localeDirs].includes(path.dirname(absolute)) && absolute.endsWith(".md")) return `/docs/${path.basename(absolute, ".md")}/${anchor}`
+  if ([docsDir, ...localeDirs].includes(path.dirname(absolute)) && absolute.endsWith(".md"))
+    return `/docs/${path.basename(absolute, ".md")}/${anchor}`
   return `${REPO}/blob/main/${relative.split(path.sep).join("/")}${anchor}`
 }
 

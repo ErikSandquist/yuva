@@ -12,7 +12,15 @@ import { api, unwrap, type WebhookEndpoint } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
-export function DeliverySheet({ endpoint, deliveryId, onClose }: { endpoint: WebhookEndpoint; deliveryId: string | null; onClose: () => void }) {
+export function DeliverySheet({
+  endpoint,
+  deliveryId,
+  onClose,
+}: {
+  endpoint: WebhookEndpoint
+  deliveryId: string | null
+  onClose: () => void
+}) {
   const { i18n } = useLingui()
   const { workspaceId: ws } = useSession()
   const refresh = useRefreshLog(endpoint.id)
@@ -62,7 +70,13 @@ export function DeliverySheet({ endpoint, deliveryId, onClose }: { endpoint: Web
               <span className="text-caption text-muted-foreground">
                 <Attempts n={d.attempts} />
               </span>
-              <Button size="sm" className="ms-auto" onClick={() => redeliver.mutate()} disabled={redeliver.isPending} data-testid="redeliver">
+              <Button
+                size="sm"
+                className="ms-auto"
+                onClick={() => redeliver.mutate()}
+                disabled={redeliver.isPending}
+                data-testid="redeliver"
+              >
                 <Trans>Redeliver</Trans>
               </Button>
             </div>
@@ -98,7 +112,10 @@ export function DeliverySheet({ endpoint, deliveryId, onClose }: { endpoint: Web
                 </h3>
                 <CopyButton value={payload} />
               </div>
-              <pre className="max-h-80 overflow-auto rounded-xl bg-surface px-3.5 py-3 font-mono text-caption" data-testid="delivery-payload">
+              <pre
+                className="max-h-80 overflow-auto rounded-xl bg-surface px-3.5 py-3 font-mono text-caption"
+                data-testid="delivery-payload"
+              >
                 {payload}
               </pre>
             </div>

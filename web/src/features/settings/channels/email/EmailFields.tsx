@@ -51,7 +51,9 @@ function Receiving({ f, set, error, taken }: Props) {
           onChange={(e) => set({ address: e.target.value })}
           {...invalid("address")}
         />
-        <FieldError id="err-address">{taken ? <Trans>Another channel already receives mail at this address.</Trans> : error("address")}</FieldError>
+        <FieldError id="err-address">
+          {taken ? <Trans>Another channel already receives mail at this address.</Trans> : error("address")}
+        </FieldError>
       </Field>
       <Notice className="text-caption" data-testid="ingress-hint">
         <p>
@@ -80,7 +82,12 @@ function Password({ f, set, error, taken }: Props) {
           <Button type="button" variant="outline" size="sm" onClick={() => set({ password: "" })}>
             <Trans>Replace</Trans>
           </Button>
-          <Button type="button" variant="ghost" size="sm" onClick={() => set({ password: "", passwordSet: false, clearing: true })}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => set({ password: "", passwordSet: false, clearing: true })}
+          >
             <Trans>Remove</Trans>
           </Button>
         </div>
@@ -97,7 +104,12 @@ function Password({ f, set, error, taken }: Props) {
             {...invalid("smtp.password")}
           />
           {(f.passwordSet || f.clearing) && (
-            <Button type="button" variant="ghost" size="sm" onClick={() => set({ password: null, passwordSet: true, clearing: false })}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => set({ password: null, passwordSet: true, clearing: false })}
+            >
               <Trans>Keep</Trans>
             </Button>
           )}
@@ -125,7 +137,11 @@ export function Sending(p: Props) {
   return (
     <FormBlock title={<Trans>Sending</Trans>}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label={<Trans>Display name</Trans>} htmlFor="email-display-name" hint={<Trans>The channel name when empty.</Trans>}>
+        <Field
+          label={<Trans>Display name</Trans>}
+          htmlFor="email-display-name"
+          hint={<Trans>The channel name when empty.</Trans>}
+        >
           <Input
             id="email-display-name"
             maxLength={200}
@@ -139,7 +155,9 @@ export function Sending(p: Props) {
         <Field
           label={<Trans>From address (optional)</Trans>}
           htmlFor="email-from"
-          hint={<Trans>When your provider sends from another address. Replies still come to the support address.</Trans>}
+          hint={
+            <Trans>When your provider sends from another address. Replies still come to the support address.</Trans>
+          }
         >
           <Input
             id="email-from"
@@ -200,7 +218,14 @@ export function Sending(p: Props) {
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={<Trans>Username</Trans>} htmlFor="smtp-username">
-          <Input id="smtp-username" maxLength={320} value={f.username} autoComplete="off" onChange={(e) => set({ username: e.target.value })} {...invalid("smtp.username")} />
+          <Input
+            id="smtp-username"
+            maxLength={320}
+            value={f.username}
+            autoComplete="off"
+            onChange={(e) => set({ username: e.target.value })}
+            {...invalid("smtp.username")}
+          />
           <FieldError id="err-smtp.username">{error("smtp.username")}</FieldError>
         </Field>
         <Password {...p} />
@@ -219,10 +244,19 @@ function AutoReply(p: Props) {
   return (
     <FormBlock
       title={<Trans>Auto-reply</Trans>}
-      action={<Switch checked={f.autoReply} onCheckedChange={(autoReply) => set({ autoReply })} aria-label={t`Send an auto-reply`} />}
+      action={
+        <Switch
+          checked={f.autoReply}
+          onCheckedChange={(autoReply) => set({ autoReply })}
+          aria-label={t`Send an auto-reply`}
+        />
+      }
     >
       <p className="-mt-2 text-caption text-muted-foreground">
-        <Trans>Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or spam.</Trans>
+        <Trans>
+          Greets new conversations by e-mail, once per contact within the interval. Never sent to automatic mail or
+          spam.
+        </Trans>
       </p>
       {f.autoReply && (
         <>

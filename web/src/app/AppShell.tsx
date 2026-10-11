@@ -38,7 +38,7 @@ export function AppShell() {
       openPalette: () => setPalette(true),
       openShortcuts: () => setShortcuts(true),
     }),
-    [],
+    []
   )
 
   const { pathname } = useLocation()
@@ -47,7 +47,8 @@ export function AppShell() {
   useHotkeys({
     [SHORTCUTS.help]: () => setShortcuts(true),
     [SHORTCUTS.search]: () => {
-      const contacts = pathname.startsWith("/contacts") && document.querySelector<HTMLInputElement>("[data-testid=contacts-search]")
+      const contacts =
+        pathname.startsWith("/contacts") && document.querySelector<HTMLInputElement>("[data-testid=contacts-search]")
       if (contacts) return contacts.focus()
       if (!chats) navigate("/")
       focusListSearch()

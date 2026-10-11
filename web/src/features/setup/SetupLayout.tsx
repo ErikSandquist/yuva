@@ -99,12 +99,21 @@ export function SetupLayout({
             {!wide && (
               <section className="mt-10 border-t pt-4" aria-label={t`Preview`}>
                 {!previewOpen && (
-                  <Button variant="ghost" size="sm" className="-ms-3" onClick={() => setShown((s) => !s)} aria-expanded={shown} data-testid="setup-preview-toggle">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="-ms-3"
+                    onClick={() => setShown((s) => !s)}
+                    aria-expanded={shown}
+                    data-testid="setup-preview-toggle"
+                  >
                     <ChevronDownIcon className={cn("transition-transform", shown && "rotate-180")} />
                     {shown ? <Trans>Hide the preview</Trans> : <Trans>Show the preview</Trans>}
                   </Button>
                 )}
-                {(previewOpen || shown) && <div className="mt-3 overflow-hidden rounded-[1.5rem] bg-surface p-4 sm:p-6">{preview}</div>}
+                {(previewOpen || shown) && (
+                  <div className="mt-3 overflow-hidden rounded-[1.5rem] bg-surface p-4 sm:p-6">{preview}</div>
+                )}
               </section>
             )}
           </div>
@@ -121,10 +130,22 @@ export function SetupLayout({
   )
 }
 
-export function StepHeader({ title, children, icon }: { title: React.ReactNode; children?: React.ReactNode; icon?: React.ReactNode }) {
+export function StepHeader({
+  title,
+  children,
+  icon,
+}: {
+  title: React.ReactNode
+  children?: React.ReactNode
+  icon?: React.ReactNode
+}) {
   return (
     <div className="mb-8">
-      {icon && <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand [&_svg]:size-5">{icon}</span>}
+      {icon && (
+        <span className="mb-5 grid size-11 place-items-center rounded-full bg-brand-wash text-brand [&_svg]:size-5">
+          {icon}
+        </span>
+      )}
       <h1 className="text-page text-balance">{title}</h1>
       {children && <p className="mt-3 text-pretty text-muted-foreground">{children}</p>}
     </div>

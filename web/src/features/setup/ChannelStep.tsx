@@ -51,7 +51,7 @@ export function ChannelStep({ inboxId }: { inboxId: string }) {
             type="button"
             className={cn(
               "group flex w-full items-center gap-4 rounded-2xl border bg-card px-4 py-4 text-start transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30",
-              focus === k && "border-faint",
+              focus === k && "border-faint"
             )}
             onMouseEnter={() => setFocus(k)}
             onFocus={() => setFocus(k)}

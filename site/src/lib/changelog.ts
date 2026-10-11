@@ -23,7 +23,9 @@ function groups(md: string) {
         ...(token as Tokens.List).items.map((li) => {
           const text = li.text.replace(/\s*\n\s*/g, " ")
           const m = text.match(titled)
-          return m ? { title: m[1], html: marked.parseInline(capital(text.slice(m[0].length)), { async: false }) } : { html: marked.parseInline(text, { async: false }) }
+          return m
+            ? { title: m[1], html: marked.parseInline(capital(text.slice(m[0].length)), { async: false }) }
+            : { html: marked.parseInline(text, { async: false }) }
         })
       )
     else if (token.type === "paragraph" && !out.length) intro.push(marked.parseInline(token.text, { async: false }))

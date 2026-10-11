@@ -1,5 +1,12 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { BadgeCheckIcon, GlobeIcon, MessageCircleQuestionMarkIcon, ThumbsDownIcon, ThumbsUpIcon, UploadIcon } from "lucide-react"
+import {
+  BadgeCheckIcon,
+  GlobeIcon,
+  MessageCircleQuestionMarkIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  UploadIcon,
+} from "lucide-react"
 import { useState } from "react"
 
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
@@ -13,7 +20,17 @@ const small = "h-6 gap-1 px-2 text-caption [&_svg]:size-3.5"
 
 export function PageLink({ url, title, className }: { url: string; title?: string; className?: string }) {
   return (
-    <a href={url} target="_blank" rel="noreferrer" title={url} className={cn("min-w-0 truncate text-muted-foreground underline-offset-4 hover:text-foreground hover:underline", className)} data-testid="page-link">
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      title={url}
+      className={cn(
+        "min-w-0 truncate text-muted-foreground underline-offset-4 hover:text-foreground hover:underline",
+        className
+      )}
+      data-testid="page-link"
+    >
       {pageLabel(url, title)}
     </a>
   )
@@ -26,14 +43,19 @@ export function PageRatingMark({ rating }: { rating: PageRating }) {
       <Trans>Helpful</Trans>
     </span>
   ) : (
-    <span className="inline-flex shrink-0 items-center gap-1 text-destructive" data-testid="page-rating" data-rating="down">
+    <span
+      className="inline-flex shrink-0 items-center gap-1 text-destructive"
+      data-testid="page-rating"
+      data-rating="down"
+    >
       <ThumbsDownIcon className="size-3.5" />
       <Trans>Not helpful</Trans>
     </span>
   )
 }
 
-const isMemberReply = (m: Message) => m.kind === "message" && m.direction === "out" && m.author.type === "member" && !m.draft
+const isMemberReply = (m: Message) =>
+  m.kind === "message" && m.direction === "out" && m.author.type === "member" && !m.draft
 
 export function usePagePublishing(c: Conversation, items: Message[], allLoaded: boolean) {
   const { t } = useLingui()
@@ -66,15 +88,33 @@ export function usePagePublishing(c: Conversation, items: Message[], allLoaded: 
             <BadgeCheckIcon className="size-3.5" />
             <Trans>Published</Trans>
           </span>
-          <Button variant="ghost" className={small} onClick={() => actions.edit(published)} title={t`Edit the published answer (${key})`} data-testid="question-edit">
+          <Button
+            variant="ghost"
+            className={small}
+            onClick={() => actions.edit(published)}
+            title={t`Edit the published answer (${key})`}
+            data-testid="question-edit"
+          >
             <Trans>Edit</Trans>
           </Button>
-          <Button variant="ghost" className={cn(small, "text-destructive hover:text-destructive")} onClick={() => actions.unpublish(published)} data-testid="question-unpublish">
+          <Button
+            variant="ghost"
+            className={cn(small, "text-destructive hover:text-destructive")}
+            onClick={() => actions.unpublish(published)}
+            data-testid="question-unpublish"
+          >
             <Trans>Unpublish</Trans>
           </Button>
         </>
       ) : reply ? (
-        <Button variant="outline" className={cn(small, "ms-1")} onClick={run} disabled={answers.isPending} title={t`Publish to the page (${key})`} data-testid="question-publish">
+        <Button
+          variant="outline"
+          className={cn(small, "ms-1")}
+          onClick={run}
+          disabled={answers.isPending}
+          title={t`Publish to the page (${key})`}
+          data-testid="question-publish"
+        >
           <UploadIcon />
           <Trans>Publish to page</Trans>
         </Button>

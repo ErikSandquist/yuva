@@ -16,6 +16,6 @@ export function useRailView() {
       listeners.add(l)
       return () => listeners.delete(l)
     },
-    () => view,
+    () => view
   )
 }

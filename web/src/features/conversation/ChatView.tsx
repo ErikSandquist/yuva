@@ -1,5 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowLeftIcon, ChevronDownIcon, ChevronUpIcon, PanelRightIcon, PaperclipIcon, SearchIcon, SearchXIcon, XIcon } from "lucide-react"
+import {
+  ArrowLeftIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PanelRightIcon,
+  PaperclipIcon,
+  SearchIcon,
+  SearchXIcon,
+  XIcon,
+} from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
@@ -24,13 +33,28 @@ import type { ThreadContext } from "@/features/conversation/messages/context"
 import { foldText, quoteOf } from "@/features/conversation/messages/MessageActions"
 import { Thread } from "@/features/conversation/messages/Thread"
 import { Status, Watchers } from "@/features/conversation/ConversationStatus"
-import { useConversation, useMarkRead, useMessages, useMoveConversation, useUpdateConversation } from "@/features/conversation/queries"
+import {
+  useConversation,
+  useMarkRead,
+  useMessages,
+  useMoveConversation,
+  useUpdateConversation,
+} from "@/features/conversation/queries"
 import { RelatedLine } from "@/features/conversation/RelatedLine"
 import { useListActions, usePinnedIds } from "@/features/inbox/memberState"
 import { useConversations } from "@/features/inbox/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { ApiError, isGone, type Channel, type Contact, type Conversation, type ConversationUpdate, type Member, type Message } from "@/lib/api"
+import {
+  ApiError,
+  isGone,
+  type Channel,
+  type Contact,
+  type Conversation,
+  type ConversationUpdate,
+  type Member,
+  type Message,
+} from "@/lib/api"
 import { useViewers } from "@/lib/presence"
 import { useSession } from "@/lib/session"
 import { useTyping } from "@/lib/typing"
@@ -49,7 +73,14 @@ function BackButton({ onBack }: { onBack?: () => void }) {
   const { t } = useLingui()
   if (!onBack) return null
   return (
-    <Button variant="ghost" size="icon-sm" onClick={onBack} aria-label={t`Back to the list`} title={t`Back to the list`} data-testid="chat-back">
+    <Button
+      variant="ghost"
+      size="icon-sm"
+      onClick={onBack}
+      aria-label={t`Back to the list`}
+      title={t`Back to the list`}
+      data-testid="chat-back"
+    >
       <ArrowLeftIcon className="rtl:rotate-180" />
     </Button>
   )
@@ -101,7 +132,15 @@ export function ChatView(props: Props) {
   return <Loaded {...props} c={c} contact={contact.data} channel={known ?? fetched} />
 }
 
-function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Props & { c: Conversation; contact?: Contact; channel?: Channel }) {
+function Loaded({
+  c,
+  contact,
+  channel,
+  onBack,
+  panel,
+  inlinePanel,
+  onPanel,
+}: Props & { c: Conversation; contact?: Contact; channel?: Channel }) {
   const { t } = useLingui()
   const text = useEnumText()
   const errorText = useErrorText()
@@ -137,7 +176,10 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
   const revision = useDraftRevision(c.id)
   const queued = usePendingReplies(c.id)
 
-  const items = useMemo(() => (messages.data?.pages ?? []).toReversed().flatMap((p) => p.items.toReversed()), [messages.data])
+  const items = useMemo(
+    () => (messages.data?.pages ?? []).toReversed().flatMap((p) => p.items.toReversed()),
+    [messages.data]
+  )
   const focusId = useSearchParams()[0].get("m") ?? undefined
   const focusMissing = !!focusId && !!messages.data && !items.some((m) => m.id === focusId)
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = messages
@@ -149,7 +191,8 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
   const inbound = shown.filter((m) => m.kind === "message" && m.direction !== "out")
   const lastInbound = inbound.at(-1)
   const feedbackId = c.kind === "feedback" && !messages.hasNextPage ? inbound[0]?.id : undefined
-  const emailTo = channel?.kind === "email" ? (inbound.findLast((m) => m.email)?.email?.from ?? contact?.emails[0]) : undefined
+  const emailTo =
+    channel?.kind === "email" ? (inbound.findLast((m) => m.email)?.email?.from ?? contact?.emails[0]) : undefined
   const undeliverable = !!emailTo && !!contact?.undeliverable.some((u) => u.email === emailTo)
   const q = finding ? foldText(findQuery.trim()) : ""
   const hits = q ? shown.filter((m) => (m.kind === "message" || m.kind === "note") && foldText(m.body).includes(q)) : []
@@ -160,7 +203,7 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
     const label = to.name || to.email
     actions.note(`@${label}\n${quoteOf(m.body)}`, [], [to.id]).then(
       () => toast(t`Forwarded to ${label} as a note`),
-      (err) => toast(errorText(err)),
+      (err) => toast(errorText(err))
     )
   }
   const ctx: ThreadContext = {
@@ -188,7 +231,8 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
   const contactTyping = typists.some((a) => a.type === "contact")
   const typingMate = typists.find((a) => a.type === "member" && a.member_id !== me)
   const viewers = useViewers(c.id)
-  const mate = typingMate ?? (viewers[0] ? { type: "member" as const, member_id: viewers[0], name: undefined } : undefined)
+  const mate =
+    typingMate ?? (viewers[0] ? { type: "member" as const, member_id: viewers[0], name: undefined } : undefined)
   const mateName = mate ? mate.name || memberName(mate.member_id) : ""
   const showCollision = !!mate && claimedFrom !== mate.member_id && c.status === "open"
 
@@ -317,19 +361,35 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
       }}
     >
       {dragging && (
-        <div className="pointer-events-none absolute inset-2 z-30 grid place-items-center rounded-2xl border-2 border-dashed border-brand/60 bg-background/85 text-center" data-testid="drop-overlay">
+        <div
+          className="pointer-events-none absolute inset-2 z-30 grid place-items-center rounded-2xl border-2 border-dashed border-brand/60 bg-background/85 text-center"
+          data-testid="drop-overlay"
+        >
           <span className="flex flex-col items-center gap-2 text-reading font-medium text-brand">
             <PaperclipIcon className="size-7" />
             <Trans>Drop files to attach them to your reply</Trans>
           </span>
         </div>
       )}
-      <header className="@container/person flex h-15 shrink-0 items-center gap-2 border-b bg-background ps-2 pe-2 phone:gap-1 phone:ps-1" data-testid="person">
+      <header
+        className="@container/person flex h-15 shrink-0 items-center gap-2 border-b bg-background ps-2 pe-2 phone:gap-1 phone:ps-1"
+        data-testid="person"
+      >
         <BackButton onBack={onBack} />
-        <button type="button" onClick={togglePanel} className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1 ps-1.5 pe-2 text-start hover:bg-muted" title={t`Contact details (C)`}>
+        <button
+          type="button"
+          onClick={togglePanel}
+          className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1 ps-1.5 pe-2 text-start hover:bg-muted"
+          title={t`Contact details (C)`}
+        >
           <span className="relative shrink-0">
             <ContactAvatar id={c.contact_id} name={name} className="size-10" />
-            {actions.live && <span className="absolute -end-px -bottom-px size-3 rounded-full border-2 border-background bg-success" data-testid="contact-live" />}
+            {actions.live && (
+              <span
+                className="absolute -end-px -bottom-px size-3 rounded-full border-2 border-background bg-success"
+                data-testid="contact-live"
+              />
+            )}
           </span>
           <span className="min-w-0 flex-1">
             <span className="block truncate text-reading font-medium" data-testid="person-name">
@@ -343,7 +403,11 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
                   <span className="truncate">{inbox.name}</span>
                 </span>
               )}
-              {inbox && <span aria-hidden className="phone:hidden @max-xl/person:hidden">·</span>}
+              {inbox && (
+                <span aria-hidden className="phone:hidden @max-xl/person:hidden">
+                  ·
+                </span>
+              )}
               <span className="truncate">
                 <Status c={c} lastInbound={lastInbound} />
               </span>
@@ -351,8 +415,17 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
           </span>
         </button>
         {assignee && (
-          <span title={t`Assigned to ${assignee.name || assignee.email}`} className="phone:hidden @max-xl/person:hidden" data-testid="header-assignee">
-            <MemberAvatar name={assignee.name || assignee.email} online={assignee.online} away={assignee.availability === "away"} className="size-7" />
+          <span
+            title={t`Assigned to ${assignee.name || assignee.email}`}
+            className="phone:hidden @max-xl/person:hidden"
+            data-testid="header-assignee"
+          >
+            <MemberAvatar
+              name={assignee.name || assignee.email}
+              online={assignee.online}
+              away={assignee.availability === "away"}
+              className="size-7"
+            />
           </span>
         )}
         <div className="flex shrink-0 items-center gap-0.5">
@@ -401,14 +474,25 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
           />
         </div>
       </header>
-      {(chipLabels.length > 0 || (c.kind === "feedback" && c.feedback) || pagePublishing.line || c.related_conversation_id || viewers.length > 0 || typingMate) && (
-        <div className="flex shrink-0 flex-wrap items-center gap-x-1.5 gap-y-1 border-b bg-background px-4 py-1.5 text-caption text-faint" data-testid="header-details">
+      {(chipLabels.length > 0 ||
+        (c.kind === "feedback" && c.feedback) ||
+        pagePublishing.line ||
+        c.related_conversation_id ||
+        viewers.length > 0 ||
+        typingMate) && (
+        <div
+          className="flex shrink-0 flex-wrap items-center gap-x-1.5 gap-y-1 border-b bg-background px-4 py-1.5 text-caption text-faint"
+          data-testid="header-details"
+        >
           {c.kind === "feedback" && c.feedback && <CategoryChip category={c.feedback.category} />}
           {c.kind === "feedback" && c.feedback && pagePublishing.line && sep}
           {pagePublishing.line}
           {pagePublishing.line && chipLabels.length > 0 && sep}
           {chipLabels.map((l) => (
-            <span key={l.id} className="inline-flex items-center gap-1 rounded-full border bg-card px-2 py-px text-caption text-muted-foreground">
+            <span
+              key={l.id}
+              className="inline-flex items-center gap-1 rounded-full border bg-card px-2 py-px text-caption text-muted-foreground"
+            >
               <Dot color={l.color} className="size-1.5" />
               {l.name}
             </span>
@@ -423,7 +507,11 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
         </div>
       )}
       {finding && (
-        <div className="flex shrink-0 items-center gap-1 border-b bg-background py-1.5 ps-3 pe-2" role="search" data-testid="find-bar">
+        <div
+          className="flex shrink-0 items-center gap-1 border-b bg-background py-1.5 ps-3 pe-2"
+          role="search"
+          data-testid="find-bar"
+        >
           <SearchIcon className="size-4 shrink-0 text-faint" />
           <input
             name="find"
@@ -447,22 +535,51 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
             aria-label={t`Search in this conversation`}
             className="h-8 min-w-0 flex-1 bg-transparent px-1.5 text-body outline-none"
           />
-          <span className="shrink-0 px-1.5 text-caption text-faint tabular-nums" aria-live="polite" data-testid="find-count">
+          <span
+            className="shrink-0 px-1.5 text-caption text-faint tabular-nums"
+            aria-live="polite"
+            data-testid="find-count"
+          >
             {q ? (hits.length ? t`${hitIndex + 1} of ${hits.length}` : t`No matches`) : ""}
           </span>
-          <Button variant="ghost" size="icon-sm" onClick={() => stepFind(-1)} disabled={hits.length < 2} aria-label={t`Older match`} title={t`Older match (Enter)`}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => stepFind(-1)}
+            disabled={hits.length < 2}
+            aria-label={t`Older match`}
+            title={t`Older match (Enter)`}
+          >
             <ChevronUpIcon />
           </Button>
-          <Button variant="ghost" size="icon-sm" onClick={() => stepFind(1)} disabled={hits.length < 2} aria-label={t`Newer match`} title={t`Newer match (⇧Enter)`}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => stepFind(1)}
+            disabled={hits.length < 2}
+            aria-label={t`Newer match`}
+            title={t`Newer match (⇧Enter)`}
+          >
             <ChevronDownIcon />
           </Button>
-          <Button variant="ghost" size="icon-sm" onClick={closeFind} aria-label={t`Close the search`} title={t`Close the search (Esc)`}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={closeFind}
+            aria-label={t`Close the search`}
+            title={t`Close the search (Esc)`}
+          >
             <XIcon />
           </Button>
         </div>
       )}
       {c.spam && (
-        <Alert role="status" variant="destructive" className="flex shrink-0 items-center gap-3 rounded-none border-x-0 border-t-0 border-b bg-destructive/6 px-4 py-2 text-small text-foreground" data-testid="spam-banner">
+        <Alert
+          role="status"
+          variant="destructive"
+          className="flex shrink-0 items-center gap-3 rounded-none border-x-0 border-t-0 border-b bg-destructive/6 px-4 py-2 text-small text-foreground"
+          data-testid="spam-banner"
+        >
           <span className="flex-1">
             <Trans>Marked as spam: never answered automatically.</Trans>
           </span>
@@ -479,7 +596,11 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
         name={name}
         feedbackId={feedbackId}
         top={<History others={others} open={historyOpen} onToggle={() => setHistoryOpen((o) => !o)} name={name} />}
-        older={{ has: !!messages.hasNextPage, loading: messages.isFetchingNextPage, load: () => void messages.fetchNextPage() }}
+        older={{
+          has: !!messages.hasNextPage,
+          loading: messages.isFetchingNextPage,
+          load: () => void messages.fetchNextPage(),
+        }}
         pending={messages.isPending}
         error={messages.error}
         queued={queued}
@@ -489,7 +610,11 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
         focusId={focusId}
       />
       <Composer>
-        {beatenBy ? <Beaten name={beatenBy} /> : showCollision && <TypingCollision name={mateName} typing={!!typingMate} onLeave={leaveTo} onClaim={claim} />}
+        {beatenBy ? (
+          <Beaten name={beatenBy} />
+        ) : (
+          showCollision && <TypingCollision name={mateName} typing={!!typingMate} onLeave={leaveTo} onClaim={claim} />
+        )}
         <ReplyBox
           key={`${c.id}:${revision}`}
           ref={reply}
@@ -505,7 +630,9 @@ function Loaded({ c, contact, channel, onBack, panel, inlinePanel, onPanel }: Pr
         />
       </Composer>
       {pagePublishing.dialogs}
-      {!inlinePanel && <ContactSheet contactId={c.contact_id} conversationId={c.id} open={sheet} onOpenChange={setSheet} />}
+      {!inlinePanel && (
+        <ContactSheet contactId={c.contact_id} conversationId={c.id} open={sheet} onOpenChange={setSheet} />
+      )}
     </section>
   )
 }

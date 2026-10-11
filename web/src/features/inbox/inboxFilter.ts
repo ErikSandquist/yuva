@@ -25,7 +25,7 @@ export function useInboxFilter() {
       listeners.add(l)
       return () => listeners.delete(l)
     },
-    () => readFilter(ws),
+    () => readFilter(ws)
   )
   const value = stored && inboxes && !inboxes.some((i) => i.id === stored) ? "" : stored
   const set = useCallback(
@@ -38,7 +38,7 @@ export function useInboxFilter() {
       }
       listeners.forEach((l) => l())
     },
-    [ws],
+    [ws]
   )
   return [value, set] as const
 }

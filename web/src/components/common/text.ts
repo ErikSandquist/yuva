@@ -133,8 +133,10 @@ export function useErrorText() {
       return t`The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings.`
     if (err.code === "not_publishable")
       return t`This question cannot be published. It needs a reply from a member, and its chat channel must still allow the page's site.`
-    if (err.code === "already_published") return t`This conversation is already published. Edit the published answer instead.`
-    if (err.code === "attachment_type_mismatch") return t`A file's content does not match its type. Check the file and try again.`
+    if (err.code === "already_published")
+      return t`This conversation is already published. Edit the published answer instead.`
+    if (err.code === "attachment_type_mismatch")
+      return t`A file's content does not match its type. Check the file and try again.`
     switch (err.status) {
       case 400:
         return t`Some of the values are not valid.`
@@ -194,7 +196,9 @@ export function formatShort(iso: string, locale: string, now = new Date()) {
   const sameDay = d.toDateString() === now.toDateString()
   if (sameDay) return new Intl.DateTimeFormat(locale, { timeStyle: "short" }).format(d)
   const sameYear = d.getFullYear() === now.getFullYear()
-  return new Intl.DateTimeFormat(locale, sameYear ? { day: "numeric", month: "short" } : { dateStyle: "short" }).format(d)
+  return new Intl.DateTimeFormat(locale, sameYear ? { day: "numeric", month: "short" } : { dateStyle: "short" }).format(
+    d
+  )
 }
 
 export function initials(name: string) {
@@ -206,5 +210,7 @@ export function initials(name: string) {
 export function formatDuration(seconds: number, locale: string) {
   const unit = seconds < 60 ? "second" : seconds < 3600 ? "minute" : seconds < 86400 ? "hour" : "day"
   const size = { second: 1, minute: 60, hour: 3600, day: 86400 }[unit]
-  return new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "short", maximumFractionDigits: 0 }).format(Math.round(seconds / size))
+  return new Intl.NumberFormat(locale, { style: "unit", unit, unitDisplay: "short", maximumFractionDigits: 0 }).format(
+    Math.round(seconds / size)
+  )
 }

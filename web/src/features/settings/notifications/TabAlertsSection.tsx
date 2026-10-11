@@ -16,12 +16,20 @@ export function TabAlertsSection() {
   return (
     <Section
       title={<Trans>In this browser tab</Trans>}
-      description={<Trans>Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you.</Trans>}
+      description={
+        <Trans>
+          Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you.
+        </Trans>
+      }
     >
       <Card>
         <ToggleRow
           title={<Trans>Alert me while the tab is in the background</Trans>}
-          hint={<Trans>A desktop notification and a short sound for new messages in conversations assigned to you or to nobody.</Trans>}
+          hint={
+            <Trans>
+              A desktop notification and a short sound for new messages in conversations assigned to you or to nobody.
+            </Trans>
+          }
         >
           <Switch checked={on} onCheckedChange={(v) => setTabAlerts(!!v)} data-testid="tab-alerts-toggle" />
         </ToggleRow>
@@ -31,7 +39,9 @@ export function TabAlertsSection() {
               {permission === "granted" ? (
                 <Trans>Desktop notifications are allowed.</Trans>
               ) : permission === "denied" ? (
-                <Trans>Desktop notifications are blocked for this site in the browser's settings, so only the sound plays.</Trans>
+                <Trans>
+                  Desktop notifications are blocked for this site in the browser's settings, so only the sound plays.
+                </Trans>
               ) : permission === "unsupported" ? (
                 <Trans>This browser cannot show desktop notifications, so only the sound plays.</Trans>
               ) : (

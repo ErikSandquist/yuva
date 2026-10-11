@@ -22,14 +22,25 @@ export function useCannedMatches(query: string | null) {
   }, [canned, query])
 }
 
-export function CannedMenu({ items, active, onPick }: { items: CannedReply[]; active: number; onPick: (c: CannedReply) => void }) {
+export function CannedMenu({
+  items,
+  active,
+  onPick,
+}: {
+  items: CannedReply[]
+  active: number
+  onPick: (c: CannedReply) => void
+}) {
   const { t } = useLingui()
   return (
     <Command
       value={items[active]?.id ?? ""}
       shouldFilter={false}
       label={t`Canned replies`}
-      className={cn(popupClass, "absolute start-0 bottom-full z-20 mb-2 h-auto max-h-64 w-full max-w-md rounded-xl! p-1.5")}
+      className={cn(
+        popupClass,
+        "absolute start-0 bottom-full z-20 mb-2 h-auto max-h-64 w-full max-w-md rounded-xl! p-1.5"
+      )}
     >
       <CommandList className="max-h-60">
         {items.map((c) => (

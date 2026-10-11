@@ -1,5 +1,14 @@
 import { useLingui } from "@lingui/react/macro"
-import { AtSignIcon, BarChart3Icon, BookOpenTextIcon, BookUserIcon, BotIcon, MessagesSquareIcon, SettingsIcon, UsersIcon } from "lucide-react"
+import {
+  AtSignIcon,
+  BarChart3Icon,
+  BookOpenTextIcon,
+  BookUserIcon,
+  BotIcon,
+  MessagesSquareIcon,
+  SettingsIcon,
+  UsersIcon,
+} from "lucide-react"
 import { useLocation, useNavigate } from "react-router"
 
 import { isChats, sectionOf, type Section } from "@/app/shell"
@@ -10,7 +19,14 @@ import { useConversations, useDrafts, useMentions } from "@/features/inbox/queri
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { cn } from "@/lib/utils"
 
-type Entry = { key: Section; label: string; icon: typeof MessagesSquareIcon; shortcut: string; badge?: number; badgeLabel?: string }
+type Entry = {
+  key: Section
+  label: string
+  icon: typeof MessagesSquareIcon
+  shortcut: string
+  badge?: number
+  badgeLabel?: string
+}
 
 export function useUnreadCount() {
   const list = useConversations({})
@@ -23,13 +39,34 @@ function useEntries(): Entry[] {
   const unseen = Number(useMentions().data?.pages[0]?.unseen ?? 0)
   const drafts = Number(useDrafts({}).data?.pages[0]?.total ?? 0)
   return [
-    { key: "conversations", label: t`Conversations`, icon: MessagesSquareIcon, shortcut: SHORTCUTS.conversations, badge: unread, badgeLabel: t`Conversations, ${unread} unread` },
-    { key: "mentions", label: t`Mentions`, icon: AtSignIcon, shortcut: SHORTCUTS.mentions, badge: unseen, badgeLabel: t`Mentions, ${unseen} unseen` },
+    {
+      key: "conversations",
+      label: t`Conversations`,
+      icon: MessagesSquareIcon,
+      shortcut: SHORTCUTS.conversations,
+      badge: unread,
+      badgeLabel: t`Conversations, ${unread} unread`,
+    },
+    {
+      key: "mentions",
+      label: t`Mentions`,
+      icon: AtSignIcon,
+      shortcut: SHORTCUTS.mentions,
+      badge: unseen,
+      badgeLabel: t`Mentions, ${unseen} unseen`,
+    },
     { key: "contacts", label: t`Contacts`, icon: BookUserIcon, shortcut: SHORTCUTS.contacts },
     { key: "team", label: t`Team`, icon: UsersIcon, shortcut: SHORTCUTS.team },
     { key: "reports", label: t`Reports`, icon: BarChart3Icon, shortcut: SHORTCUTS.reports },
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
-    { key: "assistants", label: t`Assistants`, icon: BotIcon, shortcut: SHORTCUTS.assistants, badge: drafts, badgeLabel: t`Assistants, ${drafts} drafts waiting` },
+    {
+      key: "assistants",
+      label: t`Assistants`,
+      icon: BotIcon,
+      shortcut: SHORTCUTS.assistants,
+      badge: drafts,
+      badgeLabel: t`Assistants, ${drafts} drafts waiting`,
+    },
   ]
 }
 
@@ -58,7 +95,10 @@ function Badge({ n, id, className }: { n: number; id: string; className?: string
   if (!n) return null
   return (
     <span
-      className={cn("absolute -top-1 -end-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-brand px-1 text-[11px] leading-none font-semibold text-white tabular-nums", className)}
+      className={cn(
+        "absolute -top-1 -end-1 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-brand px-1 text-[11px] leading-none font-semibold text-white tabular-nums",
+        className
+      )}
       data-testid={`rail-badge-${id}`}
     >
       {n > 99 ? "99+" : n}
@@ -85,7 +125,12 @@ export function Rail() {
   const go = useGo()
   const entries = useEntries()
   return (
-    <nav aria-label={t`Sections`} onKeyDown={moveFocus} className="flex w-16 shrink-0 flex-col items-center gap-1.5 border-e bg-surface py-3" data-testid="rail">
+    <nav
+      aria-label={t`Sections`}
+      onKeyDown={moveFocus}
+      className="flex w-16 shrink-0 flex-col items-center gap-1.5 border-e bg-surface py-3"
+      data-testid="rail"
+    >
       {entries.map((e) => (
         <Tooltip key={e.key}>
           <TooltipTrigger
@@ -160,7 +205,9 @@ export function TabBar() {
           data-rail-item
           data-testid={`tab-${e.key}`}
         >
-          <span className={cn("relative grid h-7 w-12 place-items-center rounded-full", e.key === view && "bg-brand-wash")}>
+          <span
+            className={cn("relative grid h-7 w-12 place-items-center rounded-full", e.key === view && "bg-brand-wash")}
+          >
             <e.icon className="size-5" />
             <Badge n={e.badge ?? 0} id={e.key} className="-top-1 end-auto start-[calc(50%+6px)]" />
           </span>

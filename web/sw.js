@@ -14,7 +14,7 @@ self.addEventListener("activate", (event) => {
         if (key.startsWith("yuva-") && key !== CACHE) await caches.delete(key)
       }
       await self.clients.claim()
-    })(),
+    })()
   )
 })
 
@@ -33,7 +33,7 @@ self.addEventListener("fetch", (event) => {
     return
   }
   event.respondWith(
-    caches.match(request, { cacheName: CACHE, ignoreSearch: true }).then((hit) => hit ?? fetch(request)),
+    caches.match(request, { cacheName: CACHE, ignoreSearch: true }).then((hit) => hit ?? fetch(request))
   )
 })
 
@@ -71,7 +71,7 @@ self.addEventListener("notificationclick", (event) => {
         return
       }
       await self.clients.openWindow(target.href)
-    })(),
+    })()
   )
 })
 
@@ -92,6 +92,6 @@ self.addEventListener("pushsubscriptionchange", (event) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ endpoint: sub.endpoint, keys: json.keys }),
       })
-    })(),
+    })()
   )
 })

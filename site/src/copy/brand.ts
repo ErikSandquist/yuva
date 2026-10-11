@@ -6,7 +6,9 @@ export function brandCopy(i18n: I18n) {
   return {
     meta: {
       title: i18n._(msg`Yuva brand assets: logo, colours and name`),
-      description: i18n._(msg`Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used.`),
+      description: i18n._(
+        msg`Download the Yuva logo as SVG or PNG, copy the brand colours, and read how the name and logo may be used.`
+      ),
     },
     kicker: i18n._(msg`Brand`),
     title: i18n._(msg`Brand assets`),
@@ -59,7 +61,9 @@ export function brandCopy(i18n: I18n) {
       { name: i18n._(msg`White`), hex: "#FFFFFF" },
     ],
     typeTitle: i18n._(msg`Typeface`),
-    typeBody: i18n._(msg`The name and this site are set in Geist, an open-source typeface under the SIL Open Font License.`),
+    typeBody: i18n._(
+      msg`The name and this site are set in Geist, an open-source typeface under the SIL Open Font License.`
+    ),
     rulesTitle: i18n._(msg`Using the name and logo`),
     may: i18n._(msg`You may`),
     mayItems: [
@@ -78,13 +82,20 @@ export function brandCopy(i18n: I18n) {
     downloadIcon: i18n._(msg`Download the icon`),
     tabTitle: i18n._(msg`Yuva: one inbox for every product`),
     sizesTitle: i18n._(msg`Sizes`),
-    sizesBody: i18n._(msg`The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab.`),
+    sizesBody: i18n._(
+      msg`The mark is drawn to stay readable from an app store listing down to a 16-pixel browser tab.`
+    ),
     sample: i18n._(msg`One inbox for every product you run.`),
     weights: i18n._(msg`Regular, Medium and Semibold`),
     do: i18n._(msg`Do`),
     doItems: [i18n._(msg`On light backgrounds`), i18n._(msg`On dark backgrounds`)],
     dont: i18n._(msg`Don't`),
-    dontItems: [i18n._(msg`Stretch or squash it`), i18n._(msg`Change its colours`), i18n._(msg`Rotate it`), i18n._(msg`Add shadows or outlines`)],
+    dontItems: [
+      i18n._(msg`Stretch or squash it`),
+      i18n._(msg`Change its colours`),
+      i18n._(msg`Rotate it`),
+      i18n._(msg`Add shadows or outlines`),
+    ],
   }
 }
 

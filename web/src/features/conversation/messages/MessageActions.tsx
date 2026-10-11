@@ -4,7 +4,14 @@ import { useEffect, useRef, useState } from "react"
 
 import { MemberAvatar, toast } from "@/components/common"
 import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import type { ThreadContext } from "@/features/conversation/messages/context"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import type { Message } from "@/lib/api"
@@ -22,7 +29,11 @@ export function Ticks({ at, readAt, className }: { at: string; readAt?: string; 
   const { t } = useLingui()
   const read = !!readAt && Date.parse(at) <= Date.parse(readAt)
   return read ? (
-    <CheckCheckIcon className={cn("inline size-3.5 shrink-0 text-brand", className)} aria-label={t`Read`} data-testid="ticks-read" />
+    <CheckCheckIcon
+      className={cn("inline size-3.5 shrink-0 text-brand", className)}
+      aria-label={t`Read`}
+      data-testid="ticks-read"
+    />
   ) : (
     <CheckIcon className={cn("inline size-3.5 shrink-0", className)} aria-label={t`Sent`} data-testid="ticks-sent" />
   )
@@ -60,7 +71,7 @@ export function MessageActions({ m, ctx, className }: { m: Message; ctx: ThreadC
   const copy = () =>
     navigator.clipboard.writeText(text).then(
       () => toast(t`Copied`),
-      () => toast(t`Could not copy`),
+      () => toast(t`Could not copy`)
     )
   const btn = "size-7 rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
   return (
@@ -71,24 +82,41 @@ export function MessageActions({ m, ctx, className }: { m: Message; ctx: ThreadC
         touch && !tapped && "hidden",
         touch &&
           tapped &&
-          "order-first flex basis-full group-data-[align=end]/message:justify-end group-data-[align=end]/message:pe-[34px] group-data-[align=start]/message:ps-[34px]",
+          "order-first flex basis-full group-data-[align=end]/message:justify-end group-data-[align=end]/message:pe-[34px] group-data-[align=start]/message:ps-[34px]"
       )}
     >
       <span
         className={cn(
           "z-10 flex shrink-0 items-center gap-0.5 self-center rounded-full border bg-background p-0.5 shadow-sm",
-          !touch && "opacity-0 transition-opacity group-focus-within/message:opacity-100 group-[:hover]/message:opacity-100 has-aria-expanded:opacity-100",
-          className,
+          !touch &&
+            "opacity-0 transition-opacity group-focus-within/message:opacity-100 group-[:hover]/message:opacity-100 has-aria-expanded:opacity-100",
+          className
         )}
         data-testid="message-actions"
       >
         {ctx.onQuote && text && (
-          <Button variant="ghost" size="icon-xs" className={btn} onClick={() => ctx.onQuote?.(m)} aria-label={t`Reply with a quote`} title={t`Reply with a quote`} data-testid="message-quote">
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className={btn}
+            onClick={() => ctx.onQuote?.(m)}
+            aria-label={t`Reply with a quote`}
+            title={t`Reply with a quote`}
+            data-testid="message-quote"
+          >
             <ReplyIcon />
           </Button>
         )}
         {text && (
-          <Button variant="ghost" size="icon-xs" className={btn} onClick={copy} aria-label={t`Copy`} title={t`Copy`} data-testid="message-copy">
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className={btn}
+            onClick={copy}
+            aria-label={t`Copy`}
+            title={t`Copy`}
+            data-testid="message-copy"
+          >
             <CopyIcon />
           </Button>
         )}
@@ -114,7 +142,12 @@ export function MessageActions({ m, ctx, className }: { m: Message; ctx: ThreadC
                 )}
                 {mates.map((x) => (
                   <DropdownMenuItem key={x.id} onClick={() => ctx.onForward?.(m, x)} data-testid="forward-to">
-                    <MemberAvatar name={x.name || x.email} online={x.online} away={x.availability === "away"} className="size-5" />
+                    <MemberAvatar
+                      name={x.name || x.email}
+                      online={x.online}
+                      away={x.availability === "away"}
+                      className="size-5"
+                    />
                     <span className="truncate">{x.name || x.email}</span>
                   </DropdownMenuItem>
                 ))}
@@ -149,7 +182,7 @@ export function Highlight({ text, query }: { text: string; query?: string }) {
     parts.push(
       <mark key={at} className="rounded-sm bg-warning/35 text-inherit" data-testid="find-hit">
         {text.slice(at, at + q.length)}
-      </mark>,
+      </mark>
     )
     from = at + q.length
   }

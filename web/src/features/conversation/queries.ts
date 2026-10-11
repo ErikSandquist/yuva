@@ -29,7 +29,7 @@ export function useMessages(conversationId: string | undefined) {
             path: { conversationId: conversationId! },
             query: { order: "desc", cursor: pageParam, limit: MESSAGE_PAGE },
           },
-        }),
+        })
       ),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
@@ -56,7 +56,7 @@ export function useMarkRead(conversationId: string) {
         api.POST("/v1/conversations/{conversationId}/read", {
           params: { path: { conversationId } },
           body: { message_id: messageId },
-        }),
+        })
       ),
     onSuccess: (data) => applyRead(qc, ws, data),
   })
@@ -84,7 +84,7 @@ export function useMoveConversation(id: string) {
         api.POST("/v1/conversations/{conversationId}/move", {
           params: { path: { conversationId: id } },
           body: { inbox_id: inboxId },
-        }),
+        })
       ),
     onSuccess: (data) => {
       applyEvent(qc, live, { type: "conversation.updated", data })
@@ -113,7 +113,7 @@ export function postMessage(conversationId: string, { files, ...body }: Outgoing
         for (const f of files) form.append("files", f, f.name)
         return form
       },
-    }),
+    })
   )
 }
 

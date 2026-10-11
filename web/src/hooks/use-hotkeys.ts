@@ -12,7 +12,7 @@ function isTyping(target: EventTarget | null) {
 
 function hasOpenLayer() {
   return !!document.querySelector(
-    ':is([role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"]):not([data-closed])',
+    ':is([role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"]):not([data-closed])'
   )
 }
 
@@ -32,7 +32,7 @@ if (typeof window !== "undefined") {
       sequences.set(e, chained ? `${PREFIX} ${e.key}` : e.key)
       last = chained ? null : { key: e.key, at: e.timeStamp }
     },
-    true,
+    true
   )
 }
 

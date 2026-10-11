@@ -25,7 +25,8 @@ export function PublicKeyField({
   const { workspaceId: ws } = useSession()
   const [confirm, confirmDialog] = useConfirm()
   const rotate = useMutation({
-    mutationFn: () => unwrap(api.POST("/v1/channels/{channelId}/public-key", { params: { path: { channelId: channel.id } } })),
+    mutationFn: () =>
+      unwrap(api.POST("/v1/channels/{channelId}/public-key", { params: { path: { channelId: channel.id } } })),
     onSuccess: (data) => {
       const key = data.chat?.public_key ?? data.app?.public_key
       if (key) onRotated(key)
@@ -36,7 +37,10 @@ export function PublicKeyField({
   return (
     <Field label={<Trans>Public key</Trans>} hint={hint}>
       <div className="flex min-w-0 items-center gap-2">
-        <code className="min-w-0 flex-1 truncate rounded-xl border bg-surface px-3 py-2 font-mono text-caption" data-testid="channel-public-key">
+        <code
+          className="min-w-0 flex-1 truncate rounded-xl border bg-surface px-3 py-2 font-mono text-caption"
+          data-testid="channel-public-key"
+        >
           {value}
         </code>
         <CopyButton value={value} />
@@ -46,7 +50,14 @@ export function PublicKeyField({
           size="sm"
           disabled={rotate.isPending}
           data-testid="rotate-public-key"
-          onClick={() => confirm({ title: <Trans>Rotate the public key?</Trans>, description: warning, confirm: <Trans>Rotate</Trans>, run: () => rotate.mutate() })}
+          onClick={() =>
+            confirm({
+              title: <Trans>Rotate the public key?</Trans>,
+              description: warning,
+              confirm: <Trans>Rotate</Trans>,
+              run: () => rotate.mutate(),
+            })
+          }
         >
           <Trans>Rotate</Trans>
         </Button>

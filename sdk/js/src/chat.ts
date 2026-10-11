@@ -1,7 +1,7 @@
-import { define, YuvaChatElement } from "./element";
+import { define, YuvaChatElement } from "./element"
 
-YuvaChatElement.loadPanel = () => import("./yuva-chat");
-define();
+YuvaChatElement.loadPanel = () => import("./yuva-chat")
+define()
 
-export { define, YuvaChatElement };
-export type { IdentityTokenSource, Layout } from "./types";
+export { define, YuvaChatElement }
+export type { IdentityTokenSource, Layout } from "./types"

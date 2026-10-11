@@ -56,7 +56,12 @@ export function MemberList() {
                   detail={m.email}
                 />
                 {editable(m) ? (
-                  <RoleSelect value={m.role} allowOwner={isOwner} label={t`Role of ${name}`} onChange={(role) => setRole.mutate({ id: m.id, role })} />
+                  <RoleSelect
+                    value={m.role}
+                    allowOwner={isOwner}
+                    label={t`Role of ${name}`}
+                    onChange={(role) => setRole.mutate({ id: m.id, role })}
+                  />
                 ) : (
                   <span className="w-32 text-body text-muted-foreground">{text.role[m.role]}</span>
                 )}

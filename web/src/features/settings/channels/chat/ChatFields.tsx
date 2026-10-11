@@ -37,7 +37,11 @@ export function ChatFields({
     ) : null
   return (
     <FormBlock title={<Trans>Web chat</Trans>}>
-      <Field label={<Trans>Allowed origins</Trans>} htmlFor="chat-origins" hint={<Trans>One per line, 1 to 20. Only pages on these origins can use the widget.</Trans>}>
+      <Field
+        label={<Trans>Allowed origins</Trans>}
+        htmlFor="chat-origins"
+        hint={<Trans>One per line, 1 to 20. Only pages on these origins can use the widget.</Trans>}
+      >
         <Textarea
           id="chat-origins"
           rows={3}
@@ -52,16 +56,31 @@ export function ChatFields({
         />
         <FieldError id="err-chat-origins">{originsError}</FieldError>
       </Field>
-      <ToggleRow title={<Trans>Allow anonymous visitors</Trans>} hint={<Trans>Visitors can chat without an identity token from your backend.</Trans>}>
-        <Switch checked={f.allowAnonymous} onCheckedChange={(allowAnonymous) => set({ allowAnonymous })} aria-label={t`Allow anonymous visitors`} />
+      <ToggleRow
+        title={<Trans>Allow anonymous visitors</Trans>}
+        hint={<Trans>Visitors can chat without an identity token from your backend.</Trans>}
+      >
+        <Switch
+          checked={f.allowAnonymous}
+          onCheckedChange={(allowAnonymous) => set({ allowAnonymous })}
+          aria-label={t`Allow anonymous visitors`}
+        />
       </ToggleRow>
       <ToggleRow
         title={<Trans>Ask for an e-mail address when offline</Trans>}
         hint={<Trans>When nobody is available, the widget asks where to send the reply.</Trans>}
       >
-        <Switch checked={f.askEmailOffline} onCheckedChange={(askEmailOffline) => set({ askEmailOffline })} aria-label={t`Ask for an e-mail address when offline`} />
+        <Switch
+          checked={f.askEmailOffline}
+          onCheckedChange={(askEmailOffline) => set({ askEmailOffline })}
+          aria-label={t`Ask for an e-mail address when offline`}
+        />
       </ToggleRow>
-      <Field label={<Trans>Greeting</Trans>} htmlFor="chat-greeting" hint={<Trans>Shown before the first message. The inbox greeting when empty.</Trans>}>
+      <Field
+        label={<Trans>Greeting</Trans>}
+        htmlFor="chat-greeting"
+        hint={<Trans>Shown before the first message. The inbox greeting when empty.</Trans>}
+      >
         <Textarea
           id="chat-greeting"
           rows={2}
@@ -71,11 +90,17 @@ export function ChatFields({
           onChange={(e) => set({ greeting: e.target.value })}
           aria-invalid={serverError === "greeting" || undefined}
         />
-        <FieldError id="err-chat-greeting">{serverError === "greeting" && <Trans>Use at most 500 characters.</Trans>}</FieldError>
+        <FieldError id="err-chat-greeting">
+          {serverError === "greeting" && <Trans>Use at most 500 characters.</Trans>}
+        </FieldError>
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={<Trans>Launcher position</Trans>}>
-          <Select value={f.position} onValueChange={(v) => set({ position: v as ChatLauncherPosition })} items={positionText}>
+          <Select
+            value={f.position}
+            onValueChange={(v) => set({ position: v as ChatLauncherPosition })}
+            items={positionText}
+          >
             <SelectTrigger className="w-full" aria-label={t`Launcher position`}>
               <SelectValue />
             </SelectTrigger>
@@ -90,7 +115,11 @@ export function ChatFields({
         </Field>
         <Field label={<Trans>Launcher color</Trans>} htmlFor="chat-color">
           <div className="flex h-9 items-center gap-2">
-            <Switch checked={f.customColor} onCheckedChange={(customColor) => set({ customColor })} aria-label={t`Use a custom launcher color`} />
+            <Switch
+              checked={f.customColor}
+              onCheckedChange={(customColor) => set({ customColor })}
+              aria-label={t`Use a custom launcher color`}
+            />
             {f.customColor ? (
               <>
                 <Input
@@ -109,7 +138,9 @@ export function ChatFields({
               </span>
             )}
           </div>
-          <FieldError id="err-chat-color">{serverError === "launcher.color" && <Trans>Pick a color.</Trans>}</FieldError>
+          <FieldError id="err-chat-color">
+            {serverError === "launcher.color" && <Trans>Pick a color.</Trans>}
+          </FieldError>
         </Field>
       </div>
     </FormBlock>

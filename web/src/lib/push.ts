@@ -101,7 +101,7 @@ async function register(sub: PushSubscription) {
         keys: { p256dh: json.keys?.p256dh ?? "", auth: json.keys?.auth ?? "" },
         user_agent: deviceLabel(),
       },
-    }),
+    })
   )
 }
 
@@ -131,7 +131,7 @@ function sameKey(a: Uint8Array, b: Uint8Array) {
 export async function unsubscribe(id: string | undefined) {
   if (id)
     await unwrap(
-      api.DELETE("/v1/me/push-subscriptions/{pushSubscriptionId}", { params: { path: { pushSubscriptionId: id } } }),
+      api.DELETE("/v1/me/push-subscriptions/{pushSubscriptionId}", { params: { path: { pushSubscriptionId: id } } })
     )
   await (await browserSubscription())?.unsubscribe()
 }

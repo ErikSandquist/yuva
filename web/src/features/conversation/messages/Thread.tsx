@@ -8,7 +8,13 @@ import { Badge } from "@/components/ui/badge"
 import { Bubble, BubbleContent } from "@/components/ui/bubble"
 import { Button } from "@/components/ui/button"
 import { Marker, MarkerContent } from "@/components/ui/marker"
-import { Message as MessageFrame, MessageAvatar, MessageContent, MessageFooter, MessageHeader } from "@/components/ui/message"
+import {
+  Message as MessageFrame,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+  MessageHeader,
+} from "@/components/ui/message"
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -79,7 +85,10 @@ function useDayLabel() {
     if (d.toDateString() === today.toDateString()) return t`Today`
     if (d.toDateString() === yesterday.toDateString()) return t`Yesterday`
     const sameYear = d.getFullYear() === today.getFullYear()
-    return new Intl.DateTimeFormat(i18n.locale, sameYear ? { weekday: "long", day: "numeric", month: "long" } : { dateStyle: "long" }).format(d)
+    return new Intl.DateTimeFormat(
+      i18n.locale,
+      sameYear ? { weekday: "long", day: "numeric", month: "long" } : { dateStyle: "long" }
+    ).format(d)
   }
 }
 
@@ -110,18 +119,34 @@ function EmailTags({ m }: { m: Message }) {
         </span>
       )}
       {e.auto && (
-        <Badge variant="secondary" className={cn(tagClass, "text-muted-foreground")} title={t`Automatic mail never triggers an automatic reply.`}>
+        <Badge
+          variant="secondary"
+          className={cn(tagClass, "text-muted-foreground")}
+          title={t`Automatic mail never triggers an automatic reply.`}
+        >
           <Trans>Auto-reply</Trans>
         </Badge>
       )}
       {e.dmarc === "fail" && (
-        <Badge variant="destructive" className={tagClass} title={t`The sender's domain did not authorize this mail. It may be forged.`}>
+        <Badge
+          variant="destructive"
+          className={tagClass}
+          title={t`The sender's domain did not authorize this mail. It may be forged.`}
+        >
           <Trans>DMARC failed</Trans>
         </Badge>
       )}
       {e.unverified_sender && (
         <Tooltip>
-          <TooltipTrigger render={<Badge tabIndex={0} className={cn(tagClass, "bg-warning/10 text-warning")} data-testid="unverified-sender" />}>
+          <TooltipTrigger
+            render={
+              <Badge
+                tabIndex={0}
+                className={cn(tagClass, "bg-warning/10 text-warning")}
+                data-testid="unverified-sender"
+              />
+            }
+          >
             <Trans>Unverified sender</Trans>
           </TooltipTrigger>
           <TooltipContent className="block max-w-72">
@@ -148,9 +173,15 @@ function useWho(m: Message, side: Side, ctx: ThreadContext, name: string) {
 function Face({ m, side, ctx, name }: { m: Message; side: Side; ctx: ThreadContext; name: string }) {
   const author = useAuthorName(m, ctx)
   const by = useAuthorName({ ...m, author: m.sent_by ?? m.author }, ctx)
-  if (side === "in") return <ContactAvatar id={ctx.contact?.id ?? m.conversation_id} name={name} className="size-[26px]" />
+  if (side === "in")
+    return <ContactAvatar id={ctx.contact?.id ?? m.conversation_id} name={name} className="size-[26px]" />
   if (side === "bot") return <BotAvatar name={author} url={m.author.avatar_url} className="size-[26px]" />
-  return <PersonAvatar name={by} className={cn("size-[26px] text-white", side === "me" ? "bg-muted-foreground text-background" : "bg-mate")} />
+  return (
+    <PersonAvatar
+      name={by}
+      className={cn("size-[26px] text-white", side === "me" ? "bg-muted-foreground text-background" : "bg-mate")}
+    />
+  )
 }
 
 function Meta({ m, side, ctx, name }: { m: Message; side: Side; ctx: ThreadContext; name: string }) {
@@ -168,7 +199,10 @@ function Meta({ m, side, ctx, name }: { m: Message; side: Side; ctx: ThreadConte
 const sideBubble: Record<Side, { variant: "default" | "outline"; className?: string }> = {
   in: { variant: "outline", className: "*:data-[slot=bubble-content]:bg-card" },
   me: { variant: "default" },
-  mate: { variant: "default", className: "*:data-[slot=bubble-content]:bg-mate *:data-[slot=bubble-content]:text-white" },
+  mate: {
+    variant: "default",
+    className: "*:data-[slot=bubble-content]:bg-mate *:data-[slot=bubble-content]:text-white",
+  },
   bot: { variant: "outline", className: "*:data-[slot=bubble-content]:bg-surface" },
 }
 
@@ -193,7 +227,13 @@ function Line({ m, ctx, name, me, last }: { m: Message; ctx: ThreadContext; name
   const align = out ? "end" : "start"
   const look = sideBubble[side]
   return (
-    <MessageFrame align={align} tabIndex={-1} className={cn("outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1", last ? "pb-2" : "pb-0.5")} data-testid="message" data-message-id={m.id}>
+    <MessageFrame
+      align={align}
+      tabIndex={-1}
+      className={cn("outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1", last ? "pb-2" : "pb-0.5")}
+      data-testid="message"
+      data-message-id={m.id}
+    >
       <MessageAvatar className={cn(avatarSlot, !last && "invisible")}>
         <Face m={m} side={side} ctx={ctx} name={name} />
       </MessageAvatar>
@@ -218,12 +258,27 @@ function Line({ m, ctx, name, me, last }: { m: Message; ctx: ThreadContext; name
 
 const mailLook = {
   "original-dark": { variant: "outline", className: "*:data-[slot=bubble-content]:bg-card" },
-  "original-light": { variant: "outline", className: "*:data-[slot=bubble-content]:bg-white *:data-[slot=bubble-content]:text-neutral-900" },
+  "original-light": {
+    variant: "outline",
+    className: "*:data-[slot=bubble-content]:bg-white *:data-[slot=bubble-content]:text-neutral-900",
+  },
   reading: { variant: "outline", className: "*:data-[slot=bubble-content]:bg-card" },
   readingOut: { variant: "tinted", className: undefined },
 } as const
 
-function Mail({ m, ctx, name, me, subject }: { m: Message; ctx: ThreadContext; name: string; me: string; subject?: string }) {
+function Mail({
+  m,
+  ctx,
+  name,
+  me,
+  subject,
+}: {
+  m: Message
+  ctx: ThreadContext
+  name: string
+  me: string
+  subject?: string
+}) {
   const { t } = useLingui()
   const { workspaceId } = useSession()
   const mail = useMail(m, ctx.expandQuoted)
@@ -237,11 +292,23 @@ function Mail({ m, ctx, name, me, subject }: { m: Message; ctx: ThreadContext; n
   const wide = surface !== "text"
   const e = m.email
   return (
-    <MessageFrame align={align} tabIndex={-1} className="pb-2 outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1" data-testid="message" data-kind="email" data-message-id={m.id}>
+    <MessageFrame
+      align={align}
+      tabIndex={-1}
+      className="pb-2 outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1"
+      data-testid="message"
+      data-kind="email"
+      data-message-id={m.id}
+    >
       <MessageAvatar className={avatarSlot}>
         <Face m={m} side={side} ctx={ctx} name={name} />
       </MessageAvatar>
-      <MessageContent className={cn("gap-1", wide ? "max-w-[88%] phone:max-w-full phone:flex-1" : "w-auto max-w-[80%] phone:max-w-[88%]")}>
+      <MessageContent
+        className={cn(
+          "gap-1",
+          wide ? "max-w-[88%] phone:max-w-full phone:flex-1" : "w-auto max-w-[80%] phone:max-w-[88%]"
+        )}
+      >
         <MessageHeader className={headerClass}>
           <span className="min-w-0 truncate" title={e && !out ? e.from : undefined}>
             {who}
@@ -250,9 +317,20 @@ function Mail({ m, ctx, name, me, subject }: { m: Message; ctx: ThreadContext; n
           <EmailTags m={m} />
         </MessageHeader>
         <Bubble variant={look.variant} align={align} className={cn("max-w-full", wide && "w-full", look.className)}>
-          <BubbleContent className={cn("rounded-2xl", tail(out), wide && "w-full", framed && "p-0", ctx.find?.current === m.id && hitRing)}>
+          <BubbleContent
+            className={cn(
+              "rounded-2xl",
+              tail(out),
+              wide && "w-full",
+              framed && "p-0",
+              ctx.find?.current === m.id && hitRing
+            )}
+          >
             {subject && (
-              <div className={cn("text-small font-semibold break-words", framed ? "border-b px-3 pt-2 pb-1.5" : "mb-1")} data-testid="email-subject">
+              <div
+                className={cn("text-small font-semibold break-words", framed ? "border-b px-3 pt-2 pb-1.5" : "mb-1")}
+                data-testid="email-subject"
+              >
                 {subject}
               </div>
             )}
@@ -293,7 +371,17 @@ const categoryTag: Record<FeedbackCategory, string> = {
   other: "bg-muted text-muted-foreground",
 }
 
-function FeedbackMessage({ m, ctx, name, feedback }: { m: Message; ctx: ThreadContext; name: string; feedback: Feedback }) {
+function FeedbackMessage({
+  m,
+  ctx,
+  name,
+  feedback,
+}: {
+  m: Message
+  ctx: ThreadContext
+  name: string
+  feedback: Feedback
+}) {
   const category = feedback.category
   const text = useEnumText()
   return (
@@ -304,7 +392,11 @@ function FeedbackMessage({ m, ctx, name, feedback }: { m: Message; ctx: ThreadCo
       <MessageContent className="max-w-[88%] gap-1 phone:max-w-[94%]">
         <MessageHeader className={headerClass}>
           <Badge className={cn(tagClass, "rounded-md", categoryTag[category])}>{text.category[category]}</Badge>
-          {feedback.page_url ? <Trans>Feedback sent from a documentation page</Trans> : <Trans>Feedback sent from the app</Trans>}
+          {feedback.page_url ? (
+            <Trans>Feedback sent from a documentation page</Trans>
+          ) : (
+            <Trans>Feedback sent from the app</Trans>
+          )}
         </MessageHeader>
         <Bubble variant="outline" className="max-w-full *:data-[slot=bubble-content]:bg-card">
           <BubbleContent className={cn("rounded-2xl rounded-es-md p-0", ctx.find?.current === m.id && hitRing)}>
@@ -351,11 +443,14 @@ function NoteBody({ m, ctx }: { m: Message; ctx: ThreadContext }) {
     parts.push(
       <span
         key={hit.index}
-        className={cn("rounded px-0.5 font-medium", who.id === membership.member_id ? "bg-brand-wash text-brand" : "bg-note-ink/10 text-note-ink")}
+        className={cn(
+          "rounded px-0.5 font-medium",
+          who.id === membership.member_id ? "bg-brand-wash text-brand" : "bg-note-ink/10 text-note-ink"
+        )}
         data-testid="mention"
       >
         {hit[0]}
-      </span>,
+      </span>
     )
     last = hit.index + hit[0].length
   }
@@ -384,7 +479,13 @@ function Note({ m, ctx, name, me }: { m: Message; ctx: ThreadContext; name: stri
   const side = noteSide(m, me)
   const who = useWho(m, side, ctx, name)
   return (
-    <MessageFrame align="end" tabIndex={-1} className="pb-2 outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1" data-testid="note" data-message-id={m.id}>
+    <MessageFrame
+      align="end"
+      tabIndex={-1}
+      className="pb-2 outline-none pointer-coarse:flex-wrap pointer-coarse:gap-y-1"
+      data-testid="note"
+      data-message-id={m.id}
+    >
       <MessageAvatar className={avatarSlot}>
         <Face m={m} side={side} ctx={ctx} name={name} />
       </MessageAvatar>
@@ -396,7 +497,9 @@ function Note({ m, ctx, name, me }: { m: Message; ctx: ThreadContext; name: stri
             align="end"
             className="max-w-full *:data-[slot=bubble-content]:border-note-border *:data-[slot=bubble-content]:bg-note"
           >
-            <BubbleContent className={cn("rounded-2xl rounded-ee-md text-reading", ctx.find?.current === m.id && hitRing)}>
+            <BubbleContent
+              className={cn("rounded-2xl rounded-ee-md text-reading", ctx.find?.current === m.id && hitRing)}
+            >
               <NoteBody m={m} ctx={ctx} />
             </BubbleContent>
           </Bubble>
@@ -482,7 +585,9 @@ function Draft({ m, ctx }: { m: Message; ctx: ThreadContext }) {
             align="end"
             className="max-w-full *:data-[slot=bubble-content]:border-dashed *:data-[slot=bubble-content]:border-warning/50 *:data-[slot=bubble-content]:bg-warning/5"
           >
-            <BubbleContent className={cn("rounded-2xl rounded-se-md px-[15px] py-[11px]", ctx.find?.current === m.id && hitRing)}>
+            <BubbleContent
+              className={cn("rounded-2xl rounded-se-md px-[15px] py-[11px]", ctx.find?.current === m.id && hitRing)}
+            >
               <div className="text-reading break-words whitespace-pre-wrap">{m.body}</div>
             </BubbleContent>
           </Bubble>
@@ -496,7 +601,13 @@ function Draft({ m, ctx }: { m: Message; ctx: ThreadContext }) {
             <Button variant="ghost" size="sm" onClick={edit} disabled={busy} data-testid="draft-edit">
               <Trans>Edit</Trans>
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => discard.mutate(m)} disabled={busy} data-testid="draft-discard">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => discard.mutate(m)}
+              disabled={busy}
+              data-testid="draft-discard"
+            >
               <Trans>Discard</Trans>
             </Button>
           </div>
@@ -516,11 +627,15 @@ function Rated({ m, ctx, name }: { m: Message; ctx: ThreadContext; name: string 
       <MarkerContent
         className={cn(
           "max-w-[88%] rounded-2xl border px-3.5 py-2 text-center text-body text-foreground",
-          rating === "good" ? "border-success/25 bg-success/6" : "border-destructive/25 bg-destructive/5",
+          rating === "good" ? "border-success/25 bg-success/6" : "border-destructive/25 bg-destructive/5"
         )}
       >
         <span className="font-medium">
-          {rating === "good" ? <Trans>{first} rated the conversation 👍</Trans> : <Trans>{first} rated the conversation 👎</Trans>}
+          {rating === "good" ? (
+            <Trans>{first} rated the conversation 👍</Trans>
+          ) : (
+            <Trans>{first} rated the conversation 👎</Trans>
+          )}
         </span>
         {m.body && <span className="text-muted-foreground"> · “{m.body}”</span>}
         <Time iso={m.created_at} className="ms-1.5 text-caption text-faint" />
@@ -532,7 +647,9 @@ function Rated({ m, ctx, name }: { m: Message; ctx: ThreadContext; name: string 
 function DayMarker({ label }: { label: string }) {
   return (
     <Marker variant="separator" className="py-2.5" data-testid="day-separator">
-      <MarkerContent className="rounded-full border bg-card px-3 py-1 text-caption text-muted-foreground shadow-[0_1px_2px_rgb(0_0_0/0.06)]">{label}</MarkerContent>
+      <MarkerContent className="rounded-full border bg-card px-3 py-1 text-caption text-muted-foreground shadow-[0_1px_2px_rgb(0_0_0/0.06)]">
+        {label}
+      </MarkerContent>
     </Marker>
   )
 }
@@ -548,7 +665,9 @@ function Pending({ p }: { p: PendingReply }) {
             </BubbleContent>
           </Bubble>
         )}
-        {p.files.length > 0 && <div className="self-end text-caption text-faint">{p.files.map((f) => f.name).join(", ")}</div>}
+        {p.files.length > 0 && (
+          <div className="self-end text-caption text-faint">{p.files.map((f) => f.name).join(", ")}</div>
+        )}
         <MessageFooter className="px-1 text-caption font-normal text-faint">
           {p.close ? <Trans>Sending, then closing…</Trans> : <Trans>Sending…</Trans>}
         </MessageFooter>
@@ -573,7 +692,12 @@ function Typing({ name }: { name: string }) {
 }
 
 function Row({ className, ...props }: React.ComponentProps<typeof MessageScrollerItem>) {
-  return <MessageScrollerItem className={cn("[contain-intrinsic-size:none] [content-visibility:visible]", className)} {...props} />
+  return (
+    <MessageScrollerItem
+      className={cn("[contain-intrinsic-size:none] [content-visibility:visible]", className)}
+      {...props}
+    />
+  )
 }
 
 function useScrolling(root: React.RefObject<HTMLDivElement | null>) {
@@ -619,17 +743,30 @@ function DayChip({ items, root }: { items: Message[]; root: React.RefObject<HTML
   if (!m) return null
   return (
     <div
-      className={cn("pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center transition-opacity duration-300", start && scrolling ? "opacity-100" : "opacity-0")}
+      className={cn(
+        "pointer-events-none absolute inset-x-0 top-2 z-10 flex justify-center transition-opacity duration-300",
+        start && scrolling ? "opacity-100" : "opacity-0"
+      )}
       aria-hidden
       data-testid="day-chip"
       data-active={start && scrolling}
     >
-      <span className="rounded-full border bg-card px-3 py-1 text-caption text-muted-foreground shadow-[0_1px_2px_rgb(0_0_0/0.06)]">{dayLabel(m.created_at)}</span>
+      <span className="rounded-full border bg-card px-3 py-1 text-caption text-muted-foreground shadow-[0_1px_2px_rgb(0_0_0/0.06)]">
+        {dayLabel(m.created_at)}
+      </span>
     </div>
   )
 }
 
-function Older({ root, loading, onLoad }: { root: React.RefObject<HTMLDivElement | null>; loading: boolean; onLoad: () => void }) {
+function Older({
+  root,
+  loading,
+  onLoad,
+}: {
+  root: React.RefObject<HTMLDivElement | null>
+  loading: boolean
+  onLoad: () => void
+}) {
   const self = useRef<HTMLDivElement>(null)
   const load = useRef(onLoad)
   load.current = onLoad
@@ -677,7 +814,22 @@ export function Thread(props: ThreadProps) {
   )
 }
 
-function ThreadView({ items, ctx: base, conversation, name, feedbackId, top, older, pending, error, queued, typing, lastId, lastMine, focusId }: ThreadProps) {
+function ThreadView({
+  items,
+  ctx: base,
+  conversation,
+  name,
+  feedbackId,
+  top,
+  older,
+  pending,
+  error,
+  queued,
+  typing,
+  lastId,
+  lastMine,
+  focusId,
+}: ThreadProps) {
   const { t } = useLingui()
   const { membership } = useSession()
   const dayLabel = useDayLabel()
@@ -728,8 +880,14 @@ function ThreadView({ items, ctx: base, conversation, name, feedbackId, top, old
   }, [items])
 
   const sending = useMemo(
-    () => queued.filter((p) => !items.some((m) => (!!m.client_id && m.client_id === p.clientId) || (!!p.messageId && m.id === p.messageId && !m.draft))),
-    [queued, items],
+    () =>
+      queued.filter(
+        (p) =>
+          !items.some(
+            (m) => (!!m.client_id && m.client_id === p.clientId) || (!!p.messageId && m.id === p.messageId && !m.draft)
+          )
+      ),
+    [queued, items]
   )
 
   const render = (m: Message, i: number) => {
@@ -737,7 +895,8 @@ function ThreadView({ items, ctx: base, conversation, name, feedbackId, top, old
     if (m.kind === "event") return <EventLine m={m} ctx={ctx} />
     if (m.kind === "note") return <Note m={m} ctx={ctx} name={name} me={me} />
     if (m.draft) return <Draft m={m} ctx={ctx} />
-    if (m.id === feedbackId && conversation.feedback) return <FeedbackMessage m={m} ctx={ctx} name={name} feedback={conversation.feedback} />
+    if (m.id === feedbackId && conversation.feedback)
+      return <FeedbackMessage m={m} ctx={ctx} name={name} feedback={conversation.feedback} />
     if (isMail(m)) return <Mail m={m} ctx={ctx} name={name} me={me} subject={subjects.get(m.id)} />
     return <Line m={m} ctx={ctx} name={name} me={me} last={!sameGroup(m, items[i + 1])} />
   }
@@ -771,7 +930,7 @@ function ThreadView({ items, ctx: base, conversation, name, feedbackId, top, old
                 <Row key={r.key} messageId={r.key}>
                   <DayMarker label={dayLabel(r.day!)} />
                 </Row>
-              ),
+              )
             )
           )}
           {sending.map((p) => (
@@ -787,7 +946,12 @@ function ThreadView({ items, ctx: base, conversation, name, feedbackId, top, old
         </MessageScrollerContent>
       </MessageScrollerViewport>
       <DayChip items={items} root={viewport} />
-      <MessageScrollerButton aria-label={t`Go to the latest message`} title={t`Go to the latest message`} className="z-10 shadow-md phone:inset-s-auto phone:end-2 phone:translate-x-0 rtl:phone:translate-x-0" data-testid="to-latest" />
+      <MessageScrollerButton
+        aria-label={t`Go to the latest message`}
+        title={t`Go to the latest message`}
+        className="z-10 shadow-md phone:inset-s-auto phone:end-2 phone:translate-x-0 rtl:phone:translate-x-0"
+        data-testid="to-latest"
+      />
     </MessageScroller>
   )
 }

@@ -41,11 +41,13 @@ export function useMail(m: Message, expandQuoted: boolean) {
   const remote = !!html && !!(full ? full.has_remote_images : m.email?.has_remote_images)
   const inline = useMemo(
     () => new Map(m.attachments.filter(isInlineImage).map((a) => [a.content_id!, attachmentUrl(a, workspaceId)])),
-    [m.attachments, workspaceId],
+    [m.attachments, workspaceId]
   )
   const listed = useMemo(() => {
     const placed = html && inline.size > 0 ? placedContentIds(html) : new Set<string>()
-    return m.attachments.filter((a) => !(a.inline && a.content_id && inline.has(a.content_id) && placed.has(a.content_id)))
+    return m.attachments.filter(
+      (a) => !(a.inline && a.content_id && inline.has(a.content_id) && placed.has(a.content_id))
+    )
   }, [html, inline, m.attachments])
   return {
     m,
@@ -88,7 +90,10 @@ export function MailBody({ mail }: { mail: Mail }) {
     <>
       {waiting ? (
         <div ref={mail.slot} className="w-full" data-testid="original-loading">
-          <Skeleton className="w-full rounded-none" style={{ height: knownHeight(mail.heightKey) ?? ORIGINAL_HEIGHT }} />
+          <Skeleton
+            className="w-full rounded-none"
+            style={{ height: knownHeight(mail.heightKey) ?? ORIGINAL_HEIGHT }}
+          />
         </div>
       ) : originalHtml ? (
         <EmailHtml
@@ -119,7 +124,14 @@ export function MailControls({ mail }: { mail: Mail }) {
     <>
       <ErrorLine error={mail.error} className="basis-full text-caption" />
       {!waiting && canOriginal && (
-        <Button variant="ghost" size="sm" className={control} onClick={mail.toggleOriginal} aria-pressed={!!originalHtml} data-testid="original-toggle">
+        <Button
+          variant="ghost"
+          size="sm"
+          className={control}
+          onClick={mail.toggleOriginal}
+          aria-pressed={!!originalHtml}
+          data-testid="original-toggle"
+        >
           {originalHtml ? <Trans>Show reading view</Trans> : <Trans>Show original</Trans>}
         </Button>
       )}
@@ -137,7 +149,14 @@ export function MailControls({ mail }: { mail: Mail }) {
         </Button>
       )}
       {!waiting && m.email?.quoted && !originalHtml && (
-        <Button variant="ghost" size="sm" className={control} onClick={mail.toggleQuoted} aria-expanded={quotedShown} data-testid="quoted-toggle">
+        <Button
+          variant="ghost"
+          size="sm"
+          className={control}
+          onClick={mail.toggleQuoted}
+          aria-expanded={quotedShown}
+          data-testid="quoted-toggle"
+        >
           {quotedShown ? <Trans>Hide quoted text</Trans> : <Trans>Show quoted text</Trans>}
         </Button>
       )}

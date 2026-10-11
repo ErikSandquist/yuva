@@ -55,7 +55,8 @@ export function useMentions(enabled = true) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
     queryKey: keys.mentions(ws),
-    queryFn: ({ pageParam }) => unwrap(api.GET("/v1/me/mentions", { params: { query: { cursor: pageParam, limit: 50 } } })),
+    queryFn: ({ pageParam }) =>
+      unwrap(api.GET("/v1/me/mentions", { params: { query: { cursor: pageParam, limit: 50 } } })),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
     enabled,
@@ -66,7 +67,8 @@ export function useDrafts(filters: DraftFilters) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({
     queryKey: keys.drafts(ws, filters),
-    queryFn: ({ pageParam }) => unwrap(api.GET("/v1/drafts", { params: { query: { ...filters, cursor: pageParam, limit: 50 } } })),
+    queryFn: ({ pageParam }) =>
+      unwrap(api.GET("/v1/drafts", { params: { query: { ...filters, cursor: pageParam, limit: 50 } } })),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
   })

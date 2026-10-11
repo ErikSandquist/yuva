@@ -1,28 +1,28 @@
-import { createGetUrl } from 'fumadocs-core/source';
+import { createGetUrl } from "fumadocs-core/source"
 
-export const appName = 'Acme Docs';
-export const docsRoute = '/docs';
-export const docsImageRoute = '/og/docs';
-export const docsContentRoute = '/llms.mdx/docs';
+export const appName = "Acme Docs"
+export const docsRoute = "/docs"
+export const docsImageRoute = "/og/docs"
+export const docsContentRoute = "/llms.mdx/docs"
 
 export const gitConfig = {
-  user: 'productdevbook',
-  repo: 'yuva',
-  branch: 'main',
-};
-
-const getContentUrl = createGetUrl(docsContentRoute);
-
-export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
-  const segments = [...page.slugs, 'content.md'];
-
-  return { segments, url: getContentUrl(segments, page.locale) };
+  user: "productdevbook",
+  repo: "yuva",
+  branch: "main",
 }
 
-const getImageUrl = createGetUrl(docsImageRoute);
+const getContentUrl = createGetUrl(docsContentRoute)
+
+export function getPageMarkdownUrl(page: { slugs: string[]; locale?: string }) {
+  const segments = [...page.slugs, "content.md"]
+
+  return { segments, url: getContentUrl(segments, page.locale) }
+}
+
+const getImageUrl = createGetUrl(docsImageRoute)
 
 export function getPageImageUrl(page: { slugs: string[]; locale?: string }) {
-  const segments = [...page.slugs, 'image.png'];
+  const segments = [...page.slugs, "image.png"]
 
-  return { segments, url: getImageUrl(segments, page.locale) };
+  return { segments, url: getImageUrl(segments, page.locale) }
 }

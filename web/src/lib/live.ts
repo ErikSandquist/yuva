@@ -20,7 +20,11 @@ type MessagePage = { items: Message[]; next_cursor?: string }
 export type Messages = InfiniteData<MessagePage, string | undefined>
 
 type Event = Exclude<RealtimeMessage, { type: "ready" } | { type: "resync_required" }>
-export type LiveEvent = Event extends infer E ? (E extends { type: infer T; data: infer D } ? { type: T; data: D } : never) : never
+export type LiveEvent = Event extends infer E
+  ? E extends { type: infer T; data: infer D }
+    ? { type: T; data: D }
+    : never
+  : never
 
 export type LiveContext = { ws: string; memberId: string }
 
@@ -104,8 +108,11 @@ function patchItem(qc: QueryClient, ws: string, id: string, patch: Partial<Conve
     if (!data?.pages.some((p) => p.items.some((x) => x.id === id))) continue
     qc.setQueryData<Lists>(key, (old) =>
       old
-        ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === id ? { ...x, ...patch } : x)) })) }
-        : old,
+        ? {
+            ...old,
+            pages: old.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === id ? { ...x, ...patch } : x)) })),
+          }
+        : old
     )
   }
 }
@@ -121,7 +128,7 @@ function refreshCounts(qc: QueryClient, ws: string) {
       void qc.invalidateQueries({ queryKey: keys.counts(ws) })
       void qc.invalidateQueries({ queryKey: keys.stats(ws) })
       void qc.invalidateQueries({ queryKey: keys.docs(ws) })
-    }, 400),
+    }, 400)
   )
 }
 
@@ -153,15 +160,18 @@ function dropMessage(qc: QueryClient, ws: string, m: Message) {
   qc.setQueryData<Messages>(keys.messages(ws, m.conversation_id), (old) =>
     old?.pages.some((p) => p.items.some((x) => x.id === m.id))
       ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.id !== m.id) })) }
-      : old,
+      : old
   )
 }
 
 function updateDraft(qc: QueryClient, ws: string, m: Message) {
   qc.setQueryData<Messages>(keys.messages(ws, m.conversation_id), (old) =>
     old?.pages.some((p) => p.items.some((x) => x.id === m.id && x.draft))
-      ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === m.id && x.draft ? m : x)) })) }
-      : old,
+      ? {
+          ...old,
+          pages: old.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === m.id && x.draft ? m : x)) })),
+        }
+      : old
   )
 }
 
@@ -222,7 +232,8 @@ export function applyRead(qc: QueryClient, ws: string, read: ConversationRead) {
 export function applyPin(qc: QueryClient, ws: string, pin: ConversationPin) {
   patchItem(qc, ws, pin.conversation_id, { pinned_at: pin.pinned_at })
   for (const [key] of listCaches(qc, ws)) {
-    if (((key as QueryKey)[3] as ConversationFilters).pinned !== undefined) void qc.invalidateQueries({ queryKey: key, exact: true })
+    if (((key as QueryKey)[3] as ConversationFilters).pinned !== undefined)
+      void qc.invalidateQueries({ queryKey: key, exact: true })
   }
 }
 
@@ -272,7 +283,11 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "conversation.updated":
       knowMember(qc, ctx.ws, event.data.assignee_id)
       setConversation(qc, ctx, event.data)
-      if (event.type === "conversation.updated" && listsDraftsOf(qc, ctx.ws, (x) => x.conversation.id === event.data.id)) refreshDrafts(qc, ctx.ws)
+      if (
+        event.type === "conversation.updated" &&
+        listsDraftsOf(qc, ctx.ws, (x) => x.conversation.id === event.data.id)
+      )
+        refreshDrafts(qc, ctx.ws)
       void qc.invalidateQueries({ queryKey: keys.contact(ctx.ws, event.data.contact_id), refetchType: "active" })
       void qc.invalidateQueries({ queryKey: keys.contactSummary(ctx.ws, event.data.contact_id) })
       if (event.type === "conversation.created") {
@@ -284,7 +299,7 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       for (const [key, data] of listCaches(qc, ctx.ws)) {
         if (!data?.pages.some((p) => p.items.some((x) => x.id === id && x.inbox_id === previous_inbox_id))) continue
         qc.setQueryData<Lists>(key, (old) =>
-          old ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.id !== id) })) } : old,
+          old ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.id !== id) })) } : old
         )
       }
       const inboxes = qc.getQueryData<Inbox[]>(keys.inboxes(ctx.ws))
@@ -304,7 +319,8 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       if (listsDraftsOf(qc, ctx.ws, (x) => x.draft.id === event.data.id)) refreshDrafts(qc, ctx.ws)
       if (event.data.author.contact_id) {
         void qc.invalidateQueries({ queryKey: keys.contactPresence(ctx.ws, event.data.author.contact_id) })
-        if (event.data.email) void qc.invalidateQueries({ queryKey: keys.contact(ctx.ws, event.data.author.contact_id) })
+        if (event.data.email)
+          void qc.invalidateQueries({ queryKey: keys.contact(ctx.ws, event.data.author.contact_id) })
       }
       return
     case "message.updated":
@@ -333,14 +349,19 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "contact.read": {
       const { conversation_id: id, read_at } = event.data
       qc.setQueryData<Conversation>(keys.conversation(ctx.ws, id), (old) =>
-        old && (!old.last_read_by_contact_at || Date.parse(old.last_read_by_contact_at) < Date.parse(read_at)) ? { ...old, last_read_by_contact_at: read_at } : old,
+        old && (!old.last_read_by_contact_at || Date.parse(old.last_read_by_contact_at) < Date.parse(read_at))
+          ? { ...old, last_read_by_contact_at: read_at }
+          : old
       )
       patchItem(qc, ctx.ws, id, { last_read_by_contact_at: read_at })
       return
     }
     case "contact.updated": {
       const contact = event.data
-      qc.setQueryData<Contact>(keys.contact(ctx.ws, contact.id), (old) => ({ ...contact, activity: contact.activity ?? old?.activity }))
+      qc.setQueryData<Contact>(keys.contact(ctx.ws, contact.id), (old) => ({
+        ...contact,
+        activity: contact.activity ?? old?.activity,
+      }))
       void qc.invalidateQueries({ queryKey: keys.contactSearch(ctx.ws) })
       for (const [key, data] of listCaches(qc, ctx.ws)) {
         if (!data?.pages.some((p) => p.items.some((x) => x.contact.id === contact.id))) continue
@@ -354,7 +375,7 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
                   items: p.items.map((x) => (x.contact.id === contact.id ? { ...x, contact: ref } : x)),
                 })),
               }
-            : old,
+            : old
         )
       }
       return
@@ -370,14 +391,14 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "inbox.created": {
       const inbox = event.data
       qc.setQueryData<Inbox[]>(keys.inboxes(ctx.ws), (old) =>
-        old && !old.some((x) => x.id === inbox.id) ? [...old, inbox].sort(byName) : old,
+        old && !old.some((x) => x.id === inbox.id) ? [...old, inbox].sort(byName) : old
       )
       return
     }
     case "inbox.updated": {
       const inbox = event.data
       qc.setQueryData<Inbox[]>(keys.inboxes(ctx.ws), (old) =>
-        old?.map((x) => (x.id === inbox.id ? inbox : x)).sort(byName),
+        old?.map((x) => (x.id === inbox.id ? inbox : x)).sort(byName)
       )
       qc.setQueryData([...keys.inboxes(ctx.ws), inbox.id], inbox)
       return
@@ -392,7 +413,9 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       for (const [key, data] of listCaches(qc, ctx.ws)) {
         if (!data?.pages.some((p) => p.items.some((x) => x.inbox_id === id))) continue
         qc.setQueryData<Lists>(key, (old) =>
-          old ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.inbox_id !== id) })) } : old,
+          old
+            ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.filter((x) => x.inbox_id !== id) })) }
+            : old
         )
       }
       refreshCounts(qc, ctx.ws)

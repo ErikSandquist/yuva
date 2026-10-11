@@ -29,8 +29,10 @@ export const keys = {
   webhooks: (ws: string) => ["ws", ws, "webhooks"] as const,
   webhookList: (ws: string, inbox: string) => ["ws", ws, "webhooks", "list", inbox] as const,
   webhook: (ws: string, id: string) => ["ws", ws, "webhooks", "one", id] as const,
-  webhookDeliveries: (ws: string, id: string, state: string) => ["ws", ws, "webhooks", "deliveries", id, state] as const,
-  webhookDelivery: (ws: string, id: string, delivery: string) => ["ws", ws, "webhooks", "delivery", id, delivery] as const,
+  webhookDeliveries: (ws: string, id: string, state: string) =>
+    ["ws", ws, "webhooks", "deliveries", id, state] as const,
+  webhookDelivery: (ws: string, id: string, delivery: string) =>
+    ["ws", ws, "webhooks", "delivery", id, delivery] as const,
   webhookAttempts: (ws: string, id: string) => ["ws", ws, "webhooks", "attempts", id] as const,
   conversationLists: (ws: string) => ["ws", ws, "conversations"] as const,
   conversations: (ws: string, f: ConversationFilters) => ["ws", ws, "conversations", f] as const,
@@ -45,8 +47,10 @@ export const keys = {
   draftLists: (ws: string) => ["ws", ws, "drafts"] as const,
   drafts: (ws: string, f: DraftFilters) => ["ws", ws, "drafts", f] as const,
   docs: (ws: string) => ["ws", ws, "docs"] as const,
-  docsPages: (ws: string, inbox: string, days: DocsDays, sort: DocsPageSort) => ["ws", ws, "docs", "pages", inbox, days, sort] as const,
+  docsPages: (ws: string, inbox: string, days: DocsDays, sort: DocsPageSort) =>
+    ["ws", ws, "docs", "pages", inbox, days, sort] as const,
   docsSummary: (ws: string, inbox: string, days: DocsDays) => ["ws", ws, "docs", "summary", inbox, days] as const,
-  docsPage: (ws: string, inbox: string, page: string, days: DocsDays) => ["ws", ws, "docs", "page", inbox, page, days] as const,
+  docsPage: (ws: string, inbox: string, page: string, days: DocsDays) =>
+    ["ws", ws, "docs", "page", inbox, page, days] as const,
   pageAnswers: (ws: string, f: PageAnswerFilters) => ["ws", ws, "docs", "answers", f] as const,
 }

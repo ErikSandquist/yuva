@@ -77,10 +77,7 @@ function AttachmentMedia({
   )
 }
 
-function AttachmentContent({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function AttachmentContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="attachment-content"
@@ -93,10 +90,7 @@ function AttachmentContent({
   )
 }
 
-function AttachmentTitle({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+function AttachmentTitle({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="attachment-title"
@@ -109,10 +103,7 @@ function AttachmentTitle({
   )
 }
 
-function AttachmentDescription({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+function AttachmentDescription({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="attachment-description"
@@ -126,10 +117,7 @@ function AttachmentDescription({
   )
 }
 
-function AttachmentActions({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function AttachmentActions({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="attachment-actions"
@@ -142,12 +130,7 @@ function AttachmentActions({
   )
 }
 
-function AttachmentAction({
-  className,
-  variant,
-  size = "icon-xs",
-  ...props
-}: React.ComponentProps<typeof Button>) {
+function AttachmentAction({ className, variant, size = "icon-xs", ...props }: React.ComponentProps<typeof Button>) {
   return (
     <Button
       data-slot="attachment-action"
@@ -159,12 +142,7 @@ function AttachmentAction({
   )
 }
 
-function AttachmentTrigger({
-  className,
-  render,
-  type,
-  ...props
-}: useRender.ComponentProps<"button">) {
+function AttachmentTrigger({ className, render, type, ...props }: useRender.ComponentProps<"button">) {
   return useRender({
     defaultTagName: "button",
     props: mergeProps<"button">(

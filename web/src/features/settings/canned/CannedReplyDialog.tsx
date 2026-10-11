@@ -24,7 +24,12 @@ export function CannedReplyDialog({ reply, onClose }: { reply: CannedReply | nul
   const save = useMutation({
     mutationFn: () =>
       reply
-        ? unwrap(api.PATCH("/v1/canned-replies/{cannedReplyId}", { params: { path: { cannedReplyId: reply.id } }, body: { title, shortcut, body } }))
+        ? unwrap(
+            api.PATCH("/v1/canned-replies/{cannedReplyId}", {
+              params: { path: { cannedReplyId: reply.id } },
+              body: { title, shortcut, body },
+            })
+          )
         : unwrap(api.POST("/v1/canned-replies", { body: { title, shortcut, body } })),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: keys.cannedReplies(ws) })
@@ -57,7 +62,11 @@ export function CannedReplyDialog({ reply, onClose }: { reply: CannedReply | nul
               }}
             />
           </Field>
-          <Field label={<Trans>Shortcut</Trans>} htmlFor="canned-shortcut" hint={<Trans>Lowercase letters, digits and dashes.</Trans>}>
+          <Field
+            label={<Trans>Shortcut</Trans>}
+            htmlFor="canned-shortcut"
+            hint={<Trans>Lowercase letters, digits and dashes.</Trans>}
+          >
             <Input
               id="canned-shortcut"
               required

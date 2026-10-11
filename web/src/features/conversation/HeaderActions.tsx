@@ -50,13 +50,28 @@ function useSnoozeTimes() {
   return list
 }
 
-export function SnoozeMenu({ name, actions, open, onOpenChange }: { name: string; actions: ConversationActions; open: boolean; onOpenChange: (open: boolean) => void }) {
+export function SnoozeMenu({
+  name,
+  actions,
+  open,
+  onOpenChange,
+}: {
+  name: string
+  actions: ConversationActions
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const times = useSnoozeTimes()
   const first = firstName(name)
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
-      <DropdownMenuTrigger render={iconButton} aria-label={t`Snooze (S)`} title={t`Snooze (S)`} data-testid="snooze-menu">
+      <DropdownMenuTrigger
+        render={iconButton}
+        aria-label={t`Snooze (S)`}
+        title={t`Snooze (S)`}
+        data-testid="snooze-menu"
+      >
         <ClockIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[280px] max-w-[calc(100vw-32px)]">
@@ -79,10 +94,21 @@ export function SnoozeMenu({ name, actions, open, onOpenChange }: { name: string
   )
 }
 
-export function HandMenu({ c, actions, open, onOpenChange }: { c: Conversation; actions: ConversationActions; open: boolean; onOpenChange: (open: boolean) => void }) {
+export function HandMenu({
+  c,
+  actions,
+  open,
+  onOpenChange,
+}: {
+  c: Conversation
+  actions: ConversationActions
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const { membership } = useSession()
-  const here = (m: { online: boolean; availability: string }) => (m.online && m.availability === "auto" ? 0 : m.availability === "away" ? 2 : 1)
+  const here = (m: { online: boolean; availability: string }) =>
+    m.online && m.availability === "auto" ? 0 : m.availability === "away" ? 2 : 1
   const people = useAssignableMembers(c.inbox_id)
     .filter((m) => m.id !== membership.member_id)
     .sort((a, b) => here(a) - here(b))
@@ -100,7 +126,12 @@ export function HandMenu({ c, actions, open, onOpenChange }: { c: Conversation; 
       <PopoverTrigger render={iconButton} aria-label={t`Assign (A)`} title={t`Assign (A)`} data-testid="hand-menu">
         <UserRoundPlusIcon />
       </PopoverTrigger>
-      <PopoverContent align="end" sideOffset={6} className={cn(popupClass, "w-[300px] max-w-[calc(100vw-32px)] gap-0 rounded-xl p-1.5 ring-0")} data-testid="hand-popup">
+      <PopoverContent
+        align="end"
+        sideOffset={6}
+        className={cn(popupClass, "w-[300px] max-w-[calc(100vw-32px)] gap-0 rounded-xl p-1.5 ring-0")}
+        data-testid="hand-popup"
+      >
         {!mine && (
           <>
             <Item
@@ -147,7 +178,13 @@ export function HandMenu({ c, actions, open, onOpenChange }: { c: Conversation; 
               <span className="min-w-0 flex-1 text-start">
                 <span className="block truncate">{who}</span>
                 <small className="block truncate text-caption text-faint">
-                  {m.availability === "away" ? <Trans>Away</Trans> : m.online ? <Trans>Online</Trans> : <Trans>Offline</Trans>}
+                  {m.availability === "away" ? (
+                    <Trans>Away</Trans>
+                  ) : m.online ? (
+                    <Trans>Online</Trans>
+                  ) : (
+                    <Trans>Offline</Trans>
+                  )}
                   {" · "}
                   <Plural value={load.get(m.id) ?? 0} one="# conversation" other="# conversations" />
                 </small>
@@ -172,13 +209,28 @@ export function HandMenu({ c, actions, open, onOpenChange }: { c: Conversation; 
   )
 }
 
-export function LabelsMenu({ c, update, open, onOpenChange }: { c: Conversation; update: (body: ConversationUpdate) => void; open: boolean; onOpenChange: (open: boolean) => void }) {
+export function LabelsMenu({
+  c,
+  update,
+  open,
+  onOpenChange,
+}: {
+  c: Conversation
+  update: (body: ConversationUpdate) => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { t } = useLingui()
   const labels = useLabels().data ?? []
   const current = new Set(c.labels)
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
-      <DropdownMenuTrigger render={iconButton} aria-label={t`Labels (L)`} title={t`Labels (L)`} data-testid="labels-menu">
+      <DropdownMenuTrigger
+        render={iconButton}
+        aria-label={t`Labels (L)`}
+        title={t`Labels (L)`}
+        data-testid="labels-menu"
+      >
         <TagIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-[60svh] min-w-52">

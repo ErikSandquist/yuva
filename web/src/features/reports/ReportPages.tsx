@@ -48,7 +48,12 @@ export function TodayReport() {
           [fmt.format(s.replies), t`replies`],
           [fmt.format(s.closed), t`closed`],
           [fmt.format(s.first_replies), t`first replies`],
-          [s.median_first_reply_seconds !== undefined ? formatDuration(s.median_first_reply_seconds, i18n.locale) : "–", t`median first reply`],
+          [
+            s.median_first_reply_seconds !== undefined
+              ? formatDuration(s.median_first_reply_seconds, i18n.locale)
+              : "–",
+            t`median first reply`,
+          ],
         ]
         return (
           <div className="grid grid-cols-2 gap-2" data-testid="report-tiles">

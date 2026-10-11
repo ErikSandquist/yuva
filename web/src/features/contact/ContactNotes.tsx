@@ -27,13 +27,26 @@ function Note({ note, onDelete }: { note: ContactNote; onDelete?: () => void }) 
   const m = a.member_id ? members.get(a.member_id) : undefined
   const who = a.type === "bot" ? a.name || t`Bot` : m ? m.name || m.email : t`A former teammate`
   return (
-    <li className="group/note flex flex-col gap-1 rounded-xl border border-note-border bg-note px-3 py-2.5" data-testid="contact-note">
+    <li
+      className="group/note flex flex-col gap-1 rounded-xl border border-note-border bg-note px-3 py-2.5"
+      data-testid="contact-note"
+    >
       <span className="flex items-center gap-2 text-caption font-medium text-note-ink">
         <span className="min-w-0 flex-1 truncate">
-          {who} · <time dateTime={note.created_at} title={formatDateTime(note.created_at, i18n.locale)}>{formatShort(note.created_at, i18n.locale)}</time>
+          {who} ·{" "}
+          <time dateTime={note.created_at} title={formatDateTime(note.created_at, i18n.locale)}>
+            {formatShort(note.created_at, i18n.locale)}
+          </time>
         </span>
         {onDelete && (
-          <Button variant="ghost" size="icon-xs" className="-my-1 text-note-ink hover:bg-note-border/60" onClick={onDelete} aria-label={t`Delete this note`} data-testid="delete-contact-note">
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            className="-my-1 text-note-ink hover:bg-note-border/60"
+            onClick={onDelete}
+            aria-label={t`Delete this note`}
+            data-testid="delete-contact-note"
+          >
             <Trash2Icon />
           </Button>
         )}
@@ -84,7 +97,13 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
       />
       <ErrorLine error={add.error} />
       <span className="flex items-center gap-2">
-        <Button type="submit" variant="outline" size="sm" disabled={!text || add.isPending} data-testid="contact-note-add">
+        <Button
+          type="submit"
+          variant="outline"
+          size="sm"
+          disabled={!text || add.isPending}
+          data-testid="contact-note-add"
+        >
           <Trans>Add note</Trans>
         </Button>
         <span className="text-caption text-faint">{mod} ↵</span>
@@ -110,7 +129,12 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
                   note={n}
                   onDelete={
                     mine || canManage
-                      ? () => confirm({ title: <Trans>Delete this note?</Trans>, confirm: <Trans>Delete</Trans>, run: () => del.mutate(n.id) })
+                      ? () =>
+                          confirm({
+                            title: <Trans>Delete this note?</Trans>,
+                            confirm: <Trans>Delete</Trans>,
+                            run: () => del.mutate(n.id),
+                          })
                       : undefined
                   }
                 />
@@ -120,7 +144,13 @@ export function ContactNotes({ contactId, form = "bottom" }: { contactId: string
         )
       )}
       {notes.hasNextPage && (
-        <Button variant="ghost" size="sm" className="self-center" onClick={() => void notes.fetchNextPage()} disabled={notes.isFetchingNextPage}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="self-center"
+          onClick={() => void notes.fetchNextPage()}
+          disabled={notes.isFetchingNextPage}
+        >
           <Trans>Load more</Trans>
         </Button>
       )}

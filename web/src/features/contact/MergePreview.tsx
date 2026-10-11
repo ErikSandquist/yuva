@@ -63,7 +63,9 @@ export function MergePreview({ source, target }: { source: Contact; target: Cont
           <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-0.5 text-body">
             {source.external_ids.map((x) => (
               <div key={`${x.inbox_id}:${x.external_id}`} className="contents">
-                <dt className="truncate text-muted-foreground">{inboxes.find((i) => i.id === x.inbox_id)?.name ?? "?"}</dt>
+                <dt className="truncate text-muted-foreground">
+                  {inboxes.find((i) => i.id === x.inbox_id)?.name ?? "?"}
+                </dt>
                 <dd className="truncate font-mono text-caption">{x.external_id}</dd>
               </div>
             ))}

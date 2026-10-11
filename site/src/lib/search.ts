@@ -5,7 +5,11 @@ import type { Locale } from "./routes"
 
 type Entry = { page: string; heading: string; href: string; text: string }
 
-const strip = (html: string) => html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim()
+const strip = (html: string) =>
+  html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
 
 export async function searchIndex(locale: Locale) {
   const entries: Entry[] = []
@@ -29,7 +33,12 @@ export async function searchIndex(locale: Locale) {
       }
     }
     for (const s of sections) {
-      entries.push({ page, heading: s.heading, href: s.slug ? `${href}#${s.slug}` : href, text: plain(s.lines.join("\n")).slice(0, 600) })
+      entries.push({
+        page,
+        heading: s.heading,
+        href: s.slug ? `${href}#${s.slug}` : href,
+        text: plain(s.lines.join("\n")).slice(0, 600),
+      })
     }
   }
 

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-const route = useRoute();
-const { data: page } = await useAsyncData(route.path, () =>
-  queryCollection("content").path(route.path).first(),
-);
+const route = useRoute()
+const { data: page } = await useAsyncData(route.path, () => queryCollection("content").path(route.path).first())
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: "Page not found", fatal: true });
+  throw createError({ statusCode: 404, statusMessage: "Page not found", fatal: true })
 }
-useSeoMeta({ title: page.value.title, description: page.value.description });
+useSeoMeta({ title: page.value.title, description: page.value.description })
 </script>
 
 <template>

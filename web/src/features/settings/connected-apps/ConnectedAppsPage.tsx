@@ -5,9 +5,25 @@ import { PlugIcon } from "lucide-react"
 import { ErrorLine, useConfirm } from "@/components/common"
 import { API_KEY_SCOPES, formatDateTime, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { ASSISTANTS, grantsFor, useAssistantName, type AssistantId } from "@/features/settings/connected-apps/assistants"
+import {
+  ASSISTANTS,
+  grantsFor,
+  useAssistantName,
+  type AssistantId,
+} from "@/features/settings/connected-apps/assistants"
 import { useGrants } from "@/features/settings/connected-apps/queries"
-import { Card, EmptyRow, LinkRow, PageHeader, Row, RowIcon, Rows, RowText, Section, StatusTag } from "@/features/settings/ui"
+import {
+  Card,
+  EmptyRow,
+  LinkRow,
+  PageHeader,
+  Row,
+  RowIcon,
+  Rows,
+  RowText,
+  Section,
+  StatusTag,
+} from "@/features/settings/ui"
 import { api, unwrap, type OAuthGrant } from "@/lib/api"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
@@ -21,7 +37,8 @@ function GrantRow({ g, showMember, onRevoke }: { g: OAuthGrant; showMember: bool
   const created = formatDateTime(g.created_at, i18n.locale)
   const used = g.last_used_at ? formatDateTime(g.last_used_at, i18n.locale) : null
   const member = members.get(g.member_id)
-  const memberName = g.member_id === membership.member_id ? t`You` : member ? member.name || member.email : t`Deleted member`
+  const memberName =
+    g.member_id === membership.member_id ? t`You` : member ? member.name || member.email : t`Deleted member`
   const allScopes = API_KEY_SCOPES.every((s) => g.scopes.includes(s))
   return (
     <Row className="items-start" data-testid="grant-row">
@@ -138,7 +155,8 @@ export function ConnectedAppsPage() {
   const [confirm, confirmDialog] = useConfirm()
   const list = useGrants()
   const revoke = useMutation({
-    mutationFn: (id: string) => unwrap(api.DELETE("/v1/oauth/grants/{oauthGrantId}", { params: { path: { oauthGrantId: id } } })),
+    mutationFn: (id: string) =>
+      unwrap(api.DELETE("/v1/oauth/grants/{oauthGrantId}", { params: { path: { oauthGrantId: id } } })),
     onSettled: () => qc.invalidateQueries({ queryKey: keys.oauthGrants(ws) }),
   })
   return (
@@ -148,8 +166,8 @@ export function ConnectedAppsPage() {
         description={
           canManage ? (
             <Trans>
-              Assistants and apps that members connected with their own sign-in. Each acts as that member, only within the
-              access they allowed. As an owner or admin you see and can revoke every member's connections.
+              Assistants and apps that members connected with their own sign-in. Each acts as that member, only within
+              the access they allowed. As an owner or admin you see and can revoke every member's connections.
             </Trans>
           ) : (
             <Trans>

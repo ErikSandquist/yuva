@@ -13,7 +13,10 @@ export function RelatedLine({ id, hrefFor }: { id: string; hrefFor: (id: string)
       {related.data ? (
         <Trans>
           Replied in the thread of{" "}
-          <Link to={hrefFor(id)} className="font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline">
+          <Link
+            to={hrefFor(id)}
+            className="font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+          >
             {title}
           </Link>
         </Trans>

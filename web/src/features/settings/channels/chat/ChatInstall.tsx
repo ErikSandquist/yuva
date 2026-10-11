@@ -21,7 +21,11 @@ export function ChatInstall({ channel }: { channel: Channel }) {
         channel={channel}
         value={publicKey}
         onRotated={setPublicKey}
-        hint={<Trans>Not a secret: it is part of your web pages. Rotate it to stop old embeds from starting new chats.</Trans>}
+        hint={
+          <Trans>
+            Not a secret: it is part of your web pages. Rotate it to stop old embeds from starting new chats.
+          </Trans>
+        }
         warning={
           <Trans>
             Pages that embed the old key can no longer start chats until you update the snippet. Visitors already
@@ -29,9 +33,15 @@ export function ChatInstall({ channel }: { channel: Channel }) {
           </Trans>
         }
       />
-      <Field label={<Trans>Embed snippet</Trans>} hint={<Trans>Paste it before the closing body tag of every page that should show the chat.</Trans>}>
+      <Field
+        label={<Trans>Embed snippet</Trans>}
+        hint={<Trans>Paste it before the closing body tag of every page that should show the chat.</Trans>}
+      >
         <div className="flex flex-col gap-2">
-          <pre className="max-w-full rounded-xl border bg-surface px-3 py-2 font-mono text-caption break-all whitespace-pre-wrap" data-testid="chat-snippet">
+          <pre
+            className="max-w-full rounded-xl border bg-surface px-3 py-2 font-mono text-caption break-all whitespace-pre-wrap"
+            data-testid="chat-snippet"
+          >
             {snippet}
           </pre>
           <CopyButton value={snippet} className="self-start" />

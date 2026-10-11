@@ -52,14 +52,19 @@ export function ContactSearch({ exclude, onPick }: { exclude: string; onPick: (c
             const detail = c.emails[0] ?? c.external_ids[0]?.external_id
             return (
               <li key={c.id}>
-                <Item render={<button type="button" />} size="xs" className="flex-nowrap"
+                <Item
+                  render={<button type="button" />}
+                  size="xs"
+                  className="flex-nowrap"
                   onClick={() => onPick(c)}
                   data-testid="merge-candidate"
                 >
                   <PersonAvatar name={name} className="size-7" />
                   <span className="flex min-w-0 flex-col">
                     <span className="truncate font-medium">{name}</span>
-                    {detail && detail !== name && <span className="truncate text-caption text-muted-foreground">{detail}</span>}
+                    {detail && detail !== name && (
+                      <span className="truncate text-caption text-muted-foreground">{detail}</span>
+                    )}
                   </span>
                 </Item>
               </li>

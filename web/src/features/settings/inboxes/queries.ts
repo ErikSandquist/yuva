@@ -16,7 +16,8 @@ export function useSaveInbox(inbox: Inbox) {
   const qc = useQueryClient()
   const { workspaceId: ws } = useSession()
   return useMutation({
-    mutationFn: (body: InboxUpdate) => unwrap(api.PATCH("/v1/inboxes/{inboxId}", { params: { path: { inboxId: inbox.id } }, body })),
+    mutationFn: (body: InboxUpdate) =>
+      unwrap(api.PATCH("/v1/inboxes/{inboxId}", { params: { path: { inboxId: inbox.id } }, body })),
     onSuccess: (data) => {
       qc.setQueryData([...keys.inboxes(ws), inbox.id], data)
       void qc.invalidateQueries({ queryKey: keys.inboxes(ws), exact: true })

@@ -17,7 +17,10 @@ export function Passkeys() {
   const qc = useQueryClient()
   const [name, setName] = useState("")
   const [confirm, confirmDialog] = useConfirm()
-  const list = useQuery({ queryKey: keys.passkeys, queryFn: () => unwrap(api.GET("/v1/me/passkeys")).then((r) => r.items) })
+  const list = useQuery({
+    queryKey: keys.passkeys,
+    queryFn: () => unwrap(api.GET("/v1/me/passkeys")).then((r) => r.items),
+  })
   const refresh = () => qc.invalidateQueries({ queryKey: keys.passkeys })
   const add = useMutation({
     mutationFn: () => registerPasskey(name.trim()),
@@ -27,7 +30,8 @@ export function Passkeys() {
     },
   })
   const remove = useMutation({
-    mutationFn: (id: string) => unwrap(api.DELETE("/v1/me/passkeys/{passkeyId}", { params: { path: { passkeyId: id } } })),
+    mutationFn: (id: string) =>
+      unwrap(api.DELETE("/v1/me/passkeys/{passkeyId}", { params: { path: { passkeyId: id } } })),
     onSuccess: refresh,
   })
   const supported = passkeysSupported()
@@ -75,7 +79,15 @@ export function Passkeys() {
                 <Row key={p.id}>
                   <RowText
                     title={p.name}
-                    detail={used ? <Trans>Added {created}, last used {used}</Trans> : <Trans>Added {created}</Trans>}
+                    detail={
+                      used ? (
+                        <Trans>
+                          Added {created}, last used {used}
+                        </Trans>
+                      ) : (
+                        <Trans>Added {created}</Trans>
+                      )
+                    }
                   />
                   <Button
                     variant="ghost"

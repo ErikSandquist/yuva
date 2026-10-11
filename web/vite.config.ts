@@ -8,7 +8,10 @@ import { defineConfig, type Plugin } from "vite"
 
 const server = "http://127.0.0.1:8809"
 const proxy = Object.fromEntries(
-  ["/v1", "/client/v1", "/healthz", "/readyz", "/ingress", "/r/", "/yuva.js", "/yuva-chat.js"].map((path) => [path, { target: server, ws: true }]),
+  ["/v1", "/client/v1", "/healthz", "/readyz", "/ingress", "/r/", "/yuva.js", "/yuva-chat.js"].map((path) => [
+    path,
+    { target: server, ws: true },
+  ])
 )
 
 const EMOJIBASE = "emojibase"
@@ -27,7 +30,8 @@ function emojibase(): Plugin {
       })
     },
     generateBundle() {
-      for (const file of emojibaseFiles) this.emitFile({ type: "asset", fileName: `${EMOJIBASE}/${file}`, source: source(file) })
+      for (const file of emojibaseFiles)
+        this.emitFile({ type: "asset", fileName: `${EMOJIBASE}/${file}`, source: source(file) })
     },
   }
 }
@@ -54,7 +58,7 @@ function serviceWorker(): Plugin {
         }
         const walk = (dir: string): string[] =>
           readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
-            e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)],
+            e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]
           )
         for (const file of publicDir ? walk(publicDir) : []) {
           files.push(`/${relative(publicDir, file).split("\\").join("/")}`)

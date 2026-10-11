@@ -1,6 +1,18 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useQueries, useQuery } from "@tanstack/react-query"
-import { ArrowUpRightIcon, BellIcon, BuildingIcon, KeyRoundIcon, PaletteIcon, PlugIcon, PlusIcon, QuoteIcon, SettingsIcon, TagIcon, UsersIcon } from "lucide-react"
+import {
+  ArrowUpRightIcon,
+  BellIcon,
+  BuildingIcon,
+  KeyRoundIcon,
+  PaletteIcon,
+  PlugIcon,
+  PlusIcon,
+  QuoteIcon,
+  SettingsIcon,
+  TagIcon,
+  UsersIcon,
+} from "lucide-react"
 import { Outlet } from "react-router"
 
 import { Column, ColumnHeading, ColumnLink, Pane, PaneEmpty } from "@/components/common/Column"
@@ -36,12 +48,26 @@ function Group({ title, children }: { title: React.ReactNode; children: React.Re
   )
 }
 
-function NavRow({ to, state, children, value, testId }: { to: string; state?: unknown; children: React.ReactNode; value?: React.ReactNode; testId?: string }) {
+function NavRow({
+  to,
+  state,
+  children,
+  value,
+  testId,
+}: {
+  to: string
+  state?: unknown
+  children: React.ReactNode
+  value?: React.ReactNode
+  testId?: string
+}) {
   return (
     <li>
       <ColumnLink to={to} state={state} testId={testId}>
         {children}
-        {value !== undefined && value !== "" && <span className="shrink-0 text-small whitespace-nowrap text-faint">{value}</span>}
+        {value !== undefined && value !== "" && (
+          <span className="shrink-0 text-small whitespace-nowrap text-faint">{value}</span>
+        )}
       </ColumnLink>
     </li>
   )
@@ -53,7 +79,8 @@ function useInboxChannels() {
   const results = useQueries({
     queries: inboxes.map((i) => ({
       queryKey: keys.channels(ws, i.id),
-      queryFn: () => unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: i.id } } })).then((r) => r.items),
+      queryFn: () =>
+        unwrap(api.GET("/v1/inboxes/{inboxId}/channels", { params: { path: { inboxId: i.id } } })).then((r) => r.items),
       staleTime: 5 * 60_000,
     })),
   })
@@ -68,8 +95,16 @@ export function SettingsColumn() {
   const members = useMembers().data
   const canned = useCannedReplies().data
   const labels = useLabels().data
-  const apiKeys = useQuery({ queryKey: keys.apiKeys(ws), queryFn: () => unwrap(api.GET("/v1/api-keys")).then((r) => r.items), enabled: canManage })
-  const hooks = useQuery({ queryKey: keys.webhooks(ws), queryFn: () => unwrap(api.GET("/v1/webhooks")).then((r) => r.items), enabled: canManage })
+  const apiKeys = useQuery({
+    queryKey: keys.apiKeys(ws),
+    queryFn: () => unwrap(api.GET("/v1/api-keys")).then((r) => r.items),
+    enabled: canManage,
+  })
+  const hooks = useQuery({
+    queryKey: keys.webhooks(ws),
+    queryFn: () => unwrap(api.GET("/v1/webhooks")).then((r) => r.items),
+    enabled: canManage,
+  })
   const name = me.person.name || me.person.email
   const list = (n?: number) => (n === undefined ? "" : n)
   return (
@@ -96,13 +131,15 @@ export function SettingsColumn() {
         {inboxes.map(({ inbox, channels }) => (
           <NavRow key={inbox.id} to={`/settings/inboxes/${inbox.id}`} testId="inbox-row">
             <RowIcon>
-              <span style={{ color: inbox.branding.color }}>
-                {inbox.name.charAt(0).toLocaleUpperCase()}
-              </span>
+              <span style={{ color: inbox.branding.color }}>{inbox.name.charAt(0).toLocaleUpperCase()}</span>
             </RowIcon>
             <RowText
               title={inbox.name}
-              detail={channels ? [...new Set(channels.map((c) => text.channel[c.kind]))].join(", ") || t`No channels yet` : " "}
+              detail={
+                channels
+                  ? [...new Set(channels.map((c) => text.channel[c.kind]))].join(", ") || t`No channels yet`
+                  : " "
+              }
             />
           </NavRow>
         ))}
@@ -120,7 +157,10 @@ export function SettingsColumn() {
           <RowIcon>
             <UsersIcon />
           </RowIcon>
-          <RowText title={<Trans>Members</Trans>} detail={(members ?? []).map((m) => (m.name || m.email).split(" ")[0]).join(", ")} />
+          <RowText
+            title={<Trans>Members</Trans>}
+            detail={(members ?? []).map((m) => (m.name || m.email).split(" ")[0]).join(", ")}
+          />
         </NavRow>
         <NavRow to="/settings/canned-replies" value={list(canned?.length)}>
           <RowIcon>
@@ -138,7 +178,10 @@ export function SettingsColumn() {
           <RowIcon>
             <PlugIcon />
           </RowIcon>
-          <RowText title={<Trans>Connected apps</Trans>} detail={<Trans>Connect an assistant such as Claude or ChatGPT</Trans>} />
+          <RowText
+            title={<Trans>Connected apps</Trans>}
+            detail={<Trans>Connect an assistant such as Claude or ChatGPT</Trans>}
+          />
         </NavRow>
       </Group>
       {canManage && (
@@ -162,7 +205,10 @@ export function SettingsColumn() {
           <RowIcon>
             <BuildingIcon />
           </RowIcon>
-          <RowText title={membership.workspace.name} detail={<Trans>Data retention and deleting the workspace</Trans>} />
+          <RowText
+            title={membership.workspace.name}
+            detail={<Trans>Data retention and deleting the workspace</Trans>}
+          />
         </NavRow>
       </Group>
     </Column>

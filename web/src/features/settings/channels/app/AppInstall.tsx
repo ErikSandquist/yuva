@@ -18,7 +18,11 @@ export function AppInstall({ channel }: { channel: Channel }) {
         channel={channel}
         value={publicKey}
         onRotated={setPublicKey}
-        hint={<Trans>Not a secret: it ships inside your app. Native apps send no origin, so the key is not tied to one.</Trans>}
+        hint={
+          <Trans>
+            Not a secret: it ships inside your app. Native apps send no origin, so the key is not tied to one.
+          </Trans>
+        }
         warning={
           <Trans>
             App builds with the old key can no longer start sessions until you ship one with the new key. People already
@@ -31,8 +35,8 @@ export function AppInstall({ channel }: { channel: Channel }) {
           <li>
             <Trans>
               <span className="font-medium text-foreground">iOS:</span> add the Yuva repository as a Swift package and
-              use the <code className="font-mono">YuvaKit</code> library; create the client with the server URL and
-              this key.
+              use the <code className="font-mono">YuvaKit</code> library; create the client with the server URL and this
+              key.
             </Trans>
           </li>
           <li>

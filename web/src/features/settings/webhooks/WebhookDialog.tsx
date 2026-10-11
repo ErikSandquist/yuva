@@ -6,7 +6,14 @@ import { ErrorLine } from "@/components/common"
 import { useEnumText, WEBHOOK_EVENTS } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
@@ -45,7 +52,9 @@ export function WebhookDialog({
   const [url, setUrl] = useState(endpoint?.url ?? "")
   const [description, setDescription] = useState(endpoint?.description ?? "")
   const [scope, setScope] = useState(endpoint?.inbox_id ?? inboxId ?? "")
-  const [events, setEvents] = useState<Set<WebhookEventType>>(() => new Set(endpoint?.events ?? ["conversation.created", "message.created", "feedback.created"]))
+  const [events, setEvents] = useState<Set<WebhookEventType>>(
+    () => new Set(endpoint?.events ?? ["conversation.created", "message.created", "feedback.created"])
+  )
   const [includeNotes, setIncludeNotes] = useState(endpoint?.include_notes ?? false)
   const [touched, setTouched] = useState(false)
   const chosen = WEBHOOK_EVENTS.filter((e) => events.has(e))
@@ -53,9 +62,13 @@ export function WebhookDialog({
     mutationFn: (): Promise<{ endpoint: WebhookEndpoint; secret: string | null }> => {
       const body = { url: url.trim(), description: description.trim(), events: chosen, include_notes: includeNotes }
       if (endpoint) {
-        return unwrap(api.PATCH("/v1/webhooks/{webhookId}", { params: { path: { webhookId: endpoint.id } }, body })).then((e) => ({ endpoint: e, secret: null }))
+        return unwrap(
+          api.PATCH("/v1/webhooks/{webhookId}", { params: { path: { webhookId: endpoint.id } }, body })
+        ).then((e) => ({ endpoint: e, secret: null }))
       }
-      return unwrap(api.POST("/v1/webhooks", { body: { ...body, enabled: true, ...(scope ? { inbox_id: scope } : {}) } }))
+      return unwrap(
+        api.POST("/v1/webhooks", { body: { ...body, enabled: true, ...(scope ? { inbox_id: scope } : {}) } })
+      )
     },
     onSuccess: (r) => {
       setEndpoint(r.endpoint)
@@ -117,11 +130,25 @@ export function WebhookDialog({
               />
             </Field>
             <Field label={<Trans>Description (optional)</Trans>} htmlFor="webhook-description">
-              <Input id="webhook-description" maxLength={200} value={description} placeholder={t`Push notifications`} onChange={(e) => setDescription(e.target.value)} />
+              <Input
+                id="webhook-description"
+                maxLength={200}
+                value={description}
+                placeholder={t`Push notifications`}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </Field>
             {!inboxId && (
-              <Field label={<Trans>Inbox</Trans>} hint={endpoint ? <Trans>The inbox cannot be changed later.</Trans> : undefined}>
-                <Select value={scope} onValueChange={(v) => setScope(String(v ?? ""))} items={scopes} disabled={!!endpoint}>
+              <Field
+                label={<Trans>Inbox</Trans>}
+                hint={endpoint ? <Trans>The inbox cannot be changed later.</Trans> : undefined}
+              >
+                <Select
+                  value={scope}
+                  onValueChange={(v) => setScope(String(v ?? ""))}
+                  items={scopes}
+                  disabled={!!endpoint}
+                >
                   <SelectTrigger className="w-full" aria-label={t`Inbox`}>
                     <SelectValue />
                   </SelectTrigger>
@@ -160,7 +187,9 @@ export function WebhookDialog({
             </div>
             <ToggleRow
               title={<Trans>Include notes</Trans>}
-              hint={<Trans>Also send message.created for members' internal notes. Internal events are never sent.</Trans>}
+              hint={
+                <Trans>Also send message.created for members' internal notes. Internal events are never sent.</Trans>
+              }
             >
               <Switch checked={includeNotes} onCheckedChange={setIncludeNotes} aria-label={t`Include notes`} />
             </ToggleRow>

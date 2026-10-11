@@ -19,11 +19,18 @@ export function AttemptLog({ endpoint }: { endpoint: WebhookEndpoint }) {
   const list = useQuery({
     queryKey: keys.webhookAttempts(ws, endpoint.id),
     queryFn: () =>
-      unwrap(api.GET("/v1/webhooks/{webhookId}/attempts", { params: { path: { webhookId: endpoint.id }, query: { limit: 100 } } })).then((r) => r.items),
+      unwrap(
+        api.GET("/v1/webhooks/{webhookId}/attempts", {
+          params: { path: { webhookId: endpoint.id }, query: { limit: 100 } },
+        })
+      ).then((r) => r.items),
   })
   const th = "px-4 py-2.5 text-start font-medium whitespace-nowrap"
   return (
-    <Section title={<Trans>Attempt log</Trans>} description={<Trans>Every request to this endpoint, newest first. The newest 100 are kept.</Trans>}>
+    <Section
+      title={<Trans>Attempt log</Trans>}
+      description={<Trans>Every request to this endpoint, newest first. The newest 100 are kept.</Trans>}
+    >
       <Card flush>
         {list.isPending ? (
           <Skeleton className="m-5 h-16" />
@@ -52,7 +59,12 @@ export function AttemptLog({ endpoint }: { endpoint: WebhookEndpoint }) {
               </thead>
               <tbody className="divide-y">
                 {list.data.map((a) => (
-                  <tr key={a.id} className="cursor-pointer align-top transition-colors hover:bg-muted" onClick={() => setOpen(a.delivery_id)} data-testid="attempt-row">
+                  <tr
+                    key={a.id}
+                    className="cursor-pointer align-top transition-colors hover:bg-muted"
+                    onClick={() => setOpen(a.delivery_id)}
+                    data-testid="attempt-row"
+                  >
                     <td className="px-4 py-2 whitespace-nowrap">
                       {formatDateTime(a.attempted_at, i18n.locale)}
                       {a.manual && <ManualTag />}
@@ -61,7 +73,10 @@ export function AttemptLog({ endpoint }: { endpoint: WebhookEndpoint }) {
                       <AttemptResult a={a} />
                     </td>
                     <td className="px-4 py-2 text-end whitespace-nowrap tabular-nums">{a.latency_ms} ms</td>
-                    <td className="max-w-64 min-w-40 truncate px-4 py-2 text-muted-foreground" title={a.error ?? a.response_body}>
+                    <td
+                      className="max-w-64 min-w-40 truncate px-4 py-2 text-muted-foreground"
+                      title={a.error ?? a.response_body}
+                    >
                       {a.error || a.response_body || "—"}
                     </td>
                   </tr>

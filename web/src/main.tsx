@@ -41,5 +41,5 @@ createRoot(document.getElementById("root")!).render(
         </TooltipProvider>
       </QueryClientProvider>
     </I18nProvider>
-  </StrictMode>,
+  </StrictMode>
 )

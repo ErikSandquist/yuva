@@ -14,7 +14,8 @@ export function RetentionForm() {
   const [days, setDays] = useState(current)
   const isOwner = membership.role === "owner"
   const save = useMutation({
-    mutationFn: () => unwrap(api.PATCH("/v1/workspace", { body: { retention_days: days === "" ? null : Number(days) } })),
+    mutationFn: () =>
+      unwrap(api.PATCH("/v1/workspace", { body: { retention_days: days === "" ? null : Number(days) } })),
     onSuccess: () => qc.invalidateQueries({ queryKey: meKey }),
   })
   const dirty = days !== current
@@ -24,7 +25,12 @@ export function RetentionForm() {
         onSubmit={() => save.mutate()}
         footer={
           isOwner ? (
-            <FormActions pending={save.isPending} disabled={!dirty} saved={save.isSuccess && !dirty} error={save.error} />
+            <FormActions
+              pending={save.isPending}
+              disabled={!dirty}
+              saved={save.isSuccess && !dirty}
+              error={save.error}
+            />
           ) : (
             <p className="text-body text-muted-foreground">
               <Trans>Only owners can change this.</Trans>
@@ -38,12 +44,20 @@ export function RetentionForm() {
             htmlFor="retention-days"
             hint={
               <Trans>
-                Closed conversations untouched for this many days are deleted with their messages and attachments,
-                and raw e-mails older than this are deleted. Leave empty to keep everything.
+                Closed conversations untouched for this many days are deleted with their messages and attachments, and
+                raw e-mails older than this are deleted. Leave empty to keep everything.
               </Trans>
             }
           >
-            <Input id="retention-days" type="number" min={1} max={36500} value={days} onChange={(e) => setDays(e.target.value)} className="sm:max-w-40" />
+            <Input
+              id="retention-days"
+              type="number"
+              min={1}
+              max={36500}
+              value={days}
+              onChange={(e) => setDays(e.target.value)}
+              className="sm:max-w-40"
+            />
           </Field>
         </fieldset>
       </FormCard>

@@ -15,7 +15,15 @@ export function isChats(pathname: string) {
   return pathname === "/" || pathname.startsWith("/conversations/")
 }
 
-export type Section = "conversations" | "mentions" | "assistants" | "contacts" | "team" | "reports" | "docs" | "settings"
+export type Section =
+  | "conversations"
+  | "mentions"
+  | "assistants"
+  | "contacts"
+  | "team"
+  | "reports"
+  | "docs"
+  | "settings"
 
 const routed = ["mentions", "contacts", "team", "reports", "docs", "settings"] as const
 

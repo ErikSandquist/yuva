@@ -24,7 +24,7 @@ export function Notice({
         <Icon
           className={cn(
             "mt-0.5 size-4 shrink-0",
-            tone === "danger" ? "text-destructive" : tone === "warning" ? "text-warning" : "text-faint",
+            tone === "danger" ? "text-destructive" : tone === "warning" ? "text-warning" : "text-faint"
           )}
         />
       )}

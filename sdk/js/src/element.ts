@@ -1,7 +1,7 @@
-import type { Messages } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
-import { catalogFor, directionOf, resolveLocale, translatePlain } from "./i18n";
-import type { components } from "./schema.gen";
+import type { Messages } from "@lingui/core"
+import { msg } from "@lingui/core/macro"
+import { catalogFor, directionOf, resolveLocale, translatePlain } from "./i18n"
+import type { components } from "./schema.gen"
 import {
   contrastOn,
   launcherOf,
@@ -15,7 +15,7 @@ import {
   type PanelController,
   type PanelModule,
   type Rating,
-} from "./types";
+} from "./types"
 
 const styles = `
 :host {
@@ -125,164 +125,164 @@ const styles = `
   block-size: 100%;
   min-block-size: 320px;
 }
-`;
+`
 
-const chatIcon = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>`;
-const closeIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+const chatIcon = `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>`
+const closeIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>`
 
-const scriptSrc = document.currentScript instanceof HTMLScriptElement ? document.currentScript.src : "";
+const scriptSrc = document.currentScript instanceof HTMLScriptElement ? document.currentScript.src : ""
 
 export class YuvaChatElement extends HTMLElement {
-  static observedAttributes = ["channel", "server", "layout", "locale", "dir", "identity-token", "open"];
+  static observedAttributes = ["channel", "server", "layout", "locale", "dir", "identity-token", "open"]
   static loadPanel: () => Promise<PanelModule> = () =>
-    import(/* @vite-ignore */ new URL("yuva-chat.js", scriptSrc || location.href).href);
+    import(/* @vite-ignore */ new URL("yuva-chat.js", scriptSrc || location.href).href)
 
-  #root: ShadowRoot;
-  #launcher: HTMLButtonElement | null = null;
-  #badge: HTMLElement | null = null;
-  #panel: HTMLElement;
-  #controller: Promise<PanelController> | null = null;
-  #messages: Messages = {};
-  #open = false;
-  #unread = 0;
-  #identity: IdentityTokenSource | null = null;
-  #refused = false;
+  #root: ShadowRoot
+  #launcher: HTMLButtonElement | null = null
+  #badge: HTMLElement | null = null
+  #panel: HTMLElement
+  #controller: Promise<PanelController> | null = null
+  #messages: Messages = {}
+  #open = false
+  #unread = 0
+  #identity: IdentityTokenSource | null = null
+  #refused = false
 
   constructor() {
-    super();
-    this.#root = this.attachShadow({ mode: "open" });
-    this.#panel = document.createElement("section");
-    this.#panel.className = "panel";
-    this.#panel.setAttribute("role", "dialog");
-    this.#panel.hidden = true;
+    super()
+    this.#root = this.attachShadow({ mode: "open" })
+    this.#panel = document.createElement("section")
+    this.#panel.className = "panel"
+    this.#panel.setAttribute("role", "dialog")
+    this.#panel.hidden = true
     this.#panel.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && this.layout === "launcher") this.close();
-    });
+      if (event.key === "Escape" && this.layout === "launcher") this.close()
+    })
   }
 
   get layout(): Layout {
-    return this.getAttribute("layout") === "embedded" ? "embedded" : "launcher";
+    return this.getAttribute("layout") === "embedded" ? "embedded" : "launcher"
   }
 
   get channel(): string | null {
-    return this.getAttribute("channel");
+    return this.getAttribute("channel")
   }
 
   get server(): string {
-    const base = this.getAttribute("server") || (scriptSrc ? new URL(scriptSrc).origin : location.origin);
-    return base.replace(/\/+$/, "");
+    const base = this.getAttribute("server") || (scriptSrc ? new URL(scriptSrc).origin : location.origin)
+    return base.replace(/\/+$/, "")
   }
 
   get locale(): string {
-    return resolveLocale(this.getAttribute("locale"), navigator.language);
+    return resolveLocale(this.getAttribute("locale"), navigator.language)
   }
 
   get isOpen(): boolean {
-    return this.#open;
+    return this.#open
   }
 
   get unread(): number {
-    return this.#unread;
+    return this.#unread
   }
 
   setIdentityToken(source: IdentityTokenSource | null): void {
-    this.#identity = source;
-    if (this.#controller) void this.#controller.then((controller) => controller.identityChanged());
+    this.#identity = source
+    if (this.#controller) void this.#controller.then((controller) => controller.identityChanged())
   }
 
   async signOut(): Promise<void> {
-    this.#identity = null;
-    this.removeAttribute("identity-token");
-    if (this.#controller) await (await this.#controller).signOut();
+    this.#identity = null
+    this.removeAttribute("identity-token")
+    if (this.#controller) await (await this.#controller).signOut()
   }
 
   async rate(conversationId: string, rating: Rating, comment?: string): Promise<ClientConversation> {
-    return (await this.#ensureController()).rate(conversationId, rating, comment);
+    return (await this.#ensureController()).rate(conversationId, rating, comment)
   }
 
   connectedCallback(): void {
-    this.#render();
-    const channel = this.channel;
-    if (this.layout === "embedded" || this.hasAttribute("open") || !channel) return;
-    const stored = readStored(channel);
-    if (stored.launcher) this.#applyLauncher(stored.launcher);
+    this.#render()
+    const channel = this.channel
+    if (this.layout === "embedded" || this.hasAttribute("open") || !channel) return
+    const stored = readStored(channel)
+    if (stored.launcher) this.#applyLauncher(stored.launcher)
     const idle = () => {
-      if (!this.isConnected || this.#controller || this.channel !== channel) return;
-      if (stored.session) void this.#ensureController();
-      else this.#styleLauncher(channel);
-    };
-    if ("requestIdleCallback" in window) requestIdleCallback(idle, { timeout: 3000 });
-    else setTimeout(idle, 1000);
+      if (!this.isConnected || this.#controller || this.channel !== channel) return
+      if (stored.session) void this.#ensureController()
+      else this.#styleLauncher(channel)
+    }
+    if ("requestIdleCallback" in window) requestIdleCallback(idle, { timeout: 3000 })
+    else setTimeout(idle, 1000)
   }
 
   #styleLauncher(channel: string): void {
     fetch(`${this.server}/client/v1/channels/${encodeURIComponent(channel)}`, { credentials: "omit" })
       .then((response) => {
-        if (response.status === 403 || response.status === 404) this.#refuse();
-        return response.ok ? (response.json() as Promise<components["schemas"]["ClientInbox"]>) : null;
+        if (response.status === 403 || response.status === 404) this.#refuse()
+        return response.ok ? (response.json() as Promise<components["schemas"]["ClientInbox"]>) : null
       })
       .then((inbox) => {
-        if (!inbox || this.channel !== channel || this.#controller) return;
-        const launcher = launcherOf(inbox);
-        this.#applyLauncher(launcher);
-        writeStored(channel, { ...readStored(channel), launcher });
+        if (!inbox || this.channel !== channel || this.#controller) return
+        const launcher = launcherOf(inbox)
+        this.#applyLauncher(launcher)
+        writeStored(channel, { ...readStored(channel), launcher })
       })
-      .catch(() => undefined);
+      .catch(() => undefined)
   }
 
   disconnectedCallback(): void {
-    const controller = this.#controller;
-    this.#controller = null;
-    if (controller) void controller.then((c) => c.destroy());
+    const controller = this.#controller
+    this.#controller = null
+    if (controller) void controller.then((c) => c.destroy())
   }
 
   attributeChangedCallback(name: string, previous: string | null, value: string | null): void {
-    if (!this.isConnected || previous === value) return;
+    if (!this.isConnected || previous === value) return
     if (name === "open") {
-      void (value === null ? this.close() : this.open());
-      return;
+      void (value === null ? this.close() : this.open())
+      return
     }
     if (name === "identity-token") {
-      if (this.#controller) void this.#controller.then((controller) => controller.identityChanged());
-      return;
+      if (this.#controller) void this.#controller.then((controller) => controller.identityChanged())
+      return
     }
     if (name === "channel" || name === "server") {
-      this.disconnectedCallback();
-      this.#refused = false;
-      this.#render();
-      return;
+      this.disconnectedCallback()
+      this.#refused = false
+      this.#render()
+      return
     }
-    this.#render();
-    if (this.#controller) void this.#controller.then((controller) => controller.update());
+    this.#render()
+    if (this.#controller) void this.#controller.then((controller) => controller.update())
   }
 
   async open(): Promise<void> {
-    if (this.#open || this.#refused) return;
-    this.#open = true;
-    this.toggleAttribute("open-panel", true);
-    this.#syncLauncher();
-    const controller = await this.#ensureController();
-    if (!this.#open) return;
-    this.#panel.hidden = false;
-    controller.opened();
+    if (this.#open || this.#refused) return
+    this.#open = true
+    this.toggleAttribute("open-panel", true)
+    this.#syncLauncher()
+    const controller = await this.#ensureController()
+    if (!this.#open) return
+    this.#panel.hidden = false
+    controller.opened()
   }
 
   close(): void {
-    if (!this.#open || this.layout === "embedded") return;
-    this.#open = false;
-    this.toggleAttribute("open-panel", false);
-    this.#panel.hidden = true;
-    this.#syncLauncher();
-    this.#launcher?.focus();
-    if (this.#controller) void this.#controller.then((controller) => controller.closed());
+    if (!this.#open || this.layout === "embedded") return
+    this.#open = false
+    this.toggleAttribute("open-panel", false)
+    this.#panel.hidden = true
+    this.#syncLauncher()
+    this.#launcher?.focus()
+    if (this.#controller) void this.#controller.then((controller) => controller.closed())
   }
 
   toggle(): Promise<void> | void {
-    return this.#open ? this.close() : this.open();
+    return this.#open ? this.close() : this.open()
   }
 
   #config(): ChatConfig {
-    return { channel: this.channel, server: this.server, layout: this.layout, locale: this.locale };
+    return { channel: this.channel, server: this.server, layout: this.layout, locale: this.locale }
   }
 
   #ensureController(): Promise<PanelController> {
@@ -290,97 +290,98 @@ export class YuvaChatElement extends HTMLElement {
       mount({
         panel: this.#panel,
         config: () => this.#config(),
-        identityToken: async () => (this.#identity ? ((await this.#identity()) ?? null) : this.getAttribute("identity-token")),
+        identityToken: async () =>
+          this.#identity ? ((await this.#identity()) ?? null) : this.getAttribute("identity-token"),
         isOpen: () => this.#open,
         close: () => this.close(),
         setUnread: (count) => {
-          this.#unread = count;
-          this.#syncLauncher();
-          this.dispatchEvent(new CustomEvent("yuva-unread", { detail: { count } }));
+          this.#unread = count
+          this.#syncLauncher()
+          this.dispatchEvent(new CustomEvent("yuva-unread", { detail: { count } }))
         },
         setLauncher: (style) => this.#applyLauncher(style),
         refused: () => this.#refuse(),
-      }),
-    );
-    return this.#controller;
+      })
+    )
+    return this.#controller
   }
 
   #refuse(): void {
-    if (this.#refused) return;
-    this.#refused = true;
-    console.warn(`Yuva: channel ${this.channel} is unknown or does not allow ${location.origin}`);
-    this.#open = false;
-    this.toggleAttribute("open-panel", false);
-    this.disconnectedCallback();
-    this.#render();
+    if (this.#refused) return
+    this.#refused = true
+    console.warn(`Yuva: channel ${this.channel} is unknown or does not allow ${location.origin}`)
+    this.#open = false
+    this.toggleAttribute("open-panel", false)
+    this.disconnectedCallback()
+    this.#render()
   }
 
   #applyLauncher(style: LauncherStyle): void {
-    this.setAttribute("position", style.position === "left" ? "left" : "right");
+    this.setAttribute("position", style.position === "left" ? "left" : "right")
     if (style.color && /^#[0-9a-f]{6}$/i.test(style.color)) {
-      this.style.setProperty("--yuva-accent", style.color);
-      this.style.setProperty("--yuva-on-accent", contrastOn(style.color));
+      this.style.setProperty("--yuva-accent", style.color)
+      this.style.setProperty("--yuva-on-accent", contrastOn(style.color))
     }
   }
 
   #render(): void {
-    const locale = this.locale;
-    this.#messages = catalogFor(locale);
-    this.setAttribute("lang", locale);
-    const style = document.createElement("style");
-    style.textContent = styles;
-    this.#panel.dir = this.getAttribute("dir") ?? directionOf(locale);
-    this.#panel.setAttribute("aria-modal", "false");
+    const locale = this.locale
+    this.#messages = catalogFor(locale)
+    this.setAttribute("lang", locale)
+    const style = document.createElement("style")
+    style.textContent = styles
+    this.#panel.dir = this.getAttribute("dir") ?? directionOf(locale)
+    this.#panel.setAttribute("aria-modal", "false")
     if (this.#refused) {
-      this.#launcher = null;
-      this.#badge = null;
-      this.#root.replaceChildren();
-      return;
+      this.#launcher = null
+      this.#badge = null
+      this.#root.replaceChildren()
+      return
     }
 
     if (this.layout === "embedded") {
-      this.#launcher = null;
-      this.#badge = null;
-      this.#root.replaceChildren(style, this.#panel);
-      this.#open = false;
-      void this.open();
-      return;
+      this.#launcher = null
+      this.#badge = null
+      this.#root.replaceChildren(style, this.#panel)
+      this.#open = false
+      void this.open()
+      return
     }
 
-    const launcher = document.createElement("button");
-    launcher.type = "button";
-    launcher.className = "launcher";
-    launcher.addEventListener("click", () => void this.toggle());
-    this.#launcher = launcher;
-    this.#badge = document.createElement("span");
-    this.#badge.className = "badge";
-    this.#badge.setAttribute("aria-hidden", "true");
-    this.#root.replaceChildren(style, this.#panel, launcher);
-    this.#syncLauncher();
-    if (this.hasAttribute("open") && !this.#open) void this.open();
+    const launcher = document.createElement("button")
+    launcher.type = "button"
+    launcher.className = "launcher"
+    launcher.addEventListener("click", () => void this.toggle())
+    this.#launcher = launcher
+    this.#badge = document.createElement("span")
+    this.#badge.className = "badge"
+    this.#badge.setAttribute("aria-hidden", "true")
+    this.#root.replaceChildren(style, this.#panel, launcher)
+    this.#syncLauncher()
+    if (this.hasAttribute("open") && !this.#open) void this.open()
   }
 
   #syncLauncher(): void {
-    const launcher = this.#launcher;
-    const badge = this.#badge;
-    if (!launcher || !badge) return;
-    const count = this.#unread;
-    launcher.setAttribute("aria-expanded", String(this.#open));
+    const launcher = this.#launcher
+    const badge = this.#badge
+    if (!launcher || !badge) return
+    const count = this.#unread
+    launcher.setAttribute("aria-expanded", String(this.#open))
     launcher.setAttribute(
       "aria-label",
       this.#open
         ? translatePlain(this.#messages, msg`Close chat`)
         : count > 0
           ? translatePlain(this.#messages, msg`Open chat, ${count} unread`)
-          : translatePlain(this.#messages, msg`Open chat`),
-    );
-    launcher.innerHTML = this.#open ? closeIcon : chatIcon;
-    badge.textContent = count > 9 ? "9+" : String(count);
-    badge.hidden = this.#open || count === 0;
-    launcher.append(badge);
+          : translatePlain(this.#messages, msg`Open chat`)
+    )
+    launcher.innerHTML = this.#open ? closeIcon : chatIcon
+    badge.textContent = count > 9 ? "9+" : String(count)
+    badge.hidden = this.#open || count === 0
+    launcher.append(badge)
   }
 }
 
 export function define(): void {
-  if (!customElements.get("yuva-chat")) customElements.define("yuva-chat", YuvaChatElement);
+  if (!customElements.get("yuva-chat")) customElements.define("yuva-chat", YuvaChatElement)
 }

@@ -5,7 +5,14 @@ import { useState } from "react"
 import { ErrorLine, Notice, toast, useConfirm } from "@/components/common"
 import { formatDateTime, useErrorText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { usePublish, useUnpublish, useUpdateAnswer, type AnswerText } from "@/features/docs/queries"
 import { Field } from "@/features/settings/ui"
@@ -58,14 +65,33 @@ function AnswerForm({
           </DialogHeader>
           <Notice tone="warning" icon={GlobeIcon} data-testid="answer-public-note">
             <p>
-              <Trans>Anyone who opens the page can read this question and answer. Remove names, e-mail addresses, order numbers and anything else personal.</Trans>
+              <Trans>
+                Anyone who opens the page can read this question and answer. Remove names, e-mail addresses, order
+                numbers and anything else personal.
+              </Trans>
             </p>
           </Notice>
           <Field label={<Trans>Question</Trans>} htmlFor="answer-question">
-            <Textarea id="answer-question" required rows={3} maxLength={2000} value={question} onChange={(e) => setQuestion(e.target.value)} data-testid="answer-question" />
+            <Textarea
+              id="answer-question"
+              required
+              rows={3}
+              maxLength={2000}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              data-testid="answer-question"
+            />
           </Field>
           <Field label={<Trans>Answer</Trans>} htmlFor="answer-answer">
-            <Textarea id="answer-answer" required rows={8} maxLength={20000} value={answer} onChange={(e) => setAnswer(e.target.value)} data-testid="answer-answer" />
+            <Textarea
+              id="answer-answer"
+              required
+              rows={8}
+              maxLength={20000}
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              data-testid="answer-answer"
+            />
           </Field>
           <ErrorLine error={error} />
           <DialogFooter>
@@ -82,7 +108,17 @@ function AnswerForm({
   )
 }
 
-export function PublishDialog({ conversationId, page, initial, onClose }: { conversationId: string; page: string; initial: AnswerText; onClose: () => void }) {
+export function PublishDialog({
+  conversationId,
+  page,
+  initial,
+  onClose,
+}: {
+  conversationId: string
+  page: string
+  initial: AnswerText
+  onClose: () => void
+}) {
   const { t } = useLingui()
   const publish = usePublish(conversationId)
   return (
@@ -141,7 +177,8 @@ export function useAnswerActions() {
       title: <Trans>Unpublish this answer?</Trans>,
       description: <Trans>It disappears from the page. The conversation stays and can be published again.</Trans>,
       confirm: <Trans>Unpublish</Trans>,
-      run: () => unpublish.mutate(a.id, { onSuccess: () => toast(t`Unpublished`), onError: (e) => toast(errorText(e)) }),
+      run: () =>
+        unpublish.mutate(a.id, { onSuccess: () => toast(t`Unpublished`), onError: (e) => toast(errorText(e)) }),
     })
   const dialogs = (
     <>
@@ -152,7 +189,17 @@ export function useAnswerActions() {
   return { edit: setEditing, unpublish: askUnpublish, dialogs }
 }
 
-export function AnswerCard({ a, onEdit, onUnpublish, footer }: { a: PageAnswer; onEdit: () => void; onUnpublish: () => void; footer?: React.ReactNode }) {
+export function AnswerCard({
+  a,
+  onEdit,
+  onUnpublish,
+  footer,
+}: {
+  a: PageAnswer
+  onEdit: () => void
+  onUnpublish: () => void
+  footer?: React.ReactNode
+}) {
   const { t, i18n } = useLingui()
   const edited = formatDateTime(a.updated_at, i18n.locale)
   const published = formatDateTime(a.published_at, i18n.locale)
@@ -169,7 +216,13 @@ export function AnswerCard({ a, onEdit, onUnpublish, footer }: { a: PageAnswer; 
           <PencilIcon />
           <Trans>Edit</Trans>
         </Button>
-        <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive" onClick={onUnpublish} data-testid="answer-unpublish">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-destructive hover:text-destructive"
+          onClick={onUnpublish}
+          data-testid="answer-unpublish"
+        >
           <Trash2Icon />
           <Trans>Unpublish</Trans>
         </Button>

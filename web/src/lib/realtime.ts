@@ -59,7 +59,7 @@ export function useRealtimeStatus(): RealtimeStatus {
       listeners.add(l)
       return () => listeners.delete(l)
     },
-    () => status.value,
+    () => status.value
   )
 }
 

@@ -62,7 +62,7 @@ export function useMergeContact(targetId: string) {
         api.POST("/v1/contacts/{contactId}/merge", {
           params: { path: { contactId: targetId } },
           body: { source_id: sourceId },
-        }),
+        })
       ),
     onSuccess: (data, sourceId) => {
       applyEvent(qc, live, { type: "contact.updated", data })
@@ -96,7 +96,7 @@ export function useContactDirectory(q: string, filter: DirectoryFilter) {
               limit: 50,
             },
           },
-        }),
+        })
       ),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
@@ -117,7 +117,11 @@ export function useContactNotes(id: string) {
   return useInfiniteQuery({
     queryKey: keys.contactNotes(ws, id),
     queryFn: ({ pageParam }) =>
-      unwrap(api.GET("/v1/contacts/{contactId}/notes", { params: { path: { contactId: id }, query: { cursor: pageParam, limit: 50 } } })),
+      unwrap(
+        api.GET("/v1/contacts/{contactId}/notes", {
+          params: { path: { contactId: id }, query: { cursor: pageParam, limit: 50 } },
+        })
+      ),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
   })
@@ -127,7 +131,8 @@ export function useAddContactNote(id: string) {
   const qc = useQueryClient()
   const { workspaceId: ws } = useSession()
   return useMutation({
-    mutationFn: (body: string) => unwrap(api.POST("/v1/contacts/{contactId}/notes", { params: { path: { contactId: id } }, body: { body } })),
+    mutationFn: (body: string) =>
+      unwrap(api.POST("/v1/contacts/{contactId}/notes", { params: { path: { contactId: id } }, body: { body } })),
     onSettled: () => void qc.invalidateQueries({ queryKey: keys.contactNotes(ws, id) }),
   })
 }
@@ -146,7 +151,8 @@ export function useUpdateContact(contactId: string) {
   const qc = useQueryClient()
   const live = useLiveContext()
   return useMutation({
-    mutationFn: (body: ContactUpdate) => unwrap(api.PATCH("/v1/contacts/{contactId}", { params: { path: { contactId } }, body })),
+    mutationFn: (body: ContactUpdate) =>
+      unwrap(api.PATCH("/v1/contacts/{contactId}", { params: { path: { contactId } }, body })),
     onSuccess: (data) => applyEvent(qc, live, { type: "contact.updated", data }),
   })
 }
