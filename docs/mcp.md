@@ -43,11 +43,25 @@ Replies are drafts. A member reviews each one in the conversation and sends, edi
 unless the workspace lets bots send ([Bots may send](headless.md#bots-may-send)). What an assistant
 writes over OAuth shows as "Ayşe via Claude"; with an API key, as the key's bot.
 
+## Set up live chat from an assistant
+
+Owners and admins can let an assistant do the setup. Grant `inboxes:manage` when you connect
+(an API key needs it too), then ask, for example: "Connect Yuva live chat to https://www.example.com.
+It's the Acme site, built with Next.js."
+
+The `setup_live_chat` prompt does the same. The assistant finds or creates the inbox, creates the
+chat channel for the site's origin (or adds the origin to the one there is) and gets the install
+code, filled with your server's URL and the channel's public key. With access to your code it adds
+the code there; otherwise it shows it. A connection without `inboxes:manage` gets an error naming
+the scope: reconnect and grant it. The identity secret for [signed-in users](identity.md) is not
+given to assistants; rotate it in the inbox settings when you need it.
+
 ## Reference
 
 ### Tools
 
-Tools run the same checks as `/v1`. Tools you cannot use are not listed.
+Tools run the same checks as `/v1`. Tools you cannot use are not listed; calling one anyway
+answers `insufficient_scope` with the scope to grant.
 
 | Tools | Scope |
 |---|---|
@@ -60,6 +74,8 @@ Tools run the same checks as `/v1`. Tools you cannot use are not listed.
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (owners, admins, keys without an inbox limit) | `contacts:write` |
+| `list_channels`, `get_install_snippet` (code for `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` and documentation sites) | `inboxes:read` |
+| `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
 
 With your draft open in a conversation, `send_reply` there answers `draft_pending`.
 
@@ -68,7 +84,7 @@ With your draft open in a conversation, `send_reply` there answers `draft_pendin
 | Kind | Items |
 |---|---|
 | Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`; subscriptions follow changes. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
 
 ### Safety and limits
 

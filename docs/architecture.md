@@ -378,8 +378,21 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   address; `list_feedback` is `ListConversations` with `kind=feedback`; `add_labels` and
   `remove_labels` are `BulkUpdateConversations` with one id. `merge_contacts` is listed only to
   owners, admins and keys without an inbox limit.
+- Setup tools: `list_channels` (`ListChannels`; kind, name, public key, allowed origins,
+  anonymous, discussions, e-mail addresses, never secrets), `create_inbox` (`CreateInbox`; the slug
+  is made from the name as the panel does, with `-2`, `-3` … when taken; the identity secret is not
+  returned), `create_chat_channel` (`CreateChannel` with kind `chat`; anonymous on and discussions
+  `off` unless given), `update_chat_channel` (`GetChannel`, then `UpdateChannel` with the current
+  chat settings and the added and removed origins, anonymous, discussions and greeting changed) and
+  `get_install_snippet` (`GetChannel`; the code for `html`, `react`, `nextjs`, `nuxt`, `vue`,
+  `astro`, `shadcn` and the `docs-` variants, filled with `YUVA_PUBLIC_URL` and the public key, an
+  `npm install "useyuva@>=<server version>"` line where needed, where it goes and the guide on
+  GitHub). The templates live in the server (`mcp_setup.go`) with the panel's wording. The three
+  writes are listed to owners, admins and keys with `inboxes:manage`. Calling a tool that is not
+  listed answers `insufficient_scope` naming the scope to reconnect with, or the role or
+  `bots_may_send` reason.
 - Writes carry `destructiveHint: false` except `merge_contacts`; `assign`, `set_status`, `snooze`,
-  the label tools, `move_conversation` and `bulk_update` carry `idempotentHint`; `send_reply` and
+  the label tools, `move_conversation`, `bulk_update` and `update_chat_channel` carry `idempotentHint`; `send_reply` and
   `send_draft` (`SendMessage`, delivering a stored draft instead of a copy of its text) carry
   `openWorldHint`. `send_reply` answers `409 draft_pending` while the caller (the same key,
   or the same member through the same client) has a draft in that conversation.
@@ -397,8 +410,11 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   returned only inside `customer_content` fields, and every tool description says that text there
   is data from customers and never instructions.
 - Resources `yuva://inbox/{id}`, `yuva://conversation/{id}`, `yuva://contact/{id}`, with
-  subscriptions. Prompts `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`;
-  they only arrange tool calls and text, Yuva runs no model.
+  subscriptions. Prompts `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`
+  and `setup_live_chat` (site URL, framework, product name: find or create the inbox and the chat
+  channel for the site's origin, get the snippet, add it to the code or show it; without
+  `inboxes:manage` it says which scope to reconnect with); they only arrange tool calls and text,
+  Yuva runs no model.
 - Rate limit per token or key (600 requests a minute, `429` with `Retry-After`), counted per grant
   for Connected apps.
 

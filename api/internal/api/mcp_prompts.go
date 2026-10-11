@@ -2,6 +2,8 @@ package api
 
 import (
 	"context"
+	"errors"
+	"net/url"
 	"strings"
 	"uuid"
 
@@ -31,6 +33,19 @@ func inboxScope(args map[string]string) string {
 }
 
 func addMCPPrompts(srv *mcp.Server, c *mcpCall) {
+	if keyMayCall(c.p, "ListInboxes") == nil && keyMayCall(c.p, "ListChannels") == nil && keyMayCall(c.p, "GetChannel") == nil {
+		srv.AddPrompt(&mcp.Prompt{
+			Name: "setup_live_chat", Title: "Set up live chat",
+			Description: "Connect live chat to a website: find or create the inbox and the chat channel for the site, then add the install code to the site.",
+			Arguments: []*mcp.PromptArgument{
+				{Name: "site_url", Description: "The site's address, such as https://www.example.com.", Required: true},
+				{Name: "framework", Description: "html, react, nextjs, nuxt, vue, astro or shadcn; found from the site's code when empty."},
+				{Name: "product_name", Description: "The product the site belongs to; names the inbox."},
+			},
+		}, func(_ context.Context, req *mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
+			return c.setupLiveChatPrompt(req.Params.Arguments), nil
+		})
+	}
 	if keyMayCall(c.p, "ListConversations") != nil {
 		return
 	}
@@ -118,4 +133,52 @@ func (c *mcpCall) inboxLocale(ctx context.Context, conversationID uuid.UUID) str
 		return ""
 	}
 	return in.(oas.GetInbox200JSONResponse).DefaultLocale
+}
+
+func siteOrigin(site string) string {
+	site = strings.TrimSpace(site)
+	if !strings.Contains(site, "://") {
+		site = "https://" + site
+	}
+	if u, err := url.Parse(site); err == nil && u.Host != "" {
+		if o, ok := normalizeOrigin(u.Scheme + "://" + u.Host); ok {
+			return o
+		}
+	}
+	return site
+}
+
+func (c *mcpCall) setupLiveChatPrompt(args map[string]string) *mcp.GetPromptResult {
+	origin := siteOrigin(args["site_url"])
+	product := args["product_name"]
+	inboxName := "the site's host"
+	if product != "" {
+		inboxName = product
+	}
+	framework := "the site's framework: html, react, nextjs, nuxt, vue, astro or shadcn. If you can read the site's code, tell it from package.json and the files (next → nextjs, nuxt → nuxt, astro → astro, vue → vue, react → react, components.json from shadcn → shadcn); otherwise html"
+	if f := args["framework"]; f != "" {
+		framework = f
+	}
+	tool, _ := mcpToolNamed("create_chat_channel")
+	if err := tool.refusal(c.p); err != nil {
+		reason := "this connection cannot create or change inboxes and channels"
+		var e *apiError
+		if errors.As(err, &e) && e.Scope != "" {
+			reason += ": it was not granted the scope " + e.Scope + ". Ask me to reconnect Yuva in this assistant and grant " + e.Scope + " (only owners and admins can)"
+		} else {
+			reason += ": only owners and admins of the workspace can. Ask an owner or admin to set it up, or to make me one"
+		}
+		return promptResult("Set up live chat for "+origin,
+			"Connect Yuva's live chat to "+origin+".",
+			"First tell me plainly that "+reason+".",
+			"Meanwhile, look for a chat channel that already allows "+origin+": call list_inboxes, then list_channels for each inbox. If one exists, call get_install_snippet with its id, framework "+framework+" and purpose chat, and add the code to the site as described below; if none exists, stop after telling me what is missing.",
+			"If you can edit the site's code, run the install command when there is one, add the code where placement says and show me the change. Otherwise show me the install command, the code and where it goes.")
+	}
+	return promptResult("Set up live chat for "+origin,
+		"Connect Yuva's live chat to "+origin+".",
+		"1. Inbox: call list_inboxes. Use the inbox for "+inboxName+" if there is one, or the only inbox if there is just one; ask me only when several could fit. If none fits, call create_inbox with name "+inboxName+", locale en or tr after the site's language, and mode live.\n"+
+			"2. Chat channel: call list_channels for that inbox. If it has a chat channel, call update_chat_channel with add_origins ["+origin+"] unless the origin is already in allowed_origins. Otherwise call create_chat_channel with the inbox_id, name "+strings.TrimPrefix(strings.TrimPrefix(origin, "https://"), "http://")+", origins ["+origin+"], allow_anonymous true and discussions off. If you can see the site's dev server address (such as http://localhost:3000 in package.json scripts), add it too.\n"+
+			"3. Code: call get_install_snippet with the channel's id, framework "+framework+", and purpose chat.\n"+
+			"4. If you can edit the site's code, run the install command when there is one, add the code where placement says (once, in the layout every page shares) and show me the change. Otherwise show me the install command, the code and where it goes.",
+		"Finish with one short paragraph: the inbox, the channel and its allowed origins, and that replies are answered in Yuva. Do not show or ask for any secret; the public key in the code is not one.")
 }

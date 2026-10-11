@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"slices"
 	"time"
@@ -19,21 +20,54 @@ type mcpTool struct {
 	ops    []string
 	scopes []oas.ApiKeyScope
 	allow  func(p principal) bool
+	denied *apiError
 	add    func(srv *mcp.Server, c *mcpCall)
 }
 
-func (t mcpTool) listed(p principal) bool {
+func (t mcpTool) listed(p principal) bool { return t.refusal(p) == nil }
+
+// refusal says why the caller may not use the tool: a missing scope names the scope to reconnect
+// with, since assistants cannot see tools that are not listed.
+func (t mcpTool) refusal(p principal) error {
 	for _, op := range t.ops {
-		if keyMayCall(p, op) != nil {
-			return false
+		if err := keyMayCall(p, op); err != nil {
+			return mcpScopeError(err)
 		}
 	}
 	for _, sc := range t.scopes {
-		if requireScope(p, sc) != nil {
-			return false
+		if err := requireScope(p, sc); err != nil {
+			return mcpScopeError(err)
 		}
 	}
-	return t.allow == nil || t.allow(p)
+	if t.allow != nil && !t.allow(p) {
+		if t.denied != nil {
+			return t.denied
+		}
+		return errForbidden
+	}
+	return nil
+}
+
+func mcpScopeError(err error) error {
+	var e *apiError
+	if !errors.As(err, &e) || e.Scope == "" {
+		return err
+	}
+	detail := "this connection was not granted the scope " + e.Scope + "; reconnect Yuva in your assistant and grant " + e.Scope
+	if slices.Contains(managerScopes, oas.ApiKeyScope(e.Scope)) {
+		detail += " (owners and admins only)"
+	}
+	out := problem(http.StatusForbidden, "insufficient_scope", detail+", or use an API key that has it")
+	out.Scope = e.Scope
+	return out
+}
+
+func mcpToolNamed(name string) (mcpTool, bool) {
+	i := slices.IndexFunc(mcpTools, func(t mcpTool) bool { return t.name == name })
+	if i < 0 {
+		return mcpTool{}, false
+	}
+	return mcpTools[i], true
 }
 
 func boolPtr(b bool) *bool { return &b }
@@ -371,7 +405,7 @@ func (c *mcpCall) changeLabels(ctx context.Context, in labelsIn, add bool) (mcpC
 
 func mayDeliver(p principal) bool { return !(p.deliversAsBot() && !p.botsMaySend) }
 
-var mcpTools = []mcpTool{
+var mcpTools = append([]mcpTool{
 	defineTool("search_conversations", "Search conversations",
 		"Lists conversations in the inboxes you can see, most recent activity first, with filters and full-text search. Maps to GET /v1/conversations.",
 		readOnly, map[string][]any{"status": conversationStatuses}, mcpTool{ops: []string{"ListConversations"}},
@@ -498,7 +532,7 @@ var mcpTools = []mcpTool{
 		}),
 	defineTool("send_reply", "Send a reply",
 		"Sends a new reply to the contact now, by e-mail or chat. Prefer draft_reply unless the person you work for asked to send; to send a draft that exists, use send_draft. Maps to POST /v1/conversations/{id}/messages.",
-		delivering, nil, mcpTool{ops: []string{"CreateMessage"}, scopes: []oas.ApiKeyScope{oas.MessagesWrite}, allow: mayDeliver},
+		delivering, nil, mcpTool{ops: []string{"CreateMessage"}, scopes: []oas.ApiKeyScope{oas.MessagesWrite}, allow: mayDeliver, denied: errBotSendingDisabled},
 		func(ctx context.Context, c *mcpCall, in replyIn) (mcpMessage, error) {
 			if err := c.noPendingDraft(ctx, in.ConversationID); err != nil {
 				return mcpMessage{}, err
@@ -509,7 +543,7 @@ var mcpTools = []mcpTool{
 		}),
 	defineTool("send_draft", "Send a draft",
 		"Delivers a draft that already exists, by e-mail or chat, so the conversation keeps one message instead of the draft and a copy. Use it when the person you work for asks to send a draft from draft_reply; never send_reply with the same text. Maps to POST /v1/messages/{id}/send.",
-		delivering, nil, mcpTool{ops: []string{"SendMessage"}, allow: mayDeliver},
+		delivering, nil, mcpTool{ops: []string{"SendMessage"}, allow: mayDeliver, denied: errBotSendingDisabled},
 		func(ctx context.Context, c *mcpCall, in sendDraftIn) (mcpMessage, error) {
 			res, err := c.s.SendMessage(ctx, oas.SendMessageRequestObject{MessageId: in.MessageID})
 			if err != nil {
@@ -609,4 +643,4 @@ var mcpTools = []mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}
+}, mcpSetupTools...)

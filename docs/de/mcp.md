@@ -45,12 +45,26 @@ verwirft ihn, außer der Workspace lässt Bots senden ([Bots may send](headless.
 Was ein Assistent über OAuth schreibt, erscheint als „Ayşe via Claude“; mit einem API-Schlüssel als
 der Bot des Schlüssels.
 
+## Live-Chat von einem Assistenten einrichten lassen
+
+Inhaber und Admins können die Einrichtung einem Assistenten überlassen. Erteilen Sie beim Verbinden
+`inboxes:manage` (ein API-Schlüssel braucht es ebenfalls) und fragen Sie zum Beispiel: „Verbinde den
+Yuva-Live-Chat mit https://www.example.com. Es ist die Acme-Website, gebaut mit Next.js.“
+
+Der Prompt `setup_live_chat` macht dasselbe. Der Assistent findet oder erstellt den Posteingang,
+erstellt den Chat-Kanal für den Origin der Website (oder fügt den Origin dem vorhandenen hinzu) und
+holt den Installationscode, ausgefüllt mit der URL Ihres Servers und dem öffentlichen Schlüssel des
+Kanals. Hat er Zugriff auf Ihren Code, fügt er ihn dort ein, sonst zeigt er ihn. Eine Verbindung ohne
+`inboxes:manage` bekommt einen Fehler, der den Scope nennt: neu verbinden und ihn erteilen. Das
+Identitätsgeheimnis für [angemeldete Nutzer](identity.md) bekommen Assistenten nicht; erneuern Sie
+es bei Bedarf in den Einstellungen des Posteingangs.
+
 ## Referenz
 
 ### Tools
 
 Tools durchlaufen dieselben Prüfungen wie `/v1`. Tools, die Sie nicht nutzen dürfen, werden nicht
-aufgelistet.
+aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu erteilenden Scope.
 
 | Tools | Scope |
 |---|---|
@@ -63,6 +77,8 @@ aufgelistet.
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (Inhaber, Admins, Schlüssel ohne Posteingangs-Beschränkung) | `contacts:write` |
+| `list_channels`, `get_install_snippet` (Code für `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` und Dokumentationsseiten) | `inboxes:read` |
+| `create_inbox`, `create_chat_channel`, `update_chat_channel` (Inhaber und Admins) | `inboxes:manage` |
 
 Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `draft_pending`.
 
@@ -71,7 +87,7 @@ Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `dr
 | Art | Einträge |
 |---|---|
 | Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`; Abonnements folgen Änderungen. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
 
 ### Sicherheit und Grenzen
 

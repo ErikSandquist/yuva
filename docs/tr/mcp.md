@@ -45,11 +45,25 @@ Yanıtlar taslaktır. Çalışma alanı botların göndermesine izin vermedikçe
 gönderir, düzenler ya da atar. Asistanın OAuth ile yazdıkları "Ayşe via Claude" olarak, API
 anahtarıyla yazdıkları anahtarın botu olarak görünür.
 
+## Canlı sohbeti bir asistanla kurun
+
+Sahipler ve yöneticiler kurulumu bir asistana bırakabilir. Bağlanırken `inboxes:manage` yetkisini
+verin (API anahtarında da gerekir), sonra örneğin şunu isteyin: "Yuva canlı sohbetini
+https://www.example.com sitesine bağla. Acme'nin sitesi, Next.js ile yapıldı."
+
+`setup_live_chat` prompt'u da aynısını yapar. Asistan gelen kutusunu bulur ya da oluşturur, sitenin
+origin'i için sohbet kanalını oluşturur (ya da origin'i mevcut kanala ekler) ve sunucunuzun
+adresiyle kanalın açık anahtarı doldurulmuş kurulum kodunu alır. Kodunuza erişimi varsa kodu oraya
+ekler, yoksa gösterir. `inboxes:manage` olmayan bir bağlantı yetkinin adını veren bir hata alır:
+yeniden bağlanıp bu yetkiyi verin. [Giriş yapmış kullanıcılar](identity.md) için kimlik sırrı
+asistanlara verilmez; gerektiğinde gelen kutusu ayarlarında yenileyin.
+
 ## Başvuru
 
 ### Araçlar
 
-Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar listelenmez.
+Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar listelenmez; yine de
+çağrılırsa verilmesi gereken yetkiyle birlikte `insufficient_scope` döner.
 
 | Araçlar | Yetki |
 |---|---|
@@ -62,6 +76,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `contacts:write` |
+| `list_channels`, `get_install_snippet` (`html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` ve dokümantasyon siteleri için kod) | `inboxes:read` |
+| `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
 
 Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` döner.
 
@@ -70,7 +86,7 @@ Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` 
 | Tür | Öğeler |
 |---|---|
 | Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`; abonelikler değişiklikleri izler. |
-| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`. |
+| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
 
 ### Güvenlik ve sınırlar
 
