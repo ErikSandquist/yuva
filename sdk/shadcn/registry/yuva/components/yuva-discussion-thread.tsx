@@ -26,7 +26,7 @@ import {
 } from "@/lib/yuva-utils"
 
 function authorName(author: DiscussionPost["author"], labels: YuvaDiscussionsLabels): string {
-  if (author.deleted) return labels.deletedAuthor
+  if (author.deleted) return author.kind === "member" ? labels.deletedMember : labels.deletedAuthor
   return author.name || labels.anonymous
 }
 

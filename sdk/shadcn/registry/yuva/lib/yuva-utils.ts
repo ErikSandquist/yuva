@@ -35,6 +35,7 @@ export interface YuvaDiscussionsLabels {
   edited: string
   deletedPost: string
   deletedAuthor: string
+  deletedMember: string
   anonymous: string
   team: string
   signIn: string
@@ -99,7 +100,8 @@ export const defaultYuvaDiscussionsLabels: YuvaDiscussionsLabels = {
   deleteConfirm: "Delete this post?",
   edited: "edited",
   deletedPost: "This post was deleted.",
-  deletedAuthor: "Deleted user",
+  deletedAuthor: "Deleted reader",
+  deletedMember: "Deleted member",
   anonymous: "Anonymous",
   team: "Team",
   signIn: "Sign in",

@@ -85,7 +85,11 @@ export function YuvaDiscussionList({
                   <span className="font-medium break-words">{discussion.title}</span>
                   <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
                     <span>
-                      {discussion.author.deleted ? labels.deletedAuthor : discussion.author.name || labels.anonymous}
+                      {discussion.author.deleted
+                        ? discussion.author.kind === "member"
+                          ? labels.deletedMember
+                          : labels.deletedAuthor
+                        : discussion.author.name || labels.anonymous}
                     </span>
                     <time dateTime={discussion.last_activity_at}>
                       {relativeTime(discussion.last_activity_at, locale)}

@@ -656,7 +656,7 @@ export class YuvaDiscussionsElement extends YuvaDocsElement {
   }
 
   #authorName(author: DiscussionAuthor): string {
-    if (author.deleted) return author.kind === "member" ? this.t(msg`Former team member`) : this.t(msg`Deleted account`)
+    if (author.deleted) return author.kind === "member" ? this.t(msg`Deleted member`) : this.t(msg`Deleted reader`)
     if (author.kind === "anonymous") return this.t(msg`Anonymous`)
     return author.name || (author.kind === "member" ? this.t(msg`Team member`) : this.t(msg`Reader`))
   }

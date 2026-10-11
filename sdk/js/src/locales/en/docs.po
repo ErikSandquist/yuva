@@ -60,8 +60,12 @@ msgid "Delete this reply?"
 msgstr "Delete this reply?"
 
 #: src/docs/discussions.ts
-msgid "Deleted account"
-msgstr "Deleted account"
+msgid "Deleted member"
+msgstr "Deleted member"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Deleted reader"
 
 #: src/docs/discussions.ts
 msgid "Discussions"
@@ -110,10 +114,6 @@ msgstr "Follow"
 #: src/docs/discussions.ts
 msgid "Following"
 msgstr "Following"
-
-#: src/docs/discussions.ts
-msgid "Former team member"
-msgstr "Former team member"
 
 #: src/docs/discussions.ts
 msgid "Get an e-mail when someone replies or an answer is accepted."

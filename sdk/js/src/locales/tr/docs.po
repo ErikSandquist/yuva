@@ -60,8 +60,12 @@ msgid "Delete this reply?"
 msgstr "Bu yanıt silinsin mi?"
 
 #: src/docs/discussions.ts
-msgid "Deleted account"
-msgstr "Silinmiş hesap"
+msgid "Deleted member"
+msgstr "Silinmiş üye"
+
+#: src/docs/discussions.ts
+msgid "Deleted reader"
+msgstr "Silinmiş okuyucu"
 
 #: src/docs/discussions.ts
 msgid "Discussions"
@@ -110,10 +114,6 @@ msgstr "Takip et"
 #: src/docs/discussions.ts
 msgid "Following"
 msgstr "Takip ediliyor"
-
-#: src/docs/discussions.ts
-msgid "Former team member"
-msgstr "Eski ekip üyesi"
 
 #: src/docs/discussions.ts
 msgid "Get an e-mail when someone replies or an answer is accepted."
