@@ -70,6 +70,7 @@ type Server struct {
 	mcpSchemas *mcp.SchemaCache
 	noPanel    bool
 	noWidget   bool
+	operator   []string
 }
 
 type Deps struct {
@@ -105,6 +106,8 @@ type Deps struct {
 	DisablePanel bool
 	// DisableWidget stops serving the widget scripts (YUVA_WIDGET=off).
 	DisableWidget bool
+	// OperatorEmails get a digest of new sign-ups and workspaces (YUVA_OPERATOR_EMAIL); empty is off.
+	OperatorEmails []string
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -207,7 +210,7 @@ func New(d Deps) *Server {
 		secrets: d.Secrets, objects: d.Storage, attach: d.Attachments, sanitize: htmlPolicy(), original: originalHTMLPolicy(),
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
-		noPanel: d.DisablePanel, noWidget: d.DisableWidget,
+		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails,
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()

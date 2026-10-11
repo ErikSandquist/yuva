@@ -59,8 +59,17 @@ func (s *Server) CreateWorkspace(ctx context.Context, req oas.CreateWorkspaceReq
 		if n >= perIP {
 			return errSignupIPLimit
 		}
-		ws, _, err = createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name, CreatedBy: &p.personID, CreatedIp: &ip}, p.personID)
-		return err
+		if ws, _, err = createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name, CreatedBy: &p.personID, CreatedIp: &ip}, p.personID); err != nil {
+			return err
+		}
+		if len(s.operator) == 0 {
+			return nil
+		}
+		person, err := q.GetPerson(ctx, p.personID)
+		if err != nil {
+			return err
+		}
+		return s.noteOperator(ctx, q, noticeWorkspace, person.Email, false, &name)
 	})
 	if err != nil {
 		return nil, err

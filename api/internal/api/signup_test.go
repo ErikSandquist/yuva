@@ -1,9 +1,11 @@
 package api_test
 
 import (
+	"context"
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/productdevbook/yuva/api/internal/api"
 )
@@ -127,5 +129,84 @@ func TestSignupKeepsThePageLocale(t *testing.T) {
 	me := c.expect(http.StatusOK, "POST", "/v1/auth/code/verify", map[string]any{"email": existing, "code": h.mail.code(t, existing)})
 	if l := me.body["person"].(map[string]any)["locale"]; l != "en" {
 		t.Fatalf("existing person's locale %v", l)
+	}
+}
+
+func TestOperatorDigest(t *testing.T) {
+	ops := []string{unique("op") + "@example.com", unique("op2") + "@example.com"}
+	h := newHarnessWith(t, func(d *api.Deps) {
+		openSignup(3, 10)(d)
+		d.OperatorEmails = ops
+	})
+	ctx := context.Background()
+	if _, err := h.st.Pool.Exec(ctx, "DELETE FROM operator_notices"); err != nil {
+		t.Fatal(err)
+	}
+
+	existing := unique("owner") + "@example.com"
+	h.bootstrap(existing, unique("ws"))
+	h.client().signIn(existing)
+
+	first := unique("new") + "@example.com"
+	c := h.client()
+	c.signIn(first)
+	c.expect(http.StatusCreated, "POST", "/v1/workspaces", map[string]any{"name": "Acme\nCorp"})
+	if err := h.srv.SendOperatorDigest(ctx); err != nil {
+		t.Fatal(err)
+	}
+	for _, op := range ops {
+		msgs := h.mail.wait(t, op, 1)
+		m := msgs[len(msgs)-1]
+		if !strings.Contains(m.Subject, "1 new sign-up and 1 new workspace") {
+			t.Fatalf("subject %q", m.Subject)
+		}
+		if !strings.Contains(m.Text, "Sign-up: "+first+", from "+c.ip) || !strings.Contains(m.Text, `Workspace "Acme Corp" created by `+first) || strings.Contains(m.Text, existing) {
+			t.Fatalf("text:\n%s", m.Text)
+		}
+		if m.HTML == "" {
+			t.Fatal("no html part")
+		}
+	}
+
+	reader := unique("reader") + "@example.com"
+	rc := h.client()
+	rc.expect(http.StatusAccepted, "POST", "/v1/auth/code", map[string]any{"email": reader, "reader": true})
+	rc.expect(http.StatusOK, "POST", "/v1/auth/code/verify", map[string]any{"email": reader, "code": h.mail.code(t, reader)})
+	h.clock.Advance(4 * time.Minute)
+	if err := h.srv.SendOperatorDigest(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if n := len(h.mail.to(ops[0])); n != 1 {
+		t.Fatalf("%d digests within five minutes, want %d", n, 1)
+	}
+	h.clock.Advance(time.Minute)
+	if err := h.srv.SendOperatorDigest(ctx); err != nil {
+		t.Fatal(err)
+	}
+	m := h.mail.wait(t, ops[0], 2)[1]
+	if m.Subject != "New reader sign-up: "+reader || !strings.Contains(m.Text, "Reader: "+reader) || strings.Contains(m.Text, first) {
+		t.Fatalf("second digest %q:\n%s", m.Subject, m.Text)
+	}
+	h.clock.Advance(10 * time.Minute)
+	if err := h.srv.SendOperatorDigest(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if n := len(h.mail.to(ops[0])); n != 2 {
+		t.Fatalf("a digest with nothing new: %d mails", n)
+	}
+}
+
+func TestOperatorDigestOff(t *testing.T) {
+	h := newHarnessWith(t, openSignup(3, 10))
+	email := unique("new") + "@example.com"
+	c := h.client()
+	c.signIn(email)
+	c.expect(http.StatusCreated, "POST", "/v1/workspaces", map[string]any{"name": "Acme"})
+	var n int
+	if err := h.st.Pool.QueryRow(context.Background(), "SELECT count(*) FROM operator_notices WHERE email = $1", email).Scan(&n); err != nil {
+		t.Fatal(err)
+	}
+	if n != 0 {
+		t.Fatalf("%d notices recorded with no operator address", n)
 	}
 }

@@ -226,6 +226,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		DisableMCP:       !cfg.MCP,
 		DisablePanel:     !cfg.Panel,
 		DisableWidget:    !cfg.Widget,
+		OperatorEmails:   cfg.OperatorEmails,
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")

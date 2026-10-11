@@ -54,6 +54,7 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_SIGNUP` | `invite` | `invite`: giriş kodu yalnızca mevcut kişilere ve davet edilmiş adreslere gider; çalışma alanları `yuva bootstrap` ile açılır. `open`: herkes kodla giriş yapıp panelde çalışma alanı oluşturabilir. |
 | `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | `open` kayıtta bir kişinin oluşturup silmediği çalışma alanı sayısı; fazlası `403` alır. |
 | `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | `open` kayıtta bir IP adresinden (IPv6 /64) 24 saatte oluşturulan çalışma alanı sayısı; fazlası `429` alır. |
+| `YUVA_OPERATOR_EMAIL` | boş | Yeni biri kodla kaydolduğunda (okuyucular ayrıca işaretlenir) ya da çalışma alanı oluşturduğunda e-posta alan adresler, virgülle ayrılmış: adres, çalışma alanı adı, zaman ve ülke (Cloudflare arkasında, `YUVA_CLIENT_IP_HEADER=CF-Connecting-IP` ile) ya da IP adresi. En fazla 5 dakikada bir e-posta gider, öncekinden bu yana olanların hepsini listeler. İngilizce, sunucunun SMTP'si üzerinden. Boş ise kapalı. |
 
 ## Sunucu e-postası
 

@@ -31,6 +31,8 @@ type Config struct {
 	SignupWorkspacesPerPerson int
 	SignupWorkspacesPerIP     int
 
+	OperatorEmails []string
+
 	SMTP SMTP
 
 	MasterKey string
@@ -218,6 +220,13 @@ func Load(version string) (Config, error) {
 	}
 	if c.SignupWorkspacesPerIP, err = strconv.Atoi(env("YUVA_SIGNUP_WORKSPACES_PER_IP", "5")); err != nil || c.SignupWorkspacesPerIP < 1 {
 		return c, errors.New("YUVA_SIGNUP_WORKSPACES_PER_IP must be a positive number of workspaces")
+	}
+	for _, v := range list(env("YUVA_OPERATOR_EMAIL", "")) {
+		a, err := mail.ParseAddress(v)
+		if err != nil {
+			return c, fmt.Errorf("YUVA_OPERATOR_EMAIL: %q is not an e-mail address", v)
+		}
+		c.OperatorEmails = append(c.OperatorEmails, a.Address)
 	}
 	if c.AnonymousContactsPerHour, err = strconv.Atoi(env("YUVA_ANONYMOUS_CONTACTS_PER_HOUR", "20")); err != nil || c.AnonymousContactsPerHour < 1 {
 		return c, errors.New("YUVA_ANONYMOUS_CONTACTS_PER_HOUR must be a positive number of visitors")

@@ -1,0 +1,9 @@
+{{template "heading" (printf "New on %s" .Server)}}
+<p style="margin:0 0 12px 0;">Since the last e-mail:</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 8px 0;font-size:14px;line-height:22px;">
+{{- range .Items}}
+<tr><td class="y-text" style="padding:8px 0;border-top:1px solid #e4e4e7;color:#18181b;">{{if .Workspace}}Workspace <strong>{{.Workspace}}</strong> created by {{.Email}}{{else}}{{if .Reader}}Reader{{else}}Sign-up{{end}}: <strong>{{.Email}}</strong>{{end}}<br><span class="y-muted" style="font-size:13px;color:#71717a;">{{.Time}}{{with .From}} · from {{.}}{{end}}</span></td></tr>
+{{- end}}
+</table>
+{{template "button" (button .URL "Open Yuva")}}
+{{define "operator_digest.footer"}}You get this e-mail because this address is in YUVA_OPERATOR_EMAIL on {{.Server}}.{{end}}

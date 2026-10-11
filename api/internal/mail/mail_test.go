@@ -67,6 +67,9 @@ func samples(inbox, text string) map[string]map[string]any {
 
 var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request"}
 
+// englishMails go only to the server's operator.
+var englishMails = []string{"operator_digest"}
+
 func TestEveryNonPushTemplateHasHTML(t *testing.T) {
 	names, err := fs.Glob(os.DirFS("templates/en"), "*.txt")
 	if err != nil {
@@ -77,7 +80,7 @@ func TestEveryNonPushTemplateHasHTML(t *testing.T) {
 		if strings.HasPrefix(name, "push_") || name == "continuity" {
 			continue
 		}
-		if !slices.Contains(htmlMails, name) {
+		if !slices.Contains(htmlMails, name) && !slices.Contains(englishMails, name) {
 			t.Errorf("%s has no HTML part in this test", name)
 		}
 	}
@@ -353,5 +356,43 @@ func TestFallbackLinkShowsAShortLabel(t *testing.T) {
 	}
 	if !strings.Contains(m.Text, link) {
 		t.Error("the text part lost the full URL")
+	}
+}
+
+func TestOperatorDigest(t *testing.T) {
+	one := map[string]any{"Server": "yuva.example.com", "URL": "https://yuva.example.com", "Signups": 0, "Workspaces": 1,
+		"Items": []map[string]any{{"Time": "2026-10-11 09:00 UTC", "Email": "a@example.com", "Workspace": "<Acme>", "From": "TR"}}}
+	many := map[string]any{"Server": "yuva.example.com", "URL": "https://yuva.example.com", "Signups": 2, "Workspaces": 1,
+		"Items": []map[string]any{
+			{"Time": "2026-10-11 09:00 UTC", "Email": "a@example.com", "From": "203.0.113.7"},
+			{"Time": "2026-10-11 09:01 UTC", "Email": "r@example.com", "Reader": true},
+			{"Time": "2026-10-11 09:02 UTC", "Email": "a@example.com", "Workspace": "Acme"},
+		}}
+	for _, c := range []struct {
+		data    map[string]any
+		subject string
+		text    []string
+	}{
+		{one, "New workspace: <Acme> by a@example.com", []string{`Workspace "<Acme>" created by a@example.com, from TR`}},
+		{many, "2 new sign-ups and 1 new workspace on yuva.example.com", []string{
+			"Sign-up: a@example.com, from 203.0.113.7", "Reader: r@example.com\n", `Workspace "Acme" created by a@example.com`,
+		}},
+	} {
+		m, err := mail.Render("operator_digest", "tr", c.data)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if m.Subject != c.subject {
+			t.Errorf("subject %q, want %q", m.Subject, c.subject)
+		}
+		for _, w := range c.text {
+			if !strings.Contains(m.Text, w) {
+				t.Errorf("text has no %q:\n%s", w, m.Text)
+			}
+		}
+		if !strings.Contains(m.HTML, `<html lang="en">`) || strings.Contains(m.HTML, "<Acme>") || strings.Contains(m.HTML, "<no value>") {
+			t.Errorf("html:\n%s", m.HTML)
+		}
+		checkHTML(t, "operator_digest", m.HTML)
 	}
 }

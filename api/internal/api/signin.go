@@ -238,6 +238,9 @@ func (s *Server) VerifySignInCode(ctx context.Context, req oas.VerifySignInCodeR
 			if err != nil {
 				return err
 			}
+			if err := s.noteOperator(ctx, q, noticeSignup, email, lc.Reader, nil); err != nil {
+				return err
+			}
 			personID, ok = p.ID, true
 		}
 		if !ok {

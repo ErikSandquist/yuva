@@ -574,6 +574,18 @@ type OauthToken struct {
 	UsedAt      *time.Time
 }
 
+type OperatorNotice struct {
+	ID            uuid.UUID
+	Kind          string
+	Email         string
+	Reader        bool
+	WorkspaceName *string
+	Ip            string
+	Country       *string
+	CreatedAt     time.Time
+	SentAt        *time.Time
+}
+
 type PageRating struct {
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
