@@ -51,6 +51,17 @@ export const DISCUSSION_KEYS = {
   page: "o",
 } as const
 
+export const DESIGNER_KEYS = {
+  edit: "1",
+  desktop: "2",
+  phone: "3",
+  dark: "4",
+  add: "a",
+  theme: "t",
+  image: "i",
+  versions: "v",
+} as const
+
 export function keyLabel(k: string): string[] {
   if (k.includes(" ")) return k.split(" ").flatMap(keyLabel)
   return /^[A-Z]$/.test(k) ? ["⇧", k] : [k.toUpperCase()]
@@ -133,6 +144,27 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [k(DISCUSSION_KEYS.approve), t`Approve the selected post`],
         [k(DISCUSSION_KEYS.hide), t`Hide the selected post`],
         [k(DISCUSSION_KEYS.spam), t`Mark the selected post as spam`],
+      ],
+    },
+    {
+      title: t`E-mail designer`,
+      items: [
+        [[mod, "Z"], t`Undo`],
+        [["⇧", mod, "Z"], t`Redo`],
+        [[mod, "S"], t`Save now and keep a version`],
+        [["↑", "↓"], t`Select the previous or next block`],
+        [[alt, "↑", "↓"], t`Move the selected block`],
+        [[mod, "D"], t`Duplicate the selected block`],
+        [["⌫"], t`Delete the selected block`],
+        [["Esc"], t`Leave the text, then the block`],
+        [k(DESIGNER_KEYS.add), t`Add a block`],
+        [k(DESIGNER_KEYS.theme), t`Colours, fonts and width`],
+        [k(DESIGNER_KEYS.image), t`Choose the selected block’s image`],
+        [k(DESIGNER_KEYS.versions), t`Versions`],
+        [
+          [DESIGNER_KEYS.edit, DESIGNER_KEYS.desktop, DESIGNER_KEYS.phone, DESIGNER_KEYS.dark],
+          t`Edit, or preview on a desktop, a phone or in dark mode`,
+        ],
       ],
     },
     {

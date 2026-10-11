@@ -1,4 +1,4 @@
 node_modules/
 dist/
 *.tsbuildinfo
-src/locales/*/messages.js
+src/locales/*/*.js

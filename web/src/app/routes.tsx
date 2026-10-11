@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import { Navigate, Route, Routes } from "react-router"
 
 import { Gate } from "@/app/Gate"
@@ -35,6 +36,13 @@ import { SetupPage } from "@/features/setup/SetupPage"
 import { MemberPage } from "@/features/team/MemberPage"
 import { TeamHome } from "@/features/team/TeamColumn"
 
+const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
+const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
+
+function Loading() {
+  return <div className="flex-1 bg-background" data-testid="route-loading" />
+}
+
 export function AppRoutes() {
   return (
     <Routes>
@@ -49,6 +57,14 @@ export function AppRoutes() {
         <Route path="setup/:inboxId/add/:kind" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId/wait" element={<SetupPage wait />} />
+        <Route
+          path="broadcasts/designs/:designId"
+          element={
+            <Suspense fallback={<Loading />}>
+              <DesignerPage />
+            </Suspense>
+          }
+        />
         <Route element={<Layout />}>
           <Route index element={<ChatsPage />} />
           <Route path="conversations/:conversationId" element={<ChatsPage />} />
@@ -73,6 +89,17 @@ export function AppRoutes() {
           <Route path="broadcasts" element={<BroadcastsHome />} />
           <Route path="broadcasts/lists" element={<Navigate to="/broadcasts" replace />} />
           <Route path="broadcasts/lists/:listId" element={<ListPage />} />
+          {["broadcasts/designs", "broadcasts/designs/new"].map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <Suspense fallback={<Loading />}>
+                  <GalleryPage />
+                </Suspense>
+              }
+            />
+          ))}
           <Route path="settings">
             <Route index element={<SettingsHome />} />
             <Route element={<SettingsPane />}>

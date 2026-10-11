@@ -530,6 +530,10 @@ msgstr "Acme Destek"
 msgid "Add"
 msgstr "Ekle"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a block"
+msgstr "Blok ekle"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Not ekle (isteğe bağlı)"
@@ -1190,6 +1194,10 @@ msgstr "Bir çalışma alanı seçin"
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Listeden birini seçin ya da ↑ ↓ ile gezinip Enter ile açın."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Choose the selected block’s image"
+msgstr "Seçili bloğun görselini seç"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai ve Claude Desktop"
@@ -1281,6 +1289,10 @@ msgstr "Renk"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "Renk"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Colours, fonts and width"
+msgstr "Renkler, yazı tipleri ve genişlik"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Complete"
@@ -1642,6 +1654,10 @@ msgstr "Aboneliği sil"
 msgid "Delete the label {name}?"
 msgstr "{name} etiketi silinsin mi?"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the selected block"
+msgstr "Seçili bloğu sil"
+
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Delete this canned reply?"
 msgstr "Bu hazır yanıt silinsin mi?"
@@ -1722,6 +1738,10 @@ msgstr "Reddet"
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Description (optional)"
 msgstr "Açıklama (isteğe bağlı)"
+
+#: src/features/broadcasts/BroadcastsColumn.tsx
+msgid "Designs"
+msgstr "Tasarımlar"
 
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Desktop notifications are allowed."
@@ -1891,6 +1911,10 @@ msgstr "Bekleyen taslaklar"
 msgid "Drop files to attach them to your reply"
 msgstr "Yanıtınıza eklemek için dosyaları bırakın"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Duplicate the selected block"
+msgstr "Seçili bloğu çoğalt"
+
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
@@ -1920,6 +1944,10 @@ msgstr "E-postayla yazanlara iki bağlantılı kısa bir e-posta gider; sohbet v
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
 msgstr "E-posta içeriği"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "E-mail designer"
+msgstr "E-posta tasarımcısı"
 
 #: src/features/account/AccountPage.tsx
 msgid "E-mail me about the discussions I follow"
@@ -1978,6 +2006,10 @@ msgstr "Etiketi düzenle"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Başlığı düzenle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Edit, or preview on a desktop, a phone or in dark mode"
+msgstr "Düzenle ya da masaüstünde, telefonda veya koyu modda önizle"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "edited"
@@ -2750,6 +2782,10 @@ msgstr "Bırak, {name} yanıtlasın"
 msgid "Leave it to the teammate who is typing"
 msgstr "Yazan ekip arkadaşına bırak"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Leave the text, then the block"
+msgstr "Önce metinden, sonra bloktan çık"
+
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
 msgstr "Yasal unvan"
@@ -2795,6 +2831,10 @@ msgstr "Liste geri alındı"
 #: src/features/setup/WaitStep.tsx
 msgid "Listening for the first message…"
 msgstr "İlk mesaj bekleniyor…"
+
+#: src/features/broadcasts/BroadcastsColumn.tsx
+msgid "Lists"
+msgstr "Listeler"
 
 #: src/components/common/text.ts
 msgid "Live"
@@ -3132,6 +3172,10 @@ msgstr "En çok puan, açık geri bildirim, açık tartışma ve bekleyen gönde
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Most votes"
 msgstr "En çok oy"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected block"
+msgstr "Seçili bloğu taşı"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
@@ -4388,6 +4432,10 @@ msgstr "Son etkinlik"
 msgid "Redeliver"
 msgstr "Yeniden gönder"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Redo"
+msgstr "Yinele"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Reference"
 msgstr "Referans"
@@ -4680,6 +4728,10 @@ msgstr "Kaydet"
 msgid "Save draft"
 msgstr "Taslağı kaydet"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save now and keep a version"
+msgstr "Şimdi kaydet ve sürüm sakla"
+
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -4797,6 +4849,10 @@ msgstr "Bölümler"
 #: src/features/team/TeamColumn.tsx
 msgid "See where they are, what they hold open and what they did today."
 msgstr "Nerede olduğunu, üzerindeki açık konuşmaları ve bugün neler yaptığını görün."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the previous or next block"
+msgstr "Önceki ya da sonraki bloğu seç"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -5976,6 +6032,7 @@ msgstr "Ulaşmıyor: alıcı spam olarak işaretledi, {since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Her sayfanın altında: “Bu sayfa yararlı oldu mu?”, ardından geri bildirim ve sayfanın tartışmaları."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
 msgid "Undo"
 msgstr "Geri al"
@@ -6138,6 +6195,10 @@ msgstr "Genellikle şirketinizin ya da ekibinizin adı; sonra değiştirebilirsi
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Her isteğe güvenmeden önce doğrulayın: <0>webhook-signature</0> başlığı <1>Standard Webhooks</1> belirtimine uyar, bu yüzden onun kütüphanelerinden herhangi biri uç noktanın anahtarıyla imzayı denetleyebilir. Go arka uçları Yuva deposundaki <2>sdk/go/webhook</2> paketini kullanabilir."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Versions"
+msgstr "Sürümler"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx

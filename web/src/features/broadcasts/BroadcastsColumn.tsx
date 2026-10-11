@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { MailWarningIcon, PlusIcon } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
-import { Link, useMatch, useNavigate } from "react-router"
+import { lazy, Suspense, useEffect, useRef, useState } from "react"
+import { Link, useLocation, useMatch, useNavigate } from "react-router"
 
-import { Dot, ErrorLine } from "@/components/common"
+import { Dot, ErrorLine, Segmented } from "@/components/common"
 import { Column, ColumnHeading } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -86,7 +86,51 @@ function group(lists: MailingList[], inboxes: Inbox[]) {
     .filter((g) => g.lists.length > 0)
 }
 
+const DesignsList = lazy(() => import("@/features/designs/DesignsList"))
+
 export function BroadcastsColumn() {
+  const { t } = useLingui()
+  const navigate = useNavigate()
+  const designs = useLocation().pathname.startsWith("/broadcasts/designs")
+  return (
+    <Column
+      title={<Trans>Broadcasts</Trans>}
+      testId="broadcasts-panel"
+      actions={<InboxPicker className="max-w-40" />}
+      bodyClassName="px-2"
+    >
+      <div className="px-1 pt-1 pb-3">
+        <Segmented
+          value={designs ? "designs" : "lists"}
+          onChange={(v) => navigate(v === "designs" ? "/broadcasts/designs" : "/broadcasts")}
+          label={t`Broadcasts`}
+          className="w-full"
+          itemClassName="flex-1"
+          items={[
+            { value: "lists", label: t`Lists`, testId: "broadcasts-tab-lists" },
+            { value: "designs", label: t`Designs`, testId: "broadcasts-tab-designs" },
+          ]}
+        />
+      </div>
+      {designs ? (
+        <Suspense
+          fallback={
+            <div className="flex flex-col gap-2 p-2">
+              <Skeleton className="h-12 w-full" />
+              <Skeleton className="h-12 w-full" />
+            </div>
+          }
+        >
+          <DesignsList />
+        </Suspense>
+      ) : (
+        <Lists />
+      )}
+    </Column>
+  )
+}
+
+function Lists() {
   const { t } = useLingui()
   const navigate = useNavigate()
   const { canManage } = useSession()
@@ -123,12 +167,7 @@ export function BroadcastsColumn() {
 
   let index = 0
   return (
-    <Column
-      title={<Trans>Broadcasts</Trans>}
-      testId="broadcasts-panel"
-      actions={<InboxPicker className="max-w-40" />}
-      bodyClassName="px-2"
-    >
+    <>
       <nav aria-label={t`Mailing lists`} className="flex flex-col" ref={list}>
         <div className="flex items-center gap-2 px-2.5 pt-1 pb-1">
           <h3 className="min-w-0 flex-1 text-small font-medium text-faint">
@@ -207,6 +246,6 @@ export function BroadcastsColumn() {
           }}
         />
       )}
-    </Column>
+    </>
   )
 }

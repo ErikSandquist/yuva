@@ -530,6 +530,10 @@ msgstr "Acme Support"
 msgid "Add"
 msgstr "Add"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Add a block"
+msgstr "Add a block"
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Add a note (optional)"
 msgstr "Add a note (optional)"
@@ -1190,6 +1194,10 @@ msgstr "Choose a workspace"
 msgid "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 msgstr "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Choose the selected block’s image"
+msgstr "Choose the selected block’s image"
+
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "claude.ai and Claude Desktop"
 msgstr "claude.ai and Claude Desktop"
@@ -1281,6 +1289,10 @@ msgstr "Color"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Colour"
 msgstr "Colour"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Colours, fonts and width"
+msgstr "Colours, fonts and width"
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Complete"
@@ -1642,6 +1654,10 @@ msgstr "Delete subscription"
 msgid "Delete the label {name}?"
 msgstr "Delete the label {name}?"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Delete the selected block"
+msgstr "Delete the selected block"
+
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Delete this canned reply?"
 msgstr "Delete this canned reply?"
@@ -1722,6 +1738,10 @@ msgstr "Deny"
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Description (optional)"
 msgstr "Description (optional)"
+
+#: src/features/broadcasts/BroadcastsColumn.tsx
+msgid "Designs"
+msgstr "Designs"
 
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Desktop notifications are allowed."
@@ -1891,6 +1911,10 @@ msgstr "Drafts waiting"
 msgid "Drop files to attach them to your reply"
 msgstr "Drop files to attach them to your reply"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Duplicate the selected block"
+msgstr "Duplicate the selected block"
+
 #: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
@@ -1920,6 +1944,10 @@ msgstr "E-mail contacts get a short e-mail with two links; chat and app contacts
 #: src/components/common/EmailHtml.tsx
 msgid "E-mail content"
 msgstr "E-mail content"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "E-mail designer"
+msgstr "E-mail designer"
 
 #: src/features/account/AccountPage.tsx
 msgid "E-mail me about the discussions I follow"
@@ -1978,6 +2006,10 @@ msgstr "Edit label"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Edit the title"
 msgstr "Edit the title"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Edit, or preview on a desktop, a phone or in dark mode"
+msgstr "Edit, or preview on a desktop, a phone or in dark mode"
 
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "edited"
@@ -2750,6 +2782,10 @@ msgstr "Leave it to {name}"
 msgid "Leave it to the teammate who is typing"
 msgstr "Leave it to the teammate who is typing"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Leave the text, then the block"
+msgstr "Leave the text, then the block"
+
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "Legal name"
 msgstr "Legal name"
@@ -2795,6 +2831,10 @@ msgstr "List restored"
 #: src/features/setup/WaitStep.tsx
 msgid "Listening for the first message…"
 msgstr "Listening for the first message…"
+
+#: src/features/broadcasts/BroadcastsColumn.tsx
+msgid "Lists"
+msgstr "Lists"
 
 #: src/components/common/text.ts
 msgid "Live"
@@ -3132,6 +3172,10 @@ msgstr "Most ratings, open feedback, open discussions and waiting posts first"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Most votes"
 msgstr "Most votes"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move the selected block"
+msgstr "Move the selected block"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
@@ -4388,6 +4432,10 @@ msgstr "Recent activity"
 msgid "Redeliver"
 msgstr "Redeliver"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Redo"
+msgstr "Redo"
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Reference"
 msgstr "Reference"
@@ -4680,6 +4728,10 @@ msgstr "Save"
 msgid "Save draft"
 msgstr "Save draft"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Save now and keep a version"
+msgstr "Save now and keep a version"
+
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/ListSettings.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -4797,6 +4849,10 @@ msgstr "Sections"
 #: src/features/team/TeamColumn.tsx
 msgid "See where they are, what they hold open and what they did today."
 msgstr "See where they are, what they hold open and what they did today."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Select the previous or next block"
+msgstr "Select the previous or next block"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -5976,6 +6032,7 @@ msgstr "Undeliverable: marked as spam by the recipient, {since}"
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 
+#: src/components/common/ShortcutSheet.tsx
 #: src/components/common/Toast.tsx
 msgid "Undo"
 msgstr "Undo"
@@ -6138,6 +6195,10 @@ msgstr "Usually your company or team; you can change it later"
 #: src/features/settings/webhooks/SignatureHint.tsx
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Versions"
+msgstr "Versions"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx

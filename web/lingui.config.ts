@@ -8,6 +8,11 @@ export default defineConfig({
     {
       path: "<rootDir>/src/locales/{locale}/messages",
       include: ["src"],
+      exclude: ["src/features/designs"],
+    },
+    {
+      path: "<rootDir>/src/locales/{locale}/designs",
+      include: ["src/features/designs"],
     },
   ],
   format: formatter({ lineNumbers: false }),
