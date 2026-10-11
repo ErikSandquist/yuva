@@ -10769,7 +10769,9 @@ components:
           $ref: "#/components/schemas/DiscussionAuthor"
         excerpt:
           type: string
-          description: The start of the post, at most 200 characters of plain text.
+          description: |
+            The start of the post as plain text: the text of its rendered HTML (no Markdown or
+            markup), whitespace collapsed, at most 200 characters, cut at a word boundary and ending in an ellipsis.
         created_at:
           type: string
           format: date-time

@@ -4796,7 +4796,8 @@ type ReaderNotification struct {
 	CreatedAt    time.Time         `json:"created_at"`
 	DiscussionId uuid.UUID         `json:"discussion_id"`
 
-	// Excerpt The start of the post, at most 200 characters of plain text.
+	// Excerpt The start of the post as plain text: the text of its rendered HTML (no Markdown or
+	// markup), whitespace collapsed, at most 200 characters, cut at a word boundary and ending in an ellipsis.
 	Excerpt   string    `json:"excerpt"`
 	Id        uuid.UUID `json:"id"`
 	InboxName string    `json:"inbox_name"`

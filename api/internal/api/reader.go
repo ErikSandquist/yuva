@@ -223,7 +223,7 @@ func (s *Server) ListReaderNotifications(ctx context.Context, req oas.ListReader
 			}
 			if err == nil && p.State == statePublished {
 				a := discussionAuthor(p, false)
-				n.Author, n.Excerpt = &a, excerpt(p.Body, excerptRunes)
+				n.Author, n.Excerpt = &a, postExcerpt(p.Body)
 			}
 		}
 		out.Items = append(out.Items, n)

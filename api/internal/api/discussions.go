@@ -3,6 +3,7 @@ package api
 import (
 	"bytes"
 	"context"
+	"html"
 	"net/http"
 	"slices"
 	"strings"
@@ -73,6 +74,23 @@ func renderMarkdown(src string) string {
 		return discussionHTML.Sanitize("<p>" + src + "</p>")
 	}
 	return discussionHTML.Sanitize(buf.String())
+}
+
+var plainText = bluemonday.StrictPolicy().AddSpaceWhenStrippingTag(true)
+
+// postExcerpt is the start of a post as plain text: the text of its rendered HTML, whitespace
+// collapsed, cut at a word boundary.
+func postExcerpt(body string) string {
+	text := strings.Join(strings.Fields(html.UnescapeString(plainText.Sanitize(renderMarkdown(body)))), " ")
+	r := []rune(text)
+	if len(r) <= excerptRunes {
+		return text
+	}
+	cut := string(r[:excerptRunes])
+	if i := strings.LastIndex(cut, " "); i > 0 {
+		cut = cut[:i]
+	}
+	return strings.TrimRight(cut, " ,.;:") + "…"
 }
 
 func discussionTitle(v string) (string, error) {

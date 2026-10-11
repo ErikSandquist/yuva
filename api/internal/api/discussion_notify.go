@@ -123,7 +123,7 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 			if d.AnswerPostID != nil && *d.AnswerPostID == p.ID && d.AnsweredAt != nil && d.AnsweredAt.After(f.SeenThrough) {
 				continue
 			}
-			list = append(list, digestPost{Author: digestAuthor(p), Text: excerpt(p.Body, excerptRunes)})
+			list = append(list, digestPost{Author: digestAuthor(p), Text: postExcerpt(p.Body)})
 		}
 		if len(list) > digestPosts {
 			data["More"] = len(list) - digestPosts
@@ -135,7 +135,7 @@ func (s *Server) SendDiscussionDigest(ctx context.Context, a DiscussionDigestArg
 				return err
 			}
 			if err == nil && (ans.AuthorContactID == nil || *ans.AuthorContactID != a.ContactID) {
-				data["Answer"] = digestPost{Author: digestAuthor(ans), Text: excerpt(ans.Body, excerptRunes)}
+				data["Answer"] = digestPost{Author: digestAuthor(ans), Text: postExcerpt(ans.Body)}
 			}
 			seen = later(seen, d.AnsweredAt)
 		}
