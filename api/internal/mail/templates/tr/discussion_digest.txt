@@ -1,0 +1,16 @@
+{{.Inbox}}: "{{.Title}}" {{if .Answer}}yanıtlandı{{else}}konusunda yeni yanıtlar{{end}}
+
+{{if .Answer}}"{{.Title}}" konusunda bir yanıt kabul edildi{{if .Answer.Author}} ({{.Answer.Author}}){{end}}:
+> {{.Answer.Text}}
+
+{{end}}{{if .Posts}}"{{.Title}}" konusunda yeni yanıtlar:
+{{range .Posts}}
+{{.Author}} yazdı:
+> {{.Text}}
+{{end}}{{if .More}}
+…ve {{.More}} yanıt daha.
+{{end}}
+{{end}}Konuyu okuyun: {{.URL}}
+
+Bu e-postayı {{.Inbox}} belgelerindeki bu konuyu takip ettiğiniz için aldınız. Takibi bırakın: {{.UnsubscribeURL}}{{if .SettingsURL}}
+Hangi e-postaları alacağınızı seçin: {{.SettingsURL}}{{end}}

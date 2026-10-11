@@ -1,0 +1,16 @@
+{{.Inbox}}: {{if .Answer}}Antwort in „{{.Title}}“{{else}}neue Antworten in „{{.Title}}“{{end}}
+
+{{if .Answer}}In „{{.Title}}“ wurde eine Antwort angenommen{{if .Answer.Author}}, geschrieben von {{.Answer.Author}}{{end}}:
+> {{.Answer.Text}}
+
+{{end}}{{if .Posts}}Neue Antworten in „{{.Title}}“:
+{{range .Posts}}
+{{.Author}} schrieb:
+> {{.Text}}
+{{end}}{{if .More}}
+…und {{.More}} weitere.
+{{end}}
+{{end}}Zum Thema: {{.URL}}
+
+Sie erhalten diese E-Mail, weil Sie diesem Thema in der Dokumentation von {{.Inbox}} folgen. Nicht mehr folgen: {{.UnsubscribeURL}}{{if .SettingsURL}}
+Wählen Sie, welche E-Mails Sie erhalten: {{.SettingsURL}}{{end}}

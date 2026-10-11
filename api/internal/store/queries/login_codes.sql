@@ -2,8 +2,8 @@
 DELETE FROM login_codes WHERE email = $1;
 
 -- name: CreateLoginCode :exec
-INSERT INTO login_codes (id, email, code_hash, ip, created_at, expires_at)
-VALUES ($1, $2, $3, $4, $5, $6);
+INSERT INTO login_codes (id, email, code_hash, ip, created_at, expires_at, reader)
+VALUES (@id, @email, @code_hash, @ip, @created_at, @expires_at, @reader);
 
 -- name: CountLoginCodesByEmail :one
 SELECT count(*) FROM login_codes WHERE email = $1 AND created_at > $2;

@@ -369,7 +369,6 @@ func (e ConversationEventType) Valid() bool {
 const (
 	ConversationKindConversation ConversationKind = "conversation"
 	ConversationKindFeedback     ConversationKind = "feedback"
-	ConversationKindQuestion     ConversationKind = "question"
 )
 
 // Valid indicates whether the value is a known member of the ConversationKind enum.
@@ -378,8 +377,6 @@ func (e ConversationKind) Valid() bool {
 	case ConversationKindConversation:
 		return true
 	case ConversationKindFeedback:
-		return true
-	case ConversationKindQuestion:
 		return true
 	default:
 		return false
@@ -467,6 +464,153 @@ func (e Direction) Valid() bool {
 	case In:
 		return true
 	case Out:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionAuthorKind.
+const (
+	DiscussionAuthorKindAnonymous DiscussionAuthorKind = "anonymous"
+	DiscussionAuthorKindMember    DiscussionAuthorKind = "member"
+	DiscussionAuthorKindReader    DiscussionAuthorKind = "reader"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionAuthorKind enum.
+func (e DiscussionAuthorKind) Valid() bool {
+	switch e {
+	case DiscussionAuthorKindAnonymous:
+		return true
+	case DiscussionAuthorKindMember:
+		return true
+	case DiscussionAuthorKindReader:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionEventType.
+const (
+	DiscussionEventTypeDiscussionAnswered    DiscussionEventType = "discussion.answered"
+	DiscussionEventTypeDiscussionCreated     DiscussionEventType = "discussion.created"
+	DiscussionEventTypeDiscussionPostCreated DiscussionEventType = "discussion.post_created"
+	DiscussionEventTypeDiscussionUpdated     DiscussionEventType = "discussion.updated"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionEventType enum.
+func (e DiscussionEventType) Valid() bool {
+	switch e {
+	case DiscussionEventTypeDiscussionAnswered:
+		return true
+	case DiscussionEventTypeDiscussionCreated:
+		return true
+	case DiscussionEventTypeDiscussionPostCreated:
+		return true
+	case DiscussionEventTypeDiscussionUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionMode.
+const (
+	DiscussionModeModerated DiscussionMode = "moderated"
+	DiscussionModeOff       DiscussionMode = "off"
+	DiscussionModeOpen      DiscussionMode = "open"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionMode enum.
+func (e DiscussionMode) Valid() bool {
+	switch e {
+	case DiscussionModeModerated:
+		return true
+	case DiscussionModeOff:
+		return true
+	case DiscussionModeOpen:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionPostUpdateState.
+const (
+	DiscussionPostUpdateStateHidden    DiscussionPostUpdateState = "hidden"
+	DiscussionPostUpdateStatePublished DiscussionPostUpdateState = "published"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionPostUpdateState enum.
+func (e DiscussionPostUpdateState) Valid() bool {
+	switch e {
+	case DiscussionPostUpdateStateHidden:
+		return true
+	case DiscussionPostUpdateStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionSort.
+const (
+	DiscussionSortNew        DiscussionSort = "new"
+	DiscussionSortTop        DiscussionSort = "top"
+	DiscussionSortUnanswered DiscussionSort = "unanswered"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionSort enum.
+func (e DiscussionSort) Valid() bool {
+	switch e {
+	case DiscussionSortNew:
+		return true
+	case DiscussionSortTop:
+		return true
+	case DiscussionSortUnanswered:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionState.
+const (
+	DiscussionStateHidden    DiscussionState = "hidden"
+	DiscussionStatePending   DiscussionState = "pending"
+	DiscussionStatePublished DiscussionState = "published"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionState enum.
+func (e DiscussionState) Valid() bool {
+	switch e {
+	case DiscussionStateHidden:
+		return true
+	case DiscussionStatePending:
+		return true
+	case DiscussionStatePublished:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DiscussionTeamSort.
+const (
+	DiscussionTeamSortActivity DiscussionTeamSort = "activity"
+	DiscussionTeamSortNew      DiscussionTeamSort = "new"
+	DiscussionTeamSortTop      DiscussionTeamSort = "top"
+)
+
+// Valid indicates whether the value is a known member of the DiscussionTeamSort enum.
+func (e DiscussionTeamSort) Valid() bool {
+	switch e {
+	case DiscussionTeamSortActivity:
+		return true
+	case DiscussionTeamSortNew:
+		return true
+	case DiscussionTeamSortTop:
 		return true
 	default:
 		return false
@@ -1139,6 +1283,24 @@ func (e Rating) Valid() bool {
 	}
 }
 
+// Defines values for ReaderNotificationKind.
+const (
+	Answer ReaderNotificationKind = "answer"
+	Reply  ReaderNotificationKind = "reply"
+)
+
+// Valid indicates whether the value is a known member of the ReaderNotificationKind enum.
+func (e ReaderNotificationKind) Valid() bool {
+	switch e {
+	case Answer:
+		return true
+	case Reply:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for RealtimeReadyType.
 const (
 	Ready RealtimeReadyType = "ready"
@@ -1300,16 +1462,20 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
-	WebhookEventTypeContactDeleted      WebhookEventType = "contact.deleted"
-	WebhookEventTypeContactUpdated      WebhookEventType = "contact.updated"
-	WebhookEventTypeConversationCreated WebhookEventType = "conversation.created"
-	WebhookEventTypeConversationRated   WebhookEventType = "conversation.rated"
-	WebhookEventTypeConversationUpdated WebhookEventType = "conversation.updated"
-	WebhookEventTypeDraftCreated        WebhookEventType = "draft.created"
-	WebhookEventTypeDraftDeleted        WebhookEventType = "draft.deleted"
-	WebhookEventTypeDraftUpdated        WebhookEventType = "draft.updated"
-	WebhookEventTypeFeedbackCreated     WebhookEventType = "feedback.created"
-	WebhookEventTypeMessageCreated      WebhookEventType = "message.created"
+	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
+	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
+	WebhookEventTypeConversationCreated   WebhookEventType = "conversation.created"
+	WebhookEventTypeConversationRated     WebhookEventType = "conversation.rated"
+	WebhookEventTypeConversationUpdated   WebhookEventType = "conversation.updated"
+	WebhookEventTypeDiscussionAnswered    WebhookEventType = "discussion.answered"
+	WebhookEventTypeDiscussionCreated     WebhookEventType = "discussion.created"
+	WebhookEventTypeDiscussionPostCreated WebhookEventType = "discussion.post_created"
+	WebhookEventTypeDiscussionUpdated     WebhookEventType = "discussion.updated"
+	WebhookEventTypeDraftCreated          WebhookEventType = "draft.created"
+	WebhookEventTypeDraftDeleted          WebhookEventType = "draft.deleted"
+	WebhookEventTypeDraftUpdated          WebhookEventType = "draft.updated"
+	WebhookEventTypeFeedbackCreated       WebhookEventType = "feedback.created"
+	WebhookEventTypeMessageCreated        WebhookEventType = "message.created"
 )
 
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
@@ -1324,6 +1490,14 @@ func (e WebhookEventType) Valid() bool {
 	case WebhookEventTypeConversationRated:
 		return true
 	case WebhookEventTypeConversationUpdated:
+		return true
+	case WebhookEventTypeDiscussionAnswered:
+		return true
+	case WebhookEventTypeDiscussionCreated:
+		return true
+	case WebhookEventTypeDiscussionPostCreated:
+		return true
+	case WebhookEventTypeDiscussionUpdated:
 		return true
 	case WebhookEventTypeDraftCreated:
 		return true
@@ -1584,7 +1758,7 @@ type Attachment struct {
 	Size   int64 `json:"size"`
 }
 
-// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 type Attributes map[string]interface{}
 
 // AuthorType `bot` is an API key. Rows written with a key before bot authors existed have `system`.
@@ -1724,6 +1898,12 @@ type ChatChannel struct {
 	// AskEmailOffline The widget asks for an e-mail address when nobody is available.
 	AskEmailOffline bool `json:"ask_email_offline"`
 
+	// Discussions Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+	// reader's posts wait for a member until one of theirs in the workspace was approved;
+	// identity-token users and members are published at once. `open`: everyone is published at
+	// once. Authors whose posts were marked spam always wait.
+	Discussions DiscussionMode `json:"discussions"`
+
 	// Greeting Shown before the first message; the inbox branding greeting when empty.
 	Greeting string `json:"greeting"`
 
@@ -1742,8 +1922,11 @@ type ChatChannelInput struct {
 	AllowedOrigins []Origin `json:"allowed_origins"`
 
 	// AskEmailOffline Defaults to true.
-	AskEmailOffline *bool   `json:"ask_email_offline,omitempty"`
-	Greeting        *string `json:"greeting,omitempty"`
+	AskEmailOffline *bool `json:"ask_email_offline,omitempty"`
+
+	// Discussions Defaults to `moderated`; on an update, absent keeps the current setting.
+	Discussions *DiscussionMode `json:"discussions,omitempty"`
+	Greeting    *string         `json:"greeting,omitempty"`
 
 	// Launcher The floating launcher. Absent values fall back to the inbox branding.
 	Launcher *ChatLauncher `json:"launcher,omitempty"`
@@ -1774,6 +1957,9 @@ type ClientAttachment struct {
 type ClientChatSettings struct {
 	AllowAnonymous  bool `json:"allow_anonymous"`
 	AskEmailOffline bool `json:"ask_email_offline"`
+
+	// Discussions `off` on `app` channels.
+	Discussions DiscussionMode `json:"discussions"`
 
 	// Greeting The channel greeting, else the inbox branding greeting, else empty.
 	Greeting string `json:"greeting"`
@@ -1814,8 +2000,7 @@ type ClientConversation struct {
 	Feedback *Feedback `json:"feedback,omitempty"`
 	Id       uuid.UUID `json:"id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind          ConversationKind      `json:"kind"`
 	LastMessage   *ClientMessagePreview `json:"last_message,omitempty"`
 	LastMessageAt *time.Time            `json:"last_message_at,omitempty"`
@@ -1824,9 +2009,6 @@ type ClientConversation struct {
 	// (the latest read position of any member, as in the `read` realtime frame). Absent
 	// when no member has read the conversation, and in `async` inboxes.
 	LastReadByMemberAt *time.Time `json:"last_read_by_member_at,omitempty"`
-
-	// Question `question` conversations only.
-	Question *PageQuestion `json:"question,omitempty"`
 
 	// Rating The contact's rating since the last close; absent when they have not rated it.
 	Rating  *Rating            `json:"rating,omitempty"`
@@ -1902,6 +2084,25 @@ type ClientConversationUpdatedEvent struct {
 
 // ClientConversationUpdatedEventType defines model for ClientConversationUpdatedEvent.Type.
 type ClientConversationUpdatedEventType string
+
+// ClientDiscussionCreate defines model for ClientDiscussionCreate.
+type ClientDiscussionCreate struct {
+	// Body Markdown.
+	Body      string  `json:"body"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page's absolute URL; query and fragment are dropped.
+	PageUrl string `json:"page_url"`
+	Title   string `json:"title"`
+}
+
+// ClientDiscussionPostUpdate defines model for ClientDiscussionPostUpdate.
+type ClientDiscussionPostUpdate struct {
+	Body *string `json:"body,omitempty"`
+
+	// Title Opening post only.
+	Title *string `json:"title,omitempty"`
+}
 
 // ClientEmailUpdate defines model for ClientEmailUpdate.
 type ClientEmailUpdate struct {
@@ -2114,22 +2315,8 @@ type ClientMessagePreview struct {
 	CreatedAt  time.Time  `json:"created_at"`
 	Id         uuid.UUID  `json:"id"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
-}
-
-// ClientPageAnswer A published question and answer, as the member wrote them.
-type ClientPageAnswer struct {
-	Answer      string    `json:"answer"`
-	Id          uuid.UUID `json:"id"`
-	PublishedAt time.Time `json:"published_at"`
-	Question    string    `json:"question"`
-	UpdatedAt   time.Time `json:"updated_at"`
-}
-
-// ClientPageAnswerList defines model for ClientPageAnswerList.
-type ClientPageAnswerList struct {
-	Items []ClientPageAnswer `json:"items"`
 }
 
 // ClientPresence Who can answer now, in a `live` inbox.
@@ -2151,23 +2338,6 @@ type ClientPresenceEvent struct {
 
 // ClientPresenceEventType defines model for ClientPresenceEvent.Type.
 type ClientPresenceEventType string
-
-// ClientQuestionCreate defines model for ClientQuestionCreate.
-type ClientQuestionCreate struct {
-	// Body The question.
-	Body string `json:"body"`
-
-	// ClientId The first message's `client_id`.
-	ClientId *string `json:"client_id,omitempty"`
-
-	// Email Examples: owner@example.com
-	Email     *Email  `json:"email,omitempty"`
-	PageTitle *string `json:"page_title,omitempty"`
-
-	// PageUrl The page's absolute URL; query and fragment are dropped.
-	PageUrl string  `json:"page_url"`
-	Subject *string `json:"subject,omitempty"`
-}
 
 // ClientRatingCreate defines model for ClientRatingCreate.
 type ClientRatingCreate struct {
@@ -2283,7 +2453,7 @@ type Contact struct {
 	// conversations the caller can see, spam left out; `last_seen_at` does not depend on the caller.
 	Activity *ContactActivity `json:"activity,omitempty"`
 
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes Attributes `json:"attributes"`
 
 	// Blocked Mail and chat from a blocked contact are refused.
@@ -2320,7 +2490,7 @@ type ContactActivity struct {
 
 // ContactCreate defines model for ContactCreate.
 type ContactCreate struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes  *Attributes   `json:"attributes,omitempty"`
 	Blocked     *bool         `json:"blocked,omitempty"`
 	Emails      *[]Email      `json:"emails,omitempty"`
@@ -2454,7 +2624,7 @@ type ContactSummary struct {
 
 // ContactUpdate defines model for ContactUpdate.
 type ContactUpdate struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes *Attributes `json:"attributes,omitempty"`
 	Blocked    *bool       `json:"blocked,omitempty"`
 
@@ -2499,8 +2669,7 @@ type Conversation struct {
 	Id       uuid.UUID `json:"id"`
 	InboxId  uuid.UUID `json:"inbox_id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind ConversationKind `json:"kind"`
 
 	// Labels Label ids.
@@ -2517,10 +2686,10 @@ type Conversation struct {
 	// anything, and in conversations the contact only reaches by e-mail. A `contact.read`
 	// event tells when it moves.
 	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
-	Priority            Priority   `json:"priority"`
 
-	// Question `question` conversations only: the page it was asked on.
-	Question *PageQuestion `json:"question,omitempty"`
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page     *SourcePage `json:"page,omitempty"`
+	Priority Priority    `json:"priority"`
 
 	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
 	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
@@ -2638,8 +2807,7 @@ type ConversationEvent struct {
 // ConversationEventType defines model for ConversationEvent.Type.
 type ConversationEventType string
 
-// ConversationKind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-// documentation page and carry `question`; everything else is `conversation`.
+// ConversationKind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 type ConversationKind string
 
 // ConversationListItem A conversation with what a list row shows.
@@ -2667,8 +2835,7 @@ type ConversationListItem struct {
 	Id       uuid.UUID `json:"id"`
 	InboxId  uuid.UUID `json:"inbox_id"`
 
-	// Kind `feedback` conversations carry `feedback` metadata; `question` conversations were asked on a
-	// documentation page and carry `question`; everything else is `conversation`.
+	// Kind `feedback` conversations carry `feedback` metadata; everything else is `conversation`.
 	Kind ConversationKind `json:"kind"`
 
 	// Labels Label ids.
@@ -2689,12 +2856,12 @@ type ConversationListItem struct {
 	// event tells when it moves.
 	LastReadByContactAt *time.Time `json:"last_read_by_contact_at,omitempty"`
 
+	// Page The documentation page it was sent from (page feedback, questions asked on a page before discussions); absent otherwise.
+	Page *SourcePage `json:"page,omitempty"`
+
 	// PinnedAt When the calling member pinned it; absent when they did not, and for API keys.
 	PinnedAt *time.Time `json:"pinned_at,omitempty"`
 	Priority Priority   `json:"priority"`
-
-	// Question `question` conversations only: the page it was asked on.
-	Question *PageQuestion `json:"question,omitempty"`
 
 	// Rating The contact's latest rating. A conversation can be rated once each time it is closed, so
 	// this may belong to an earlier close (compare `rated_at` with `closed_at`). The thread also
@@ -2863,20 +3030,280 @@ type CountByID struct {
 // Direction defines model for Direction.
 type Direction string
 
-// DocsPage defines model for DocsPage.
-type DocsPage struct {
-	Down          int64     `json:"down"`
-	InboxId       uuid.UUID `json:"inbox_id"`
-	OpenFeedback  int64     `json:"open_feedback"`
-	OpenQuestions int64     `json:"open_questions"`
+// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+// `voted` and `following` on `/client/v1` only (false without a token).
+type Discussion struct {
+	// AnswerPostId The accepted answer; absent while there is none.
+	AnswerPostId *uuid.UUID `json:"answer_post_id,omitempty"`
+	AnsweredAt   *time.Time `json:"answered_at,omitempty"`
+
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author DiscussionAuthor `json:"author"`
+
+	// Body Markdown as written; empty once the opening post was deleted.
+	Body string `json:"body"`
+
+	// BodyHtml `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow noreferrer"`, and links to other sites also `target="_blank"` with `noopener`).
+	BodyHtml string `json:"body_html"`
+
+	// ChannelId The chat channel whose setting applied when it was started.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ConversationId The conversation it was started from; absent once that is deleted.
+	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
+	CreatedAt      time.Time  `json:"created_at"`
+
+	// Deleted The opening post was deleted by its author; the replies stay.
+	Deleted        *bool      `json:"deleted,omitempty"`
+	EditedAt       *time.Time `json:"edited_at,omitempty"`
+	Following      *bool      `json:"following,omitempty"`
+	HiddenPosts    *int32     `json:"hidden_posts,omitempty"`
+	Id             uuid.UUID  `json:"id"`
+	InboxId        *uuid.UUID `json:"inbox_id,omitempty"`
+	LastActivityAt time.Time  `json:"last_activity_at"`
+	Locked         bool       `json:"locked"`
+
+	// Mine The caller started it.
+	Mine          *bool     `json:"mine,omitempty"`
+	OpeningPostId uuid.UUID `json:"opening_post_id"`
 
 	// Page The page's URL without query and fragment.
-	Page             string `json:"page"`
-	PublishedAnswers int64  `json:"published_answers"`
+	Page      string  `json:"page"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PendingPosts Posts waiting for a member, the opening post included.
+	PendingPosts *int32 `json:"pending_posts,omitempty"`
+
+	// ReplyCount Published replies, replies to replies included.
+	ReplyCount int32 `json:"reply_count"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State DiscussionState `json:"state"`
+	Title string          `json:"title"`
+	Voted *bool           `json:"voted,omitempty"`
+	Votes int32           `json:"votes"`
+}
+
+// DiscussionAnswer defines model for DiscussionAnswer.
+type DiscussionAnswer struct {
+	PostId uuid.UUID `json:"post_id"`
+}
+
+// DiscussionAuthor Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+// given on `/v1` only.
+type DiscussionAuthor struct {
+	ContactId *uuid.UUID `json:"contact_id,omitempty"`
+	Deleted   bool       `json:"deleted"`
+
+	// Initials One or two letters for an avatar; empty when there is no name.
+	Initials string `json:"initials"`
+
+	// Kind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+	// `anonymous`: no author to show (threads moved over from published answers).
+	Kind     DiscussionAuthorKind `json:"kind"`
+	MemberId *uuid.UUID           `json:"member_id,omitempty"`
+
+	// Name Absent when the author has no name (show "Reader") or is deleted.
+	Name *string `json:"name,omitempty"`
+}
+
+// DiscussionAuthorKind `member`: someone of the team. `reader`: a signed-in reader or a user of the host app.
+// `anonymous`: no author to show (threads moved over from published answers).
+type DiscussionAuthorKind string
+
+// DiscussionCreate defines model for DiscussionCreate.
+type DiscussionCreate struct {
+	// Body Markdown.
+	Body string `json:"body"`
+
+	// ChannelId A chat channel that allows the page's origin.
+	ChannelId uuid.UUID `json:"channel_id"`
+	PageTitle *string   `json:"page_title,omitempty"`
+	PageUrl   string    `json:"page_url"`
+	Title     string    `json:"title"`
+}
+
+// DiscussionDetail defines model for DiscussionDetail.
+type DiscussionDetail struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Posts The replies, the accepted answer first, then oldest first; not the opening post.
+	Posts []DiscussionPost `json:"posts"`
+}
+
+// DiscussionEvent `discussion.created`: a thread was started (also when it waits for approval: see `state`).
+// `discussion.post_created`: a reply was written, with the reply in `post`.
+// `discussion.answered`: an answer was accepted, with it in `post`.
+// `discussion.updated`: a post or the thread was approved, hidden, marked spam, edited,
+// deleted, locked or unlocked, or the answer was cleared; `post` names the post when one
+// changed.
+type DiscussionEvent struct {
+	CreatedAt   time.Time           `json:"created_at"`
+	Data        DiscussionEventData `json:"data"`
+	Id          int64               `json:"id"`
+	InboxId     uuid.UUID           `json:"inbox_id"`
+	Type        DiscussionEventType `json:"type"`
+	WorkspaceId uuid.UUID           `json:"workspace_id"`
+}
+
+// DiscussionEventType defines model for DiscussionEvent.Type.
+type DiscussionEventType string
+
+// DiscussionEventData defines model for DiscussionEventData.
+type DiscussionEventData struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Post The post the event is about; absent for changes to the thread alone.
+	Post *DiscussionPost `json:"post,omitempty"`
+}
+
+// DiscussionFromConversation defines model for DiscussionFromConversation.
+type DiscussionFromConversation struct {
+	// Answer Posted by the member and marked as the accepted answer.
+	Answer *string `json:"answer,omitempty"`
+
+	// Body The public question, as the member edits it (Markdown).
+	Body      string  `json:"body"`
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page, when the conversation has none or another one is meant.
+	PageUrl *string `json:"page_url,omitempty"`
+	Title   string  `json:"title"`
+}
+
+// DiscussionMode Discussions on the channel's documentation pages. `off`: none. `moderated` (default): a
+// reader's posts wait for a member until one of theirs in the workspace was approved;
+// identity-token users and members are published at once. `open`: everyone is published at
+// once. Authors whose posts were marked spam always wait.
+type DiscussionMode string
+
+// DiscussionPage defines model for DiscussionPage.
+type DiscussionPage struct {
+	Items []Discussion `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// DiscussionPost One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+// reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+type DiscussionPost struct {
+	// Accepted It is the thread's accepted answer.
+	Accepted bool `json:"accepted"`
+
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author DiscussionAuthor `json:"author"`
+
+	// Body Markdown as written; empty when `deleted`.
+	Body string `json:"body"`
+
+	// BodyHtml `body` rendered to sanitized HTML.
+	BodyHtml     string     `json:"body_html"`
+	CreatedAt    time.Time  `json:"created_at"`
+	Deleted      bool       `json:"deleted"`
+	DiscussionId uuid.UUID  `json:"discussion_id"`
+	EditedAt     *time.Time `json:"edited_at,omitempty"`
+	Id           uuid.UUID  `json:"id"`
+	Mine         *bool      `json:"mine,omitempty"`
+	Opening      bool       `json:"opening"`
+	ParentPostId *uuid.UUID `json:"parent_post_id,omitempty"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State DiscussionState `json:"state"`
+	Voted *bool           `json:"voted,omitempty"`
+	Votes int32           `json:"votes"`
+}
+
+// DiscussionPostCreate defines model for DiscussionPostCreate.
+type DiscussionPostCreate struct {
+	// Body Markdown.
+	Body string `json:"body"`
+
+	// ParentPostId A reply to the thread (not the opening post) to answer; absent for a reply to the thread.
+	ParentPostId *uuid.UUID `json:"parent_post_id,omitempty"`
+}
+
+// DiscussionPostItem defines model for DiscussionPostItem.
+type DiscussionPostItem struct {
+	// Discussion A thread on a documentation page. Its opening post (`opening_post_id`) carries the body,
+	// votes and author; vote, edit and moderate the thread through it. `inbox_id`, `channel_id`,
+	// `pending_posts`, `hidden_posts` and `conversation_id` are given on `/v1` only; `mine`,
+	// `voted` and `following` on `/client/v1` only (false without a token).
+	Discussion Discussion `json:"discussion"`
+
+	// Post One post of a thread: the opening post (`opening`), a reply to the thread, or a reply to a
+	// reply (`parent_post_id`). `mine` and `voted` are given on `/client/v1` only.
+	Post DiscussionPost `json:"post"`
+}
+
+// DiscussionPostPage defines model for DiscussionPostPage.
+type DiscussionPostPage struct {
+	Items []DiscussionPostItem `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// DiscussionPostUpdate defines model for DiscussionPostUpdate.
+type DiscussionPostUpdate struct {
+	Body  *string                    `json:"body,omitempty"`
+	State *DiscussionPostUpdateState `json:"state,omitempty"`
+
+	// Title Opening post only.
+	Title *string `json:"title,omitempty"`
+}
+
+// DiscussionPostUpdateState defines model for DiscussionPostUpdate.State.
+type DiscussionPostUpdateState string
+
+// DiscussionSort defines model for DiscussionSort.
+type DiscussionSort string
+
+// DiscussionState `published`: public. `pending`: waits for a member; only its author and members see it.
+// `hidden`: a member hid it; only members see it.
+type DiscussionState string
+
+// DiscussionTeamSort defines model for DiscussionTeamSort.
+type DiscussionTeamSort string
+
+// DiscussionUpdate defines model for DiscussionUpdate.
+type DiscussionUpdate struct {
+	Locked *bool   `json:"locked,omitempty"`
+	Title  *string `json:"title,omitempty"`
+}
+
+// DocsPage defines model for DocsPage.
+type DocsPage struct {
+	Down         int64     `json:"down"`
+	InboxId      uuid.UUID `json:"inbox_id"`
+	OpenFeedback int64     `json:"open_feedback"`
+	OpenThreads  int64     `json:"open_threads"`
+
+	// Page The page's URL without query and fragment.
+	Page         string `json:"page"`
+	PendingPosts int64  `json:"pending_posts"`
 
 	// Title The latest title the page sent; empty when none.
-	Title string `json:"title"`
-	Up    int64  `json:"up"`
+	Title             string `json:"title"`
+	UnansweredThreads int64  `json:"unanswered_threads"`
+	Up                int64  `json:"up"`
 }
 
 // DocsPageDay defines model for DocsPageDay.
@@ -2910,17 +3337,18 @@ type DocsSite struct {
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
 	// ChannelName That channel's name; absent with `channel_id`.
-	ChannelName   *string   `json:"channel_name,omitempty"`
-	Down          int64     `json:"down"`
-	InboxId       uuid.UUID `json:"inbox_id"`
-	OpenFeedback  int64     `json:"open_feedback"`
-	OpenQuestions int64     `json:"open_questions"`
+	ChannelName  *string   `json:"channel_name,omitempty"`
+	Down         int64     `json:"down"`
+	InboxId      uuid.UUID `json:"inbox_id"`
+	OpenFeedback int64     `json:"open_feedback"`
+	OpenThreads  int64     `json:"open_threads"`
 
 	// Origin The site, `scheme://host[:port]`.
-	Origin           string `json:"origin"`
-	Pages            int64  `json:"pages"`
-	PublishedAnswers int64  `json:"published_answers"`
-	Up               int64  `json:"up"`
+	Origin            string `json:"origin"`
+	Pages             int64  `json:"pages"`
+	PendingPosts      int64  `json:"pending_posts"`
+	UnansweredThreads int64  `json:"unanswered_threads"`
+	Up                int64  `json:"up"`
 }
 
 // DocsSiteList defines model for DocsSiteList.
@@ -2937,21 +3365,21 @@ type DocsSummary struct {
 
 // DocsSummaryDay defines model for DocsSummaryDay.
 type DocsSummaryDay struct {
-	Day       openapi_types.Date `json:"day"`
-	Down      int64              `json:"down"`
-	Feedback  int64              `json:"feedback"`
-	Questions int64              `json:"questions"`
-	Up        int64              `json:"up"`
+	Day      openapi_types.Date `json:"day"`
+	Down     int64              `json:"down"`
+	Feedback int64              `json:"feedback"`
+	Threads  int64              `json:"threads"`
+	Up       int64              `json:"up"`
 }
 
 // DocsTotals defines model for DocsTotals.
 type DocsTotals struct {
-	Down             int64 `json:"down"`
-	Feedback         int64 `json:"feedback"`
-	PublishedAnswers int64 `json:"published_answers"`
-	Questions        int64 `json:"questions"`
-	RatedPages       int64 `json:"rated_pages"`
-	Up               int64 `json:"up"`
+	Down         int64 `json:"down"`
+	Feedback     int64 `json:"feedback"`
+	PendingPosts int64 `json:"pending_posts"`
+	RatedPages   int64 `json:"rated_pages"`
+	Threads      int64 `json:"threads"`
+	Up           int64 `json:"up"`
 }
 
 // DraftAuthorKind `bot`: written with an API key. `assistant`: written by a member through an OAuth client.
@@ -3580,7 +4008,7 @@ type MentionNote struct {
 	CreatedAt time.Time     `json:"created_at"`
 	Id        uuid.UUID     `json:"id"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
 }
 
@@ -3791,7 +4219,7 @@ type MessageEmailDetail struct {
 	// HasRemoteImages `full_html` or `original_html` loads images from other servers; block them until the member asks.
 	HasRemoteImages bool `json:"has_remote_images"`
 
-	// Headers Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, …).
+	// Headers Selected headers as received (Date, Reply-To, Auto-Submitted, Precedence, ...).
 	Headers   map[string]string `json:"headers"`
 	InReplyTo *string           `json:"in_reply_to,omitempty"`
 	MessageId string            `json:"message_id"`
@@ -3853,7 +4281,7 @@ type MessagePreview struct {
 	// change (assignment, status, labels).
 	Kind MessageKind `json:"kind"`
 
-	// Text The plain-text body on one line, cut to 140 characters with `…` when longer.
+	// Text The plain-text body on one line, cut to 140 characters with `...` when longer.
 	Text string `json:"text"`
 }
 
@@ -4119,59 +4547,6 @@ type OAuthWorkspaceChoice struct {
 // Examples: https://www.example.com
 type Origin = string
 
-// PageAnswer A question and answer published to a documentation page.
-type PageAnswer struct {
-	Answer string `json:"answer"`
-
-	// ChannelId The chat channel whose pages show it.
-	ChannelId uuid.UUID `json:"channel_id"`
-
-	// ConversationId The question it was published from; absent once that conversation is deleted.
-	ConversationId *uuid.UUID `json:"conversation_id,omitempty"`
-	Id             uuid.UUID  `json:"id"`
-	InboxId        uuid.UUID  `json:"inbox_id"`
-
-	// MemberId The member who published it; absent once they are removed.
-	MemberId *uuid.UUID `json:"member_id,omitempty"`
-
-	// Page The page's URL without query and fragment.
-	Page        string    `json:"page"`
-	PublishedAt time.Time `json:"published_at"`
-	Question    string    `json:"question"`
-
-	// Title The page's title when it was published; may be empty.
-	Title     string    `json:"title"`
-	UpdatedAt time.Time `json:"updated_at"`
-}
-
-// PageAnswerCreate defines model for PageAnswerCreate.
-type PageAnswerCreate struct {
-	Answer   string `json:"answer"`
-	Question string `json:"question"`
-}
-
-// PageAnswerPage defines model for PageAnswerPage.
-type PageAnswerPage struct {
-	Items []PageAnswer `json:"items"`
-
-	// NextCursor Absent on the last page.
-	NextCursor *string `json:"next_cursor,omitempty"`
-}
-
-// PageAnswerUpdate defines model for PageAnswerUpdate.
-type PageAnswerUpdate struct {
-	Answer   *string `json:"answer,omitempty"`
-	Question *string `json:"question,omitempty"`
-}
-
-// PageQuestion The documentation page a `question` conversation was asked on.
-type PageQuestion struct {
-	PageTitle *string `json:"page_title,omitempty"`
-
-	// PageUrl Without query and fragment.
-	PageUrl string `json:"page_url"`
-}
-
 // PageRating defines model for PageRating.
 type PageRating string
 
@@ -4198,7 +4573,7 @@ type Passkey struct {
 type PasskeyCeremony struct {
 	CeremonyId string `json:"ceremony_id"`
 
-	// Options WebAuthn options in their JSON form (`{"publicKey": …}`), for
+	// Options WebAuthn options in their JSON form (`{"publicKey": ...}`), for
 	// `PublicKeyCredential.parseCreationOptionsFromJSON` or
 	// `parseRequestOptionsFromJSON`.
 	Options map[string]interface{} `json:"options"`
@@ -4352,6 +4727,141 @@ type RatingStats struct {
 	Inboxes []InboxRatingStats `json:"inboxes"`
 }
 
+// ReaderAccount defines model for ReaderAccount.
+type ReaderAccount struct {
+	// Email Examples: owner@example.com
+	Email Email `json:"email"`
+
+	// EmailNotifications E-mails about followed threads; on by default.
+	EmailNotifications bool   `json:"email_notifications"`
+	Initials           string `json:"initials"`
+
+	// Locale The language of e-mails sent to the person.
+	Locale Locale `json:"locale"`
+
+	// Member The person is a member of at least one workspace.
+	Member bool `json:"member"`
+
+	// Name Shown on the person's posts; empty until set.
+	Name     string    `json:"name"`
+	PersonId uuid.UUID `json:"person_id"`
+}
+
+// ReaderAccountUpdate defines model for ReaderAccountUpdate.
+type ReaderAccountUpdate struct {
+	EmailNotifications *bool   `json:"email_notifications,omitempty"`
+	Name               *string `json:"name,omitempty"`
+}
+
+// ReaderDiscussion A thread as the reader's account lists it.
+type ReaderDiscussion struct {
+	Answered  bool      `json:"answered"`
+	CreatedAt time.Time `json:"created_at"`
+	Following bool      `json:"following"`
+	Id        uuid.UUID `json:"id"`
+
+	// InboxName The product whose documentation it is on.
+	InboxName      string    `json:"inbox_name"`
+	LastActivityAt time.Time `json:"last_activity_at"`
+	Locked         bool      `json:"locked"`
+	Page           string    `json:"page"`
+	PageTitle      *string   `json:"page_title,omitempty"`
+	ReplyCount     int32     `json:"reply_count"`
+
+	// Started The reader started it.
+	Started bool `json:"started"`
+
+	// State `published`: public. `pending`: waits for a member; only its author and members see it.
+	// `hidden`: a member hid it; only members see it.
+	State         DiscussionState `json:"state"`
+	Title         string          `json:"title"`
+	Votes         int32           `json:"votes"`
+	WorkspaceName string          `json:"workspace_name"`
+}
+
+// ReaderDiscussionPage defines model for ReaderDiscussionPage.
+type ReaderDiscussionPage struct {
+	Items []ReaderDiscussion `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ReaderNotification defines model for ReaderNotification.
+type ReaderNotification struct {
+	// Author Who wrote a post, shown by name and initials only. `deleted` is true once the member left or
+	// the reader deleted their account; `name` is then absent. `member_id` and `contact_id` are
+	// given on `/v1` only.
+	Author       *DiscussionAuthor `json:"author,omitempty"`
+	CreatedAt    time.Time         `json:"created_at"`
+	DiscussionId uuid.UUID         `json:"discussion_id"`
+
+	// Excerpt The start of the post, at most 200 characters of plain text.
+	Excerpt   string    `json:"excerpt"`
+	Id        uuid.UUID `json:"id"`
+	InboxName string    `json:"inbox_name"`
+
+	// Kind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+	Kind   ReaderNotificationKind `json:"kind"`
+	Page   string                 `json:"page"`
+	PostId *uuid.UUID             `json:"post_id,omitempty"`
+	ReadAt *time.Time             `json:"read_at,omitempty"`
+
+	// Title The thread's title.
+	Title string `json:"title"`
+}
+
+// ReaderNotificationKind `reply`: a new reply in a followed thread. `answer`: an answer was accepted there.
+type ReaderNotificationKind string
+
+// ReaderNotificationPage defines model for ReaderNotificationPage.
+type ReaderNotificationPage struct {
+	Items []ReaderNotification `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+	Unread     int64   `json:"unread"`
+}
+
+// ReaderNotificationsRead defines model for ReaderNotificationsRead.
+type ReaderNotificationsRead struct {
+	Ids *[]uuid.UUID `json:"ids,omitempty"`
+}
+
+// ReaderProfile defines model for ReaderProfile.
+type ReaderProfile struct {
+	Initials string `json:"initials"`
+
+	// Name Absent when the person has no name yet.
+	Name *string `json:"name,omitempty"`
+}
+
+// ReaderToken defines model for ReaderToken.
+type ReaderToken struct {
+	ChannelKey string    `json:"channel_key"`
+	ExpiresAt  time.Time `json:"expires_at"`
+
+	// Origin The target origin for `postMessage`, as normalized.
+	//
+	// Examples: https://www.example.com
+	Origin Origin        `json:"origin"`
+	Reader ReaderProfile `json:"reader"`
+
+	// Token `yuva_rd_<secret>`, shown once.
+	Token string `json:"token"`
+}
+
+// ReaderTokenCreate defines model for ReaderTokenCreate.
+type ReaderTokenCreate struct {
+	// ChannelKey The chat channel's public key, from the `channel` query parameter of `/account/connect`.
+	ChannelKey string `json:"channel_key"`
+
+	// Origin The origin of the page that opened the popup.
+	//
+	// Examples: https://www.example.com
+	Origin Origin `json:"origin"`
+}
+
 // RealtimeMessage One server message on `/v1/realtime`, told apart by `type`.
 type RealtimeMessage struct {
 	union json.RawMessage
@@ -4381,6 +4891,10 @@ type Role string
 type SignInCodeRequest struct {
 	// Email Examples: owner@example.com
 	Email Email `json:"email"`
+
+	// Reader Sign in as a reader (the account page and its `/account/connect` popup): the code is sent
+	// to any address, and verifying it creates the person when there is none yet.
+	Reader *bool `json:"reader,omitempty"`
 }
 
 // SignInCodeVerify defines model for SignInCodeVerify.
@@ -4426,6 +4940,14 @@ type SmtpSettingsInput struct {
 // SmtpTls `starttls` upgrades a plain connection (port 587), `tls` connects with TLS (port 465),
 // `none` sends in the clear (local relays and test servers only).
 type SmtpTls string
+
+// SourcePage The documentation page a conversation was sent from.
+type SourcePage struct {
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl Without query and fragment.
+	PageUrl string `json:"page_url"`
+}
 
 // Stats defines model for Stats.
 type Stats struct {
@@ -4572,7 +5094,7 @@ type WebhookAttempt struct {
 	AttemptedAt time.Time `json:"attempted_at"`
 	DeliveryId  uuid.UUID `json:"delivery_id"`
 
-	// Error Why the attempt failed (timeout, refused address, non-2xx status, …).
+	// Error Why the attempt failed (timeout, refused address, non-2xx status, ...).
 	Error     *string   `json:"error,omitempty"`
 	Id        uuid.UUID `json:"id"`
 	LatencyMs int32     `json:"latency_ms"`
@@ -4595,7 +5117,7 @@ type WebhookAttemptList struct {
 
 // WebhookContact The contact as a host backend needs it.
 type WebhookContact struct {
-	// Attributes Free-form data about the contact (plan, app version, …), at most 16 KiB.
+	// Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 	Attributes Attributes `json:"attributes"`
 	Emails     []Email    `json:"emails"`
 
@@ -4732,6 +5254,19 @@ type WebhookDeliveryPage struct {
 // WebhookDeliveryState `pending` while attempts remain, `succeeded` after a 2xx answer, `failed` when the retries
 // (about 24 hours) ran out or the endpoint was disabled.
 type WebhookDeliveryState string
+
+// WebhookDiscussionPayload defines model for WebhookDiscussionPayload.
+type WebhookDiscussionPayload struct {
+	Data DiscussionEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
 
 // WebhookEndpoint defines model for WebhookEndpoint.
 type WebhookEndpoint struct {
@@ -4901,6 +5436,12 @@ type Cursor = string
 // DeliveryId defines model for DeliveryId.
 type DeliveryId = uuid.UUID
 
+// DiscussionId defines model for DiscussionId.
+type DiscussionId = uuid.UUID
+
+// DiscussionPostId defines model for DiscussionPostId.
+type DiscussionPostId = uuid.UUID
+
 // DocsDays defines model for DocsDays.
 type DocsDays = int32
 
@@ -4934,9 +5475,6 @@ type OAuthGrantId = uuid.UUID
 // OAuthRequestId defines model for OAuthRequestId.
 type OAuthRequestId = uuid.UUID
 
-// PageAnswerId defines model for PageAnswerId.
-type PageAnswerId = uuid.UUID
-
 // PasskeyId defines model for PasskeyId.
 type PasskeyId = uuid.UUID
 
@@ -4964,10 +5502,17 @@ type WorkspaceHeader = uuid.UUID
 // SignedIn defines model for SignedIn.
 type SignedIn = Me
 
-// ListClientPageAnswersParams defines parameters for ListClientPageAnswers.
-type ListClientPageAnswersParams struct {
+// ListClientDiscussionsParams defines parameters for ListClientDiscussions.
+type ListClientDiscussionsParams struct {
 	// Page The page's URL.
-	Page string `form:"page" json:"page"`
+	Page string          `form:"page" json:"page"`
+	Sort *DiscussionSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListClientConversationsParams defines parameters for ListClientConversations.
@@ -5017,16 +5562,52 @@ type SetClientTypingParams struct {
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
+// CreateClientDiscussionParams defines parameters for CreateClientDiscussion.
+type CreateClientDiscussionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
+// CreateClientDiscussionPostParams defines parameters for CreateClientDiscussionPost.
+type CreateClientDiscussionPostParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+}
+
 // CreateClientFeedbackParams defines parameters for CreateClientFeedback.
 type CreateClientFeedbackParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 }
 
-// CreateClientQuestionParams defines parameters for CreateClientQuestion.
-type CreateClientQuestionParams struct {
-	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
-	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+// ListReaderDiscussionsParams defines parameters for ListReaderDiscussions.
+type ListReaderDiscussionsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListReaderFollowingParams defines parameters for ListReaderFollowing.
+type ListReaderFollowingParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListReaderNotificationsParams defines parameters for ListReaderNotifications.
+type ListReaderNotificationsParams struct {
+	// Unread `true` lists only unread notifications.
+	Unread *bool `form:"unread,omitempty" json:"unread,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
 // ListApiKeysParams defines parameters for ListApiKeys.
@@ -5255,8 +5836,8 @@ type ListConversationsParams struct {
 	Spam *bool `form:"spam,omitempty" json:"spam,omitempty"`
 
 	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
-	// parameter (`kind=feedback&kind=question`) or give a comma-separated list
-	// (`kind=feedback,question`).
+	// parameter (`kind=feedback&kind=conversation`) or give a comma-separated list
+	// (`kind=feedback,conversation`).
 	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
 
 	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
@@ -5264,17 +5845,16 @@ type ListConversationsParams struct {
 	// without a `channel_kind` never match.
 	ChannelKind *[]ChannelKind `form:"channel_kind,omitempty" json:"channel_kind,omitempty"`
 
-	// Site Only feedback and questions sent from a page of this site: an origin,
-	// `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
-	// `question.page_url`.
+	// Site Only conversations sent from a page of this site: an origin, `scheme://host[:port]`,
+	// matched against the origin of `page.page_url`.
 	Site *string `form:"site,omitempty" json:"site,omitempty"`
 
 	// Category Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
 	// `feedback`, `400`).
 	Category *FeedbackCategory `form:"category,omitempty" json:"category,omitempty"`
 
-	// Page Only feedback and questions sent from this documentation page (a URL; query and
-	// fragment are ignored).
+	// Page Only conversations sent from this documentation page (a URL; query and fragment are
+	// ignored).
 	Page *string `form:"page,omitempty" json:"page,omitempty"`
 
 	// Pinned `true` lists only the conversations the calling member pinned, `false` only the others;
@@ -5330,6 +5910,15 @@ type UpdateConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// CreateDiscussionFromConversationParams defines parameters for CreateDiscussionFromConversation.
+type CreateDiscussionFromConversationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListMessagesParams defines parameters for ListMessages.
 type ListMessagesParams struct {
 	Order *ListMessagesParamsOrder `form:"order,omitempty" json:"order,omitempty"`
@@ -5377,15 +5966,6 @@ type PinConversationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
-// PublishConversationParams defines parameters for PublishConversation.
-type PublishConversationParams struct {
-	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
-	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
-
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
 // MarkConversationReadParams defines parameters for MarkConversationRead.
 type MarkConversationReadParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -5406,6 +5986,128 @@ type SetMemberTypingParams struct {
 
 // MarkConversationUnreadParams defines parameters for MarkConversationUnread.
 type MarkConversationUnreadParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListDiscussionPostsParams defines parameters for ListDiscussionPosts.
+type ListDiscussionPostsParams struct {
+	State   *DiscussionState `form:"state,omitempty" json:"state,omitempty"`
+	InboxId *uuid.UUID       `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
+	// Page Only this page's posts (a URL; query and fragment are ignored).
+	Page *string `form:"page,omitempty" json:"page,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteDiscussionPostParams defines parameters for DeleteDiscussionPost.
+type DeleteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateDiscussionPostParams defines parameters for UpdateDiscussionPost.
+type UpdateDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// MarkDiscussionPostSpamParams defines parameters for MarkDiscussionPostSpam.
+type MarkDiscussionPostSpamParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UnvoteDiscussionPostParams defines parameters for UnvoteDiscussionPost.
+type UnvoteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// VoteDiscussionPostParams defines parameters for VoteDiscussionPost.
+type VoteDiscussionPostParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListDiscussionsParams defines parameters for ListDiscussions.
+type ListDiscussionsParams struct {
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
+	// Page Only this page's threads (a URL; query and fragment are ignored).
+	Page     *string          `form:"page,omitempty" json:"page,omitempty"`
+	State    *DiscussionState `form:"state,omitempty" json:"state,omitempty"`
+	Answered *bool            `form:"answered,omitempty" json:"answered,omitempty"`
+	Locked   *bool            `form:"locked,omitempty" json:"locked,omitempty"`
+
+	// Pending `true`: only threads with posts waiting for a member.
+	Pending *bool               `form:"pending,omitempty" json:"pending,omitempty"`
+	Sort    *DiscussionTeamSort `form:"sort,omitempty" json:"sort,omitempty"`
+
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDiscussionParams defines parameters for CreateDiscussion.
+type CreateDiscussionParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetDiscussionParams defines parameters for GetDiscussion.
+type GetDiscussionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateDiscussionParams defines parameters for UpdateDiscussion.
+type UpdateDiscussionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ClearDiscussionAnswerParams defines parameters for ClearDiscussionAnswer.
+type ClearDiscussionAnswerParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// AcceptDiscussionAnswerParams defines parameters for AcceptDiscussionAnswer.
+type AcceptDiscussionAnswerParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDiscussionPostParams defines parameters for CreateDiscussionPost.
+type CreateDiscussionPostParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
 	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
 
@@ -5750,44 +6452,6 @@ type RevokeOAuthGrantParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
-// ListPageAnswersParams defines parameters for ListPageAnswers.
-type ListPageAnswersParams struct {
-	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
-
-	// Page Only this page's answers (a URL; query and fragment are ignored).
-	Page *string `form:"page,omitempty" json:"page,omitempty"`
-
-	// ConversationId Only the answer published from this conversation.
-	ConversationId *uuid.UUID `form:"conversation_id,omitempty" json:"conversation_id,omitempty"`
-
-	// Cursor The `next_cursor` of the previous page.
-	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
-
-	// Limit Page size, 1 to 100; 25 by default.
-	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
-
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// DeletePageAnswerParams defines parameters for DeletePageAnswer.
-type DeletePageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// GetPageAnswerParams defines parameters for GetPageAnswer.
-type GetPageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
-// UpdatePageAnswerParams defines parameters for UpdatePageAnswer.
-type UpdatePageAnswerParams struct {
-	// YuvaWorkspace The workspace to act on; see "Workspace selection".
-	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
-}
-
 // GetStatsParams defines parameters for GetStats.
 type GetStatsParams struct {
 	// InboxId Only this inbox (`404` when the caller cannot see it).
@@ -5979,6 +6643,62 @@ type WebhookConversationUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// WebhookDiscussionAnsweredParams defines parameters for WebhookDiscussionAnswered.
+type WebhookDiscussionAnsweredParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionCreatedParams defines parameters for WebhookDiscussionCreated.
+type WebhookDiscussionCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionPostCreatedParams defines parameters for WebhookDiscussionPostCreated.
+type WebhookDiscussionPostCreatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
+// WebhookDiscussionUpdatedParams defines parameters for WebhookDiscussionUpdated.
+type WebhookDiscussionUpdatedParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookDraftCreatedParams defines parameters for WebhookDraftCreated.
 type WebhookDraftCreatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -6076,17 +6796,35 @@ type MarkClientConversationReadJSONRequestBody = ClientReadCreate
 // SetClientTypingJSONRequestBody defines body for SetClientTyping for application/json ContentType.
 type SetClientTypingJSONRequestBody = TypingCreate
 
+// UpdateClientDiscussionPostJSONRequestBody defines body for UpdateClientDiscussionPost for application/json ContentType.
+type UpdateClientDiscussionPostJSONRequestBody = ClientDiscussionPostUpdate
+
+// CreateClientDiscussionJSONRequestBody defines body for CreateClientDiscussion for application/json ContentType.
+type CreateClientDiscussionJSONRequestBody = ClientDiscussionCreate
+
+// AcceptClientDiscussionAnswerJSONRequestBody defines body for AcceptClientDiscussionAnswer for application/json ContentType.
+type AcceptClientDiscussionAnswerJSONRequestBody = DiscussionAnswer
+
+// CreateClientDiscussionPostJSONRequestBody defines body for CreateClientDiscussionPost for application/json ContentType.
+type CreateClientDiscussionPostJSONRequestBody = DiscussionPostCreate
+
 // CreateClientFeedbackJSONRequestBody defines body for CreateClientFeedback for application/json ContentType.
 type CreateClientFeedbackJSONRequestBody = ClientFeedbackCreate
 
 // CreateClientFeedbackMultipartRequestBody defines body for CreateClientFeedback for multipart/form-data ContentType.
 type CreateClientFeedbackMultipartRequestBody = ClientFeedbackCreateMultipart
 
-// CreateClientQuestionJSONRequestBody defines body for CreateClientQuestion for application/json ContentType.
-type CreateClientQuestionJSONRequestBody = ClientQuestionCreate
-
 // CreateClientSessionJSONRequestBody defines body for CreateClientSession for application/json ContentType.
 type CreateClientSessionJSONRequestBody = ClientSessionCreate
+
+// UpdateReaderAccountJSONRequestBody defines body for UpdateReaderAccount for application/json ContentType.
+type UpdateReaderAccountJSONRequestBody = ReaderAccountUpdate
+
+// MarkReaderNotificationsReadJSONRequestBody defines body for MarkReaderNotificationsRead for application/json ContentType.
+type MarkReaderNotificationsReadJSONRequestBody = ReaderNotificationsRead
+
+// CreateReaderTokenJSONRequestBody defines body for CreateReaderToken for application/json ContentType.
+type CreateReaderTokenJSONRequestBody = ReaderTokenCreate
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -6133,6 +6871,9 @@ type BulkUpdateConversationsJSONRequestBody = ConversationBulkUpdate
 // UpdateConversationJSONRequestBody defines body for UpdateConversation for application/json ContentType.
 type UpdateConversationJSONRequestBody = ConversationUpdate
 
+// CreateDiscussionFromConversationJSONRequestBody defines body for CreateDiscussionFromConversation for application/json ContentType.
+type CreateDiscussionFromConversationJSONRequestBody = DiscussionFromConversation
+
 // CreateMessageJSONRequestBody defines body for CreateMessage for application/json ContentType.
 type CreateMessageJSONRequestBody = MessageCreate
 
@@ -6142,14 +6883,26 @@ type CreateMessageMultipartRequestBody = MessageCreateMultipart
 // MoveConversationJSONRequestBody defines body for MoveConversation for application/json ContentType.
 type MoveConversationJSONRequestBody = ConversationMove
 
-// PublishConversationJSONRequestBody defines body for PublishConversation for application/json ContentType.
-type PublishConversationJSONRequestBody = PageAnswerCreate
-
 // MarkConversationReadJSONRequestBody defines body for MarkConversationRead for application/json ContentType.
 type MarkConversationReadJSONRequestBody = ConversationReadCreate
 
 // SetMemberTypingJSONRequestBody defines body for SetMemberTyping for application/json ContentType.
 type SetMemberTypingJSONRequestBody = TypingCreate
+
+// UpdateDiscussionPostJSONRequestBody defines body for UpdateDiscussionPost for application/json ContentType.
+type UpdateDiscussionPostJSONRequestBody = DiscussionPostUpdate
+
+// CreateDiscussionJSONRequestBody defines body for CreateDiscussion for application/json ContentType.
+type CreateDiscussionJSONRequestBody = DiscussionCreate
+
+// UpdateDiscussionJSONRequestBody defines body for UpdateDiscussion for application/json ContentType.
+type UpdateDiscussionJSONRequestBody = DiscussionUpdate
+
+// AcceptDiscussionAnswerJSONRequestBody defines body for AcceptDiscussionAnswer for application/json ContentType.
+type AcceptDiscussionAnswerJSONRequestBody = DiscussionAnswer
+
+// CreateDiscussionPostJSONRequestBody defines body for CreateDiscussionPost for application/json ContentType.
+type CreateDiscussionPostJSONRequestBody = DiscussionPostCreate
 
 // CreateFeedbackJSONRequestBody defines body for CreateFeedback for application/json ContentType.
 type CreateFeedbackJSONRequestBody = FeedbackCreate
@@ -6199,9 +6952,6 @@ type UpdateMessageJSONRequestBody = MessageUpdate
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
 
-// UpdatePageAnswerJSONRequestBody defines body for UpdatePageAnswer for application/json ContentType.
-type UpdatePageAnswerJSONRequestBody = PageAnswerUpdate
-
 // CreateWebhookJSONRequestBody defines body for CreateWebhook for application/json ContentType.
 type CreateWebhookJSONRequestBody = WebhookEndpointCreate
 
@@ -6228,6 +6978,18 @@ type WebhookConversationRatedJSONRequestBody = WebhookConversationPayload
 
 // WebhookConversationUpdatedJSONRequestBody defines body for WebhookConversationUpdated for application/json ContentType.
 type WebhookConversationUpdatedJSONRequestBody = WebhookConversationPayload
+
+// WebhookDiscussionAnsweredJSONRequestBody defines body for WebhookDiscussionAnswered for application/json ContentType.
+type WebhookDiscussionAnsweredJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionCreatedJSONRequestBody defines body for WebhookDiscussionCreated for application/json ContentType.
+type WebhookDiscussionCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionPostCreatedJSONRequestBody defines body for WebhookDiscussionPostCreated for application/json ContentType.
+type WebhookDiscussionPostCreatedJSONRequestBody = WebhookDiscussionPayload
+
+// WebhookDiscussionUpdatedJSONRequestBody defines body for WebhookDiscussionUpdated for application/json ContentType.
+type WebhookDiscussionUpdatedJSONRequestBody = WebhookDiscussionPayload
 
 // WebhookDraftCreatedJSONRequestBody defines body for WebhookDraftCreated for application/json ContentType.
 type WebhookDraftCreatedJSONRequestBody = WebhookMessagePayload
@@ -6891,6 +7653,32 @@ func (t *RealtimeMessage) MergeConversationPinEvent(v ConversationPinEvent) erro
 	return err
 }
 
+// AsDiscussionEvent returns the union data inside the RealtimeMessage as a DiscussionEvent
+func (t RealtimeMessage) AsDiscussionEvent() (DiscussionEvent, error) {
+	var body DiscussionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionEvent overwrites any union data inside the RealtimeMessage as the provided DiscussionEvent
+func (t *RealtimeMessage) FromDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionEvent performs a merge with any union data inside the RealtimeMessage, using the provided DiscussionEvent
+func (t *RealtimeMessage) MergeDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -7079,6 +7867,14 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsConversationReadEvent()
 	case "conversation.updated":
 		return t.AsConversationEvent()
+	case "discussion.answered":
+		return t.AsDiscussionEvent()
+	case "discussion.created":
+		return t.AsDiscussionEvent()
+	case "discussion.post_created":
+		return t.AsDiscussionEvent()
+	case "discussion.updated":
+		return t.AsDiscussionEvent()
 	case "draft.created":
 		return t.AsDraftEvent()
 	case "draft.deleted":
@@ -7486,6 +8282,32 @@ func (t *StoredEvent) MergeConversationPinEvent(v ConversationPinEvent) error {
 	return err
 }
 
+// AsDiscussionEvent returns the union data inside the StoredEvent as a DiscussionEvent
+func (t StoredEvent) AsDiscussionEvent() (DiscussionEvent, error) {
+	var body DiscussionEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromDiscussionEvent overwrites any union data inside the StoredEvent as the provided DiscussionEvent
+func (t *StoredEvent) FromDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeDiscussionEvent performs a merge with any union data inside the StoredEvent, using the provided DiscussionEvent
+func (t *StoredEvent) MergeDiscussionEvent(v DiscussionEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -7516,6 +8338,14 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return t.AsConversationReadEvent()
 	case "conversation.updated":
 		return t.AsConversationEvent()
+	case "discussion.answered":
+		return t.AsDiscussionEvent()
+	case "discussion.created":
+		return t.AsDiscussionEvent()
+	case "discussion.post_created":
+		return t.AsDiscussionEvent()
+	case "discussion.updated":
+		return t.AsDiscussionEvent()
 	case "draft.created":
 		return t.AsDraftEvent()
 	case "draft.deleted":
@@ -7557,9 +8387,12 @@ type ServerInterface interface {
 	// GetClientChannel A chat or app channel's public settings
 	// (GET /client/v1/channels/{channel_key})
 	GetClientChannel(w http.ResponseWriter, r *http.Request, channelKey string)
-	// ListClientPageAnswers A documentation page's published answers
-	// (GET /client/v1/channels/{channel_key}/page-answers)
-	ListClientPageAnswers(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, params ListClientPageAnswersParams)
+	// ListClientDiscussions A documentation page's discussion threads
+	// (GET /client/v1/channels/{channel_key}/discussions)
+	ListClientDiscussions(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, params ListClientDiscussionsParams)
+	// GetClientDiscussion A thread with its replies
+	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
+	GetClientDiscussion(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, discussionId DiscussionId)
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(w http.ResponseWriter, r *http.Request, channelKey ChannelKey)
@@ -7590,12 +8423,42 @@ type ServerInterface interface {
 	// SetClientTyping Tell members the contact is typing
 	// (POST /client/v1/conversations/{conversationId}/typing)
 	SetClientTyping(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params SetClientTypingParams)
+	// DeleteClientDiscussionPost Delete one's own post
+	// (DELETE /client/v1/discussion-posts/{postId})
+	DeleteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId)
+	// UpdateClientDiscussionPost Edit one's own post
+	// (PATCH /client/v1/discussion-posts/{postId})
+	UpdateClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId)
+	// UnvoteClientDiscussionPost Take a vote back
+	// (DELETE /client/v1/discussion-posts/{postId}/vote)
+	UnvoteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId)
+	// VoteClientDiscussionPost Vote for a post
+	// (PUT /client/v1/discussion-posts/{postId}/vote)
+	VoteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId)
+	// CreateClientDiscussion Start a thread
+	// (POST /client/v1/discussions)
+	CreateClientDiscussion(w http.ResponseWriter, r *http.Request, params CreateClientDiscussionParams)
+	// ClearClientDiscussionAnswer Clear the accepted answer
+	// (DELETE /client/v1/discussions/{discussionId}/answer)
+	ClearClientDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId)
+	// AcceptClientDiscussionAnswer Mark the accepted answer
+	// (PUT /client/v1/discussions/{discussionId}/answer)
+	AcceptClientDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId)
+	// UnfollowClientDiscussion Stop following a thread
+	// (DELETE /client/v1/discussions/{discussionId}/follow)
+	UnfollowClientDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId)
+	// FollowClientDiscussion Follow a thread
+	// (PUT /client/v1/discussions/{discussionId}/follow)
+	FollowClientDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId)
+	// CreateClientDiscussionPost Reply in a thread
+	// (POST /client/v1/discussions/{discussionId}/posts)
+	CreateClientDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateClientDiscussionPostParams)
 	// CreateClientFeedback Send feedback
 	// (POST /client/v1/feedback)
 	CreateClientFeedback(w http.ResponseWriter, r *http.Request, params CreateClientFeedbackParams)
-	// CreateClientQuestion Ask a question about a documentation page
-	// (POST /client/v1/questions)
-	CreateClientQuestion(w http.ResponseWriter, r *http.Request, params CreateClientQuestionParams)
+	// DeleteReaderToken Sign a site out of the reader account
+	// (DELETE /client/v1/reader-token)
+	DeleteReaderToken(w http.ResponseWriter, r *http.Request)
 	// DeleteClientSession End the contact session
 	// (DELETE /client/v1/session)
 	DeleteClientSession(w http.ResponseWriter, r *http.Request)
@@ -7611,6 +8474,30 @@ type ServerInterface interface {
 	// GetReadyz Readiness
 	// (GET /readyz)
 	GetReadyz(w http.ResponseWriter, r *http.Request)
+	// GetReaderAccount The signed-in person as a reader
+	// (GET /v1/account)
+	GetReaderAccount(w http.ResponseWriter, r *http.Request)
+	// UpdateReaderAccount Change the reader name or e-mail settings
+	// (PATCH /v1/account)
+	UpdateReaderAccount(w http.ResponseWriter, r *http.Request)
+	// ListReaderDiscussions Threads the reader started or replied to
+	// (GET /v1/account/discussions)
+	ListReaderDiscussions(w http.ResponseWriter, r *http.Request, params ListReaderDiscussionsParams)
+	// ListReaderFollowing Threads the reader follows
+	// (GET /v1/account/following)
+	ListReaderFollowing(w http.ResponseWriter, r *http.Request, params ListReaderFollowingParams)
+	// UnfollowReaderDiscussion Stop following a thread
+	// (DELETE /v1/account/following/{discussionId})
+	UnfollowReaderDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId)
+	// ListReaderNotifications The reader's notifications
+	// (GET /v1/account/notifications)
+	ListReaderNotifications(w http.ResponseWriter, r *http.Request, params ListReaderNotificationsParams)
+	// MarkReaderNotificationsRead Mark notifications read
+	// (POST /v1/account/notifications/read)
+	MarkReaderNotificationsRead(w http.ResponseWriter, r *http.Request)
+	// CreateReaderToken Hand a reader token to a documentation site
+	// (POST /v1/account/reader-tokens)
+	CreateReaderToken(w http.ResponseWriter, r *http.Request)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(w http.ResponseWriter, r *http.Request, params ListApiKeysParams)
@@ -7722,6 +8609,9 @@ type ServerInterface interface {
 	// UpdateConversation Update a conversation
 	// (PATCH /v1/conversations/{conversationId})
 	UpdateConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params UpdateConversationParams)
+	// CreateDiscussionFromConversation Turn a private conversation into a public thread
+	// (POST /v1/conversations/{conversationId}/discussion)
+	CreateDiscussionFromConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params CreateDiscussionFromConversationParams)
 	// ListMessages List a conversation's messages
 	// (GET /v1/conversations/{conversationId}/messages)
 	ListMessages(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params ListMessagesParams)
@@ -7737,9 +8627,6 @@ type ServerInterface interface {
 	// PinConversation Pin a conversation
 	// (PUT /v1/conversations/{conversationId}/pin)
 	PinConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params PinConversationParams)
-	// PublishConversation Publish a question and its answer to the page
-	// (POST /v1/conversations/{conversationId}/publish)
-	PublishConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params PublishConversationParams)
 	// MarkConversationRead Mark a conversation read
 	// (POST /v1/conversations/{conversationId}/read)
 	MarkConversationRead(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params MarkConversationReadParams)
@@ -7749,10 +8636,49 @@ type ServerInterface interface {
 	// MarkConversationUnread Mark a conversation unread
 	// (POST /v1/conversations/{conversationId}/unread)
 	MarkConversationUnread(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params MarkConversationUnreadParams)
+	// ListDiscussionPosts Posts by state (the moderation queue)
+	// (GET /v1/discussion-posts)
+	ListDiscussionPosts(w http.ResponseWriter, r *http.Request, params ListDiscussionPostsParams)
+	// DeleteDiscussionPost Delete a member's own post
+	// (DELETE /v1/discussion-posts/{postId})
+	DeleteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params DeleteDiscussionPostParams)
+	// UpdateDiscussionPost Approve, hide, or edit a member's own post
+	// (PATCH /v1/discussion-posts/{postId})
+	UpdateDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params UpdateDiscussionPostParams)
+	// MarkDiscussionPostSpam Mark a post as spam
+	// (POST /v1/discussion-posts/{postId}/spam)
+	MarkDiscussionPostSpam(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params MarkDiscussionPostSpamParams)
+	// UnvoteDiscussionPost Take a member's vote back
+	// (DELETE /v1/discussion-posts/{postId}/vote)
+	UnvoteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params UnvoteDiscussionPostParams)
+	// VoteDiscussionPost Vote for a post as a member
+	// (PUT /v1/discussion-posts/{postId}/vote)
+	VoteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params VoteDiscussionPostParams)
+	// ListDiscussions List discussion threads
+	// (GET /v1/discussions)
+	ListDiscussions(w http.ResponseWriter, r *http.Request, params ListDiscussionsParams)
+	// CreateDiscussion Start a thread as a member
+	// (POST /v1/discussions)
+	CreateDiscussion(w http.ResponseWriter, r *http.Request, params CreateDiscussionParams)
+	// GetDiscussion A thread with every post
+	// (GET /v1/discussions/{discussionId})
+	GetDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params GetDiscussionParams)
+	// UpdateDiscussion Edit the title, lock or unlock
+	// (PATCH /v1/discussions/{discussionId})
+	UpdateDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params UpdateDiscussionParams)
+	// ClearDiscussionAnswer Clear the accepted answer
+	// (DELETE /v1/discussions/{discussionId}/answer)
+	ClearDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ClearDiscussionAnswerParams)
+	// AcceptDiscussionAnswer Mark the accepted answer
+	// (PUT /v1/discussions/{discussionId}/answer)
+	AcceptDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params AcceptDiscussionAnswerParams)
+	// CreateDiscussionPost Reply as a member
+	// (POST /v1/discussions/{discussionId}/posts)
+	CreateDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateDiscussionPostParams)
 	// GetDocsPage One documentation page
 	// (GET /v1/docs/page)
 	GetDocsPage(w http.ResponseWriter, r *http.Request, params GetDocsPageParams)
-	// ListDocsPages Documentation pages with their ratings, feedback and questions
+	// ListDocsPages Documentation pages with their ratings, feedback and discussions
 	// (GET /v1/docs/pages)
 	ListDocsPages(w http.ResponseWriter, r *http.Request, params ListDocsPagesParams)
 	// ListDocsSites Documentation sites
@@ -7917,18 +8843,6 @@ type ServerInterface interface {
 	// DenyOAuthRequest Deny an authorization request
 	// (POST /v1/oauth/requests/{oauthRequestId}/deny)
 	DenyOAuthRequest(w http.ResponseWriter, r *http.Request, oauthRequestId OAuthRequestId)
-	// ListPageAnswers List published answers
-	// (GET /v1/page-answers)
-	ListPageAnswers(w http.ResponseWriter, r *http.Request, params ListPageAnswersParams)
-	// DeletePageAnswer Unpublish an answer
-	// (DELETE /v1/page-answers/{pageAnswerId})
-	DeletePageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params DeletePageAnswerParams)
-	// GetPageAnswer Get a published answer
-	// (GET /v1/page-answers/{pageAnswerId})
-	GetPageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params GetPageAnswerParams)
-	// UpdatePageAnswer Edit a published answer
-	// (PATCH /v1/page-answers/{pageAnswerId})
-	UpdatePageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params UpdatePageAnswerParams)
 	// GetVapidPublicKey The server's Web Push key
 	// (GET /v1/push/vapid-public-key)
 	GetVapidPublicKey(w http.ResponseWriter, r *http.Request)
@@ -8043,8 +8957,8 @@ func (siw *ServerInterfaceWrapper) GetClientChannel(w http.ResponseWriter, r *ht
 	handler.ServeHTTP(w, r)
 }
 
-// ListClientPageAnswers operation middleware
-func (siw *ServerInterfaceWrapper) ListClientPageAnswers(w http.ResponseWriter, r *http.Request) {
+// ListClientDiscussions operation middleware
+func (siw *ServerInterfaceWrapper) ListClientDiscussions(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 	_ = err
@@ -8059,7 +8973,7 @@ func (siw *ServerInterfaceWrapper) ListClientPageAnswers(w http.ResponseWriter, 
 	}
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params ListClientPageAnswersParams
+	var params ListClientDiscussionsParams
 
 	// ------------- Required query parameter "page" -------------
 
@@ -8074,8 +8988,82 @@ func (siw *ServerInterfaceWrapper) ListClientPageAnswers(w http.ResponseWriter, 
 		return
 	}
 
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "sort", r.URL.Query(), &params.Sort, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "sort"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListClientPageAnswers(w, r, channelKey, params)
+		siw.Handler.ListClientDiscussions(w, r, channelKey, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetClientDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) GetClientDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "channel_key" -------------
+	var channelKey ChannelKey
+
+	err = runtime.BindStyledParameterWithOptions("simple", "channel_key", r.PathValue("channel_key"), &channelKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_key", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetClientDiscussion(w, r, channelKey, discussionId)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -8482,6 +9470,305 @@ func (siw *ServerInterfaceWrapper) SetClientTyping(w http.ResponseWriter, r *htt
 	handler.ServeHTTP(w, r)
 }
 
+// DeleteClientDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) DeleteClientDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteClientDiscussionPost(w, r, postId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateClientDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) UpdateClientDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateClientDiscussionPost(w, r, postId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnvoteClientDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) UnvoteClientDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnvoteClientDiscussionPost(w, r, postId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// VoteClientDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) VoteClientDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.VoteClientDiscussionPost(w, r, postId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClientDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) CreateClientDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateClientDiscussionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClientDiscussion(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ClearClientDiscussionAnswer operation middleware
+func (siw *ServerInterfaceWrapper) ClearClientDiscussionAnswer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ClearClientDiscussionAnswer(w, r, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AcceptClientDiscussionAnswer operation middleware
+func (siw *ServerInterfaceWrapper) AcceptClientDiscussionAnswer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AcceptClientDiscussionAnswer(w, r, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnfollowClientDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) UnfollowClientDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnfollowClientDiscussion(w, r, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// FollowClientDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) FollowClientDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.FollowClientDiscussion(w, r, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateClientDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) CreateClientDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateClientDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateClientDiscussionPost(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // CreateClientFeedback operation middleware
 func (siw *ServerInterfaceWrapper) CreateClientFeedback(w http.ResponseWriter, r *http.Request) {
 
@@ -8523,38 +9810,11 @@ func (siw *ServerInterfaceWrapper) CreateClientFeedback(w http.ResponseWriter, r
 	handler.ServeHTTP(w, r)
 }
 
-// CreateClientQuestion operation middleware
-func (siw *ServerInterfaceWrapper) CreateClientQuestion(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params CreateClientQuestionParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Idempotency-Key" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
-		var IdempotencyKey IdempotencyKey
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
-			return
-		}
-
-		params.IdempotencyKey = &IdempotencyKey
-
-	}
+// DeleteReaderToken operation middleware
+func (siw *ServerInterfaceWrapper) DeleteReaderToken(w http.ResponseWriter, r *http.Request) {
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.CreateClientQuestion(w, r, params)
+		siw.Handler.DeleteReaderToken(w, r)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -8625,6 +9885,239 @@ func (siw *ServerInterfaceWrapper) GetReadyz(w http.ResponseWriter, r *http.Requ
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetReadyz(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetReaderAccount operation middleware
+func (siw *ServerInterfaceWrapper) GetReaderAccount(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetReaderAccount(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateReaderAccount operation middleware
+func (siw *ServerInterfaceWrapper) UpdateReaderAccount(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateReaderAccount(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListReaderDiscussions operation middleware
+func (siw *ServerInterfaceWrapper) ListReaderDiscussions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListReaderDiscussionsParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListReaderDiscussions(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListReaderFollowing operation middleware
+func (siw *ServerInterfaceWrapper) ListReaderFollowing(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListReaderFollowingParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListReaderFollowing(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnfollowReaderDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) UnfollowReaderDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnfollowReaderDiscussion(w, r, discussionId)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListReaderNotifications operation middleware
+func (siw *ServerInterfaceWrapper) ListReaderNotifications(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListReaderNotificationsParams
+
+	// ------------- Optional query parameter "unread" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "unread", r.URL.Query(), &params.Unread, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "unread"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "unread", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListReaderNotifications(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// MarkReaderNotificationsRead operation middleware
+func (siw *ServerInterfaceWrapper) MarkReaderNotificationsRead(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.MarkReaderNotificationsRead(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateReaderToken operation middleware
+func (siw *ServerInterfaceWrapper) CreateReaderToken(w http.ResponseWriter, r *http.Request) {
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateReaderToken(w, r)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -10702,6 +12195,75 @@ func (siw *ServerInterfaceWrapper) UpdateConversation(w http.ResponseWriter, r *
 	handler.ServeHTTP(w, r)
 }
 
+// CreateDiscussionFromConversation operation middleware
+func (siw *ServerInterfaceWrapper) CreateDiscussionFromConversation(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "conversationId" -------------
+	var conversationId ConversationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateDiscussionFromConversationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateDiscussionFromConversation(w, r, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListMessages operation middleware
 func (siw *ServerInterfaceWrapper) ListMessages(w http.ResponseWriter, r *http.Request) {
 
@@ -11029,75 +12591,6 @@ func (siw *ServerInterfaceWrapper) PinConversation(w http.ResponseWriter, r *htt
 	handler.ServeHTTP(w, r)
 }
 
-// PublishConversation operation middleware
-func (siw *ServerInterfaceWrapper) PublishConversation(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// ------------- Path parameter "conversationId" -------------
-	var conversationId ConversationId
-
-	err = runtime.BindStyledParameterWithOptions("simple", "conversationId", r.PathValue("conversationId"), &conversationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversationId", Err: err})
-		return
-	}
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params PublishConversationParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Idempotency-Key" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
-		var IdempotencyKey IdempotencyKey
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
-			return
-		}
-
-		params.IdempotencyKey = &IdempotencyKey
-
-	}
-
-	// ------------- Optional header parameter "Yuva-Workspace" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
-		var YuvaWorkspace WorkspaceHeader
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
-			return
-		}
-
-		params.YuvaWorkspace = &YuvaWorkspace
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.PublishConversation(w, r, conversationId, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
 // MarkConversationRead operation middleware
 func (siw *ServerInterfaceWrapper) MarkConversationRead(w http.ResponseWriter, r *http.Request) {
 
@@ -11296,6 +12789,875 @@ func (siw *ServerInterfaceWrapper) MarkConversationUnread(w http.ResponseWriter,
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.MarkConversationUnread(w, r, conversationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListDiscussionPosts operation middleware
+func (siw *ServerInterfaceWrapper) ListDiscussionPosts(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListDiscussionPostsParams
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "page" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListDiscussionPosts(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) DeleteDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteDiscussionPost(w, r, postId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) UpdateDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateDiscussionPost(w, r, postId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// MarkDiscussionPostSpam operation middleware
+func (siw *ServerInterfaceWrapper) MarkDiscussionPostSpam(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params MarkDiscussionPostSpamParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.MarkDiscussionPostSpam(w, r, postId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnvoteDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) UnvoteDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UnvoteDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnvoteDiscussionPost(w, r, postId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// VoteDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) VoteDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "postId" -------------
+	var postId DiscussionPostId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "postId", r.PathValue("postId"), &postId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "postId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params VoteDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.VoteDiscussionPost(w, r, postId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListDiscussions operation middleware
+func (siw *ServerInterfaceWrapper) ListDiscussions(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListDiscussionsParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "page" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "state" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "state", r.URL.Query(), &params.State, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "state"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "state", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "answered" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "answered", r.URL.Query(), &params.Answered, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "answered"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "answered", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "locked" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "locked", r.URL.Query(), &params.Locked, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "locked"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "locked", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "pending" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "pending", r.URL.Query(), &params.Pending, runtime.BindQueryParameterOptions{Type: "boolean", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "pending"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pending", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "sort" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "sort", r.URL.Query(), &params.Sort, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "sort"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "sort", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListDiscussions(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) CreateDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateDiscussionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateDiscussion(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) GetDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetDiscussionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetDiscussion(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateDiscussion operation middleware
+func (siw *ServerInterfaceWrapper) UpdateDiscussion(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateDiscussionParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateDiscussion(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ClearDiscussionAnswer operation middleware
+func (siw *ServerInterfaceWrapper) ClearDiscussionAnswer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ClearDiscussionAnswerParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ClearDiscussionAnswer(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// AcceptDiscussionAnswer operation middleware
+func (siw *ServerInterfaceWrapper) AcceptDiscussionAnswer(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params AcceptDiscussionAnswerParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.AcceptDiscussionAnswer(w, r, discussionId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateDiscussionPost operation middleware
+func (siw *ServerInterfaceWrapper) CreateDiscussionPost(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "discussionId" -------------
+	var discussionId DiscussionId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "discussionId", r.PathValue("discussionId"), &discussionId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "discussionId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateDiscussionPostParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateDiscussionPost(w, r, discussionId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -13946,262 +16308,6 @@ func (siw *ServerInterfaceWrapper) DenyOAuthRequest(w http.ResponseWriter, r *ht
 	handler.ServeHTTP(w, r)
 }
 
-// ListPageAnswers operation middleware
-func (siw *ServerInterfaceWrapper) ListPageAnswers(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params ListPageAnswersParams
-
-	// ------------- Optional query parameter "inbox_id" -------------
-
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
-	if err != nil {
-		var requiredError *runtime.RequiredParameterError
-		if errors.As(err, &requiredError) {
-			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
-		} else {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
-		}
-		return
-	}
-
-	// ------------- Optional query parameter "page" -------------
-
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "page", r.URL.Query(), &params.Page, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
-	if err != nil {
-		var requiredError *runtime.RequiredParameterError
-		if errors.As(err, &requiredError) {
-			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "page"})
-		} else {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "page", Err: err})
-		}
-		return
-	}
-
-	// ------------- Optional query parameter "conversation_id" -------------
-
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "conversation_id", r.URL.Query(), &params.ConversationId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
-	if err != nil {
-		var requiredError *runtime.RequiredParameterError
-		if errors.As(err, &requiredError) {
-			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "conversation_id"})
-		} else {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "conversation_id", Err: err})
-		}
-		return
-	}
-
-	// ------------- Optional query parameter "cursor" -------------
-
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
-	if err != nil {
-		var requiredError *runtime.RequiredParameterError
-		if errors.As(err, &requiredError) {
-			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
-		} else {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
-		}
-		return
-	}
-
-	// ------------- Optional query parameter "limit" -------------
-
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
-	if err != nil {
-		var requiredError *runtime.RequiredParameterError
-		if errors.As(err, &requiredError) {
-			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
-		} else {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
-		}
-		return
-	}
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Yuva-Workspace" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
-		var YuvaWorkspace WorkspaceHeader
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
-			return
-		}
-
-		params.YuvaWorkspace = &YuvaWorkspace
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.ListPageAnswers(w, r, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// DeletePageAnswer operation middleware
-func (siw *ServerInterfaceWrapper) DeletePageAnswer(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// ------------- Path parameter "pageAnswerId" -------------
-	var pageAnswerId PageAnswerId
-
-	err = runtime.BindStyledParameterWithOptions("simple", "pageAnswerId", r.PathValue("pageAnswerId"), &pageAnswerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageAnswerId", Err: err})
-		return
-	}
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params DeletePageAnswerParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Yuva-Workspace" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
-		var YuvaWorkspace WorkspaceHeader
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
-			return
-		}
-
-		params.YuvaWorkspace = &YuvaWorkspace
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.DeletePageAnswer(w, r, pageAnswerId, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// GetPageAnswer operation middleware
-func (siw *ServerInterfaceWrapper) GetPageAnswer(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// ------------- Path parameter "pageAnswerId" -------------
-	var pageAnswerId PageAnswerId
-
-	err = runtime.BindStyledParameterWithOptions("simple", "pageAnswerId", r.PathValue("pageAnswerId"), &pageAnswerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageAnswerId", Err: err})
-		return
-	}
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params GetPageAnswerParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Yuva-Workspace" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
-		var YuvaWorkspace WorkspaceHeader
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
-			return
-		}
-
-		params.YuvaWorkspace = &YuvaWorkspace
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetPageAnswer(w, r, pageAnswerId, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
-// UpdatePageAnswer operation middleware
-func (siw *ServerInterfaceWrapper) UpdatePageAnswer(w http.ResponseWriter, r *http.Request) {
-
-	var err error
-	_ = err
-
-	// ------------- Path parameter "pageAnswerId" -------------
-	var pageAnswerId PageAnswerId
-
-	err = runtime.BindStyledParameterWithOptions("simple", "pageAnswerId", r.PathValue("pageAnswerId"), &pageAnswerId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
-	if err != nil {
-		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "pageAnswerId", Err: err})
-		return
-	}
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params UpdatePageAnswerParams
-
-	headers := r.Header
-
-	// ------------- Optional header parameter "Yuva-Workspace" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
-		var YuvaWorkspace WorkspaceHeader
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
-			return
-		}
-
-		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
-		if err != nil {
-			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
-			return
-		}
-
-		params.YuvaWorkspace = &YuvaWorkspace
-
-	}
-
-	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.UpdatePageAnswer(w, r, pageAnswerId, params)
-	}))
-
-	for _, middleware := range siw.HandlerMiddlewares {
-		handler = middleware(handler)
-	}
-
-	handler.ServeHTTP(w, r)
-}
-
 // GetVapidPublicKey operation middleware
 func (siw *ServerInterfaceWrapper) GetVapidPublicKey(w http.ResponseWriter, r *http.Request) {
 
@@ -15241,6 +17347,14 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/me/notifications/inboxes/{inboxId}", wrapper.DeleteInboxNotifications)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/me/notifications/inboxes/{inboxId}", wrapper.SetInboxNotifications)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/me/mentions", wrapper.ListMentions)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/account", wrapper.GetReaderAccount)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/account", wrapper.UpdateReaderAccount)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/account/reader-tokens", wrapper.CreateReaderToken)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/account/discussions", wrapper.ListReaderDiscussions)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/account/following", wrapper.ListReaderFollowing)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/account/following/{discussionId}", wrapper.UnfollowReaderDiscussion)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/account/notifications", wrapper.ListReaderNotifications)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/account/notifications/read", wrapper.MarkReaderNotificationsRead)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/workspace", wrapper.DeleteWorkspace)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/workspace", wrapper.GetWorkspace)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/workspace", wrapper.UpdateWorkspace)
@@ -15291,7 +17405,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/{conversationId}", wrapper.GetConversation)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/conversations/{conversationId}", wrapper.UpdateConversation)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/move", wrapper.MoveConversation)
-	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/publish", wrapper.PublishConversation)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/discussion", wrapper.CreateDiscussionFromConversation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations/{conversationId}/messages", wrapper.ListMessages)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/messages", wrapper.CreateMessage)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/conversations/{conversationId}/read", wrapper.MarkConversationRead)
@@ -15314,14 +17428,23 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/canned-replies", wrapper.CreateCannedReply)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/canned-replies/{cannedReplyId}", wrapper.DeleteCannedReply)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/canned-replies/{cannedReplyId}", wrapper.UpdateCannedReply)
-	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/page-answers", wrapper.ListPageAnswers)
-	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.DeletePageAnswer)
-	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.GetPageAnswer)
-	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.UpdatePageAnswer)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/sites", wrapper.ListDocsSites)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/pages", wrapper.ListDocsPages)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/summary", wrapper.GetDocsSummary)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/page", wrapper.GetDocsPage)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussions", wrapper.ListDiscussions)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussions", wrapper.CreateDiscussion)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussions/{discussionId}", wrapper.GetDiscussion)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/discussions/{discussionId}", wrapper.UpdateDiscussion)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussions/{discussionId}/posts", wrapper.CreateDiscussionPost)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussions/{discussionId}/answer", wrapper.ClearDiscussionAnswer)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/discussions/{discussionId}/answer", wrapper.AcceptDiscussionAnswer)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/discussion-posts", wrapper.ListDiscussionPosts)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussion-posts/{postId}", wrapper.DeleteDiscussionPost)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/discussion-posts/{postId}", wrapper.UpdateDiscussionPost)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/discussion-posts/{postId}/spam", wrapper.MarkDiscussionPostSpam)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.UnvoteDiscussionPost)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/discussion-posts/{postId}/vote", wrapper.VoteDiscussionPost)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/usage", wrapper.GetUsage)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/feedback", wrapper.CreateFeedback)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/webhooks", wrapper.ListWebhooks)
@@ -15346,7 +17469,19 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}", wrapper.GetClientChannel)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/channels/{channel_key}/page-ratings", wrapper.CreatePageRating)
-	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/page-answers", wrapper.ListClientPageAnswers)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions", wrapper.ListClientDiscussions)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/channels/{channel_key}/discussions/{discussionId}", wrapper.GetClientDiscussion)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions", wrapper.CreateClientDiscussion)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/posts", wrapper.CreateClientDiscussionPost)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/answer", wrapper.ClearClientDiscussionAnswer)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/answer", wrapper.AcceptClientDiscussionAnswer)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/follow", wrapper.UnfollowClientDiscussion)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/discussions/{discussionId}/follow", wrapper.FollowClientDiscussion)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}", wrapper.DeleteClientDiscussionPost)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}", wrapper.UpdateClientDiscussionPost)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}/vote", wrapper.UnvoteClientDiscussionPost)
+	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/discussion-posts/{postId}/vote", wrapper.VoteClientDiscussionPost)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/reader-token", wrapper.DeleteReaderToken)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/conversations", wrapper.ListClientConversations)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/conversations", wrapper.CreateClientConversation)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/conversations/{conversationId}", wrapper.GetClientConversation)
@@ -15356,7 +17491,6 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/conversations/{conversationId}/rating", wrapper.RateClientConversation)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/conversations/{conversationId}/typing", wrapper.SetClientTyping)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/feedback", wrapper.CreateClientFeedback)
-	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/questions", wrapper.CreateClientQuestion)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/contact/email", wrapper.SetClientContactEmail)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/attachments/{attachmentId}", wrapper.DownloadClientAttachment)
 
@@ -15384,6 +17518,18 @@ type WebhookReceiverInterface interface {
 	// A conversation changed
 	// HandleWebhookConversationUpdatedWebhook handles the POST webhook for conversation.updated.
 	HandleWebhookConversationUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookConversationUpdatedParams)
+	// An answer was accepted
+	// HandleWebhookDiscussionAnsweredWebhook handles the POST webhook for discussion.answered.
+	HandleWebhookDiscussionAnsweredWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionAnsweredParams)
+	// A discussion thread was started
+	// HandleWebhookDiscussionCreatedWebhook handles the POST webhook for discussion.created.
+	HandleWebhookDiscussionCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionCreatedParams)
+	// A reply was written in a thread
+	// HandleWebhookDiscussionPostCreatedWebhook handles the POST webhook for discussion.post_created.
+	HandleWebhookDiscussionPostCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionPostCreatedParams)
+	// A thread or post was moderated or edited
+	// HandleWebhookDiscussionUpdatedWebhook handles the POST webhook for discussion.updated.
+	HandleWebhookDiscussionUpdatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDiscussionUpdatedParams)
 	// A draft was written
 	// HandleWebhookDraftCreatedWebhook handles the POST webhook for draft.created.
 	HandleWebhookDraftCreatedWebhook(w http.ResponseWriter, r *http.Request, params WebhookDraftCreatedParams)
@@ -15858,6 +18004,374 @@ func WebhookConversationUpdatedWebhookHandler(si WebhookReceiverInterface, errHa
 		}
 
 		si.HandleWebhookConversationUpdatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookDiscussionAnsweredWebhookHandler returns the http.Handler for the discussion.answered webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookDiscussionAnsweredWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookDiscussionAnsweredParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookDiscussionAnsweredWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookDiscussionCreatedWebhookHandler returns the http.Handler for the discussion.created webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookDiscussionCreatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookDiscussionCreatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookDiscussionCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookDiscussionPostCreatedWebhookHandler returns the http.Handler for the discussion.post_created webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookDiscussionPostCreatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookDiscussionPostCreatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookDiscussionPostCreatedWebhook(w, r, params)
+	})
+	for _, mw := range middlewares {
+		h = mw(h)
+	}
+	return h
+}
+
+// WebhookDiscussionUpdatedWebhookHandler returns the http.Handler for the discussion.updated webhook.
+// Mount this at the URL path advertised to webhook senders. errHandler
+// may be nil; if so, parameter-binding errors return 400 with the error
+// message. Middlewares are applied in the order provided -- the last
+// argument becomes the outermost wrapper.
+func WebhookDiscussionUpdatedWebhookHandler(si WebhookReceiverInterface, errHandler func(w http.ResponseWriter, r *http.Request, err error), middlewares ...WebhookReceiverMiddlewareFunc) http.Handler {
+	if errHandler == nil {
+		errHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+	}
+	var h http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		_ = err
+
+		// Parameter object where we will unmarshal all parameters from the request.
+		var params WebhookDiscussionUpdatedParams
+
+		// ------------- Required header parameter "webhook-id" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-id")]; found {
+			var WebhookId WebhookIdHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-id", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-id", valueList[0], &WebhookId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-id", Err: err})
+				return
+			}
+			params.WebhookId = WebhookId
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-id is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-id", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-timestamp" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-timestamp")]; found {
+			var WebhookTimestamp WebhookTimestampHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-timestamp", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-timestamp", valueList[0], &WebhookTimestamp, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-timestamp", Err: err})
+				return
+			}
+			params.WebhookTimestamp = WebhookTimestamp
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-timestamp is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-timestamp", Err: err})
+			return
+		}
+
+		// ------------- Required header parameter "webhook-signature" -------------
+		if valueList, found := r.Header[http.CanonicalHeaderKey("webhook-signature")]; found {
+			var WebhookSignature WebhookSignatureHeader
+			n := len(valueList)
+			if n != 1 {
+				errHandler(w, r, &TooManyValuesForParamError{ParamName: "webhook-signature", Count: n})
+				return
+			}
+
+			err = runtime.BindStyledParameterWithOptions("simple", "webhook-signature", valueList[0], &WebhookSignature, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: true, Type: "string", Format: ""})
+			if err != nil {
+				errHandler(w, r, &InvalidParamFormatError{ParamName: "webhook-signature", Err: err})
+				return
+			}
+			params.WebhookSignature = WebhookSignature
+
+		} else {
+			err := fmt.Errorf("Header parameter webhook-signature is required, but not found")
+			errHandler(w, r, &RequiredHeaderError{ParamName: "webhook-signature", Err: err})
+			return
+		}
+
+		si.HandleWebhookDiscussionUpdatedWebhook(w, r, params)
 	})
 	for _, mw := range middlewares {
 		h = mw(h)
@@ -16489,25 +19003,25 @@ func (response GetClientChannel429ApplicationProblemPlusJSONResponse) VisitGetCl
 	return err
 }
 
-type ListClientPageAnswersRequestObject struct {
+type ListClientDiscussionsRequestObject struct {
 	ChannelKey ChannelKey `json:"channel_key"`
-	Params     ListClientPageAnswersParams
+	Params     ListClientDiscussionsParams
 }
 
-type ListClientPageAnswersResponseObject interface {
-	VisitListClientPageAnswersResponse(w http.ResponseWriter) error
+type ListClientDiscussionsResponseObject interface {
+	VisitListClientDiscussionsResponse(w http.ResponseWriter) error
 }
 
-type ListClientPageAnswers200ResponseHeaders struct {
+type ListClientDiscussions200ResponseHeaders struct {
 	CacheControl *string
 }
 
-type ListClientPageAnswers200JSONResponse struct {
-	Body    ClientPageAnswerList
-	Headers ListClientPageAnswers200ResponseHeaders
+type ListClientDiscussions200JSONResponse struct {
+	Body    DiscussionPage
+	Headers ListClientDiscussions200ResponseHeaders
 }
 
-func (response ListClientPageAnswers200JSONResponse) VisitListClientPageAnswersResponse(w http.ResponseWriter) error {
+func (response ListClientDiscussions200JSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
@@ -16522,11 +19036,11 @@ func (response ListClientPageAnswers200JSONResponse) VisitListClientPageAnswersR
 	return err
 }
 
-type ListClientPageAnswers400ApplicationProblemPlusJSONResponse struct {
+type ListClientDiscussions400ApplicationProblemPlusJSONResponse struct {
 	ProblemApplicationProblemPlusJSONResponse
 }
 
-func (response ListClientPageAnswers400ApplicationProblemPlusJSONResponse) VisitListClientPageAnswersResponse(w http.ResponseWriter) error {
+func (response ListClientDiscussions400ApplicationProblemPlusJSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -16538,9 +19052,23 @@ func (response ListClientPageAnswers400ApplicationProblemPlusJSONResponse) Visit
 	return err
 }
 
-type ListClientPageAnswers403ApplicationProblemPlusJSONResponse Problem
+type ListClientDiscussions401ApplicationProblemPlusJSONResponse Problem
 
-func (response ListClientPageAnswers403ApplicationProblemPlusJSONResponse) VisitListClientPageAnswersResponse(w http.ResponseWriter) error {
+func (response ListClientDiscussions401ApplicationProblemPlusJSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListClientDiscussions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListClientDiscussions403ApplicationProblemPlusJSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -16552,9 +19080,9 @@ func (response ListClientPageAnswers403ApplicationProblemPlusJSONResponse) Visit
 	return err
 }
 
-type ListClientPageAnswers404ApplicationProblemPlusJSONResponse Problem
+type ListClientDiscussions404ApplicationProblemPlusJSONResponse Problem
 
-func (response ListClientPageAnswers404ApplicationProblemPlusJSONResponse) VisitListClientPageAnswersResponse(w http.ResponseWriter) error {
+func (response ListClientDiscussions404ApplicationProblemPlusJSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -16566,9 +19094,100 @@ func (response ListClientPageAnswers404ApplicationProblemPlusJSONResponse) Visit
 	return err
 }
 
-type ListClientPageAnswers429ApplicationProblemPlusJSONResponse Problem
+type ListClientDiscussions429ApplicationProblemPlusJSONResponse Problem
 
-func (response ListClientPageAnswers429ApplicationProblemPlusJSONResponse) VisitListClientPageAnswersResponse(w http.ResponseWriter) error {
+func (response ListClientDiscussions429ApplicationProblemPlusJSONResponse) VisitListClientDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientDiscussionRequestObject struct {
+	ChannelKey   ChannelKey   `json:"channel_key"`
+	DiscussionId DiscussionId `json:"discussionId"`
+}
+
+type GetClientDiscussionResponseObject interface {
+	VisitGetClientDiscussionResponse(w http.ResponseWriter) error
+}
+
+type GetClientDiscussion200ResponseHeaders struct {
+	CacheControl *string
+}
+
+type GetClientDiscussion200JSONResponse struct {
+	Body    DiscussionDetail
+	Headers GetClientDiscussion200ResponseHeaders
+}
+
+func (response GetClientDiscussion200JSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.CacheControl != nil {
+		w.Header().Set("Cache-Control", fmt.Sprint(*response.Headers.CacheControl))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientDiscussion401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetClientDiscussion401ApplicationProblemPlusJSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientDiscussion403ApplicationProblemPlusJSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientDiscussion404ApplicationProblemPlusJSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetClientDiscussion429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetClientDiscussion429ApplicationProblemPlusJSONResponse) VisitGetClientDiscussionResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -17464,6 +20083,737 @@ func (response SetClientTyping429ApplicationProblemPlusJSONResponse) VisitSetCli
 	return err
 }
 
+type DeleteClientDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+}
+
+type DeleteClientDiscussionPostResponseObject interface {
+	VisitDeleteClientDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type DeleteClientDiscussionPost204Response struct {
+}
+
+func (response DeleteClientDiscussionPost204Response) VisitDeleteClientDiscussionPostResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteClientDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteClientDiscussionPost401ApplicationProblemPlusJSONResponse) VisitDeleteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteClientDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteClientDiscussionPost403ApplicationProblemPlusJSONResponse) VisitDeleteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteClientDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteClientDiscussionPost404ApplicationProblemPlusJSONResponse) VisitDeleteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateClientDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Body   *UpdateClientDiscussionPostJSONRequestBody
+}
+
+type UpdateClientDiscussionPostResponseObject interface {
+	VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type UpdateClientDiscussionPost200JSONResponse DiscussionPost
+
+func (response UpdateClientDiscussionPost200JSONResponse) VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateClientDiscussionPost400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateClientDiscussionPost400ApplicationProblemPlusJSONResponse) VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateClientDiscussionPost401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateClientDiscussionPost401ApplicationProblemPlusJSONResponse) VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateClientDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateClientDiscussionPost403ApplicationProblemPlusJSONResponse) VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateClientDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateClientDiscussionPost404ApplicationProblemPlusJSONResponse) VisitUpdateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteClientDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+}
+
+type UnvoteClientDiscussionPostResponseObject interface {
+	VisitUnvoteClientDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type UnvoteClientDiscussionPost200JSONResponse DiscussionPost
+
+func (response UnvoteClientDiscussionPost200JSONResponse) VisitUnvoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteClientDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnvoteClientDiscussionPost401ApplicationProblemPlusJSONResponse) VisitUnvoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteClientDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnvoteClientDiscussionPost403ApplicationProblemPlusJSONResponse) VisitUnvoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteClientDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnvoteClientDiscussionPost404ApplicationProblemPlusJSONResponse) VisitUnvoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteClientDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+}
+
+type VoteClientDiscussionPostResponseObject interface {
+	VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type VoteClientDiscussionPost200JSONResponse DiscussionPost
+
+func (response VoteClientDiscussionPost200JSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteClientDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response VoteClientDiscussionPost401ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteClientDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteClientDiscussionPost403ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteClientDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteClientDiscussionPost404ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteClientDiscussionPost429ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteClientDiscussionPost429ApplicationProblemPlusJSONResponse) VisitVoteClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionRequestObject struct {
+	Params CreateClientDiscussionParams
+	Body   *CreateClientDiscussionJSONRequestBody
+}
+
+type CreateClientDiscussionResponseObject interface {
+	VisitCreateClientDiscussionResponse(w http.ResponseWriter) error
+}
+
+type CreateClientDiscussion201JSONResponse Discussion
+
+func (response CreateClientDiscussion201JSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateClientDiscussion400ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussion401ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussion403ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussion429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussion429ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearClientDiscussionAnswerRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+}
+
+type ClearClientDiscussionAnswerResponseObject interface {
+	VisitClearClientDiscussionAnswerResponse(w http.ResponseWriter) error
+}
+
+type ClearClientDiscussionAnswer200JSONResponse Discussion
+
+func (response ClearClientDiscussionAnswer200JSONResponse) VisitClearClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearClientDiscussionAnswer401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ClearClientDiscussionAnswer401ApplicationProblemPlusJSONResponse) VisitClearClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearClientDiscussionAnswer403ApplicationProblemPlusJSONResponse Problem
+
+func (response ClearClientDiscussionAnswer403ApplicationProblemPlusJSONResponse) VisitClearClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearClientDiscussionAnswer404ApplicationProblemPlusJSONResponse Problem
+
+func (response ClearClientDiscussionAnswer404ApplicationProblemPlusJSONResponse) VisitClearClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswerRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Body         *AcceptClientDiscussionAnswerJSONRequestBody
+}
+
+type AcceptClientDiscussionAnswerResponseObject interface {
+	VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error
+}
+
+type AcceptClientDiscussionAnswer200JSONResponse Discussion
+
+func (response AcceptClientDiscussionAnswer200JSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswer400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response AcceptClientDiscussionAnswer400ApplicationProblemPlusJSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswer401ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptClientDiscussionAnswer401ApplicationProblemPlusJSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswer403ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptClientDiscussionAnswer403ApplicationProblemPlusJSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptClientDiscussionAnswer404ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptClientDiscussionAnswer404ApplicationProblemPlusJSONResponse) VisitAcceptClientDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnfollowClientDiscussionRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+}
+
+type UnfollowClientDiscussionResponseObject interface {
+	VisitUnfollowClientDiscussionResponse(w http.ResponseWriter) error
+}
+
+type UnfollowClientDiscussion204Response struct {
+}
+
+func (response UnfollowClientDiscussion204Response) VisitUnfollowClientDiscussionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type UnfollowClientDiscussion401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnfollowClientDiscussion401ApplicationProblemPlusJSONResponse) VisitUnfollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnfollowClientDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnfollowClientDiscussion403ApplicationProblemPlusJSONResponse) VisitUnfollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnfollowClientDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnfollowClientDiscussion404ApplicationProblemPlusJSONResponse) VisitUnfollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type FollowClientDiscussionRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+}
+
+type FollowClientDiscussionResponseObject interface {
+	VisitFollowClientDiscussionResponse(w http.ResponseWriter) error
+}
+
+type FollowClientDiscussion204Response struct {
+}
+
+func (response FollowClientDiscussion204Response) VisitFollowClientDiscussionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type FollowClientDiscussion401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response FollowClientDiscussion401ApplicationProblemPlusJSONResponse) VisitFollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type FollowClientDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response FollowClientDiscussion403ApplicationProblemPlusJSONResponse) VisitFollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type FollowClientDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response FollowClientDiscussion404ApplicationProblemPlusJSONResponse) VisitFollowClientDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPostRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       CreateClientDiscussionPostParams
+	Body         *CreateClientDiscussionPostJSONRequestBody
+}
+
+type CreateClientDiscussionPostResponseObject interface {
+	VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type CreateClientDiscussionPost201JSONResponse DiscussionPost
+
+func (response CreateClientDiscussionPost201JSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPost400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateClientDiscussionPost400ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPost401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussionPost401ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussionPost403ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussionPost404ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateClientDiscussionPost429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateClientDiscussionPost429ApplicationProblemPlusJSONResponse) VisitCreateClientDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type CreateClientFeedbackRequestObject struct {
 	Params        CreateClientFeedbackParams
 	JSONBody      *CreateClientFeedbackJSONRequestBody
@@ -17574,48 +20924,26 @@ func (response CreateClientFeedback429ApplicationProblemPlusJSONResponse) VisitC
 	return err
 }
 
-type CreateClientQuestionRequestObject struct {
-	Params CreateClientQuestionParams
-	Body   *CreateClientQuestionJSONRequestBody
+type DeleteReaderTokenRequestObject struct {
 }
 
-type CreateClientQuestionResponseObject interface {
-	VisitCreateClientQuestionResponse(w http.ResponseWriter) error
+type DeleteReaderTokenResponseObject interface {
+	VisitDeleteReaderTokenResponse(w http.ResponseWriter) error
 }
 
-type CreateClientQuestion201JSONResponse ClientConversationCreated
-
-func (response CreateClientQuestion201JSONResponse) VisitCreateClientQuestionResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(201)
-	_, err := buf.WriteTo(w)
-	return err
+type DeleteReaderToken204Response struct {
 }
 
-type CreateClientQuestion400ApplicationProblemPlusJSONResponse struct {
+func (response DeleteReaderToken204Response) VisitDeleteReaderTokenResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteReaderToken401ApplicationProblemPlusJSONResponse struct {
 	ProblemApplicationProblemPlusJSONResponse
 }
 
-func (response CreateClientQuestion400ApplicationProblemPlusJSONResponse) VisitCreateClientQuestionResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(400)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type CreateClientQuestion401ApplicationProblemPlusJSONResponse Problem
-
-func (response CreateClientQuestion401ApplicationProblemPlusJSONResponse) VisitCreateClientQuestionResponse(w http.ResponseWriter) error {
+func (response DeleteReaderToken401ApplicationProblemPlusJSONResponse) VisitDeleteReaderTokenResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -17623,34 +20951,6 @@ func (response CreateClientQuestion401ApplicationProblemPlusJSONResponse) VisitC
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type CreateClientQuestion403ApplicationProblemPlusJSONResponse Problem
-
-func (response CreateClientQuestion403ApplicationProblemPlusJSONResponse) VisitCreateClientQuestionResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type CreateClientQuestion429ApplicationProblemPlusJSONResponse Problem
-
-func (response CreateClientQuestion429ApplicationProblemPlusJSONResponse) VisitCreateClientQuestionResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(429)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -17897,6 +21197,423 @@ func (response GetReadyz503ApplicationProblemPlusJSONResponse) VisitGetReadyzRes
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(503)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetReaderAccountRequestObject struct {
+}
+
+type GetReaderAccountResponseObject interface {
+	VisitGetReaderAccountResponse(w http.ResponseWriter) error
+}
+
+type GetReaderAccount200JSONResponse ReaderAccount
+
+func (response GetReaderAccount200JSONResponse) VisitGetReaderAccountResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetReaderAccount401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetReaderAccount401ApplicationProblemPlusJSONResponse) VisitGetReaderAccountResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateReaderAccountRequestObject struct {
+	Body *UpdateReaderAccountJSONRequestBody
+}
+
+type UpdateReaderAccountResponseObject interface {
+	VisitUpdateReaderAccountResponse(w http.ResponseWriter) error
+}
+
+type UpdateReaderAccount200JSONResponse ReaderAccount
+
+func (response UpdateReaderAccount200JSONResponse) VisitUpdateReaderAccountResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateReaderAccount400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateReaderAccount400ApplicationProblemPlusJSONResponse) VisitUpdateReaderAccountResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateReaderAccount401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateReaderAccount401ApplicationProblemPlusJSONResponse) VisitUpdateReaderAccountResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderDiscussionsRequestObject struct {
+	Params ListReaderDiscussionsParams
+}
+
+type ListReaderDiscussionsResponseObject interface {
+	VisitListReaderDiscussionsResponse(w http.ResponseWriter) error
+}
+
+type ListReaderDiscussions200JSONResponse ReaderDiscussionPage
+
+func (response ListReaderDiscussions200JSONResponse) VisitListReaderDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderDiscussions400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListReaderDiscussions400ApplicationProblemPlusJSONResponse) VisitListReaderDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderDiscussions401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListReaderDiscussions401ApplicationProblemPlusJSONResponse) VisitListReaderDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderFollowingRequestObject struct {
+	Params ListReaderFollowingParams
+}
+
+type ListReaderFollowingResponseObject interface {
+	VisitListReaderFollowingResponse(w http.ResponseWriter) error
+}
+
+type ListReaderFollowing200JSONResponse ReaderDiscussionPage
+
+func (response ListReaderFollowing200JSONResponse) VisitListReaderFollowingResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderFollowing400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListReaderFollowing400ApplicationProblemPlusJSONResponse) VisitListReaderFollowingResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderFollowing401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListReaderFollowing401ApplicationProblemPlusJSONResponse) VisitListReaderFollowingResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnfollowReaderDiscussionRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+}
+
+type UnfollowReaderDiscussionResponseObject interface {
+	VisitUnfollowReaderDiscussionResponse(w http.ResponseWriter) error
+}
+
+type UnfollowReaderDiscussion204Response struct {
+}
+
+func (response UnfollowReaderDiscussion204Response) VisitUnfollowReaderDiscussionResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type UnfollowReaderDiscussion401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnfollowReaderDiscussion401ApplicationProblemPlusJSONResponse) VisitUnfollowReaderDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnfollowReaderDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnfollowReaderDiscussion404ApplicationProblemPlusJSONResponse) VisitUnfollowReaderDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderNotificationsRequestObject struct {
+	Params ListReaderNotificationsParams
+}
+
+type ListReaderNotificationsResponseObject interface {
+	VisitListReaderNotificationsResponse(w http.ResponseWriter) error
+}
+
+type ListReaderNotifications200JSONResponse ReaderNotificationPage
+
+func (response ListReaderNotifications200JSONResponse) VisitListReaderNotificationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderNotifications400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListReaderNotifications400ApplicationProblemPlusJSONResponse) VisitListReaderNotificationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListReaderNotifications401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListReaderNotifications401ApplicationProblemPlusJSONResponse) VisitListReaderNotificationsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkReaderNotificationsReadRequestObject struct {
+	Body *MarkReaderNotificationsReadJSONRequestBody
+}
+
+type MarkReaderNotificationsReadResponseObject interface {
+	VisitMarkReaderNotificationsReadResponse(w http.ResponseWriter) error
+}
+
+type MarkReaderNotificationsRead204Response struct {
+}
+
+func (response MarkReaderNotificationsRead204Response) VisitMarkReaderNotificationsReadResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type MarkReaderNotificationsRead400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response MarkReaderNotificationsRead400ApplicationProblemPlusJSONResponse) VisitMarkReaderNotificationsReadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkReaderNotificationsRead401ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkReaderNotificationsRead401ApplicationProblemPlusJSONResponse) VisitMarkReaderNotificationsReadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateReaderTokenRequestObject struct {
+	Body *CreateReaderTokenJSONRequestBody
+}
+
+type CreateReaderTokenResponseObject interface {
+	VisitCreateReaderTokenResponse(w http.ResponseWriter) error
+}
+
+type CreateReaderToken201JSONResponse ReaderToken
+
+func (response CreateReaderToken201JSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateReaderToken400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateReaderToken400ApplicationProblemPlusJSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateReaderToken401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateReaderToken401ApplicationProblemPlusJSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateReaderToken403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateReaderToken403ApplicationProblemPlusJSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateReaderToken404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateReaderToken404ApplicationProblemPlusJSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -20455,6 +24172,102 @@ func (response UpdateConversation404ApplicationProblemPlusJSONResponse) VisitUpd
 	return err
 }
 
+type CreateDiscussionFromConversationRequestObject struct {
+	ConversationId ConversationId `json:"conversationId"`
+	Params         CreateDiscussionFromConversationParams
+	Body           *CreateDiscussionFromConversationJSONRequestBody
+}
+
+type CreateDiscussionFromConversationResponseObject interface {
+	VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error
+}
+
+type CreateDiscussionFromConversation201JSONResponse DiscussionDetail
+
+func (response CreateDiscussionFromConversation201JSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionFromConversation400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateDiscussionFromConversation400ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionFromConversation401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionFromConversation401ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionFromConversation403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionFromConversation403ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionFromConversation404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionFromConversation404ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionFromConversation409ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionFromConversation409ApplicationProblemPlusJSONResponse) VisitCreateDiscussionFromConversationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListMessagesRequestObject struct {
 	ConversationId ConversationId `json:"conversationId"`
 	Params         ListMessagesParams
@@ -20905,102 +24718,6 @@ func (response PinConversation404ApplicationProblemPlusJSONResponse) VisitPinCon
 	return err
 }
 
-type PublishConversationRequestObject struct {
-	ConversationId ConversationId `json:"conversationId"`
-	Params         PublishConversationParams
-	Body           *PublishConversationJSONRequestBody
-}
-
-type PublishConversationResponseObject interface {
-	VisitPublishConversationResponse(w http.ResponseWriter) error
-}
-
-type PublishConversation201JSONResponse PageAnswer
-
-func (response PublishConversation201JSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(201)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type PublishConversation400ApplicationProblemPlusJSONResponse struct {
-	ProblemApplicationProblemPlusJSONResponse
-}
-
-func (response PublishConversation400ApplicationProblemPlusJSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(400)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type PublishConversation401ApplicationProblemPlusJSONResponse Problem
-
-func (response PublishConversation401ApplicationProblemPlusJSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type PublishConversation403ApplicationProblemPlusJSONResponse Problem
-
-func (response PublishConversation403ApplicationProblemPlusJSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type PublishConversation404ApplicationProblemPlusJSONResponse Problem
-
-func (response PublishConversation404ApplicationProblemPlusJSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(404)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type PublishConversation409ApplicationProblemPlusJSONResponse Problem
-
-func (response PublishConversation409ApplicationProblemPlusJSONResponse) VisitPublishConversationResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(409)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
 type MarkConversationReadRequestObject struct {
 	ConversationId ConversationId `json:"conversationId"`
 	Params         MarkConversationReadParams
@@ -21215,6 +24932,985 @@ func (response MarkConversationUnread403ApplicationProblemPlusJSONResponse) Visi
 type MarkConversationUnread404ApplicationProblemPlusJSONResponse Problem
 
 func (response MarkConversationUnread404ApplicationProblemPlusJSONResponse) VisitMarkConversationUnreadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionPostsRequestObject struct {
+	Params ListDiscussionPostsParams
+}
+
+type ListDiscussionPostsResponseObject interface {
+	VisitListDiscussionPostsResponse(w http.ResponseWriter) error
+}
+
+type ListDiscussionPosts200JSONResponse DiscussionPostPage
+
+func (response ListDiscussionPosts200JSONResponse) VisitListDiscussionPostsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionPosts400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListDiscussionPosts400ApplicationProblemPlusJSONResponse) VisitListDiscussionPostsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionPosts401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussionPosts401ApplicationProblemPlusJSONResponse) VisitListDiscussionPostsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionPosts403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussionPosts403ApplicationProblemPlusJSONResponse) VisitListDiscussionPostsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionPosts404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussionPosts404ApplicationProblemPlusJSONResponse) VisitListDiscussionPostsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Params DeleteDiscussionPostParams
+}
+
+type DeleteDiscussionPostResponseObject interface {
+	VisitDeleteDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type DeleteDiscussionPost204Response struct {
+}
+
+func (response DeleteDiscussionPost204Response) VisitDeleteDiscussionPostResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteDiscussionPost401ApplicationProblemPlusJSONResponse) VisitDeleteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteDiscussionPost403ApplicationProblemPlusJSONResponse) VisitDeleteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteDiscussionPost404ApplicationProblemPlusJSONResponse) VisitDeleteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Params UpdateDiscussionPostParams
+	Body   *UpdateDiscussionPostJSONRequestBody
+}
+
+type UpdateDiscussionPostResponseObject interface {
+	VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type UpdateDiscussionPost200JSONResponse DiscussionPost
+
+func (response UpdateDiscussionPost200JSONResponse) VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionPost400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateDiscussionPost400ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionPost401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussionPost401ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussionPost403ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussionPost404ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkDiscussionPostSpamRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Params MarkDiscussionPostSpamParams
+}
+
+type MarkDiscussionPostSpamResponseObject interface {
+	VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error
+}
+
+type MarkDiscussionPostSpam200JSONResponse DiscussionPost
+
+func (response MarkDiscussionPostSpam200JSONResponse) VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkDiscussionPostSpam400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response MarkDiscussionPostSpam400ApplicationProblemPlusJSONResponse) VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkDiscussionPostSpam401ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkDiscussionPostSpam401ApplicationProblemPlusJSONResponse) VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkDiscussionPostSpam403ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkDiscussionPostSpam403ApplicationProblemPlusJSONResponse) VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type MarkDiscussionPostSpam404ApplicationProblemPlusJSONResponse Problem
+
+func (response MarkDiscussionPostSpam404ApplicationProblemPlusJSONResponse) VisitMarkDiscussionPostSpamResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Params UnvoteDiscussionPostParams
+}
+
+type UnvoteDiscussionPostResponseObject interface {
+	VisitUnvoteDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type UnvoteDiscussionPost200JSONResponse DiscussionPost
+
+func (response UnvoteDiscussionPost200JSONResponse) VisitUnvoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnvoteDiscussionPost401ApplicationProblemPlusJSONResponse) VisitUnvoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response UnvoteDiscussionPost403ApplicationProblemPlusJSONResponse) VisitUnvoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnvoteDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnvoteDiscussionPost404ApplicationProblemPlusJSONResponse) VisitUnvoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteDiscussionPostRequestObject struct {
+	PostId DiscussionPostId `json:"postId"`
+	Params VoteDiscussionPostParams
+}
+
+type VoteDiscussionPostResponseObject interface {
+	VisitVoteDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type VoteDiscussionPost200JSONResponse DiscussionPost
+
+func (response VoteDiscussionPost200JSONResponse) VisitVoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteDiscussionPost401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response VoteDiscussionPost401ApplicationProblemPlusJSONResponse) VisitVoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteDiscussionPost403ApplicationProblemPlusJSONResponse) VisitVoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type VoteDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response VoteDiscussionPost404ApplicationProblemPlusJSONResponse) VisitVoteDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussionsRequestObject struct {
+	Params ListDiscussionsParams
+}
+
+type ListDiscussionsResponseObject interface {
+	VisitListDiscussionsResponse(w http.ResponseWriter) error
+}
+
+type ListDiscussions200JSONResponse DiscussionPage
+
+func (response ListDiscussions200JSONResponse) VisitListDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussions400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListDiscussions400ApplicationProblemPlusJSONResponse) VisitListDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussions401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussions401ApplicationProblemPlusJSONResponse) VisitListDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussions403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussions403ApplicationProblemPlusJSONResponse) VisitListDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDiscussions404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDiscussions404ApplicationProblemPlusJSONResponse) VisitListDiscussionsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionRequestObject struct {
+	Params CreateDiscussionParams
+	Body   *CreateDiscussionJSONRequestBody
+}
+
+type CreateDiscussionResponseObject interface {
+	VisitCreateDiscussionResponse(w http.ResponseWriter) error
+}
+
+type CreateDiscussion201JSONResponse Discussion
+
+func (response CreateDiscussion201JSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussion400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateDiscussion400ApplicationProblemPlusJSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussion401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussion401ApplicationProblemPlusJSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussion403ApplicationProblemPlusJSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussion404ApplicationProblemPlusJSONResponse) VisitCreateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDiscussionRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       GetDiscussionParams
+}
+
+type GetDiscussionResponseObject interface {
+	VisitGetDiscussionResponse(w http.ResponseWriter) error
+}
+
+type GetDiscussion200JSONResponse DiscussionDetail
+
+func (response GetDiscussion200JSONResponse) VisitGetDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDiscussion401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetDiscussion401ApplicationProblemPlusJSONResponse) VisitGetDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetDiscussion403ApplicationProblemPlusJSONResponse) VisitGetDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetDiscussion404ApplicationProblemPlusJSONResponse) VisitGetDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussionRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       UpdateDiscussionParams
+	Body         *UpdateDiscussionJSONRequestBody
+}
+
+type UpdateDiscussionResponseObject interface {
+	VisitUpdateDiscussionResponse(w http.ResponseWriter) error
+}
+
+type UpdateDiscussion200JSONResponse Discussion
+
+func (response UpdateDiscussion200JSONResponse) VisitUpdateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussion400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateDiscussion400ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussion401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussion401ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussion403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussion403ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateDiscussion404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateDiscussion404ApplicationProblemPlusJSONResponse) VisitUpdateDiscussionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearDiscussionAnswerRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       ClearDiscussionAnswerParams
+}
+
+type ClearDiscussionAnswerResponseObject interface {
+	VisitClearDiscussionAnswerResponse(w http.ResponseWriter) error
+}
+
+type ClearDiscussionAnswer200JSONResponse Discussion
+
+func (response ClearDiscussionAnswer200JSONResponse) VisitClearDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearDiscussionAnswer401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ClearDiscussionAnswer401ApplicationProblemPlusJSONResponse) VisitClearDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearDiscussionAnswer403ApplicationProblemPlusJSONResponse Problem
+
+func (response ClearDiscussionAnswer403ApplicationProblemPlusJSONResponse) VisitClearDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ClearDiscussionAnswer404ApplicationProblemPlusJSONResponse Problem
+
+func (response ClearDiscussionAnswer404ApplicationProblemPlusJSONResponse) VisitClearDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptDiscussionAnswerRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       AcceptDiscussionAnswerParams
+	Body         *AcceptDiscussionAnswerJSONRequestBody
+}
+
+type AcceptDiscussionAnswerResponseObject interface {
+	VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error
+}
+
+type AcceptDiscussionAnswer200JSONResponse Discussion
+
+func (response AcceptDiscussionAnswer200JSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptDiscussionAnswer400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response AcceptDiscussionAnswer400ApplicationProblemPlusJSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptDiscussionAnswer401ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptDiscussionAnswer401ApplicationProblemPlusJSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptDiscussionAnswer403ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptDiscussionAnswer403ApplicationProblemPlusJSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type AcceptDiscussionAnswer404ApplicationProblemPlusJSONResponse Problem
+
+func (response AcceptDiscussionAnswer404ApplicationProblemPlusJSONResponse) VisitAcceptDiscussionAnswerResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionPostRequestObject struct {
+	DiscussionId DiscussionId `json:"discussionId"`
+	Params       CreateDiscussionPostParams
+	Body         *CreateDiscussionPostJSONRequestBody
+}
+
+type CreateDiscussionPostResponseObject interface {
+	VisitCreateDiscussionPostResponse(w http.ResponseWriter) error
+}
+
+type CreateDiscussionPost201JSONResponse DiscussionPost
+
+func (response CreateDiscussionPost201JSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionPost400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateDiscussionPost400ApplicationProblemPlusJSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionPost401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionPost401ApplicationProblemPlusJSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionPost403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionPost403ApplicationProblemPlusJSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateDiscussionPost404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateDiscussionPost404ApplicationProblemPlusJSONResponse) VisitCreateDiscussionPostResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -25021,296 +29717,6 @@ func (response DenyOAuthRequest404ApplicationProblemPlusJSONResponse) VisitDenyO
 	return err
 }
 
-type ListPageAnswersRequestObject struct {
-	Params ListPageAnswersParams
-}
-
-type ListPageAnswersResponseObject interface {
-	VisitListPageAnswersResponse(w http.ResponseWriter) error
-}
-
-type ListPageAnswers200JSONResponse PageAnswerPage
-
-func (response ListPageAnswers200JSONResponse) VisitListPageAnswersResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type ListPageAnswers400ApplicationProblemPlusJSONResponse struct {
-	ProblemApplicationProblemPlusJSONResponse
-}
-
-func (response ListPageAnswers400ApplicationProblemPlusJSONResponse) VisitListPageAnswersResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(400)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type ListPageAnswers401ApplicationProblemPlusJSONResponse Problem
-
-func (response ListPageAnswers401ApplicationProblemPlusJSONResponse) VisitListPageAnswersResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type ListPageAnswers403ApplicationProblemPlusJSONResponse Problem
-
-func (response ListPageAnswers403ApplicationProblemPlusJSONResponse) VisitListPageAnswersResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type ListPageAnswers404ApplicationProblemPlusJSONResponse Problem
-
-func (response ListPageAnswers404ApplicationProblemPlusJSONResponse) VisitListPageAnswersResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(404)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type DeletePageAnswerRequestObject struct {
-	PageAnswerId PageAnswerId `json:"pageAnswerId"`
-	Params       DeletePageAnswerParams
-}
-
-type DeletePageAnswerResponseObject interface {
-	VisitDeletePageAnswerResponse(w http.ResponseWriter) error
-}
-
-type DeletePageAnswer204Response struct {
-}
-
-func (response DeletePageAnswer204Response) VisitDeletePageAnswerResponse(w http.ResponseWriter) error {
-	w.WriteHeader(204)
-	return nil
-}
-
-type DeletePageAnswer401ApplicationProblemPlusJSONResponse struct {
-	ProblemApplicationProblemPlusJSONResponse
-}
-
-func (response DeletePageAnswer401ApplicationProblemPlusJSONResponse) VisitDeletePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type DeletePageAnswer403ApplicationProblemPlusJSONResponse Problem
-
-func (response DeletePageAnswer403ApplicationProblemPlusJSONResponse) VisitDeletePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type DeletePageAnswer404ApplicationProblemPlusJSONResponse Problem
-
-func (response DeletePageAnswer404ApplicationProblemPlusJSONResponse) VisitDeletePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(404)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type GetPageAnswerRequestObject struct {
-	PageAnswerId PageAnswerId `json:"pageAnswerId"`
-	Params       GetPageAnswerParams
-}
-
-type GetPageAnswerResponseObject interface {
-	VisitGetPageAnswerResponse(w http.ResponseWriter) error
-}
-
-type GetPageAnswer200JSONResponse PageAnswer
-
-func (response GetPageAnswer200JSONResponse) VisitGetPageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type GetPageAnswer401ApplicationProblemPlusJSONResponse struct {
-	ProblemApplicationProblemPlusJSONResponse
-}
-
-func (response GetPageAnswer401ApplicationProblemPlusJSONResponse) VisitGetPageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type GetPageAnswer403ApplicationProblemPlusJSONResponse Problem
-
-func (response GetPageAnswer403ApplicationProblemPlusJSONResponse) VisitGetPageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type GetPageAnswer404ApplicationProblemPlusJSONResponse Problem
-
-func (response GetPageAnswer404ApplicationProblemPlusJSONResponse) VisitGetPageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(404)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type UpdatePageAnswerRequestObject struct {
-	PageAnswerId PageAnswerId `json:"pageAnswerId"`
-	Params       UpdatePageAnswerParams
-	Body         *UpdatePageAnswerJSONRequestBody
-}
-
-type UpdatePageAnswerResponseObject interface {
-	VisitUpdatePageAnswerResponse(w http.ResponseWriter) error
-}
-
-type UpdatePageAnswer200JSONResponse PageAnswer
-
-func (response UpdatePageAnswer200JSONResponse) VisitUpdatePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type UpdatePageAnswer400ApplicationProblemPlusJSONResponse struct {
-	ProblemApplicationProblemPlusJSONResponse
-}
-
-func (response UpdatePageAnswer400ApplicationProblemPlusJSONResponse) VisitUpdatePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(400)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type UpdatePageAnswer401ApplicationProblemPlusJSONResponse Problem
-
-func (response UpdatePageAnswer401ApplicationProblemPlusJSONResponse) VisitUpdatePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(401)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type UpdatePageAnswer403ApplicationProblemPlusJSONResponse Problem
-
-func (response UpdatePageAnswer403ApplicationProblemPlusJSONResponse) VisitUpdatePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(403)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
-type UpdatePageAnswer404ApplicationProblemPlusJSONResponse Problem
-
-func (response UpdatePageAnswer404ApplicationProblemPlusJSONResponse) VisitUpdatePageAnswerResponse(w http.ResponseWriter) error {
-
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(response); err != nil {
-		return err
-	}
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(404)
-	_, err := buf.WriteTo(w)
-	return err
-}
-
 type GetVapidPublicKeyRequestObject struct {
 }
 
@@ -26439,9 +30845,12 @@ type StrictServerInterface interface {
 	// GetClientChannel A chat or app channel's public settings
 	// (GET /client/v1/channels/{channel_key})
 	GetClientChannel(ctx context.Context, request GetClientChannelRequestObject) (GetClientChannelResponseObject, error)
-	// ListClientPageAnswers A documentation page's published answers
-	// (GET /client/v1/channels/{channel_key}/page-answers)
-	ListClientPageAnswers(ctx context.Context, request ListClientPageAnswersRequestObject) (ListClientPageAnswersResponseObject, error)
+	// ListClientDiscussions A documentation page's discussion threads
+	// (GET /client/v1/channels/{channel_key}/discussions)
+	ListClientDiscussions(ctx context.Context, request ListClientDiscussionsRequestObject) (ListClientDiscussionsResponseObject, error)
+	// GetClientDiscussion A thread with its replies
+	// (GET /client/v1/channels/{channel_key}/discussions/{discussionId})
+	GetClientDiscussion(ctx context.Context, request GetClientDiscussionRequestObject) (GetClientDiscussionResponseObject, error)
 	// CreatePageRating Rate a documentation page
 	// (POST /client/v1/channels/{channel_key}/page-ratings)
 	CreatePageRating(ctx context.Context, request CreatePageRatingRequestObject) (CreatePageRatingResponseObject, error)
@@ -26472,12 +30881,42 @@ type StrictServerInterface interface {
 	// SetClientTyping Tell members the contact is typing
 	// (POST /client/v1/conversations/{conversationId}/typing)
 	SetClientTyping(ctx context.Context, request SetClientTypingRequestObject) (SetClientTypingResponseObject, error)
+	// DeleteClientDiscussionPost Delete one's own post
+	// (DELETE /client/v1/discussion-posts/{postId})
+	DeleteClientDiscussionPost(ctx context.Context, request DeleteClientDiscussionPostRequestObject) (DeleteClientDiscussionPostResponseObject, error)
+	// UpdateClientDiscussionPost Edit one's own post
+	// (PATCH /client/v1/discussion-posts/{postId})
+	UpdateClientDiscussionPost(ctx context.Context, request UpdateClientDiscussionPostRequestObject) (UpdateClientDiscussionPostResponseObject, error)
+	// UnvoteClientDiscussionPost Take a vote back
+	// (DELETE /client/v1/discussion-posts/{postId}/vote)
+	UnvoteClientDiscussionPost(ctx context.Context, request UnvoteClientDiscussionPostRequestObject) (UnvoteClientDiscussionPostResponseObject, error)
+	// VoteClientDiscussionPost Vote for a post
+	// (PUT /client/v1/discussion-posts/{postId}/vote)
+	VoteClientDiscussionPost(ctx context.Context, request VoteClientDiscussionPostRequestObject) (VoteClientDiscussionPostResponseObject, error)
+	// CreateClientDiscussion Start a thread
+	// (POST /client/v1/discussions)
+	CreateClientDiscussion(ctx context.Context, request CreateClientDiscussionRequestObject) (CreateClientDiscussionResponseObject, error)
+	// ClearClientDiscussionAnswer Clear the accepted answer
+	// (DELETE /client/v1/discussions/{discussionId}/answer)
+	ClearClientDiscussionAnswer(ctx context.Context, request ClearClientDiscussionAnswerRequestObject) (ClearClientDiscussionAnswerResponseObject, error)
+	// AcceptClientDiscussionAnswer Mark the accepted answer
+	// (PUT /client/v1/discussions/{discussionId}/answer)
+	AcceptClientDiscussionAnswer(ctx context.Context, request AcceptClientDiscussionAnswerRequestObject) (AcceptClientDiscussionAnswerResponseObject, error)
+	// UnfollowClientDiscussion Stop following a thread
+	// (DELETE /client/v1/discussions/{discussionId}/follow)
+	UnfollowClientDiscussion(ctx context.Context, request UnfollowClientDiscussionRequestObject) (UnfollowClientDiscussionResponseObject, error)
+	// FollowClientDiscussion Follow a thread
+	// (PUT /client/v1/discussions/{discussionId}/follow)
+	FollowClientDiscussion(ctx context.Context, request FollowClientDiscussionRequestObject) (FollowClientDiscussionResponseObject, error)
+	// CreateClientDiscussionPost Reply in a thread
+	// (POST /client/v1/discussions/{discussionId}/posts)
+	CreateClientDiscussionPost(ctx context.Context, request CreateClientDiscussionPostRequestObject) (CreateClientDiscussionPostResponseObject, error)
 	// CreateClientFeedback Send feedback
 	// (POST /client/v1/feedback)
 	CreateClientFeedback(ctx context.Context, request CreateClientFeedbackRequestObject) (CreateClientFeedbackResponseObject, error)
-	// CreateClientQuestion Ask a question about a documentation page
-	// (POST /client/v1/questions)
-	CreateClientQuestion(ctx context.Context, request CreateClientQuestionRequestObject) (CreateClientQuestionResponseObject, error)
+	// DeleteReaderToken Sign a site out of the reader account
+	// (DELETE /client/v1/reader-token)
+	DeleteReaderToken(ctx context.Context, request DeleteReaderTokenRequestObject) (DeleteReaderTokenResponseObject, error)
 	// DeleteClientSession End the contact session
 	// (DELETE /client/v1/session)
 	DeleteClientSession(ctx context.Context, request DeleteClientSessionRequestObject) (DeleteClientSessionResponseObject, error)
@@ -26493,6 +30932,30 @@ type StrictServerInterface interface {
 	// GetReadyz Readiness
 	// (GET /readyz)
 	GetReadyz(ctx context.Context, request GetReadyzRequestObject) (GetReadyzResponseObject, error)
+	// GetReaderAccount The signed-in person as a reader
+	// (GET /v1/account)
+	GetReaderAccount(ctx context.Context, request GetReaderAccountRequestObject) (GetReaderAccountResponseObject, error)
+	// UpdateReaderAccount Change the reader name or e-mail settings
+	// (PATCH /v1/account)
+	UpdateReaderAccount(ctx context.Context, request UpdateReaderAccountRequestObject) (UpdateReaderAccountResponseObject, error)
+	// ListReaderDiscussions Threads the reader started or replied to
+	// (GET /v1/account/discussions)
+	ListReaderDiscussions(ctx context.Context, request ListReaderDiscussionsRequestObject) (ListReaderDiscussionsResponseObject, error)
+	// ListReaderFollowing Threads the reader follows
+	// (GET /v1/account/following)
+	ListReaderFollowing(ctx context.Context, request ListReaderFollowingRequestObject) (ListReaderFollowingResponseObject, error)
+	// UnfollowReaderDiscussion Stop following a thread
+	// (DELETE /v1/account/following/{discussionId})
+	UnfollowReaderDiscussion(ctx context.Context, request UnfollowReaderDiscussionRequestObject) (UnfollowReaderDiscussionResponseObject, error)
+	// ListReaderNotifications The reader's notifications
+	// (GET /v1/account/notifications)
+	ListReaderNotifications(ctx context.Context, request ListReaderNotificationsRequestObject) (ListReaderNotificationsResponseObject, error)
+	// MarkReaderNotificationsRead Mark notifications read
+	// (POST /v1/account/notifications/read)
+	MarkReaderNotificationsRead(ctx context.Context, request MarkReaderNotificationsReadRequestObject) (MarkReaderNotificationsReadResponseObject, error)
+	// CreateReaderToken Hand a reader token to a documentation site
+	// (POST /v1/account/reader-tokens)
+	CreateReaderToken(ctx context.Context, request CreateReaderTokenRequestObject) (CreateReaderTokenResponseObject, error)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(ctx context.Context, request ListApiKeysRequestObject) (ListApiKeysResponseObject, error)
@@ -26604,6 +31067,9 @@ type StrictServerInterface interface {
 	// UpdateConversation Update a conversation
 	// (PATCH /v1/conversations/{conversationId})
 	UpdateConversation(ctx context.Context, request UpdateConversationRequestObject) (UpdateConversationResponseObject, error)
+	// CreateDiscussionFromConversation Turn a private conversation into a public thread
+	// (POST /v1/conversations/{conversationId}/discussion)
+	CreateDiscussionFromConversation(ctx context.Context, request CreateDiscussionFromConversationRequestObject) (CreateDiscussionFromConversationResponseObject, error)
 	// ListMessages List a conversation's messages
 	// (GET /v1/conversations/{conversationId}/messages)
 	ListMessages(ctx context.Context, request ListMessagesRequestObject) (ListMessagesResponseObject, error)
@@ -26619,9 +31085,6 @@ type StrictServerInterface interface {
 	// PinConversation Pin a conversation
 	// (PUT /v1/conversations/{conversationId}/pin)
 	PinConversation(ctx context.Context, request PinConversationRequestObject) (PinConversationResponseObject, error)
-	// PublishConversation Publish a question and its answer to the page
-	// (POST /v1/conversations/{conversationId}/publish)
-	PublishConversation(ctx context.Context, request PublishConversationRequestObject) (PublishConversationResponseObject, error)
 	// MarkConversationRead Mark a conversation read
 	// (POST /v1/conversations/{conversationId}/read)
 	MarkConversationRead(ctx context.Context, request MarkConversationReadRequestObject) (MarkConversationReadResponseObject, error)
@@ -26631,10 +31094,49 @@ type StrictServerInterface interface {
 	// MarkConversationUnread Mark a conversation unread
 	// (POST /v1/conversations/{conversationId}/unread)
 	MarkConversationUnread(ctx context.Context, request MarkConversationUnreadRequestObject) (MarkConversationUnreadResponseObject, error)
+	// ListDiscussionPosts Posts by state (the moderation queue)
+	// (GET /v1/discussion-posts)
+	ListDiscussionPosts(ctx context.Context, request ListDiscussionPostsRequestObject) (ListDiscussionPostsResponseObject, error)
+	// DeleteDiscussionPost Delete a member's own post
+	// (DELETE /v1/discussion-posts/{postId})
+	DeleteDiscussionPost(ctx context.Context, request DeleteDiscussionPostRequestObject) (DeleteDiscussionPostResponseObject, error)
+	// UpdateDiscussionPost Approve, hide, or edit a member's own post
+	// (PATCH /v1/discussion-posts/{postId})
+	UpdateDiscussionPost(ctx context.Context, request UpdateDiscussionPostRequestObject) (UpdateDiscussionPostResponseObject, error)
+	// MarkDiscussionPostSpam Mark a post as spam
+	// (POST /v1/discussion-posts/{postId}/spam)
+	MarkDiscussionPostSpam(ctx context.Context, request MarkDiscussionPostSpamRequestObject) (MarkDiscussionPostSpamResponseObject, error)
+	// UnvoteDiscussionPost Take a member's vote back
+	// (DELETE /v1/discussion-posts/{postId}/vote)
+	UnvoteDiscussionPost(ctx context.Context, request UnvoteDiscussionPostRequestObject) (UnvoteDiscussionPostResponseObject, error)
+	// VoteDiscussionPost Vote for a post as a member
+	// (PUT /v1/discussion-posts/{postId}/vote)
+	VoteDiscussionPost(ctx context.Context, request VoteDiscussionPostRequestObject) (VoteDiscussionPostResponseObject, error)
+	// ListDiscussions List discussion threads
+	// (GET /v1/discussions)
+	ListDiscussions(ctx context.Context, request ListDiscussionsRequestObject) (ListDiscussionsResponseObject, error)
+	// CreateDiscussion Start a thread as a member
+	// (POST /v1/discussions)
+	CreateDiscussion(ctx context.Context, request CreateDiscussionRequestObject) (CreateDiscussionResponseObject, error)
+	// GetDiscussion A thread with every post
+	// (GET /v1/discussions/{discussionId})
+	GetDiscussion(ctx context.Context, request GetDiscussionRequestObject) (GetDiscussionResponseObject, error)
+	// UpdateDiscussion Edit the title, lock or unlock
+	// (PATCH /v1/discussions/{discussionId})
+	UpdateDiscussion(ctx context.Context, request UpdateDiscussionRequestObject) (UpdateDiscussionResponseObject, error)
+	// ClearDiscussionAnswer Clear the accepted answer
+	// (DELETE /v1/discussions/{discussionId}/answer)
+	ClearDiscussionAnswer(ctx context.Context, request ClearDiscussionAnswerRequestObject) (ClearDiscussionAnswerResponseObject, error)
+	// AcceptDiscussionAnswer Mark the accepted answer
+	// (PUT /v1/discussions/{discussionId}/answer)
+	AcceptDiscussionAnswer(ctx context.Context, request AcceptDiscussionAnswerRequestObject) (AcceptDiscussionAnswerResponseObject, error)
+	// CreateDiscussionPost Reply as a member
+	// (POST /v1/discussions/{discussionId}/posts)
+	CreateDiscussionPost(ctx context.Context, request CreateDiscussionPostRequestObject) (CreateDiscussionPostResponseObject, error)
 	// GetDocsPage One documentation page
 	// (GET /v1/docs/page)
 	GetDocsPage(ctx context.Context, request GetDocsPageRequestObject) (GetDocsPageResponseObject, error)
-	// ListDocsPages Documentation pages with their ratings, feedback and questions
+	// ListDocsPages Documentation pages with their ratings, feedback and discussions
 	// (GET /v1/docs/pages)
 	ListDocsPages(ctx context.Context, request ListDocsPagesRequestObject) (ListDocsPagesResponseObject, error)
 	// ListDocsSites Documentation sites
@@ -26799,18 +31301,6 @@ type StrictServerInterface interface {
 	// DenyOAuthRequest Deny an authorization request
 	// (POST /v1/oauth/requests/{oauthRequestId}/deny)
 	DenyOAuthRequest(ctx context.Context, request DenyOAuthRequestRequestObject) (DenyOAuthRequestResponseObject, error)
-	// ListPageAnswers List published answers
-	// (GET /v1/page-answers)
-	ListPageAnswers(ctx context.Context, request ListPageAnswersRequestObject) (ListPageAnswersResponseObject, error)
-	// DeletePageAnswer Unpublish an answer
-	// (DELETE /v1/page-answers/{pageAnswerId})
-	DeletePageAnswer(ctx context.Context, request DeletePageAnswerRequestObject) (DeletePageAnswerResponseObject, error)
-	// GetPageAnswer Get a published answer
-	// (GET /v1/page-answers/{pageAnswerId})
-	GetPageAnswer(ctx context.Context, request GetPageAnswerRequestObject) (GetPageAnswerResponseObject, error)
-	// UpdatePageAnswer Edit a published answer
-	// (PATCH /v1/page-answers/{pageAnswerId})
-	UpdatePageAnswer(ctx context.Context, request UpdatePageAnswerRequestObject) (UpdatePageAnswerResponseObject, error)
 	// GetVapidPublicKey The server's Web Push key
 	// (GET /v1/push/vapid-public-key)
 	GetVapidPublicKey(ctx context.Context, request GetVapidPublicKeyRequestObject) (GetVapidPublicKeyResponseObject, error)
@@ -26955,26 +31445,53 @@ func (sh *strictHandler) GetClientChannel(w http.ResponseWriter, r *http.Request
 	}
 }
 
-// ListClientPageAnswers operation middleware
-func (sh *strictHandler) ListClientPageAnswers(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, params ListClientPageAnswersParams) {
-	var request ListClientPageAnswersRequestObject
+// ListClientDiscussions operation middleware
+func (sh *strictHandler) ListClientDiscussions(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, params ListClientDiscussionsParams) {
+	var request ListClientDiscussionsRequestObject
 
 	request.ChannelKey = channelKey
 	request.Params = params
 
 	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.ListClientPageAnswers(ctx, request.(ListClientPageAnswersRequestObject))
+		return sh.ssi.ListClientDiscussions(ctx, request.(ListClientDiscussionsRequestObject))
 	}
 	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "ListClientPageAnswers")
+		handler = middleware(handler, "ListClientDiscussions")
 	}
 
 	response, err := handler(r.Context(), w, r, request)
 
 	if err != nil {
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(ListClientPageAnswersResponseObject); ok {
-		if err := validResponse.VisitListClientPageAnswersResponse(w); err != nil {
+	} else if validResponse, ok := response.(ListClientDiscussionsResponseObject); ok {
+		if err := validResponse.VisitListClientDiscussionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetClientDiscussion operation middleware
+func (sh *strictHandler) GetClientDiscussion(w http.ResponseWriter, r *http.Request, channelKey ChannelKey, discussionId DiscussionId) {
+	var request GetClientDiscussionRequestObject
+
+	request.ChannelKey = channelKey
+	request.DiscussionId = discussionId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetClientDiscussion(ctx, request.(GetClientDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetClientDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetClientDiscussionResponseObject); ok {
+		if err := validResponse.VisitGetClientDiscussionResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -27321,6 +31838,295 @@ func (sh *strictHandler) SetClientTyping(w http.ResponseWriter, r *http.Request,
 	}
 }
 
+// DeleteClientDiscussionPost operation middleware
+func (sh *strictHandler) DeleteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId) {
+	var request DeleteClientDiscussionPostRequestObject
+
+	request.PostId = postId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteClientDiscussionPost(ctx, request.(DeleteClientDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteClientDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteClientDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitDeleteClientDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateClientDiscussionPost operation middleware
+func (sh *strictHandler) UpdateClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId) {
+	var request UpdateClientDiscussionPostRequestObject
+
+	request.PostId = postId
+
+	var body UpdateClientDiscussionPostJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateClientDiscussionPost(ctx, request.(UpdateClientDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateClientDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateClientDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitUpdateClientDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnvoteClientDiscussionPost operation middleware
+func (sh *strictHandler) UnvoteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId) {
+	var request UnvoteClientDiscussionPostRequestObject
+
+	request.PostId = postId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnvoteClientDiscussionPost(ctx, request.(UnvoteClientDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnvoteClientDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnvoteClientDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitUnvoteClientDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// VoteClientDiscussionPost operation middleware
+func (sh *strictHandler) VoteClientDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId) {
+	var request VoteClientDiscussionPostRequestObject
+
+	request.PostId = postId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.VoteClientDiscussionPost(ctx, request.(VoteClientDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "VoteClientDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(VoteClientDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitVoteClientDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateClientDiscussion operation middleware
+func (sh *strictHandler) CreateClientDiscussion(w http.ResponseWriter, r *http.Request, params CreateClientDiscussionParams) {
+	var request CreateClientDiscussionRequestObject
+
+	request.Params = params
+
+	var body CreateClientDiscussionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateClientDiscussion(ctx, request.(CreateClientDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateClientDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateClientDiscussionResponseObject); ok {
+		if err := validResponse.VisitCreateClientDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ClearClientDiscussionAnswer operation middleware
+func (sh *strictHandler) ClearClientDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId) {
+	var request ClearClientDiscussionAnswerRequestObject
+
+	request.DiscussionId = discussionId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ClearClientDiscussionAnswer(ctx, request.(ClearClientDiscussionAnswerRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ClearClientDiscussionAnswer")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ClearClientDiscussionAnswerResponseObject); ok {
+		if err := validResponse.VisitClearClientDiscussionAnswerResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// AcceptClientDiscussionAnswer operation middleware
+func (sh *strictHandler) AcceptClientDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId) {
+	var request AcceptClientDiscussionAnswerRequestObject
+
+	request.DiscussionId = discussionId
+
+	var body AcceptClientDiscussionAnswerJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.AcceptClientDiscussionAnswer(ctx, request.(AcceptClientDiscussionAnswerRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "AcceptClientDiscussionAnswer")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(AcceptClientDiscussionAnswerResponseObject); ok {
+		if err := validResponse.VisitAcceptClientDiscussionAnswerResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnfollowClientDiscussion operation middleware
+func (sh *strictHandler) UnfollowClientDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId) {
+	var request UnfollowClientDiscussionRequestObject
+
+	request.DiscussionId = discussionId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnfollowClientDiscussion(ctx, request.(UnfollowClientDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnfollowClientDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnfollowClientDiscussionResponseObject); ok {
+		if err := validResponse.VisitUnfollowClientDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// FollowClientDiscussion operation middleware
+func (sh *strictHandler) FollowClientDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId) {
+	var request FollowClientDiscussionRequestObject
+
+	request.DiscussionId = discussionId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.FollowClientDiscussion(ctx, request.(FollowClientDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "FollowClientDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(FollowClientDiscussionResponseObject); ok {
+		if err := validResponse.VisitFollowClientDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateClientDiscussionPost operation middleware
+func (sh *strictHandler) CreateClientDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateClientDiscussionPostParams) {
+	var request CreateClientDiscussionPostRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body CreateClientDiscussionPostJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateClientDiscussionPost(ctx, request.(CreateClientDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateClientDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateClientDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitCreateClientDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // CreateClientFeedback operation middleware
 func (sh *strictHandler) CreateClientFeedback(w http.ResponseWriter, r *http.Request, params CreateClientFeedbackParams) {
 	var request CreateClientFeedbackRequestObject
@@ -27365,32 +32171,23 @@ func (sh *strictHandler) CreateClientFeedback(w http.ResponseWriter, r *http.Req
 	}
 }
 
-// CreateClientQuestion operation middleware
-func (sh *strictHandler) CreateClientQuestion(w http.ResponseWriter, r *http.Request, params CreateClientQuestionParams) {
-	var request CreateClientQuestionRequestObject
-
-	request.Params = params
-
-	var body CreateClientQuestionJSONRequestBody
-	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
-		return
-	}
-	request.Body = &body
+// DeleteReaderToken operation middleware
+func (sh *strictHandler) DeleteReaderToken(w http.ResponseWriter, r *http.Request) {
+	var request DeleteReaderTokenRequestObject
 
 	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.CreateClientQuestion(ctx, request.(CreateClientQuestionRequestObject))
+		return sh.ssi.DeleteReaderToken(ctx, request.(DeleteReaderTokenRequestObject))
 	}
 	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "CreateClientQuestion")
+		handler = middleware(handler, "DeleteReaderToken")
 	}
 
 	response, err := handler(r.Context(), w, r, request)
 
 	if err != nil {
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(CreateClientQuestionResponseObject); ok {
-		if err := validResponse.VisitCreateClientQuestionResponse(w); err != nil {
+	} else if validResponse, ok := response.(DeleteReaderTokenResponseObject); ok {
+		if err := validResponse.VisitDeleteReaderTokenResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -27518,6 +32315,227 @@ func (sh *strictHandler) GetReadyz(w http.ResponseWriter, r *http.Request) {
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetReadyzResponseObject); ok {
 		if err := validResponse.VisitGetReadyzResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetReaderAccount operation middleware
+func (sh *strictHandler) GetReaderAccount(w http.ResponseWriter, r *http.Request) {
+	var request GetReaderAccountRequestObject
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetReaderAccount(ctx, request.(GetReaderAccountRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetReaderAccount")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetReaderAccountResponseObject); ok {
+		if err := validResponse.VisitGetReaderAccountResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateReaderAccount operation middleware
+func (sh *strictHandler) UpdateReaderAccount(w http.ResponseWriter, r *http.Request) {
+	var request UpdateReaderAccountRequestObject
+
+	var body UpdateReaderAccountJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateReaderAccount(ctx, request.(UpdateReaderAccountRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateReaderAccount")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateReaderAccountResponseObject); ok {
+		if err := validResponse.VisitUpdateReaderAccountResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListReaderDiscussions operation middleware
+func (sh *strictHandler) ListReaderDiscussions(w http.ResponseWriter, r *http.Request, params ListReaderDiscussionsParams) {
+	var request ListReaderDiscussionsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListReaderDiscussions(ctx, request.(ListReaderDiscussionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListReaderDiscussions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListReaderDiscussionsResponseObject); ok {
+		if err := validResponse.VisitListReaderDiscussionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListReaderFollowing operation middleware
+func (sh *strictHandler) ListReaderFollowing(w http.ResponseWriter, r *http.Request, params ListReaderFollowingParams) {
+	var request ListReaderFollowingRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListReaderFollowing(ctx, request.(ListReaderFollowingRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListReaderFollowing")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListReaderFollowingResponseObject); ok {
+		if err := validResponse.VisitListReaderFollowingResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnfollowReaderDiscussion operation middleware
+func (sh *strictHandler) UnfollowReaderDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId) {
+	var request UnfollowReaderDiscussionRequestObject
+
+	request.DiscussionId = discussionId
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnfollowReaderDiscussion(ctx, request.(UnfollowReaderDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnfollowReaderDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnfollowReaderDiscussionResponseObject); ok {
+		if err := validResponse.VisitUnfollowReaderDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListReaderNotifications operation middleware
+func (sh *strictHandler) ListReaderNotifications(w http.ResponseWriter, r *http.Request, params ListReaderNotificationsParams) {
+	var request ListReaderNotificationsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListReaderNotifications(ctx, request.(ListReaderNotificationsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListReaderNotifications")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListReaderNotificationsResponseObject); ok {
+		if err := validResponse.VisitListReaderNotificationsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// MarkReaderNotificationsRead operation middleware
+func (sh *strictHandler) MarkReaderNotificationsRead(w http.ResponseWriter, r *http.Request) {
+	var request MarkReaderNotificationsReadRequestObject
+
+	var body MarkReaderNotificationsReadJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.MarkReaderNotificationsRead(ctx, request.(MarkReaderNotificationsReadRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "MarkReaderNotificationsRead")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(MarkReaderNotificationsReadResponseObject); ok {
+		if err := validResponse.VisitMarkReaderNotificationsReadResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateReaderToken operation middleware
+func (sh *strictHandler) CreateReaderToken(w http.ResponseWriter, r *http.Request) {
+	var request CreateReaderTokenRequestObject
+
+	var body CreateReaderTokenJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateReaderToken(ctx, request.(CreateReaderTokenRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateReaderToken")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateReaderTokenResponseObject); ok {
+		if err := validResponse.VisitCreateReaderTokenResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -28603,6 +33621,40 @@ func (sh *strictHandler) UpdateConversation(w http.ResponseWriter, r *http.Reque
 	}
 }
 
+// CreateDiscussionFromConversation operation middleware
+func (sh *strictHandler) CreateDiscussionFromConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params CreateDiscussionFromConversationParams) {
+	var request CreateDiscussionFromConversationRequestObject
+
+	request.ConversationId = conversationId
+	request.Params = params
+
+	var body CreateDiscussionFromConversationJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateDiscussionFromConversation(ctx, request.(CreateDiscussionFromConversationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateDiscussionFromConversation")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateDiscussionFromConversationResponseObject); ok {
+		if err := validResponse.VisitCreateDiscussionFromConversationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // ListMessages operation middleware
 func (sh *strictHandler) ListMessages(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params ListMessagesParams) {
 	var request ListMessagesRequestObject
@@ -28763,40 +33815,6 @@ func (sh *strictHandler) PinConversation(w http.ResponseWriter, r *http.Request,
 	}
 }
 
-// PublishConversation operation middleware
-func (sh *strictHandler) PublishConversation(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params PublishConversationParams) {
-	var request PublishConversationRequestObject
-
-	request.ConversationId = conversationId
-	request.Params = params
-
-	var body PublishConversationJSONRequestBody
-	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
-		return
-	}
-	request.Body = &body
-
-	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.PublishConversation(ctx, request.(PublishConversationRequestObject))
-	}
-	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "PublishConversation")
-	}
-
-	response, err := handler(r.Context(), w, r, request)
-
-	if err != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(PublishConversationResponseObject); ok {
-		if err := validResponse.VisitPublishConversationResponse(w); err != nil {
-			sh.options.ResponseErrorHandlerFunc(w, r, err)
-		}
-	} else if response != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
-	}
-}
-
 // MarkConversationRead operation middleware
 func (sh *strictHandler) MarkConversationRead(w http.ResponseWriter, r *http.Request, conversationId ConversationId, params MarkConversationReadParams) {
 	var request MarkConversationReadRequestObject
@@ -28891,6 +33909,389 @@ func (sh *strictHandler) MarkConversationUnread(w http.ResponseWriter, r *http.R
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(MarkConversationUnreadResponseObject); ok {
 		if err := validResponse.VisitMarkConversationUnreadResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListDiscussionPosts operation middleware
+func (sh *strictHandler) ListDiscussionPosts(w http.ResponseWriter, r *http.Request, params ListDiscussionPostsParams) {
+	var request ListDiscussionPostsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListDiscussionPosts(ctx, request.(ListDiscussionPostsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListDiscussionPosts")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListDiscussionPostsResponseObject); ok {
+		if err := validResponse.VisitListDiscussionPostsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteDiscussionPost operation middleware
+func (sh *strictHandler) DeleteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params DeleteDiscussionPostParams) {
+	var request DeleteDiscussionPostRequestObject
+
+	request.PostId = postId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteDiscussionPost(ctx, request.(DeleteDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitDeleteDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateDiscussionPost operation middleware
+func (sh *strictHandler) UpdateDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params UpdateDiscussionPostParams) {
+	var request UpdateDiscussionPostRequestObject
+
+	request.PostId = postId
+	request.Params = params
+
+	var body UpdateDiscussionPostJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateDiscussionPost(ctx, request.(UpdateDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitUpdateDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// MarkDiscussionPostSpam operation middleware
+func (sh *strictHandler) MarkDiscussionPostSpam(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params MarkDiscussionPostSpamParams) {
+	var request MarkDiscussionPostSpamRequestObject
+
+	request.PostId = postId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.MarkDiscussionPostSpam(ctx, request.(MarkDiscussionPostSpamRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "MarkDiscussionPostSpam")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(MarkDiscussionPostSpamResponseObject); ok {
+		if err := validResponse.VisitMarkDiscussionPostSpamResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnvoteDiscussionPost operation middleware
+func (sh *strictHandler) UnvoteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params UnvoteDiscussionPostParams) {
+	var request UnvoteDiscussionPostRequestObject
+
+	request.PostId = postId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnvoteDiscussionPost(ctx, request.(UnvoteDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnvoteDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnvoteDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitUnvoteDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// VoteDiscussionPost operation middleware
+func (sh *strictHandler) VoteDiscussionPost(w http.ResponseWriter, r *http.Request, postId DiscussionPostId, params VoteDiscussionPostParams) {
+	var request VoteDiscussionPostRequestObject
+
+	request.PostId = postId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.VoteDiscussionPost(ctx, request.(VoteDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "VoteDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(VoteDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitVoteDiscussionPostResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListDiscussions operation middleware
+func (sh *strictHandler) ListDiscussions(w http.ResponseWriter, r *http.Request, params ListDiscussionsParams) {
+	var request ListDiscussionsRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListDiscussions(ctx, request.(ListDiscussionsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListDiscussions")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListDiscussionsResponseObject); ok {
+		if err := validResponse.VisitListDiscussionsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateDiscussion operation middleware
+func (sh *strictHandler) CreateDiscussion(w http.ResponseWriter, r *http.Request, params CreateDiscussionParams) {
+	var request CreateDiscussionRequestObject
+
+	request.Params = params
+
+	var body CreateDiscussionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateDiscussion(ctx, request.(CreateDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateDiscussionResponseObject); ok {
+		if err := validResponse.VisitCreateDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetDiscussion operation middleware
+func (sh *strictHandler) GetDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params GetDiscussionParams) {
+	var request GetDiscussionRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetDiscussion(ctx, request.(GetDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetDiscussionResponseObject); ok {
+		if err := validResponse.VisitGetDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateDiscussion operation middleware
+func (sh *strictHandler) UpdateDiscussion(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params UpdateDiscussionParams) {
+	var request UpdateDiscussionRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body UpdateDiscussionJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateDiscussion(ctx, request.(UpdateDiscussionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateDiscussion")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateDiscussionResponseObject); ok {
+		if err := validResponse.VisitUpdateDiscussionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ClearDiscussionAnswer operation middleware
+func (sh *strictHandler) ClearDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params ClearDiscussionAnswerParams) {
+	var request ClearDiscussionAnswerRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ClearDiscussionAnswer(ctx, request.(ClearDiscussionAnswerRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ClearDiscussionAnswer")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ClearDiscussionAnswerResponseObject); ok {
+		if err := validResponse.VisitClearDiscussionAnswerResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// AcceptDiscussionAnswer operation middleware
+func (sh *strictHandler) AcceptDiscussionAnswer(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params AcceptDiscussionAnswerParams) {
+	var request AcceptDiscussionAnswerRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body AcceptDiscussionAnswerJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.AcceptDiscussionAnswer(ctx, request.(AcceptDiscussionAnswerRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "AcceptDiscussionAnswer")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(AcceptDiscussionAnswerResponseObject); ok {
+		if err := validResponse.VisitAcceptDiscussionAnswerResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateDiscussionPost operation middleware
+func (sh *strictHandler) CreateDiscussionPost(w http.ResponseWriter, r *http.Request, discussionId DiscussionId, params CreateDiscussionPostParams) {
+	var request CreateDiscussionPostRequestObject
+
+	request.DiscussionId = discussionId
+	request.Params = params
+
+	var body CreateDiscussionPostJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateDiscussionPost(ctx, request.(CreateDiscussionPostRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateDiscussionPost")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateDiscussionPostResponseObject); ok {
+		if err := validResponse.VisitCreateDiscussionPostResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -30468,120 +35869,6 @@ func (sh *strictHandler) DenyOAuthRequest(w http.ResponseWriter, r *http.Request
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(DenyOAuthRequestResponseObject); ok {
 		if err := validResponse.VisitDenyOAuthRequestResponse(w); err != nil {
-			sh.options.ResponseErrorHandlerFunc(w, r, err)
-		}
-	} else if response != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
-	}
-}
-
-// ListPageAnswers operation middleware
-func (sh *strictHandler) ListPageAnswers(w http.ResponseWriter, r *http.Request, params ListPageAnswersParams) {
-	var request ListPageAnswersRequestObject
-
-	request.Params = params
-
-	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.ListPageAnswers(ctx, request.(ListPageAnswersRequestObject))
-	}
-	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "ListPageAnswers")
-	}
-
-	response, err := handler(r.Context(), w, r, request)
-
-	if err != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(ListPageAnswersResponseObject); ok {
-		if err := validResponse.VisitListPageAnswersResponse(w); err != nil {
-			sh.options.ResponseErrorHandlerFunc(w, r, err)
-		}
-	} else if response != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
-	}
-}
-
-// DeletePageAnswer operation middleware
-func (sh *strictHandler) DeletePageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params DeletePageAnswerParams) {
-	var request DeletePageAnswerRequestObject
-
-	request.PageAnswerId = pageAnswerId
-	request.Params = params
-
-	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.DeletePageAnswer(ctx, request.(DeletePageAnswerRequestObject))
-	}
-	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "DeletePageAnswer")
-	}
-
-	response, err := handler(r.Context(), w, r, request)
-
-	if err != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(DeletePageAnswerResponseObject); ok {
-		if err := validResponse.VisitDeletePageAnswerResponse(w); err != nil {
-			sh.options.ResponseErrorHandlerFunc(w, r, err)
-		}
-	} else if response != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
-	}
-}
-
-// GetPageAnswer operation middleware
-func (sh *strictHandler) GetPageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params GetPageAnswerParams) {
-	var request GetPageAnswerRequestObject
-
-	request.PageAnswerId = pageAnswerId
-	request.Params = params
-
-	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.GetPageAnswer(ctx, request.(GetPageAnswerRequestObject))
-	}
-	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "GetPageAnswer")
-	}
-
-	response, err := handler(r.Context(), w, r, request)
-
-	if err != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(GetPageAnswerResponseObject); ok {
-		if err := validResponse.VisitGetPageAnswerResponse(w); err != nil {
-			sh.options.ResponseErrorHandlerFunc(w, r, err)
-		}
-	} else if response != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
-	}
-}
-
-// UpdatePageAnswer operation middleware
-func (sh *strictHandler) UpdatePageAnswer(w http.ResponseWriter, r *http.Request, pageAnswerId PageAnswerId, params UpdatePageAnswerParams) {
-	var request UpdatePageAnswerRequestObject
-
-	request.PageAnswerId = pageAnswerId
-	request.Params = params
-
-	var body UpdatePageAnswerJSONRequestBody
-	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
-		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
-		return
-	}
-	request.Body = &body
-
-	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
-		return sh.ssi.UpdatePageAnswer(ctx, request.(UpdatePageAnswerRequestObject))
-	}
-	for _, middleware := range sh.middlewares {
-		handler = middleware(handler, "UpdatePageAnswer")
-	}
-
-	response, err := handler(r.Context(), w, r, request)
-
-	if err != nil {
-		sh.options.ResponseErrorHandlerFunc(w, r, err)
-	} else if validResponse, ok := response.(UpdatePageAnswerResponseObject); ok {
-		if err := validResponse.VisitUpdatePageAnswerResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

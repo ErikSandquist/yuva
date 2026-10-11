@@ -28,6 +28,17 @@ func (b *eventBatch) job(args river.JobArgs, opts *river.InsertOpts) {
 	b.jobs = append(b.jobs, river.InsertManyParams{Args: args, InsertOpts: opts})
 }
 
+// jobOnce queues a job unless the batch already holds one with the same arguments; River refuses
+// two unique jobs with equal arguments in one insert.
+func (b *eventBatch) jobOnce(args river.JobArgs, opts *river.InsertOpts) {
+	for _, j := range b.jobs {
+		if j.Args == args {
+			return
+		}
+	}
+	b.job(args, opts)
+}
+
 func (b *eventBatch) add(typ string, inboxID, conversationID *uuid.UUID, data any) {
 	b.items = append(b.items, pendingEvent{typ: typ, inboxID: inboxID, conversationID: conversationID, data: mustJSON(data)})
 }

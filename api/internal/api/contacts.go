@@ -712,6 +712,9 @@ func (s *Server) MergeContact(ctx context.Context, req oas.MergeContactRequestOb
 			}
 			events.conversation(realtime.ConversationUpdated, c, body)
 		}
+		if err := moveDiscussions(ctx, q, p.workspaceID, from, to); err != nil {
+			return err
+		}
 		if _, err := q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: p.workspaceID, ID: from}); err != nil {
 			return err
 		}

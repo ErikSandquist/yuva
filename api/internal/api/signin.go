@@ -102,12 +102,13 @@ func (s *Server) RequestSignInCode(ctx context.Context, req oas.RequestSignInCod
 	}
 	code := newCode()
 	id := uuid.New()
+	reader := req.Body.Reader != nil && *req.Body.Reader
 	if err := s.st.CreateLoginCode(ctx, store.CreateLoginCodeParams{
-		ID: id, Email: email, CodeHash: hashCode(id, code), Ip: ip, CreatedAt: now, ExpiresAt: now.Add(codeTTL),
+		ID: id, Email: email, CodeHash: hashCode(id, code), Ip: ip, CreatedAt: now, ExpiresAt: now.Add(codeTTL), Reader: reader,
 	}); err != nil {
 		return nil, err
 	}
-	if known == nil || !*known {
+	if !reader && (known == nil || !*known) {
 		return oas.RequestSignInCode202Response{}, nil
 	}
 	locale, err := s.localeFor(ctx, email, now)
@@ -215,6 +216,13 @@ func (s *Server) VerifySignInCode(ctx context.Context, req oas.VerifySignInCodeR
 		personID, ok, err := acceptInvites(ctx, q, email, now)
 		if err != nil {
 			return err
+		}
+		if !ok && lc.Reader {
+			p, err := createPerson(ctx, q, email, "", "en")
+			if err != nil {
+				return err
+			}
+			personID, ok = p.ID, true
 		}
 		if !ok {
 			fail = errInvalidCode

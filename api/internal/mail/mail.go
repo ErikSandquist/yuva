@@ -26,6 +26,8 @@ type Message struct {
 	To      string
 	Subject string
 	Text    string
+	// Unsubscribe is a one-click unsubscribe URL (RFC 8058), sent as List-Unsubscribe.
+	Unsubscribe string
 }
 
 type Mailer interface {
@@ -156,6 +158,10 @@ func compose(from *mail.Address, m Message) []byte {
 	header("Date", time.Now().UTC().Format(time.RFC1123Z))
 	header("Message-ID", "<"+hex.EncodeToString(id)+"@"+domain+">")
 	header("Auto-Submitted", "auto-generated")
+	if m.Unsubscribe != "" {
+		header("List-Unsubscribe", "<"+m.Unsubscribe+">")
+		header("List-Unsubscribe-Post", "List-Unsubscribe=One-Click")
+	}
 	header("MIME-Version", "1.0")
 	header("Content-Type", "text/plain; charset=utf-8")
 	header("Content-Transfer-Encoding", "quoted-printable")

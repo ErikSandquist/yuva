@@ -14,7 +14,7 @@ import (
 
 const createPerson = `-- name: CreatePerson :one
 INSERT INTO people (id, email, name, locale, webauthn_handle) VALUES ($1, $2, $3, $4, $5)
-RETURNING id, email, name, locale, webauthn_handle, created_at, availability
+RETURNING id, email, name, locale, webauthn_handle, created_at, availability, reader_email_notifications
 `
 
 type CreatePersonParams struct {
@@ -42,6 +42,7 @@ func (q *Queries) CreatePerson(ctx context.Context, arg CreatePersonParams) (Per
 		&i.WebauthnHandle,
 		&i.CreatedAt,
 		&i.Availability,
+		&i.ReaderEmailNotifications,
 	)
 	return i, err
 }
@@ -59,7 +60,7 @@ func (q *Queries) DeletePerson(ctx context.Context, id uuid.UUID) (int64, error)
 }
 
 const getPerson = `-- name: GetPerson :one
-SELECT id, email, name, locale, webauthn_handle, created_at, availability FROM people WHERE id = $1
+SELECT id, email, name, locale, webauthn_handle, created_at, availability, reader_email_notifications FROM people WHERE id = $1
 `
 
 func (q *Queries) GetPerson(ctx context.Context, id uuid.UUID) (Person, error) {
@@ -73,12 +74,13 @@ func (q *Queries) GetPerson(ctx context.Context, id uuid.UUID) (Person, error) {
 		&i.WebauthnHandle,
 		&i.CreatedAt,
 		&i.Availability,
+		&i.ReaderEmailNotifications,
 	)
 	return i, err
 }
 
 const getPersonByEmail = `-- name: GetPersonByEmail :one
-SELECT id, email, name, locale, webauthn_handle, created_at, availability FROM people WHERE email = $1
+SELECT id, email, name, locale, webauthn_handle, created_at, availability, reader_email_notifications FROM people WHERE email = $1
 `
 
 func (q *Queries) GetPersonByEmail(ctx context.Context, email string) (Person, error) {
@@ -92,12 +94,13 @@ func (q *Queries) GetPersonByEmail(ctx context.Context, email string) (Person, e
 		&i.WebauthnHandle,
 		&i.CreatedAt,
 		&i.Availability,
+		&i.ReaderEmailNotifications,
 	)
 	return i, err
 }
 
 const getPersonByWebauthnHandle = `-- name: GetPersonByWebauthnHandle :one
-SELECT id, email, name, locale, webauthn_handle, created_at, availability FROM people WHERE webauthn_handle = $1
+SELECT id, email, name, locale, webauthn_handle, created_at, availability, reader_email_notifications FROM people WHERE webauthn_handle = $1
 `
 
 func (q *Queries) GetPersonByWebauthnHandle(ctx context.Context, webauthnHandle []byte) (Person, error) {
@@ -111,6 +114,7 @@ func (q *Queries) GetPersonByWebauthnHandle(ctx context.Context, webauthnHandle 
 		&i.WebauthnHandle,
 		&i.CreatedAt,
 		&i.Availability,
+		&i.ReaderEmailNotifications,
 	)
 	return i, err
 }
@@ -141,7 +145,7 @@ UPDATE people SET
     name = coalesce($2, name),
     locale = coalesce($3, locale)
 WHERE id = $1
-RETURNING id, email, name, locale, webauthn_handle, created_at, availability
+RETURNING id, email, name, locale, webauthn_handle, created_at, availability, reader_email_notifications
 `
 
 type UpdatePersonParams struct {
@@ -161,6 +165,7 @@ func (q *Queries) UpdatePerson(ctx context.Context, arg UpdatePersonParams) (Per
 		&i.WebauthnHandle,
 		&i.CreatedAt,
 		&i.Availability,
+		&i.ReaderEmailNotifications,
 	)
 	return i, err
 }

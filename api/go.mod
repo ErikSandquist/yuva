@@ -25,6 +25,7 @@ require (
 	github.com/riverqueue/river v0.49.0
 	github.com/riverqueue/river/riverdriver/riverpgxv5 v0.49.0
 	github.com/riverqueue/river/rivertype v0.49.0
+	github.com/yuin/goldmark v1.8.6
 	golang.org/x/net v0.58.0
 )
 

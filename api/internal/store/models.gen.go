@@ -79,6 +79,7 @@ type ChatChannel struct {
 	LauncherPosition *string
 	LauncherColor    *string
 	Platforms        []string
+	Discussions      string
 }
 
 type ChatVisitor struct {
@@ -90,17 +91,19 @@ type ChatVisitor struct {
 }
 
 type Contact struct {
-	ID           uuid.UUID
-	WorkspaceID  uuid.UUID
-	Name         string
-	Attributes   []byte
-	Blocked      bool
-	Search       interface{}
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	Locale       *string
-	TypedEmail   *string
-	LastActiveAt *time.Time
+	ID                   uuid.UUID
+	WorkspaceID          uuid.UUID
+	Name                 string
+	Attributes           []byte
+	Blocked              bool
+	Search               interface{}
+	CreatedAt            time.Time
+	UpdatedAt            time.Time
+	Locale               *string
+	TypedEmail           *string
+	LastActiveAt         *time.Time
+	PersonID             *uuid.UUID
+	DiscussionsBlockedAt *time.Time
 }
 
 type ContactEmail struct {
@@ -203,6 +206,79 @@ type ConversationRead struct {
 	LastReadMessageID uuid.UUID
 	LastReadAt        time.Time
 	UpdatedAt         time.Time
+}
+
+type Discussion struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	InboxID        uuid.UUID
+	ChannelID      uuid.UUID
+	Page           string
+	PageTitle      string
+	Title          string
+	OpeningPostID  uuid.UUID
+	State          string
+	LockedAt       *time.Time
+	AnswerPostID   *uuid.UUID
+	AnsweredAt     *time.Time
+	ReplyCount     int32
+	PendingPosts   int32
+	HiddenPosts    int32
+	ConversationID *uuid.UUID
+	CreatedAt      time.Time
+	LastActivityAt time.Time
+}
+
+type DiscussionFollow struct {
+	WorkspaceID  uuid.UUID
+	DiscussionID uuid.UUID
+	ContactID    uuid.UUID
+	CreatedAt    time.Time
+	SeenThrough  time.Time
+	EmailedAt    *time.Time
+}
+
+type DiscussionPost struct {
+	ID              uuid.UUID
+	WorkspaceID     uuid.UUID
+	DiscussionID    uuid.UUID
+	ParentPostID    *uuid.UUID
+	Opening         bool
+	AuthorType      string
+	AuthorMemberID  *uuid.UUID
+	AuthorContactID *uuid.UUID
+	Body            string
+	State           string
+	CreatedAt       time.Time
+	EditedAt        *time.Time
+	DeletedAt       *time.Time
+}
+
+type DiscussionPostView struct {
+	ID              uuid.UUID
+	WorkspaceID     uuid.UUID
+	DiscussionID    uuid.UUID
+	ParentPostID    *uuid.UUID
+	Opening         bool
+	AuthorType      string
+	AuthorMemberID  *uuid.UUID
+	AuthorContactID *uuid.UUID
+	Body            string
+	State           string
+	CreatedAt       time.Time
+	EditedAt        *time.Time
+	DeletedAt       *time.Time
+	Votes           int32
+	AuthorName      string
+	AuthorPersonID  *uuid.UUID
+}
+
+type DiscussionVote struct {
+	WorkspaceID uuid.UUID
+	PostID      uuid.UUID
+	ContactID   *uuid.UUID
+	MemberID    *uuid.UUID
+	CreatedAt   time.Time
 }
 
 type EmailAutoReply struct {
@@ -345,6 +421,26 @@ type LoginCode struct {
 	CreatedAt  time.Time
 	ExpiresAt  time.Time
 	ConsumedAt *time.Time
+	Reader     bool
+}
+
+type M12Answer struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	InboxID        uuid.UUID
+	ChannelID      uuid.UUID
+	Page           string
+	Title          string
+	Question       string
+	Answer         string
+	MemberID       *uuid.UUID
+	ConversationID *uuid.UUID
+	PublishedAt    time.Time
+	UpdatedAt      time.Time
+	DiscussionID   uuid.UUID
+	QuestionID     uuid.UUID
+	AnswerID       uuid.UUID
+	FirstLine      string
 }
 
 type Member struct {
@@ -477,21 +573,6 @@ type OauthToken struct {
 	UsedAt      *time.Time
 }
 
-type PageAnswer struct {
-	ID             uuid.UUID
-	WorkspaceID    uuid.UUID
-	InboxID        uuid.UUID
-	ChannelID      uuid.UUID
-	Page           string
-	Title          string
-	Question       string
-	Answer         string
-	MemberID       *uuid.UUID
-	ConversationID *uuid.UUID
-	PublishedAt    time.Time
-	UpdatedAt      time.Time
-}
-
 type PageRating struct {
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
@@ -515,13 +596,14 @@ type Passkey struct {
 }
 
 type Person struct {
-	ID             uuid.UUID
-	Email          string
-	Name           string
-	Locale         string
-	WebauthnHandle []byte
-	CreatedAt      time.Time
-	Availability   string
+	ID                       uuid.UUID
+	Email                    string
+	Name                     string
+	Locale                   string
+	WebauthnHandle           []byte
+	CreatedAt                time.Time
+	Availability             string
+	ReaderEmailNotifications bool
 }
 
 type PushSubscription struct {
@@ -537,6 +619,29 @@ type PushSubscription struct {
 	LastSuccessAt *time.Time
 	LastFailureAt *time.Time
 	LastError     *string
+}
+
+type ReaderNotification struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	PersonID     uuid.UUID
+	DiscussionID uuid.UUID
+	PostID       *uuid.UUID
+	Kind         string
+	CreatedAt    time.Time
+	ReadAt       *time.Time
+}
+
+type ReaderToken struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	ChannelID   uuid.UUID
+	PersonID    uuid.UUID
+	SessionID   uuid.UUID
+	TokenHash   []byte
+	Origin      string
+	CreatedAt   time.Time
+	ExpiresAt   time.Time
 }
 
 type RealtimeConnection struct {

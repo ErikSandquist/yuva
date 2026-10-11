@@ -16,50 +16,6 @@ WHERE pr.workspace_id = @workspace_id AND pr.channel_id = @channel_id AND pr.pag
       WHERE r.workspace_id = @workspace_id AND r.channel_id = @channel_id AND r.page = @page
         AND r.day >= @since::date AND CASE WHEN @up::bool THEN r.up > 0 ELSE r.down > 0 END);
 
--- name: ListClientPageAnswers :many
-SELECT * FROM page_answers
-WHERE workspace_id = @workspace_id AND inbox_id = @inbox_id AND page = @page
-ORDER BY published_at DESC, id DESC
-LIMIT 100;
-
--- name: CreatePageAnswer :one
-INSERT INTO page_answers (id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id,
-                          conversation_id, published_at, updated_at)
-VALUES (@id, @workspace_id, @inbox_id, @channel_id, @page, @title, @question, @answer, @member_id,
-        @conversation_id, @now, @now)
-RETURNING *;
-
--- name: GetPageAnswer :one
-SELECT * FROM page_answers WHERE workspace_id = @workspace_id AND id = @id;
-
--- name: UpdatePageAnswer :one
-UPDATE page_answers SET question = @question, answer = @answer, updated_at = @now
-WHERE workspace_id = @workspace_id AND id = @id
-RETURNING *;
-
--- name: DeletePageAnswer :execrows
-DELETE FROM page_answers WHERE workspace_id = @workspace_id AND id = @id;
-
--- name: ListPageAnswers :many
-SELECT a.* FROM page_answers a
-WHERE a.workspace_id = @workspace_id
-  AND (@all_inboxes::bool OR EXISTS (
-      SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = a.workspace_id AND iv.inbox_id = a.inbox_id AND iv.viewer_id = @viewer_id::uuid))
-  AND (sqlc.narg(inbox_id)::uuid IS NULL OR a.inbox_id = sqlc.narg(inbox_id)::uuid)
-  AND (sqlc.narg(page)::text IS NULL OR a.page = sqlc.narg(page)::text)
-  AND (sqlc.narg(conversation_id)::uuid IS NULL OR a.conversation_id = sqlc.narg(conversation_id)::uuid)
-  AND (sqlc.narg(cursor_at)::timestamptz IS NULL
-       OR (a.published_at, a.id) < (sqlc.narg(cursor_at)::timestamptz, sqlc.narg(cursor_id)::uuid))
-ORDER BY a.published_at DESC, a.id DESC
-LIMIT @lim;
-
--- name: ConversationHasMemberReply :one
-SELECT EXISTS (
-    SELECT 1 FROM messages
-    WHERE workspace_id = @workspace_id AND conversation_id = @conversation_id
-      AND kind = 'message' AND direction = 'out' AND author_type = 'member' AND NOT draft)::bool;
-
 -- name: ListDocsPages :many
 WITH visible AS (
     SELECT i.id FROM inboxes i
@@ -77,27 +33,29 @@ WITH visible AS (
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+           count(*)::bigint AS open_feedback
     FROM conversations c
     WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND c.status = 'open' AND NOT c.spam
       AND (sqlc.narg(page)::text IS NULL OR c.page_url = sqlc.narg(page)::text)
       AND (sqlc.narg(site)::text IS NULL OR left(c.page_url, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY c.inbox_id, c.page_url
-), answered AS (
-    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
-    FROM page_answers a
-    WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
-      AND (sqlc.narg(page)::text IS NULL OR a.page = sqlc.narg(page)::text)
-      AND (sqlc.narg(site)::text IS NULL OR left(a.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
-    GROUP BY a.inbox_id, a.page
+), threads AS (
+    SELECT d.inbox_id, d.page,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL)::bigint AS open_threads,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
+           sum(d.pending_posts)::bigint AS pending_posts
+    FROM discussions d
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+      AND (sqlc.narg(page)::text IS NULL OR d.page = sqlc.narg(page)::text)
+      AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
+    GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
     UNION SELECT opened.inbox_id, opened.page FROM opened
-    UNION SELECT answered.inbox_id, answered.page FROM answered
+    UNION SELECT threads.inbox_id, threads.page FROM threads
 )
-SELECT d.inbox_id, d.page, d.title, d.up, d.down, d.open_feedback, d.open_questions, d.published_answers FROM (
+SELECT d.inbox_id, d.page, d.title, d.up, d.down, d.open_feedback, d.open_threads, d.unanswered_threads, d.pending_posts FROM (
 SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
     coalesce(
         (SELECT t.title FROM page_ratings t
@@ -106,24 +64,25 @@ SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
         (SELECT ct.page_title FROM conversations ct
          WHERE ct.workspace_id = @workspace_id AND ct.inbox_id = p.inbox_id AND ct.page_url = p.page AND ct.page_title <> ''
          ORDER BY ct.created_at DESC LIMIT 1),
-        (SELECT at.title FROM page_answers at
-         WHERE at.workspace_id = @workspace_id AND at.inbox_id = p.inbox_id AND at.page = p.page AND at.title <> ''
-         ORDER BY at.published_at DESC LIMIT 1),
+        (SELECT dt.page_title FROM discussions dt
+         WHERE dt.workspace_id = @workspace_id AND dt.inbox_id = p.inbox_id AND dt.page = p.page AND dt.page_title <> ''
+         ORDER BY dt.created_at DESC LIMIT 1),
         '')::text AS title,
     coalesce(rated.up, 0)::bigint AS up,
     coalesce(rated.down, 0)::bigint AS down,
     coalesce(opened.open_feedback, 0)::bigint AS open_feedback,
-    coalesce(opened.open_questions, 0)::bigint AS open_questions,
-    coalesce(answered.published_answers, 0)::bigint AS published_answers
+    coalesce(threads.open_threads, 0)::bigint AS open_threads,
+    coalesce(threads.unanswered_threads, 0)::bigint AS unanswered_threads,
+    coalesce(threads.pending_posts, 0)::bigint AS pending_posts
 FROM pages p
 LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
 LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
-LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+LEFT JOIN threads ON threads.inbox_id = p.inbox_id AND threads.page = p.page
 ) d
 ORDER BY
     CASE @sort::text
         WHEN 'up' THEN d.up
-        WHEN 'activity' THEN d.up + d.down + d.open_feedback + d.open_questions
+        WHEN 'activity' THEN d.up + d.down + d.open_feedback + d.open_threads + d.pending_posts
         WHEN 'helpful' THEN CASE WHEN d.up + d.down >= @helpful_min::bigint THEN 1 ELSE 0 END
         ELSE d.down
     END DESC,
@@ -156,22 +115,28 @@ WITH visible AS (
     GROUP BY r.day
 ), sent AS (
     SELECT (c.created_at AT TIME ZONE 'UTC')::date AS day,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS questions
+           count(*)::bigint AS feedback
     FROM conversations c
     WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND NOT c.spam AND c.created_at >= @since_at::timestamptz
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND NOT c.spam AND c.created_at >= @since_at::timestamptz
       AND (sqlc.narg(site)::text IS NULL OR left(c.page_url, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
+    GROUP BY 1
+), started AS (
+    SELECT (d.created_at AT TIME ZONE 'UTC')::date AS day, count(*)::bigint AS threads
+    FROM discussions d
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+      AND d.created_at >= @since_at::timestamptz AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY 1
 )
 SELECT days.day::date AS day,
     coalesce(rated.up, 0)::bigint AS up,
     coalesce(rated.down, 0)::bigint AS down,
     coalesce(sent.feedback, 0)::bigint AS feedback,
-    coalesce(sent.questions, 0)::bigint AS questions
+    coalesce(started.threads, 0)::bigint AS threads
 FROM days
 LEFT JOIN rated ON rated.day = days.day
 LEFT JOIN sent ON sent.day = days.day
+LEFT JOIN started ON started.day = days.day
 ORDER BY days.day;
 
 -- name: GetDocsSummaryCounts :one
@@ -188,9 +153,9 @@ SELECT
         SELECT DISTINCT r.inbox_id, r.page FROM page_ratings r
         WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
           AND r.up + r.down > 0 AND (sqlc.narg(site)::text IS NULL OR left(r.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')) rp)::bigint AS rated_pages,
-    (SELECT count(*) FROM page_answers a
-     WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
-       AND a.published_at >= @since_at::timestamptz AND (sqlc.narg(site)::text IS NULL OR left(a.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/'))::bigint AS published_answers;
+    (SELECT coalesce(sum(d.pending_posts), 0) FROM discussions d
+     WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+       AND (sqlc.narg(site)::text IS NULL OR left(d.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/'))::bigint AS pending_posts;
 
 -- name: ListDocsSites :many
 WITH visible AS (
@@ -207,31 +172,34 @@ WITH visible AS (
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+           count(*)::bigint AS open_feedback
     FROM conversations c
     WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND c.status = 'open' AND NOT c.spam
     GROUP BY c.inbox_id, c.page_url
-), answered AS (
-    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
-    FROM page_answers a
-    WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
-    GROUP BY a.inbox_id, a.page
+), threads AS (
+    SELECT d.inbox_id, d.page,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL)::bigint AS open_threads,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
+           sum(d.pending_posts)::bigint AS pending_posts
+    FROM discussions d
+    WHERE d.workspace_id = @workspace_id AND d.inbox_id IN (SELECT id FROM visible)
+    GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
     UNION SELECT opened.inbox_id, opened.page FROM opened
-    UNION SELECT answered.inbox_id, answered.page FROM answered
+    UNION SELECT threads.inbox_id, threads.page FROM threads
 ), data AS (
     SELECT p.inbox_id, substring(p.page from '^[a-z]+://[^/]+') AS origin, count(*)::bigint AS pages,
            coalesce(sum(rated.up), 0)::bigint AS up, coalesce(sum(rated.down), 0)::bigint AS down,
            coalesce(sum(opened.open_feedback), 0)::bigint AS open_feedback,
-           coalesce(sum(opened.open_questions), 0)::bigint AS open_questions,
-           coalesce(sum(answered.published_answers), 0)::bigint AS published_answers
+           coalesce(sum(threads.open_threads), 0)::bigint AS open_threads,
+           coalesce(sum(threads.unanswered_threads), 0)::bigint AS unanswered_threads,
+           coalesce(sum(threads.pending_posts), 0)::bigint AS pending_posts
     FROM pages p
     LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
     LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
-    LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+    LEFT JOIN threads ON threads.inbox_id = p.inbox_id AND threads.page = p.page
     GROUP BY 1, 2
 ), allowed AS (
     SELECT ch.inbox_id, o.origin, ch.id AS channel_id, ch.name AS channel_name,
@@ -250,8 +218,9 @@ SELECT s.origin::text AS origin, s.inbox_id::uuid AS inbox_id,
     coalesce(d.up, 0)::bigint AS up,
     coalesce(d.down, 0)::bigint AS down,
     coalesce(d.open_feedback, 0)::bigint AS open_feedback,
-    coalesce(d.open_questions, 0)::bigint AS open_questions,
-    coalesce(d.published_answers, 0)::bigint AS published_answers
+    coalesce(d.open_threads, 0)::bigint AS open_threads,
+    coalesce(d.unanswered_threads, 0)::bigint AS unanswered_threads,
+    coalesce(d.pending_posts, 0)::bigint AS pending_posts
 FROM sites s
 LEFT JOIN data d ON d.inbox_id = s.inbox_id AND d.origin = s.origin
 LEFT JOIN allowed al ON al.inbox_id = s.inbox_id AND al.origin = s.origin AND al.n = 1

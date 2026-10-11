@@ -214,7 +214,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		},
 		Hub:              hub,
 		Ingress:          ingressSettings(cfg),
-		Chat:             api.ChatSettings{EmailDelay: cfg.ChatEmailDelay, AnonymousContactsPerHour: cfg.AnonymousContactsPerHour},
+		Chat:             api.ChatSettings{EmailDelay: cfg.ChatEmailDelay, AnonymousContactsPerHour: cfg.AnonymousContactsPerHour, DiscussionEmailDelay: cfg.DiscussionEmailDelay},
 		Webhooks:         api.WebhookSettings{AllowPrivate: cfg.WebhookAllowPrivate},
 		SMTPAllowPrivate: cfg.SMTPAllowPrivate,
 		Push:             api.PushSettings{Keys: pushKeys},

@@ -13,7 +13,10 @@ import (
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
-const defaultChatEmailDelay = 5 * time.Minute
+const (
+	defaultChatEmailDelay       = 5 * time.Minute
+	defaultDiscussionEmailDelay = 10 * time.Minute
+)
 
 type ContinuityArgs struct {
 	WorkspaceID    uuid.UUID `json:"workspace_id"`

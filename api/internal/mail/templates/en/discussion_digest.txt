@@ -1,0 +1,16 @@
+{{.Inbox}}: {{if .Answer}}answered{{else}}new replies{{end}} in "{{.Title}}"
+
+{{if .Answer}}An answer was accepted in "{{.Title}}"{{if .Answer.Author}}, written by {{.Answer.Author}}{{end}}:
+> {{.Answer.Text}}
+
+{{end}}{{if .Posts}}New replies in "{{.Title}}":
+{{range .Posts}}
+{{.Author}} wrote:
+> {{.Text}}
+{{end}}{{if .More}}
+…and {{.More}} more.
+{{end}}
+{{end}}Read the thread: {{.URL}}
+
+You get this e-mail because you follow this thread on {{.Inbox}}'s documentation. Stop following it: {{.UnsubscribeURL}}{{if .SettingsURL}}
+Choose which e-mails you get: {{.SettingsURL}}{{end}}

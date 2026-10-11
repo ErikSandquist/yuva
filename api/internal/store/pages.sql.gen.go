@@ -46,128 +46,37 @@ func (q *Queries) AddPageRating(ctx context.Context, arg AddPageRatingParams) er
 	return err
 }
 
-const conversationHasMemberReply = `-- name: ConversationHasMemberReply :one
-SELECT EXISTS (
-    SELECT 1 FROM messages
-    WHERE workspace_id = $1 AND conversation_id = $2
-      AND kind = 'message' AND direction = 'out' AND author_type = 'member' AND NOT draft)::bool
-`
-
-type ConversationHasMemberReplyParams struct {
-	WorkspaceID    uuid.UUID
-	ConversationID uuid.UUID
-}
-
-func (q *Queries) ConversationHasMemberReply(ctx context.Context, arg ConversationHasMemberReplyParams) (bool, error) {
-	row := q.db.QueryRow(ctx, conversationHasMemberReply, arg.WorkspaceID, arg.ConversationID)
-	var column_1 bool
-	err := row.Scan(&column_1)
-	return column_1, err
-}
-
-const createPageAnswer = `-- name: CreatePageAnswer :one
-INSERT INTO page_answers (id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id,
-                          conversation_id, published_at, updated_at)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9,
-        $10, $11, $11)
-RETURNING id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id, conversation_id, published_at, updated_at
-`
-
-type CreatePageAnswerParams struct {
-	ID             uuid.UUID
-	WorkspaceID    uuid.UUID
-	InboxID        uuid.UUID
-	ChannelID      uuid.UUID
-	Page           string
-	Title          string
-	Question       string
-	Answer         string
-	MemberID       *uuid.UUID
-	ConversationID *uuid.UUID
-	Now            time.Time
-}
-
-func (q *Queries) CreatePageAnswer(ctx context.Context, arg CreatePageAnswerParams) (PageAnswer, error) {
-	row := q.db.QueryRow(ctx, createPageAnswer,
-		arg.ID,
-		arg.WorkspaceID,
-		arg.InboxID,
-		arg.ChannelID,
-		arg.Page,
-		arg.Title,
-		arg.Question,
-		arg.Answer,
-		arg.MemberID,
-		arg.ConversationID,
-		arg.Now,
-	)
-	var i PageAnswer
-	err := row.Scan(
-		&i.ID,
-		&i.WorkspaceID,
-		&i.InboxID,
-		&i.ChannelID,
-		&i.Page,
-		&i.Title,
-		&i.Question,
-		&i.Answer,
-		&i.MemberID,
-		&i.ConversationID,
-		&i.PublishedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
-}
-
-const deletePageAnswer = `-- name: DeletePageAnswer :execrows
-DELETE FROM page_answers WHERE workspace_id = $1 AND id = $2
-`
-
-type DeletePageAnswerParams struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-}
-
-func (q *Queries) DeletePageAnswer(ctx context.Context, arg DeletePageAnswerParams) (int64, error) {
-	result, err := q.db.Exec(ctx, deletePageAnswer, arg.WorkspaceID, arg.ID)
-	if err != nil {
-		return 0, err
-	}
-	return result.RowsAffected(), nil
-}
-
 const getDocsSummaryCounts = `-- name: GetDocsSummaryCounts :one
 WITH visible AS (
     SELECT i.id FROM inboxes i
     WHERE i.workspace_id = $1
-      AND ($5::uuid IS NULL OR i.id = $5::uuid)
-      AND ($6::bool OR EXISTS (
+      AND ($4::uuid IS NULL OR i.id = $4::uuid)
+      AND ($5::bool OR EXISTS (
           SELECT 1 FROM inbox_viewers iv
-          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $7::uuid))
+          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $6::uuid))
 )
 SELECT
     (SELECT count(*) FROM (
         SELECT DISTINCT r.inbox_id, r.page FROM page_ratings r
         WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $2::date
           AND r.up + r.down > 0 AND ($3::text IS NULL OR left(r.page, length($3::text) + 1) = $3::text || '/')) rp)::bigint AS rated_pages,
-    (SELECT count(*) FROM page_answers a
-     WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
-       AND a.published_at >= $4::timestamptz AND ($3::text IS NULL OR left(a.page, length($3::text) + 1) = $3::text || '/'))::bigint AS published_answers
+    (SELECT coalesce(sum(d.pending_posts), 0) FROM discussions d
+     WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+       AND ($3::text IS NULL OR left(d.page, length($3::text) + 1) = $3::text || '/'))::bigint AS pending_posts
 `
 
 type GetDocsSummaryCountsParams struct {
 	WorkspaceID uuid.UUID
 	Since       time.Time
 	Site        *string
-	SinceAt     time.Time
 	InboxID     *uuid.UUID
 	AllInboxes  bool
 	ViewerID    uuid.UUID
 }
 
 type GetDocsSummaryCountsRow struct {
-	RatedPages       int64
-	PublishedAnswers int64
+	RatedPages   int64
+	PendingPosts int64
 }
 
 func (q *Queries) GetDocsSummaryCounts(ctx context.Context, arg GetDocsSummaryCountsParams) (GetDocsSummaryCountsRow, error) {
@@ -175,89 +84,13 @@ func (q *Queries) GetDocsSummaryCounts(ctx context.Context, arg GetDocsSummaryCo
 		arg.WorkspaceID,
 		arg.Since,
 		arg.Site,
-		arg.SinceAt,
 		arg.InboxID,
 		arg.AllInboxes,
 		arg.ViewerID,
 	)
 	var i GetDocsSummaryCountsRow
-	err := row.Scan(&i.RatedPages, &i.PublishedAnswers)
+	err := row.Scan(&i.RatedPages, &i.PendingPosts)
 	return i, err
-}
-
-const getPageAnswer = `-- name: GetPageAnswer :one
-SELECT id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id, conversation_id, published_at, updated_at FROM page_answers WHERE workspace_id = $1 AND id = $2
-`
-
-type GetPageAnswerParams struct {
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-}
-
-func (q *Queries) GetPageAnswer(ctx context.Context, arg GetPageAnswerParams) (PageAnswer, error) {
-	row := q.db.QueryRow(ctx, getPageAnswer, arg.WorkspaceID, arg.ID)
-	var i PageAnswer
-	err := row.Scan(
-		&i.ID,
-		&i.WorkspaceID,
-		&i.InboxID,
-		&i.ChannelID,
-		&i.Page,
-		&i.Title,
-		&i.Question,
-		&i.Answer,
-		&i.MemberID,
-		&i.ConversationID,
-		&i.PublishedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
-}
-
-const listClientPageAnswers = `-- name: ListClientPageAnswers :many
-SELECT id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id, conversation_id, published_at, updated_at FROM page_answers
-WHERE workspace_id = $1 AND inbox_id = $2 AND page = $3
-ORDER BY published_at DESC, id DESC
-LIMIT 100
-`
-
-type ListClientPageAnswersParams struct {
-	WorkspaceID uuid.UUID
-	InboxID     uuid.UUID
-	Page        string
-}
-
-func (q *Queries) ListClientPageAnswers(ctx context.Context, arg ListClientPageAnswersParams) ([]PageAnswer, error) {
-	rows, err := q.db.Query(ctx, listClientPageAnswers, arg.WorkspaceID, arg.InboxID, arg.Page)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []PageAnswer
-	for rows.Next() {
-		var i PageAnswer
-		if err := rows.Scan(
-			&i.ID,
-			&i.WorkspaceID,
-			&i.InboxID,
-			&i.ChannelID,
-			&i.Page,
-			&i.Title,
-			&i.Question,
-			&i.Answer,
-			&i.MemberID,
-			&i.ConversationID,
-			&i.PublishedAt,
-			&i.UpdatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
 }
 
 const listDocsPages = `-- name: ListDocsPages :many
@@ -277,27 +110,29 @@ WITH visible AS (
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+           count(*)::bigint AS open_feedback
     FROM conversations c
     WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND c.status = 'open' AND NOT c.spam
       AND ($10::text IS NULL OR c.page_url = $10::text)
       AND ($11::text IS NULL OR left(c.page_url, length($11::text) + 1) = $11::text || '/')
     GROUP BY c.inbox_id, c.page_url
-), answered AS (
-    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
-    FROM page_answers a
-    WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
-      AND ($10::text IS NULL OR a.page = $10::text)
-      AND ($11::text IS NULL OR left(a.page, length($11::text) + 1) = $11::text || '/')
-    GROUP BY a.inbox_id, a.page
+), threads AS (
+    SELECT d.inbox_id, d.page,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL)::bigint AS open_threads,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
+           sum(d.pending_posts)::bigint AS pending_posts
+    FROM discussions d
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+      AND ($10::text IS NULL OR d.page = $10::text)
+      AND ($11::text IS NULL OR left(d.page, length($11::text) + 1) = $11::text || '/')
+    GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
     UNION SELECT opened.inbox_id, opened.page FROM opened
-    UNION SELECT answered.inbox_id, answered.page FROM answered
+    UNION SELECT threads.inbox_id, threads.page FROM threads
 )
-SELECT d.inbox_id, d.page, d.title, d.up, d.down, d.open_feedback, d.open_questions, d.published_answers FROM (
+SELECT d.inbox_id, d.page, d.title, d.up, d.down, d.open_feedback, d.open_threads, d.unanswered_threads, d.pending_posts FROM (
 SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
     coalesce(
         (SELECT t.title FROM page_ratings t
@@ -306,24 +141,25 @@ SELECT p.inbox_id::uuid AS inbox_id, p.page::text AS page,
         (SELECT ct.page_title FROM conversations ct
          WHERE ct.workspace_id = $1 AND ct.inbox_id = p.inbox_id AND ct.page_url = p.page AND ct.page_title <> ''
          ORDER BY ct.created_at DESC LIMIT 1),
-        (SELECT at.title FROM page_answers at
-         WHERE at.workspace_id = $1 AND at.inbox_id = p.inbox_id AND at.page = p.page AND at.title <> ''
-         ORDER BY at.published_at DESC LIMIT 1),
+        (SELECT dt.page_title FROM discussions dt
+         WHERE dt.workspace_id = $1 AND dt.inbox_id = p.inbox_id AND dt.page = p.page AND dt.page_title <> ''
+         ORDER BY dt.created_at DESC LIMIT 1),
         '')::text AS title,
     coalesce(rated.up, 0)::bigint AS up,
     coalesce(rated.down, 0)::bigint AS down,
     coalesce(opened.open_feedback, 0)::bigint AS open_feedback,
-    coalesce(opened.open_questions, 0)::bigint AS open_questions,
-    coalesce(answered.published_answers, 0)::bigint AS published_answers
+    coalesce(threads.open_threads, 0)::bigint AS open_threads,
+    coalesce(threads.unanswered_threads, 0)::bigint AS unanswered_threads,
+    coalesce(threads.pending_posts, 0)::bigint AS pending_posts
 FROM pages p
 LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
 LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
-LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+LEFT JOIN threads ON threads.inbox_id = p.inbox_id AND threads.page = p.page
 ) d
 ORDER BY
     CASE $2::text
         WHEN 'up' THEN d.up
-        WHEN 'activity' THEN d.up + d.down + d.open_feedback + d.open_questions
+        WHEN 'activity' THEN d.up + d.down + d.open_feedback + d.open_threads + d.pending_posts
         WHEN 'helpful' THEN CASE WHEN d.up + d.down >= $3::bigint THEN 1 ELSE 0 END
         ELSE d.down
     END DESC,
@@ -347,14 +183,15 @@ type ListDocsPagesParams struct {
 }
 
 type ListDocsPagesRow struct {
-	InboxID          uuid.UUID
-	Page             string
-	Title            string
-	Up               int64
-	Down             int64
-	OpenFeedback     int64
-	OpenQuestions    int64
-	PublishedAnswers int64
+	InboxID           uuid.UUID
+	Page              string
+	Title             string
+	Up                int64
+	Down              int64
+	OpenFeedback      int64
+	OpenThreads       int64
+	UnansweredThreads int64
+	PendingPosts      int64
 }
 
 func (q *Queries) ListDocsPages(ctx context.Context, arg ListDocsPagesParams) ([]ListDocsPagesRow, error) {
@@ -385,8 +222,9 @@ func (q *Queries) ListDocsPages(ctx context.Context, arg ListDocsPagesParams) ([
 			&i.Up,
 			&i.Down,
 			&i.OpenFeedback,
-			&i.OpenQuestions,
-			&i.PublishedAnswers,
+			&i.OpenThreads,
+			&i.UnansweredThreads,
+			&i.PendingPosts,
 		); err != nil {
 			return nil, err
 		}
@@ -413,31 +251,34 @@ WITH visible AS (
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+           count(*)::bigint AS open_feedback
     FROM conversations c
     WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND c.status = 'open' AND NOT c.spam
     GROUP BY c.inbox_id, c.page_url
-), answered AS (
-    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
-    FROM page_answers a
-    WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
-    GROUP BY a.inbox_id, a.page
+), threads AS (
+    SELECT d.inbox_id, d.page,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL)::bigint AS open_threads,
+           count(*) FILTER (WHERE d.state = 'published' AND d.answer_post_id IS NULL AND d.locked_at IS NULL AND d.reply_count = 0)::bigint AS unanswered_threads,
+           sum(d.pending_posts)::bigint AS pending_posts
+    FROM discussions d
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+    GROUP BY d.inbox_id, d.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
     UNION SELECT opened.inbox_id, opened.page FROM opened
-    UNION SELECT answered.inbox_id, answered.page FROM answered
+    UNION SELECT threads.inbox_id, threads.page FROM threads
 ), data AS (
     SELECT p.inbox_id, substring(p.page from '^[a-z]+://[^/]+') AS origin, count(*)::bigint AS pages,
            coalesce(sum(rated.up), 0)::bigint AS up, coalesce(sum(rated.down), 0)::bigint AS down,
            coalesce(sum(opened.open_feedback), 0)::bigint AS open_feedback,
-           coalesce(sum(opened.open_questions), 0)::bigint AS open_questions,
-           coalesce(sum(answered.published_answers), 0)::bigint AS published_answers
+           coalesce(sum(threads.open_threads), 0)::bigint AS open_threads,
+           coalesce(sum(threads.unanswered_threads), 0)::bigint AS unanswered_threads,
+           coalesce(sum(threads.pending_posts), 0)::bigint AS pending_posts
     FROM pages p
     LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
     LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
-    LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+    LEFT JOIN threads ON threads.inbox_id = p.inbox_id AND threads.page = p.page
     GROUP BY 1, 2
 ), allowed AS (
     SELECT ch.inbox_id, o.origin, ch.id AS channel_id, ch.name AS channel_name,
@@ -456,8 +297,9 @@ SELECT s.origin::text AS origin, s.inbox_id::uuid AS inbox_id,
     coalesce(d.up, 0)::bigint AS up,
     coalesce(d.down, 0)::bigint AS down,
     coalesce(d.open_feedback, 0)::bigint AS open_feedback,
-    coalesce(d.open_questions, 0)::bigint AS open_questions,
-    coalesce(d.published_answers, 0)::bigint AS published_answers
+    coalesce(d.open_threads, 0)::bigint AS open_threads,
+    coalesce(d.unanswered_threads, 0)::bigint AS unanswered_threads,
+    coalesce(d.pending_posts, 0)::bigint AS pending_posts
 FROM sites s
 LEFT JOIN data d ON d.inbox_id = s.inbox_id AND d.origin = s.origin
 LEFT JOIN allowed al ON al.inbox_id = s.inbox_id AND al.origin = s.origin AND al.n = 1
@@ -473,16 +315,17 @@ type ListDocsSitesParams struct {
 }
 
 type ListDocsSitesRow struct {
-	Origin           string
-	InboxID          uuid.UUID
-	ChannelID        *uuid.UUID
-	ChannelName      *string
-	Pages            int64
-	Up               int64
-	Down             int64
-	OpenFeedback     int64
-	OpenQuestions    int64
-	PublishedAnswers int64
+	Origin            string
+	InboxID           uuid.UUID
+	ChannelID         *uuid.UUID
+	ChannelName       *string
+	Pages             int64
+	Up                int64
+	Down              int64
+	OpenFeedback      int64
+	OpenThreads       int64
+	UnansweredThreads int64
+	PendingPosts      int64
 }
 
 func (q *Queries) ListDocsSites(ctx context.Context, arg ListDocsSitesParams) ([]ListDocsSitesRow, error) {
@@ -509,8 +352,9 @@ func (q *Queries) ListDocsSites(ctx context.Context, arg ListDocsSitesParams) ([
 			&i.Up,
 			&i.Down,
 			&i.OpenFeedback,
-			&i.OpenQuestions,
-			&i.PublishedAnswers,
+			&i.OpenThreads,
+			&i.UnansweredThreads,
+			&i.PendingPosts,
 		); err != nil {
 			return nil, err
 		}
@@ -540,22 +384,28 @@ WITH visible AS (
     GROUP BY r.day
 ), sent AS (
     SELECT (c.created_at AT TIME ZONE 'UTC')::date AS day,
-           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS feedback,
-           count(*) FILTER (WHERE c.kind = 'question')::bigint AS questions
+           count(*)::bigint AS feedback
     FROM conversations c
     WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND NOT c.spam AND c.created_at >= $8::timestamptz
+      AND c.page_url IS NOT NULL AND c.kind = 'feedback' AND NOT c.spam AND c.created_at >= $8::timestamptz
       AND ($7::text IS NULL OR left(c.page_url, length($7::text) + 1) = $7::text || '/')
+    GROUP BY 1
+), started AS (
+    SELECT (d.created_at AT TIME ZONE 'UTC')::date AS day, count(*)::bigint AS threads
+    FROM discussions d
+    WHERE d.workspace_id = $1 AND d.inbox_id IN (SELECT id FROM visible)
+      AND d.created_at >= $8::timestamptz AND ($7::text IS NULL OR left(d.page, length($7::text) + 1) = $7::text || '/')
     GROUP BY 1
 )
 SELECT days.day::date AS day,
     coalesce(rated.up, 0)::bigint AS up,
     coalesce(rated.down, 0)::bigint AS down,
     coalesce(sent.feedback, 0)::bigint AS feedback,
-    coalesce(sent.questions, 0)::bigint AS questions
+    coalesce(started.threads, 0)::bigint AS threads
 FROM days
 LEFT JOIN rated ON rated.day = days.day
 LEFT JOIN sent ON sent.day = days.day
+LEFT JOIN started ON started.day = days.day
 ORDER BY days.day
 `
 
@@ -571,11 +421,11 @@ type ListDocsSummaryDaysParams struct {
 }
 
 type ListDocsSummaryDaysRow struct {
-	Day       time.Time
-	Up        int64
-	Down      int64
-	Feedback  int64
-	Questions int64
+	Day      time.Time
+	Up       int64
+	Down     int64
+	Feedback int64
+	Threads  int64
 }
 
 func (q *Queries) ListDocsSummaryDays(ctx context.Context, arg ListDocsSummaryDaysParams) ([]ListDocsSummaryDaysRow, error) {
@@ -601,77 +451,7 @@ func (q *Queries) ListDocsSummaryDays(ctx context.Context, arg ListDocsSummaryDa
 			&i.Up,
 			&i.Down,
 			&i.Feedback,
-			&i.Questions,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const listPageAnswers = `-- name: ListPageAnswers :many
-SELECT a.id, a.workspace_id, a.inbox_id, a.channel_id, a.page, a.title, a.question, a.answer, a.member_id, a.conversation_id, a.published_at, a.updated_at FROM page_answers a
-WHERE a.workspace_id = $1
-  AND ($2::bool OR EXISTS (
-      SELECT 1 FROM inbox_viewers iv
-      WHERE iv.workspace_id = a.workspace_id AND iv.inbox_id = a.inbox_id AND iv.viewer_id = $3::uuid))
-  AND ($4::uuid IS NULL OR a.inbox_id = $4::uuid)
-  AND ($5::text IS NULL OR a.page = $5::text)
-  AND ($6::uuid IS NULL OR a.conversation_id = $6::uuid)
-  AND ($7::timestamptz IS NULL
-       OR (a.published_at, a.id) < ($7::timestamptz, $8::uuid))
-ORDER BY a.published_at DESC, a.id DESC
-LIMIT $9
-`
-
-type ListPageAnswersParams struct {
-	WorkspaceID    uuid.UUID
-	AllInboxes     bool
-	ViewerID       uuid.UUID
-	InboxID        *uuid.UUID
-	Page           *string
-	ConversationID *uuid.UUID
-	CursorAt       *time.Time
-	CursorID       *uuid.UUID
-	Lim            int32
-}
-
-func (q *Queries) ListPageAnswers(ctx context.Context, arg ListPageAnswersParams) ([]PageAnswer, error) {
-	rows, err := q.db.Query(ctx, listPageAnswers,
-		arg.WorkspaceID,
-		arg.AllInboxes,
-		arg.ViewerID,
-		arg.InboxID,
-		arg.Page,
-		arg.ConversationID,
-		arg.CursorAt,
-		arg.CursorID,
-		arg.Lim,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []PageAnswer
-	for rows.Next() {
-		var i PageAnswer
-		if err := rows.Scan(
-			&i.ID,
-			&i.WorkspaceID,
-			&i.InboxID,
-			&i.ChannelID,
-			&i.Page,
-			&i.Title,
-			&i.Question,
-			&i.Answer,
-			&i.MemberID,
-			&i.ConversationID,
-			&i.PublishedAt,
-			&i.UpdatedAt,
+			&i.Threads,
 		); err != nil {
 			return nil, err
 		}
@@ -757,44 +537,4 @@ func (q *Queries) TakeBackPageRating(ctx context.Context, arg TakeBackPageRating
 		arg.Since,
 	)
 	return err
-}
-
-const updatePageAnswer = `-- name: UpdatePageAnswer :one
-UPDATE page_answers SET question = $1, answer = $2, updated_at = $3
-WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, inbox_id, channel_id, page, title, question, answer, member_id, conversation_id, published_at, updated_at
-`
-
-type UpdatePageAnswerParams struct {
-	Question    string
-	Answer      string
-	Now         time.Time
-	WorkspaceID uuid.UUID
-	ID          uuid.UUID
-}
-
-func (q *Queries) UpdatePageAnswer(ctx context.Context, arg UpdatePageAnswerParams) (PageAnswer, error) {
-	row := q.db.QueryRow(ctx, updatePageAnswer,
-		arg.Question,
-		arg.Answer,
-		arg.Now,
-		arg.WorkspaceID,
-		arg.ID,
-	)
-	var i PageAnswer
-	err := row.Scan(
-		&i.ID,
-		&i.WorkspaceID,
-		&i.InboxID,
-		&i.ChannelID,
-		&i.Page,
-		&i.Title,
-		&i.Question,
-		&i.Answer,
-		&i.MemberID,
-		&i.ConversationID,
-		&i.PublishedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
 }

@@ -73,6 +73,13 @@ func (w *retentionWorker) Work(ctx context.Context, _ *river.Job[jobs.RetentionA
 	if err := w.s.queueWorkspaceDeletions(ctx); err != nil {
 		return err
 	}
+	now := w.s.now()
+	if err := w.s.st.DeleteExpiredReaderTokens(ctx, now); err != nil {
+		return err
+	}
+	if err := w.s.st.DeleteOldReaderNotifications(ctx, now.Add(-readerNotificationsKept)); err != nil {
+		return err
+	}
 	return w.s.ApplyRetention(ctx)
 }
 

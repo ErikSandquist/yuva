@@ -1,0 +1,633 @@
+package api
+
+import (
+	"context"
+	"encoding/base64"
+	"strconv"
+	"strings"
+	"time"
+	"uuid"
+
+	"github.com/productdevbook/yuva/api/internal/oas"
+	"github.com/productdevbook/yuva/api/internal/store"
+)
+
+const (
+	readerTokenPrefix = "yuva_rd_"
+	privateNoStore    = "private, no-store"
+)
+
+var limitDiscussionPostsPerHour = limit{discussionPostsPerHour, time.Hour}
+
+// discussant is a caller of the /client/v1 discussion endpoints: a reader token or a contact
+// session of a chat channel.
+type discussant struct {
+	actor
+	workspaceID, inboxID, channelID uuid.UUID
+	kind                            string
+	chat                            store.ChatChannel
+	personID                        *uuid.UUID
+	readerTokenID                   *uuid.UUID
+	identified                      bool
+}
+
+const discussantKey ctxKey = iota + 200
+
+func discussantFrom(ctx context.Context) *discussant {
+	d, _ := ctx.Value(discussantKey).(*discussant)
+	return d
+}
+
+func (s *Server) resolveDiscussant(ctx context.Context, token string) (*discussant, error) {
+	if !strings.HasPrefix(token, readerTokenPrefix) {
+		cp, err := s.resolveContact(ctx, token)
+		if err != nil {
+			return nil, err
+		}
+		contact := cp.contactID
+		return &discussant{
+			actor: actor{contactID: &contact}, workspaceID: cp.workspaceID, inboxID: cp.inboxID, channelID: cp.channelID,
+			kind: cp.kind, chat: cp.chat, identified: cp.identified,
+		}, nil
+	}
+	now := s.now()
+	tok, err := s.st.GetReaderTokenByHash(ctx, store.GetReaderTokenByHashParams{TokenHash: hashSecret(token), Now: now})
+	if store.IsNotFound(err) {
+		return nil, errContactUnauthenticated
+	}
+	if err != nil {
+		return nil, err
+	}
+	ch, err := s.st.GetSessionChannel(ctx, store.GetSessionChannelParams{WorkspaceID: tok.WorkspaceID, ChannelID: tok.ChannelID})
+	if store.IsNotFound(err) || (err == nil && ch.Kind != string(oas.ChannelKindChat)) {
+		return nil, errContactUnauthenticated
+	}
+	if err != nil {
+		return nil, err
+	}
+	if !s.originAllowedFor(originFrom(ctx), ch.Kind, ch.AllowedOrigins) {
+		return nil, errOriginRefused
+	}
+	inbox, err := s.st.GetChannel(ctx, store.GetChannelParams{WorkspaceID: tok.WorkspaceID, ID: tok.ChannelID})
+	if err != nil {
+		return nil, err
+	}
+	person, tokenID := tok.PersonID, tok.ID
+	d := &discussant{
+		workspaceID: tok.WorkspaceID, inboxID: inbox.InboxID, channelID: tok.ChannelID, kind: ch.Kind, chat: sessionChat(ch),
+		personID: &person, readerTokenID: &tokenID,
+	}
+	m, err := s.st.GetMemberByPerson(ctx, store.GetMemberByPersonParams{WorkspaceID: tok.WorkspaceID, PersonID: person})
+	if err != nil && !store.IsNotFound(err) {
+		return nil, err
+	}
+	if err == nil {
+		ok, err := memberHasInbox(ctx, s.st.Queries, tok.WorkspaceID, d.inboxID, m.ID)
+		if err != nil {
+			return nil, err
+		}
+		if ok {
+			id := m.ID
+			d.memberID = &id
+			return d, nil
+		}
+	}
+	c, err := s.st.FindContactByPerson(ctx, store.FindContactByPersonParams{WorkspaceID: tok.WorkspaceID, PersonID: &person})
+	if err != nil && !store.IsNotFound(err) {
+		return nil, err
+	}
+	if err == nil {
+		if c.Blocked {
+			return nil, errContactBlocked
+		}
+		id := c.ID
+		d.contactID = &id
+	}
+	return d, nil
+}
+
+// ensureWriter makes sure the caller can write: anonymous visitors cannot, and a reader gets the
+// contact linked to their person in this workspace on their first write.
+func (s *Server) ensureWriter(ctx context.Context, d *discussant) error {
+	if d.readerTokenID == nil && !d.identified {
+		return errSignInRequired
+	}
+	if d.memberID != nil || d.contactID != nil {
+		return nil
+	}
+	var id uuid.UUID
+	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		var err error
+		id, err = s.readerContact(ctx, q, d.workspaceID, *d.personID)
+		return err
+	})
+	if store.IsUniqueViolation(err) {
+		c, ferr := s.st.FindContactByPerson(ctx, store.FindContactByPersonParams{WorkspaceID: d.workspaceID, PersonID: d.personID})
+		if ferr != nil {
+			return ferr
+		}
+		id, err = c.ID, nil
+	}
+	if err != nil {
+		return err
+	}
+	d.contactID = &id
+	return nil
+}
+
+// readerContact links the person to the workspace's contact with their address, or creates one.
+func (s *Server) readerContact(ctx context.Context, q *store.Queries, ws, personID uuid.UUID) (uuid.UUID, error) {
+	person, err := q.GetPerson(ctx, personID)
+	if err != nil {
+		return uuid.Nil(), err
+	}
+	now := s.now()
+	linked, err := q.LinkContactByEmail(ctx, store.LinkContactByEmailParams{WorkspaceID: ws, Email: person.Email, PersonID: &personID, Now: now})
+	if err == nil {
+		return linked.ID, nil
+	}
+	if !store.IsNotFound(err) {
+		return uuid.Nil(), err
+	}
+	c, err := q.CreateContact(ctx, store.CreateContactParams{ID: newID(), WorkspaceID: ws, Name: person.Name, Attributes: []byte("{}"), Now: now})
+	if err != nil {
+		return uuid.Nil(), err
+	}
+	if err := q.SetContactPerson(ctx, store.SetContactPersonParams{WorkspaceID: ws, ID: c.ID, PersonID: &personID}); err != nil {
+		return uuid.Nil(), err
+	}
+	if _, err := q.GetContactIDByEmail(ctx, store.GetContactIDByEmailParams{WorkspaceID: ws, Email: person.Email}); store.IsNotFound(err) {
+		if err := q.AddContactEmail(ctx, store.AddContactEmailParams{WorkspaceID: ws, ContactID: c.ID, Email: person.Email, Position: 0}); err != nil {
+			return uuid.Nil(), err
+		}
+	} else if err != nil {
+		return uuid.Nil(), err
+	}
+	return c.ID, q.RefreshContactSearch(ctx, store.RefreshContactSearchParams{WorkspaceID: ws, ID: c.ID})
+}
+
+func (s *Server) discussionChecks(ctx context.Context, d *discussant) []rateCheck {
+	who := "member:" + uuidString(d.memberID)
+	if d.contactID != nil {
+		who = "contact:" + d.contactID.String()
+	}
+	return append(s.writeChecks(ctx, contactPrincipal{channelID: d.channelID}),
+		rateCheck{"discussion:post:" + who, limit{discussionPostsPerMin, time.Minute}},
+		rateCheck{"discussion:posth:" + who, limitDiscussionPostsPerHour})
+}
+
+func uuidString(id *uuid.UUID) string {
+	if id == nil {
+		return ""
+	}
+	return id.String()
+}
+
+// clientThread loads a thread the discussant may see: in its inbox, on a page its channel serves,
+// published or their own pending one.
+func (d *discussant) thread(ctx context.Context, q *store.Queries, id uuid.UUID, lock bool) (thread, error) {
+	t, err := loadThread(ctx, q, d.workspaceID, id, lock)
+	if err != nil {
+		return t, err
+	}
+	if t.d.InboxID != d.inboxID {
+		return t, errDiscussionGone
+	}
+	if _, err := channelPage(t.d.Page, d.kind, d.chat.AllowedOrigins); err != nil {
+		return t, errDiscussionGone
+	}
+	v := viewer{actor: d.actor}
+	if !v.sees(t.opening()) {
+		return t, errDiscussionGone
+	}
+	return t, nil
+}
+
+func (d *discussant) viewer() *viewer { return &viewer{actor: d.actor, client: true} }
+
+func (d *discussant) checkOpen() error {
+	if d.kind != string(oas.ChannelKindChat) || d.chat.Discussions == string(oas.DiscussionModeOff) || d.chat.Discussions == "" {
+		return errDiscussionsOff
+	}
+	return nil
+}
+
+func (d *discussant) mayChange(t thread) error {
+	if t.d.LockedAt != nil && d.memberID == nil {
+		return errDiscussionLocked
+	}
+	return nil
+}
+
+// positionCursor is an offset within one sort, for lists without a stable key.
+func encodePosition(sort string, n int32) string {
+	return base64.RawURLEncoding.EncodeToString([]byte(sort + "." + strconv.Itoa(int(n))))
+}
+
+func decodePosition(sort string, s *string) (int32, error) {
+	if s == nil || *s == "" {
+		return 0, nil
+	}
+	raw, err := base64.RawURLEncoding.DecodeString(*s)
+	if err != nil {
+		return 0, errInvalidCursor
+	}
+	got, num, ok := strings.Cut(string(raw), ".")
+	if !ok || got != sort {
+		return 0, errInvalidCursor
+	}
+	n, err := strconv.ParseInt(num, 10, 32)
+	if err != nil || n < 0 {
+		return 0, errInvalidCursor
+	}
+	return int32(n), nil
+}
+
+// readerOf resolves the optional token on the public read endpoints; it must belong to the channel.
+func (s *Server) readerOf(ctx context.Context, ch store.FindChatChannelByKeyRow) (*viewer, string, error) {
+	token, ok := bearerToken(requestFrom(ctx))
+	if !ok {
+		return &viewer{client: true}, publicMaxAge, nil
+	}
+	d, err := s.resolveDiscussant(ctx, token)
+	if err != nil {
+		return nil, "", err
+	}
+	if d.channelID != ch.ChannelID || d.workspaceID != ch.WorkspaceID {
+		return nil, "", errContactUnauthenticated
+	}
+	return d.viewer(), privateNoStore, nil
+}
+
+func (s *Server) discussionChannel(ctx context.Context, key string) (store.FindChatChannelByKeyRow, error) {
+	if err := s.rateLimit(rateCheck{"discussions:ip:" + rateIP(s.clientIP(requestFrom(ctx))), limitChannelPerIP}); err != nil {
+		return store.FindChatChannelByKeyRow{}, err
+	}
+	ch, err := s.docsChannel(ctx, key, nil)
+	if err != nil {
+		return ch, err
+	}
+	if ch.Discussions == string(oas.DiscussionModeOff) {
+		return ch, errDiscussionsOff
+	}
+	return ch, nil
+}
+
+func (s *Server) ListClientDiscussions(ctx context.Context, req oas.ListClientDiscussionsRequestObject) (oas.ListClientDiscussionsResponseObject, error) {
+	ch, err := s.discussionChannel(ctx, req.ChannelKey)
+	if err != nil {
+		return nil, err
+	}
+	prm := req.Params
+	page, err := channelPage(prm.Page, ch.Kind, ch.AllowedOrigins)
+	if err != nil {
+		return nil, err
+	}
+	sort := oas.DiscussionSortNew
+	if prm.Sort != nil {
+		if !prm.Sort.Valid() {
+			return nil, errValidation("sort must be new, top or unanswered")
+		}
+		sort = *prm.Sort
+	}
+	lim, err := pageSize(prm.Limit)
+	if err != nil {
+		return nil, err
+	}
+	off, err := decodePosition(string(sort), prm.Cursor)
+	if err != nil {
+		return nil, err
+	}
+	v, cache, err := s.readerOf(ctx, ch)
+	if err != nil {
+		return nil, err
+	}
+	rows, err := s.st.ListPageDiscussions(ctx, store.ListPageDiscussionsParams{
+		WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Page: page, ViewerContact: v.contactID, ViewerMember: v.memberID,
+		Sort: string(sort), Lim: lim + 1, Off: off,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var next *string
+	if len(rows) > int(lim) {
+		rows = rows[:lim]
+		c := encodePosition(string(sort), off+lim)
+		next = &c
+	}
+	items, err := discussionsBody(ctx, s.st.Queries, ch.WorkspaceID, rows, v)
+	if err != nil {
+		return nil, err
+	}
+	return oas.ListClientDiscussions200JSONResponse{
+		Body:    oas.DiscussionPage{Items: items, NextCursor: next},
+		Headers: oas.ListClientDiscussions200ResponseHeaders{CacheControl: &cache},
+	}, nil
+}
+
+func (s *Server) GetClientDiscussion(ctx context.Context, req oas.GetClientDiscussionRequestObject) (oas.GetClientDiscussionResponseObject, error) {
+	ch, err := s.discussionChannel(ctx, req.ChannelKey)
+	if err != nil {
+		return nil, err
+	}
+	v, cache, err := s.readerOf(ctx, ch)
+	if err != nil {
+		return nil, err
+	}
+	t, err := loadThread(ctx, s.st.Queries, ch.WorkspaceID, req.DiscussionId, false)
+	if err != nil {
+		return nil, err
+	}
+	if t.d.InboxID != ch.InboxID || !v.sees(t.opening()) {
+		return nil, errDiscussionGone
+	}
+	if _, err := channelPage(t.d.Page, ch.Kind, ch.AllowedOrigins); err != nil {
+		return nil, errDiscussionGone
+	}
+	if err := fillViewer(ctx, s.st.Queries, ch.WorkspaceID, v, []uuid.UUID{t.d.ID}); err != nil {
+		return nil, err
+	}
+	return oas.GetClientDiscussion200JSONResponse{
+		Body:    t.detail(v),
+		Headers: oas.GetClientDiscussion200ResponseHeaders{CacheControl: &cache},
+	}, nil
+}
+
+func (s *Server) CreateClientDiscussion(ctx context.Context, req oas.CreateClientDiscussionRequestObject) (oas.CreateClientDiscussionResponseObject, error) {
+	d := discussantFrom(ctx)
+	if err := d.checkOpen(); err != nil {
+		return nil, err
+	}
+	if err := s.rateLimit(s.discussionChecks(ctx, d)...); err != nil {
+		return nil, err
+	}
+	b := req.Body
+	page, err := channelPage(b.PageUrl, d.kind, d.chat.AllowedOrigins)
+	if err != nil {
+		return nil, err
+	}
+	title, err := discussionTitle(b.Title)
+	if err != nil {
+		return nil, err
+	}
+	body, err := discussionBodyText(b.Body)
+	if err != nil {
+		return nil, err
+	}
+	pageTitle, err := pageTitle(b.PageTitle)
+	if err != nil {
+		return nil, err
+	}
+	var id uuid.UUID
+	err = s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, d.chat.Discussions, d.actor, d.identified)
+		if err != nil {
+			return err
+		}
+		n := newThread{ws: d.workspaceID, inbox: d.inboxID, channel: d.channelID, page: page, title: title, body: body, author: d.actor, state: state}
+		if pageTitle != nil {
+			n.pageTitle = *pageTitle
+		}
+		t, err := s.createThread(ctx, q, events, n)
+		id = t.ID
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	out, err := threadView(ctx, s.st.Queries, d.workspaceID, id, d.viewer())
+	if err != nil {
+		return nil, err
+	}
+	return oas.CreateClientDiscussion201JSONResponse(out), nil
+}
+
+func (s *Server) CreateClientDiscussionPost(ctx context.Context, req oas.CreateClientDiscussionPostRequestObject) (oas.CreateClientDiscussionPostResponseObject, error) {
+	d := discussantFrom(ctx)
+	if err := d.checkOpen(); err != nil {
+		return nil, err
+	}
+	if err := s.rateLimit(s.discussionChecks(ctx, d)...); err != nil {
+		return nil, err
+	}
+	body, err := discussionBodyText(req.Body.Body)
+	if err != nil {
+		return nil, err
+	}
+	var id uuid.UUID
+	err = s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		t, err := d.thread(ctx, q, req.DiscussionId, true)
+		if err != nil {
+			return err
+		}
+		if err := d.mayChange(t); err != nil {
+			return err
+		}
+		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, d.chat.Discussions, d.actor, d.identified)
+		if err != nil {
+			return err
+		}
+		id, err = s.addReply(ctx, q, events, t, d.actor, body, req.Body.ParentPostId, state)
+		return err
+	})
+	if err != nil {
+		return nil, err
+	}
+	out, err := postView(ctx, s.st.Queries, d.workspaceID, id, d.viewer())
+	if err != nil {
+		return nil, err
+	}
+	return oas.CreateClientDiscussionPost201JSONResponse(out), nil
+}
+
+func (s *Server) clientAnswer(ctx context.Context, id uuid.UUID, postID *uuid.UUID) (oas.Discussion, error) {
+	d := discussantFrom(ctx)
+	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		t, err := d.thread(ctx, q, id, true)
+		if err != nil {
+			return err
+		}
+		if err := d.mayChange(t); err != nil {
+			return err
+		}
+		if d.memberID == nil && !d.owns(t.opening()) {
+			return errNotPostAuthor
+		}
+		return s.setAnswer(ctx, q, events, t, postID, d.actor)
+	})
+	if err != nil {
+		return oas.Discussion{}, err
+	}
+	return threadView(ctx, s.st.Queries, d.workspaceID, id, d.viewer())
+}
+
+func (s *Server) AcceptClientDiscussionAnswer(ctx context.Context, req oas.AcceptClientDiscussionAnswerRequestObject) (oas.AcceptClientDiscussionAnswerResponseObject, error) {
+	out, err := s.clientAnswer(ctx, req.DiscussionId, &req.Body.PostId)
+	if err != nil {
+		return nil, err
+	}
+	return oas.AcceptClientDiscussionAnswer200JSONResponse(out), nil
+}
+
+func (s *Server) ClearClientDiscussionAnswer(ctx context.Context, req oas.ClearClientDiscussionAnswerRequestObject) (oas.ClearClientDiscussionAnswerResponseObject, error) {
+	out, err := s.clientAnswer(ctx, req.DiscussionId, nil)
+	if err != nil {
+		return nil, err
+	}
+	return oas.ClearClientDiscussionAnswer200JSONResponse(out), nil
+}
+
+func (s *Server) clientFollow(ctx context.Context, id uuid.UUID, follow bool) error {
+	d := discussantFrom(ctx)
+	if err := s.rateLimit(s.writeChecks(ctx, contactPrincipal{channelID: d.channelID})...); err != nil {
+		return err
+	}
+	t, err := d.thread(ctx, s.st.Queries, id, false)
+	if err != nil || d.contactID == nil {
+		return err
+	}
+	if follow {
+		return s.st.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID, Now: s.now()})
+	}
+	_, err = s.st.UnfollowDiscussion(ctx, store.UnfollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID})
+	return err
+}
+
+func (s *Server) FollowClientDiscussion(ctx context.Context, req oas.FollowClientDiscussionRequestObject) (oas.FollowClientDiscussionResponseObject, error) {
+	if err := s.clientFollow(ctx, req.DiscussionId, true); err != nil {
+		return nil, err
+	}
+	return oas.FollowClientDiscussion204Response{}, nil
+}
+
+func (s *Server) UnfollowClientDiscussion(ctx context.Context, req oas.UnfollowClientDiscussionRequestObject) (oas.UnfollowClientDiscussionResponseObject, error) {
+	if err := s.clientFollow(ctx, req.DiscussionId, false); err != nil {
+		return nil, err
+	}
+	return oas.UnfollowClientDiscussion204Response{}, nil
+}
+
+// clientPost loads a post the discussant may see, with its thread, for a change.
+func (d *discussant) post(ctx context.Context, q *store.Queries, id uuid.UUID) (thread, store.DiscussionPostView, error) {
+	p, err := q.GetDiscussionPost(ctx, store.GetDiscussionPostParams{WorkspaceID: d.workspaceID, ID: id})
+	if store.IsNotFound(err) {
+		return thread{}, p, errDiscussionPostGone
+	}
+	if err != nil {
+		return thread{}, p, err
+	}
+	t, err := d.thread(ctx, q, p.DiscussionID, true)
+	if err == errDiscussionGone {
+		return t, p, errDiscussionPostGone
+	}
+	if err != nil {
+		return t, p, err
+	}
+	if p, _ = t.post(id); !(&viewer{actor: d.actor}).sees(p) {
+		return t, p, errDiscussionPostGone
+	}
+	return t, p, nil
+}
+
+func (s *Server) UpdateClientDiscussionPost(ctx context.Context, req oas.UpdateClientDiscussionPostRequestObject) (oas.UpdateClientDiscussionPostResponseObject, error) {
+	d := discussantFrom(ctx)
+	if req.Body.Body == nil && req.Body.Title == nil {
+		return nil, errValidation("send body or title")
+	}
+	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		t, p, err := d.post(ctx, q, req.PostId)
+		if err != nil {
+			return err
+		}
+		if !d.owns(p) {
+			return errNotPostAuthor
+		}
+		if err := d.mayChange(t); err != nil {
+			return err
+		}
+		if d.memberID == nil && s.now().Sub(p.CreatedAt) > discussionEditWindow {
+			return errEditWindowClosed
+		}
+		return s.editPost(ctx, q, events, t, p, req.Body.Body, req.Body.Title)
+	})
+	if err != nil {
+		return nil, err
+	}
+	out, err := postView(ctx, s.st.Queries, d.workspaceID, req.PostId, d.viewer())
+	if err != nil {
+		return nil, err
+	}
+	return oas.UpdateClientDiscussionPost200JSONResponse(out), nil
+}
+
+func (s *Server) DeleteClientDiscussionPost(ctx context.Context, req oas.DeleteClientDiscussionPostRequestObject) (oas.DeleteClientDiscussionPostResponseObject, error) {
+	d := discussantFrom(ctx)
+	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		t, p, err := d.post(ctx, q, req.PostId)
+		if err != nil {
+			return err
+		}
+		if p.DeletedAt != nil {
+			return errDiscussionPostGone
+		}
+		if !d.owns(p) {
+			return errNotPostAuthor
+		}
+		return s.deletePost(ctx, q, events, t, p)
+	})
+	if err != nil {
+		return nil, err
+	}
+	return oas.DeleteClientDiscussionPost204Response{}, nil
+}
+
+func (s *Server) clientVote(ctx context.Context, id uuid.UUID, add bool) (oas.DiscussionPost, error) {
+	d := discussantFrom(ctx)
+	if err := s.rateLimit(s.writeChecks(ctx, contactPrincipal{channelID: d.channelID})...); err != nil {
+		return oas.DiscussionPost{}, err
+	}
+	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		t, p, err := d.post(ctx, q, id)
+		if err != nil {
+			return err
+		}
+		if err := d.mayChange(t); err != nil {
+			return err
+		}
+		if p.State != statePublished || p.DeletedAt != nil {
+			return errDiscussionPostGone
+		}
+		return vote(ctx, q, d.workspaceID, p, d.actor, add, s.now())
+	})
+	if err != nil {
+		return oas.DiscussionPost{}, err
+	}
+	return postView(ctx, s.st.Queries, d.workspaceID, id, d.viewer())
+}
+
+func (s *Server) VoteClientDiscussionPost(ctx context.Context, req oas.VoteClientDiscussionPostRequestObject) (oas.VoteClientDiscussionPostResponseObject, error) {
+	out, err := s.clientVote(ctx, req.PostId, true)
+	if err != nil {
+		return nil, err
+	}
+	return oas.VoteClientDiscussionPost200JSONResponse(out), nil
+}
+
+func (s *Server) UnvoteClientDiscussionPost(ctx context.Context, req oas.UnvoteClientDiscussionPostRequestObject) (oas.UnvoteClientDiscussionPostResponseObject, error) {
+	out, err := s.clientVote(ctx, req.PostId, false)
+	if err != nil {
+		return nil, err
+	}
+	return oas.UnvoteClientDiscussionPost200JSONResponse(out), nil
+}
+
+func (s *Server) DeleteReaderToken(ctx context.Context, _ oas.DeleteReaderTokenRequestObject) (oas.DeleteReaderTokenResponseObject, error) {
+	d := discussantFrom(ctx)
+	if d.readerTokenID == nil {
+		return nil, errContactUnauthenticated
+	}
+	if err := s.st.DeleteReaderToken(ctx, store.DeleteReaderTokenParams{WorkspaceID: d.workspaceID, ID: *d.readerTokenID}); err != nil {
+		return nil, err
+	}
+	return oas.DeleteReaderToken204Response{}, nil
+}

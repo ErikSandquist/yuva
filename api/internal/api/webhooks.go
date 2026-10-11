@@ -46,6 +46,8 @@ var webhookEventTypes = []oas.WebhookEventType{
 	oas.WebhookEventTypeMessageCreated,
 	oas.WebhookEventTypeFeedbackCreated, oas.WebhookEventTypeContactUpdated, oas.WebhookEventTypeContactDeleted,
 	oas.WebhookEventTypeDraftCreated, oas.WebhookEventTypeDraftUpdated, oas.WebhookEventTypeDraftDeleted,
+	oas.WebhookEventTypeDiscussionCreated, oas.WebhookEventTypeDiscussionPostCreated, oas.WebhookEventTypeDiscussionAnswered,
+	oas.WebhookEventTypeDiscussionUpdated,
 }
 
 func webhookSecretContext(workspaceID, endpointID uuid.UUID) []byte {
@@ -446,7 +448,8 @@ func (s *Server) ListWebhookAttempts(ctx context.Context, req oas.ListWebhookAtt
 func webhookSource(e pendingEvent) bool {
 	switch e.typ {
 	case realtime.ConversationCreated, realtime.ConversationUpdated, realtime.MessageCreated, realtime.ContactUpdated,
-		realtime.DraftCreated, realtime.DraftUpdated, realtime.DraftDeleted:
+		realtime.DraftCreated, realtime.DraftUpdated, realtime.DraftDeleted,
+		eventDiscussionCreated, eventDiscussionPostCreated, eventDiscussionAnswered, eventDiscussionUpdated:
 		return true
 	case realtime.ContactDeleted:
 		return e.deleted != nil
@@ -678,6 +681,12 @@ func (s *Server) webhookPayloads(ctx context.Context, q *store.Queries, ev store
 			return nil, nil, err
 		}
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, nil, oas.WebhookContactData{Contact: wc})}}, inboxes, nil
+	case eventDiscussionCreated, eventDiscussionPostCreated, eventDiscussionAnswered, eventDiscussionUpdated:
+		if ev.InboxID == nil {
+			return nil, nil, nil
+		}
+		inbox := *ev.InboxID
+		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, &inbox, json.RawMessage(ev.Payload))}}, []uuid.UUID{inbox}, nil
 	case realtime.ContactDeleted:
 		if deleted == nil {
 			return nil, nil, nil

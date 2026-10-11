@@ -38,6 +38,7 @@ const (
 	accessPerson
 	accessMember
 	accessContact
+	accessDiscussant
 )
 
 var operationAccess = map[string]access{
@@ -64,9 +65,6 @@ var operationAccess = map[string]access{
 	"UnpinConversation":      accessMember,
 	"SetMemberTyping":        accessMember,
 	"ListMentions":           accessMember,
-	"PublishConversation":    accessMember,
-	"UpdatePageAnswer":       accessMember,
-	"DeletePageAnswer":       accessMember,
 
 	"GetVapidPublicKey":          accessPerson,
 	"ListPushSubscriptions":      accessPerson,
@@ -78,24 +76,45 @@ var operationAccess = map[string]access{
 	"SetInboxNotifications":      accessMember,
 	"DeleteInboxNotifications":   accessMember,
 
-	"CreateClientSession":        accessPublic,
-	"GetClientChannel":           accessPublic,
-	"CreatePageRating":           accessPublic,
-	"ListClientPageAnswers":      accessPublic,
-	"CreateClientQuestion":       accessContact,
-	"GetClientSession":           accessContact,
-	"DeleteClientSession":        accessContact,
-	"ListClientConversations":    accessContact,
-	"CreateClientConversation":   accessContact,
-	"GetClientConversation":      accessContact,
-	"ListClientMessages":         accessContact,
-	"CreateClientMessage":        accessContact,
-	"MarkClientConversationRead": accessContact,
-	"SetClientTyping":            accessContact,
-	"RateClientConversation":     accessContact,
-	"SetClientContactEmail":      accessContact,
-	"CreateClientFeedback":       accessContact,
-	"DownloadClientAttachment":   accessContact,
+	"CreateClientSession":   accessPublic,
+	"GetClientChannel":      accessPublic,
+	"CreatePageRating":      accessPublic,
+	"ListClientDiscussions": accessPublic,
+	"GetClientDiscussion":   accessPublic,
+
+	"CreateClientDiscussion":       accessDiscussant,
+	"CreateClientDiscussionPost":   accessDiscussant,
+	"AcceptClientDiscussionAnswer": accessDiscussant,
+	"ClearClientDiscussionAnswer":  accessDiscussant,
+	"FollowClientDiscussion":       accessDiscussant,
+	"UnfollowClientDiscussion":     accessDiscussant,
+	"UpdateClientDiscussionPost":   accessDiscussant,
+	"DeleteClientDiscussionPost":   accessDiscussant,
+	"VoteClientDiscussionPost":     accessDiscussant,
+	"UnvoteClientDiscussionPost":   accessDiscussant,
+	"DeleteReaderToken":            accessDiscussant,
+
+	"GetReaderAccount":            accessPerson,
+	"UpdateReaderAccount":         accessPerson,
+	"CreateReaderToken":           accessPerson,
+	"ListReaderDiscussions":       accessPerson,
+	"ListReaderFollowing":         accessPerson,
+	"UnfollowReaderDiscussion":    accessPerson,
+	"ListReaderNotifications":     accessPerson,
+	"MarkReaderNotificationsRead": accessPerson,
+	"GetClientSession":            accessContact,
+	"DeleteClientSession":         accessContact,
+	"ListClientConversations":     accessContact,
+	"CreateClientConversation":    accessContact,
+	"GetClientConversation":       accessContact,
+	"ListClientMessages":          accessContact,
+	"CreateClientMessage":         accessContact,
+	"MarkClientConversationRead":  accessContact,
+	"SetClientTyping":             accessContact,
+	"RateClientConversation":      accessContact,
+	"SetClientContactEmail":       accessContact,
+	"CreateClientFeedback":        accessContact,
+	"DownloadClientAttachment":    accessContact,
 
 	"UpdateMember": accessMember,
 	"RemoveMember": accessMember,
@@ -206,6 +225,29 @@ func (s *Server) authenticate(next oas.StrictHandlerFunc, operationID string) oa
 				return nil, err
 			}
 			return next(context.WithValue(ctx, contactKey, c), w, r, request)
+		}
+		if kind == accessDiscussant {
+			token, _ := bearerToken(r)
+			if token == "" {
+				return nil, errContactUnauthenticated
+			}
+			d, err := s.resolveDiscussant(ctx, token)
+			if err != nil {
+				return nil, err
+			}
+			if operationID != "DeleteReaderToken" {
+				if err := s.ensureWriter(ctx, d); err != nil {
+					return nil, err
+				}
+				callerType, callerID := callerContact, d.contactID
+				if d.memberID != nil {
+					callerType, callerID = callerMember, d.memberID
+				}
+				if replayed, err := s.claimIdempotency(ctx, w, r, d.workspaceID, callerType, *callerID); err != nil || replayed {
+					return nil, err
+				}
+			}
+			return next(context.WithValue(ctx, discussantKey, d), w, r, request)
 		}
 		if workspaceQueryOperations[operationID] {
 			if err := workspaceFromQuery(r); err != nil {

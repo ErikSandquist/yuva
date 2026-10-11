@@ -9,35 +9,23 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"uuid"
 
 	openapi_types "github.com/oapi-codegen/runtime/types"
 
-	"github.com/productdevbook/yuva/api/internal/mail"
 	"github.com/productdevbook/yuva/api/internal/oas"
-	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 const (
-	maxPageURL          = 2000
-	maxPageTitle        = 300
-	pageRatingTakeBack  = 90
-	pageAnswersMaxAge   = "public, max-age=60"
-	defaultDocsDays     = 30
-	maxPublishedAnswers = 20000
-	helpfulMinRatings   = 5
+	maxPageURL         = 2000
+	maxPageTitle       = 300
+	pageRatingTakeBack = 90
+	publicMaxAge       = "public, max-age=60"
+	defaultDocsDays    = 30
+	helpfulMinRatings  = 5
 )
 
-var (
-	errPageOrigin       = problem(http.StatusBadRequest, "page_origin", "the page's origin is not one of the channel's allowed origins")
-	errQuestionChannel  = problem(http.StatusForbidden, "forbidden", "questions are asked from chat channels")
-	errPageAnswerGone   = problem(http.StatusNotFound, "not_found", "no such published answer")
-	errAlreadyPublished = problem(http.StatusConflict, "already_published", "this conversation is already published; edit the published answer")
-	errNotQuestion      = problem(http.StatusConflict, "not_publishable", "only question conversations are published")
-	errNoMemberReply    = problem(http.StatusConflict, "not_publishable", "publish once a member has replied")
-	errPageNotOnChannel = problem(http.StatusConflict, "not_publishable", "the conversation's channel does not serve the page's origin")
-)
+var errPageOrigin = problem(http.StatusBadRequest, "page_origin", "the page's origin is not one of the channel's allowed origins")
 
 // pageURL is a documentation page as Yuva keys it: the URL without query and fragment, with the
 // origin written as browsers send it.
@@ -191,332 +179,11 @@ func (s *Server) CreatePageRating(ctx context.Context, req oas.CreatePageRatingR
 	return oas.CreatePageRating204Response{}, nil
 }
 
-func (s *Server) ListClientPageAnswers(ctx context.Context, req oas.ListClientPageAnswersRequestObject) (oas.ListClientPageAnswersResponseObject, error) {
-	if err := s.rateLimit(rateCheck{"page-answers:ip:" + rateIP(s.clientIP(requestFrom(ctx))), limitChannelPerIP}); err != nil {
-		return nil, err
-	}
-	ch, err := s.docsChannel(ctx, req.ChannelKey, nil)
-	if err != nil {
-		return nil, err
-	}
-	page, err := channelPage(req.Params.Page, ch.Kind, ch.AllowedOrigins)
-	if err != nil {
-		return nil, err
-	}
-	rows, err := s.st.ListClientPageAnswers(ctx, store.ListClientPageAnswersParams{WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Page: page})
-	if err != nil {
-		return nil, err
-	}
-	items := make([]oas.ClientPageAnswer, len(rows))
-	for i, a := range rows {
-		items[i] = oas.ClientPageAnswer{Id: a.ID, Question: a.Question, Answer: a.Answer, PublishedAt: a.PublishedAt, UpdatedAt: a.UpdatedAt}
-	}
-	cache := pageAnswersMaxAge
-	return oas.ListClientPageAnswers200JSONResponse{
-		Body:    oas.ClientPageAnswerList{Items: items},
-		Headers: oas.ListClientPageAnswers200ResponseHeaders{CacheControl: &cache},
-	}, nil
-}
-
-func (s *Server) CreateClientQuestion(ctx context.Context, req oas.CreateClientQuestionRequestObject) (oas.CreateClientQuestionResponseObject, error) {
-	cp := contactFrom(ctx)
-	if cp.kind != string(oas.ChannelKindChat) {
-		return nil, errQuestionChannel
-	}
-	if err := s.rateLimit(s.writeChecks(ctx, cp)...); err != nil {
-		return nil, err
-	}
-	b := req.Body
-	in := &messageInput{body: b.Body, clientID: b.ClientId, subject: b.Subject}
-	if err := s.validateClientInput(in); err != nil {
-		return nil, err
-	}
-	page, err := channelPage(b.PageUrl, cp.kind, cp.chat.AllowedOrigins)
-	if err != nil {
-		return nil, err
-	}
-	title, err := pageTitle(b.PageTitle)
-	if err != nil {
-		return nil, err
-	}
-	var addr *string
-	if b.Email != nil && strings.TrimSpace(string(*b.Email)) != "" {
-		a, err := normalizeEmail(*b.Email)
-		if err != nil {
-			return nil, err
-		}
-		addr = &a
-	}
-	if in.clientID != nil {
-		prev, err := s.st.FindContactMessageByClientID(ctx, store.FindContactMessageByClientIDParams{
-			WorkspaceID: cp.workspaceID, InboxID: cp.inboxID, ContactID: cp.contactID, ClientID: *in.clientID,
-		})
-		if err == nil {
-			out, err := s.clientConversationCreated(ctx, cp, prev.ConversationID, prev.ID)
-			if err != nil {
-				return nil, err
-			}
-			return oas.CreateClientQuestion201JSONResponse(out), nil
-		}
-		if !store.IsNotFound(err) {
-			return nil, err
-		}
-	}
-	var (
-		convID, msgID uuid.UUID
-		confirm       *mail.Message
-	)
-	err = s.inTx(ctx, cp.workspaceID, func(q *store.Queries, events *eventBatch) error {
-		if addr != nil {
-			r, err := q.SetContactTypedEmail(ctx, store.SetContactTypedEmailParams{WorkspaceID: cp.workspaceID, ID: cp.contactID, TypedEmail: addr, Now: s.now()})
-			if err != nil {
-				return err
-			}
-			if confirm, err = s.confirmTypedEmail(ctx, q, cp, *addr); err != nil {
-				return err
-			}
-			body, err := s.contactBody(ctx, q, cp.workspaceID, contactRow(r))
-			if err != nil {
-				return err
-			}
-			events.add(realtime.ContactUpdated, nil, nil, body)
-		}
-		subject := ""
-		if in.subject != nil {
-			subject = *in.subject
-		}
-		kind, channelID := string(oas.ConversationKindQuestion), cp.channelID
-		c, err := q.CreateConversation(ctx, store.CreateConversationParams{
-			ID: newID(), WorkspaceID: cp.workspaceID, InboxID: cp.inboxID, ContactID: cp.contactID, ChannelID: &channelID,
-			Subject: subject, Priority: string(oas.Normal), Kind: &kind, PageUrl: &page, PageTitle: title, Now: s.now(),
-		})
-		if err != nil {
-			return err
-		}
-		events.conversation(realtime.ConversationCreated, c, conversationBody(c, nil))
-		msg, _, err := s.addContactMessage(ctx, q, events, cp, c, in, true)
-		convID, msgID = c.ID, msg.ID
-		return err
-	})
-	if err != nil {
-		return nil, err
-	}
-	if confirm != nil {
-		s.sendMail(ctx, *confirm)
-	}
-	out, err := s.clientConversationCreated(ctx, cp, convID, msgID)
-	if err != nil {
-		return nil, err
-	}
-	return oas.CreateClientQuestion201JSONResponse(out), nil
-}
-
-func conversationQuestion(c store.Conversation) *oas.PageQuestion {
-	if c.Kind != string(oas.ConversationKindQuestion) || c.PageUrl == nil {
+func conversationPage(c store.Conversation) *oas.SourcePage {
+	if c.PageUrl == nil {
 		return nil
 	}
-	return &oas.PageQuestion{PageUrl: *c.PageUrl, PageTitle: c.PageTitle}
-}
-
-func pageAnswerBody(a store.PageAnswer) oas.PageAnswer {
-	return oas.PageAnswer{
-		Id: a.ID, InboxId: a.InboxID, ChannelId: a.ChannelID, Page: a.Page, Title: a.Title, Question: a.Question, Answer: a.Answer,
-		MemberId: a.MemberID, ConversationId: a.ConversationID, PublishedAt: a.PublishedAt, UpdatedAt: a.UpdatedAt,
-	}
-}
-
-func publishedText(question, answer *string) (string, string, error) {
-	var q, a string
-	var err error
-	if question != nil {
-		if q, err = trimmed(*question, 1, 2000, "question"); err != nil {
-			return q, a, err
-		}
-	}
-	if answer != nil {
-		if a, err = trimmed(*answer, 1, maxPublishedAnswers, "answer"); err != nil {
-			return q, a, err
-		}
-	}
-	return q, a, nil
-}
-
-func (s *Server) PublishConversation(ctx context.Context, req oas.PublishConversationRequestObject) (oas.PublishConversationResponseObject, error) {
-	p := principalFrom(ctx)
-	question, answer, err := publishedText(&req.Body.Question, &req.Body.Answer)
-	if err != nil {
-		return nil, err
-	}
-	var out store.PageAnswer
-	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
-		c, err := visibleConversation(ctx, q, p, req.ConversationId, true)
-		if err != nil {
-			return err
-		}
-		if c.Kind != string(oas.ConversationKindQuestion) || c.PageUrl == nil {
-			return errNotQuestion
-		}
-		replied, err := q.ConversationHasMemberReply(ctx, store.ConversationHasMemberReplyParams{WorkspaceID: p.workspaceID, ConversationID: c.ID})
-		if err != nil {
-			return err
-		}
-		if !replied {
-			return errNoMemberReply
-		}
-		if c.ChannelID == nil {
-			return errPageNotOnChannel
-		}
-		ch, err := q.GetSessionChannel(ctx, store.GetSessionChannelParams{WorkspaceID: p.workspaceID, ChannelID: *c.ChannelID})
-		if store.IsNotFound(err) {
-			return errPageNotOnChannel
-		}
-		if err != nil {
-			return err
-		}
-		page, err := channelPage(*c.PageUrl, ch.Kind, ch.AllowedOrigins)
-		if err != nil {
-			return errPageNotOnChannel
-		}
-		title := ""
-		if c.PageTitle != nil {
-			title = *c.PageTitle
-		}
-		memberID, convID := p.memberID, c.ID
-		out, err = q.CreatePageAnswer(ctx, store.CreatePageAnswerParams{
-			ID: newID(), WorkspaceID: p.workspaceID, InboxID: c.InboxID, ChannelID: ch.ChannelID, Page: page, Title: title,
-			Question: question, Answer: answer, MemberID: &memberID, ConversationID: &convID, Now: s.now(),
-		})
-		if store.IsUniqueViolation(err) {
-			return errAlreadyPublished
-		}
-		return err
-	})
-	if err != nil {
-		return nil, err
-	}
-	return oas.PublishConversation201JSONResponse(pageAnswerBody(out)), nil
-}
-
-func visiblePageAnswer(ctx context.Context, q *store.Queries, p principal, id uuid.UUID) (store.PageAnswer, error) {
-	a, err := q.GetPageAnswer(ctx, store.GetPageAnswerParams{WorkspaceID: p.workspaceID, ID: id})
-	if store.IsNotFound(err) {
-		return a, errPageAnswerGone
-	}
-	if err != nil {
-		return a, err
-	}
-	ok, err := canSeeInbox(ctx, q, p, a.InboxID)
-	if err != nil {
-		return a, err
-	}
-	if !ok {
-		return a, errPageAnswerGone
-	}
-	return a, nil
-}
-
-func (s *Server) ListPageAnswers(ctx context.Context, req oas.ListPageAnswersRequestObject) (oas.ListPageAnswersResponseObject, error) {
-	p := principalFrom(ctx)
-	prm := req.Params
-	lim, err := pageSize(prm.Limit)
-	if err != nil {
-		return nil, err
-	}
-	at, cid, err := decodeCursor(prm.Cursor)
-	if err != nil {
-		return nil, err
-	}
-	arg := store.ListPageAnswersParams{
-		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(),
-		InboxID: prm.InboxId, ConversationID: prm.ConversationId, CursorAt: at, CursorID: cid, Lim: lim + 1,
-	}
-	if prm.InboxId != nil {
-		if _, err := visibleInbox(ctx, s.st.Queries, p, *prm.InboxId); err != nil {
-			return nil, err
-		}
-	}
-	if prm.Page != nil {
-		page, _, err := pageURL(*prm.Page)
-		if err != nil {
-			return nil, err
-		}
-		arg.Page = &page
-	}
-	rows, err := s.st.ListPageAnswers(ctx, arg)
-	if err != nil {
-		return nil, err
-	}
-	var next *string
-	if len(rows) > int(lim) {
-		rows = rows[:lim]
-		c := encodeCursor(rows[lim-1].PublishedAt, rows[lim-1].ID)
-		next = &c
-	}
-	items := make([]oas.PageAnswer, len(rows))
-	for i, a := range rows {
-		items[i] = pageAnswerBody(a)
-	}
-	return oas.ListPageAnswers200JSONResponse{Items: items, NextCursor: next}, nil
-}
-
-func (s *Server) GetPageAnswer(ctx context.Context, req oas.GetPageAnswerRequestObject) (oas.GetPageAnswerResponseObject, error) {
-	a, err := visiblePageAnswer(ctx, s.st.Queries, principalFrom(ctx), req.PageAnswerId)
-	if err != nil {
-		return nil, err
-	}
-	return oas.GetPageAnswer200JSONResponse(pageAnswerBody(a)), nil
-}
-
-func (s *Server) UpdatePageAnswer(ctx context.Context, req oas.UpdatePageAnswerRequestObject) (oas.UpdatePageAnswerResponseObject, error) {
-	p := principalFrom(ctx)
-	if req.Body.Question == nil && req.Body.Answer == nil {
-		return nil, errValidation("send question or answer")
-	}
-	question, answer, err := publishedText(req.Body.Question, req.Body.Answer)
-	if err != nil {
-		return nil, err
-	}
-	var out store.PageAnswer
-	err = s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
-		a, err := visiblePageAnswer(ctx, q, p, req.PageAnswerId)
-		if err != nil {
-			return err
-		}
-		if req.Body.Question == nil {
-			question = a.Question
-		}
-		if req.Body.Answer == nil {
-			answer = a.Answer
-		}
-		out, err = q.UpdatePageAnswer(ctx, store.UpdatePageAnswerParams{WorkspaceID: p.workspaceID, ID: a.ID, Question: question, Answer: answer, Now: s.now()})
-		if store.IsNotFound(err) {
-			return errPageAnswerGone
-		}
-		return err
-	})
-	if err != nil {
-		return nil, err
-	}
-	return oas.UpdatePageAnswer200JSONResponse(pageAnswerBody(out)), nil
-}
-
-func (s *Server) DeletePageAnswer(ctx context.Context, req oas.DeletePageAnswerRequestObject) (oas.DeletePageAnswerResponseObject, error) {
-	p := principalFrom(ctx)
-	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, _ *eventBatch) error {
-		a, err := visiblePageAnswer(ctx, q, p, req.PageAnswerId)
-		if err != nil {
-			return err
-		}
-		n, err := q.DeletePageAnswer(ctx, store.DeletePageAnswerParams{WorkspaceID: p.workspaceID, ID: a.ID})
-		if err == nil && n == 0 {
-			return errPageAnswerGone
-		}
-		return err
-	})
-	if err != nil {
-		return nil, err
-	}
-	return oas.DeletePageAnswer204Response{}, nil
+	return &oas.SourcePage{PageUrl: *c.PageUrl, PageTitle: c.PageTitle}
 }
 
 func docsSince(s *Server, days *int32) (time.Time, error) {
@@ -557,7 +224,7 @@ func decodeOffset(sort oas.DocsPageSort, s *string) (int32, error) {
 func docsPageBody(r store.ListDocsPagesRow) oas.DocsPage {
 	return oas.DocsPage{
 		InboxId: r.InboxID, Page: r.Page, Title: r.Title, Up: r.Up, Down: r.Down,
-		OpenFeedback: r.OpenFeedback, OpenQuestions: r.OpenQuestions, PublishedAnswers: r.PublishedAnswers,
+		OpenFeedback: r.OpenFeedback, OpenThreads: r.OpenThreads, UnansweredThreads: r.UnansweredThreads, PendingPosts: r.PendingPosts,
 	}
 }
 
@@ -680,21 +347,21 @@ func (s *Server) GetDocsSummary(ctx context.Context, req oas.GetDocsSummaryReque
 	}
 	counts, err := s.st.GetDocsSummaryCounts(ctx, store.GetDocsSummaryCountsParams{
 		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId, Site: site,
-		Since: since, SinceAt: since,
+		Since: since,
 	})
 	if err != nil {
 		return nil, err
 	}
 	out := oas.DocsSummary{
-		Totals: oas.DocsTotals{RatedPages: counts.RatedPages, PublishedAnswers: counts.PublishedAnswers},
+		Totals: oas.DocsTotals{RatedPages: counts.RatedPages, PendingPosts: counts.PendingPosts},
 		Days:   make([]oas.DocsSummaryDay, len(days)),
 	}
 	for i, d := range days {
-		out.Days[i] = oas.DocsSummaryDay{Day: openapi_types.Date{Time: d.Day}, Up: d.Up, Down: d.Down, Feedback: d.Feedback, Questions: d.Questions}
+		out.Days[i] = oas.DocsSummaryDay{Day: openapi_types.Date{Time: d.Day}, Up: d.Up, Down: d.Down, Feedback: d.Feedback, Threads: d.Threads}
 		out.Totals.Up += d.Up
 		out.Totals.Down += d.Down
 		out.Totals.Feedback += d.Feedback
-		out.Totals.Questions += d.Questions
+		out.Totals.Threads += d.Threads
 	}
 	return oas.GetDocsSummary200JSONResponse(out), nil
 }
@@ -732,7 +399,7 @@ func (s *Server) ListDocsSites(ctx context.Context, req oas.ListDocsSitesRequest
 	for i, r := range rows {
 		items[i] = oas.DocsSite{
 			Origin: r.Origin, InboxId: r.InboxID, ChannelId: r.ChannelID, ChannelName: r.ChannelName, Pages: r.Pages,
-			Up: r.Up, Down: r.Down, OpenFeedback: r.OpenFeedback, OpenQuestions: r.OpenQuestions, PublishedAnswers: r.PublishedAnswers,
+			Up: r.Up, Down: r.Down, OpenFeedback: r.OpenFeedback, OpenThreads: r.OpenThreads, UnansweredThreads: r.UnansweredThreads, PendingPosts: r.PendingPosts,
 		}
 	}
 	return oas.ListDocsSites200JSONResponse{Items: items}, nil

@@ -87,8 +87,8 @@ func (q *Queries) CountLoginCodesByIP(ctx context.Context, arg CountLoginCodesBy
 }
 
 const createLoginCode = `-- name: CreateLoginCode :exec
-INSERT INTO login_codes (id, email, code_hash, ip, created_at, expires_at)
-VALUES ($1, $2, $3, $4, $5, $6)
+INSERT INTO login_codes (id, email, code_hash, ip, created_at, expires_at, reader)
+VALUES ($1, $2, $3, $4, $5, $6, $7)
 `
 
 type CreateLoginCodeParams struct {
@@ -98,6 +98,7 @@ type CreateLoginCodeParams struct {
 	Ip        string
 	CreatedAt time.Time
 	ExpiresAt time.Time
+	Reader    bool
 }
 
 func (q *Queries) CreateLoginCode(ctx context.Context, arg CreateLoginCodeParams) error {
@@ -108,6 +109,7 @@ func (q *Queries) CreateLoginCode(ctx context.Context, arg CreateLoginCodeParams
 		arg.Ip,
 		arg.CreatedAt,
 		arg.ExpiresAt,
+		arg.Reader,
 	)
 	return err
 }
@@ -122,7 +124,7 @@ func (q *Queries) DeleteLoginCodesByEmail(ctx context.Context, email string) err
 }
 
 const latestLoginCode = `-- name: LatestLoginCode :one
-SELECT id, email, code_hash, ip, attempts, created_at, expires_at, consumed_at FROM login_codes WHERE email = $1 AND consumed_at IS NULL
+SELECT id, email, code_hash, ip, attempts, created_at, expires_at, consumed_at, reader FROM login_codes WHERE email = $1 AND consumed_at IS NULL
 ORDER BY created_at DESC LIMIT 1
 FOR UPDATE
 `
@@ -139,6 +141,7 @@ func (q *Queries) LatestLoginCode(ctx context.Context, email string) (LoginCode,
 		&i.CreatedAt,
 		&i.ExpiresAt,
 		&i.ConsumedAt,
+		&i.Reader,
 	)
 	return i, err
 }

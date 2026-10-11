@@ -57,7 +57,7 @@ func chatChannelBody(c store.ChatChannel) *oas.ChatChannel {
 	out := &oas.ChatChannel{
 		PublicKey: c.PublicKey, AllowAnonymous: c.AllowAnonymous, AskEmailOffline: c.AskEmailOffline,
 		Greeting: c.Greeting, AllowedOrigins: make([]oas.Origin, len(c.AllowedOrigins)),
-		Launcher: oas.ChatLauncher{Color: c.LauncherColor},
+		Launcher: oas.ChatLauncher{Color: c.LauncherColor}, Discussions: oas.DiscussionMode(c.Discussions),
 	}
 	for i, o := range c.AllowedOrigins {
 		out.AllowedOrigins[i] = oas.Origin(o)
@@ -80,6 +80,7 @@ func appChannelBody(c store.ChatChannel) *oas.AppChannel {
 func appChannelParams(workspaceID, channelID uuid.UUID, in *oas.AppChannelInput, cur *store.ChatChannel) (store.SaveChatChannelParams, error) {
 	out := store.SaveChatChannelParams{
 		WorkspaceID: workspaceID, ChannelID: channelID, AskEmailOffline: true, AllowedOrigins: []string{}, Platforms: allPlatforms,
+		Discussions: string(oas.DiscussionModeOff),
 	}
 	if cur != nil {
 		out.PublicKey = cur.PublicKey
@@ -113,9 +114,15 @@ func appChannelParams(workspaceID, channelID uuid.UUID, in *oas.AppChannelInput,
 }
 
 func chatChannelParams(workspaceID, channelID uuid.UUID, in *oas.ChatChannelInput, cur *store.ChatChannel) (store.SaveChatChannelParams, error) {
-	out := store.SaveChatChannelParams{WorkspaceID: workspaceID, ChannelID: channelID, AskEmailOffline: true, Platforms: []string{}}
+	out := store.SaveChatChannelParams{
+		WorkspaceID: workspaceID, ChannelID: channelID, AskEmailOffline: true, Platforms: []string{},
+		Discussions: string(oas.DiscussionModeModerated),
+	}
 	if cur != nil {
 		out.PublicKey = cur.PublicKey
+		if cur.Discussions != "" {
+			out.Discussions = cur.Discussions
+		}
 	} else {
 		out.PublicKey = newChatKey()
 	}
@@ -135,6 +142,12 @@ func chatChannelParams(workspaceID, channelID uuid.UUID, in *oas.ChatChannelInpu
 	}
 	if in.AllowAnonymous != nil {
 		out.AllowAnonymous = *in.AllowAnonymous
+	}
+	if in.Discussions != nil {
+		if !in.Discussions.Valid() {
+			return out, errValidation("chat.discussions must be off, moderated or open")
+		}
+		out.Discussions = string(*in.Discussions)
 	}
 	if in.AskEmailOffline != nil {
 		out.AskEmailOffline = *in.AskEmailOffline

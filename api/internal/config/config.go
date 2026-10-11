@@ -42,6 +42,7 @@ type Config struct {
 	EmailSenderHourlyCap int
 
 	ChatEmailDelay           time.Duration
+	DiscussionEmailDelay     time.Duration
 	AnonymousContactsPerHour int
 
 	WebhookAllowPrivate bool
@@ -182,6 +183,9 @@ func Load(version string) (Config, error) {
 	}
 	if c.ChatEmailDelay, err = time.ParseDuration(env("YUVA_CHAT_EMAIL_DELAY", "5m")); err != nil || c.ChatEmailDelay < time.Second {
 		return c, errors.New("YUVA_CHAT_EMAIL_DELAY must be a duration of at least 1s, such as 5m")
+	}
+	if c.DiscussionEmailDelay, err = time.ParseDuration(env("YUVA_DISCUSSION_EMAIL_DELAY", "10m")); err != nil || c.DiscussionEmailDelay < time.Second {
+		return c, errors.New("YUVA_DISCUSSION_EMAIL_DELAY must be a duration of at least 1s, such as 10m")
 	}
 	if c.MCP, err = switchEnv("YUVA_MCP", true); err != nil {
 		return c, err

@@ -119,6 +119,8 @@ type ChatSettings struct {
 	EmailDelay time.Duration
 	// AnonymousContactsPerHour caps new anonymous visitors per channel, IP address and hour; 0 means 20.
 	AnonymousContactsPerHour int
+	// DiscussionEmailDelay is the least time between two e-mails to a follower about one thread; 0 means 10 minutes.
+	DiscussionEmailDelay time.Duration
 }
 
 type IngressSettings struct {
@@ -176,6 +178,9 @@ func New(d Deps) *Server {
 	chat := d.Chat
 	if chat.EmailDelay <= 0 {
 		chat.EmailDelay = defaultChatEmailDelay
+	}
+	if chat.DiscussionEmailDelay <= 0 {
+		chat.DiscussionEmailDelay = defaultDiscussionEmailDelay
 	}
 	if chat.AnonymousContactsPerHour <= 0 {
 		chat.AnonymousContactsPerHour = defaultAnonymousContactsPerHour
@@ -288,6 +293,8 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("POST "+emailConfirmPath, s.serveEmailConfirmPost)
 	mux.HandleFunc("GET "+ratingPathPrefix+"{token}", s.serveRatingPage)
 	mux.HandleFunc("POST "+ratingPathPrefix+"{token}", s.serveRatingPost)
+	mux.HandleFunc("GET "+unsubscribePathPrefix+"{token}", s.serveUnsubscribePage)
+	mux.HandleFunc("POST "+unsubscribePathPrefix+"{token}", s.serveUnsubscribePost)
 	mux.HandleFunc("GET /.well-known/oauth-authorization-server", s.serveOAuthServerMetadata)
 	mux.HandleFunc("GET /.well-known/oauth-protected-resource", s.serveResourceMetadata(s.apiResource(), "Yuva"))
 	mux.HandleFunc("GET /.well-known/oauth-protected-resource/mcp", s.serveResourceMetadata(s.mcpResource(), "Yuva MCP"))

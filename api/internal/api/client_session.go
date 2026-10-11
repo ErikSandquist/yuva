@@ -90,8 +90,15 @@ func chatChannelOf(ch store.FindChatChannelByKeyRow) store.ChatChannel {
 	return store.ChatChannel{
 		WorkspaceID: ch.WorkspaceID, ChannelID: ch.ChannelID, PublicKey: ch.PublicKey, AllowedOrigins: ch.AllowedOrigins,
 		AllowAnonymous: ch.AllowAnonymous, AskEmailOffline: ch.AskEmailOffline, Greeting: ch.Greeting,
-		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms,
+		LauncherPosition: ch.LauncherPosition, LauncherColor: ch.LauncherColor, Platforms: ch.Platforms, Discussions: ch.Discussions,
 	}
+}
+
+func clientDiscussionMode(chat store.ChatChannel) oas.DiscussionMode {
+	if len(chat.AllowedOrigins) == 0 || chat.Discussions == "" {
+		return oas.DiscussionModeOff
+	}
+	return oas.DiscussionMode(chat.Discussions)
 }
 
 func (s *Server) GetClientChannel(ctx context.Context, req oas.GetClientChannelRequestObject) (oas.GetClientChannelResponseObject, error) {
@@ -384,6 +391,9 @@ func (s *Server) mergeContact(ctx context.Context, q *store.Queries, events *eve
 		}
 		events.conversation(realtime.ConversationUpdated, c, body)
 	}
+	if err := moveDiscussions(ctx, q, ws, from, to); err != nil {
+		return err
+	}
 	if _, err := q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: ws, ID: from}); err != nil {
 		return err
 	}
@@ -415,7 +425,7 @@ func (s *Server) clientInbox(ctx context.Context, q *store.Queries, in store.Inb
 		Mode: b.Mode, BusinessHours: b.BusinessHours, OpenNow: inboxOpen(in, s.now()),
 		Chat: oas.ClientChatSettings{
 			Greeting: chat.Greeting, LauncherPosition: oas.Right, LauncherColor: chat.LauncherColor,
-			AskEmailOffline: chat.AskEmailOffline, AllowAnonymous: chat.AllowAnonymous,
+			AskEmailOffline: chat.AskEmailOffline, AllowAnonymous: chat.AllowAnonymous, Discussions: clientDiscussionMode(chat),
 		},
 		FeedbackCategories: feedbackCategories,
 		AskForRating:       in.AskForRating,
