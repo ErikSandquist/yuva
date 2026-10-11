@@ -95,6 +95,89 @@ tutup yalnızca `<PageDiscussions />` ekleyin. `useyuva` `sdk/js`'ten yol üzeri
 React'in ikinci bir kopyasını yükleyebilir; örnekteki `next.config.mjs` gibi `turbopack.root`
 atayın.
 
+### shadcn/ui
+
+[shadcn/ui](https://ui.shadcn.com) üzerine kurulu, tartışmaları kendi kodu olarak, kendi tasarım
+sisteminde isteyen React siteleri için. Çalıştırılabilir örnek:
+[`examples/shadcn-next`](../../examples/shadcn-next)
+([nasıl çalıştırılır](../../examples/README.md#shadcn-next)).
+
+```sh
+npx shadcn@latest add https://useyuva.com/r/yuva-discussions.json https://useyuva.com/r/yuva-page-feedback.json
+```
+
+Bu, bileşenleri projenize kopyalar (`components/yuva-*.tsx`, `hooks/use-yuva-discussions.tsx`,
+`lib/yuva-utils.ts`), kullandıkları shadcn/ui bileşenlerini ekler (button, card, input, tabs,
+textarea, avatar, badge, separator, skeleton) ve `useyuva` ile `lucide-react`'i kurar. Daha küçük
+öğeler `use-yuva-discussions` (yalnızca provider ve hook'lar), `yuva-discussion-list`,
+`yuva-discussion-thread` ve `yuva-discussion-composer`; hepsi
+`https://useyuva.com/r/registry.json`'da listelenir.
+
+```tsx
+// app/layout.tsx
+import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions";
+
+<YuvaDiscussionsProvider
+  server={process.env.NEXT_PUBLIC_YUVA_SERVER}
+  channel={process.env.NEXT_PUBLIC_YUVA_CHANNEL}
+>
+  {children}
+</YuvaDiscussionsProvider>
+```
+
+```tsx
+// makalenin altında
+<YuvaPageFeedback />
+<YuvaDiscussions />
+```
+
+`YuvaDiscussions`; `page` ve `pageTitle` (varsayılan olarak sorgu ve parça olmadan URL ile
+`document.title`), `defaultSort`, `labels` ve `className` alır; çevresinde provider yoksa `server`
+ve `channel`'ı kendisine verin. Provider ayrıca `identityToken` (öğelerdeki gibi bir fonksiyon),
+tarihler için `locale` ve kendi yaptığınız bir `createYuvaClient()`'ı paylaşmak için `client` alır.
+
+- **Özelleştirmek** için dosyaları düzenleyin: artık sizin. Renkler temanızın değişkenlerinden
+  gelir (`primary`, `muted`, `border`, `destructive` …), bu yüzden karanlık mod temanızı izler.
+  Gönderiler, sunucunun `body_html`'ini `lib/yuva-utils.ts`'teki `yuvaProseClassName` sınıflarıyla
+  gösterir; yazma alanının önizlemesi React öğelerinden oluşur, yayımlanan ise sunucunun ürettiğidir.
+- **Kendi düzeniniz** için bileşenlerin arkasındaki hook'lar: `useDiscussions(page, sort)`,
+  `useDiscussion(id)`, `useYuvaReader()` (`signIn()`'i bir tıklamadan çağırın),
+  `useDiscussionMode()` ve `usePageRating(page)`.
+- **Etiketler** varsayılan olarak İngilizcedir (`defaultYuvaDiscussionsLabels`). Değiştirmek ya da
+  çevirmek için `labels`'ı provider'a ya da tek bir bileşene verin; sayılar fonksiyondur. Türkçe:
+
+```tsx
+import type { YuvaDiscussionsLabels } from "@/lib/yuva-utils";
+
+const tr: Partial<YuvaDiscussionsLabels> = {
+  heading: "Tartışmalar",
+  sortNew: "Yeni",
+  sortTop: "En çok oy alan",
+  sortUnanswered: "Yanıtsız",
+  newDiscussion: "Yeni tartışma",
+  empty: "Bu sayfada henüz tartışma yok. İlkini siz başlatın.",
+  replies: (count) => `${count} yanıt`,
+  votes: (count) => `${count} oy`,
+  answered: "Yanıtlandı",
+  acceptedAnswer: "Kabul edilen yanıt",
+  reply: "Yanıtla",
+  signIn: "Giriş yap",
+  signInHint: "Tartışma başlatmak, yanıtlamak ve oy vermek için giriş yapın.",
+  write: "Yaz",
+  preview: "Önizleme",
+  startDiscussion: "Tartışmayı başlat",
+  feedbackQuestion: "Bu sayfa işinize yaradı mı?",
+  feedbackYes: "Evet",
+  feedbackNo: "Hayır",
+};
+
+<YuvaDiscussionsProvider server={server} channel={channel} labels={tr} locale="tr">
+```
+
+Bileşenler mantıksal boşluklar kullanır (`ps-`, `border-s`, `text-start`), bu yüzden `dir="rtl"`
+altında da çalışır. Öğeler gibi `useyuva`'nın 0.0.6'dan sonraki sürümüne ihtiyaç duyarlar; o zamana
+kadar örnekteki gibi `sdk/js`'e yol üzerinden bağlanın.
+
 ### Diğer site üreticileri
 
 Betiği (ya da `useyuva/docs`'u) yükleyin ve öğeleri makalenin altına koyun:

@@ -95,6 +95,92 @@ Haben Sie die eigene `<Feedback>`-Komponente von Fumadocs eingebaut, ersetzen Si
 Pfad aus `sdk/js` verlinkt, kann Next eine zweite Kopie von React laden; setzen Sie
 `turbopack.root` wie in der `next.config.mjs` des Beispiels.
 
+### shadcn/ui
+
+Für React-Seiten auf [shadcn/ui](https://ui.shadcn.com), die die Diskussionen als eigenen Code in
+ihrem eigenen Designsystem haben wollen. Lauffähiges Beispiel:
+[`examples/shadcn-next`](../../examples/shadcn-next)
+([so starten Sie es](../../examples/README.md#shadcn-next)).
+
+```sh
+npx shadcn@latest add https://useyuva.com/r/yuva-discussions.json https://useyuva.com/r/yuva-page-feedback.json
+```
+
+Das kopiert die Komponenten in Ihr Projekt (`components/yuva-*.tsx`,
+`hooks/use-yuva-discussions.tsx`, `lib/yuva-utils.ts`), ergänzt die shadcn/ui-Bausteine, auf denen
+sie aufbauen (button, card, input, tabs, textarea, avatar, badge, separator, skeleton), und
+installiert `useyuva` und `lucide-react`. Die kleineren Einträge sind `use-yuva-discussions` (nur
+Provider und Hooks), `yuva-discussion-list`, `yuva-discussion-thread` und
+`yuva-discussion-composer`; alle stehen in `https://useyuva.com/r/registry.json`.
+
+```tsx
+// app/layout.tsx
+import { YuvaDiscussionsProvider } from "@/hooks/use-yuva-discussions";
+
+<YuvaDiscussionsProvider
+  server={process.env.NEXT_PUBLIC_YUVA_SERVER}
+  channel={process.env.NEXT_PUBLIC_YUVA_CHANNEL}
+>
+  {children}
+</YuvaDiscussionsProvider>
+```
+
+```tsx
+// unter dem Artikel
+<YuvaPageFeedback />
+<YuvaDiscussions />
+```
+
+`YuvaDiscussions` nimmt `page` und `pageTitle` (standardmäßig die URL ohne Query und Fragment und
+`document.title`), `defaultSort`, `labels` und `className`; ohne Provider darum geben Sie ihm
+`server` und `channel` selbst. Der Provider nimmt außerdem `identityToken` (eine Funktion, wie bei
+den Elementen), `locale` für Datumsangaben und `client`, um ein eigenes `createYuvaClient()` zu
+teilen.
+
+- **Anpassen** durch Bearbeiten der Dateien: Sie gehören jetzt Ihnen. Die Farben kommen aus Ihren
+  Theme-Variablen (`primary`, `muted`, `border`, `destructive` …), der Dark Mode folgt also Ihrem
+  Theme. Beiträge zeigen das `body_html` des Servers in den Klassen von `yuvaProseClassName` aus
+  `lib/yuva-utils.ts`; die Vorschau im Editor besteht aus React-Elementen, veröffentlicht wird, was
+  der Server rendert.
+- **Eigenes Layout**: Die Hooks hinter den Komponenten sind `useDiscussions(page, sort)`,
+  `useDiscussion(id)`, `useYuvaReader()` (`signIn()` aus einem Klick aufrufen),
+  `useDiscussionMode()` und `usePageRating(page)`.
+- **Beschriftungen** sind standardmäßig Englisch (`defaultYuvaDiscussionsLabels`). Geben Sie
+  `labels` an den Provider oder an eine Komponente, um sie zu ändern oder zu übersetzen; Zahlen
+  sind Funktionen. Türkisch:
+
+```tsx
+import type { YuvaDiscussionsLabels } from "@/lib/yuva-utils";
+
+const tr: Partial<YuvaDiscussionsLabels> = {
+  heading: "Tartışmalar",
+  sortNew: "Yeni",
+  sortTop: "En çok oy alan",
+  sortUnanswered: "Yanıtsız",
+  newDiscussion: "Yeni tartışma",
+  empty: "Bu sayfada henüz tartışma yok. İlkini siz başlatın.",
+  replies: (count) => `${count} yanıt`,
+  votes: (count) => `${count} oy`,
+  answered: "Yanıtlandı",
+  acceptedAnswer: "Kabul edilen yanıt",
+  reply: "Yanıtla",
+  signIn: "Giriş yap",
+  signInHint: "Tartışma başlatmak, yanıtlamak ve oy vermek için giriş yapın.",
+  write: "Yaz",
+  preview: "Önizleme",
+  startDiscussion: "Tartışmayı başlat",
+  feedbackQuestion: "Bu sayfa işinize yaradı mı?",
+  feedbackYes: "Evet",
+  feedbackNo: "Hayır",
+};
+
+<YuvaDiscussionsProvider server={server} channel={channel} labels={tr} locale="tr">
+```
+
+Die Komponenten verwenden logische Abstände (`ps-`, `border-s`, `text-start`) und funktionieren
+deshalb auch unter `dir="rtl"`. Wie die Elemente brauchen sie `useyuva` aus dem Release nach 0.0.6;
+bis dahin hängen Sie wie das Beispiel per Pfad von `sdk/js` ab.
+
 ### Andere Generatoren
 
 Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie die Elemente unter den Artikel:
