@@ -207,8 +207,9 @@ scoped API keys, and every key-authored message names its bot.
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
 before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
-added to existing keys; keys cannot hold `broadcasts:*` until broadcasts ship (M13.3). `yuva api-key create` takes `--scope` (repeatable,
-default every scope) and `--inbox` (repeatable).
+added to existing keys, and `broadcasts:send` is never implied: a key made without naming its scopes holds
+every scope but that one. `yuva api-key create` takes `--scope` (repeatable, default every scope but
+`broadcasts:send`) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
 inboxes sees; it cannot hold `inboxes:manage`, `webhooks:manage`, `workspace:manage` or `migrations:manage` (refused when
@@ -1223,6 +1224,17 @@ Decisions:
   welcome, test and broadcast mail never use the server's own `YUVA_SMTP_*`. Test sends go to members
   only. `YUVA_BROADCAST_DAILY_RECIPIENTS` (0 = no limit) caps recipients per workspace and UTC day; a send
   that reaches it continues the next day.
+  Implementation: each recipient's mail is rendered from the frozen document with their merge values
+  when it goes out (no stored HTML template). A batch is 50 mails or 5 seconds, whichever ends first, and
+  the broadcast's state is read again before every mail; the send job marks a broadcast `sent` itself once
+  nothing is queued (there is no separate finish job), and a sweep every 5 minutes queues the job of any
+  broadcast that should be moving. Recipients are checked again before their mail (still subscribed, not
+  suppressed, not opted out) and skipped with the reason otherwise. Temporary SMTP failures are retried
+  after 5 minutes, 30 minutes, 2 hours and 6 hours, then the delivery fails; `5.1.x` and `5.2.1` refusals
+  are bounces; 20 refusals in a row, a refused account or TLS, or a server unreachable for 30 minutes
+  pause the broadcast (`sender_error`, the SMTP answer in `state_detail`). Test sends: 20 mails an hour
+  per workspace; their unsubscribe link names no list and its page says it was a test. Progress reaches
+  `/v1/realtime` as `broadcast.progress` (counts, not stored, at most every 5 seconds).
 - **Headers.** `Message-ID` `<delivery token.random@sending domain>` (the conversation shape, so loop
   protection is unchanged), `List-Unsubscribe`, `List-Unsubscribe-Post`, `List-Id`, `Feedback-ID`
   (`broadcast:list:workspace:yuvabroadcast`), `X-Auto-Response-Suppress: OOF, AutoReply`; no
@@ -1230,24 +1242,38 @@ Decisions:
 - **Bounces and complaints.** SES (SNS), delivery reports to the channel, SMTP 5xx at send time and ARF
   feedback reports find the delivery by Message-ID. A hard bounce suppresses the address for all mail; a
   complaint about a broadcast suppresses broadcasts only, unsubscribes every list of the workspace and
-  writes an opt-out. A broadcast pauses itself at 5% bounces (after 200) or 0.3% complaints (after 1,000);
-  a workspace whose 30-day complaint rate reaches 0.3% is suspended from sending.
+  writes an opt-out. A broadcast pauses itself at 5% bounces (after 200) or 0.3% complaints (after 1,000),
+  counted since it started or was last resumed; a workspace whose 30-day complaint rate reaches 0.3% (over
+  at least 1,000 mails) or bounce rate 8% (over at least 2,000) is suspended from sending and its running
+  broadcasts pause. ARF reports count only from a sender whose trusted DMARC result is `pass`.
 - **Deliverability.** A check sends a probe through the broadcast account to the channel's own address
   and reads the trusted `Authentication-Results` (SPF, DKIM, DMARC, alignment, whether the DKIM signature
   covers the list headers) plus DNS. A channel may also have its own DKIM key, signed by Yuva.
 - **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` and
   opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a
   `broadcast_reply` marker; someone else's reply opens their own conversation; automatic replies are only
-  counted. Notifications about replies to one broadcast are grouped per member every 10 minutes.
+  counted (when they name no conversation). Notifications about replies to one broadcast are grouped per
+  member every 10 minutes (one push "N new replies"; no e-mail fallback for them).
 - **Measuring.** Per broadcast: recipients, sent, failed, bounced, complained, unsubscribed, replied,
   automatic replies, skipped by reason, and unique clicks only when the broadcast turns click tracking on
-  (links go through `/c/{token}`). There is no open pixel.
+  (links go through `/c/{token}`). There is no open pixel. Tracked links are the web links of the HTML part
+  that are the same for every recipient (no merge field), found when the broadcast is scheduled; a `HEAD`
+  request and a third link of one mail opened within 2 seconds are not counted.
 - **Hosted servers.** `YUVA_BROADCASTS=on|approval|off` (unset: `approval` with `YUVA_SIGNUP=open`, else
   `on`). In `approval` mode a workspace asks the operator, who answers with
-  `yuva workspace broadcasts approve|deny|suspend|limit`; approved workspaces warm up from 500 recipients
-  a day, doubling after each clean day. The operator digest reports approval requests, suspensions and
-  auto-pauses without content. `YUVA_MAIL_LINK_URL` puts `/m/`, `/s/`, `/c/` and `/i/` on a separate
-  domain.
+  `yuva workspace broadcasts approve|deny|suspend|limit|show`; approved workspaces warm up from 500
+  recipients a day, doubling after each clean day (at least 100 sent, bounces under 3%, complaints under
+  0.1%) and losing a doubling after a bad one. Only the operator lifts a suspension (`approve`). The
+  operator digest reports approval requests, suspensions and auto-pauses without content.
+  `YUVA_BROADCASTS=off` refuses broadcast writes (`403 broadcasts_disabled`); lists and their forms keep
+  working. `YUVA_MAIL_LINK_URL` puts `/m/`, `/s/`, `/c/` and `/i/` on a separate domain, which answers only
+  those routes.
+
+  ```sh
+  yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]
+  yuva workspace broadcasts limit --workspace <id|name> --daily <n>   # 0 removes the limit
+  yuva workspace broadcasts show --workspace <id|name>                # status, limits, 30-day rates, last 10
+  ```
 - **Scopes, events, MCP.** Scopes `lists:read`, `lists:write`, `broadcasts:read`, `broadcasts:write`,
   `broadcasts:send`; keys and OAuth tokens schedule only while the workspace allows it
   (`broadcasts_by_keys`, off by default). Events and webhook types `subscription.created`,
@@ -1539,9 +1565,9 @@ now; per-channel limits can narrow them later.
     `people.reader_email_notifications` is a person-level setting.
   - Open sign-up's limits count `workspaces` by `created_by` (a person) and `created_ip` across
     the server, before the new workspace exists.
-  - `operator_notices` is the server operator's feed of new people and workspaces
-    (`YUVA_OPERATOR_EMAIL`): it is about the server, not a workspace, and is read only by the
-    operator digest job.
+  - `operator_notices` is the server operator's feed of new people and workspaces, broadcast approval
+    requests, suspensions and automatic pauses (`YUVA_OPERATOR_EMAIL`): it is about the server, not a
+    workspace (a line names the workspace), and is read only by the operator digest job.
   - Analytics collection names only a property's public key: `POST /client/v1/analytics/{key}` finds
     the property by `analytics_properties.public_key` (or its `previous_key` during a rotation), unique
     across the server, and a share link finds its share by `analytics_shares.token_hash`; everything

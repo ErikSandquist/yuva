@@ -173,7 +173,7 @@ func TestEmailDesigns(t *testing.T) {
 	none := h.client()
 	none.bearer = o.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "lists", "scopes": []string{"lists:read"}}).str("secret")
 	none.expectProblem(http.StatusForbidden, "insufficient_scope", "GET", "/v1/email-designs", nil)
-	o.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/api-keys", map[string]any{"name": "send", "scopes": []string{"broadcasts:send"}})
+	o.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "send", "scopes": []string{"broadcasts:send"}})
 }
 
 func TestEmailDesignConflictKeepsTheirs(t *testing.T) {

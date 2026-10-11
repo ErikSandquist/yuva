@@ -69,8 +69,14 @@ func (s *Server) noteOperator(ctx context.Context, q *store.Queries, kind, email
 }
 
 type operatorItem struct {
-	Time, Email, Workspace, From string
-	Reader                       bool
+	Time, Email, Workspace, From, Title, Detail string
+	Reader                                      bool
+}
+
+var broadcastNoticeTitles = map[string]string{
+	noticeBroadcastApproval:  "Broadcast approval requested",
+	noticeBroadcastSuspended: "Workspace suspended from broadcasts",
+	noticeBroadcastPaused:    "Broadcast paused",
 }
 
 func oneLine(s string) string {
@@ -112,16 +118,26 @@ func (s *Server) SendOperatorDigest(ctx context.Context) error {
 		return err
 	}
 	var items []operatorItem
-	signups, workspaces := 0, 0
+	signups, workspaces, broadcasts := 0, 0, 0
 	for _, n := range notices {
 		it := operatorItem{Time: n.CreatedAt.UTC().Format("2006-01-02 15:04 UTC"), Email: n.Email, Reader: n.Reader, From: n.Ip}
 		if n.Country != nil {
 			it.From = *n.Country
 		}
-		if n.Kind == noticeWorkspace && n.WorkspaceName != nil {
+		switch title, ok := broadcastNoticeTitles[n.Kind]; {
+		case ok:
+			it.Title, it.From = title, ""
+			if n.WorkspaceName != nil {
+				it.Workspace = oneLine(*n.WorkspaceName)
+			}
+			if n.Detail != nil {
+				it.Detail = oneLine(*n.Detail)
+			}
+			broadcasts++
+		case n.Kind == noticeWorkspace && n.WorkspaceName != nil:
 			it.Workspace = oneLine(*n.WorkspaceName)
 			workspaces++
-		} else {
+		default:
 			signups++
 		}
 		items = append(items, it)
@@ -131,7 +147,7 @@ func (s *Server) SendOperatorDigest(ctx context.Context) error {
 		server = u.Host
 	}
 	msg, err := mail.Render("operator_digest", "en", map[string]any{
-		"Items": items, "Signups": signups, "Workspaces": workspaces, "Server": server, "URL": s.auth.PublicURL,
+		"Items": items, "Signups": signups, "Workspaces": workspaces, "Broadcasts": broadcasts, "Server": server, "URL": s.auth.PublicURL,
 	})
 	if err != nil {
 		return err

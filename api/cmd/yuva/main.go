@@ -49,6 +49,9 @@ const usageText = `usage:
       (prints the channel id and its public key, tab-separated)
   yuva channel list --workspace <id|name> --inbox <id|slug>
   yuva workspace delete --workspace <id|name> --yes
+  yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]
+  yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)
+  yuva workspace broadcasts show --workspace <id|name>
   yuva person delete --email <address> --yes
   yuva vapid-keys                (prints a new Web Push key pair)
   yuva templates render [--dir templates/email]   (writes each gallery template's preview.<locale>.html)
@@ -237,6 +240,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		OperatorEmails:   cfg.OperatorEmails,
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
+		Broadcasts: api.BroadcastSettings{
+			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
+		},
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")
@@ -253,7 +259,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.IngressSecret != "" && cfg.IngressAuthservID == "" {
 		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC results of inbound mail are stored but not used")
 	}
-	queue, err := jobs.New(st.Pool, st.Queries, log, srv.AddWorkers)
+	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, srv.AddWorkers)
 	if err != nil {
 		return fmt.Errorf("job queue: %w", err)
 	}

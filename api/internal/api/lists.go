@@ -334,6 +334,13 @@ func (s *Server) DeleteMailingList(ctx context.Context, req oas.DeleteMailingLis
 		if err := requireManagerOrKey(p); err != nil {
 			return err
 		}
+		used, err := q.BroadcastUsesList(ctx, store.BroadcastUsesListParams{WorkspaceID: p.workspaceID, ListID: l.ID.String()})
+		if err != nil {
+			return err
+		}
+		if used {
+			return errListInUse
+		}
 		emails, err := q.ListUnsubscribedEmails(ctx, store.ListUnsubscribedEmailsParams{WorkspaceID: p.workspaceID, ListID: l.ID})
 		if err != nil {
 			return err

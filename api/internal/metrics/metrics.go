@@ -19,6 +19,12 @@ var (
 	RequestSeconds = promauto.NewHistogramVec(prometheus.HistogramOpts{
 		Name: "yuva_http_request_seconds", Help: "HTTP request latency.", Buckets: prometheus.DefBuckets,
 	}, []string{"method"})
+	BroadcastMessages = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "yuva_broadcast_messages_total", Help: "Broadcast mails by result: sent, bounced, rejected, deferred.",
+	}, []string{"result"})
+	BroadcastComplaints = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "yuva_broadcast_complaints_total", Help: "Spam complaints about broadcast mails.",
+	})
 )
 
 func Serve(ctx context.Context, addr string, log *slog.Logger) {

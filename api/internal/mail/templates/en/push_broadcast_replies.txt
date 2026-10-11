@@ -1,0 +1,3 @@
+{{.Inbox}} · {{.Broadcast}}
+
+{{if eq .Count 1}}1 new reply to the broadcast{{else}}{{.Count}} new replies to the broadcast{{end}}

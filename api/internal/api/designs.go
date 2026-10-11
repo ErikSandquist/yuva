@@ -136,10 +136,10 @@ func mailLang(locale string) string {
 	return "en"
 }
 
-func (s *Server) imageURL(token string) string { return s.auth.PublicURL + "/i/" + token }
+func (s *Server) imageURL(token string) string { return s.linkBase() + "/i/" + token }
 
 func (s *Server) iconURL(network, variant string) string {
-	return s.auth.PublicURL + "/i/s/" + network + "-" + variant + ".png"
+	return s.linkBase() + "/i/s/" + network + "-" + variant + ".png"
 }
 
 // renderScope is what a render knows besides the document: the inbox for the footer and the
@@ -171,32 +171,14 @@ func (s *Server) renderDesign(ctx context.Context, q *store.Queries, ws uuid.UUI
 	if sc.list != nil {
 		v.ListName = sc.list.Name
 	}
-	v.UnsubscribeURL = s.auth.PublicURL + "/m/example"
+	v.UnsubscribeURL = s.linkBase() + "/m/example"
 	v.PreferencesURL = v.UnsubscribeURL
 	in.Values = v
-	images := map[string]store.EmailImage{}
-	if ids := d.ImageIDs(); len(ids) > 0 {
-		var parsed []uuid.UUID
-		for _, id := range ids {
-			if u, err := uuid.Parse(id); err == nil {
-				parsed = append(parsed, u)
-			}
-		}
-		rows, err := q.ListEmailImagesByIDs(ctx, store.ListEmailImagesByIDsParams{WorkspaceID: ws, Ids: parsed})
-		if err != nil {
-			return design.Output{}, err
-		}
-		for _, r := range rows {
-			images[r.ID.String()] = r
-		}
+	img, err := s.designImages(ctx, q, ws, d)
+	if err != nil {
+		return design.Output{}, err
 	}
-	in.Image = func(b design.Block) (design.Image, bool) {
-		img, ok := images[strings.ToLower(b.ImageID)]
-		if !ok {
-			return design.Image{}, false
-		}
-		return design.Image{URL: s.imageURL(img.Token), Width: int(img.Width), Height: int(img.Height)}, true
-	}
+	in.Image = img
 	out, err := design.Render(in)
 	if sc.inbox == nil {
 		kept := out.Warnings[:0]
@@ -208,6 +190,33 @@ func (s *Server) renderDesign(ctx context.Context, q *store.Queries, ws uuid.UUI
 		out.Warnings = kept
 	}
 	return out, err
+}
+
+// designImages looks up the workspace's images a document uses, for the renderer.
+func (s *Server) designImages(ctx context.Context, q *store.Queries, ws uuid.UUID, d design.Document) (func(design.Block) (design.Image, bool), error) {
+	images := map[string]store.EmailImage{}
+	if ids := d.ImageIDs(); len(ids) > 0 {
+		var parsed []uuid.UUID
+		for _, id := range ids {
+			if u, err := uuid.Parse(id); err == nil {
+				parsed = append(parsed, u)
+			}
+		}
+		rows, err := q.ListEmailImagesByIDs(ctx, store.ListEmailImagesByIDsParams{WorkspaceID: ws, Ids: parsed})
+		if err != nil {
+			return nil, err
+		}
+		for _, r := range rows {
+			images[r.ID.String()] = r
+		}
+	}
+	return func(b design.Block) (design.Image, bool) {
+		img, ok := images[strings.ToLower(b.ImageID)]
+		if !ok {
+			return design.Image{}, false
+		}
+		return design.Image{URL: s.imageURL(img.Token), Width: int(img.Width), Height: int(img.Height)}, true
+	}, nil
 }
 
 func issueBodies(is []design.Issue) []oas.EmailDesignIssue {

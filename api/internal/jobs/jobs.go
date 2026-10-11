@@ -37,9 +37,17 @@ const (
 	UnusedOAuthClientAge   = 30 * 24 * time.Hour
 	PresenceSweepInterval  = time.Minute
 	OperatorDigestInterval = time.Minute
+	BroadcastSweepInterval = 5 * time.Minute
 )
 
-func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+// BroadcastQueue holds the broadcast sending jobs, so a large send never delays replies,
+// notifications or webhooks on the default queue.
+const BroadcastQueue = "broadcast"
+
+func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+	if broadcastWorkers < 1 {
+		broadcastWorkers = 2
+	}
 	workers := river.NewWorkers()
 	river.AddWorker(workers, &EventCleanupWorker{Queries: q, Now: time.Now})
 	for _, r := range register {
@@ -47,7 +55,7 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, register ...fun
 	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
 		Logger:  log,
-		Queues:  map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}},
+		Queues:  map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}},
 		Workers: workers,
 		PeriodicJobs: []*river.PeriodicJob{
 			river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
@@ -62,6 +70,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, register ...fun
 			river.NewPeriodicJob(river.PeriodicInterval(OperatorDigestInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return OperatorDigestArgs{}, nil
 			}, &river.PeriodicJobOpts{ID: "operator_digest", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(BroadcastSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return BroadcastSweepArgs{}, nil
+			}, &river.PeriodicJobOpts{ID: "broadcast_sweep", RunOnStart: true}),
 		},
 	})
 }
@@ -80,6 +91,11 @@ func (PresenceSweepArgs) Kind() string { return "presence_sweep" }
 type OperatorDigestArgs struct{}
 
 func (OperatorDigestArgs) Kind() string { return "operator_digest" }
+
+// BroadcastSweepArgs is worked by the api package, which owns sending.
+type BroadcastSweepArgs struct{}
+
+func (BroadcastSweepArgs) Kind() string { return "broadcast_sweep" }
 
 type EventCleanupArgs struct{}
 

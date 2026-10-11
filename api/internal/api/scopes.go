@@ -11,8 +11,11 @@ var allScopes = []oas.ApiKeyScope{
 	oas.ConversationsRead, oas.ConversationsWrite, oas.MessagesWrite, oas.DraftsSend, oas.NotesWrite,
 	oas.ContactsRead, oas.ContactsWrite, oas.InboxesRead, oas.InboxesManage, oas.LabelsWrite,
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
-	oas.BroadcastsRead, oas.BroadcastsWrite,
+	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend,
 }
+
+// notImpliedScopes are left out of a key made without naming its scopes.
+var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend}
 
 var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage}
 
@@ -142,6 +145,24 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"RestoreEmailDesignVersion": {oas.BroadcastsWrite},
 	"UploadEmailImage":          {oas.BroadcastsWrite},
 	"DeleteEmailImage":          {oas.BroadcastsWrite},
+
+	"ListBroadcasts":          {oas.BroadcastsRead},
+	"GetBroadcast":            {oas.BroadcastsRead},
+	"CountBroadcastAudience":  {oas.BroadcastsRead},
+	"ReviewBroadcast":         {oas.BroadcastsRead},
+	"GetBroadcastReport":      {oas.BroadcastsRead},
+	"ListBroadcastDeliveries": {oas.BroadcastsRead, oas.ContactsRead},
+
+	"CreateBroadcast":   {oas.BroadcastsWrite},
+	"UpdateBroadcast":   {oas.BroadcastsWrite},
+	"DeleteBroadcast":   {oas.BroadcastsWrite},
+	"SendBroadcastTest": {oas.BroadcastsWrite},
+
+	"ScheduleBroadcast":   {oas.BroadcastsSend},
+	"UnscheduleBroadcast": {oas.BroadcastsSend},
+	"PauseBroadcast":      {oas.BroadcastsSend},
+	"ResumeBroadcast":     {oas.BroadcastsSend},
+	"CancelBroadcast":     {oas.BroadcastsSend},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

@@ -61,6 +61,13 @@ type Config struct {
 	MCP    bool
 	Panel  bool
 	Widget bool
+
+	// Broadcasts is on, approval or off (YUVA_BROADCASTS).
+	Broadcasts               string
+	BroadcastWorkers         int
+	BroadcastDailyRecipients int64
+	// MailLinkURL is the base of /m/, /s/, /c/ and /i/ links in mail; PublicURL when unset.
+	MailLinkURL string
 }
 
 type VAPID struct {
@@ -239,10 +246,39 @@ func Load(version string) (Config, error) {
 	if err := c.loadVAPID(); err != nil {
 		return c, err
 	}
+	if err := c.loadBroadcasts(); err != nil {
+		return c, err
+	}
 	if c.SMTP.Enabled() && c.SMTP.From == "" {
 		return c, errors.New("YUVA_SMTP_FROM is required when YUVA_SMTP_HOST is set")
 	}
 	return c, nil
+}
+
+func (c *Config) loadBroadcasts() error {
+	def := "on"
+	if c.SignupOpen {
+		def = "approval"
+	}
+	c.Broadcasts = strings.ToLower(env("YUVA_BROADCASTS", def))
+	switch c.Broadcasts {
+	case "on", "approval", "off":
+	default:
+		return errors.New("YUVA_BROADCASTS must be on, approval or off")
+	}
+	var err error
+	if c.BroadcastWorkers, err = strconv.Atoi(env("YUVA_BROADCAST_WORKERS", "2")); err != nil || c.BroadcastWorkers < 1 {
+		return errors.New("YUVA_BROADCAST_WORKERS must be a positive number of workers")
+	}
+	if c.BroadcastDailyRecipients, err = strconv.ParseInt(env("YUVA_BROADCAST_DAILY_RECIPIENTS", "0"), 10, 64); err != nil || c.BroadcastDailyRecipients < 0 {
+		return errors.New("YUVA_BROADCAST_DAILY_RECIPIENTS must be a number of recipients, 0 for no limit")
+	}
+	c.MailLinkURL = strings.TrimRight(env("YUVA_MAIL_LINK_URL", c.PublicURL), "/")
+	u, err := url.Parse(c.MailLinkURL)
+	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" || (u.Path != "" && u.Path != "/") {
+		return fmt.Errorf("YUVA_MAIL_LINK_URL must be an absolute http(s) URL without a path, got %q", c.MailLinkURL)
+	}
+	return nil
 }
 
 func (c *Config) loadVAPID() error {

@@ -1,0 +1,92 @@
+package api
+
+import (
+	"context"
+	"errors"
+	"time"
+	"uuid"
+
+	"github.com/productdevbook/yuva/api/internal/store"
+)
+
+// OperatorApproveBroadcasts lets a workspace send broadcasts (an approval, or lifting a suspension).
+// Broadcasts it paused stay paused until a member resumes them.
+func (s *Server) OperatorApproveBroadcasts(ctx context.Context, ws uuid.UUID, reason string) error {
+	_, err := s.st.SetWorkspaceBroadcastsStatus(ctx, store.SetWorkspaceBroadcastsStatusParams{ID: ws, Status: wsAllowed, Reason: optionalText(reason, 500), Now: s.now()})
+	return err
+}
+
+// OperatorDenyBroadcasts answers an approval request with no; the workspace may ask again.
+func (s *Server) OperatorDenyBroadcasts(ctx context.Context, ws uuid.UUID, reason string) error {
+	_, err := s.st.SetWorkspaceBroadcastsStatus(ctx, store.SetWorkspaceBroadcastsStatusParams{ID: ws, Status: wsApprovalRequired, Reason: optionalText(reason, 500), Now: s.now()})
+	return err
+}
+
+// OperatorSuspendBroadcasts stops a workspace from sending and pauses its running broadcasts.
+func (s *Server) OperatorSuspendBroadcasts(ctx context.Context, ws uuid.UUID, reason string) error {
+	if reason == "" {
+		reason = "suspended by the server's operator"
+	}
+	return s.suspendBroadcasts(ctx, ws, reason, false)
+}
+
+// OperatorLimitBroadcasts sets the workspace's daily recipients limit; 0 removes it.
+func (s *Server) OperatorLimitBroadcasts(ctx context.Context, ws uuid.UUID, daily int) error {
+	if daily < 0 {
+		return errors.New("--daily must be 0 or more")
+	}
+	var limit *int32
+	if daily > 0 {
+		limit = new(int32(daily))
+	}
+	_, err := s.st.SetWorkspaceBroadcastDailyLimit(ctx, store.SetWorkspaceBroadcastDailyLimitParams{ID: ws, DailyLimit: limit})
+	return err
+}
+
+// BroadcastSummary is what the operator sees of a workspace's broadcasts.
+type BroadcastSummary struct {
+	Status, Reason                  string
+	DailyLimit, SentToday           int64
+	Sent30, Bounced30, Complained30 int64
+	SenderDomains                   []string
+	Latest                          []BroadcastLine
+}
+
+type BroadcastLine struct {
+	Name, Subject, State string
+	Recipients, Sent     int64
+	Bounced, Complained  int64
+	CreatedAt            time.Time
+}
+
+func (s *Server) OperatorBroadcastSummary(ctx context.Context, ws uuid.UUID) (BroadcastSummary, error) {
+	var out BroadcastSummary
+	w, err := s.st.GetWorkspace(ctx, ws)
+	if err != nil {
+		return out, err
+	}
+	out.Status, out.Reason = w.BroadcastsStatus, deref(w.BroadcastsStatusReason)
+	if out.DailyLimit, out.SentToday, err = s.dailyAllowance(ctx, s.st.Queries, w); err != nil {
+		return out, err
+	}
+	days, err := s.st.ListSendingDays(ctx, store.ListSendingDaysParams{WorkspaceID: ws, Since: utcDay(s.now()).Add(-rateWindow)})
+	if err != nil {
+		return out, err
+	}
+	for _, d := range days {
+		out.Sent30, out.Bounced30, out.Complained30 = out.Sent30+int64(d.Sent), out.Bounced30+int64(d.Bounced), out.Complained30+int64(d.Complained)
+	}
+	if out.SenderDomains, err = s.st.ListBroadcastSenderDomains(ctx, store.ListBroadcastSenderDomainsParams{WorkspaceID: ws, Since: new(s.now().Add(-rateWindow))}); err != nil {
+		return out, err
+	}
+	rows, err := s.st.ListLatestBroadcasts(ctx, store.ListLatestBroadcastsParams{WorkspaceID: ws, Lim: 10})
+	if err != nil {
+		return out, err
+	}
+	for _, b := range rows {
+		c := parseCounts(b.Counts)
+		out.Latest = append(out.Latest, BroadcastLine{Name: b.Name, Subject: b.Subject, State: b.State, Recipients: c.Recipients,
+			Sent: c.Sent, Bounced: c.Bounced, Complained: c.Complained, CreatedAt: b.CreatedAt})
+	}
+	return out, nil
+}

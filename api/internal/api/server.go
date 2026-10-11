@@ -7,6 +7,7 @@ import (
 	"net/netip"
 	"net/url"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -35,7 +36,7 @@ import (
 
 const maxBodyBytes = 8 << 20
 
-var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix}
+var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix}
 
 var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp"}
 
@@ -66,7 +67,8 @@ type Server struct {
 	hooks    *webhook.Client
 	push     *push.Sender
 
-	imagesMax int64
+	imagesMax  int64
+	broadcasts BroadcastSettings
 
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
@@ -112,6 +114,7 @@ type Deps struct {
 	OperatorEmails []string
 	// EmailImagesMaxBytes caps a workspace's e-mail images (YUVA_EMAIL_IMAGES_MAX_BYTES); 0 is no limit.
 	EmailImagesMaxBytes int64
+	Broadcasts          BroadcastSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -215,6 +218,7 @@ func New(d Deps) *Server {
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
 		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
+		broadcasts: d.Broadcasts,
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
@@ -315,6 +319,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("POST "+confirmPathPrefix+"{token}", s.serveConfirmPost)
 	mux.HandleFunc("GET "+managePathPrefix+"{token}", s.serveManagePage)
 	mux.HandleFunc("POST "+managePathPrefix+"{token}", s.serveManagePost)
+	mux.HandleFunc("GET "+clickPathPrefix+"{token}", s.serveClick)
 	mux.HandleFunc("GET "+emailImagePathPrefix+"s/{file}", s.serveSocialIcon)
 	mux.HandleFunc("GET "+emailImagePathPrefix+"{token}", s.serveEmailImage)
 	mux.HandleFunc("GET "+emailTemplatesPathPrefix+"{slug}/{file}", s.serveTemplatePreview)
@@ -346,7 +351,26 @@ func (s *Server) Handler() http.Handler {
 		}
 		panel.ServeHTTP(w, r)
 	})
-	return s.recoverer(s.logRequests(noSniff(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux))))))))
+	return s.recoverer(s.logRequests(noSniff(s.linkHost(oauthCORS(s.clientCORS(s.guardCookieWrites(s.limitBody(s.idempotency(mux)))))))))
+}
+
+var mailLinkPrefixes = []string{managePathPrefix, confirmPathPrefix, clickPathPrefix, emailImagePathPrefix}
+
+// linkHost answers only the mail link routes on YUVA_MAIL_LINK_URL's host when it differs from the
+// server's own, so the link domain never serves the panel or the API.
+func (s *Server) linkHost(next http.Handler) http.Handler {
+	link, err := url.Parse(s.linkBase())
+	own, err2 := url.Parse(s.auth.PublicURL)
+	if err != nil || err2 != nil || strings.EqualFold(link.Host, own.Host) {
+		return next
+	}
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.EqualFold(r.Host, link.Host) && !slices.ContainsFunc(mailLinkPrefixes, func(p string) bool { return strings.HasPrefix(r.URL.Path, p) }) {
+			writeProblem(w, errNotFound)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func noSniff(next http.Handler) http.Handler {

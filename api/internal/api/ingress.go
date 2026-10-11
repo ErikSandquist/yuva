@@ -278,6 +278,12 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 		return IngestResult{}, err
 	}
 	nullFrom := fromTrusted && nullSender(envelopeFrom)
+	if m.Feedback != nil {
+		res, handled, err := s.applyFeedbackReport(ctx, ch, m)
+		if err != nil || handled {
+			return res, err
+		}
+	}
 	if m.Bounce != nil && nullFrom {
 		res, handled, err := s.applyDSN(ctx, ch, m)
 		if err != nil || handled {
@@ -291,6 +297,11 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 		return IngestResult{}, errIngestMalformed
 	}
 	auto := m.Auto || nullFrom || ownMessageID(m.MessageID, ch)
+	if auto {
+		if counted, err := s.broadcastAutoReply(ctx, ch, m); err != nil || counted {
+			return IngestResult{Status: IngestDropped}, err
+		}
+	}
 	ws := ch.WorkspaceID
 	headerID := m.MessageID
 	if headerID == "" {
@@ -556,6 +567,20 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 		related = &found.ID
 		found = nil
 	}
+	var delivery *store.BroadcastDelivery
+	if found == nil && related == nil && !spam {
+		if delivery, err = deliveryOfTokens(ctx, q, ch, m, contactID); err != nil {
+			return store.Conversation{}, false, err
+		}
+		if delivery != nil && delivery.ContactID == contactID && delivery.ConversationID != nil {
+			c, err := q.GetConversation(ctx, store.GetConversationParams{WorkspaceID: ws, ID: *delivery.ConversationID})
+			if err == nil && c.ContactID == contactID && c.InboxID == ch.InboxID {
+				found, delivery = &c, nil
+			} else if err != nil && !store.IsNotFound(err) {
+				return c, false, err
+			}
+		}
+	}
 	if found == nil {
 		n, err := q.CountRecentConversations(ctx, store.CountRecentConversationsParams{
 			WorkspaceID: ws, ChannelID: &ch.ChannelID, ContactID: contactID, Since: now.Add(-time.Hour),
@@ -569,7 +594,7 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 				return latest, false, err
 			}
 			if !spam || latest.Spam {
-				found = &latest
+				found, delivery = &latest, nil
 			}
 		}
 	}
@@ -607,7 +632,24 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 	if err != nil {
 		return c, false, err
 	}
+	var reply func() error
+	if delivery != nil {
+		created := c
+		if c, err = q.SetConversationBroadcast(ctx, store.SetConversationBroadcastParams{WorkspaceID: ws, ID: c.ID, BroadcastID: &delivery.BroadcastID}); err != nil {
+			return created, false, err
+		}
+		d := *delivery
+		reply = func() error {
+			_, err := s.broadcastReplyStart(ctx, q, events, c, d, contactID, now)
+			return err
+		}
+	}
 	events.conversation(realtime.ConversationCreated, c, conversationBody(c, nil))
+	if reply != nil {
+		if err := reply(); err != nil {
+			return c, false, err
+		}
+	}
 	return c, true, nil
 }
 

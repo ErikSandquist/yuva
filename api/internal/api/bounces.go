@@ -102,7 +102,7 @@ func (s *Server) applyDSN(ctx context.Context, ch store.FindEmailChannelByAddres
 		}
 	}
 	if sent == nil {
-		return IngestResult{}, false, nil
+		return s.applyBroadcastDSN(ctx, ch, m)
 	}
 	failed := m.Bounce.Failed()
 	if len(failed) == 0 {
@@ -299,8 +299,7 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 	}
 	row, err := s.st.FindOutboundEmailAnyWorkspace(ctx, id)
 	if store.IsNotFound(err) {
-		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
-		return nil
+		return s.applyBroadcastSES(ctx, id, recipients)
 	}
 	if err != nil {
 		return err
@@ -311,4 +310,49 @@ func (s *Server) applySES(ctx context.Context, payload string) error {
 		return nil
 	}
 	return s.recordBounce(ctx, row.WorkspaceID, &row.MessageID, recipients, failMessage)
+}
+
+// applyBroadcastSES applies an SES bounce or complaint about broadcast mail, for its recipient only.
+func (s *Server) applyBroadcastSES(ctx context.Context, id string, recipients []bounced) error {
+	d, err := s.st.FindBroadcastDeliveryAnyWorkspace(ctx, id)
+	if store.IsNotFound(err) {
+		s.log.InfoContext(ctx, "ses notification for an unknown message", slog.String("message_id", id))
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	for _, r := range recipients {
+		if r.email == d.Email {
+			return s.deliveryFeedback(ctx, d, r.reason == suppressComplaint, r.detail)
+		}
+	}
+	s.log.InfoContext(ctx, "ses notification names no recipient of the message", slog.String("message_id", id))
+	return nil
+}
+
+// applyBroadcastDSN applies a delivery report about broadcast mail of the channel's workspace: a
+// permanent failure of the delivery's own address is a bounce, anything else changes nothing.
+func (s *Server) applyBroadcastDSN(ctx context.Context, ch store.FindEmailChannelByAddressRow, m *email.Message) (IngestResult, bool, error) {
+	for _, id := range slices.Concat([]string{m.Bounce.OriginalMessageID}, m.InReplyTo, m.References) {
+		if id == "" {
+			continue
+		}
+		d, err := s.st.FindBroadcastDeliveryByHeader(ctx, store.FindBroadcastDeliveryByHeaderParams{WorkspaceID: ch.WorkspaceID, HeaderMessageID: id})
+		if store.IsNotFound(err) {
+			continue
+		}
+		if err != nil {
+			return IngestResult{}, false, err
+		}
+		for _, r := range m.Bounce.Failed() {
+			if r.Email == d.Email && r.Permanent() {
+				if err := s.deliveryFeedback(ctx, d, false, strings.TrimSpace(r.Status+" "+r.Diagnostic)); err != nil {
+					return IngestResult{}, false, err
+				}
+			}
+		}
+		return IngestResult{Status: IngestBounce}, true, nil
+	}
+	return IngestResult{}, false, nil
 }

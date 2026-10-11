@@ -209,7 +209,7 @@ func createAPIKey(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, 
 	}
 	var scopes []string
 	for _, sc := range allScopes {
-		if spec.Scopes == nil || slices.Contains(spec.Scopes, string(sc)) {
+		if (spec.Scopes == nil && !slices.Contains(notImpliedScopes, sc)) || slices.Contains(spec.Scopes, string(sc)) {
 			scopes = append(scopes, string(sc))
 		}
 	}

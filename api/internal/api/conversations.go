@@ -166,7 +166,7 @@ func (s *Server) listItems(ctx context.Context, p principal, rows []store.Conver
 			Id: c.Id, InboxId: c.InboxId, ContactId: c.ContactId, ChannelId: c.ChannelId, ChannelKind: c.ChannelKind, Kind: c.Kind, Feedback: c.Feedback, Page: c.Page, Subject: c.Subject,
 			Status: c.Status, SnoozeUntil: c.SnoozeUntil, Priority: c.Priority, Spam: c.Spam, AssigneeId: c.AssigneeId, Labels: c.Labels,
 			LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt, CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt,
-			RelatedConversationId: c.RelatedConversationId, ClosedAt: c.ClosedAt, Rating: c.Rating, LastReadByContactAt: c.LastReadByContactAt,
+			RelatedConversationId: c.RelatedConversationId, ClosedAt: c.ClosedAt, Rating: c.Rating, LastReadByContactAt: c.LastReadByContactAt, BroadcastId: c.BroadcastId,
 			Contact: contacts[r.ContactID], LastMessage: previews[r.ID], Unread: unread[r.ID], PinnedAt: pinned[r.ID],
 		}
 	}
@@ -181,7 +181,7 @@ func conversationBody(c store.Conversation, labels []uuid.UUID) oas.Conversation
 		Id: c.ID, InboxId: c.InboxID, ContactId: c.ContactID, ChannelId: c.ChannelID, ChannelKind: (*oas.ChannelKind)(c.ChannelKind), Subject: c.Subject,
 		Kind: oas.ConversationKind(c.Kind), Feedback: conversationFeedback(c), Page: conversationPage(c), Status: oas.ConversationStatus(c.Status), SnoozeUntil: c.SnoozeUntil, Priority: oas.Priority(c.Priority), Spam: c.Spam,
 		AssigneeId: c.AssigneeID, Labels: labels, LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt,
-		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, RelatedConversationId: c.RelatedConversationID,
+		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, RelatedConversationId: c.RelatedConversationID, BroadcastId: c.BroadcastID,
 		ClosedAt: c.ClosedAt, Rating: conversationRating(c), LastReadByContactAt: c.LastReadByContactAt,
 	}
 }
@@ -317,7 +317,7 @@ func (s *Server) ListConversations(ctx context.Context, req oas.ListConversation
 	pos, neg := splitSearch(q)
 	arg := store.ListConversationsParams{
 		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(),
-		InboxID: prm.InboxId, ContactID: prm.ContactId, LabelID: prm.LabelId, Q: pos, QNot: neg,
+		InboxID: prm.InboxId, ContactID: prm.ContactId, BroadcastID: prm.BroadcastId, LabelID: prm.LabelId, Q: pos, QNot: neg,
 		CursorAt: at, CursorID: cid, Lim: lim + 1, Spam: prm.Spam != nil && *prm.Spam,
 	}
 	if arg.Kinds, err = enumList(prm.Kind, "kind must be conversation or feedback"); err != nil {

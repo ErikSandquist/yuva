@@ -591,3 +591,24 @@ func (d *Document) MapImages(f func(b *Block)) {
 	}
 	walk(d.Blocks)
 }
+
+// MergeFields lists the merge fields of the preheader, headings, rich text, button labels and
+// URLs and image links, in document order.
+func (d Document) MergeFields() []Field {
+	out := Fields(d.Preheader)
+	d.Walk(func(b Block) {
+		switch b.Type {
+		case "heading":
+			f, _ := richFields(b.Text)
+			out = append(out, f...)
+		case "text", "footer":
+			f, _ := richFields(b.HTML)
+			out = append(out, f...)
+		case "button":
+			out = append(append(out, Fields(b.Label)...), Fields(b.URL)...)
+		case "image":
+			out = append(out, Fields(b.Link)...)
+		}
+	})
+	return out
+}

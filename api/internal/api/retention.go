@@ -18,15 +18,15 @@ const retentionBatch = 200
 func (s *Server) UpdateWorkspace(ctx context.Context, req oas.UpdateWorkspaceRequestObject) (oas.UpdateWorkspaceResponseObject, error) {
 	p := principalFrom(ctx)
 	b := req.Body
-	if !b.RetentionDays.IsSpecified() && b.BotsMaySend == nil {
-		return nil, errValidation("send retention_days or bots_may_send")
+	if !b.RetentionDays.IsSpecified() && b.BotsMaySend == nil && b.BroadcastsByKeys == nil {
+		return nil, errValidation("send retention_days, bots_may_send or broadcasts_by_keys")
 	}
 	if b.RetentionDays.IsSpecified() && !p.isKey() {
 		if err := requireOwner(p); err != nil {
 			return nil, err
 		}
 	}
-	if b.BotsMaySend != nil {
+	if b.BotsMaySend != nil || b.BroadcastsByKeys != nil {
 		if p.isGrant() {
 			return nil, errMemberSessionRequired
 		}
@@ -54,14 +54,23 @@ func (s *Server) UpdateWorkspace(ctx context.Context, req oas.UpdateWorkspaceReq
 			}
 		}
 		if b.BotsMaySend != nil {
-			w, err = q.SetWorkspaceBotsMaySend(ctx, store.SetWorkspaceBotsMaySendParams{ID: p.workspaceID, BotsMaySend: *b.BotsMaySend})
+			if w, err = q.SetWorkspaceBotsMaySend(ctx, store.SetWorkspaceBotsMaySendParams{ID: p.workspaceID, BotsMaySend: *b.BotsMaySend}); err != nil {
+				return err
+			}
+		}
+		if b.BroadcastsByKeys != nil {
+			w, err = q.SetWorkspaceBroadcastsByKeys(ctx, store.SetWorkspaceBroadcastsByKeysParams{ID: p.workspaceID, ByKeys: *b.BroadcastsByKeys})
 		}
 		return err
 	})
 	if err != nil {
 		return nil, err
 	}
-	return oas.UpdateWorkspace200JSONResponse(workspaceBody(w)), nil
+	body, err := s.workspaceBody(ctx, w)
+	if err != nil {
+		return nil, err
+	}
+	return oas.UpdateWorkspace200JSONResponse(body), nil
 }
 
 type retentionWorker struct {
@@ -84,6 +93,9 @@ func (w *retentionWorker) Work(ctx context.Context, _ *river.Job[jobs.RetentionA
 		return err
 	}
 	if err := w.s.CleanUnusedImages(ctx); err != nil {
+		return err
+	}
+	if err := w.s.CleanBroadcasts(ctx); err != nil {
 		return err
 	}
 	return w.s.ApplyRetention(ctx)

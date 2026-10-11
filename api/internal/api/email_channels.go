@@ -18,6 +18,7 @@ const (
 	smtpTLSImplicit       = "tls"
 	smtpTLSNone           = "none"
 	catchAllLocal         = "*"
+	defaultBroadcastRate  = 5
 )
 
 var (
@@ -46,6 +47,19 @@ func emailChannelBody(e store.EmailChannel) *oas.EmailChannel {
 			PasswordSet: len(e.SmtpPassword) > 0,
 		}
 	}
+	if e.BroadcastSmtpHost != nil && *e.BroadcastSmtpHost != "" {
+		out.BroadcastSmtp = &oas.SmtpSettings{
+			Host: *e.BroadcastSmtpHost, Port: 587, Username: deref(e.BroadcastSmtpUsername), Tls: oas.SmtpTls(smtpTLSStartTLS),
+			PasswordSet: len(e.BroadcastSmtpPassword) > 0,
+		}
+		if e.BroadcastSmtpPort != nil {
+			out.BroadcastSmtp.Port = *e.BroadcastSmtpPort
+		}
+		if e.BroadcastSmtpTls != nil {
+			out.BroadcastSmtp.Tls = oas.SmtpTls(*e.BroadcastSmtpTls)
+		}
+	}
+	out.BroadcastRate = e.BroadcastRate
 	return out
 }
 
@@ -77,48 +91,11 @@ func (s *Server) emailChannelParams(workspaceID, channelID uuid.UUID, in *oas.Em
 		out.FromAddress = &from
 	}
 	if sm := in.Smtp; sm != nil {
-		host := strings.TrimSpace(sm.Host)
-		if host == "" || len(host) > 253 || !hostPattern.MatchString(host) {
-			return out, errValidation("email.smtp.host must be a host name or IP address")
+		acc, err := s.smtpAccount("email.smtp", *sm, curPassword(cur), smtpSecretContext(workspaceID, channelID))
+		if err != nil {
+			return out, err
 		}
-		if email.CheckSMTPHost(host, s.smtpPriv) != nil {
-			return out, errValidation("email.smtp.host points to a private, loopback or link-local address")
-		}
-		out.SmtpHost = host
-		if sm.Tls != nil {
-			if !sm.Tls.Valid() {
-				return out, errValidation("email.smtp.tls must be starttls, tls or none")
-			}
-			out.SmtpTls = string(*sm.Tls)
-		}
-		switch {
-		case sm.Port != nil:
-			if *sm.Port < 1 || *sm.Port > 65535 {
-				return out, errValidation("email.smtp.port must be 1 to 65535")
-			}
-			out.SmtpPort = *sm.Port
-		case out.SmtpTls == smtpTLSImplicit:
-			out.SmtpPort = 465
-		}
-		if sm.Username != nil {
-			if out.SmtpUsername, err = trimmed(*sm.Username, 0, 320, "email.smtp.username"); err != nil {
-				return out, err
-			}
-		}
-		if out.SmtpUsername != "" && out.SmtpTls == smtpTLSNone && !loopbackHost(host) {
-			return out, errValidation("email.smtp.username needs tls or starttls: the password is never sent unencrypted")
-		}
-		switch {
-		case sm.Password == nil:
-			if cur != nil {
-				out.SmtpPassword = cur.SmtpPassword
-			}
-		case *sm.Password == "":
-		case len(*sm.Password) > 1024:
-			return out, errValidation("email.smtp.password must be at most 1024 bytes")
-		default:
-			out.SmtpPassword = s.secrets.Seal([]byte(*sm.Password), smtpSecretContext(workspaceID, channelID))
-		}
+		out.SmtpHost, out.SmtpPort, out.SmtpUsername, out.SmtpPassword, out.SmtpTls = acc.host, acc.port, acc.username, acc.password, acc.tls
 	}
 	if ar := in.AutoReply; ar != nil {
 		out.AutoReplyEnabled = ar.Enabled
@@ -138,6 +115,100 @@ func (s *Server) emailChannelParams(workspaceID, channelID uuid.UUID, in *oas.Em
 		}
 	}
 	return out, nil
+}
+
+type smtpAccount struct {
+	host, username, tls string
+	port                int32
+	password            []byte
+}
+
+func curPassword(cur *store.EmailChannel) []byte {
+	if cur == nil {
+		return nil
+	}
+	return cur.SmtpPassword
+}
+
+// smtpAccount checks an SMTP account from the API; a password left out keeps keep, an empty one
+// removes it, and a new one is sealed under secretCtx.
+func (s *Server) smtpAccount(field string, sm oas.SmtpSettingsInput, keep, secretCtx []byte) (smtpAccount, error) {
+	out := smtpAccount{port: 587, tls: smtpTLSStartTLS}
+	host := strings.TrimSpace(sm.Host)
+	if host == "" || len(host) > 253 || !hostPattern.MatchString(host) {
+		return out, errValidation(field + ".host must be a host name or IP address")
+	}
+	if email.CheckSMTPHost(host, s.smtpPriv) != nil {
+		return out, errValidation(field + ".host points to a private, loopback or link-local address")
+	}
+	out.host = host
+	if sm.Tls != nil {
+		if !sm.Tls.Valid() {
+			return out, errValidation(field + ".tls must be starttls, tls or none")
+		}
+		out.tls = string(*sm.Tls)
+	}
+	switch {
+	case sm.Port != nil:
+		if *sm.Port < 1 || *sm.Port > 65535 {
+			return out, errValidation(field + ".port must be 1 to 65535")
+		}
+		out.port = *sm.Port
+	case out.tls == smtpTLSImplicit:
+		out.port = 465
+	}
+	var err error
+	if sm.Username != nil {
+		if out.username, err = trimmed(*sm.Username, 0, 320, field+".username"); err != nil {
+			return out, err
+		}
+	}
+	if out.username != "" && out.tls == smtpTLSNone && !loopbackHost(host) {
+		return out, errValidation(field + ".username needs tls or starttls: the password is never sent unencrypted")
+	}
+	switch {
+	case sm.Password == nil:
+		out.password = keep
+	case *sm.Password == "":
+	case len(*sm.Password) > 1024:
+		return out, errValidation(field + ".password must be at most 1024 bytes")
+	default:
+		out.password = s.secrets.Seal([]byte(*sm.Password), secretCtx)
+	}
+	return out, nil
+}
+
+// emailBroadcastParams are a channel's broadcast account and pace after an update: what the input
+// leaves out stays as it was.
+func (s *Server) emailBroadcastParams(workspaceID, channelID uuid.UUID, in *oas.EmailChannelInput, cur *store.EmailChannel) (*store.SetEmailChannelBroadcastParams, error) {
+	out := store.SetEmailChannelBroadcastParams{WorkspaceID: workspaceID, ChannelID: channelID, Rate: defaultBroadcastRate}
+	if cur != nil {
+		out.Host, out.Port, out.Username, out.Password, out.Tls, out.Rate = cur.BroadcastSmtpHost, cur.BroadcastSmtpPort,
+			cur.BroadcastSmtpUsername, cur.BroadcastSmtpPassword, cur.BroadcastSmtpTls, cur.BroadcastRate
+	}
+	if in.BroadcastSmtp == nil && in.BroadcastSmtpRemove == nil && in.BroadcastRate == nil {
+		return nil, nil
+	}
+	if in.BroadcastSmtpRemove != nil && *in.BroadcastSmtpRemove {
+		if in.BroadcastSmtp != nil {
+			return nil, errValidation("send email.broadcast_smtp or email.broadcast_smtp_remove, not both")
+		}
+		out.Host, out.Port, out.Username, out.Password, out.Tls = nil, nil, nil, nil, nil
+	}
+	if sm := in.BroadcastSmtp; sm != nil {
+		acc, err := s.smtpAccount("email.broadcast_smtp", *sm, out.Password, broadcastSMTPSecretContext(workspaceID, channelID))
+		if err != nil {
+			return nil, err
+		}
+		out.Host, out.Port, out.Username, out.Password, out.Tls = &acc.host, &acc.port, &acc.username, acc.password, &acc.tls
+	}
+	if r := in.BroadcastRate; r != nil {
+		if *r < 1 || *r > 100 {
+			return nil, errValidation("email.broadcast_rate must be 1 to 100 mails a second")
+		}
+		out.Rate = *r
+	}
+	return &out, nil
 }
 
 func saveEmailChannel(ctx context.Context, q *store.Queries, arg store.CreateEmailChannelParams) (store.EmailChannel, error) {

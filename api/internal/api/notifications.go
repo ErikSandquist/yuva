@@ -417,6 +417,7 @@ func (s *Server) Notify(ctx context.Context, a NotifyArgs) error {
 		}
 	}
 	mine := ev == oas.MessageInMyConversation || ev == oas.AssignedToMe || ev == oas.Mentioned
+	grouped := c.BroadcastID != nil && (ev == oas.NewLiveConversation || ev == oas.NewAsyncConversation)
 	now := s.now()
 	var jobs []river.InsertManyParams
 	for _, r := range candidates {
@@ -435,6 +436,12 @@ func (s *Server) Notify(ctx context.Context, a NotifyArgs) error {
 		events := applyNotificationEvents(roleNotificationDefaults(r.Role), parseNotificationUpdate(r.NotificationEvents))
 		events = applyNotificationEvents(events, perMember[r.ID])
 		ch := notificationChannelsFor(events, ev)
+		if grouped {
+			if ch.Push && s.push != nil {
+				jobs = append(jobs, replyNotifyArgs(ws, *c.BroadcastID, r.ID, now))
+			}
+			continue
+		}
 		if ch.Push && s.push != nil {
 			subs, err := s.st.ListLivePushSubscriptionIDs(ctx, store.ListLivePushSubscriptionIDsParams{PersonID: r.PersonID, Now: now})
 			if err != nil {

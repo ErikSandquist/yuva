@@ -26,7 +26,7 @@ type listWords struct {
 	ManageTitle, SubscribedAs, NotSubscribed, UnsubscribeFrom    string
 	Lists, Save, UnsubscribeAll, UnsubscribeAllText              string
 	Unsubscribed, Saved, AllGone, Undo, Restored, OneClickDone   string
-	ManageLink                                                   string
+	ManageLink, TestMail                                         string
 }
 
 var listLanguages = map[string]listWords{
@@ -41,6 +41,7 @@ var listLanguages = map[string]listWords{
 		Unsubscribed: "You are unsubscribed from “%l”.", Saved: "Your choices are saved.",
 		AllGone: "You will get no more list mail from %i.", Undo: "Undo", Restored: "Your subscriptions are back.",
 		ManageLink: "Choose which e-mails you get",
+		TestMail:   "This was a test of a broadcast. Its link changes nothing; in the real mail it unsubscribes the recipient.",
 	},
 	"tr": {
 		Lang: "tr", Gone: "Bu bağlantı artık geçerli değil.", Error: "Bir sorun oluştu. Bağlantıyı daha sonra yeniden deneyin.",
@@ -53,6 +54,7 @@ var listLanguages = map[string]listWords{
 		Unsubscribed: "“%l” aboneliğinden çıktınız.", Saved: "Seçimleriniz kaydedildi.",
 		AllGone: "%i tarafından artık liste e-postası almayacaksınız.", Undo: "Geri al", Restored: "Abonelikleriniz geri geldi.",
 		ManageLink: "Hangi e-postaları alacağınızı seçin",
+		TestMail:   "Bu, bir bültenin deneme gönderimiydi. Bu bağlantı hiçbir şeyi değiştirmez; gerçek e-postada alıcının aboneliğini sonlandırır.",
 	},
 	"de": {
 		Lang: "de", Gone: "Dieser Link ist nicht mehr gültig.", Error: "Etwas ist schiefgelaufen. Versuchen Sie den Link später erneut.",
@@ -65,6 +67,7 @@ var listLanguages = map[string]listWords{
 		Unsubscribed: "Sie sind von „%l“ abgemeldet.", Saved: "Ihre Auswahl ist gespeichert.",
 		AllGone: "Sie erhalten keine Listen-E-Mails von %i mehr.", Undo: "Rückgängig", Restored: "Ihre Abonnements sind wieder da.",
 		ManageLink: "Wählen, welche E-Mails Sie erhalten",
+		TestMail:   "Dies war ein Test eines Newsletters. Dieser Link ändert nichts; in der echten E-Mail meldet er den Empfänger ab.",
 	},
 }
 
@@ -434,8 +437,38 @@ func (s *Server) manageView(w http.ResponseWriter, ctx context.Context, t *manag
 }
 
 // serveManagePage shows the unsubscribe and preference page; opening it changes nothing.
+// testManagePage answers the unsubscribe link of a test send, which names no list.
+func (s *Server) testManagePage(w http.ResponseWriter, r *http.Request, token string) bool {
+	ids, _, ok := s.openToken(token, manageTokenContext, 4, false)
+	if !ok || ids[1] != uuid.Nil() || ids[3] == uuid.Nil() {
+		return false
+	}
+	if r.Method == http.MethodPost && r.PostFormValue("List-Unsubscribe") == "One-Click" {
+		w.Header().Set("Cache-Control", "no-store")
+		w.WriteHeader(http.StatusOK)
+		return true
+	}
+	b, err := s.st.GetBroadcast(r.Context(), store.GetBroadcastParams{WorkspaceID: ids[0], ID: ids[3]})
+	if err != nil {
+		goneListPage(w)
+		return true
+	}
+	in, err := s.st.GetInbox(r.Context(), store.GetInboxParams{WorkspaceID: ids[0], ID: b.InboxID})
+	if err != nil {
+		goneListPage(w)
+		return true
+	}
+	v := s.listPageView(in, nil)
+	v.Heading = v.W.TestMail
+	writeListPage(w, http.StatusOK, v)
+	return true
+}
+
 func (s *Server) serveManagePage(w http.ResponseWriter, r *http.Request) {
 	token := r.PathValue("token")
+	if s.testManagePage(w, r, token) {
+		return
+	}
 	t, err := s.manageTarget(r.Context(), s.st.Queries, token, false)
 	if err != nil {
 		s.listPageError(w, r, err)
@@ -468,6 +501,9 @@ func (s *Server) serveManagePost(w http.ResponseWriter, r *http.Request) {
 		_ = r.ParseForm()
 	}
 	token := r.PathValue("token")
+	if s.testManagePage(w, r, token) {
+		return
+	}
 	action := r.PostFormValue("action")
 	oneClick := action == "" && r.PostFormValue("List-Unsubscribe") == "One-Click"
 	ids, _, ok := s.openToken(token, manageTokenContext, 4, false)

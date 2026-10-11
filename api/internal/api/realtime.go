@@ -311,6 +311,10 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		if requireScope(f.p, oas.ListsRead) != nil {
 			return false, nil
 		}
+	case eventBroadcastUpdated, eventBroadcastProgress:
+		if requireScope(f.p, oas.BroadcastsRead) != nil {
+			return false, nil
+		}
 	case realtime.Typing:
 		var ty oas.Typing
 		if err := json.Unmarshal(e.Data, &ty); err != nil {

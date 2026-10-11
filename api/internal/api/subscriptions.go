@@ -272,6 +272,11 @@ func (s *Server) unsubscribe(ctx context.Context, q *store.Queries, events *even
 	if err != nil {
 		return out, err
 	}
+	if pr.broadcastID != nil {
+		if err := s.unsubscribedThrough(ctx, q, sub.WorkspaceID, *pr.broadcastID, sub.ContactID); err != nil {
+			return out, err
+		}
+	}
 	return out, s.consentEvent(ctx, q, out, kind, pr)
 }
 

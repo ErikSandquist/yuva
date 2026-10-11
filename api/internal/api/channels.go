@@ -183,6 +183,15 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 		if err != nil {
 			return err
 		}
+		bc, err := s.emailBroadcastParams(p.workspaceID, id, req.Body.Email, nil)
+		if err != nil {
+			return err
+		}
+		if bc != nil {
+			if e, err = q.SetEmailChannelBroadcast(ctx, *bc); err != nil {
+				return err
+			}
+		}
 		out = channelBody(c, &e, nil)
 		return nil
 	})
@@ -274,6 +283,15 @@ func (s *Server) UpdateChannel(ctx context.Context, req oas.UpdateChannelRequest
 			}
 			if _, err := saveEmailChannel(ctx, q, arg); err != nil {
 				return err
+			}
+			bc, err := s.emailBroadcastParams(p.workspaceID, c.ID, req.Body.Email, prev)
+			if err != nil {
+				return err
+			}
+			if bc != nil {
+				if _, err := q.SetEmailChannelBroadcast(ctx, *bc); err != nil {
+					return err
+				}
 			}
 		}
 		if req.Body.Chat != nil {

@@ -48,6 +48,7 @@ var webhookEventTypes = []oas.WebhookEventType{
 	oas.WebhookEventTypeDraftCreated, oas.WebhookEventTypeDraftUpdated, oas.WebhookEventTypeDraftDeleted,
 	oas.WebhookEventTypeDiscussionCreated, oas.WebhookEventTypeDiscussionPostCreated, oas.WebhookEventTypeDiscussionAnswered,
 	oas.WebhookEventTypeDiscussionUpdated, oas.WebhookEventTypeSubscriptionCreated, oas.WebhookEventTypeSubscriptionUpdated,
+	oas.WebhookEventTypeBroadcastUpdated,
 }
 
 func webhookSecretContext(workspaceID, endpointID uuid.UUID) []byte {
@@ -450,7 +451,7 @@ func webhookSource(e pendingEvent) bool {
 	case realtime.ConversationCreated, realtime.ConversationUpdated, realtime.MessageCreated, realtime.ContactUpdated,
 		realtime.DraftCreated, realtime.DraftUpdated, realtime.DraftDeleted,
 		eventDiscussionCreated, eventDiscussionPostCreated, eventDiscussionAnswered, eventDiscussionUpdated,
-		eventSubscriptionCreated, eventSubscriptionUpdated:
+		eventSubscriptionCreated, eventSubscriptionUpdated, eventBroadcastUpdated:
 		return true
 	case realtime.ContactDeleted:
 		return e.deleted != nil
@@ -701,6 +702,13 @@ func (s *Server) webhookPayloads(ctx context.Context, q *store.Queries, ev store
 		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, &inbox, oas.WebhookSubscriptionData{
 			Subscription: d.Subscription, List: d.List, PreviousState: d.PreviousState, Contact: *contact,
 		})}}, []uuid.UUID{inbox}, nil
+	case eventBroadcastUpdated:
+		var d oas.BroadcastEventData
+		if err := json.Unmarshal(ev.Payload, &d); err != nil {
+			return nil, nil, err
+		}
+		inbox := d.Broadcast.InboxId
+		return []webhookOut{{typ: ev.Type, body: payload(ev.Type, &inbox, oas.WebhookBroadcastData{Broadcast: d.Broadcast, PreviousState: d.PreviousState})}}, []uuid.UUID{inbox}, nil
 	case realtime.ContactDeleted:
 		if deleted == nil {
 			return nil, nil, nil

@@ -72,13 +72,13 @@ func (s *Server) openToken(token string, label []byte, n int, timed bool) ([]uui
 }
 
 func (s *Server) confirmURL(sub store.ListSubscription) string {
-	return s.auth.PublicURL + confirmPathPrefix + s.sealToken(confirmTokenContext, []uuid.UUID{sub.WorkspaceID, sub.ID}, new(s.now()))
+	return s.linkBase() + confirmPathPrefix + s.sealToken(confirmTokenContext, []uuid.UUID{sub.WorkspaceID, sub.ID}, new(s.now()))
 }
 
 // manageURL is the unsubscribe and preference page of a contact for a list; broadcast is zero
 // outside broadcasts. It never expires while the contact exists.
 func (s *Server) manageURL(ws, listID, contactID, broadcast uuid.UUID) string {
-	return s.auth.PublicURL + managePathPrefix + s.sealToken(manageTokenContext, []uuid.UUID{ws, listID, contactID, broadcast}, nil)
+	return s.linkBase() + managePathPrefix + s.sealToken(manageTokenContext, []uuid.UUID{ws, listID, contactID, broadcast}, nil)
 }
 
 type ListMailArgs struct {

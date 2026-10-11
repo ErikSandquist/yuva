@@ -27,8 +27,11 @@ const (
 		"         [--smtp-host <host> [--smtp-port <n>] [--tls starttls|tls|none] [--smtp-username <name>] [--smtp-password-file <path|->]]\n" +
 		"       yuva channel create-chat --workspace <id|name> --inbox <id|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]\n" +
 		"       yuva channel list --workspace <id|name> --inbox <id|slug>"
-	workspaceUsage = "usage: yuva workspace delete --workspace <id|name> --yes"
-	personUsage    = "usage: yuva person delete --email <address> --yes"
+	workspaceUsage = "usage: yuva workspace delete --workspace <id|name> --yes\n" +
+		"       yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]\n" +
+		"       yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)\n" +
+		"       yuva workspace broadcasts show --workspace <id|name>"
+	personUsage = "usage: yuva person delete --email <address> --yes"
 )
 
 func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []string) error {
@@ -45,11 +48,15 @@ func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []stri
 	}
 	defer st.Close()
 	log := slog.Default()
-	srv := api.New(api.Deps{Log: log, Store: st, Version: cfg.Version, Mailer: mail.Log{Log: log}, Secrets: masterKey})
+	srv := api.New(api.Deps{Log: log, Store: st, Version: cfg.Version, Mailer: mail.Log{Log: log}, Secrets: masterKey,
+		Broadcasts: api.BroadcastSettings{Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL}})
 	switch cmd {
 	case "inbox":
 		return inboxCommand(ctx, st, srv, args, os.Stdout, os.Stderr)
 	case "workspace":
+		if len(args) > 0 && args[0] == "broadcasts" {
+			return broadcastsCommand(ctx, st, srv, args[1:], os.Stdout, os.Stderr)
+		}
 		return workspaceCommand(ctx, st, srv, args, os.Stderr)
 	case "person":
 		return personCommand(ctx, srv, args, os.Stderr)
@@ -392,4 +399,77 @@ func slugify(name string) string {
 		dash = true
 	}
 	return b.String()
+}
+
+func broadcastsCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stdout, stderr io.Writer) error {
+	if len(args) == 0 {
+		return errors.New(workspaceUsage)
+	}
+	fs := flag.NewFlagSet("workspace broadcasts "+args[0], flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	workspace := fs.String("workspace", "", "workspace id or exact name")
+	reason := fs.String("reason", "", "the reason shown to the workspace")
+	daily := fs.Int("daily", -1, "recipients a day; 0 removes the limit")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if fs.NArg() != 0 {
+		return errors.New(workspaceUsage)
+	}
+	ws, err := api.FindWorkspace(ctx, st, *workspace)
+	if err != nil {
+		return err
+	}
+	switch args[0] {
+	case "approve":
+		err = srv.OperatorApproveBroadcasts(ctx, ws.ID, *reason)
+	case "deny":
+		err = srv.OperatorDenyBroadcasts(ctx, ws.ID, *reason)
+	case "suspend":
+		err = srv.OperatorSuspendBroadcasts(ctx, ws.ID, *reason)
+	case "limit":
+		if *daily < 0 {
+			return errors.New("limit needs --daily <n>")
+		}
+		err = srv.OperatorLimitBroadcasts(ctx, ws.ID, *daily)
+	case "show":
+		return showBroadcasts(ctx, srv, ws, stdout)
+	default:
+		return errors.New(workspaceUsage)
+	}
+	if err != nil {
+		return err
+	}
+	fmt.Fprintf(stderr, "workspace %q (%s): broadcasts %s done\n", ws.Name, ws.ID, args[0])
+	return nil
+}
+
+func showBroadcasts(ctx context.Context, srv *api.Server, ws store.Workspace, stdout io.Writer) error {
+	sum, err := srv.OperatorBroadcastSummary(ctx, ws.ID)
+	if err != nil {
+		return err
+	}
+	limit := "none"
+	if sum.DailyLimit >= 0 {
+		limit = fmt.Sprint(sum.DailyLimit)
+	}
+	pct := func(n, of int64) string {
+		if of == 0 {
+			return "-"
+		}
+		return fmt.Sprintf("%.2f%%", 100*float64(n)/float64(of))
+	}
+	fmt.Fprintf(stdout, "workspace     %s (%s)\nstatus        %s", ws.Name, ws.ID, sum.Status)
+	if sum.Reason != "" {
+		fmt.Fprintf(stdout, " (%s)", sum.Reason)
+	}
+	fmt.Fprintf(stdout, "\ndaily limit   %s, sent today %d\nlast 30 days  %d sent, bounces %s, complaints %s\nsender domains %s\n",
+		limit, sum.SentToday, sum.Sent30, pct(sum.Bounced30, sum.Sent30), pct(sum.Complained30, sum.Sent30), strings.Join(sum.SenderDomains, ", "))
+	tw := tabwriter.NewWriter(stdout, 0, 2, 2, ' ', 0)
+	fmt.Fprintln(tw, "CREATED\tSTATE\tRECIPIENTS\tSENT\tBOUNCED\tCOMPLAINED\tNAME\tSUBJECT")
+	for _, b := range sum.Latest {
+		fmt.Fprintf(tw, "%s\t%s\t%d\t%d\t%d\t%d\t%s\t%s\n", b.CreatedAt.UTC().Format("2006-01-02 15:04"), b.State, b.Recipients, b.Sent,
+			b.Bounced, b.Complained, b.Name, b.Subject)
+	}
+	return tw.Flush()
 }

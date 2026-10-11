@@ -62,6 +62,11 @@ func (s *Server) CreateWorkspace(ctx context.Context, req oas.CreateWorkspaceReq
 		if ws, _, err = createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name, CreatedBy: &p.personID, CreatedIp: &ip}, p.personID); err != nil {
 			return err
 		}
+		if s.broadcastMode() == broadcastsApproval {
+			if ws, err = q.SetWorkspaceBroadcastsStatus(ctx, store.SetWorkspaceBroadcastsStatusParams{ID: ws.ID, Status: wsApprovalRequired, Now: now}); err != nil {
+				return err
+			}
+		}
 		if len(s.operator) == 0 {
 			return nil
 		}
@@ -74,5 +79,9 @@ func (s *Server) CreateWorkspace(ctx context.Context, req oas.CreateWorkspaceReq
 	if err != nil {
 		return nil, err
 	}
-	return oas.CreateWorkspace201JSONResponse(workspaceBody(ws)), nil
+	body, err := s.workspaceBody(ctx, ws)
+	if err != nil {
+		return nil, err
+	}
+	return oas.CreateWorkspace201JSONResponse(body), nil
 }
