@@ -53,6 +53,7 @@ import {
   useMoveConversation,
   useUpdateConversation,
 } from "@/features/conversation/queries"
+import { BroadcastLine } from "@/features/conversation/BroadcastLine"
 import { RelatedLine } from "@/features/conversation/RelatedLine"
 import { useListActions, usePinnedIds } from "@/features/inbox/memberState"
 import { useConversations } from "@/features/inbox/queries"
@@ -533,12 +534,15 @@ function Loaded({
         (c.kind === "feedback" && c.feedback) ||
         pageLine ||
         c.related_conversation_id ||
+        c.broadcast_id ||
         viewers.length > 0 ||
         typingMate) && (
         <div
           className="flex shrink-0 flex-wrap items-center gap-x-1.5 gap-y-1 border-b bg-background px-4 py-1.5 text-caption text-faint"
           data-testid="header-details"
         >
+          {c.broadcast_id && <BroadcastLine id={c.broadcast_id} />}
+          {c.broadcast_id && (chipLabels.length > 0 || (c.kind === "feedback" && c.feedback) || pageLine) && sep}
           {c.kind === "feedback" && c.feedback && <CategoryChip category={c.feedback.category} />}
           {c.kind === "feedback" && c.feedback && pageLine && sep}
           <PageLine c={c} />

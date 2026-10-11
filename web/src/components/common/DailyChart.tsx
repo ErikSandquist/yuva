@@ -32,17 +32,23 @@ export function DailyChart({
   stacked,
   className,
   testId,
+  tick,
+  label,
 }: {
   rows: DayRow[]
   config: ChartConfig
   stacked?: boolean
   className?: string
   testId?: string
+  tick?: (day: string) => string
+  label?: (day: string) => string
 }) {
   const { i18n } = useLingui()
   const short = new Intl.DateTimeFormat(i18n.locale, { day: "numeric", month: "short", timeZone: "UTC" })
   const long = new Intl.DateTimeFormat(i18n.locale, { dateStyle: "medium", timeZone: "UTC" })
   const date = (d: unknown) => new Date(`${String(d)}T00:00:00Z`)
+  const tickText = tick ?? ((d: string) => short.format(date(d)))
+  const labelText = label ?? ((d: string) => long.format(date(d)))
   const keys = Object.keys(config)
   return (
     <ChartContainer config={config} className={cn("aspect-auto h-48 w-full", className)} data-testid={testId}>
@@ -58,13 +64,13 @@ export function DailyChart({
           axisLine={false}
           tickMargin={8}
           minTickGap={24}
-          tickFormatter={(d) => short.format(date(d))}
+          tickFormatter={(d) => tickText(String(d))}
         />
         <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={44} />
         <ChartTooltip
           cursor={false}
           content={
-            <ChartTooltipContent labelFormatter={(_, p) => (p?.[0] ? long.format(date(p[0].payload.day)) : "")} />
+            <ChartTooltipContent labelFormatter={(_, p) => (p?.[0] ? labelText(String(p[0].payload.day)) : "")} />
           }
         />
         <ChartLegend content={<ChartLegendContent />} />

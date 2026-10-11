@@ -129,7 +129,7 @@ export function ListSettings({ list }: { list: MailingList }) {
                       remove.mutate(list.id, {
                         onSuccess: () => {
                           toast(t`List deleted`)
-                          navigate("/broadcasts")
+                          navigate("/broadcasts/lists")
                         },
                       }),
                   })

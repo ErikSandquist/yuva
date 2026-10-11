@@ -8,6 +8,7 @@ import { Column, ColumnHeading } from "@/components/common/Column"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Switch } from "@/components/ui/switch"
+import { BroadcastList } from "@/features/broadcasts/BroadcastList"
 import { NewListDialog } from "@/features/broadcasts/ListForm"
 import { listLink, useLists, useShowArchived } from "@/features/broadcasts/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
@@ -88,10 +89,23 @@ function group(lists: MailingList[], inboxes: Inbox[]) {
 
 const DesignsList = lazy(() => import("@/features/designs/DesignsList"))
 
+type Tab = "broadcasts" | "lists" | "designs"
+
+const TAB_PATHS: Record<Tab, string> = {
+  broadcasts: "/broadcasts",
+  lists: "/broadcasts/lists",
+  designs: "/broadcasts/designs",
+}
+
 export function BroadcastsColumn() {
   const { t } = useLingui()
   const navigate = useNavigate()
-  const designs = useLocation().pathname.startsWith("/broadcasts/designs")
+  const { pathname } = useLocation()
+  const tab: Tab = pathname.startsWith("/broadcasts/designs")
+    ? "designs"
+    : pathname.startsWith("/broadcasts/lists")
+      ? "lists"
+      : "broadcasts"
   return (
     <Column
       title={<Trans>Broadcasts</Trans>}
@@ -101,18 +115,21 @@ export function BroadcastsColumn() {
     >
       <div className="px-1 pt-1 pb-3">
         <Segmented
-          value={designs ? "designs" : "lists"}
-          onChange={(v) => navigate(v === "designs" ? "/broadcasts/designs" : "/broadcasts")}
+          value={tab}
+          onChange={(v) => navigate(TAB_PATHS[v])}
           label={t`Broadcasts`}
           className="w-full"
-          itemClassName="flex-1"
+          itemClassName="flex-1 px-2"
           items={[
+            { value: "broadcasts", label: t`Broadcasts`, testId: "broadcasts-tab-broadcasts" },
             { value: "lists", label: t`Lists`, testId: "broadcasts-tab-lists" },
             { value: "designs", label: t`Designs`, testId: "broadcasts-tab-designs" },
           ]}
         />
       </div>
-      {designs ? (
+      {tab === "broadcasts" ? (
+        <BroadcastList />
+      ) : tab === "designs" ? (
         <Suspense
           fallback={
             <div className="flex flex-col gap-2 p-2">

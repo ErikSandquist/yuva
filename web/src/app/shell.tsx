@@ -35,5 +35,10 @@ export function sectionOf(pathname: string, view: Section): Section {
 }
 
 export function isSectionHome(pathname: string) {
-  return pathname === "/" || pathname === "/broadcasts/designs" || routed.some((s) => pathname === `/${s}`)
+  return (
+    pathname === "/" ||
+    pathname === "/broadcasts/designs" ||
+    pathname === "/broadcasts/lists" ||
+    routed.some((s) => pathname === `/${s}`)
+  )
 }

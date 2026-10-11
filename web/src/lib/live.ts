@@ -1,6 +1,8 @@
 import type { InfiniteData, QueryClient, QueryKey } from "@tanstack/react-query"
 
 import type {
+  Broadcast,
+  BroadcastProgress,
   Contact,
   Conversation,
   ConversationListItem,
@@ -56,6 +58,7 @@ function matches(c: Conversation & { pinned_at?: string }, f: ConversationFilter
   if (f.category && c.feedback?.category !== f.category) return false
   if (f.page && (c.page?.page_url ?? c.feedback?.page_url) !== f.page) return false
   if (f.inbox_id && c.inbox_id !== f.inbox_id) return false
+  if (f.broadcast_id && c.broadcast_id !== f.broadcast_id) return false
   if (f.contact_id && c.contact_id !== f.contact_id) return false
   if (f.label_id && !c.labels.includes(f.label_id)) return false
   if (f.assignee === "unassigned" && c.assignee_id) return false
@@ -298,6 +301,56 @@ function listsDraftsOf(qc: QueryClient, ws: string, test: (item: DraftItem) => b
     .some(([, data]) => data?.pages.some((p) => p.items.some(test)))
 }
 
+type BroadcastPages = InfiniteData<{ items: Broadcast[]; next_cursor?: string }, string | undefined>
+
+function patchBroadcastPages(qc: QueryClient, ws: string, id: string, patch: (b: Broadcast) => Broadcast) {
+  for (const [key, data] of qc.getQueriesData<BroadcastPages>({ queryKey: [...keys.broadcasts(ws), "pages"] })) {
+    if (!data?.pages.some((p) => p.items.some((x) => x.id === id))) continue
+    qc.setQueryData<BroadcastPages>(key, (old) =>
+      old
+        ? { ...old, pages: old.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === id ? patch(x) : x)) })) }
+        : old
+    )
+  }
+}
+
+const broadcastTimers = new Map<string, ReturnType<typeof setTimeout>>()
+
+function refreshBroadcasts(qc: QueryClient, ws: string, id: string) {
+  const timerKey = `${ws}:${id}`
+  clearTimeout(broadcastTimers.get(timerKey))
+  broadcastTimers.set(
+    timerKey,
+    setTimeout(() => {
+      broadcastTimers.delete(timerKey)
+      void qc.invalidateQueries({ queryKey: [...keys.broadcasts(ws), "pages"] })
+      void qc.invalidateQueries({ queryKey: keys.broadcastReview(ws, id) })
+      void qc.invalidateQueries({ queryKey: keys.broadcastReport(ws, id) })
+      void qc.invalidateQueries({ queryKey: [...keys.broadcasts(ws), "deliveries", id] })
+    }, 400)
+  )
+}
+
+export function setBroadcast(qc: QueryClient, ws: string, b: Broadcast) {
+  const current = qc.getQueryData<Broadcast>(keys.broadcast(ws, b.id))
+  if (current && current.updated_at > b.updated_at) return
+  qc.setQueryData(keys.broadcast(ws, b.id), b)
+  patchBroadcastPages(qc, ws, b.id, () => b)
+  refreshBroadcasts(qc, ws, b.id)
+}
+
+function applyProgress(qc: QueryClient, ws: string, p: BroadcastProgress) {
+  const patch = (b: Broadcast): Broadcast => ({
+    ...b,
+    state: p.state,
+    counts: p.counts,
+    waiting_until: p.waiting_until,
+  })
+  qc.setQueryData<Broadcast>(keys.broadcast(ws, p.id), (old) => (old ? patch(old) : old))
+  patchBroadcastPages(qc, ws, p.id, patch)
+  void qc.invalidateQueries({ queryKey: keys.broadcastReport(ws, p.id) })
+}
+
 function byName(a: Inbox, b: Inbox) {
   return a.name.localeCompare(b.name) || (a.id < b.id ? -1 : 1)
 }
@@ -463,6 +516,12 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
     case "subscription.created":
     case "subscription.updated":
       refreshLists(qc, ctx.ws)
+      return
+    case "broadcast.updated":
+      setBroadcast(qc, ctx.ws, event.data.broadcast)
+      return
+    case "broadcast.progress":
+      applyProgress(qc, ctx.ws, event.data)
       return
     case "discussion.created":
     case "discussion.post_created":

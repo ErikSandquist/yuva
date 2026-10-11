@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArchiveIcon, MailWarningIcon, MegaphoneIcon } from "lucide-react"
+import { ArchiveIcon, MailWarningIcon, UsersIcon } from "lucide-react"
 import { Link, useParams, useSearchParams } from "react-router"
 
 import { Dot, ErrorLine, Notice, Segmented } from "@/components/common"
@@ -18,9 +18,9 @@ import { useInboxes } from "@/lib/workspace"
 const TABS = ["subscribers", "growth", "form", "settings", "export"] as const
 type Tab = (typeof TABS)[number]
 
-export function BroadcastsHome() {
+export function ListsHome() {
   return (
-    <PaneEmpty icon={MegaphoneIcon} title={<Trans>Mailing lists</Trans>} testId="broadcasts-home">
+    <PaneEmpty icon={UsersIcon} title={<Trans>Mailing lists</Trans>} testId="lists-home">
       <ConsentExplainer />
     </PaneEmpty>
   )
@@ -73,7 +73,7 @@ export function ListPage() {
   if (!l) {
     return (
       <Pane wide>
-        <PaneBack to="/broadcasts" label={t`Broadcasts`} />
+        <PaneBack to="/broadcasts/lists" label={t`Lists`} />
         <ErrorLine error={list.error} />
       </Pane>
     )
@@ -81,7 +81,7 @@ export function ListPage() {
   return (
     <Pane wide testId="list-page" key={l.id}>
       <header className="flex flex-col">
-        <PaneBack to="/broadcasts" label={t`Broadcasts`} />
+        <PaneBack to="/broadcasts/lists" label={t`Lists`} />
         <h1 className="min-w-0 text-page break-words" data-testid="list-name-heading">
           {l.name}
         </h1>

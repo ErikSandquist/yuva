@@ -51,6 +51,18 @@ export const DISCUSSION_KEYS = {
   page: "o",
 } as const
 
+export const BROADCAST_KEYS = {
+  create: "c",
+  design: "o",
+  test: "t",
+  send: "s",
+  unschedule: "u",
+  pause: "p",
+  cancel: "X",
+  report: "r",
+  deliveries: "d",
+} as const
+
 export const DESIGNER_KEYS = {
   edit: "1",
   desktop: "2",
@@ -144,6 +156,22 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [k(DISCUSSION_KEYS.approve), t`Approve the selected post`],
         [k(DISCUSSION_KEYS.hide), t`Hide the selected post`],
         [k(DISCUSSION_KEYS.spam), t`Mark the selected post as spam`],
+      ],
+    },
+    {
+      title: t`Broadcasts`,
+      items: [
+        [["↑", "↓"], t`Move through the broadcasts`],
+        [["↵"], t`Open the broadcast`],
+        [k(BROADCAST_KEYS.create), t`New broadcast`],
+        [k(BROADCAST_KEYS.design), t`Edit the design`],
+        [k(BROADCAST_KEYS.test), t`Send a test`],
+        [k(BROADCAST_KEYS.send), t`Review, then send or schedule`],
+        [k(BROADCAST_KEYS.unschedule), t`Back to draft`],
+        [k(BROADCAST_KEYS.pause), t`Pause or resume sending`],
+        [k(BROADCAST_KEYS.cancel), t`Cancel the broadcast`],
+        [k(BROADCAST_KEYS.report), t`Report`],
+        [k(BROADCAST_KEYS.deliveries), t`Recipients`],
       ],
     },
     {

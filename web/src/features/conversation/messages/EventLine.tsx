@@ -1,7 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
+import { Link } from "react-router"
 
 import { formatDateTime, useEnumText } from "@/components/common/text"
 import { Marker, MarkerContent } from "@/components/ui/marker"
+import { broadcastLink } from "@/features/broadcasts/broadcastQueries"
 import { timeOf, useAuthorName, type ThreadContext } from "@/features/conversation/messages/context"
 import type { Message } from "@/lib/api"
 
@@ -72,6 +74,21 @@ export function EventLine({ m, ctx }: { m: Message; ctx: ThreadContext }) {
           <Trans>{actor} rated the conversation 👍</Trans>
         )
       break
+    case "broadcast_reply": {
+      const broadcast = e.broadcast
+      const name = broadcast?.name
+      body = broadcast ? (
+        <Trans>
+          Reply to{" "}
+          <Link to={broadcastLink(broadcast.id)} className="font-medium text-muted-foreground hover:underline">
+            {name}
+          </Link>
+        </Trans>
+      ) : (
+        <Trans>Reply to a broadcast</Trans>
+      )
+      break
+    }
     case "moved": {
       const from = ctx.inboxes.find((i) => i.id === e.previous_inbox_id)?.name ?? t`another inbox`
       body = <Trans>Moved from {from}</Trans>

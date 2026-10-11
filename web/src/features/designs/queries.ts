@@ -70,6 +70,7 @@ export function useDesign(id: string) {
   return useQuery({
     queryKey: k.one(ws, id),
     queryFn: () => unwrap(api.GET("/v1/email-designs/{designId}", { params: { path: { designId: id } } })),
+    enabled: !!id,
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     retry: (n, err) => !(err instanceof ApiError && err.status < 500) && n < 2,

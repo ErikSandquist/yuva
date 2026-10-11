@@ -121,6 +121,10 @@ export function useRealtime(ws: string, memberId: string) {
           if (msg.data.member_id !== memberId) applyViewing(msg.data)
           return
         }
+        if (msg.type === "broadcast.progress") {
+          applyEvent(qc, ctx, { type: msg.type, data: msg.data })
+          return
+        }
         cursor = Math.max(cursor ?? 0, msg.id)
         if (msg.type === "message.created" && msg.data.kind === "message" && msg.data.author.type === "contact") {
           stopTyping(msg.data.conversation_id, { type: "contact", contact_id: msg.data.author.contact_id })

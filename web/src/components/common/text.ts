@@ -4,6 +4,10 @@ import {
   ApiError,
   type ApiKeyScope,
   type AppPlatform,
+  type BroadcastDeliveryState,
+  type BroadcastPauseReason,
+  type BroadcastSkipReason,
+  type BroadcastState,
   type ChannelKind,
   type ConsentEventKind,
   type ConversationStatus,
@@ -44,6 +48,7 @@ export const WEBHOOK_EVENTS: WebhookEventType[] = [
   "discussion.updated",
   "subscription.created",
   "subscription.updated",
+  "broadcast.updated",
 ]
 export const API_KEY_SCOPES: ApiKeyScope[] = [
   "conversations:read",
@@ -66,6 +71,14 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
 export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = ["inboxes:manage", "webhooks:manage", "workspace:manage"]
 export const DELIVERY_STATES: WebhookDeliveryState[] = ["pending", "succeeded", "failed"]
 export const SUBSCRIPTION_STATES: SubscriptionState[] = ["subscribed", "pending", "unsubscribed"]
+export const BROADCAST_DELIVERY_STATES: BroadcastDeliveryState[] = [
+  "queued",
+  "sent",
+  "failed",
+  "bounced",
+  "complained",
+  "skipped",
+]
 
 export function useEnumText() {
   const { t } = useLingui()
@@ -103,6 +116,7 @@ export function useEnumText() {
       "discussion.updated": t`A discussion changed`,
       "subscription.created": t`Someone subscribed to a mailing list`,
       "subscription.updated": t`A subscription changed`,
+      "broadcast.updated": t`A broadcast was scheduled, started, paused or finished`,
     } satisfies Record<WebhookEventType, string>,
     scope: {
       "conversations:read": t`Read conversations, messages, labels and canned replies`,
@@ -173,6 +187,38 @@ export function useEnumText() {
       complaint: t`Spam report`,
       mail: t`Mail from Yuva`,
     } as Record<string, string | undefined>,
+    broadcastState: {
+      draft: t`Draft`,
+      scheduled: t`Scheduled`,
+      preparing: t`Preparing`,
+      sending: t`Sending`,
+      paused: t`Paused`,
+      sent: t({ message: "Sent", context: "broadcast state" }),
+      cancelled: t`Cancelled`,
+      failed: t`Failed`,
+    } satisfies Record<BroadcastState, string>,
+    pauseReason: {
+      member: t`Paused by your team.`,
+      bounce_rate: t`Paused on its own: 5% or more of the mails sent bounced. Check the list for old or mistyped addresses before you resume.`,
+      complaint_rate: t`Paused on its own: 0.3% or more of the recipients reported the mail as spam, the most mail providers accept. Make sure everyone on the lists asked for this mail before you resume.`,
+      sender_error: t`Paused on its own: the SMTP server refused the account, its encryption or too many mails in a row. Check the channel's broadcast account, then resume.`,
+      workspace_suspended: t`Paused because the workspace may not send broadcasts for now.`,
+      operator: t`Paused by the server's operator.`,
+    } satisfies Record<BroadcastPauseReason, string>,
+    deliveryState: {
+      queued: t`Queued`,
+      sent: t({ message: "Sent", context: "delivery state" }),
+      failed: t`Failed`,
+      bounced: t`Bounced`,
+      complained: t`Reported as spam`,
+      skipped: t`Skipped`,
+    } satisfies Record<BroadcastDeliveryState, string>,
+    skipReason: {
+      suppressed: t`The address bounced or complained`,
+      opted_out: t`Objected to all mail`,
+      unsubscribed: t`Unsubscribed before it went out`,
+      cancelled: t`The broadcast was cancelled`,
+    } satisfies Record<BroadcastSkipReason, string>,
     weekday: {
       mon: t`Monday`,
       tue: t`Tuesday`,
@@ -219,6 +265,25 @@ export function useErrorText() {
       return t`This address got as many confirmation mails as allowed for now. Try again tomorrow.`
     if (err.code === "confirmation_required") return t`Only the person can subscribe again, by confirming a mail.`
     if (err.code === "not_pending") return t`This subscription is no longer waiting for confirmation.`
+    if (err.code === "broadcast_active") return t`Cancel the broadcast before deleting it.`
+    if (err.code === "not_draft") return t`This broadcast is no longer a draft, so it cannot be changed.`
+    if (err.code === "review_failed") return t`The review found something that blocks sending. Fix the red items first.`
+    if (err.code === "audience_changed")
+      return t`The number of recipients changed since you looked. Check the new count and confirm again.`
+    if (err.code === "broadcasts_disabled") return t`Broadcasts are turned off on this server.`
+    if (err.code === "broadcasts_approval_required")
+      return t`This workspace may send broadcasts once the server's operator approves it. Ask for approval in the workspace settings.`
+    if (err.code === "broadcasts_suspended") return t`This workspace may not send broadcasts for now.`
+    if (err.code === "broadcasts_by_keys_disabled")
+      return t`Keys and assistants may not schedule broadcasts in this workspace.`
+    if (err.code === "sender_not_ready")
+      return t`The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings.`
+    if (err.code === "design_required") return t`Pick a design first.`
+    if (err.code === "test_limit") return t`This workspace sent as many tests as allowed this hour. Try again later.`
+    if (err.code === "already_started") return t`Sending has already started. Pause or cancel it instead.`
+    if (err.code === "invalid_state") return t`The broadcast changed in the meantime. Look at its state and try again.`
+    if (err.code === "audience_too_large") return t`A broadcast can go to at most 1,000,000 recipients.`
+    if (err.code === "limit_reached") return t`This workspace has as many broadcasts as allowed. Delete old ones first.`
     if (err.code === "attachment_type_mismatch")
       return t`A file's content does not match its type. Check the file and try again.`
     switch (err.status) {

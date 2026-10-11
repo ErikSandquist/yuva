@@ -4,6 +4,7 @@ import {
   BotIcon,
   ClockIcon,
   MailIcon,
+  MegaphoneIcon,
   MailOpenIcon,
   PinIcon,
   PinOffIcon,
@@ -249,9 +250,16 @@ function Row({
               {formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
-          {(source || place) && (
+          {(source || place || c.broadcast_id) && (
             <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
               {source && <SourceBadge source={source} />}
+              {c.broadcast_id && (
+                <MegaphoneIcon
+                  className="size-3.5 shrink-0 text-brand"
+                  aria-label={t`Reply to a broadcast`}
+                  data-testid="row-broadcast"
+                />
+              )}
               {place && <span className="min-w-0 truncate">{place}</span>}
             </span>
           )}

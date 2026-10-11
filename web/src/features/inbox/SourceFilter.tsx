@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon, ListFilterIcon } from "lucide-react"
+import { CheckIcon, ListFilterIcon, MegaphoneIcon } from "lucide-react"
 import { useMemo, useSyncExternalStore } from "react"
 
 import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText, type Source } from "@/components/common"
@@ -7,12 +7,13 @@ import { popupClass } from "@/components/ui/dropdown-menu"
 import { Item } from "@/components/ui/item"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
+import { useBroadcasts } from "@/features/broadcasts/broadcastQueries"
 import { useDocsSites } from "@/features/docs/queries"
 import type { ConversationFilters } from "@/lib/keys"
 import { cn } from "@/lib/utils"
 import { useChannelMap } from "@/lib/workspace"
 
-export type SourceFilterValue = { source?: Source; site?: string }
+export type SourceFilterValue = { source?: Source; site?: string; broadcast?: { id: string; name: string } }
 
 let value: SourceFilterValue = {}
 const listeners = new Set<() => void>()
@@ -40,6 +41,7 @@ export function sourceFilters(v: SourceFilterValue): ConversationFilters {
     f.channel_kind = [v.source]
   }
   if (v.site) f.site = v.site
+  if (v.broadcast) f.broadcast_id = v.broadcast.id
   return f
 }
 
@@ -90,6 +92,45 @@ function Choice({
   )
 }
 
+function BroadcastChoices({
+  inboxId,
+  v,
+  update,
+}: {
+  inboxId: string
+  v: SourceFilterValue
+  update: (next: SourceFilterValue) => void
+}) {
+  const list = useBroadcasts(inboxId, ["sending", "paused", "sent", "cancelled"])
+  const items = (list.data?.pages.flatMap((p) => p.items) ?? []).slice(0, 8).map((b) => ({ id: b.id, name: b.name }))
+  if (v.broadcast && !items.some((b) => b.id === v.broadcast?.id)) items.unshift(v.broadcast)
+  if (items.length === 0) return null
+  return (
+    <>
+      <Separator className="mx-1.5 my-1 w-auto" />
+      <p className="px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint">
+        <Trans>Replies to a broadcast</Trans>
+      </p>
+      <Choice active={!v.broadcast} onClick={() => update({ ...v, broadcast: undefined })} testId="broadcast-any">
+        <span className="flex-1 text-start">
+          <Trans>Any conversation</Trans>
+        </span>
+      </Choice>
+      {items.map((b) => (
+        <Choice
+          key={b.id}
+          active={v.broadcast?.id === b.id}
+          onClick={() => update({ ...v, broadcast: b })}
+          testId="broadcast-option"
+        >
+          <MegaphoneIcon className="size-4 text-muted-foreground" />
+          <span className="min-w-0 flex-1 truncate text-start">{b.name}</span>
+        </Choice>
+      ))}
+    </>
+  )
+}
+
 export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange: () => void }) {
   const { t } = useLingui()
   const text = useSourceText()
@@ -99,8 +140,8 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
     set(next)
     onChange()
   }
-  const active = !!v.source || !!v.site
-  const summary = [v.source && text[v.source], v.site && hostOf(v.site)].filter(Boolean).join(" · ")
+  const active = !!v.source || !!v.site || !!v.broadcast
+  const summary = [v.source && text[v.source], v.site && hostOf(v.site), v.broadcast?.name].filter(Boolean).join(" · ")
   return (
     <Popover>
       <PopoverTrigger
@@ -113,8 +154,8 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
             )}
           />
         }
-        aria-label={t`Filter by type and site`}
-        title={t`Filter by type and site`}
+        aria-label={t`Filter by type, site and broadcast`}
+        title={t`Filter by type, site and broadcast`}
         data-testid="source-filter"
       >
         <ListFilterIcon className="size-3.5 shrink-0" />
@@ -172,6 +213,7 @@ export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange:
             </p>
           </>
         )}
+        <BroadcastChoices inboxId={inboxId} v={v} update={update} />
       </PopoverContent>
     </Popover>
   )

@@ -1,4 +1,11 @@
-import type { ConversationQuery, DiscussionQuery, DocsPageSort, DraftAuthorKind, SubscriptionState } from "@/lib/api"
+import type {
+  BroadcastDeliveryState,
+  ConversationQuery,
+  DiscussionQuery,
+  DocsPageSort,
+  DraftAuthorKind,
+  SubscriptionState,
+} from "@/lib/api"
 
 export type ConversationFilters = Omit<ConversationQuery, "cursor" | "limit">
 
@@ -70,4 +77,14 @@ export const keys = {
     ["ws", ws, "lists", "subscriptions", list, state, q] as const,
   subscription: (ws: string, list: string, id: string) => ["ws", ws, "lists", "subscription", list, id] as const,
   contactSubscriptions: (ws: string, contact: string) => ["ws", ws, "lists", "contact", contact] as const,
+  broadcasts: (ws: string) => ["ws", ws, "broadcasts"] as const,
+  broadcastPages: (ws: string, inbox: string, group: string) =>
+    ["ws", ws, "broadcasts", "pages", inbox, group] as const,
+  broadcast: (ws: string, id: string) => ["ws", ws, "broadcasts", "one", id] as const,
+  broadcastReview: (ws: string, id: string) => ["ws", ws, "broadcasts", "review", id] as const,
+  broadcastAudience: (ws: string, id: string, audience: string) =>
+    ["ws", ws, "broadcasts", "audience", id, audience] as const,
+  broadcastReport: (ws: string, id: string) => ["ws", ws, "broadcasts", "report", id] as const,
+  broadcastDeliveries: (ws: string, id: string, state: BroadcastDeliveryState | "", q: string, replied: boolean) =>
+    ["ws", ws, "broadcasts", "deliveries", id, state, q, replied] as const,
 }
