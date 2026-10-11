@@ -33,7 +33,7 @@ const iconButton = <Button variant="ghost" size="icon-sm" />
 function useSnoozeTimes() {
   const { t, i18n } = useLingui()
   const time = new Intl.DateTimeFormat(i18n.locale, { hour: "2-digit", minute: "2-digit" })
-  const now = new Date()
+  const [now] = useState(() => new Date())
   const hour = new Date(now.getTime() + 60 * 60 * 1000)
   const evening = new Date(now)
   evening.setHours(17, 0, 0, 0)
@@ -64,8 +64,6 @@ export function SnoozeMenu({
   anchor?: RefObject<Element | null>
 }) {
   const { t } = useLingui()
-  const times = useSnoozeTimes()
-  const first = firstName(name)
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
@@ -77,22 +75,30 @@ export function SnoozeMenu({
         <ClockIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" anchor={anchor} className="w-[280px] max-w-[calc(100vw-32px)]">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>
-            <Trans>When should it come back?</Trans>
-          </DropdownMenuLabel>
-          {times.map((o) => (
-            <DropdownMenuItem key={o.label} onClick={() => actions.snooze(o.at, o.when)}>
-              <span className="flex-1">{o.label}</span>
-              {o.detail && <span className="text-caption text-faint">{o.detail}</span>}
-            </DropdownMenuItem>
-          ))}
-          <DropdownMenuItem onClick={actions.untilReply}>
-            <Trans>When {first} writes again</Trans>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        <SnoozeTimes name={name} actions={actions} />
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+function SnoozeTimes({ name, actions }: { name: string; actions: ConversationActions }) {
+  const times = useSnoozeTimes()
+  const first = firstName(name)
+  return (
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>
+        <Trans>When should it come back?</Trans>
+      </DropdownMenuLabel>
+      {times.map((o) => (
+        <DropdownMenuItem key={o.label} onClick={() => actions.snooze(o.at, o.when)}>
+          <span className="flex-1">{o.label}</span>
+          {o.detail && <span className="text-caption text-faint">{o.detail}</span>}
+        </DropdownMenuItem>
+      ))}
+      <DropdownMenuItem onClick={actions.untilReply}>
+        <Trans>When {first} writes again</Trans>
+      </DropdownMenuItem>
+    </DropdownMenuGroup>
   )
 }
 

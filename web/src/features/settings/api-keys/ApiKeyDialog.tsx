@@ -52,6 +52,7 @@ export function ApiKeyDialog({
   const [scopes, setScopes] = useState<Set<ApiKeyScope>>(() => new Set(API_KEY_SCOPES))
   const [limit, setLimit] = useState<Set<string>>(() => new Set())
   const [expiry, setExpiry] = useState("")
+  const [today] = useState(() => localDate(new Date()))
   const [touched, setTouched] = useState(false)
   const limited = limit.size > 0
   const allowed = (s: ApiKeyScope) => !limited || !WORKSPACE_WIDE_SCOPES.includes(s)
@@ -217,7 +218,7 @@ export function ApiKeyDialog({
                   <Input
                     id="key-expiry"
                     type="date"
-                    min={localDate(new Date())}
+                    min={today}
                     value={expiry}
                     onChange={(e) => setExpiry(e.target.value)}
                     className="sm:max-w-48"

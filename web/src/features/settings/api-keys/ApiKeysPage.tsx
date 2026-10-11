@@ -49,6 +49,7 @@ function BotSending() {
 }
 
 function KeyRow({ k, onEdit, onRevoke }: { k: ApiKey; onEdit: () => void; onRevoke: () => void }) {
+  const [now] = useState(Date.now)
   const { t, i18n } = useLingui()
   const text = useEnumText()
   const members = useMemberMap()
@@ -59,7 +60,7 @@ function KeyRow({ k, onEdit, onRevoke }: { k: ApiKey; onEdit: () => void; onRevo
   const by = creator ? creator.name || creator.email : null
   const bot = k.bot_name || k.name
   const expires = k.expires_at ? formatDateTime(k.expires_at, i18n.locale) : null
-  const expired = !!k.expires_at && new Date(k.expires_at).getTime() <= Date.now()
+  const expired = !!k.expires_at && new Date(k.expires_at).getTime() <= now
   const allScopes = API_KEY_SCOPES.every((s) => k.scopes.includes(s))
   const inboxNames = k.inbox_ids?.map((id) => inboxes.find((i) => i.id === id)?.name ?? t`Deleted inbox`).join(", ")
   const inactive = !!k.revoked_at || expired
