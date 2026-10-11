@@ -230,7 +230,9 @@ paths:
     get:
       operationId: getVersion
       summary: Server version
-      description: The version of the running server build.
+      description: |
+        The version of the running server build and whether anyone may sign up (`signup`), so a
+        sign-in page can offer "Create an account" or say that the server is invite only.
       tags: [system]
       security: []
       responses:
@@ -246,8 +248,9 @@ paths:
       summary: Request a sign-in code
       description: |
         Sends a one-time code to the address when it belongs to a person (a member, a former member
-        or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-        creates the person on verification. The answer is the same either way and takes the same
+        or a reader) or has a pending invite, or to any address with `reader: true` or when the
+        server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+        workspace, on verification. The answer is the same either way and takes the same
         time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
         most recent code of an address is accepted.
       tags: [auth]
@@ -273,7 +276,9 @@ paths:
         Exchanges a valid code for a member session. Each code accepts five attempts. After 20
         wrong codes for an address within 24 hours, codes for it are refused
         (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-        e-mail; passkeys still work. Pending invites for the address are accepted on success.
+        e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+        address that is not yet a person becomes one when it has an invite, when the code was
+        requested with `reader: true`, or when the server's sign-up is `open`.
       tags: [auth]
       security: []
       requestBody:
@@ -1020,6 +1025,44 @@ paths:
         "401":
           $ref: "#/components/responses/Problem"
         "403":
+          $ref: "#/components/responses/Problem"
+  /v1/workspaces:
+    post:
+      operationId: createWorkspace
+      summary: Create a workspace
+      description: |
+        Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+        is `open` (`403 signup_closed` otherwise; operators create workspaces with
+        `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+        workspaces they created (`403 workspace_limit`), and at most
+        `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+        hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+
+        Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+        `Yuva-Workspace` to act on it.
+      tags: [workspace]
+      security:
+        - session: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WorkspaceCreate"
+      responses:
+        "201":
+          description: The new workspace.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "429":
           $ref: "#/components/responses/Problem"
   /v1/members:
     get:
@@ -6543,6 +6586,14 @@ components:
         created_at:
           type: string
           format: date-time
+    WorkspaceCreate:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
     WorkspaceUpdate:
       type: object
       description: Only the fields sent change; at least one is required.
@@ -11744,12 +11795,19 @@ components:
           type: string
     Version:
       type: object
-      required: [version]
+      required: [version, signup]
       properties:
         version:
           type: string
           description: A release tag, a commit hash, or `dev`.
           examples: ["0.1.0"]
+        signup:
+          type: string
+          enum: [invite, open]
+          description: |
+            `invite`: only people with an invite (or an existing account) can sign in to the panel.
+            `open`: anyone can sign in with an e-mailed code and create a workspace
+            (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.
     Problem:
       type: object
       description: An RFC 9457 problem document.

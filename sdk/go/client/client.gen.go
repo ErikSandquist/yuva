@@ -1422,6 +1422,24 @@ func (e UndeliverableEmailReason) Valid() bool {
 	}
 }
 
+// Defines values for VersionSignup.
+const (
+	VersionSignupInvite VersionSignup = "invite"
+	VersionSignupOpen   VersionSignup = "open"
+)
+
+// Valid indicates whether the value is a known member of the VersionSignup enum.
+func (e VersionSignup) Valid() bool {
+	switch e {
+	case VersionSignupInvite:
+		return true
+	case VersionSignupOpen:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ViewingEventType.
 const (
 	ViewingEventTypeViewing ViewingEventType = "viewing"
@@ -5056,11 +5074,21 @@ type VapidPublicKey struct {
 
 // Version defines model for Version.
 type Version struct {
+	// Signup `invite`: only people with an invite (or an existing account) can sign in to the panel.
+	// `open`: anyone can sign in with an e-mailed code and create a workspace
+	// (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.
+	Signup VersionSignup `json:"signup"`
+
 	// Version A release tag, a commit hash, or `dev`.
 	//
 	// Examples: 0.1.0
 	Version string `json:"version"`
 }
+
+// VersionSignup `invite`: only people with an invite (or an existing account) can sign in to the panel.
+// `open`: anyone can sign in with an e-mailed code and create a workspace
+// (`POST /v1/workspaces`). Set with `YUVA_SIGNUP`.
+type VersionSignup string
 
 // Viewing defines model for Viewing.
 type Viewing struct {
@@ -5391,6 +5419,11 @@ type Workspace struct {
 
 	// RetentionDays Closed conversations untouched for this many days are deleted with their messages and attachments, and raw e-mails older than this are deleted. Absent when everything is kept.
 	RetentionDays *int32 `json:"retention_days,omitempty"`
+}
+
+// WorkspaceCreate defines model for WorkspaceCreate.
+type WorkspaceCreate struct {
+	Name string `json:"name"`
 }
 
 // WorkspaceDeletion defines model for WorkspaceDeletion.
@@ -6962,6 +6995,9 @@ type DeleteWorkspaceJSONRequestBody = WorkspaceDeletion
 
 // UpdateWorkspaceJSONRequestBody defines body for UpdateWorkspace for application/json ContentType.
 type UpdateWorkspaceJSONRequestBody = WorkspaceUpdate
+
+// CreateWorkspaceJSONRequestBody defines body for CreateWorkspace for application/json ContentType.
+type CreateWorkspaceJSONRequestBody = WorkspaceCreate
 
 // WebhookContactDeletedJSONRequestBody defines body for WebhookContactDeleted for application/json ContentType.
 type WebhookContactDeletedJSONRequestBody = WebhookContactDeletedPayload
@@ -9242,8 +9278,9 @@ type ClientInterface interface {
 	// RequestSignInCodeWithBody Request a sign-in code
 	//
 	// Sends a one-time code to the address when it belongs to a person (a member, a former member
-	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-	// creates the person on verification. The answer is the same either way and takes the same
+	// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+	// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+	// workspace, on verification. The answer is the same either way and takes the same
 	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
@@ -9255,8 +9292,9 @@ type ClientInterface interface {
 	// RequestSignInCode Request a sign-in code
 	//
 	// Sends a one-time code to the address when it belongs to a person (a member, a former member
-	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-	// creates the person on verification. The answer is the same either way and takes the same
+	// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+	// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+	// workspace, on verification. The answer is the same either way and takes the same
 	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
@@ -9270,7 +9308,9 @@ type ClientInterface interface {
 	// Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 	// wrong codes for an address within 24 hours, codes for it are refused
 	// (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-	// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+	// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+	// address that is not yet a person becomes one when it has an invite, when the code was
+	// requested with `reader: true`, or when the server's sign-up is `open`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -9282,7 +9322,9 @@ type ClientInterface interface {
 	// Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 	// wrong codes for an address within 24 hours, codes for it are refused
 	// (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-	// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+	// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+	// address that is not yet a person becomes one when it has an invite, when the code was
+	// requested with `reader: true`, or when the server's sign-up is `open`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -11013,7 +11055,8 @@ type ClientInterface interface {
 
 	// GetVersion Server version
 	//
-	// The version of the running server build.
+	// The version of the running server build and whether anyone may sign up (`signup`), so a
+	// sign-in page can offer "Create an account" or say that the server is invite only.
 	//
 	// Corresponds with GET /v1/version (the `GetVersion` operationId).
 	GetVersion(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -11217,6 +11260,40 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 	UpdateWorkspace(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkspaceWithBody Create a workspace
+	//
+	// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+	// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+	// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+	// workspaces they created (`403 workspace_limit`), and at most
+	// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+	// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+	//
+	// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+	// `Yuva-Workspace` to act on it.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+	CreateWorkspaceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateWorkspace Create a workspace
+	//
+	// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+	// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+	// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+	// workspaces they created (`403 workspace_limit`), and at most
+	// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+	// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+	//
+	// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+	// `Yuva-Workspace` to act on it.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+	CreateWorkspace(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
 // DownloadClientAttachment Download an attachment
@@ -12629,8 +12706,9 @@ func (c *Client) DownloadAttachment(ctx context.Context, attachmentId Attachment
 // RequestSignInCodeWithBody Request a sign-in code
 //
 // Sends a one-time code to the address when it belongs to a person (a member, a former member
-// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-// creates the person on verification. The answer is the same either way and takes the same
+// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+// workspace, on verification. The answer is the same either way and takes the same
 // time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
@@ -12652,8 +12730,9 @@ func (c *Client) RequestSignInCodeWithBody(ctx context.Context, contentType stri
 // RequestSignInCode Request a sign-in code
 //
 // Sends a one-time code to the address when it belongs to a person (a member, a former member
-// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-// creates the person on verification. The answer is the same either way and takes the same
+// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+// workspace, on verification. The answer is the same either way and takes the same
 // time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
@@ -12677,7 +12756,9 @@ func (c *Client) RequestSignInCode(ctx context.Context, body RequestSignInCodeJS
 // Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 // wrong codes for an address within 24 hours, codes for it are refused
 // (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+// address that is not yet a person becomes one when it has an invite, when the code was
+// requested with `reader: true`, or when the server's sign-up is `open`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -12699,7 +12780,9 @@ func (c *Client) VerifySignInCodeWithBody(ctx context.Context, contentType strin
 // Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 // wrong codes for an address within 24 hours, codes for it are refused
 // (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+// address that is not yet a person becomes one when it has an invite, when the code was
+// requested with `reader: true`, or when the server's sign-up is `open`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -15920,7 +16003,8 @@ func (c *Client) GetUsage(ctx context.Context, params *GetUsageParams, reqEditor
 
 // GetVersion Server version
 //
-// The version of the running server build.
+// The version of the running server build and whether anyone may sign up (`signup`), so a
+// sign-in page can offer "Create an account" or say that the server is invite only.
 //
 // Corresponds with GET /v1/version (the `GetVersion` operationId).
 func (c *Client) GetVersion(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -16295,6 +16379,60 @@ func (c *Client) UpdateWorkspaceWithBody(ctx context.Context, params *UpdateWork
 // Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 func (c *Client) UpdateWorkspace(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateWorkspaceRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkspaceWithBody Create a workspace
+//
+// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+// workspaces they created (`403 workspace_limit`), and at most
+// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+//
+// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+// `Yuva-Workspace` to act on it.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+func (c *Client) CreateWorkspaceWithBody(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkspaceRequestWithBody(c.Server, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateWorkspace Create a workspace
+//
+// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+// workspaces they created (`403 workspace_limit`), and at most
+// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+//
+// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+// `Yuva-Workspace` to act on it.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+func (c *Client) CreateWorkspace(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateWorkspaceRequest(c.Server, body)
 	if err != nil {
 		return nil, err
 	}
@@ -25983,6 +26121,46 @@ func NewUpdateWorkspaceRequestWithBody(server string, params *UpdateWorkspacePar
 	return req, nil
 }
 
+// NewCreateWorkspaceRequest calls the generic CreateWorkspace builder with application/json body
+func NewCreateWorkspaceRequest(server string, body CreateWorkspaceJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateWorkspaceRequestWithBody(server, "application/json", bodyReader)
+}
+
+// NewCreateWorkspaceRequestWithBody constructs an http.Request for the CreateWorkspace method, with any body, and a specified content type
+func NewCreateWorkspaceRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/workspaces")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	return req, nil
+}
+
 func (c *Client) applyEditors(ctx context.Context, req *http.Request, additionalEditors []RequestEditorFn) error {
 	for _, r := range c.RequestEditors {
 		if err := r(ctx, req); err != nil {
@@ -26869,8 +27047,9 @@ type ClientWithResponsesInterface interface {
 	// RequestSignInCodeWithBodyWithResponse Request a sign-in code
 	//
 	// Sends a one-time code to the address when it belongs to a person (a member, a former member
-	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-	// creates the person on verification. The answer is the same either way and takes the same
+	// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+	// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+	// workspace, on verification. The answer is the same either way and takes the same
 	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
@@ -26882,8 +27061,9 @@ type ClientWithResponsesInterface interface {
 	// RequestSignInCodeWithResponse Request a sign-in code
 	//
 	// Sends a one-time code to the address when it belongs to a person (a member, a former member
-	// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-	// creates the person on verification. The answer is the same either way and takes the same
+	// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+	// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+	// workspace, on verification. The answer is the same either way and takes the same
 	// time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 	// most recent code of an address is accepted.
 	//
@@ -26897,7 +27077,9 @@ type ClientWithResponsesInterface interface {
 	// Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 	// wrong codes for an address within 24 hours, codes for it are refused
 	// (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-	// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+	// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+	// address that is not yet a person becomes one when it has an invite, when the code was
+	// requested with `reader: true`, or when the server's sign-up is `open`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -26909,7 +27091,9 @@ type ClientWithResponsesInterface interface {
 	// Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 	// wrong codes for an address within 24 hours, codes for it are refused
 	// (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-	// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+	// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+	// address that is not yet a person becomes one when it has an invite, when the code was
+	// requested with `reader: true`, or when the server's sign-up is `open`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -28788,7 +28972,8 @@ type ClientWithResponsesInterface interface {
 
 	// GetVersionWithResponse Server version
 	//
-	// The version of the running server build.
+	// The version of the running server build and whether anyone may sign up (`signup`), so a
+	// sign-in page can offer "Create an account" or say that the server is invite only.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -29012,6 +29197,40 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /v1/workspace (the `UpdateWorkspace` operationId).
 	UpdateWorkspaceWithResponse(ctx context.Context, params *UpdateWorkspaceParams, body UpdateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWorkspaceResponse, error)
+
+	// CreateWorkspaceWithBodyWithResponse Create a workspace
+	//
+	// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+	// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+	// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+	// workspaces they created (`403 workspace_limit`), and at most
+	// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+	// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+	//
+	// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+	// `Yuva-Workspace` to act on it.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+	CreateWorkspaceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkspaceResponse, error)
+
+	// CreateWorkspaceWithResponse Create a workspace
+	//
+	// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+	// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+	// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+	// workspaces they created (`403 workspace_limit`), and at most
+	// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+	// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+	//
+	// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+	// `Yuva-Workspace` to act on it.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+	CreateWorkspaceWithResponse(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkspaceResponse, error)
 }
 
 // DownloadClientAttachmentResponse200Headers the declared response headers of an HTTP 200 response for DownloadClientAttachment
@@ -39773,6 +39992,75 @@ func (r UpdateWorkspaceResponse) ContentType() string {
 	return ""
 }
 
+type CreateWorkspaceResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *Workspace
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateWorkspaceResponse) GetJSON201() *Workspace {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateWorkspaceResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateWorkspaceResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateWorkspaceResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CreateWorkspaceResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateWorkspaceResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateWorkspaceResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateWorkspaceResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateWorkspaceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 // DownloadClientAttachmentWithResponse Download an attachment
 //
 // An attachment of a message (not a note) in one of the contact's conversations, served as a
@@ -40987,8 +41275,9 @@ func (c *ClientWithResponses) DownloadAttachmentWithResponse(ctx context.Context
 // RequestSignInCodeWithBodyWithResponse Request a sign-in code
 //
 // Sends a one-time code to the address when it belongs to a person (a member, a former member
-// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-// creates the person on verification. The answer is the same either way and takes the same
+// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+// workspace, on verification. The answer is the same either way and takes the same
 // time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
@@ -41006,8 +41295,9 @@ func (c *ClientWithResponses) RequestSignInCodeWithBodyWithResponse(ctx context.
 // RequestSignInCodeWithResponse Request a sign-in code
 //
 // Sends a one-time code to the address when it belongs to a person (a member, a former member
-// or a reader) or has a pending invite, or to any address with `reader: true`, whose code
-// creates the person on verification. The answer is the same either way and takes the same
+// or a reader) or has a pending invite, or to any address with `reader: true` or when the
+// server's sign-up is `open` (see `GET /v1/version`); that code creates the person, with no
+// workspace, on verification. The answer is the same either way and takes the same
 // time (the mail is sent after it), so it does not reveal whether an address is known. Codes expire after 10 minutes; only the
 // most recent code of an address is accepted.
 //
@@ -41027,7 +41317,9 @@ func (c *ClientWithResponses) RequestSignInCodeWithResponse(ctx context.Context,
 // Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 // wrong codes for an address within 24 hours, codes for it are refused
 // (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+// address that is not yet a person becomes one when it has an invite, when the code was
+// requested with `reader: true`, or when the server's sign-up is `open`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -41045,7 +41337,9 @@ func (c *ClientWithResponses) VerifySignInCodeWithBodyWithResponse(ctx context.C
 // Exchanges a valid code for a member session. Each code accepts five attempts. After 20
 // wrong codes for an address within 24 hours, codes for it are refused
 // (`429 sign_in_paused`) until older failures leave that window, and the member is told by
-// e-mail; passkeys still work. Pending invites for the address are accepted on success.
+// e-mail; passkeys still work. Pending invites for the address are accepted on success. An
+// address that is not yet a person becomes one when it has an invite, when the code was
+// requested with `reader: true`, or when the server's sign-up is `open`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -43818,7 +44112,8 @@ func (c *ClientWithResponses) GetUsageWithResponse(ctx context.Context, params *
 
 // GetVersionWithResponse Server version
 //
-// The version of the running server build.
+// The version of the running server build and whether anyone may sign up (`signup`), so a
+// sign-in page can offer "Create an account" or say that the server is invite only.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -44149,6 +44444,52 @@ func (c *ClientWithResponses) UpdateWorkspaceWithResponse(ctx context.Context, p
 		return nil, err
 	}
 	return ParseUpdateWorkspaceResponse(rsp)
+}
+
+// CreateWorkspaceWithBodyWithResponse Create a workspace
+//
+// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+// workspaces they created (`403 workspace_limit`), and at most
+// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+//
+// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+// `Yuva-Workspace` to act on it.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+func (c *ClientWithResponses) CreateWorkspaceWithBodyWithResponse(ctx context.Context, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWorkspaceResponse, error) {
+	rsp, err := c.CreateWorkspaceWithBody(ctx, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkspaceResponse(rsp)
+}
+
+// CreateWorkspaceWithResponse Create a workspace
+//
+// Creates a workspace with the signed-in person as its owner. Only when the server's sign-up
+// is `open` (`403 signup_closed` otherwise; operators create workspaces with
+// `yuva bootstrap`). A person may have at most `YUVA_SIGNUP_WORKSPACES_PER_PERSON` live
+// workspaces they created (`403 workspace_limit`), and at most
+// `YUVA_SIGNUP_WORKSPACES_PER_IP` workspaces are created from one IP address (IPv6 /64) in 24
+// hours (`429 rate_limited`). The name is 1 to 200 characters after trimming.
+//
+// Person sessions only; the `Yuva-Workspace` header is ignored. Send the new id as
+// `Yuva-Workspace` to act on it.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/workspaces (the `CreateWorkspace` operationId).
+func (c *ClientWithResponses) CreateWorkspaceWithResponse(ctx context.Context, body CreateWorkspaceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWorkspaceResponse, error) {
+	rsp, err := c.CreateWorkspace(ctx, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateWorkspaceResponse(rsp)
 }
 
 // ParseDownloadClientAttachmentResponse parses an HTTP response from a DownloadClientAttachmentWithResponse call
@@ -52510,6 +52851,60 @@ func ParseUpdateWorkspaceResponse(rsp *http.Response) (*UpdateWorkspaceResponse,
 			return nil, err
 		}
 		response.ApplicationproblemJSON403 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateWorkspaceResponse parses an HTTP response from a CreateWorkspaceWithResponse call
+func ParseCreateWorkspaceResponse(rsp *http.Response) (*CreateWorkspaceResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateWorkspaceResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest Workspace
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 
