@@ -179,20 +179,27 @@ workspace or another reader is visible.
 
 ## M13 — Broadcasts and e-mail designs
 
-Status: in progress; plan in issue #25, decisions in `architecture.md` › Broadcasts and e-mail
-designs (M13).
+Status: planned; umbrella issue #25, decisions in `architecture.md` › Broadcasts and e-mail designs
+(M13). Ships in five steps; M13.1 and M13.2 in parallel, then M13.3, then M13.4 and M13.5 in parallel.
 
-- Mailing lists with recorded consent and double opt-in, `<yuva-subscribe>`, CSV import and an API
-  for host backends.
-- Broadcasts to lists, narrowed by labels and attributes, scheduled, sent through an inbox's e-mail
-  channel (optionally its own SMTP for broadcasts), with one-click unsubscribe, postal address,
-  bounces and complaints; replies become conversations in the inbox.
-- A block-based designer in the panel and server-side rendering to responsive HTML and text.
-- A template gallery in the panel and on the website; templates added by pull request.
+- **M13.1 Lists and subscribing:** mailing lists with recorded consent and double opt-in,
+  `<yuva-subscribe>` (HTML, React, Nuxt, shadcn), unsubscribe and preference pages with one-click, an API
+  for host backends, consent export.
+- **M13.2 Designs:** the design document, the server renderer to responsive HTML and text, images, the
+  block designer in the panel, six starter templates in `templates/email/`.
+- **M13.3 Sending:** broadcasts to lists narrowed by attributes, review, test sends, scheduling, pause and
+  cancel, sending through an inbox's e-mail channel (optionally its own SMTP account), bounces,
+  complaints and suppression, replies as conversations, reports, daily caps and the approval gate for
+  hosted servers.
+- **M13.4 Import and deliverability:** CSV import with attestation and progress; SPF, DKIM and DMARC
+  check by probe; optional DKIM signing by Yuva.
+- **M13.5 Reach:** the template gallery on the website with "Use this template", MCP tools and prompts,
+  subscriptions in the mobile SDKs, the İYS export.
 
-Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter
-from a gallery template, sends a test, schedules it to the list and it arrives on Gmail and Apple
-Mail looking like the preview, in light and dark; one recipient replies and the reply is a
-conversation in the inbox; another unsubscribes with one click and gets no further broadcast; a
-bounce suppresses the address; another workspace sees none of it.
-
+Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter from a
+gallery template, sends a test, schedules it to the list and it lands in the inbox (not spam) of the project's seed
+mailboxes at Gmail, Outlook and iCloud with SPF, DKIM and DMARC passing, and its WebKit and Chromium renders
+match the preview, in light and dark; one recipient replies and the reply is a conversation in the inbox;
+an out-of-office reply is not; another unsubscribes with one click and gets no further broadcast; a bounce
+suppresses the address and a complaint unsubscribes it; a hosted workspace cannot send before approval;
+another workspace sees none of it.

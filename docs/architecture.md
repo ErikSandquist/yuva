@@ -115,6 +115,7 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 | `/client/v1` | widget, mobile SDKs | channel public key + contact session, or a reader token on the discussion endpoints |
 | `/ingress/email` | edge Worker, MTAs | HMAC signature over the raw message |
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
+| `/s/{token}`, `/m/{token}`, `/c/{token}`, `/i/{token}` | people who receive list and broadcast mail | a token sealed under the master key; an image token |
 | `/v1/realtime`, `/client/v1/realtime` | panel, widget, SDKs | as above |
 
 A member session belongs to a person, not to a workspace. Workspace endpoints act on the workspace
@@ -189,9 +190,15 @@ scoped API keys, and every key-authored message names its bot.
 | `webhooks:manage` | webhooks, their deliveries and attempts |
 | `workspace:manage` | update the workspace, usage |
 | `feedback:write` | feedback |
+| `lists:read` | lists, subscriptions, growth, consent export, imports |
+| `lists:write` | lists, subscriptions, confirmations, imports |
+| `broadcasts:read` | broadcasts, deliveries, reports, designs, templates, images, previews |
+| `broadcasts:write` | drafts, designs, images, test sends |
+| `broadcasts:send` | schedule, unschedule, pause, resume, cancel (only while the workspace allows keys and assistants to) |
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
-before scopes existed hold every scope above. `yuva api-key create` takes `--scope` (repeatable,
+before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
+added to existing keys. `yuva api-key create` takes `--scope` (repeatable,
 default every scope) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
@@ -243,7 +250,8 @@ workspace. The existing `client_id` on messages stays as it is.
 
 **Event feed.** `GET /v1/events?after=<id>&limit=<n>` returns the events realtime and webhooks
 carry, in id order, filtered exactly as the caller's realtime stream is (inbox access, key inbox
-limit, scopes: a caller sees an event only if it holds `conversations:read`, and contact events
+limit, scopes: a caller sees an event only if it holds `conversations:read` (`lists:read` for list and
+subscription events, `broadcasts:read` for broadcast events), and contact events
 also need `contacts:read`). `after` is the last event id the caller handled; the answer carries
 `next` (the last id returned) and `has_more`. Events are kept 7 days (realtime replay uses the same
 rows). An `after` older than the oldest kept event answers `410 cursor_expired`: the caller
@@ -559,7 +567,9 @@ complaints arrive at `/ingress/ses` through SNS: the SNS signature is checked ag
 certificate, only topics listed in `YUVA_SES_TOPIC_ARNS` are accepted, a subscription is confirmed
 only on an `sns.<region>.amazonaws.com` URL, a notification whose `Timestamp` is more than an hour
 old (or ahead) is refused as a replay, and a notification counts only for a message we sent
-and for its recipients. Undeliverable addresses are shown on the
+and for its recipients. Suppressions have a scope: a hard bounce or a complaint about a reply
+stops all mail to the address; a complaint about a broadcast stops broadcasts only (see Broadcasts).
+Undeliverable addresses are shown on the
 contact, replies to them are refused until a member clears them.
 
 Mail the server writes itself (sign-in code and pause notice, invite, member notification, address
@@ -575,7 +585,9 @@ the inbox's name and `branding.color` (else `#2563eb`) and never names Yuva, wit
 button and text colour derived from it. `List-Unsubscribe` links also appear as footer links. Both
 parts are quoted-printable UTF-8 through the server mailer (`YUVA_SMTP_*`); the rating request goes
 out through the inbox's e-mail channel like a reply, its HTML stored as the message e-mail's
-`full_html` while the message itself stays text. The continuity mail renders only its subject (its
+`full_html` while the message itself stays text. List confirmation and welcome mails (`list_confirm`,
+`list_welcome`) are rendered the same way under the inbox's brand and go out through the list's e-mail
+channel, never through the server mailer. The continuity mail renders only its subject (its
 body is the members' replies) and push payloads stay text.
 
 ### Live chat and async messaging (web)
@@ -657,7 +669,8 @@ as `whsec_<base64>`, stored encrypted under the master key, rotatable. After a r
 secret keeps signing next to the new one for 24 hours.
 
 Events: `conversation.created`, `conversation.updated`, `conversation.rated`, `message.created`,
-`feedback.created`, `contact.updated`, `contact.deleted`. Payloads follow Standard Webhooks: `{type, timestamp,
+`feedback.created`, `contact.updated`, `contact.deleted`, `subscription.created`, `subscription.updated`,
+`broadcast.updated`. Payloads follow Standard Webhooks: `{type, timestamp,
 workspace_id, inbox_id, data}`, with the conversation, message and contact in `data`; the contact
 carries `external_ids` (so the host maps it to its own user) and `online`. `contact.deleted`
 carries the external ids the contact had.
@@ -1131,55 +1144,101 @@ Private help stays private: page feedback, live chat and e-mail are unchanged. D
 
 ### Broadcasts and e-mail designs (M13)
 
-A workspace sends e-mail to many contacts at once: newsletters, product updates, announcements.
-What sets it apart from a newsletter tool is that every broadcast is sent on behalf of an inbox and
-a reply becomes a conversation in that inbox. Decisions:
+A workspace sends e-mail to many contacts at once: newsletters, product updates, announcements. Every
+broadcast is sent on behalf of an inbox through one of its e-mail channels, and a reply becomes a
+conversation in that inbox. Plan in issue #25; it ships in five steps (M13.1–M13.5 in the roadmap).
+Decisions:
 
-- **Lists and consent.** `mailing_lists` per workspace (name, inbox it belongs to, double opt-in on
-  by default) and `list_subscriptions` (list, contact, address, state
-  `pending|subscribed|unsubscribed`, how and when consent was given: form, import, API, member, with
-  time, IP and the form's page). A contact may be on many lists. Consent is never assumed: an import
-  needs the importer to confirm the people agreed, and is recorded as such.
-- **Signing up.** `<yuva-subscribe>` (web component, Shadow DOM, on an existing chat channel's key
-  and origins like the documentation elements) and `POST /client/v1/subscribe`; double opt-in sends
-  a confirmation mail with a sealed link; rate limited per IP and channel. Host backends add
-  subscribers with an API key (`POST /v1/lists/{id}/subscriptions`), CSV import in the panel.
-- **Audiences.** A broadcast goes to one or more lists, optionally narrowed by labels and contact
-  attributes; the count is shown before sending. Suppressed addresses (bounces, complaints,
-  unsubscribes) are never sent to.
-- **Senders.** A broadcast is sent through an e-mail channel of its inbox (From that channel's
-  address, Reply-To the same, so replies thread into the inbox). A channel can have separate SMTP
-  settings for broadcasts (`broadcast_smtp`) so marketing volume uses its own account or SES
-  configuration set and never hurts support mail. Confirmation mails, test sends and broadcasts
-  all go through the sender channel, never through the server's own SMTP account (`YUVA_SMTP_*`),
-  so open sign-up cannot use the operator's mail account for bulk mail. `YUVA_BROADCAST_DAILY_RECIPIENTS`
-  (0 = no limit, the default) caps recipients per workspace per day on a hosted server.
-- **Sending.** River jobs, batches per sender with a per-sender rate (`messages per second`), one
-  `broadcast_deliveries` row per recipient (`queued|sent|bounced|complained|failed`, unsubscribed
-  and replied flags). `List-Unsubscribe` with one-click POST on every message, a footer with the
-  workspace's postal address (required before the first broadcast) and an unsubscribe link.
-  Test sends go to members only. A broadcast can be scheduled and cancelled until it starts.
-- **Replies.** A reply to a broadcast matches its delivery by Message-ID and opens (or continues) a
-  conversation with that contact in the inbox, with the broadcast linked; auto-replies are dropped
-  by the existing loop rules.
-- **Measuring.** Counts of sent, bounced, complained, unsubscribed and replied, per broadcast.
-  Click tracking is off by default (a per-broadcast switch rewrites links through `/c/{token}`);
-  there is no open pixel.
-- **Designs.** A design is a JSON document of blocks (sections, columns, heading, text, image,
-  button, divider, spacer, social links, footer) with a theme (colours, font stack, width), rendered
-  on the server to responsive table HTML and a text part by the same renderer the server's own mails
-  use. `email_designs` per workspace with versions; a broadcast stores the rendered HTML it sent.
-  Images are uploaded to object storage and served publicly at `/i/{token}` (immutable, no tracking);
-  PNG, JPEG, GIF and WebP only (no SVG, which can carry script).
-- **Designer.** A block editor in the panel: drag blocks, edit inline, theme panel, desktop and
-  phone preview, dark-mode preview, send a test, merge fields (`{{contact.name}}` …, with
-  fallbacks) checked before sending.
-- **Template gallery.** Starter designs ship with Yuva (`templates/email/`, MIT like `sdk/` and
-  listed in `LICENSING.md`, each a design JSON plus a preview image): newsletter, product update,
-  announcement, welcome, event, digest. The panel
-  shows the gallery when creating a design; the website shows it publicly at `/templates`, with a
-  "Use this template" link into the panel. Anyone can add a template by pull request; there is no
-  paid store.
+- **Lists.** `mailing_lists` belong to an inbox: name, public description, `double_opt_in` (on by
+  default), `public` (offered on forms and the preference page), `commercial` (marketing content, for the
+  consent export), `welcome` (a receipt after subscribing) and the e-mail channel that sends its
+  confirmation and welcome mail. Owners and admins manage lists; agents read the lists of their inboxes.
+- **Subscriptions and consent.** `list_subscriptions` (list, contact, address, `pending|subscribed|
+  unsubscribed`, source `form|identity|api|member|import`) and an append-only `consent_events` log (what
+  happened, when, IP, user agent, page, the label the person saw, the member, key or import). Consent is
+  never assumed: API calls and imports declare it (an import needs the importer's attestation and where
+  people agreed, stored with every row). Only the person moves an `unsubscribed` subscription back, through
+  a confirmation. Unsubscribing from all of an inbox's lists, a complaint and deleting a contact who had
+  objected leave an `email_optouts` row (a keyed HMAC of the address, nothing else) that the API and imports
+  respect. Pending subscriptions go after 30 days; unsubscribed ones and their events after 3 years.
+- **Signing up.** `<yuva-subscribe>` (`/yuva-subscribe.js`, `useyuva/subscribe`, React and Nuxt
+  wrappers, shadcn registry items) on an existing chat channel's key and origins; anonymous forms post to
+  `POST /client/v1/channels/{key}/subscriptions` with a sealed form token, a honeypot and per-IP,
+  per-channel and per-address limits, and get the same answer for every address. Identity-token sessions
+  subscribe at once when their address is verified (`PUT /client/v1/subscriptions/{list}`). Double
+  opt-in mails a link to `/s/{token}`, a server-rendered page like `/r/{token}` whose button confirms
+  (opening it changes nothing). Host backends use `/v1/lists/{id}/subscriptions`; the panel imports CSV
+  files asynchronously with progress.
+- **Unsubscribing.** Every broadcast and welcome mail carries `List-Unsubscribe` with
+  `List-Unsubscribe-Post: List-Unsubscribe=One-Click` (RFC 8058) and footer links to `/m/{token}`: a page
+  with "unsubscribe from this list", the inbox's public lists and "unsubscribe from everything"; opening it
+  changes nothing, its one-click POST unsubscribes at once. Tokens seal the workspace, list, contact and
+  broadcast under the master key and never expire while the contact exists.
+- **Designs.** A design is a JSON document (`EmailDesignDocument` in the contract, `schema: 1` with
+  upgrade steps on read) of blocks (section, columns, heading, text, image, button, divider, spacer,
+  social, footer) and a theme (colours with dark overrides, a fixed font stack, width, radius,
+  direction). Rich text is a stored subset of HTML checked by a bluemonday policy on every write; there is
+  no raw-HTML block and no remote image. `api/internal/mail/design` renders it to table HTML with inline
+  styles (hybrid columns, dark-mode classes, Outlook wrappers, a preheader) and a text part; it shares its
+  colour and button code with the server's own `layout.html`. Merge fields `{{ contact.first_name |
+  "there" }}` are checked on save, and a broadcast is not scheduled while a field without fallback would be
+  empty for anyone. A required footer (the inbox's legal name, postal address, registration and contact,
+  why the person gets the mail, unsubscribe and preference links) is always added. `email_designs` keep
+  a version for concurrent edits and up to 50 snapshots.
+- **Images** are uploaded (PNG, JPEG, GIF, WebP; never SVG), re-encoded without metadata at most 1,200 px
+  wide (WebP stored as PNG or JPEG) and served publicly at `/i/{token}` with immutable caching and nothing
+  recorded per request: the one exception to "objects are never public".
+- **Broadcasts.** A draft names the inbox, the e-mail channel, lists (up to 10) with attribute and
+  language conditions, the design, subject and preheader. Scheduling runs a review (sender identity,
+  sender ready, approval, merge fields, HTML under Gmail's clipping size, deliverability) and freezes the
+  design. At send time `broadcast_start` snapshots the audience into `broadcast_deliveries` (one per
+  contact; suppressed, opted-out and unsubscribed addresses left out) and `broadcast_send`, one job per
+  sender channel on its own River queue (`YUVA_BROADCAST_WORKERS`, default 2), sends in batches over one
+  SMTP connection at the channel's pace, re-checking each address, so pause and cancel act within a batch.
+  The channel's `broadcast_smtp_*` account is used when set, else its support account; confirmation,
+  welcome, test and broadcast mail never use the server's own `YUVA_SMTP_*`. Test sends go to members
+  only. `YUVA_BROADCAST_DAILY_RECIPIENTS` (0 = no limit) caps recipients per workspace and UTC day; a send
+  that reaches it continues the next day.
+- **Headers.** `Message-ID` `<delivery token.random@sending domain>` (the conversation shape, so loop
+  protection is unchanged), `List-Unsubscribe`, `List-Unsubscribe-Post`, `List-Id`, `Feedback-ID`
+  (`broadcast:list:workspace:yuvabroadcast`), `X-Auto-Response-Suppress: OOF, AutoReply`; no
+  `Auto-Submitted`.
+- **Bounces and complaints.** SES (SNS), delivery reports to the channel, SMTP 5xx at send time and ARF
+  feedback reports find the delivery by Message-ID. A hard bounce suppresses the address for all mail; a
+  complaint about a broadcast suppresses broadcasts only, unsubscribes every list of the workspace and
+  writes an opt-out. A broadcast pauses itself at 5% bounces (after 200) or 0.3% complaints (after 1,000);
+  a workspace whose 30-day complaint rate reaches 0.3% is suspended from sending.
+- **Deliverability.** A check sends a probe through the broadcast account to the channel's own address
+  and reads the trusted `Authentication-Results` (SPF, DKIM, DMARC, alignment, whether the DKIM signature
+  covers the list headers) plus DNS. A channel may also have its own DKIM key, signed by Yuva.
+- **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` and
+  opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a
+  `broadcast_reply` marker; someone else's reply opens their own conversation; automatic replies are only
+  counted. Notifications about replies to one broadcast are grouped per member every 10 minutes.
+- **Measuring.** Per broadcast: recipients, sent, failed, bounced, complained, unsubscribed, replied,
+  automatic replies, skipped by reason, and unique clicks only when the broadcast turns click tracking on
+  (links go through `/c/{token}`). There is no open pixel.
+- **Hosted servers.** `YUVA_BROADCASTS=on|approval|off` (unset: `approval` with `YUVA_SIGNUP=open`, else
+  `on`). In `approval` mode a workspace asks the operator, who answers with
+  `yuva workspace broadcasts approve|deny|suspend|limit`; approved workspaces warm up from 500 recipients
+  a day, doubling after each clean day. The operator digest reports approval requests, suspensions and
+  auto-pauses without content. `YUVA_MAIL_LINK_URL` puts `/m/`, `/s/`, `/c/` and `/i/` on a separate
+  domain.
+- **Scopes, events, MCP.** Scopes `lists:read`, `lists:write`, `broadcasts:read`, `broadcasts:write`,
+  `broadcasts:send`; keys and OAuth tokens schedule only while the workspace allows it
+  (`broadcasts_by_keys`, off by default). Events and webhook types `subscription.created`,
+  `subscription.updated` and `broadcast.updated` (imports send none per row). MCP tools draft designs and
+  broadcasts, preview, send tests to the caller and read reports; `schedule_broadcast` needs the audience
+  count it was shown.
+- **Law.** Consent records and their export serve GDPR Art. 7 and 15 and KVKK; objections are kept after
+  erasure; the welcome receipt and the footer follow Türkiye's Regulation on Commercial Communication
+  (Art. 7–10); links never expire (CAN-SPAM 30 days, CASL 60). Senders in Türkiye register their consents
+  in İYS themselves; Yuva exports them in İYS's fields.
+- **Template gallery.** Six starters ship in `templates/email/` (MIT, listed in `LICENSING.md`; each a
+  design JSON per language, assets and generated previews): newsletter, product update, announcement,
+  welcome, event, digest. The panel shows them when creating a design; the website shows them at
+  `/templates` (en, tr, de) with "Use this template". New templates come by pull request
+  (`templates/email/README.md`); there is no paid store.
 
 ### Contacts directory
 
@@ -1212,7 +1271,8 @@ have an open conversation, with search over names, addresses and external ids.
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
 single-node install: `YUVA_STORAGE=local|s3`, with `YUVA_STORAGE_DIR` for local disk and
 `YUVA_S3_ENDPOINT`, `YUVA_S3_REGION`, `YUVA_S3_BUCKET`, `YUVA_S3_ACCESS_KEY_ID`,
-`YUVA_S3_SECRET_ACCESS_KEY`, `YUVA_S3_PATH_STYLE` for S3. Objects are never public; members and API
+`YUVA_S3_SECRET_ACCESS_KEY`, `YUVA_S3_PATH_STYLE` for S3. Objects are never public (the exception is e-mail images, served at `/i/{token}`, see Broadcasts);
+members and API
 keys download them through `/v1/attachments/{id}`, which checks inbox access. The size limit
 (`YUVA_ATTACHMENT_MAX_BYTES`, 25 MiB by default) and the content-type allowlist
 (`YUVA_ATTACHMENT_TYPES`, comma-separated, `image/*` style wildcards allowed) are server-wide for
@@ -1265,7 +1325,10 @@ now; per-channel limits can narrow them later.
     the recipient address (`email_channels.address`, unique across the server), and
     `/ingress/ses` finds the message a bounce refers to by our Message-ID
     (`message_emails.header_message_id` of outbound mail). Everything after that lookup is scoped
-    by the workspace it returned.
+    by the workspace it returned. `/ingress/ses` also finds a broadcast delivery by its Message-ID
+    (`broadcast_deliveries.header_message_id`, unique across the server), and `/i/{token}` finds an
+    e-mail image by its token (`email_images.token`, unique across the server) before the workspace
+    is known; everything after those lookups is scoped by the workspace they returned.
   - The widget and the apps name only a chat or app channel's public key, which is unique across
     the server: a new contact session finds its channel by `chat_channels.public_key` (app
     channels live in the same table), and a CORS preflight, which
@@ -1292,7 +1355,7 @@ now; per-channel limits can narrow them later.
     operator digest job.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
-- Usage counters (conversations, messages, members, storage) recorded per workspace per month.
+- Usage counters (conversations, messages, members, storage, broadcast recipients) recorded per workspace per month.
 - Billing and plans are not part of the open-source core. Sign-up is: `YUVA_SIGNUP=open` lets
   anyone create an account and a workspace, within per-person and per-address limits (see Panel).
 
