@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { Navigate, useLocation, useSearchParams } from "react-router"
 
 import { CheckItem, CheckList, ErrorLine, Notice } from "@/components/common"
-import { API_KEY_SCOPES, useEnumText } from "@/components/common/text"
+import { API_KEY_SCOPES, OPT_IN_SCOPES, useEnumText } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { AuthLayout } from "@/features/auth/AuthLayout"
 import { activate, i18n } from "@/i18n"
@@ -19,7 +19,7 @@ const heading = "text-page"
 
 function defaultScopes(req: OAuthRequest, offered: ApiKeyScope[]) {
   const asked = req.requested_scopes
-  return new Set(asked ? offered.filter((s) => asked.includes(s)) : offered)
+  return new Set(asked ? offered.filter((s) => asked.includes(s)) : offered.filter((s) => !OPT_IN_SCOPES.includes(s)))
 }
 
 function Ended({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {

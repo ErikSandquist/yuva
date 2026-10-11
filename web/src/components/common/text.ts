@@ -67,7 +67,11 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "feedback:write",
   "lists:read",
   "lists:write",
+  "broadcasts:read",
+  "broadcasts:write",
+  "broadcasts:send",
 ]
+export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = ["inboxes:manage", "webhooks:manage", "workspace:manage"]
 export const DELIVERY_STATES: WebhookDeliveryState[] = ["pending", "succeeded", "failed"]
 export const SUBSCRIPTION_STATES: SubscriptionState[] = ["subscribed", "pending", "unsubscribed"]
@@ -137,7 +141,7 @@ export function useEnumText() {
       "lists:write": t`Manage mailing lists and subscribers`,
       "broadcasts:read": t`Read broadcasts and e-mail designs`,
       "broadcasts:write": t`Write broadcasts and e-mail designs`,
-      "broadcasts:send": t`Schedule and send broadcasts`,
+      "broadcasts:send": t`Schedule and send broadcasts, when the workspace lets keys and assistants send them`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,

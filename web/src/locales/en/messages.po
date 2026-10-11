@@ -5517,8 +5517,8 @@ msgid "Schedule"
 msgstr "Schedule"
 
 #: src/components/common/text.ts
-msgid "Schedule and send broadcasts"
-msgstr "Schedule and send broadcasts"
+msgid "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
+msgstr "Schedule and send broadcasts, when the workspace lets keys and assistants send them"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx

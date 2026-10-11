@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 
 import { BotAvatar, CheckItem, CheckList, Dot, ErrorLine } from "@/components/common"
-import { API_KEY_SCOPES, useEnumText, WORKSPACE_WIDE_SCOPES } from "@/components/common/text"
+import { API_KEY_SCOPES, OPT_IN_SCOPES, useEnumText, WORKSPACE_WIDE_SCOPES } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -49,7 +49,9 @@ export function ApiKeyDialog({
   const [name, setName] = useState(apiKey?.name ?? "")
   const [botName, setBotName] = useState(apiKey?.bot_name ?? "")
   const [avatar, setAvatar] = useState(apiKey?.bot_avatar_url ?? "")
-  const [scopes, setScopes] = useState<Set<ApiKeyScope>>(() => new Set(API_KEY_SCOPES))
+  const [scopes, setScopes] = useState<Set<ApiKeyScope>>(
+    () => new Set(API_KEY_SCOPES.filter((s) => !OPT_IN_SCOPES.includes(s)))
+  )
   const [limit, setLimit] = useState<Set<string>>(() => new Set())
   const [expiry, setExpiry] = useState("")
   const [today] = useState(() => localDate(new Date()))
