@@ -213,6 +213,11 @@ function SenderLine({ ch }: { ch: Channel }) {
   )
 }
 
+const asSeen = (s: string) =>
+  s
+    .replace(/\{\{\s*[^|}]*?\s*(?:\|\s*"([^"]*)"\s*)?\}\}/g, (_, fallback?: string) => fallback ?? "")
+    .replace(/\s{2,}/g, " ")
+
 function InboxRow({
   sender,
   address,
@@ -237,9 +242,9 @@ function InboxRow({
             <span className="min-w-0 flex-1 truncate text-body font-semibold">{sender || address || t`Your name`}</span>
             <span className="shrink-0 text-caption text-faint">{t`now`}</span>
           </div>
-          <p className="truncate text-body font-medium">{subject || t`The subject`}</p>
+          <p className="truncate text-body font-medium">{asSeen(subject) || t`The subject`}</p>
           <p className="truncate text-small text-faint">
-            {preheader || t`The first line of the mail shows here when there is no preview text.`}
+            {asSeen(preheader) || t`The first line of the mail shows here when there is no preview text.`}
           </p>
         </div>
       </div>

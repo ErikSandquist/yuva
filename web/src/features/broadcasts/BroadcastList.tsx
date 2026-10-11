@@ -87,11 +87,11 @@ function Row({ b, current, cursor }: { b: Broadcast; current: boolean; cursor: b
           <span className="min-w-0 flex-1 truncate text-body font-medium">{b.name}</span>
           <StateBadge state={b.state} />
         </span>
-        <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint">
+        <span className="flex min-w-0 flex-wrap items-center gap-x-1.5 text-caption text-faint">
           {inbox && (
-            <span className="inline-flex min-w-0 items-center gap-1">
+            <span className="inline-flex max-w-full shrink-0 items-center gap-1">
               <Dot color={inbox.branding.color} className="size-[6px] shrink-0 rounded-[2px]" />
-              <span className="truncate">{inbox.name}</span>
+              <span className="min-w-0 truncate">{inbox.name}</span>
             </span>
           )}
           {inbox && <span aria-hidden>·</span>}

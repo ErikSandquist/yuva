@@ -7485,6 +7485,10 @@ msgstr "Kabul ettiği metin"
 msgid "What went out"
 msgstr "Ne gönderildi"
 
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "What will go out"
+msgstr "Ne gönderilecek"
+
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "Sık yazdıkların"

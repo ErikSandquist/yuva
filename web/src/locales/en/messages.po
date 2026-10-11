@@ -7485,6 +7485,10 @@ msgstr "What they agreed to"
 msgid "What went out"
 msgstr "What went out"
 
+#: src/features/broadcasts/BroadcastPage.tsx
+msgid "What will go out"
+msgstr "What will go out"
+
 #: src/features/settings/SettingsColumn.tsx
 msgid "What you write often"
 msgstr "What you write often"

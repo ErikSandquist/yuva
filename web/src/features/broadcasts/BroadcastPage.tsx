@@ -246,7 +246,7 @@ function Summary({ b }: { b: Broadcast }) {
   if (b.started_at) rows.push([t`Started`, formatDateTime(b.started_at, i18n.locale)])
   if (b.finished_at) rows.push([t`Finished`, formatDateTime(b.finished_at, i18n.locale)])
   return (
-    <Section title={<Trans>What went out</Trans>}>
+    <Section title={b.started_at ? <Trans>What went out</Trans> : <Trans>What will go out</Trans>}>
       <Card>
         <div className="flex flex-wrap items-start gap-5 phone:flex-col" data-testid="broadcast-summary">
           {b.design_id &&
