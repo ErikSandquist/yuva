@@ -33,6 +33,18 @@ Keep this table current when a command changes.
 - Every table has `workspace_id`; every query filters by it. No exception without a written reason
   in `docs/architecture.md`.
 
+## Domain architects
+
+Three agents own the design of a whole area across the parts above. They plan and review; the part
+owners implement from their plan, and the orchestrator writes their decisions into
+`docs/architecture.md` and `docs/roadmap.md`.
+
+| Area | Architect agent |
+|---|---|
+| Broadcasts: mailing lists and consent, bulk sending and deliverability, the e-mail designer and renderer, the template gallery | yuva-broadcasts |
+| Migrations: importing mail and help-desk history from Gmail, Outlook, Yandex, any IMAP server and other help desks, with read-only access to the source | yuva-migration |
+| Analytics: cookieless web and app analytics with the web script, Swift and Kotlin SDKs, dashboards and MCP tools | yuva-analytics |
+
 ## Versions
 
 - One version for the whole repository, SemVer, starting at `0.0.1`. Tags are `v0.0.1`, `v0.0.2`, …;
