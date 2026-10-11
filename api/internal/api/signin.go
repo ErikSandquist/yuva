@@ -100,18 +100,30 @@ func (s *Server) RequestSignInCode(ctx context.Context, req oas.RequestSignInCod
 	if err != nil {
 		return nil, err
 	}
+	var pageLocale *string
+	if l := req.Body.Locale; l != nil {
+		if !validLocale(*l) {
+			return nil, errValidation("locale must be en or tr")
+		}
+		v := string(*l)
+		pageLocale = &v
+	}
 	code := newCode()
 	id := uuid.New()
 	reader := req.Body.Reader != nil && *req.Body.Reader
 	if err := s.st.CreateLoginCode(ctx, store.CreateLoginCodeParams{
-		ID: id, Email: email, CodeHash: hashCode(id, code), Ip: ip, CreatedAt: now, ExpiresAt: now.Add(codeTTL), Reader: reader,
+		ID: id, Email: email, CodeHash: hashCode(id, code), Ip: ip, CreatedAt: now, ExpiresAt: now.Add(codeTTL), Reader: reader, Locale: pageLocale,
 	}); err != nil {
 		return nil, err
 	}
 	if !reader && !s.auth.Signup.Open && (known == nil || !*known) {
 		return oas.RequestSignInCode202Response{}, nil
 	}
-	locale, err := s.localeFor(ctx, email, now)
+	fallback := string(oas.En)
+	if pageLocale != nil {
+		fallback = *pageLocale
+	}
+	locale, err := s.localeFor(ctx, email, now, fallback)
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +142,7 @@ func (s *Server) noticeSignInPaused(ctx context.Context, email string, now time.
 	} else if err != nil {
 		return err
 	}
-	locale, err := s.localeFor(ctx, email, now)
+	locale, err := s.localeFor(ctx, email, now, string(oas.En))
 	if err != nil {
 		return err
 	}
@@ -143,7 +155,7 @@ func (s *Server) noticeSignInPaused(ctx context.Context, email string, now time.
 	return nil
 }
 
-func (s *Server) localeFor(ctx context.Context, email string, now time.Time) (string, error) {
+func (s *Server) localeFor(ctx context.Context, email string, now time.Time, fallback string) (string, error) {
 	p, err := s.st.GetPersonByEmail(ctx, email)
 	if err == nil {
 		return p.Locale, nil
@@ -153,7 +165,7 @@ func (s *Server) localeFor(ctx context.Context, email string, now time.Time) (st
 	}
 	inv, err := s.st.LatestPendingInvite(ctx, store.LatestPendingInviteParams{Email: email, Now: now})
 	if store.IsNotFound(err) {
-		return "en", nil
+		return fallback, nil
 	}
 	if err != nil {
 		return "", err
@@ -218,7 +230,11 @@ func (s *Server) VerifySignInCode(ctx context.Context, req oas.VerifySignInCodeR
 			return err
 		}
 		if !ok && (lc.Reader || s.auth.Signup.Open) {
-			p, err := createPerson(ctx, q, email, "", "en")
+			locale := string(oas.En)
+			if lc.Locale != nil {
+				locale = *lc.Locale
+			}
+			p, err := createPerson(ctx, q, email, "", locale)
 			if err != nil {
 				return err
 			}

@@ -823,6 +823,9 @@ remote images, http(s)):
   (IPv6 /64); a person may have `YUVA_SIGNUP_WORKSPACES_PER_PERSON` (3) live workspaces they
   created (`403 workspace_limit`) and one address may create `YUVA_SIGNUP_WORKSPACES_PER_IP` (5)
   in 24 hours (`429 rate_limited`). Under `invite` that endpoint answers `403 signup_closed`.
+  A code request carries the sign-in page's `locale`, kept on the code row: for an address with
+  no person and no invite it is the code mail's language and the new person's locale; a person
+  keeps their own and an invite's locale wins.
   The panel follows `signup`: with `open` its sign-in page says a new address gets an account
   (`/?signup=1` opens it as "Create your Yuva account"), a person with no workspace is asked to
   create one (name prefilled from the e-mail domain) and goes on to setup, and the workspace

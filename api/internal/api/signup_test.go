@@ -2,6 +2,7 @@ package api_test
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/productdevbook/yuva/api/internal/api"
@@ -92,5 +93,39 @@ func TestSignupWorkspacesPerIP(t *testing.T) {
 		} else {
 			c.expectProblem(http.StatusTooManyRequests, "rate_limited", "POST", "/v1/workspaces", map[string]any{"name": "Acme"})
 		}
+	}
+}
+
+func TestSignupKeepsThePageLocale(t *testing.T) {
+	h := newHarnessWith(t, openSignup(3, 10))
+	c := h.client()
+	c.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/auth/code", map[string]any{"email": unique("x") + "@example.com", "locale": "xx"})
+
+	signUp := func(c *client, email string, reader bool) response {
+		t.Helper()
+		c.expect(http.StatusAccepted, "POST", "/v1/auth/code", map[string]any{"email": email, "locale": "tr", "reader": reader})
+		msgs := h.mail.wait(t, email, 1)
+		if subject := msgs[len(msgs)-1].Subject; !strings.HasPrefix(subject, "Yuva giriş kodunuz") {
+			t.Fatalf("code mail to %s: %q", email, subject)
+		}
+		return c.expect(http.StatusOK, "POST", "/v1/auth/code/verify", map[string]any{"email": email, "code": h.mail.code(t, email)})
+	}
+	for _, reader := range []bool{false, true} {
+		me := signUp(h.client(), unique("new")+"@example.com", reader)
+		if l := me.body["person"].(map[string]any)["locale"]; l != "tr" {
+			t.Fatalf("reader %v: new person's locale %v: %s", reader, l, me.raw)
+		}
+	}
+
+	existing := unique("owner") + "@example.com"
+	h.bootstrap(existing, unique("ws"))
+	c = h.client()
+	c.expect(http.StatusAccepted, "POST", "/v1/auth/code", map[string]any{"email": existing, "locale": "tr"})
+	if subject := h.mail.wait(t, existing, 1)[0].Subject; !strings.HasPrefix(subject, "Your Yuva sign-in code") {
+		t.Fatalf("code mail to an existing person: %q", subject)
+	}
+	me := c.expect(http.StatusOK, "POST", "/v1/auth/code/verify", map[string]any{"email": existing, "code": h.mail.code(t, existing)})
+	if l := me.body["person"].(map[string]any)["locale"]; l != "en" {
+		t.Fatalf("existing person's locale %v", l)
 	}
 }

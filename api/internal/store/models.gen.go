@@ -422,6 +422,7 @@ type LoginCode struct {
 	ExpiresAt  time.Time
 	ConsumedAt *time.Time
 	Reader     bool
+	Locale     *string
 }
 
 type M12Answer struct {

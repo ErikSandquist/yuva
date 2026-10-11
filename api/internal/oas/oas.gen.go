@@ -4911,6 +4911,12 @@ type SignInCodeRequest struct {
 	// Email Examples: owner@example.com
 	Email Email `json:"email"`
 
+	// Locale The language the sign-in page is shown in. Used only when the address belongs to no
+	// person and has no invite: the code e-mail is written in it, and the person that
+	// verifying the code creates gets it as their locale. An existing person keeps their own
+	// locale, and an invite's locale wins over it. Absent: English.
+	Locale *Locale `json:"locale,omitempty"`
+
 	// Reader Sign in as a reader (the account page and its `/account/connect` popup): the code is sent
 	// to any address, and verifying it creates the person when there is none yet.
 	Reader *bool `json:"reader,omitempty"`
