@@ -203,3 +203,29 @@ match the preview, in light and dark; one recipient replies and the reply is a c
 an out-of-office reply is not; another unsubscribes with one click and gets no further broadcast; a bounce
 suppresses the address and a complaint unsubscribes it; a hosted workspace cannot send before approval;
 another workspace sees none of it.
+
+## M14 — Move to Yuva
+
+Status: planned; umbrella issue #35, decisions in `architecture.md` › Moving to Yuva (M14). Ships in four
+steps, in this order.
+
+- **M14.1 IMAP with presets:** every mailbox over IMAP with app passwords (Gmail, Google Workspace,
+  Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX, any server), detection from the address and MX, a
+  connection tester with precise errors, the read-only guard and its tests, scan and dry run,
+  resumable copy with live progress, catch-up sync, forwarding addresses, delivery verification,
+  finish with credential deletion, the wizard and list in the panel, guides in en, tr and de, MCP
+  tools and the `move_to_yuva` prompt.
+- **M14.2 Microsoft over IMAP:** "Sign in with Microsoft" for Outlook.com and Microsoft 365, only to
+  obtain an IMAP XOAUTH2 token (`IMAP.AccessAsUser.All`); the same read-only IMAP client.
+- **M14.3 Export files:** Google Takeout, mbox, .eml and Maildir archives with resumable upload; the
+  fast way for very large Gmail mailboxes, followed by IMAP for newer mail and the cutover.
+- **M14.4 Help desks:** Zendesk and Help Scout.
+
+Accept: an owner moves a mailbox with an app password through the wizard; the dry run matches the
+mailbox; killing the server mid-copy loses and duplicates nothing; the inbox shows the threads with
+original dates, members as authors and labels, nothing unread and no notification, webhook or push;
+mail arriving during the switch is stored once and notifies; the forwarding is verified by a probe;
+finishing deletes the credentials; the source mailbox is byte-identical (UIDs, flags, modseq) before
+and after. An Outlook.com and a Microsoft 365 mailbox, a Takeout file, a Zendesk and a Help Scout
+account import the same way. An assistant runs the whole flow through MCP without ever handling a
+password.

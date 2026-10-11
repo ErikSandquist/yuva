@@ -77,7 +77,8 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 - Go, `net/http`, OpenAPI 3.1 contract in `openapi/openapi.yaml`, strict server generated with
   oapi-codegen. Postgres through pgx and sqlc; goose migrations.
 - Background work on River (Postgres-backed queue): outbound e-mail, webhooks, notification
-  fan-out, attachment cleanup, retention.
+  fan-out, attachment cleanup, retention, and migrations on their own `migrations` queue (see
+  "Moving to Yuva").
 - Realtime: WebSocket (`coder/websocket`). Every change that members see live writes a row to
   `events` in the same transaction, last, under a per-workspace advisory lock, so event ids within
   a workspace follow commit order; the transaction's `NOTIFY` carries the id. One listener per
@@ -189,6 +190,7 @@ scoped API keys, and every key-authored message names its bot.
 | `canned_replies:write` | create, update and delete canned replies |
 | `webhooks:manage` | webhooks, their deliveries and attempts |
 | `workspace:manage` | update the workspace, usage |
+| `migrations:manage` | migrations: detect, create, change, connect, test, scan, start, pause, resume, cancel, finish, remove imported history, errors, probe, uploads |
 | `feedback:write` | feedback |
 | `lists:read` | lists, subscriptions, growth, consent export, imports |
 | `lists:write` | lists, subscriptions, confirmations, imports |
@@ -202,7 +204,7 @@ added to existing keys. `yuva api-key create` takes `--scope` (repeatable,
 default every scope) and `--inbox` (repeatable).
 
 A key may be limited to some inboxes. It then sees what an agent with access to exactly those
-inboxes sees; it cannot hold `inboxes:manage`, `webhooks:manage` or `workspace:manage` (refused when
+inboxes sees; it cannot hold `inboxes:manage`, `webhooks:manage`, `workspace:manage` or `migrations:manage` (refused when
 the key is made). An inbox that is deleted drops out of the limit; a key whose every inbox is gone
 sees nothing. A key may have an expiry; after it, the key gets `401 api_key_expired`. Scopes, inbox
 limit and expiry are fixed when the key is made; a different set needs a new key. Name, bot name and
@@ -347,8 +349,8 @@ ignored (claude.ai lists `jwt-bearer`), and registration answers with the two Yu
 - Scopes are the API key scopes. A token acts as its member: what the member's role and inbox access
   allow, narrowed by the granted scopes, never more. A member who leaves or is removed loses every
   grant. Management scopes a member's role cannot use are not offered on the consent page: agents
-  are not offered `inboxes:manage`, `labels:write`, `canned_replies:write`, `webhooks:manage` and
-  `workspace:manage`, and nobody `feedback:write` (API keys only). A token may call exactly the
+  are not offered `inboxes:manage`, `labels:write`, `canned_replies:write`, `webhooks:manage`,
+  `workspace:manage` and `migrations:manage`, and nobody `feedback:write` (API keys only). A token may call exactly the
   operations an API key may; the rest (read state, typing, notification settings, `/v1/me`,
   members, keys, Connected apps, the consent endpoints) need a member session, and a token never
   changes `bots_may_send`.
@@ -400,6 +402,14 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   writes are listed to owners, admins and keys with `inboxes:manage`. Calling a tool that is not
   listed answers `insufficient_scope` naming the scope to reconnect with, or the role or
   `bots_may_send` reason.
+- Migration tools (`detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`,
+  `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`,
+  `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`,
+  `retry_migration_items`, `list_migration_errors`, `send_migration_probe`,
+  `remove_migration_history`) are listed to owners, admins and keys with `migrations:manage`. None
+  takes a credential: `create_migration` returns the panel link where the person connects.
+  `remove_migration_history` carries `destructiveHint` and needs `confirm_count`. Resource
+  `yuva://migration/{id}`; prompt `move_to_yuva` (address, inbox).
 - Writes carry `destructiveHint: false` except `merge_contacts`; `assign`, `set_status`, `snooze`,
   the label tools, `move_conversation`, `bulk_update` and `update_chat_channel` carry `idempotentHint`; `send_reply` and
   `send_draft` (`SendMessage`, delivering a stored draft instead of a copy of its text) carry
@@ -507,6 +517,10 @@ Inbound:
    forged, so a reply whose trusted DMARC result fails never joins a conversation that is not
    flagged spam either: it opens a new spam conversation with `related_conversation_id`. The `Cc` of inbound
    mail is recorded and shown; nobody is copied automatically on replies.
+   Every e-mail channel also has a forwarding address, `<token>@<YUVA_FORWARDING_DOMAIN>` (16 random
+   characters, rotatable), for mailboxes that forward to Yuva instead of moving their MX; ingress
+   resolves a recipient on that domain by token before the address lookup. Without the setting there
+   is none.
 3. MIME parsing with enmime; visible text with quotes and signatures stripped (our own Go
    implementation in `api/internal/email/reply`, tested against a fixture corpus, which scans only
    the first 64 KiB of the text: when nothing is hidden there the whole text is shown); the quoted
@@ -1266,6 +1280,86 @@ have an open conversation, with search over names, addresses and external ids.
   the author or an owner or admin deletes one. Contacts never see them, no event or webhook
   carries them, a merge moves them to the remaining contact and deleting the contact deletes them.
 
+### Moving to Yuva (M14)
+
+A team brings its history from the service it uses today and then switches its mail over, without
+losing a message and without changing anything at the source. Decisions:
+
+- **Sources.** Every mailbox is read over IMAP. Presets for Gmail and Google Workspace, Yandex,
+  iCloud, Zoho, Yahoo, Fastmail, GMX and any server connect with an app password or password.
+  Outlook.com and Microsoft 365 accept no passwords: "Sign in with Microsoft" obtains only an IMAP
+  token (`https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`, sent with
+  `AUTHENTICATE XOAUTH2`) when the operator configured the Entra app (`YUVA_MICROSOFT_*`). Export
+  files (Google Takeout mbox, mbox, .eml or Maildir in a zip; no PST, for want of a permissively
+  licensed reader) need no access to the account and are the fast way for very large Gmail
+  mailboxes: Takeout first, then IMAP for newer mail and the cutover. Help desks: Zendesk with OAuth
+  `read`, Help Scout. Detection from the address and the domain's MX picks the preset; autoconfig is
+  read only from the team's own domain. Provider mail APIs and other sign-ins were considered and
+  rejected for one IMAP path.
+- **Read-only, enforced three times.** No credential a mailbox accepts is read-only (Microsoft's
+  consent screen says "Read and write access to mailboxes via IMAP"), so Yuva enforces it. IMAP goes
+  through `internal/migrate/imapread`, the only package that may import the IMAP client: it opens
+  mailboxes with `EXAMINE` and fetches with `BODY.PEEK`, and a wire guard under the connection lets
+  through only `CAPABILITY`, `NOOP`, `LOGOUT`, `STARTTLS`, `LOGIN`, `AUTHENTICATE`, `LIST`, `STATUS`,
+  `EXAMINE`, `UNSELECT`, `SEARCH` and `FETCH` of non-marking items; anything else closes the
+  connection before it is sent. Help-desk sources use a transport that refuses every method but `GET`
+  and every host not on the source's list. A sign-in must grant exactly the requested scopes. Tests
+  fail the build if a write command or method could be sent, and an integration test proves a Dovecot
+  mailbox byte-identical after a migration.
+- **Two phases.** A scan reads headers only, joins threads (Takeout and help-desk thread ids, else
+  `References`/`In-Reply-To` with the live bounds, never by subject) and gives an exact dry run:
+  counts per folder, what is skipped and why, contacts, labels, storage and time. The copy then
+  imports whole threads newest first. A thread is a conversation of the inbox's e-mail channel whose
+  address is the mailbox address; mail from a team address (the mailbox, aliases, members) is an
+  outgoing message by the mapped member or, without one, by its original name and address
+  (`imported_author`). Spam, trash, drafts and chats are never read; threads of only automatic or
+  only internal mail are skipped by default. Labels and user folders become labels; a status rule
+  closes old threads and leaves recent ones open or pending.
+- **Imported history is quiet.** Imported rows keep their original times and carry `imported_at`
+  (and `migration_id` on conversations and created contacts). They write no `conversation.*` or
+  `message.*` events, so no webhook, push, notification, auto-reply, rating request or continuity
+  mail follows; they are never unread, are left out of `/v1/stats` and the bounce lookups, count in
+  `imported_*` usage columns instead of the billed ones, and the retention clock starts at the import.
+  Parsing, quote stripping, sanitising and attachments are the live ingest code's. "Remove imported
+  history" deletes the conversations nobody wrote in after the import.
+- **Engine.** River jobs on a queue of their own (`migrations`, `YUVA_MIGRATION_WORKERS` per process,
+  default 2) in 30-second slices, one job per migration (unique options and a lease), a watchdog every
+  minute that resumes a migration whose process died. Checkpoints per folder (`UIDVALIDITY` and UIDs,
+  file offsets, help-desk cursors); every item has a source id and a dedupe key (Message-ID, else the
+  hash the live ingest uses), its rows get ids derived from both, and it is imported in one
+  transaction, so a retry never duplicates. A message the channel already has, in either direction,
+  is not imported again, which also lets a Takeout import and a later IMAP migration of the same
+  mailbox meet without duplicates. Each source has a budget below its published limit (Gmail IMAP
+  1,500 MB a day, other servers one connection and 4 MB/s, help desks half their rate limit), kept on
+  the migration row; limit answers and `Retry-After` are honoured. Microsoft tokens are refreshed
+  before a connection and resealed. Progress reaches owners and admins as `migration.updated`
+  (stored) and `migration.progress` (a signal, at most every two seconds); never webhooks.
+- **Cutover.** After the copy, sync runs every two minutes. Mail received before the migration went
+  live is history; mail after it is new mail and takes the live path (events, notifications), without
+  the greeting. Every e-mail channel has a forwarding address `<token>@YUVA_FORWARDING_DOMAIN` that
+  ingress resolves by token; the team forwards the mailbox there (or routes it, or moves the MX). While
+  waiting, Google's forwarding confirmation to that address is shown on the migration instead of
+  opening a conversation. A probe mail with an HMAC header (context `migration-probe:`) is recognised at
+  ingress before the own-sender drop and verifies delivery. Sync stops after verification and a quiet
+  period (24 hours by default) in which it found nothing ingress did not also deliver; the channel
+  dedupe keeps one copy of mail that came both ways.
+- **Credentials.** Sealed under the master key (context `migration:`+workspace+migration) in
+  `migration_credentials`, never in job arguments, events, logs or answers; deleted in the transaction
+  that completes or cancels the migration, after `YUVA_MIGRATION_SYNC_MAX_DAYS` (30) of sync, and with
+  the workspace; tokens revoked where the provider allows (Zendesk), otherwise the completion screen
+  says where to remove the app or the app password. Sign-in uses PKCE, refuses a grant whose scopes
+  differ from the requested set and, for Microsoft, a sign-in to another address than the mailbox.
+  Assistants never handle a password: MCP tools return a panel link where the person connects.
+- **Who.** Owners, admins, and keys without an inbox limit or owner/admin tokens with
+  `migrations:manage`. Every action is in `migration_audit` (actor, client), kept
+  `YUVA_MIGRATION_AUDIT_DAYS` (365). Connection tests are limited (10 per migration, 30 per workspace an
+  hour) so the server is no password-guessing tool. Hosted limits: `YUVA_MIGRATION_SOURCES`,
+  `YUVA_MIGRATION_MAX_ACTIVE`, `YUVA_MIGRATION_MAX_BYTES`, `YUVA_MIGRATION_UPLOAD_MAX_BYTES`.
+- **Panel and MCP.** A wizard in the setup layout (Source, Connect, Choose, Map, Review, Copy, Switch,
+  Done) with live progress, provider guides inline and in the docs (en, tr, de), Settings → Move to
+  Yuva for the list, a banner in the target inbox while it runs. MCP tools for every operation
+  (`create_migration` returns the connect link) and the `move_to_yuva` prompt.
+
 ### Storage
 
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
@@ -1284,6 +1378,9 @@ now; per-channel limits can narrow them later.
   `null` keeps everything. An hourly River job deletes closed conversations whose last change and
   last activity are older than that, with their messages, attachments and stored files, and
   removes raw e-mails older than that from storage (the parsed message stays).
+- Imported history (see "Moving to Yuva") is the workspace's data like any conversation: contact
+  export and deletion, retention (counted from the import) and workspace deletion cover it. Source
+  credentials are deleted when the migration ends.
 - Workspace deletion: an owner deletes the workspace in the panel or with `DELETE /v1/workspace`
   (the body repeats its name), an operator with `yuva workspace delete --workspace <id|name> --yes`.
   One transaction sets `workspaces.deleted_at`, removes the workspace's webhook endpoints and the
@@ -1353,6 +1450,13 @@ now; per-channel limits can narrow them later.
   - `operator_notices` is the server operator's feed of new people and workspaces
     (`YUVA_OPERATOR_EMAIL`): it is about the server, not a workspace, and is read only by the
     operator digest job.
+  - A forwarding address names only its token: ingress finds the channel by
+    `email_channels.forward_token` (unique across the server), like an address. A migration probe is
+    recognised by its HMAC before the channel's workspace matters.
+  - The migration watchdog lists migrations whose lease expired across workspaces
+    (`migrations_lease_idx`); everything after that lookup is scoped by the workspace it returned.
+  - `migration_audit` rows outlive their migration (no foreign key to it) but carry `workspace_id`
+    and go with the workspace.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
 - Usage counters (conversations, messages, members, storage, broadcast recipients) recorded per workspace per month.
