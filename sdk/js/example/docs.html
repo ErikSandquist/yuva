@@ -32,12 +32,12 @@
     <script>
       const params = new URLSearchParams(location.search);
       const slot = document.getElementById("slot");
-      for (const tag of ["yuva-page-questions", "yuva-page-feedback"]) {
+      for (const tag of ["yuva-page-feedback", "yuva-discussions"]) {
         const element = document.createElement(tag);
         for (const name of ["server", "channel", "locale", "dir", "identity-token"]) {
           if (params.get(name)) element.setAttribute(name, params.get(name));
         }
-        for (const type of ["yuva-rating", "yuva-feedback", "yuva-question"]) {
+        for (const type of ["yuva-rating", "yuva-feedback", "yuva-discussion", "yuva-post", "yuva-reader"]) {
           element.addEventListener(type, (event) => console.log(type, event.detail));
         }
         slot.append(element);

@@ -1,7 +1,8 @@
 import { defineComponent, h, onMounted, ref, watch, type PropType } from "vue"
 import { useRuntimeConfig } from "#imports"
 import type { IdentityTokenSource, Layout } from "../../types"
-import type { PageFeedbackDetail, PageRatingDetail } from "../../docs"
+import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "../../docs"
+import type { ReaderProfile } from "../../client/api"
 
 type Tokened = HTMLElement & { setIdentityToken(source: IdentityTokenSource | null): void }
 
@@ -87,6 +88,31 @@ export const YuvaPageFeedback = defineComponent({
       {
         onYuvaRating: detail<PageRatingDetail>((d) => emit("rating", d)),
         onYuvaFeedback: detail<PageFeedbackDetail>((d) => emit("feedback", d)),
+      }
+    )
+    expose({ element })
+    return render
+  },
+})
+
+export const YuvaDiscussions = defineComponent({
+  name: "YuvaDiscussions",
+  props: docsProps,
+  emits: {
+    discussion: (_: DiscussionDetailEvent) => true,
+    post: (_: DiscussionPostDetail) => true,
+    reader: (_: ReaderProfile | null) => true,
+  },
+  setup(props, { emit, expose }) {
+    const { element, render } = setup(
+      "yuva-discussions",
+      () => import("../../docs"),
+      props,
+      (p) => ({ page: p.page, "page-title": p.pageTitle }),
+      {
+        onYuvaDiscussion: detail<DiscussionDetailEvent>((d) => emit("discussion", d)),
+        onYuvaPost: detail<DiscussionPostDetail>((d) => emit("post", d)),
+        onYuvaReader: detail<ReaderProfile | null>((d) => emit("reader", d)),
       }
     )
     expose({ element })

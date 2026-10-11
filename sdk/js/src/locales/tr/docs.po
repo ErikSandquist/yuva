@@ -7,9 +7,73 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/docs/discussions.ts
+msgid "Accepted answer"
+msgstr "Kabul edilen yanıt"
+
+#: src/docs/discussions.ts
+msgid "All discussions"
+msgstr "Tüm tartışmalar"
+
+#: src/docs/discussions.ts
+msgid "Anonymous"
+msgstr "Anonim"
+
+#: src/docs/discussions.ts
+msgid "Answered"
+msgstr "Yanıtlandı"
+
+#: src/docs/discussions.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Bir soru sorun, bir fikir paylaşın ya da bu sayfadaki bir sorunu anlatın."
+
+#: src/docs/discussions.ts
+msgid "Awaiting approval"
+msgstr "Onay bekliyor"
+
+#: src/docs/discussions.ts
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/docs/discussions.ts
+msgid "Check the title and the text and try again."
+msgstr "Başlığı ve metni kontrol edip yeniden deneyin."
+
+#: src/docs/discussions.ts
+msgid "Could not load the discussions."
+msgstr "Tartışmalar yüklenemedi."
+
 #: src/docs/base.ts
 msgid "Could not send. Try again."
 msgstr "Gönderilemedi. Yeniden deneyin."
+
+#: src/docs/discussions.ts
+msgid "Delete"
+msgstr "Sil"
+
+#: src/docs/discussions.ts
+msgid "Delete this discussion?"
+msgstr "Bu tartışma silinsin mi?"
+
+#: src/docs/discussions.ts
+msgid "Delete this reply?"
+msgstr "Bu yanıt silinsin mi?"
+
+#: src/docs/discussions.ts
+msgid "Deleted account"
+msgstr "Silinmiş hesap"
+
+#: src/docs/discussions.ts
+msgid "Discussions"
+msgstr "Tartışmalar"
+
+#: src/docs/discussions.ts
+msgid "Discussions about this page"
+msgstr "Bu sayfayla ilgili tartışmalar"
+
+#: src/docs/discussions.ts
+msgid "Discussions are turned off for this site."
+msgstr "Bu sitede tartışmalar kapalı."
 
 #: src/docs/feedback.ts
 msgid "E-mail address"
@@ -19,33 +83,184 @@ msgstr "E-posta adresi"
 msgid "E-mail for a reply (optional)"
 msgstr "Yanıt için e-posta (isteğe bağlı)"
 
+#: src/docs/discussions.ts
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/docs/discussions.ts
+msgid "Edit your post"
+msgstr "Gönderinizi düzenleyin"
+
+#: src/docs/discussions.ts
+msgid "edited"
+msgstr "düzenlendi"
+
 #: src/docs/feedback.ts
 msgid "Enter a valid e-mail address."
 msgstr "Geçerli bir e-posta adresi girin."
+
+#: src/docs/discussions.ts
+msgid "Every discussion on this page has an answer."
+msgstr "Bu sayfadaki her tartışmanın bir yanıtı var."
+
+#: src/docs/discussions.ts
+msgid "Follow"
+msgstr "Takip et"
+
+#: src/docs/discussions.ts
+msgid "Following"
+msgstr "Takip ediliyor"
+
+#: src/docs/discussions.ts
+msgid "Former team member"
+msgstr "Eski ekip üyesi"
+
+#: src/docs/discussions.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Biri yanıt yazdığında ya da bir yanıt kabul edildiğinde e-posta alın."
+
+#: src/docs/discussions.ts
+msgid "Have a question or an idea? Start the first one."
+msgstr "Bir sorunuz ya da fikriniz mi var? İlk tartışmayı siz başlatın."
+
+#: src/docs/discussions.ts
+msgid "just now"
+msgstr "az önce"
+
+#: src/docs/discussions.ts
+msgid "Keep"
+msgstr "Kalsın"
+
+#: src/docs/discussions.ts
+msgid "Loading discussions…"
+msgstr "Tartışmalar yükleniyor…"
+
+#: src/docs/discussions.ts
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+#: src/docs/discussions.ts
+msgid "Locked"
+msgstr "Kilitli"
+
+#: src/docs/discussions.ts
+msgid "Mark as answer"
+msgstr "Yanıt olarak işaretle"
+
+#: src/docs/discussions.ts
+msgid "Markdown is supported."
+msgstr "Markdown desteklenir."
+
+#: src/docs/discussions.ts
+msgid "New"
+msgstr "Yeni"
 
 #: src/docs/feedback.ts
 msgid "No"
 msgstr "Hayır"
 
+#: src/docs/discussions.ts
+msgid "No discussions about this page yet."
+msgstr "Bu sayfayla ilgili henüz bir tartışma yok."
+
 #: src/docs/feedback.ts
 msgid "No thanks"
 msgstr "Hayır, teşekkürler"
+
+#: src/docs/discussions.ts
+msgid "Nothing to preview."
+msgstr "Önizlenecek bir şey yok."
+
+#: src/docs/discussions.ts
+msgid "Pending"
+msgstr "Bekliyor"
+
+#: src/docs/discussions.ts
+msgid "Posts can be edited for 30 minutes after they are written."
+msgstr "Gönderiler yazıldıktan sonra 30 dakika içinde düzenlenebilir."
+
+#: src/docs/discussions.ts
+msgid "Preview"
+msgstr "Önizleme"
+
+#: src/docs/discussions.ts
+msgid "Reader"
+msgstr "Okur"
+
+#. placeholder {0}: target.votes
+#: src/docs/discussions.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Oyunuzu geri alın ({0} oy)"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/discussions.ts
+msgid "Replies: {0}"
+msgstr "Yanıtlar: {0}"
+
+#: src/docs/discussions.ts
+msgid "Reply"
+msgstr "Yanıtla"
+
+#: src/docs/discussions.ts
+msgid "Save"
+msgstr "Kaydet"
 
 #: src/docs/feedback.ts
 msgid "Send"
 msgstr "Gönder"
 
+#: src/docs/discussions.ts
 #: src/docs/feedback.ts
 msgid "Sending…"
 msgstr "Gönderiliyor…"
+
+#: src/docs/discussions.ts
+msgid "Show more"
+msgstr "Daha fazla göster"
+
+#: src/docs/discussions.ts
+msgid "Sign in"
+msgstr "Giriş yap"
+
+#: src/docs/discussions.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Bu tartışmada yanıt yazmak, oy vermek ve takip etmek için giriş yapın."
+
+#: src/docs/discussions.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Tartışma başlatmak için giriş yapın. Adınız gönderinizle birlikte gösterilir."
+
+#: src/docs/discussions.ts
+msgid "Sign in to take part in the discussion."
+msgstr "Tartışmaya katılmak için giriş yapın."
 
 #: src/docs/base.ts
 msgid "Sign in to write to us."
 msgstr "Bize yazmak için oturum açın."
 
+#: src/docs/discussions.ts
+msgid "Sign out"
+msgstr "Çıkış yap"
+
 #: src/docs/feedback.ts
 msgid "Sorry about that. What was missing or unclear?"
 msgstr "Üzgünüz. Eksik ya da anlaşılmayan ne vardı?"
+
+#: src/docs/discussions.ts
+msgid "Sort discussions"
+msgstr "Tartışmaları sırala"
+
+#: src/docs/discussions.ts
+msgid "Start a discussion"
+msgstr "Tartışma başlat"
+
+#: src/docs/discussions.ts
+msgid "Start discussion"
+msgstr "Tartışmayı başlat"
+
+#: src/docs/discussions.ts
+msgid "Team"
+msgstr "Ekip"
 
 #: src/docs/feedback.ts
 msgid "Thanks for your feedback."
@@ -55,18 +270,104 @@ msgstr "Geri bildiriminiz için teşekkürler."
 msgid "Thanks! Anything we could add? (optional)"
 msgstr "Teşekkürler! Ekleyebileceğimiz bir şey var mı? (isteğe bağlı)"
 
+#: src/docs/discussions.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Teşekkürler! Tartışmanız ekip onayladığında herkese görünecek."
+
+#: src/docs/discussions.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Teşekkürler! Yanıtınız ekip onayladığında herkese görünecek."
+
+#: src/docs/discussions.ts
+msgid "The opening post was deleted."
+msgstr "Açılış gönderisi silindi."
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked."
+msgstr "Bu tartışma kilitli."
+
+#: src/docs/discussions.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Bu tartışma kilitli. Yeni yanıt yazılamaz."
+
+#: src/docs/discussions.ts
+msgid "This discussion is no longer available."
+msgstr "Bu tartışma artık mevcut değil."
+
+#: src/docs/discussions.ts
+msgid "This reply was deleted."
+msgstr "Bu yanıt silindi."
+
+#: src/docs/discussions.ts
+msgid "Title"
+msgstr "Başlık"
+
 #: src/docs/base.ts
 msgid "Too many attempts. Wait a moment and try again."
 msgstr "Çok fazla deneme. Biraz bekleyip tekrar deneyin."
+
+#: src/docs/discussions.ts
+msgid "Top"
+msgstr "En çok oy alan"
+
+#: src/docs/discussions.ts
+msgid "Try again"
+msgstr "Yeniden dene"
+
+#: src/docs/discussions.ts
+msgid "Unanswered"
+msgstr "Yanıtsız"
+
+#: src/docs/discussions.ts
+msgid "Unmark as answer"
+msgstr "Yanıt işaretini kaldır"
+
+#. placeholder {0}: target.votes
+#: src/docs/discussions.ts
+msgid "Upvote ({0} votes)"
+msgstr "Oy ver ({0} oy)"
+
+#. placeholder {0}: discussion.votes
+#: src/docs/discussions.ts
+msgid "Votes: {0}"
+msgstr "Oylar: {0}"
 
 #: src/docs/feedback.ts
 msgid "Was this page helpful?"
 msgstr "Bu sayfa işinize yaradı mı?"
 
+#: src/docs/discussions.ts
+msgid "Write"
+msgstr "Yaz"
+
+#: src/docs/discussions.ts
+msgid "Write a reply…"
+msgstr "Bir yanıt yazın…"
+
 #: src/docs/feedback.ts
 msgid "Yes"
 msgstr "Evet"
 
+#: src/docs/discussions.ts
+msgid "You can't do that."
+msgstr "Bunu yapamazsınız."
+
 #: src/docs/base.ts
 msgid "You seem to be offline."
 msgstr "Çevrimdışı görünüyorsunuz."
+
+#: src/docs/discussions.ts
+msgid "Your browser blocked the sign-in window. Allow pop-ups for this site and try again."
+msgstr "Tarayıcınız giriş penceresini engelledi. Bu site için açılır pencerelere izin verip yeniden deneyin."
+
+#: src/docs/discussions.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "İlk gönderileriniz herkese görünmeden önce ekip tarafından kontrol edilir."
+
+#: src/docs/discussions.ts
+msgid "Your question or idea"
+msgstr "Sorunuz ya da fikriniz"
+
+#: src/docs/discussions.ts
+msgid "Your reply"
+msgstr "Yanıtınız"

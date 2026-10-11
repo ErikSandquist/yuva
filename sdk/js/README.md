@@ -6,9 +6,9 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 |---|---|
 | `useyuva` | `createYuvaClient()`: the contact side (`/client/v1`) without DOM. Browsers, Node 22+, Bun, Deno, workers. |
 | `useyuva/chat` | The `<yuva-chat>` web component, built on that client. Browser only. |
-| `useyuva/docs` | `<yuva-page-feedback>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
+| `useyuva/docs` | `<yuva-page-feedback>` and `<yuva-discussions>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
 | `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`. React 18+ is an optional peer. |
-| `useyuva/nuxt` | A Nuxt module: `YuvaChat` and `YuvaPageFeedback` components, configured once in `nuxt.config`. |
+| `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback` and `YuvaDiscussions` components, configured once in `nuxt.config`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
 
 ```sh
@@ -130,13 +130,23 @@ import "useyuva/docs";
 
 ```html
 <yuva-page-feedback channel="yuva_pk_…" server="https://support.example.com"></yuva-page-feedback>
+<yuva-discussions channel="yuva_pk_…" server="https://support.example.com"></yuva-discussions>
 ```
 
-It takes `channel`, `server`, `locale`, `dir` and `identity-token` like `<yuva-chat>`, plus `page`
-and `page-title`, which default to the URL without query and fragment and `document.title`. It
-follows client-side navigation. Events: `yuva-rating` (`{ page, rating, previous }`),
-and `yuva-feedback` (`{ page, rating, conversation_id }`).
-In React use `YuvaPageFeedback` from `useyuva/react`.
+Both take `channel`, `server`, `locale`, `dir` and `identity-token` like `<yuva-chat>`, plus `page`
+and `page-title`, which default to the URL without query and fragment and `document.title`. They
+follow client-side navigation.
+
+`<yuva-discussions>` shows the page's threads (New, Top, Unanswered), a thread with its replies
+and accepted answer, and forms to start a thread, reply, edit, delete, vote, follow and accept an
+answer. Readers sign in with their account on the Yuva server in a popup; with `identity-token`
+your signed-in users write as themselves without it. Methods: `reload()`, `open(id)`, `signIn()`
+(from a click), `signOut()`.
+
+Events: `yuva-rating` (`{ page, rating, previous }`), `yuva-feedback` (`{ page, rating, conversation_id }`),
+`yuva-discussion` (`{ page, discussion_id, state }`), `yuva-post` (`{ page, discussion_id, post_id, state }`)
+and `yuva-reader` (`{ name, initials }` or `null`). In React use `YuvaPageFeedback` and
+`YuvaDiscussions` from `useyuva/react` (`onDiscussion`, `onPost`, `onReader`).
 
 ## Nuxt
 
@@ -149,10 +159,10 @@ export default defineNuxtConfig({
 ```
 
 `NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL` and `NUXT_PUBLIC_YUVA_LOCALE` override the
-options at runtime. `<YuvaChat />` and `<YuvaPageFeedback />` are
+options at runtime. `<YuvaChat />`, `<YuvaPageFeedback />` and `<YuvaDiscussions />` are
 auto-imported, render on the server and load their element in the browser when they mount. Props
 are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);
-events are `@rating`, `@feedback` and `@unread`. `yuva-*` tags are custom elements in
+events are `@rating`, `@feedback`, `@discussion`, `@post`, `@reader` and `@unread`. `yuva-*` tags are custom elements in
 your templates.
 
 ## React
