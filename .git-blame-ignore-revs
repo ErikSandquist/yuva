@@ -1,2 +1,5 @@
 # style: format with oxfmt
 a38b975248c3278cd9cb0c55ada7c37a59c864f1
+
+# style(site): format .astro files with prettier
+dd479c3a5397b2fda252a5d234cdb1b00ad5c15c
