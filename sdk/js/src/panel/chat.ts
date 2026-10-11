@@ -377,7 +377,7 @@ export class Chat implements PanelController {
   async #reload(): Promise<void> {
     await this.#loadConversations()
     const current = this.#view?.kind === "thread" ? this.#view.id : null
-    for (const id of [...this.#threads.keys()]) if (id !== current) this.#threads.delete(id)
+    for (const id of this.#threads.keys()) if (id !== current) this.#threads.delete(id)
     if (current) {
       this.#threads.delete(current)
       await this.#loadMessages(current)

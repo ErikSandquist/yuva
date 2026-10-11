@@ -96,7 +96,7 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
             </Trans>
           </Hint>
         </>,
-        <p>
+        <p key="step-2">
           <Trans>
             Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify
             itself, keep its published identity. Click <b className="font-medium">Add</b>, then{" "}
@@ -169,13 +169,13 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
             <Trans>Your plan and workspace policies decide whether custom MCP servers are available.</Trans>
           </Hint>
         </>,
-        <p>
+        <p key="step-2">
           <Trans>
             Name it Yuva. Under <b className="font-medium">Connection</b> choose{" "}
             <b className="font-medium">Public endpoint</b> and paste the server URL; choose OAuth for authentication.
           </Trans>
         </p>,
-        <p>
+        <p key="step-3">
           <Trans>
             Confirm the warning and select <b className="font-medium">Create as a plugin</b>. ChatGPT registers itself
             with this server.
@@ -199,7 +199,7 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           </Hint>
           <CodeBlock value={s.cursor.config} testId="assistant-config" />
         </>,
-        <p>
+        <p key="step-2">
           <Trans>
             In Cursor's MCP settings, sign in to <b className="font-medium">yuva</b> when it asks.
           </Trans>
@@ -223,7 +223,7 @@ function useClientSteps(a: Assistant, url: string): React.ReactNode[] {
           <CodeBlock value={s.vscode.command} testId="assistant-command" />
           <CodeBlock value={s.vscode.config} testId="assistant-config" />
         </>,
-        <p>
+        <p key="step-2">
           <Trans>Start the server. VS Code asks to sign in to Yuva and opens your browser.</Trans>
         </p>,
       ]
@@ -278,13 +278,13 @@ function useConsentSteps(clientName: string): React.ReactNode[] {
   const host = window.location.host
   const workspace = membership.workspace.name
   return [
-    <p>
+    <p key="consent-1">
       <Trans>
         Your browser opens the consent page on <b className="font-medium">{host}</b>. Sign in with a code or a passkey
         if you are not signed in already.
       </Trans>
     </p>,
-    <p>
+    <p key="consent-2">
       <Trans>
         Pick the workspace <b className="font-medium">{workspace}</b>, check the scopes and allow. You go back to{" "}
         {clientName}, and the connection shows up here.

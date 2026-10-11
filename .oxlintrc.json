@@ -1,12 +1,20 @@
 {
-  "plugins": [
-    "typescript",
-    "unicorn",
-    "oxc",
-    "react"
-  ],
+  "plugins": ["typescript", "unicorn", "oxc", "react"],
   "categories": {
     "correctness": "error"
+  },
+  "rules": {
+    // A leading underscore marks a parameter kept for its type, as in Vue emits validators.
+    "eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    // The React Compiler rules below flag deliberate patterns (refs read in render, state synced in effects,
+    // Date.now() in render, module-level memory, hoisted callbacks); changing them changes behaviour.
+    "react/refs": "off",
+    "react/set-state-in-effect": "off",
+    "react/purity": "off",
+    "react/immutability": "off",
+    "react/globals": "off",
+    // Its fixes add or drop effect and memo dependencies, which changes when they run.
+    "react/exhaustive-deps": "off"
   },
   "ignorePatterns": [
     "**/*.gen.*",

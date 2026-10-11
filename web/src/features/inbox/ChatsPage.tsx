@@ -44,9 +44,9 @@ function DayStats() {
   const fmt = new Intl.NumberFormat(i18n.locale)
   const median = stats.median_first_reply_seconds
   const tiles: [string, React.ReactNode][] = [
-    [fmt.format(stats.replies), <Trans>replies today</Trans>],
-    [median !== undefined ? formatDuration(median, i18n.locale) : "–", <Trans>median first reply</Trans>],
-    [fmt.format(stats.closed), <Trans>closed today</Trans>],
+    [fmt.format(stats.replies), <Trans key="replies">replies today</Trans>],
+    [median !== undefined ? formatDuration(median, i18n.locale) : "–", <Trans key="median">median first reply</Trans>],
+    [fmt.format(stats.closed), <Trans key="closed">closed today</Trans>],
   ]
   const good = stats.ratings.good
   const bad = stats.ratings.bad
@@ -54,7 +54,7 @@ function DayStats() {
     const pct = new Intl.NumberFormat(i18n.locale, { style: "percent" }).format(good / (good + bad))
     tiles.push([
       pct,
-      <Trans>
+      <Trans key="rating">
         satisfied · 👍 {good} 👎 {bad}
       </Trans>,
     ])

@@ -23,22 +23,22 @@ export function ReportsColumn() {
   const rows: [string, React.ReactNode, React.ReactNode, React.ReactNode, string][] = [
     [
       "today",
-      <BarChart3Icon />,
-      <Trans>Replies and closes</Trans>,
+      <BarChart3Icon key="icon" />,
+      <Trans key="label">Replies and closes</Trans>,
       s ? t`${fmt.format(s.replies)} replies · ${fmt.format(s.closed)} closed` : " ",
       "report-link-today",
     ],
     [
       "ratings",
-      <ThumbsUpIcon />,
-      <Trans>Ratings</Trans>,
+      <ThumbsUpIcon key="icon" />,
+      <Trans key="label">Ratings</Trans>,
       s ? (rated ? t`${pct} satisfied` : t`No ratings today`) : " ",
       "report-link-ratings",
     ],
     [
       "members",
-      <UsersIcon />,
-      <Trans>By member</Trans>,
+      <UsersIcon key="icon" />,
+      <Trans key="label">By member</Trans>,
       s ? t`${fmt.format(s.members.length)} active today` : " ",
       "report-link-members",
     ],
