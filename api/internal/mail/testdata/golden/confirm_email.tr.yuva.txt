@@ -1,0 +1,9 @@
+Acme Support için e-posta adresinizi onaylayın
+
+Bu adresi Acme Support ile bir yazışmada bıraktınız. Yanıtları e-postayla almak ve yanıtlamak için
+onaylayın:
+
+    https://yuva.example.com/email/confirm?token=abc
+
+Bağlantı 24 saat geçerlidir. Bu adresi siz bırakmadıysanız bu e-postayı yok sayın; adrese
+hiçbir şey bağlanmaz.

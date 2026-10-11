@@ -1,0 +1,7 @@
+Bestätigen Sie Ihr Abonnement von Product news
+
+Jemand hat darum gebeten, diese Adresse für „Product news“ von Acme Support einzutragen. Bestätigen Sie es hier:
+
+    https://yuva.example.com/s/tok
+
+Der Link gilt 7 Tage. Wenn Sie das nicht angefordert haben, ignorieren Sie diese E-Mail; es passiert nichts.

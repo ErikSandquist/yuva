@@ -1,0 +1,8 @@
+Acme Support: Wie waren wir?
+
+Ihre Unterhaltung mit Acme Support ist abgeschlossen. Wie waren wir? Ein Klick genügt:
+
+Gut: https://yuva.example.com/rate/tok?rating=good
+Nicht gut: https://yuva.example.com/rate/tok?rating=bad
+
+Auf der Seite, die sich öffnet, können Sie einen Kommentar hinzufügen. Die Links gelten 30 Tage.

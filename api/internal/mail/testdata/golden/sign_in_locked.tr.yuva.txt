@@ -1,0 +1,8 @@
+Yuva hesabınız için giriş kodları durduruldu
+
+Son 24 saatte bu adres için 10 yanlış giriş kodu girildi; bu yüzden bu adresin
+giriş kodları, o süre içindeki yanlış kod sayısı 10 altına inene kadar durduruldu.
+Geçiş anahtarları çalışmaya devam eder.
+
+Bunu siz yapmadıysanız biri hesabınıza girmeye çalışıyor olabilir. Bir şey yapmanız gerekmez;
+gereken kodlar yalnızca bu adrese gönderilir.

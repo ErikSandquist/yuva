@@ -1,0 +1,16 @@
+Acme Support: Jane Doe yanıt bekliyor
+
+Mehmet size Acme Support gelen kutusunda bir konuşma atadı: Invoice question.
+
+Jane Doe yazdı:
+
+> Hello, my invoice is wrong.
+> Can you also send a copy to accounting?
+…ve 2 mesaj daha.
+
+Mehmet bir notta sizden bahsetti:
+> @you can you take this one?
+
+Konuşmayı açın: https://yuva.example.com/c/1
+
+Bu e-postayı, konuşma 15 dakika boyunca okunmadığı için alıyorsunuz. Hangi e-postaları alacağınızı seçin: https://yuva.example.com/settings/notifications

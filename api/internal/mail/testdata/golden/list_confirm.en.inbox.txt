@@ -1,0 +1,7 @@
+Confirm your subscription to Product news
+
+Someone asked to subscribe this address to "Product news" from Acme Support. Confirm it here:
+
+    https://yuva.example.com/s/tok
+
+The link works for 7 days. If you did not ask for this, ignore this e-mail and nothing happens.

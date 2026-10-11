@@ -1,0 +1,9 @@
+Bestätigen Sie Ihre E-Mail-Adresse für Acme Support
+
+Sie haben diese Adresse in einer Unterhaltung mit Acme Support angegeben. Bestätigen Sie sie, um
+Antworten per E-Mail zu erhalten und zu beantworten:
+
+    https://yuva.example.com/email/confirm?token=abc
+
+Der Link ist 24 Stunden gültig. Wenn Sie diese Adresse nicht angegeben haben, ignorieren Sie
+diese E-Mail; dann wird nichts mit ihr verknüpft.

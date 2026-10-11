@@ -1,0 +1,16 @@
+Acme Support: Jane Doe wartet auf eine Antwort
+
+Mehmet hat Ihnen eine Unterhaltung in Acme Support zugewiesen: Invoice question.
+
+Jane Doe schrieb:
+
+> Hello, my invoice is wrong.
+> Can you also send a copy to accounting?
+…und 2 weitere.
+
+Mehmet hat Sie in einer Notiz erwähnt:
+> @you can you take this one?
+
+Unterhaltung öffnen: https://yuva.example.com/c/1
+
+Sie erhalten diese E-Mail, weil die Unterhaltung nach 15 Minuten noch ungelesen war. Wählen Sie, welche E-Mails Sie erhalten: https://yuva.example.com/settings/notifications

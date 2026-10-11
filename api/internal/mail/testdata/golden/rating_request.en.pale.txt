@@ -1,0 +1,8 @@
+Acme Support: how did we do?
+
+Your conversation with Acme Support is closed. How did we do? One click is enough:
+
+Good: https://yuva.example.com/rate/tok?rating=good
+Not good: https://yuva.example.com/rate/tok?rating=bad
+
+You can add a comment on the page that opens. The links work for 30 days.

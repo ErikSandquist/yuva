@@ -1,0 +1,20 @@
+Acme Support: "How do I export my data?" yanıtlandı
+
+"How do I export my data?" konusunda bir yanıt kabul edildi (Mehmet Kaya):
+> Open Settings, then Export.
+The file arrives by e-mail.
+
+"How do I export my data?" konusunda yeni yanıtlar:
+
+Jane Doe yazdı:
+> Hello, my invoice is wrong.
+
+Bir okuyucu yazdı:
+> Same question here.
+
+…ve 3 yanıt daha.
+
+Konuyu okuyun: https://docs.example.com/export#yuva-discussion-1
+
+Bu e-postayı Acme Support belgelerindeki bu konuyu takip ettiğiniz için aldınız. Takibi bırakın: https://yuva.example.com/discussions/unsubscribe/tok
+Hangi e-postaları alacağınızı seçin: https://yuva.example.com/account

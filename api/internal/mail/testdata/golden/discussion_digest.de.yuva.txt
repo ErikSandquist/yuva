@@ -1,0 +1,20 @@
+Acme Support: Antwort in „How do I export my data?“
+
+In „How do I export my data?“ wurde eine Antwort angenommen, geschrieben von Mehmet Kaya:
+> Open Settings, then Export.
+The file arrives by e-mail.
+
+Neue Antworten in „How do I export my data?“:
+
+Jane Doe schrieb:
+> Hello, my invoice is wrong.
+
+Jemand aus der Leserschaft schrieb:
+> Same question here.
+
+…und 3 weitere.
+
+Zum Thema: https://docs.example.com/export#yuva-discussion-1
+
+Sie erhalten diese E-Mail, weil Sie diesem Thema in der Dokumentation von Acme Support folgen. Nicht mehr folgen: https://yuva.example.com/discussions/unsubscribe/tok
+Wählen Sie, welche E-Mails Sie erhalten: https://yuva.example.com/account

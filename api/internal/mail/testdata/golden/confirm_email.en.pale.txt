@@ -1,0 +1,9 @@
+Confirm your e-mail address for Acme Support
+
+You left this address in a conversation with Acme Support. Confirm it to receive and answer replies
+by e-mail:
+
+    https://yuva.example.com/email/confirm?token=abc
+
+The link is valid for 24 hours. If you did not leave this address, ignore this e-mail and
+nothing will be linked to it.

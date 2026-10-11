@@ -1,0 +1,8 @@
+Acme Support: nasıldık?
+
+Acme Support ile konuşmanız kapandı. Nasıldık? Tek tıklama yeterli:
+
+İyi: https://yuva.example.com/rate/tok?rating=good
+İyi değil: https://yuva.example.com/rate/tok?rating=bad
+
+Açılan sayfada yorum da ekleyebilirsiniz. Bağlantılar 30 gün geçerlidir.

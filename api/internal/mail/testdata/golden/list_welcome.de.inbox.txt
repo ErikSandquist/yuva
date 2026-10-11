@@ -1,0 +1,13 @@
+Sie haben Product news abonniert
+
+Sie haben jetzt „Product news“ von Acme Support abonniert.
+
+One e-mail a month.
+
+Sie können sich jederzeit mit einem Klick abmelden:
+
+Abmelden: https://yuva.example.com/m/tok
+Wählen, welche E-Mails Sie erhalten: https://yuva.example.com/m/tok
+
+Sie erhalten diese E-Mail, weil diese Adresse Product news abonniert hat.
+Acme Ltd, 1 Main Street, Springfield

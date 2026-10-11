@@ -1,0 +1,9 @@
+New workspace: Acme by a@example.com
+
+New on yuva.example.com since the last e-mail:
+
+- 2026-10-11 09:00 UTC  Workspace "Acme" created by a@example.com, from TR
+
+https://yuva.example.com
+
+You get this e-mail because this address is in YUVA_OPERATOR_EMAIL on this server.
