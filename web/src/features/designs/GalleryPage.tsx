@@ -141,10 +141,9 @@ function useCategory() {
   const { t } = useLingui()
   const names: Record<string, string> = {
     newsletter: t`Newsletter`,
-    "product-update": t`Product update`,
-    update: t`Product update`,
+    product: t`Product`,
     announcement: t`Announcement`,
-    welcome: t`Welcome`,
+    onboarding: t`Onboarding`,
     event: t`Event`,
     digest: t`Digest`,
   }

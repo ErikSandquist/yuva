@@ -12,6 +12,7 @@ import {
   Trash2Icon,
 } from "lucide-react"
 import { useState } from "react"
+import { createPortal } from "react-dom"
 
 import { Button } from "@/components/ui/button"
 import { textOn } from "@/features/designs/colors"
@@ -126,10 +127,7 @@ function Tools({ block, container, index, count }: { block: Block; container: st
     fn()
   }
   return (
-    <div
-      className="absolute -top-3.5 end-1.5 z-30 flex items-center gap-px rounded-full border bg-card p-0.5 font-sans shadow-sm"
-      data-container={container}
-    >
+    <div className="flex items-center gap-px phone:hidden" data-container={container}>
       <Button
         variant="ghost"
         size="icon-xs"
@@ -231,38 +229,71 @@ function BlockView({
       data-selected={selected || undefined}
       data-testid="canvas-block"
     >
-      <div
-        data-tag
-        className={cn(
-          "absolute -top-3.5 start-1.5 z-30 items-center gap-0.5 rounded-full py-0.5 ps-0.5 pe-2 font-sans text-[11px] leading-4 font-medium shadow-sm",
-          selected ? "flex bg-brand text-white" : "hidden bg-card text-muted-foreground",
-          errors.length > 0 && !selected && "flex bg-destructive text-white"
-        )}
-      >
-        <button
-          type="button"
-          ref={setActivatorNodeRef}
-          {...listeners}
-          {...attributes}
-          aria-label={t`Drag ${kind}`}
-          className="grid size-5 cursor-grab touch-none place-items-center rounded-full hover:bg-black/10 active:cursor-grabbing"
-          onClick={(e) => e.stopPropagation()}
-          data-testid="block-handle"
+      {!selected && (
+        <div
+          data-tag
+          className={cn(
+            "absolute -top-3.5 start-1.5 z-30 items-center gap-0.5 rounded-full py-0.5 ps-0.5 pe-2 font-sans text-[11px] leading-4 font-medium shadow-sm",
+            errors.length > 0 ? "flex bg-destructive text-white" : "hidden bg-card text-muted-foreground"
+          )}
         >
-          <GripVerticalIcon className="size-3" />
-        </button>
-        <BlockIcon type={block.type} className="size-3" />
-        {names[block.type]}
-        {block.hide && block.hide !== "none" && (
-          <EyeOffIcon
-            className="ms-0.5 size-3"
-            aria-label={block.hide === "mobile" ? t`Hidden on phones` : t`Hidden on wide screens`}
-          />
+          <button
+            type="button"
+            ref={setActivatorNodeRef}
+            {...listeners}
+            {...attributes}
+            aria-label={t`Drag ${kind}`}
+            className="grid size-5 cursor-grab touch-none place-items-center rounded-full hover:bg-black/10 active:cursor-grabbing"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <GripVerticalIcon className="size-3" />
+          </button>
+          <TagLabel block={block} />
+        </div>
+      )}
+      {selected &&
+        !d.readOnly &&
+        d.toolSlot &&
+        createPortal(
+          <>
+            <span className="flex h-7 items-center gap-1 rounded-full bg-brand py-0.5 ps-0.5 pe-2.5 text-caption font-medium text-white">
+              <button
+                type="button"
+                ref={setActivatorNodeRef}
+                {...listeners}
+                {...attributes}
+                aria-label={t`Drag ${kind}`}
+                className="grid size-6 cursor-grab touch-none place-items-center rounded-full hover:bg-black/10 active:cursor-grabbing"
+                onClick={(e) => e.stopPropagation()}
+                data-testid="block-handle"
+              >
+                <GripVerticalIcon className="size-3.5" />
+              </button>
+              <TagLabel block={block} compact />
+            </span>
+            <Tools block={block} container={container} index={index} count={count} />
+          </>,
+          d.toolSlot
         )}
-      </div>
-      {selected && !d.readOnly && <Tools block={block} container={container} index={index} count={count} />}
       <BlockBody block={block} />
     </div>
+  )
+}
+
+function TagLabel({ block, compact }: { block: Block; compact?: boolean }) {
+  const { t } = useLingui()
+  const names = useBlockNames()
+  return (
+    <>
+      <BlockIcon type={block.type} className="size-3 shrink-0" />
+      <span className={cn("whitespace-nowrap", compact && "phone:hidden")}>{names[block.type]}</span>
+      {block.hide && block.hide !== "none" && (
+        <EyeOffIcon
+          className="ms-0.5 size-3 shrink-0"
+          aria-label={block.hide === "mobile" ? t`Hidden on phones` : t`Hidden on wide screens`}
+        />
+      )}
+    </>
   )
 }
 

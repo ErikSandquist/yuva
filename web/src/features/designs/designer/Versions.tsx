@@ -22,6 +22,7 @@ function useReasonText() {
       test: t`Sent as a test`,
       scheduled: t`Scheduled to send`,
       restored: t`Restored`,
+      conflict: t`Kept from a conflict`,
     })[r]
 }
 
@@ -61,8 +62,8 @@ export function Versions({
           </SheetTitle>
           <SheetDescription>
             <Trans>
-              A version is kept at most every ten minutes while you edit, when you save by hand and when you restore
-              one. The newest 50 stay.
+              A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one
+              and when someone else's save wins a conflict. The newest 50 stay.
             </Trans>
           </SheetDescription>
         </SheetHeader>

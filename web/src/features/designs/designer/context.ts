@@ -20,6 +20,7 @@ export type Designer = {
   openLibrary: (blockId: string) => void
   drop: DropTarget | null
   dragging: string | null
+  toolSlot: HTMLElement | null
 }
 
 export const DesignerContext = createContext<Designer | null>(null)

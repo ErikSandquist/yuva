@@ -2658,9 +2658,10 @@ export interface paths {
          * Save an e-mail design
          * @description Replaces the name, inbox and document. `base_version` is the `version` the edit started
          *     from; when the design has moved on since, nothing is saved and the answer is
-         *     `409 version_conflict` with the current design in `design`. Each save increases
-         *     `version` by one and takes a snapshot when the newest is older than 10 minutes or
-         *     `snapshot` is true. Saving an archived design brings it back.
+         *     `409 version_conflict` with the current design in `design`, and the current version is
+         *     kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+         *     when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+         *     brings it back.
          *
          *     Owners, admins and API keys. Scope: `broadcasts:write`.
          */
@@ -8685,7 +8686,7 @@ export interface components {
             base_version: number;
         };
         /** @enum {string} */
-        EmailDesignVersionReason: "autosave" | "test" | "scheduled" | "restored" | "manual";
+        EmailDesignVersionReason: "autosave" | "test" | "scheduled" | "restored" | "manual" | "conflict";
         EmailDesignVersion: {
             /** Format: int32 */
             version: number;

@@ -544,7 +544,7 @@ export function MergePicker({
   )
 }
 
-export function TextToolbar({ owner }: { owner: string | null }) {
+export function TextToolbar({ owner, slot }: { owner: string | null; slot?: (el: HTMLDivElement | null) => void }) {
   const { t } = useLingui()
   const current = useActiveEditor()
   const a = current && current.owner === owner ? current : null
@@ -568,91 +568,94 @@ export function TextToolbar({ owner }: { owner: string | null }) {
   const lists = a?.mode === "rich"
   const run = (fn: (e: Editor) => void) => () => editor && fn(editor)
   return (
-    <div
-      className="flex h-11 shrink-0 items-center gap-0.5 overflow-x-auto border-b bg-card px-2"
-      role="toolbar"
-      aria-label={t`Text formatting`}
-      data-testid="text-toolbar"
-    >
-      <ToolButton
-        label={t`Bold`}
-        shortcut={`${mod} B`}
-        pressed={state?.bold}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().toggleBold().run())}
+    <div className="flex h-11 shrink-0 items-center border-b bg-card">
+      <div
+        className="flex h-full min-w-0 flex-1 items-center gap-0.5 overflow-x-auto px-2"
+        role="toolbar"
+        aria-label={t`Text formatting`}
+        data-testid="text-toolbar"
       >
-        <BoldIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Italic`}
-        shortcut={`${mod} I`}
-        pressed={state?.italic}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().toggleItalic().run())}
-      >
-        <ItalicIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Underline`}
-        shortcut={`${mod} U`}
-        pressed={state?.underline}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().toggleUnderline().run())}
-      >
-        <UnderlineIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Strikethrough`}
-        pressed={state?.strike}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().toggleStrike().run())}
-      >
-        <StrikethroughIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Code`}
-        pressed={state?.code}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().toggleCode().run())}
-      >
-        <CodeIcon />
-      </ToolButton>
-      <LinkButton editor={editor} disabled={!marks} />
-      <span className="mx-1 h-5 w-px shrink-0 bg-border" />
-      <ToolButton
-        label={t`Bulleted list`}
-        pressed={state?.bullet}
-        disabled={!lists}
-        onClick={run((e) => e.chain().focus().toggleBulletList().run())}
-      >
-        <ListIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Numbered list`}
-        pressed={state?.ordered}
-        disabled={!lists}
-        onClick={run((e) => e.chain().focus().toggleOrderedList().run())}
-      >
-        <ListOrderedIcon />
-      </ToolButton>
-      <ToolButton
-        label={t`Clear formatting`}
-        disabled={!marks}
-        onClick={run((e) => e.chain().focus().unsetAllMarks().run())}
-      >
-        <RemoveFormattingIcon />
-      </ToolButton>
-      <span className="mx-1 h-5 w-px shrink-0 bg-border" />
-      <MergePicker
-        disabled={!a}
-        onPick={({ field, fallback }) =>
-          editor
-            ?.chain()
-            .focus()
-            .insertContent({ type: "mergeField", attrs: { field, fallback: fallback ?? null } })
-            .run()
-        }
-      />
+        <ToolButton
+          label={t`Bold`}
+          shortcut={`${mod} B`}
+          pressed={state?.bold}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().toggleBold().run())}
+        >
+          <BoldIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Italic`}
+          shortcut={`${mod} I`}
+          pressed={state?.italic}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().toggleItalic().run())}
+        >
+          <ItalicIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Underline`}
+          shortcut={`${mod} U`}
+          pressed={state?.underline}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().toggleUnderline().run())}
+        >
+          <UnderlineIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Strikethrough`}
+          pressed={state?.strike}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().toggleStrike().run())}
+        >
+          <StrikethroughIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Code`}
+          pressed={state?.code}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().toggleCode().run())}
+        >
+          <CodeIcon />
+        </ToolButton>
+        <LinkButton editor={editor} disabled={!marks} />
+        <span className="mx-1 h-5 w-px shrink-0 bg-border" />
+        <ToolButton
+          label={t`Bulleted list`}
+          pressed={state?.bullet}
+          disabled={!lists}
+          onClick={run((e) => e.chain().focus().toggleBulletList().run())}
+        >
+          <ListIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Numbered list`}
+          pressed={state?.ordered}
+          disabled={!lists}
+          onClick={run((e) => e.chain().focus().toggleOrderedList().run())}
+        >
+          <ListOrderedIcon />
+        </ToolButton>
+        <ToolButton
+          label={t`Clear formatting`}
+          disabled={!marks}
+          onClick={run((e) => e.chain().focus().unsetAllMarks().run())}
+        >
+          <RemoveFormattingIcon />
+        </ToolButton>
+        <span className="mx-1 h-5 w-px shrink-0 bg-border" />
+        <MergePicker
+          disabled={!a}
+          onPick={({ field, fallback }) =>
+            editor
+              ?.chain()
+              .focus()
+              .insertContent({ type: "mergeField", attrs: { field, fallback: fallback ?? null } })
+              .run()
+          }
+        />
+      </div>
+      <div ref={slot} className="flex shrink-0 items-center gap-1 border-s px-2 empty:hidden" data-testid="block-bar" />
     </div>
   )
 }

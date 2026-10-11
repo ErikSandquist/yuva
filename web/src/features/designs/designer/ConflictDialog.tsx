@@ -64,7 +64,7 @@ export function ConflictDialog({
                 <Trans>Keep mine</Trans>
               </span>
               <span className="text-caption font-normal opacity-85">
-                <Trans>Save your version over theirs. Theirs stays in the versions.</Trans>
+                <Trans>Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”.</Trans>
               </span>
             </span>
           </Button>

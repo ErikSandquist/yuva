@@ -12,7 +12,11 @@ export const ATTRIBUTE_PREFIX = "contact.attributes."
 
 const ATTRIBUTE_KEY = /^[A-Za-z0-9_.-]{1,64}$/
 
-export const MERGE_RE = /\{\{\s*([^|}\s]+)\s*(?:\|\s*"([^"]*)"\s*)?\}\}/g
+const MERGE_SOURCE = /\{\{\s*([^|}\s]+)\s*(?:\|\s*"([^"]*)"\s*)?\}\}/.source
+
+function mergeMatches(text: string) {
+  return [...text.matchAll(new RegExp(MERGE_SOURCE, "g"))]
+}
 
 export function knownField(field: string) {
   if ((MERGE_FIELDS as readonly string[]).includes(field)) return true
@@ -27,7 +31,7 @@ export function mergeToken(field: string, fallback?: string) {
 export type MergeUse = { field: string; fallback?: string }
 
 export function mergeFields(text: string): MergeUse[] {
-  return [...text.matchAll(MERGE_RE)].map((m) => ({ field: m[1], fallback: m[2] || undefined }))
+  return mergeMatches(text).map((m) => ({ field: m[1], fallback: m[2] || undefined }))
 }
 
 const BLOCK_TAGS = new Set(["p", "ul", "ol", "li"])
@@ -104,11 +108,11 @@ export function withChips(html: string) {
   while (walker.nextNode()) texts.push(walker.currentNode as Text)
   for (const node of texts) {
     const value = node.data
-    MERGE_RE.lastIndex = 0
-    if (!MERGE_RE.test(value)) continue
+    const matches = mergeMatches(value)
+    if (matches.length === 0) continue
     const frag = doc.createDocumentFragment()
     let last = 0
-    for (const m of value.matchAll(MERGE_RE)) {
+    for (const m of matches) {
       if (m.index > last) frag.append(value.slice(last, m.index))
       frag.append(chip(doc, m[1], m[2] || undefined))
       last = m.index + m[0].length
@@ -123,7 +127,7 @@ export function textWithChips(text: string) {
   const doc = document.implementation.createHTMLDocument("")
   const p = doc.createElement("p")
   let last = 0
-  for (const m of text.matchAll(MERGE_RE)) {
+  for (const m of mergeMatches(text)) {
     if (m.index > last) p.append(text.slice(last, m.index))
     p.append(chip(doc, m[1], m[2] || undefined))
     last = m.index + m[0].length

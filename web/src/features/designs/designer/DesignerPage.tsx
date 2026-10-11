@@ -445,6 +445,8 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
   const [left, setLeft] = useState<"blocks" | "layers">("blocks")
   const [sheet, setSheet] = useState<null | "blocks" | "layers" | "style">(null)
   const [library, setLibrary] = useState<string | null>(null)
+  const altFocus = useRef<string | null>(null)
+  const [toolSlot, setToolSlot] = useState<HTMLElement | null>(null)
   const [versionsOpen, setVersionsOpen] = useState(false)
   const [checksOpen, setChecksOpen] = useState(false)
   const [drop, setDrop] = useState<DropTarget | null>(null)
@@ -530,6 +532,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
     openLibrary: (id) => setLibrary(id),
     drop,
     dragging: dragging?.id ?? null,
+    toolSlot,
   }
 
   const renderIssues = render.data && !render.isPlaceholderData ? render.data.warnings : null
@@ -995,7 +998,7 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
             <main className="flex min-w-0 flex-1 flex-col">
               {mode === "edit" ? (
                 <>
-                  {!readOnly && <TextToolbar owner={selected} />}
+                  {!readOnly && <TextToolbar owner={selected} slot={setToolSlot} />}
                   <div className="min-h-0 flex-1 overflow-y-auto">{canvas}</div>
                 </>
               ) : (
@@ -1115,8 +1118,17 @@ function DesignerScreen({ initial, ws }: { initial: EmailDesign; ws: string }) {
         onOpenChange={(o) => !o && setLibrary(null)}
         current={library ? (findBlock(doc, library) as { image_id?: string } | null)?.image_id : undefined}
         onPick={(img) => {
-          if (library) ctx.update(library, { image_id: img.id } as Partial<Block>)
+          const block = library ? findBlock(doc, library) : null
+          if (block?.type === "image" && block.image_id !== img.id) {
+            ctx.update(block.id, block.decorative ? { image_id: img.id } : { image_id: img.id, alt: "" })
+            if (!block.decorative) altFocus.current = block.id
+          }
           setLibrary(null)
+        }}
+        finalFocus={() => {
+          const id = altFocus.current
+          altFocus.current = null
+          return (id && document.getElementById(`alt-${id}`)) || true
         }}
       />
       <Versions

@@ -64,8 +64,8 @@ msgid "A title in three sizes"
 msgstr "A title in three sizes"
 
 #: src/features/designs/designer/Versions.tsx
-msgid "A version is kept at most every ten minutes while you edit, when you save by hand and when you restore one. The newest 50 stay."
-msgstr "A version is kept at most every ten minutes while you edit, when you save by hand and when you restore one. The newest 50 stay."
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Add"
@@ -590,6 +590,10 @@ msgstr "Its sender details fill the required footer."
 msgid "Keep mine"
 msgstr "Keep mine"
 
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "Kept from a conflict"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Keyboard shortcuts"
@@ -786,6 +790,10 @@ msgstr "Offline, kept on this device"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Offline. Your changes are kept on this device and saved when you are back."
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "Onboarding"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "One under the other on narrow screens."
 msgstr "One under the other on narrow screens."
@@ -845,8 +853,8 @@ msgid "Preview text"
 msgstr "Preview text"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "Product update"
-msgstr "Product update"
+msgid "Product"
+msgstr "Product"
 
 #: src/features/designs/designer/editor.tsx
 msgid "Put each person’s own details into the mail."
@@ -914,8 +922,8 @@ msgid "Save now and keep a version"
 msgstr "Save now and keep a version"
 
 #: src/features/designs/designer/ConflictDialog.tsx
-msgid "Save your version over theirs. Theirs stays in the versions."
-msgstr "Save your version over theirs. Theirs stays in the versions."
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Saved"
@@ -1277,10 +1285,6 @@ msgstr "View"
 #: src/features/designs/text.ts
 msgid "Website"
 msgstr "Website"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Welcome"
-msgstr "Welcome"
 
 #: src/features/designs/designer/editor.tsx
 msgid "When it is empty, write"

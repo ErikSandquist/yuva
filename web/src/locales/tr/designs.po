@@ -64,8 +64,8 @@ msgid "A title in three sizes"
 msgstr "Üç boyutta bir başlık"
 
 #: src/features/designs/designer/Versions.tsx
-msgid "A version is kept at most every ten minutes while you edit, when you save by hand and when you restore one. The newest 50 stay."
-msgstr "Düzenlerken en fazla on dakikada bir, elle kaydettiğinizde ve bir sürümü geri yüklediğinizde bir sürüm saklanır. En yeni 50 sürüm kalır."
+msgid "A version is kept at most every ten minutes while you edit, when you save by hand, when you restore one and when someone else's save wins a conflict. The newest 50 stay."
+msgstr "Düzenlerken en fazla on dakikada bir, elle kaydettiğinizde, bir sürümü geri yüklediğinizde ve bir çakışmada başkasının kaydı öne geçtiğinde bir sürüm saklanır. En yeni 50 sürüm kalır."
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Add"
@@ -590,6 +590,10 @@ msgstr "Gönderen bilgileri zorunlu alt bilgiyi doldurur."
 msgid "Keep mine"
 msgstr "Benimkini koru"
 
+#: src/features/designs/designer/Versions.tsx
+msgid "Kept from a conflict"
+msgstr "Çakışmada saklandı"
+
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Keyboard shortcuts"
 msgstr "Klavye kısayolları"
@@ -786,6 +790,10 @@ msgstr "Çevrimdışı, bu cihazda saklanıyor"
 msgid "Offline. Your changes are kept on this device and saved when you are back."
 msgstr "Çevrimdışı. Değişiklikleriniz bu cihazda saklanıyor ve bağlantı gelince kaydedilecek."
 
+#: src/features/designs/GalleryPage.tsx
+msgid "Onboarding"
+msgstr "Başlangıç"
+
 #: src/features/designs/designer/Inspector.tsx
 msgid "One under the other on narrow screens."
 msgstr "Dar ekranlarda alt alta."
@@ -845,8 +853,8 @@ msgid "Preview text"
 msgstr "Önizleme metni"
 
 #: src/features/designs/GalleryPage.tsx
-msgid "Product update"
-msgstr "Ürün güncellemesi"
+msgid "Product"
+msgstr "Ürün"
 
 #: src/features/designs/designer/editor.tsx
 msgid "Put each person’s own details into the mail."
@@ -914,8 +922,8 @@ msgid "Save now and keep a version"
 msgstr "Şimdi kaydet ve sürüm sakla"
 
 #: src/features/designs/designer/ConflictDialog.tsx
-msgid "Save your version over theirs. Theirs stays in the versions."
-msgstr "Sizin sürümünüz onlarınkinin üstüne kaydedilir. Onlarınki sürümlerde kalır."
+msgid "Save your version over theirs. Theirs is kept in Versions as “Kept from a conflict”."
+msgstr "Sizin sürümünüz onlarınkinin üzerine kaydedilir. Onlarınki Sürümler’de “Çakışmada saklandı” olarak kalır."
 
 #: src/features/designs/designer/DesignerPage.tsx
 msgid "Saved"
@@ -1277,10 +1285,6 @@ msgstr "Görünüm"
 #: src/features/designs/text.ts
 msgid "Website"
 msgstr "Web sitesi"
-
-#: src/features/designs/GalleryPage.tsx
-msgid "Welcome"
-msgstr "Hoş geldiniz"
 
 #: src/features/designs/designer/editor.tsx
 msgid "When it is empty, write"

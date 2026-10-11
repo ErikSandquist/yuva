@@ -48,11 +48,13 @@ export function ImageLibrary({
   onOpenChange,
   current,
   onPick,
+  finalFocus,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
   current?: string
   onPick: (image: EmailImage) => void
+  finalFocus?: () => HTMLElement | boolean
 }) {
   const { t, i18n } = useLingui()
   const images = useImages(open)
@@ -103,6 +105,7 @@ export function ImageLibrary({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
           className="flex max-h-[88svh] flex-col gap-4 sm:max-w-3xl"
+          finalFocus={finalFocus}
           data-testid="image-library"
           onDragOver={(e) => {
             if (e.dataTransfer.types.includes("Files")) {
