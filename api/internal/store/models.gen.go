@@ -342,6 +342,47 @@ type EmailConfirmation struct {
 	ExpiresAt   time.Time
 }
 
+type EmailDesign struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	InboxID      *uuid.UUID
+	Name         string
+	Document     []byte
+	Version      int32
+	TemplateSlug *string
+	CreatedBy    *uuid.UUID
+	UpdatedBy    *uuid.UUID
+	ArchivedAt   *time.Time
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+}
+
+type EmailDesignVersion struct {
+	WorkspaceID uuid.UUID
+	DesignID    uuid.UUID
+	Version     int32
+	Document    []byte
+	Reason      string
+	MemberID    *uuid.UUID
+	CreatedAt   time.Time
+}
+
+type EmailImage struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	Token       string
+	StorageKey  string
+	ContentType string
+	Width       int32
+	Height      int32
+	SizeBytes   int64
+	Sha256      []byte
+	Filename    string
+	MemberID    *uuid.UUID
+	SentAt      *time.Time
+	CreatedAt   time.Time
+}
+
 type EmailOptout struct {
 	WorkspaceID uuid.UUID
 	EmailHash   []byte
