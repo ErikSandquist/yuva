@@ -18,6 +18,17 @@ export type EmailForm = {
   autoReply: boolean
   autoReplyText: string
   interval: string
+  bc: boolean
+  bcHad: boolean
+  bcHost: string
+  bcPort: string
+  bcUsername: string
+  bcTls: SmtpTls
+  bcPassword: string | null
+  bcPasswordSet: boolean
+  bcClearing: boolean
+  rate: string
+  rateWas: string
 }
 
 export function emailForm(e?: EmailChannel): EmailForm {
@@ -35,6 +46,17 @@ export function emailForm(e?: EmailChannel): EmailForm {
     autoReply: e?.auto_reply.enabled ?? false,
     autoReplyText: e?.auto_reply.text ?? "",
     interval: String(e?.auto_reply.interval_hours ?? 24),
+    bc: !!e?.broadcast_smtp,
+    bcHad: !!e?.broadcast_smtp,
+    bcHost: e?.broadcast_smtp?.host ?? "",
+    bcPort: e?.broadcast_smtp ? String(e.broadcast_smtp.port) : "",
+    bcUsername: e?.broadcast_smtp?.username ?? "",
+    bcTls: e?.broadcast_smtp?.tls ?? "starttls",
+    bcPassword: e?.broadcast_smtp?.password_set ? null : "",
+    bcPasswordSet: !!e?.broadcast_smtp?.password_set,
+    bcClearing: false,
+    rate: String(e?.broadcast_rate ?? 5),
+    rateWas: String(e?.broadcast_rate ?? 5),
   }
 }
 
@@ -50,6 +72,14 @@ export function emailInput(f: EmailForm): EmailChannelInput {
     if (f.port.trim()) out.smtp.port = Number(f.port)
     if (f.password !== null) out.smtp.password = f.password
   }
+  if (f.bc && f.bcHost.trim()) {
+    out.broadcast_smtp = { host: f.bcHost.trim(), username: f.bcUsername.trim(), tls: f.bcTls }
+    if (f.bcPort.trim()) out.broadcast_smtp.port = Number(f.bcPort)
+    if (f.bcPassword !== null) out.broadcast_smtp.password = f.bcPassword
+  } else if (f.bcHad) {
+    out.broadcast_smtp_remove = true
+  }
+  if (f.rate !== f.rateWas && f.rate.trim()) out.broadcast_rate = Number(f.rate)
   return out
 }
 
@@ -64,6 +94,12 @@ export type EmailField =
   | "smtp.tls"
   | "auto_reply.text"
   | "auto_reply.interval_hours"
+  | "broadcast_smtp.host"
+  | "broadcast_smtp.port"
+  | "broadcast_smtp.username"
+  | "broadcast_smtp.password"
+  | "broadcast_smtp.tls"
+  | "broadcast_rate"
 
 export function emailErrorField(err: unknown): EmailField | null {
   if (!(err instanceof ApiError)) return null
@@ -86,5 +122,11 @@ export function useEmailFieldErrors() {
     "smtp.tls": t`Pick a TLS mode.`,
     "auto_reply.text": t`Write the auto-reply, or turn it off.`,
     "auto_reply.interval_hours": t`Use 1 to 8760 hours.`,
+    "broadcast_smtp.host": t`Enter a host name or IP address.`,
+    "broadcast_smtp.port": t`Use a port from 1 to 65535.`,
+    "broadcast_smtp.username": t`A username needs TLS or STARTTLS: the password is never sent unencrypted.`,
+    "broadcast_smtp.password": t`The password is too long.`,
+    "broadcast_smtp.tls": t`Pick a TLS mode.`,
+    broadcast_rate: t`Use 1 to 100 mails a second.`,
   } satisfies Record<EmailField, string>
 }
