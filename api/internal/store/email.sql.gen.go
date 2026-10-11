@@ -150,7 +150,7 @@ ON CONFLICT (workspace_id, channel_id) DO UPDATE SET
     smtp_password = excluded.smtp_password, smtp_tls = excluded.smtp_tls,
     auto_reply_enabled = excluded.auto_reply_enabled, auto_reply_text = excluded.auto_reply_text,
     auto_reply_interval_hours = excluded.auto_reply_interval_hours
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled
 `
 
 type CreateEmailChannelParams struct {
@@ -200,6 +200,15 @@ func (q *Queries) CreateEmailChannel(ctx context.Context, arg CreateEmailChannel
 		&i.AutoReplyEnabled,
 		&i.AutoReplyText,
 		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
 	)
 	return i, err
 }
@@ -385,7 +394,7 @@ func (q *Queries) FindConversationByHeaders(ctx context.Context, arg FindConvers
 }
 
 const findEmailChannelByAddress = `-- name: FindEmailChannelByAddress :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, c.inbox_id, c.name AS channel_name FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, c.inbox_id, c.name AS channel_name FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.address = $1 AND w.deleted_at IS NULL
@@ -405,6 +414,15 @@ type FindEmailChannelByAddressRow struct {
 	AutoReplyEnabled       bool
 	AutoReplyText          string
 	AutoReplyIntervalHours int32
+	BroadcastSmtpHost      *string
+	BroadcastSmtpPort      *int32
+	BroadcastSmtpUsername  *string
+	BroadcastSmtpPassword  []byte
+	BroadcastSmtpTls       *string
+	BroadcastRate          int32
+	DkimSelector           *string
+	DkimPrivateKey         []byte
+	DkimEnabled            bool
 	InboxID                uuid.UUID
 	ChannelName            string
 }
@@ -428,6 +446,15 @@ func (q *Queries) FindEmailChannelByAddress(ctx context.Context, address string)
 		&i.AutoReplyEnabled,
 		&i.AutoReplyText,
 		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
 		&i.InboxID,
 		&i.ChannelName,
 	)
@@ -525,7 +552,7 @@ func (q *Queries) GetContactIDByEmail(ctx context.Context, arg GetContactIDByEma
 }
 
 const getEmailChannel = `-- name: GetEmailChannel :one
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
 `
 
 type GetEmailChannelParams struct {
@@ -550,6 +577,15 @@ func (q *Queries) GetEmailChannel(ctx context.Context, arg GetEmailChannelParams
 		&i.AutoReplyEnabled,
 		&i.AutoReplyText,
 		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
 	)
 	return i, err
 }
@@ -606,7 +642,7 @@ func (q *Queries) IsEmailChannelSender(ctx context.Context, address string) (boo
 }
 
 const isEmailSuppressed = `-- name: IsEmailSuppressed :one
-SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2) AS suppressed
+SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope = 'all') AS suppressed
 `
 
 type IsEmailSuppressedParams struct {
@@ -815,7 +851,7 @@ func (q *Queries) ListConversationsRawKeys(ctx context.Context, arg ListConversa
 }
 
 const listEmailChannels = `-- name: ListEmailChannels :many
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
 `
 
 type ListEmailChannelsParams struct {
@@ -846,6 +882,15 @@ func (q *Queries) ListEmailChannels(ctx context.Context, arg ListEmailChannelsPa
 			&i.AutoReplyEnabled,
 			&i.AutoReplyText,
 			&i.AutoReplyIntervalHours,
+			&i.BroadcastSmtpHost,
+			&i.BroadcastSmtpPort,
+			&i.BroadcastSmtpUsername,
+			&i.BroadcastSmtpPassword,
+			&i.BroadcastSmtpTls,
+			&i.BroadcastRate,
+			&i.DkimSelector,
+			&i.DkimPrivateKey,
+			&i.DkimEnabled,
 		); err != nil {
 			return nil, err
 		}

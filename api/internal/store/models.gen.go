@@ -90,6 +90,24 @@ type ChatVisitor struct {
 	CreatedAt   time.Time
 }
 
+type ConsentEvent struct {
+	ID             uuid.UUID
+	WorkspaceID    uuid.UUID
+	SubscriptionID uuid.UUID
+	Kind           string
+	Source         string
+	Ip             *string
+	UserAgent      *string
+	PageUrl        *string
+	ConsentText    *string
+	MemberID       *uuid.UUID
+	ApiKeyID       *uuid.UUID
+	ImportID       *uuid.UUID
+	BroadcastID    *uuid.UUID
+	Detail         []byte
+	CreatedAt      time.Time
+}
+
 type Contact struct {
 	ID                   uuid.UUID
 	WorkspaceID          uuid.UUID
@@ -302,6 +320,15 @@ type EmailChannel struct {
 	AutoReplyEnabled       bool
 	AutoReplyText          string
 	AutoReplyIntervalHours int32
+	BroadcastSmtpHost      *string
+	BroadcastSmtpPort      *int32
+	BroadcastSmtpUsername  *string
+	BroadcastSmtpPassword  []byte
+	BroadcastSmtpTls       *string
+	BroadcastRate          int32
+	DkimSelector           *string
+	DkimPrivateKey         []byte
+	DkimEnabled            bool
 }
 
 type EmailConfirmation struct {
@@ -315,12 +342,20 @@ type EmailConfirmation struct {
 	ExpiresAt   time.Time
 }
 
+type EmailOptout struct {
+	WorkspaceID uuid.UUID
+	EmailHash   []byte
+	Reason      string
+	CreatedAt   time.Time
+}
+
 type EmailSuppression struct {
 	WorkspaceID uuid.UUID
 	Email       string
 	Reason      string
 	Detail      string
 	CreatedAt   time.Time
+	Scope       string
 }
 
 type Event struct {
@@ -370,6 +405,10 @@ type Inbox struct {
 	UpdatedAt            time.Time
 	AskForRating         bool
 	RatingSince          *time.Time
+	SenderLegalName      *string
+	SenderPostalAddress  *string
+	SenderRegistration   *string
+	SenderContact        *string
 }
 
 type InboxMember struct {
@@ -412,6 +451,25 @@ type Label struct {
 	CreatedAt   time.Time
 }
 
+type ListSubscription struct {
+	ID                     uuid.UUID
+	WorkspaceID            uuid.UUID
+	ListID                 uuid.UUID
+	ContactID              uuid.UUID
+	Email                  string
+	State                  string
+	Source                 string
+	ConsentAt              *time.Time
+	ConfirmedAt            *time.Time
+	ConfirmationSentAt     *time.Time
+	ConfirmationsSent      int32
+	UnsubscribedAt         *time.Time
+	UnsubscribeReason      *string
+	UnsubscribeBroadcastID *uuid.UUID
+	CreatedAt              time.Time
+	UpdatedAt              time.Time
+}
+
 type LoginCode struct {
 	ID         uuid.UUID
 	Email      string
@@ -442,6 +500,22 @@ type M12Answer struct {
 	QuestionID     uuid.UUID
 	AnswerID       uuid.UUID
 	FirstLine      string
+}
+
+type MailingList struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	InboxID     uuid.UUID
+	ChannelID   *uuid.UUID
+	Name        string
+	Description string
+	DoubleOptIn bool
+	Public      bool
+	Commercial  bool
+	Welcome     bool
+	ArchivedAt  *time.Time
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 type Member struct {
@@ -677,11 +751,12 @@ type Session struct {
 }
 
 type UsageCounter struct {
-	WorkspaceID     uuid.UUID
-	Month           time.Time
-	Conversations   int64
-	Messages        int64
-	AttachmentBytes int64
+	WorkspaceID         uuid.UUID
+	Month               time.Time
+	Conversations       int64
+	Messages            int64
+	AttachmentBytes     int64
+	BroadcastRecipients int64
 }
 
 type WebauthnCeremony struct {
@@ -741,12 +816,17 @@ type WebhookEndpoint struct {
 }
 
 type Workspace struct {
-	ID            uuid.UUID
-	Name          string
-	CreatedAt     time.Time
-	RetentionDays *int32
-	DeletedAt     *time.Time
-	BotsMaySend   bool
-	CreatedBy     *uuid.UUID
-	CreatedIp     *string
+	ID                     uuid.UUID
+	Name                   string
+	CreatedAt              time.Time
+	RetentionDays          *int32
+	DeletedAt              *time.Time
+	BotsMaySend            bool
+	CreatedBy              *uuid.UUID
+	CreatedIp              *string
+	BroadcastsStatus       string
+	BroadcastsStatusReason *string
+	BroadcastsStatusAt     *time.Time
+	BroadcastDailyLimit    *int32
+	BroadcastsByKeys       bool
 }

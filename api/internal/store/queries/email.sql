@@ -130,7 +130,7 @@ VALUES (@workspace_id, @email, @reason, @detail, @now)
 ON CONFLICT (workspace_id, email) DO UPDATE SET reason = excluded.reason, detail = excluded.detail, created_at = excluded.created_at;
 
 -- name: IsEmailSuppressed :one
-SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2) AS suppressed;
+SELECT EXISTS (SELECT 1 FROM email_suppressions WHERE workspace_id = $1 AND email = $2 AND scope = 'all') AS suppressed;
 
 -- name: ListContactSuppressions :many
 SELECT e.contact_id, s.email, s.reason, s.detail, s.created_at FROM email_suppressions s
