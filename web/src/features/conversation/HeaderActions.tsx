@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { CheckIcon, ClockIcon, RotateCcwIcon, TagIcon, UserRoundCheckIcon, UserRoundPlusIcon } from "lucide-react"
-import { useState } from "react"
+import { useState, type RefObject } from "react"
 
 import { Dot, Kbd, MemberAvatar } from "@/components/common"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
@@ -55,11 +55,13 @@ export function SnoozeMenu({
   actions,
   open,
   onOpenChange,
+  anchor,
 }: {
   name: string
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
+  anchor?: RefObject<Element | null>
 }) {
   const { t } = useLingui()
   const times = useSnoozeTimes()
@@ -74,7 +76,7 @@ export function SnoozeMenu({
       >
         <ClockIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[280px] max-w-[calc(100vw-32px)]">
+      <DropdownMenuContent align="end" anchor={anchor} className="w-[280px] max-w-[calc(100vw-32px)]">
         <DropdownMenuGroup>
           <DropdownMenuLabel>
             <Trans>When should it come back?</Trans>
@@ -99,11 +101,13 @@ export function HandMenu({
   actions,
   open,
   onOpenChange,
+  anchor,
 }: {
   c: Conversation
   actions: ConversationActions
   open: boolean
   onOpenChange: (open: boolean) => void
+  anchor?: RefObject<Element | null>
 }) {
   const { t } = useLingui()
   const { membership } = useSession()
@@ -128,6 +132,7 @@ export function HandMenu({
       </PopoverTrigger>
       <PopoverContent
         align="end"
+        anchor={anchor}
         sideOffset={6}
         className={cn(popupClass, "w-[300px] max-w-[calc(100vw-32px)] gap-0 rounded-xl p-1.5 ring-0")}
         data-testid="hand-popup"

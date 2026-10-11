@@ -57,7 +57,7 @@ import { RelatedLine } from "@/features/conversation/RelatedLine"
 import { useListActions, usePinnedIds } from "@/features/inbox/memberState"
 import { useConversations } from "@/features/inbox/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import { useMediaQuery } from "@/hooks/use-media-query"
+import { useIsPhone, useMediaQuery } from "@/hooks/use-media-query"
 import {
   ApiError,
   isGone,
@@ -183,6 +183,8 @@ function Loaded({
   const [claimedFrom, setClaimedFrom] = useState<string | null>(null)
   const [beatenBy, setBeatenBy] = useState<string | null>(null)
   const fine = useMediaQuery("(pointer: fine)")
+  const phone = useIsPhone()
+  const actionsRef = useRef<HTMLDivElement>(null)
   const [sheet, setSheet] = useState(false)
   const [finding, setFinding] = useState(false)
   const [findQuery, setFindQuery] = useState("")
@@ -391,14 +393,14 @@ function Loaded({
         </div>
       )}
       <header
-        className="@container/person flex h-15 shrink-0 items-center gap-2 border-b bg-background ps-2 pe-2 phone:gap-1 phone:ps-1"
+        className="@container/person flex h-15 shrink-0 items-center gap-2 border-b bg-background ps-2 pe-2 phone:h-auto phone:min-h-15 phone:gap-1 phone:py-1.5 phone:ps-1"
         data-testid="person"
       >
         <BackButton onBack={onBack} />
         <button
           type="button"
           onClick={togglePanel}
-          className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1 ps-1.5 pe-2 text-start hover:bg-muted"
+          className="flex min-w-0 flex-1 items-center gap-3 rounded-lg py-1 ps-1.5 pe-2 text-start hover:bg-muted phone:gap-2.5 phone:ps-1 phone:pe-1"
           title={t`Contact details (C)`}
         >
           <span className="relative shrink-0">
@@ -418,10 +420,15 @@ function Loaded({
             <span className="block truncate text-reading font-medium" data-testid="person-name">
               {name}
             </span>
-            <span className="flex min-w-0 items-center gap-x-1.5 truncate text-caption text-faint">
+            <span
+              className={cn(
+                "flex min-w-0 items-center gap-x-1.5 truncate text-caption text-faint",
+                phone && "flex-wrap gap-y-0.5 whitespace-normal"
+              )}
+            >
               {source && <SourceBadge source={source} />}
               {place && (
-                <span className="min-w-0 truncate phone:hidden @max-xl/person:hidden" data-testid="header-place">
+                <span className={cn("min-w-0 truncate", !phone && "@max-xl/person:hidden")} data-testid="header-place">
                   {place}
                 </span>
               )}
@@ -441,7 +448,7 @@ function Loaded({
                   ·
                 </span>
               )}
-              <span className="truncate">
+              <span className={cn("truncate", phone && place && "basis-full")} data-testid="header-status">
                 <Status c={c} lastInbound={lastInbound} />
               </span>
             </span>
@@ -461,9 +468,25 @@ function Loaded({
             />
           </span>
         )}
-        <div className="flex shrink-0 items-center gap-0.5">
-          <HandMenu c={c} actions={actions} open={menu === "hand"} onOpenChange={openMenu("hand")} />
-          <SnoozeMenu name={name} actions={actions} open={menu === "snooze"} onOpenChange={openMenu("snooze")} />
+        <div ref={actionsRef} className="flex shrink-0 items-center gap-0.5">
+          <span className="phone:hidden">
+            <HandMenu
+              c={c}
+              actions={actions}
+              open={menu === "hand"}
+              onOpenChange={openMenu("hand")}
+              anchor={phone ? actionsRef : undefined}
+            />
+          </span>
+          <span className="phone:hidden">
+            <SnoozeMenu
+              name={name}
+              actions={actions}
+              open={menu === "snooze"}
+              onOpenChange={openMenu("snooze")}
+              anchor={phone ? actionsRef : undefined}
+            />
+          </span>
           <span className="phone:hidden @max-xl/person:hidden">
             <LabelsMenu c={c} update={update} open={menu === "labels"} onOpenChange={openMenu("labels")} />
           </span>
@@ -473,7 +496,7 @@ function Loaded({
             size="icon-sm"
             onClick={() => (finding ? closeFind() : openFind())}
             aria-pressed={finding}
-            className={cn(finding && "bg-muted text-foreground")}
+            className={cn("phone:hidden", finding && "bg-muted text-foreground")}
             aria-label={t`Search in this conversation`}
             title={t`Search in this conversation (${keyLabel(SHORTCUTS.find).join("")})`}
             data-testid="find-toggle"
@@ -505,6 +528,7 @@ function Loaded({
             onPin={togglePin}
             onUnread={markUnread}
             onDiscussion={handlers.discussion}
+            folded={phone ? { hand: handlers.hand, snooze: handlers.snooze, find: openFind } : undefined}
           />
         </div>
       </header>

@@ -794,7 +794,9 @@ remote images, http(s)):
   bottom. On the right, the contact details, toggled
   from the header; below 1200 px wide they open as a sheet, never as a third column, and the
   header drops the inbox name, the assignee, the labels button and the close button's text when
-  the conversation is narrower than 36rem, so the contact's name keeps its room. On a phone the list and the conversation are
+  the conversation is narrower than 36rem, so the contact's name keeps its room. On a phone the line under the name
+  (source, place, status) wraps instead of being cut, and assign, snooze and search move into the
+  more menu next to close. On a phone the list and the conversation are
   two screens with a back button. With nothing open the middle shows what the team did today
   from `GET /v1/stats`: replies sent by members, conversations closed and the median time to the
   first reply, per member too, over the inboxes the caller can see. Nothing is stored for it: it
@@ -842,6 +844,15 @@ remote images, http(s)):
   A code request carries the sign-in page's `locale`, kept on the code row: for an address with
   no person and no invite it is the code mail's language and the new person's locale; a person
   keeps their own and an invite's locale wins.
+  `YUVA_OPERATOR_EMAIL` (comma-separated, unset = off) tells the server's operator about
+  growth: a new person created by verifying a code (no person, no invite; readers marked) and a
+  workspace created with `POST /v1/workspaces` are written as an `operator_notices` row in the
+  same transaction (address, workspace name, client IP, and the country only from `CF-IPCountry`
+  when `YUVA_CLIENT_IP_HEADER` is `CF-Connecting-IP`, since Cloudflare overwrites it). A River
+  job, periodic every minute, sends one English e-mail (`operator_digest`) to every address with
+  the unsent rows, at most once per 5 minutes after the last one, so a burst becomes one mail.
+  Sent rows are deleted after an hour; they are kept only to know when the last mail went out.
+  No conversation, message or contact content goes into it.
   The panel follows `signup`: with `open` its sign-in page says a new address gets an account
   (`/?signup=1` opens it as "Create your Yuva account"), a person with no workspace is asked to
   create one (name prefilled from the e-mail domain) and goes on to setup, and the workspace
@@ -1220,6 +1231,9 @@ now; per-channel limits can narrow them later.
     `people.reader_email_notifications` is a person-level setting.
   - Open sign-up's limits count `workspaces` by `created_by` (a person) and `created_ip` across
     the server, before the new workspace exists.
+  - `operator_notices` is the server operator's feed of new people and workspaces
+    (`YUVA_OPERATOR_EMAIL`): it is about the server, not a workspace, and is read only by the
+    operator digest job.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
 - Usage counters (conversations, messages, members, storage) recorded per workspace per month.

@@ -842,6 +842,7 @@ msgstr "Assign (A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "Assign or hand to a teammate"
 
@@ -4260,6 +4261,7 @@ msgstr "Search in the loaded messages"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "Search in this conversation"
 
@@ -4616,6 +4618,7 @@ msgstr "SMTP host"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Snooze"
 msgstr "Snooze"
 

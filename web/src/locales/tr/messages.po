@@ -842,6 +842,7 @@ msgstr "Ata (A)"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Assign or hand to a teammate"
 msgstr "Ata ya da bir ekip arkadaşına devret"
 
@@ -4260,6 +4261,7 @@ msgstr "Yüklenen mesajlarda ara"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ChatView.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Search in this conversation"
 msgstr "Bu konuşmada ara"
 
@@ -4616,6 +4618,7 @@ msgstr "SMTP sunucusu"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/conversation/ConversationMenu.tsx
 msgid "Snooze"
 msgstr "Ertele"
 

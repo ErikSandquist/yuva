@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import {
+  ClockIcon,
   EllipsisIcon,
   FlagIcon,
   InboxIcon,
@@ -8,11 +9,13 @@ import {
   PinIcon,
   PinOffIcon,
   RotateCcwIcon,
+  SearchIcon,
   ShieldAlertIcon,
   ShieldCheckIcon,
   TagIcon,
   UserIcon,
   UserRoundCheckIcon,
+  UserRoundPlusIcon,
 } from "lucide-react"
 
 import { Dot, Kbd } from "@/components/common"
@@ -48,6 +51,7 @@ export function ConversationMenu({
   onPin,
   onUnread,
   onDiscussion,
+  folded,
 }: {
   c: Conversation
   open: boolean
@@ -59,6 +63,7 @@ export function ConversationMenu({
   onPin: () => void
   onUnread: () => void
   onDiscussion: () => void
+  folded?: { hand: () => void; snooze: () => void; find: () => void }
 }) {
   const { t } = useLingui()
   const text = useEnumText()
@@ -77,6 +82,36 @@ export function ConversationMenu({
         <EllipsisIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-60">
+        {folded && (
+          <>
+            <DropdownMenuItem onClick={folded.hand} data-testid="header-hand">
+              <UserRoundPlusIcon />
+              <span className="flex-1">
+                <Trans>Assign or hand to a teammate</Trans>
+              </span>
+              <Kbd>{keyLabel(SHORTCUTS.hand)[0]}</Kbd>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={folded.snooze} data-testid="header-snooze">
+              <ClockIcon />
+              <span className="flex-1">
+                <Trans>Snooze</Trans>
+              </span>
+              <Kbd>{keyLabel(SHORTCUTS.snooze)[0]}</Kbd>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={folded.find} data-testid="header-find">
+              <SearchIcon />
+              <span className="flex-1">
+                <Trans>Search in this conversation</Trans>
+              </span>
+              <span className="flex gap-0.5">
+                {keyLabel(SHORTCUTS.find).map((k) => (
+                  <Kbd key={k}>{k}</Kbd>
+                ))}
+              </span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuItem onClick={onContact}>
           <UserIcon />
           <span className="flex-1">

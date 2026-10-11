@@ -201,7 +201,7 @@ export function TabBar() {
           onClick={() => go(e.key)}
           aria-current={e.key === view ? "page" : undefined}
           aria-label={e.badge ? e.badgeLabel : e.label}
-          className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-0.5 pt-2 pb-1.5 text-[11px] text-muted-foreground outline-none focus-visible:bg-muted aria-[current=page]:text-brand"
+          className="flex min-w-0 flex-1 basis-0 flex-col items-center gap-0.5 pt-2 pb-1.5 text-[11px] text-muted-foreground outline-none focus-visible:bg-muted aria-[current=page]:min-w-max aria-[current=page]:px-1 aria-[current=page]:text-brand"
           data-rail-item
           data-testid={`tab-${e.key}`}
         >
