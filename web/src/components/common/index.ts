@@ -6,7 +6,14 @@ export { EmptyState } from "@/components/common/EmptyState"
 export { ErrorLine } from "@/components/common/ErrorLine"
 export { Kbd } from "@/components/common/Kbd"
 export { Notice } from "@/components/common/Notice"
-export { BotAvatar, colorFor, ContactAvatar, MemberAvatar, PersonAvatar } from "@/components/common/Avatar"
+export {
+  BotAvatar,
+  colorFor,
+  ContactAvatar,
+  MemberAvatar,
+  PersonAvatar,
+  VisitorAvatar,
+} from "@/components/common/Avatar"
 export { SecretDialog } from "@/components/common/SecretDialog"
 export { Segmented } from "@/components/common/Segmented"
 export { TypeToConfirmDialog } from "@/components/common/TypeToConfirmDialog"
@@ -14,3 +21,18 @@ export { TypingDots } from "@/components/common/TypingDots"
 export { useConfirm } from "@/components/common/ConfirmDialog"
 export { YuvaMark } from "@/components/common/Logo"
 export { toast, Toaster } from "@/components/common/Toast"
+export {
+  hostOf,
+  hostPath,
+  isVisitor,
+  originOf,
+  pageOf,
+  placeOf,
+  SOURCE_FILTERS,
+  SourceBadge,
+  SourceIcon,
+  sourceOf,
+  useContactName,
+  useSourceText,
+  type Source,
+} from "@/components/common/Source"

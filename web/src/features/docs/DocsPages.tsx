@@ -197,7 +197,7 @@ function Conversations({
   empty: React.ReactNode
   title: React.ReactNode
 }) {
-  const list = useConversations({ inbox_id: inboxId, page, kind })
+  const list = useConversations({ inbox_id: inboxId, page, kind: [kind] })
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
   return (
     <Section title={title}>

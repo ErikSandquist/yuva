@@ -1,0 +1,178 @@
+import { Trans, useLingui } from "@lingui/react/macro"
+import { CheckIcon, ListFilterIcon } from "lucide-react"
+import { useMemo, useSyncExternalStore } from "react"
+
+import { hostOf, SOURCE_FILTERS, SourceIcon, useSourceText, type Source } from "@/components/common"
+import { popupClass } from "@/components/ui/dropdown-menu"
+import { Item } from "@/components/ui/item"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Separator } from "@/components/ui/separator"
+import { useDocsSites } from "@/features/docs/queries"
+import type { ConversationFilters } from "@/lib/keys"
+import { cn } from "@/lib/utils"
+import { useChannelMap } from "@/lib/workspace"
+
+export type SourceFilterValue = { source?: Source; site?: string }
+
+let value: SourceFilterValue = {}
+const listeners = new Set<() => void>()
+
+export function useSourceFilter() {
+  const v = useSyncExternalStore(
+    (l) => {
+      listeners.add(l)
+      return () => listeners.delete(l)
+    },
+    () => value
+  )
+  const set = (next: SourceFilterValue) => {
+    value = next
+    listeners.forEach((l) => l())
+  }
+  return [v, set] as const
+}
+
+export function sourceFilters(v: SourceFilterValue): ConversationFilters {
+  const f: ConversationFilters = {}
+  if (v.source === "feedback" || v.source === "question") f.kind = [v.source]
+  else if (v.source) {
+    f.kind = ["conversation"]
+    f.channel_kind = [v.source]
+  }
+  if (v.site) f.site = v.site
+  return f
+}
+
+export type Site = { origin: string; name?: string }
+
+export function useSites(inboxId: string): Site[] {
+  const docs = useDocsSites(inboxId, 90).data?.items
+  const channels = useChannelMap()
+  return useMemo(() => {
+    const byOrigin = new Map<string, Site>()
+    for (const s of docs ?? []) {
+      const known = byOrigin.get(s.origin)
+      if (!known?.name) byOrigin.set(s.origin, { origin: s.origin, name: s.channel_name })
+    }
+    for (const ch of channels.values()) {
+      if (ch.kind !== "chat" || (inboxId && ch.inbox_id !== inboxId)) continue
+      for (const o of ch.chat?.allowed_origins ?? [])
+        if (!byOrigin.get(o)?.name) byOrigin.set(o, { origin: o, name: ch.name })
+    }
+    return [...byOrigin.values()].sort((a, b) => hostOf(a.origin).localeCompare(hostOf(b.origin)))
+  }, [docs, channels, inboxId])
+}
+
+function Choice({
+  active,
+  onClick,
+  children,
+  testId,
+}: {
+  active: boolean
+  onClick: () => void
+  children: React.ReactNode
+  testId?: string
+}) {
+  return (
+    <Item
+      render={<button type="button" />}
+      size="xs"
+      role="menuitemradio"
+      aria-checked={active}
+      className={cn("flex-nowrap", active && "bg-muted")}
+      onClick={onClick}
+      data-testid={testId}
+    >
+      {children}
+      <CheckIcon className={cn("ms-auto size-4 shrink-0 text-brand", !active && "invisible")} />
+    </Item>
+  )
+}
+
+export function SourceFilter({ inboxId, onChange }: { inboxId: string; onChange: () => void }) {
+  const { t } = useLingui()
+  const text = useSourceText()
+  const [v, set] = useSourceFilter()
+  const sites = useSites(inboxId)
+  const update = (next: SourceFilterValue) => {
+    set(next)
+    onChange()
+  }
+  const active = !!v.source || !!v.site
+  const summary = [v.source && text[v.source], v.site && hostOf(v.site)].filter(Boolean).join(" · ")
+  return (
+    <Popover>
+      <PopoverTrigger
+        render={
+          <button
+            type="button"
+            className={cn(
+              "inline-flex h-7 max-w-full min-w-0 shrink-0 items-center gap-1.5 rounded-full px-3 text-small font-medium transition-colors",
+              active ? "bg-brand-wash text-brand" : "bg-muted text-muted-foreground hover:text-foreground"
+            )}
+          />
+        }
+        aria-label={t`Filter by type and site`}
+        title={t`Filter by type and site`}
+        data-testid="source-filter"
+      >
+        <ListFilterIcon className="size-3.5 shrink-0" />
+        <span className="truncate">{active ? summary : <Trans>Filter</Trans>}</span>
+      </PopoverTrigger>
+      <PopoverContent
+        align="start"
+        sideOffset={6}
+        className={cn(
+          popupClass,
+          "max-h-[70svh] w-[280px] max-w-[calc(100vw-32px)] gap-0 overflow-y-auto rounded-xl p-1.5 ring-0"
+        )}
+        data-testid="source-filter-popup"
+      >
+        <p className="px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint">
+          <Trans>Type</Trans>
+        </p>
+        <Choice active={!v.source} onClick={() => update({ ...v, source: undefined })} testId="source-any">
+          <span className="flex-1 text-start">
+            <Trans>Every type</Trans>
+          </span>
+        </Choice>
+        {SOURCE_FILTERS.map((s) => (
+          <Choice key={s} active={v.source === s} onClick={() => update({ ...v, source: s })} testId={`source-${s}`}>
+            <SourceIcon source={s} className="size-4 text-muted-foreground" />
+            <span className="flex-1 text-start">{text[s]}</span>
+          </Choice>
+        ))}
+        {sites.length > 0 && (
+          <>
+            <Separator className="mx-1.5 my-1 w-auto" />
+            <p className="px-2.5 pt-1.5 pb-1 text-caption font-medium text-faint">
+              <Trans>Site</Trans>
+            </p>
+            <Choice active={!v.site} onClick={() => update({ ...v, site: undefined })} testId="site-any">
+              <span className="flex-1 text-start">
+                <Trans>Every site</Trans>
+              </span>
+            </Choice>
+            {sites.map((s) => (
+              <Choice
+                key={s.origin}
+                active={v.site === s.origin}
+                onClick={() => update({ ...v, site: s.origin })}
+                testId="site-option"
+              >
+                <span className="min-w-0 flex-1 text-start">
+                  <span className="block truncate">{s.name || hostOf(s.origin)}</span>
+                  {s.name && <small className="block truncate text-caption text-faint">{hostOf(s.origin)}</small>}
+                </span>
+              </Choice>
+            ))}
+            <p className="px-2.5 pt-1 pb-1.5 text-caption text-faint">
+              <Trans>A site shows the feedback and questions sent from its pages.</Trans>
+            </p>
+          </>
+        )}
+      </PopoverContent>
+    </Popover>
+  )
+}

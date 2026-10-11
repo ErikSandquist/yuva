@@ -1,3 +1,5 @@
+import { UserRoundIcon } from "lucide-react"
+
 import { initials } from "@/components/common/text"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
@@ -75,6 +77,21 @@ export function MemberAvatar({
           )}
         />
       )}
+    </span>
+  )
+}
+
+export function VisitorAvatar({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-muted text-faint",
+        className
+      )}
+      data-testid="visitor-avatar"
+    >
+      <UserRoundIcon className="size-1/2" />
     </span>
   )
 }

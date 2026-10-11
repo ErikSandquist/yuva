@@ -63,6 +63,15 @@ export function useDocsPage(inboxId: string, page: string, d: DocsDays) {
   })
 }
 
+export function useDocsSites(inboxId: string, d: DocsDays) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: keys.docsSites(ws, inboxId, d),
+    queryFn: () =>
+      unwrap(api.GET("/v1/docs/sites", { params: { query: { inbox_id: inboxId || undefined, days: d } } })),
+  })
+}
+
 export function usePageAnswers(f: PageAnswerFilters, enabled = true) {
   const { workspaceId: ws } = useSession()
   return useInfiniteQuery({

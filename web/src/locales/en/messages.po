@@ -402,6 +402,10 @@ msgstr "A note for the team… type @ to mention a teammate"
 msgid "A question about {name}"
 msgstr "A question about {name}"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "A site shows the feedback and questions sent from its pages."
+msgstr "A site shows the feedback and questions sent from its pages."
+
 #: src/features/conversation/ChatView.tsx
 #: src/features/conversation/ConversationStatus.tsx
 msgid "A teammate"
@@ -656,6 +660,7 @@ msgstr "Anyone who opens the page can read this question and answer. Remove name
 msgid "Anything using this key stops working at once."
 msgstr "Anything using this key stops working at once."
 
+#: src/components/common/Source.tsx
 #: src/components/common/text.ts
 msgid "API"
 msgstr "API"
@@ -666,6 +671,7 @@ msgstr "API"
 msgid "API keys"
 msgstr "API keys"
 
+#: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
@@ -1487,6 +1493,7 @@ msgstr "Drafts waiting"
 msgid "Drop files to attach them to your reply"
 msgstr "Drop files to attach them to your reply"
 
+#: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/auth/AuthLayout.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -1642,6 +1649,14 @@ msgstr "Every open conversation has someone."
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
 msgstr "Every request to this endpoint, newest first. The newest 100 are kept."
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Every site"
+msgstr "Every site"
+
+#: src/features/inbox/SourceFilter.tsx
+msgid "Every type"
+msgstr "Every type"
+
 #: src/features/inbox/ChatsPage.tsx
 msgid "Everyone has been answered."
 msgstr "Everyone has been answered."
@@ -1696,6 +1711,7 @@ msgstr "Failing"
 msgid "feedback"
 msgstr "feedback"
 
+#: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Feedback"
 msgstr "Feedback"
@@ -1721,8 +1737,13 @@ msgid "Feedback sent from the app"
 msgstr "Feedback sent from the app"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "Filter"
+
+#: src/features/inbox/SourceFilter.tsx
+msgid "Filter by type and site"
+msgstr "Filter by type and site"
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -2226,6 +2247,7 @@ msgstr "Listening for the first message…"
 msgid "Live"
 msgstr "Live"
 
+#: src/components/common/Source.tsx
 #: src/features/auth/AuthLayout.tsx
 msgid "Live chat"
 msgstr "Live chat"
@@ -2865,6 +2887,10 @@ msgid "Nothing is snoozed."
 msgstr "Nothing is snoozed."
 
 #: src/features/inbox/ChatList.tsx
+msgid "Nothing matches these filters."
+msgstr "Nothing matches these filters."
+
+#: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Nothing matches your search here."
 
@@ -3376,6 +3402,7 @@ msgstr "Push: {label}"
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 
+#: src/components/common/Source.tsx
 #: src/features/docs/AnswerDialog.tsx
 msgid "Question"
 msgstr "Question"
@@ -4080,6 +4107,10 @@ msgstr "signed-in users only"
 msgid "Signing secret"
 msgstr "Signing secret"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Site"
+msgstr "Site"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Slug"
@@ -4619,6 +4650,10 @@ msgstr "Turn on for this device"
 msgid "Turned off by Yuva"
 msgstr "Turned off by Yuva"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Type"
+msgstr "Type"
+
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
 msgstr "Type / and the shortcut in the composer to insert one."
@@ -4670,8 +4705,6 @@ msgstr "Unknown device"
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/conversation/ChatView.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/previews.tsx
 msgid "Unnamed contact"
 msgstr "Unnamed contact"
@@ -4771,10 +4804,15 @@ msgstr "Usually replies within a day"
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 
+#: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Visitor"
 msgstr "Visitor"
+
+#: src/components/common/Source.tsx
+msgid "Visitor · {where}"
+msgstr "Visitor · {where}"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Visitors"

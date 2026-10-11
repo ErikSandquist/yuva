@@ -36,11 +36,23 @@ function previewText(body: string) {
   return runes.length > PREVIEW_RUNES ? runes.slice(0, PREVIEW_RUNES).join("").trim() + "…" : text
 }
 
+function pageOrigin(url?: string) {
+  if (!url) return ""
+  try {
+    return new URL(url).origin
+  } catch {
+    return ""
+  }
+}
+
 function matches(c: Conversation & { pinned_at?: string }, f: ConversationFilters, memberId: string) {
   if (!!f.spam !== c.spam) return false
   if (f.pinned !== undefined && !!c.pinned_at !== f.pinned) return false
   if (f.status && c.status !== f.status) return false
-  if ((f.kind || f.category) && c.kind !== (f.kind ?? "feedback")) return false
+  if (f.kind?.length && !f.kind.includes(c.kind)) return false
+  if (f.category && c.kind !== "feedback") return false
+  if (f.channel_kind?.length && !(c.channel_kind && f.channel_kind.includes(c.channel_kind))) return false
+  if (f.site && pageOrigin(c.question?.page_url ?? c.feedback?.page_url) !== f.site) return false
   if (f.category && c.feedback?.category !== f.category) return false
   if (f.page && (c.question?.page_url ?? c.feedback?.page_url) !== f.page) return false
   if (f.inbox_id && c.inbox_id !== f.inbox_id) return false

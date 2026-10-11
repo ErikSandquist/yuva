@@ -52,5 +52,6 @@ export const keys = {
   docsSummary: (ws: string, inbox: string, days: DocsDays) => ["ws", ws, "docs", "summary", inbox, days] as const,
   docsPage: (ws: string, inbox: string, page: string, days: DocsDays) =>
     ["ws", ws, "docs", "page", inbox, page, days] as const,
+  docsSites: (ws: string, inbox: string, days: DocsDays) => ["ws", ws, "docs", "sites", inbox, days] as const,
   pageAnswers: (ws: string, f: PageAnswerFilters) => ["ws", ws, "docs", "answers", f] as const,
 }

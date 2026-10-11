@@ -12,7 +12,19 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router"
 
-import { ChannelIcon, ContactAvatar, Dot, EmptyState, MemberAvatar, toast } from "@/components/common"
+import {
+  ContactAvatar,
+  Dot,
+  EmptyState,
+  isVisitor,
+  MemberAvatar,
+  placeOf,
+  SourceBadge,
+  sourceOf,
+  toast,
+  useContactName,
+  VisitorAvatar,
+} from "@/components/common"
 import { keyLabel, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { useEnumText, useErrorText } from "@/components/common/text"
 import { Alert } from "@/components/ui/alert"
@@ -153,7 +165,11 @@ function Loaded({
   const messages = useMessages(c.id)
   const history = useConversations({ contact_id: c.contact_id })
   const others = (history.data?.pages.flatMap((p) => p.items) ?? []).filter((o) => o.id !== c.id)
-  const name = contact ? contact.name || contact.emails[0] || t`Unnamed contact` : "…"
+  const contactName = useContactName()
+  const visitor = !!contact && isVisitor(contact.name, contact.emails[0])
+  const name = contact ? contactName(c, channel, contact.name, contact.emails[0]) : "…"
+  const source = sourceOf(c, channel)
+  const place = placeOf(c, channel)
   const actions = useConversationActions(c, name)
   const updater = useUpdateConversation(c.id)
   const mover = useMoveConversation(c.id)
@@ -383,7 +399,11 @@ function Loaded({
           title={t`Contact details (C)`}
         >
           <span className="relative shrink-0">
-            <ContactAvatar id={c.contact_id} name={name} className="size-10" />
+            {visitor ? (
+              <VisitorAvatar className="size-10" />
+            ) : (
+              <ContactAvatar id={c.contact_id} name={name} className="size-10" />
+            )}
             {actions.live && (
               <span
                 className="absolute -end-px -bottom-px size-3 rounded-full border-2 border-background bg-success"
@@ -396,7 +416,17 @@ function Loaded({
               {name}
             </span>
             <span className="flex min-w-0 items-center gap-x-1.5 truncate text-caption text-faint">
-              {channel && <ChannelIcon kind={channel.kind} className="size-3 shrink-0" />}
+              {source && <SourceBadge source={source} />}
+              {place && (
+                <span className="min-w-0 truncate phone:hidden @max-xl/person:hidden" data-testid="header-place">
+                  {place}
+                </span>
+              )}
+              {place && (
+                <span aria-hidden className="phone:hidden @max-xl/person:hidden">
+                  ·
+                </span>
+              )}
               {inbox && (
                 <span className="inline-flex min-w-0 items-center gap-1 truncate phone:hidden @max-xl/person:hidden">
                   <Dot color={inbox.branding.color} className="size-[7px] rounded-[2px]" />

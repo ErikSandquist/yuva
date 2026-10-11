@@ -714,12 +714,21 @@ remote images, http(s)):
   of the conversations: the list first, then the chosen page with a back button. The conversations column has the workspace, new
   conversation and a menu to contacts, setup, the command palette and the shortcuts; a search field (Postgres FTS over people and messages);
   filter chips (All, Unread, Mine, Unassigned, Snoozed, Done, which are the list filters `status`
-  and `assignee`, Unread filtering the loaded rows by `unread`) and an inbox picker; then the
+  and `assignee`, Unread filtering the loaded rows by `unread`) and an inbox picker; a Filter
+  popover after the chips narrows by type (Live chat, E-mail, App: `kind=conversation` with that
+  `channel_kind`; Feedback, Question: that `kind`) and by site (`site=<origin>`, which keeps the
+  feedback and questions sent from that site's pages; the sites come from `GET /v1/docs/sites` and
+  the chat channels' origins), kept for the session; then the
   conversation list, most recent activity first, paged as it scrolls and kept current from the
   realtime connection. A row shows the contact, the last message (marked when a bot or the team
   wrote it, replaced by the member's unsent draft or by "typing…"; a team reply in a chat or app
   conversation shows ✓, or ✓✓ once `last_read_by_contact_at` reaches it), the time, an unread mark, the
   channel, the assignee and a green dot when the contact of a chat or app conversation is online.
+  It also says where the conversation came from: a source badge (Live chat, E-mail, App or API from
+  the starting channel's `channel_kind`; Feedback and Question take precedence) and, for feedback
+  and questions, the page's host and path, for chat and app conversations the channel's name. A
+  contact with neither name nor e-mail is "Visitor · <site host or channel name>" with a neutral
+  avatar, never initials; the conversation header shows the same name, badge and place.
   ↑/↓ move through the list, Enter opens, J/K open the next or previous one. Each member can pin
   conversations to the top of their own list and mark one unread again, from the row's context
   menu or the conversation's menu (P, U): `PUT`/`DELETE /v1/conversations/{id}/pin` and

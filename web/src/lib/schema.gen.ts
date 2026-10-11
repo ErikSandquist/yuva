@@ -1758,6 +1758,38 @@ export interface paths {
         patch: operations["updatePageAnswer"];
         trace?: never;
     };
+    "/v1/docs/sites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Documentation sites
+         * @description A site is the origin (`scheme://host[:port]`) of documentation page URLs, per inbox. Over
+         *     the inboxes the caller can see (or `inbox_id`): every site that has a page
+         *     `GET /v1/docs/pages` would list for the same `days` (rated in the window, open feedback or
+         *     questions, published answers), and every origin allowed on a chat channel of those inboxes,
+         *     with zeros when nothing came from it yet. The counts are those of
+         *     `GET /v1/docs/pages?site=…` summed: `pages` is how many pages that list has.
+         *
+         *     `channel_id` and `channel_name` name the chat channel of the inbox that allows the origin
+         *     (the oldest when several do); absent when none does any more.
+         *
+         *     Ordered by origin, then inbox. Not paginated.
+         *
+         *     Scope: `conversations:read`.
+         */
+        get: operations["listDocsSites"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/docs/pages": {
         parameters: {
             query?: never;
@@ -1779,7 +1811,9 @@ export interface paths {
          *       window; pages with fewer follow, ordered the same way, so one `up` never tops the list.
          *     - `activity`: most ratings plus open feedback and questions first.
          *
-         *     `next_cursor` belongs to the `sort`, `days` and `inbox_id` it was returned for; a cursor of
+         *     `site` keeps only the pages of that site (origin).
+         *
+         *     `next_cursor` belongs to the `sort`, `days`, `inbox_id` and `site` it was returned for; a cursor of
          *     another sort answers `400`.
          *
          *     Scope: `conversations:read`.
@@ -1807,6 +1841,7 @@ export interface paths {
          *     the window, not spam, in any status) and answers published in the window, in total and
          *     per day. Every day of the window is listed, oldest first, with zeros where nothing
          *     happened. `rated_pages` counts pages (per inbox) with at least one rating in the window.
+         *     `site` counts only the pages of that site (origin).
          *
          *     Scope: `conversations:read`.
          */
@@ -1831,7 +1866,8 @@ export interface paths {
          * @description A page's counts as in `GET /v1/docs/pages` (zero when nothing is known about it) and its
          *     ratings per day over the window. Its feedback and questions are
          *     `GET /v1/conversations?inbox_id=…&page=…` (with `kind=feedback` or `kind=question`), its
-         *     answers `GET /v1/page-answers?inbox_id=…&page=…`.
+         *     answers `GET /v1/page-answers?inbox_id=…&page=…`. With `site`, a page on another origin
+         *     answers `400 validation_failed`.
          *
          *     Scope: `conversations:read`.
          */
@@ -4291,6 +4327,11 @@ export interface components {
              */
             channel_id?: string;
             /**
+             * @description Read-only: the kind of the channel it started on, kept when that channel is removed or
+             *     the conversation moves to another inbox. Absent when it started without a channel.
+             */
+            channel_kind?: components["schemas"]["ChannelKind"];
+            /**
              * Format: uuid
              * @description Set when this conversation was opened for a sender who answered in the e-mail thread of
              *     another contact's conversation (a forward, a CC'd colleague): the conversation whose
@@ -5522,6 +5563,34 @@ export interface components {
             /** Format: int64 */
             published_answers: number;
         };
+        DocsSite: {
+            /** @description The site, `scheme://host[:port]`. */
+            origin: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /**
+             * Format: uuid
+             * @description The chat channel of the inbox that allows the origin; absent when none does.
+             */
+            channel_id?: string;
+            /** @description That channel's name; absent with `channel_id`. */
+            channel_name?: string;
+            /** Format: int64 */
+            pages: number;
+            /** Format: int64 */
+            up: number;
+            /** Format: int64 */
+            down: number;
+            /** Format: int64 */
+            open_feedback: number;
+            /** Format: int64 */
+            open_questions: number;
+            /** Format: int64 */
+            published_answers: number;
+        };
+        DocsSiteList: {
+            items: components["schemas"]["DocsSite"][];
+        };
         DocsPagePage: {
             items: components["schemas"]["DocsPage"][];
             /** @description Absent on the last page. */
@@ -6220,6 +6289,11 @@ export interface components {
         PageAnswerId: string;
         /** @description The chat channel's public key. */
         ChannelKey: string;
+        /**
+         * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+         *     Without it, every site.
+         */
+        DocsSiteFilter: string;
         /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
         DocsDays: number;
         /** @description Full-text search (Postgres `simple` configuration, `websearch` syntax). */
@@ -8088,9 +8162,28 @@ export interface operations {
                  *     `false`, spam is left out.
                  */
                 spam?: boolean;
-                /** @description Only conversations of this kind, e.g. `feedback` for the feedback view. */
-                kind?: components["schemas"]["ConversationKind"];
-                /** @description Only feedback of this category (implies `kind=feedback`). */
+                /**
+                 * @description Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+                 *     parameter (`kind=feedback&kind=question`) or give a comma-separated list
+                 *     (`kind=feedback,question`).
+                 */
+                kind?: components["schemas"]["ConversationKind"][];
+                /**
+                 * @description Only conversations that started on a channel of these kinds (`channel_kind` on the
+                 *     conversation). Repeat the parameter or give a comma-separated list. Conversations
+                 *     without a `channel_kind` never match.
+                 */
+                channel_kind?: components["schemas"]["ChannelKind"][];
+                /**
+                 * @description Only feedback and questions sent from a page of this site: an origin,
+                 *     `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
+                 *     `question.page_url`.
+                 */
+                site?: string;
+                /**
+                 * @description Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
+                 *     `feedback`, `400`).
+                 */
                 category?: components["schemas"]["FeedbackCategory"];
                 /**
                  * @description Only feedback and questions sent from this documentation page (a URL; query and
@@ -9210,10 +9303,46 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listDocsSites: {
+        parameters: {
+            query?: {
+                inbox_id?: string;
+                /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
+                days?: components["parameters"]["DocsDays"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The sites. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocsSiteList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     listDocsPages: {
         parameters: {
             query?: {
                 inbox_id?: string;
+                /**
+                 * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+                 *     Without it, every site.
+                 */
+                site?: components["parameters"]["DocsSiteFilter"];
                 /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
                 days?: components["parameters"]["DocsDays"];
                 sort?: components["schemas"]["DocsPageSort"];
@@ -9250,6 +9379,11 @@ export interface operations {
         parameters: {
             query?: {
                 inbox_id?: string;
+                /**
+                 * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+                 *     Without it, every site.
+                 */
+                site?: components["parameters"]["DocsSiteFilter"];
                 /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
                 days?: components["parameters"]["DocsDays"];
             };
@@ -9283,6 +9417,11 @@ export interface operations {
                 inbox_id: string;
                 /** @description The page's URL; query and fragment are ignored. */
                 page: string;
+                /**
+                 * @description Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+                 *     Without it, every site.
+                 */
+                site?: components["parameters"]["DocsSiteFilter"];
                 /** @description The rating window in days, `7`, `30` or `90`; 30 by default. */
                 days?: components["parameters"]["DocsDays"];
             };

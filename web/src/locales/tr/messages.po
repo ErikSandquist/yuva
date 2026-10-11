@@ -402,6 +402,10 @@ msgstr "Ekip için bir not… birini çağırmak için @ yaz"
 msgid "A question about {name}"
 msgstr "{name} hakkında bir soru"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "A site shows the feedback and questions sent from its pages."
+msgstr "Site seçilince yalnızca o sitenin sayfalarından gelen geri bildirimler ve sorular görünür."
+
 #: src/features/conversation/ChatView.tsx
 #: src/features/conversation/ConversationStatus.tsx
 msgid "A teammate"
@@ -656,6 +660,7 @@ msgstr "Sayfayı açan herkes bu soruyu ve yanıtı okuyabilir. Adları, e-posta
 msgid "Anything using this key stops working at once."
 msgstr "Bu anahtarı kullanan her şey hemen çalışmayı durdurur."
 
+#: src/components/common/Source.tsx
 #: src/components/common/text.ts
 msgid "API"
 msgstr "API"
@@ -666,6 +671,7 @@ msgstr "API"
 msgid "API keys"
 msgstr "API anahtarları"
 
+#: src/components/common/Source.tsx
 #: src/features/conversation/Feedback.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "App"
@@ -1487,6 +1493,7 @@ msgstr "Bekleyen taslaklar"
 msgid "Drop files to attach them to your reply"
 msgstr "Yanıtınıza eklemek için dosyaları bırakın"
 
+#: src/components/common/Source.tsx
 #: src/components/common/text.ts
 #: src/features/auth/AuthLayout.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -1642,6 +1649,14 @@ msgstr "Açık konuşmaların hepsinin bir sorumlusu var."
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
 msgstr "Bu uç noktaya yapılan her istek, en yenisi başta. En yeni 100 tanesi saklanır."
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Every site"
+msgstr "Tüm siteler"
+
+#: src/features/inbox/SourceFilter.tsx
+msgid "Every type"
+msgstr "Tüm türler"
+
 #: src/features/inbox/ChatsPage.tsx
 msgid "Everyone has been answered."
 msgstr "Herkes yanıtlandı."
@@ -1696,6 +1711,7 @@ msgstr "Başarısız oluyor"
 msgid "feedback"
 msgstr "geri bildirim"
 
+#: src/components/common/Source.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Feedback"
 msgstr "Geri bildirim"
@@ -1721,8 +1737,13 @@ msgid "Feedback sent from the app"
 msgstr "Uygulamadan gönderilen geri bildirim"
 
 #: src/features/inbox/ChatList.tsx
+#: src/features/inbox/SourceFilter.tsx
 msgid "Filter"
 msgstr "Filtre"
+
+#: src/features/inbox/SourceFilter.tsx
+msgid "Filter by type and site"
+msgstr "Türe ve siteye göre filtrele"
 
 #: src/features/setup/SetupLayout.tsx
 msgid "First message"
@@ -2226,6 +2247,7 @@ msgstr "İlk mesaj bekleniyor…"
 msgid "Live"
 msgstr "Canlı"
 
+#: src/components/common/Source.tsx
 #: src/features/auth/AuthLayout.tsx
 msgid "Live chat"
 msgstr "Canlı sohbet"
@@ -2865,6 +2887,10 @@ msgid "Nothing is snoozed."
 msgstr "Ertelenmiş bir şey yok."
 
 #: src/features/inbox/ChatList.tsx
+msgid "Nothing matches these filters."
+msgstr "Bu filtrelere uyan konuşma yok."
+
+#: src/features/inbox/ChatList.tsx
 msgid "Nothing matches your search here."
 msgstr "Burada aramana uyan bir şey yok."
 
@@ -3376,6 +3402,7 @@ msgstr "Anlık bildirim: {label}"
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "SDK'nın konuşmalar ekranını uygulamanızda bir Yardım düğmesine bağlayın, sonra oradan bir mesaj gönderin."
 
+#: src/components/common/Source.tsx
 #: src/features/docs/AnswerDialog.tsx
 msgid "Question"
 msgstr "Soru"
@@ -4080,6 +4107,10 @@ msgstr "yalnızca oturum açmış kullanıcılar"
 msgid "Signing secret"
 msgstr "İmzalama anahtarı"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Site"
+msgstr "Site"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Kısa ad"
@@ -4619,6 +4650,10 @@ msgstr "Bu cihazda aç"
 msgid "Turned off by Yuva"
 msgstr "Yuva kapattı"
 
+#: src/features/inbox/SourceFilter.tsx
+msgid "Type"
+msgstr "Tür"
+
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Type / and the shortcut in the composer to insert one."
 msgstr "Eklemek için yazma alanında / ve ardından kısayolu yazın."
@@ -4670,8 +4705,6 @@ msgstr "Bilinmeyen cihaz"
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/conversation/ChatView.tsx
-#: src/features/inbox/ChatList.tsx
 #: src/features/setup/previews.tsx
 msgid "Unnamed contact"
 msgstr "Adsız kişi"
@@ -4771,10 +4804,15 @@ msgstr "Genellikle bir gün içinde yanıtlar"
 msgid "Verify every request before trusting it: the <0>webhook-signature</0> header follows the <1>Standard Webhooks</1> specification, so any of its libraries can check it with the endpoint's secret. Go backends can use the <2>sdk/go/webhook</2> package of the Yuva repository."
 msgstr "Her isteğe güvenmeden önce doğrulayın: <0>webhook-signature</0> başlığı <1>Standard Webhooks</1> belirtimine uyar, bu yüzden onun kütüphanelerinden herhangi biri uç noktanın anahtarıyla imzayı denetleyebilir. Go arka uçları Yuva deposundaki <2>sdk/go/webhook</2> paketini kullanabilir."
 
+#: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Visitor"
 msgstr "Ziyaretçi"
+
+#: src/components/common/Source.tsx
+msgid "Visitor · {where}"
+msgstr "Ziyaretçi · {where}"
 
 #: src/features/contact/ContactsColumn.tsx
 msgid "Visitors"

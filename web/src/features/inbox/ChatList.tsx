@@ -23,7 +23,19 @@ import { Link, useNavigate } from "react-router"
 import { useShell } from "@/app/shell"
 import { TeamMenu } from "@/app/TeamMenu"
 import { UserMenu } from "@/app/UserMenu"
-import { ChannelIcon, ContactAvatar, ErrorLine, Kbd, MemberAvatar, toast } from "@/components/common"
+import {
+  ContactAvatar,
+  ErrorLine,
+  isVisitor,
+  Kbd,
+  MemberAvatar,
+  placeOf,
+  SourceBadge,
+  sourceOf,
+  toast,
+  useContactName,
+  VisitorAvatar,
+} from "@/components/common"
 import { keyLabel, mod, SHORTCUTS } from "@/components/common/ShortcutSheet"
 import { formatShort, useErrorText } from "@/components/common/text"
 import { Alert } from "@/components/ui/alert"
@@ -50,6 +62,7 @@ import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
+import { SourceFilter, sourceFilters, useSourceFilter } from "@/features/inbox/SourceFilter"
 import { useBulkUpdateConversations, useConversations, useCounts } from "@/features/inbox/queries"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useIsPhone } from "@/hooks/use-media-query"
@@ -176,7 +189,11 @@ function Row({
   const channel = useChannelMap().get(c.channel_id ?? "")
   const members = useMemberMap()
   const assignee = c.assignee_id ? members.get(c.assignee_id) : undefined
-  const name = c.contact.name || c.contact.email || t`Unnamed contact`
+  const contactName = useContactName()
+  const visitor = isVisitor(c.contact.name, c.contact.email)
+  const name = contactName(c, channel, c.contact.name, c.contact.email)
+  const source = sourceOf(c, channel)
+  const place = placeOf(c, channel)
   const rating = currentRating(c)
   return (
     <ContextMenu>
@@ -196,7 +213,11 @@ function Row({
         data-pinned={c.pinned_at ? true : undefined}
       >
         <span className="relative shrink-0 py-2.5">
-          <ContactAvatar id={c.contact.id} name={name} className="size-12" />
+          {visitor ? (
+            <VisitorAvatar className="size-12" />
+          ) : (
+            <ContactAvatar id={c.contact.id} name={name} className="size-12" />
+          )}
           {live && (
             <span
               className="absolute end-0 bottom-3 size-3 rounded-full border-2 border-background bg-success"
@@ -224,8 +245,13 @@ function Row({
               {formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
+          {(source || place) && (
+            <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
+              {source && <SourceBadge source={source} />}
+              {place && <span className="min-w-0 truncate">{place}</span>}
+            </span>
+          )}
           <span className="flex min-w-0 items-center gap-1.5 text-small text-muted-foreground">
-            {channel && <ChannelIcon kind={channel.kind} className="size-3.5 shrink-0 text-faint" />}
             {c.status === "snoozed" && <ClockIcon className="size-3.5 shrink-0 text-faint" aria-label={t`Snoozed`} />}
             <span className="flex min-w-0 flex-1">
               <Preview c={c} current={current} receipts={channel?.kind === "chat" || channel?.kind === "app"} />
@@ -470,7 +496,9 @@ export function ChatList({
   const sentinel = useRef<HTMLDivElement>(null)
   const [nearEnd, setNearEnd] = useState(false)
 
-  const filters = { ...chipFilters[chip], inbox_id: inboxId || undefined, q: q || undefined }
+  const [source] = useSourceFilter()
+  const narrowed = !!source.source || !!source.site
+  const filters = { ...chipFilters[chip], ...sourceFilters(source), inbox_id: inboxId || undefined, q: q || undefined }
   const list = useConversations(filters)
   const pinnedList = useConversations({ ...filters, pinned: true })
   const loaded = useMemo(() => list.data?.pages.flatMap((p) => p.items) ?? [], [list.data])
@@ -631,6 +659,13 @@ export function ChatList({
             {labels[k]}
           </button>
         ))}
+        <SourceFilter
+          inboxId={inboxId}
+          onChange={() => {
+            setCursorId(null)
+            scroller.current?.scrollTo({ top: 0 })
+          }}
+        />
       </div>
       <AwayBanner />
       <CleanupBanner onReview={onOpen} />
@@ -649,7 +684,13 @@ export function ChatList({
           </div>
         ) : rows.length === 0 && !hasNextPage ? (
           <p className="px-6 py-12 text-center text-body text-faint" data-testid="list-empty">
-            {q ? <Trans>Nothing matches your search here.</Trans> : empty[chip]}
+            {q ? (
+              <Trans>Nothing matches your search here.</Trans>
+            ) : narrowed ? (
+              <Trans>Nothing matches these filters.</Trans>
+            ) : (
+              empty[chip]
+            )}
           </p>
         ) : (
           <>
