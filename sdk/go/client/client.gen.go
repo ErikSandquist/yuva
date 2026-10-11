@@ -108,6 +108,45 @@ func (e AppPlatform) Valid() bool {
 	}
 }
 
+// Defines values for AuthStatus.
+const (
+	AuthFail      AuthStatus = "fail"
+	AuthNeutral   AuthStatus = "neutral"
+	AuthNone      AuthStatus = "none"
+	AuthPass      AuthStatus = "pass"
+	AuthPermerror AuthStatus = "permerror"
+	AuthPolicy    AuthStatus = "policy"
+	AuthSoftfail  AuthStatus = "softfail"
+	AuthTemperror AuthStatus = "temperror"
+	AuthUnknown   AuthStatus = "unknown"
+)
+
+// Valid indicates whether the value is a known member of the AuthStatus enum.
+func (e AuthStatus) Valid() bool {
+	switch e {
+	case AuthFail:
+		return true
+	case AuthNeutral:
+		return true
+	case AuthNone:
+		return true
+	case AuthPass:
+		return true
+	case AuthPermerror:
+		return true
+	case AuthPolicy:
+		return true
+	case AuthSoftfail:
+		return true
+	case AuthTemperror:
+		return true
+	case AuthUnknown:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AuthorType.
 const (
 	AuthorTypeBot     AuthorType = "bot"
@@ -282,6 +321,7 @@ const (
 	BroadcastReviewKeyAudienceNonempty BroadcastReviewKey = "audience_nonempty"
 	BroadcastReviewKeyClickTracking    BroadcastReviewKey = "click_tracking"
 	BroadcastReviewKeyDailyCap         BroadcastReviewKey = "daily_cap"
+	BroadcastReviewKeyDeliverability   BroadcastReviewKey = "deliverability"
 	BroadcastReviewKeyDesign           BroadcastReviewKey = "design"
 	BroadcastReviewKeyHtmlSize         BroadcastReviewKey = "html_size"
 	BroadcastReviewKeyImagesAlt        BroadcastReviewKey = "images_alt"
@@ -303,6 +343,8 @@ func (e BroadcastReviewKey) Valid() bool {
 	case BroadcastReviewKeyClickTracking:
 		return true
 	case BroadcastReviewKeyDailyCap:
+		return true
+	case BroadcastReviewKeyDeliverability:
 		return true
 	case BroadcastReviewKeyDesign:
 		return true
@@ -798,6 +840,36 @@ func (e ConversationStatus) Valid() bool {
 	}
 }
 
+// Defines values for DeliverabilityState.
+const (
+	DeliverabilityFailed       DeliverabilityState = "failed"
+	DeliverabilityQueued       DeliverabilityState = "queued"
+	DeliverabilityReceived     DeliverabilityState = "received"
+	DeliverabilitySent         DeliverabilityState = "sent"
+	DeliverabilityTimeout      DeliverabilityState = "timeout"
+	DeliverabilityUnverifiable DeliverabilityState = "unverifiable"
+)
+
+// Valid indicates whether the value is a known member of the DeliverabilityState enum.
+func (e DeliverabilityState) Valid() bool {
+	switch e {
+	case DeliverabilityFailed:
+		return true
+	case DeliverabilityQueued:
+		return true
+	case DeliverabilityReceived:
+		return true
+	case DeliverabilitySent:
+		return true
+	case DeliverabilityTimeout:
+		return true
+	case DeliverabilityUnverifiable:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for Direction.
 const (
 	In  Direction = "in"
@@ -957,6 +1029,27 @@ func (e DiscussionTeamSort) Valid() bool {
 	case DiscussionTeamSortNew:
 		return true
 	case DiscussionTeamSortTop:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DmarcPolicy.
+const (
+	DmarcPolicyNone       DmarcPolicy = "none"
+	DmarcPolicyQuarantine DmarcPolicy = "quarantine"
+	DmarcPolicyReject     DmarcPolicy = "reject"
+)
+
+// Valid indicates whether the value is a known member of the DmarcPolicy enum.
+func (e DmarcPolicy) Valid() bool {
+	switch e {
+	case DmarcPolicyNone:
+		return true
+	case DmarcPolicyQuarantine:
+		return true
+	case DmarcPolicyReject:
 		return true
 	default:
 		return false
@@ -2905,6 +2998,10 @@ type Attachment struct {
 
 // Attributes Free-form data about the contact (plan, app version, ...), at most 16 KiB.
 type Attributes map[string]interface{}
+
+// AuthStatus A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+// when it was not reported.
+type AuthStatus string
 
 // AuthorType `bot` is an API key. Rows written with a key before bot authors existed have `system`.
 type AuthorType string
@@ -4863,6 +4960,103 @@ type CountByID struct {
 	Id    uuid.UUID `json:"id"`
 }
 
+// DeliverabilityCheck defines model for DeliverabilityCheck.
+type DeliverabilityCheck struct {
+	// CheckedAt When the probe arrived or failed.
+	CheckedAt *time.Time          `json:"checked_at,omitempty"`
+	CreatedAt time.Time           `json:"created_at"`
+	Dkim      DeliverabilityDkim  `json:"dkim"`
+	Dmarc     DeliverabilityDmarc `json:"dmarc"`
+
+	// Domain The sending domain, of `From`.
+	Domain string `json:"domain"`
+
+	// Error `failed` only: why the probe was not sent, such as the SMTP server's answer.
+	Error *string           `json:"error,omitempty"`
+	Mx    *DeliverabilityMx `json:"mx,omitempty"`
+	Spf   DeliverabilitySpf `json:"spf"`
+
+	// State `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+	// `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+	// server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+	// receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+	// minutes; `failed` when it could not be sent (`error`).
+	State DeliverabilityState `json:"state"`
+
+	// Tls The probe went to the SMTP server encrypted (STARTTLS or TLS).
+	Tls      *bool                   `json:"tls,omitempty"`
+	YuvaDkim *DeliverabilityYuvaDkim `json:"yuva_dkim,omitempty"`
+}
+
+// DeliverabilityDkim defines model for DeliverabilityDkim.
+type DeliverabilityDkim struct {
+	// Aligned A signature aligned with `From` passed.
+	Aligned bool `json:"aligned"`
+
+	// CoversListUnsubscribe That passing aligned signature covers `List-Unsubscribe` and `List-Unsubscribe-Post`.
+	CoversListUnsubscribe bool    `json:"covers_list_unsubscribe"`
+	Domain                *string `json:"domain,omitempty"`
+
+	// Signatures Every DKIM signature of the probe with the receiving server's result for it.
+	Signatures []DkimSignature `json:"signatures"`
+
+	// Status The result of the signature aligned with `From`, else of the first one reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityDmarc defines model for DeliverabilityDmarc.
+type DeliverabilityDmarc struct {
+	Policy *DmarcPolicy `json:"policy,omitempty"`
+
+	// Record The DMARC record that applies to the sending domain; absent when there is none.
+	Record *string `json:"record,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityMx defines model for DeliverabilityMx.
+type DeliverabilityMx struct {
+	// Domain The domain of the channel's reply address.
+	Domain string `json:"domain"`
+
+	// Hosts Its MX hosts by preference; empty when it has none.
+	Hosts []string `json:"hosts"`
+}
+
+// DeliverabilitySpf defines model for DeliverabilitySpf.
+type DeliverabilitySpf struct {
+	// Aligned `domain` shares its organizational domain with `From` (DMARC relaxed alignment).
+	Aligned bool `json:"aligned"`
+
+	// Domain The envelope sender's domain the result is for (`smtp.mailfrom`).
+	Domain *string `json:"domain,omitempty"`
+
+	// Record The SPF record of the sending domain itself; absent when it has none.
+	Record *string `json:"record,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DeliverabilityState `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+// `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+// server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+// receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+// minutes; `failed` when it could not be sent (`error`).
+type DeliverabilityState string
+
+// DeliverabilityYuvaDkim defines model for DeliverabilityYuvaDkim.
+type DeliverabilityYuvaDkim struct {
+	DnsName string `json:"dns_name"`
+
+	// Published DNS answers at `dns_name` with the channel's public key.
+	Published bool   `json:"published"`
+	Selector  string `json:"selector"`
+}
+
 // Direction defines model for Direction.
 type Direction string
 
@@ -5125,6 +5319,34 @@ type DiscussionUpdate struct {
 	Title  *string `json:"title,omitempty"`
 }
 
+// DkimKeyCreate defines model for DkimKeyCreate.
+type DkimKeyCreate struct {
+	// Selector The DNS label the key is published under, such as `yuva` or `yuva2026`.
+	Selector string `json:"selector"`
+}
+
+// DkimSignature defines model for DkimSignature.
+type DkimSignature struct {
+	// Aligned `domain` shares its organizational domain with `From`.
+	Aligned bool `json:"aligned"`
+
+	// CoversListUnsubscribe Its `h=` lists both `List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058).
+	CoversListUnsubscribe bool `json:"covers_list_unsubscribe"`
+
+	// Domain `d=`
+	Domain string `json:"domain"`
+
+	// Selector `s=`
+	Selector *string `json:"selector,omitempty"`
+
+	// Status A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+	// when it was not reported.
+	Status AuthStatus `json:"status"`
+}
+
+// DmarcPolicy defines model for DmarcPolicy.
+type DmarcPolicy string
+
 // DocsPage defines model for DocsPage.
 type DocsPage struct {
 	Down         int64     `json:"down"`
@@ -5374,6 +5596,9 @@ type EmailChannel struct {
 	// DisplayName The name in `From`; the channel name when empty.
 	DisplayName string `json:"display_name"`
 
+	// Dkim The channel's Yuva DKIM key; absent without one.
+	Dkim *EmailDkim `json:"dkim,omitempty"`
+
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email `json:"from_address,omitempty"`
 
@@ -5404,6 +5629,12 @@ type EmailChannelInput struct {
 	// BroadcastSmtpRemove `true` removes the broadcast SMTP account; broadcasts then use `smtp`.
 	BroadcastSmtpRemove *bool   `json:"broadcast_smtp_remove,omitempty"`
 	DisplayName         *string `json:"display_name,omitempty"`
+
+	// Dkim Absent keeps the stored state. `enabled: true` needs a key (`POST
+	// /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+	// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+	// until it is enabled again for the new domain.
+	Dkim *EmailDkimInput `json:"dkim,omitempty"`
 
 	// FromAddress Examples: owner@example.com
 	FromAddress *Email             `json:"from_address,omitempty"`
@@ -5697,6 +5928,28 @@ type EmailDividerBlock struct {
 
 // EmailDividerBlockType defines model for EmailDividerBlock.Type.
 type EmailDividerBlockType string
+
+// EmailDkim A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
+// TXT record to publish; they follow the sending domain (`from_address`, else `address`).
+type EmailDkim struct {
+	// DnsName Examples: yuva._domainkey.example.com
+	DnsName string `json:"dns_name"`
+
+	// DnsValue Examples: v=DKIM1; k=rsa; p=MIIBIjANBgkqh...
+	DnsValue string `json:"dns_value"`
+
+	// Enabled Mail is signed with the key.
+	Enabled  bool   `json:"enabled"`
+	Selector string `json:"selector"`
+}
+
+// EmailDkimInput Absent keeps the stored state. `enabled: true` needs a key (`POST
+// /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+// until it is enabled again for the new domain.
+type EmailDkimInput struct {
+	Enabled bool `json:"enabled"`
+}
 
 // EmailFont A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
 // `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
@@ -9121,6 +9374,36 @@ type UpdateChannelParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetDeliverabilityParams defines parameters for GetDeliverability.
+type GetDeliverabilityParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CheckDeliverabilityParams defines parameters for CheckDeliverability.
+type CheckDeliverabilityParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteDkimKeyParams defines parameters for DeleteDkimKey.
+type DeleteDkimKeyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateDkimKeyParams defines parameters for CreateDkimKey.
+type CreateDkimKeyParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // RotateChannelPublicKeyParams defines parameters for RotateChannelPublicKey.
 type RotateChannelPublicKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -10661,6 +10944,9 @@ type UpdateCannedReplyJSONRequestBody = CannedReplyUpdate
 
 // UpdateChannelJSONRequestBody defines body for UpdateChannel for application/json ContentType.
 type UpdateChannelJSONRequestBody = ChannelUpdate
+
+// CreateDkimKeyJSONRequestBody defines body for CreateDkimKey for application/json ContentType.
+type CreateDkimKeyJSONRequestBody = DkimKeyCreate
 
 // CreateContactJSONRequestBody defines body for CreateContact for application/json ContentType.
 type CreateContactJSONRequestBody = ContactCreate
@@ -14935,6 +15221,89 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/channels/{channelId} (the `UpdateChannel` operationId).
 	UpdateChannel(ctx context.Context, channelId ChannelId, params *UpdateChannelParams, body UpdateChannelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetDeliverability Get the last deliverability check of an e-mail channel
+	//
+	// The last check and what it found. `404 not_found` when the channel was never checked. The
+	// broadcast review reads it: a warning when the channel was never checked, the check did not
+	// finish or found no DMARC record, blocking when it found no passing DKIM signature.
+	//
+	// Scope: `inboxes:read`.
+	//
+	// Corresponds with GET /v1/channels/{channelId}/deliverability (the `GetDeliverability` operationId).
+	GetDeliverability(ctx context.Context, channelId ChannelId, params *GetDeliverabilityParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CheckDeliverability Check how an e-mail channel's broadcasts authenticate
+	//
+	// Sends a probe through the channel's broadcast SMTP account (its support account when it
+	// has none) to the channel's own address, with the headers a broadcast carries, and looks up
+	// DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+	// domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+	// it arrives and never becomes a conversation; the result is read only from the
+	// `Authentication-Results` of the receiving server the operator trusts
+	// (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+	// `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+	// when it has not within 10 minutes. A new check replaces the previous one.
+	//
+	// `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+	// at most 6 checks an hour per channel (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Corresponds with POST /v1/channels/{channelId}/deliverability-check (the `CheckDeliverability` operationId).
+	CheckDeliverability(ctx context.Context, channelId ChannelId, params *CheckDeliverabilityParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteDkimKey Remove an e-mail channel's DKIM key
+	//
+	// Stops signing with it and deletes the key; a channel without a key also answers `204`.
+	// `409 email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Corresponds with DELETE /v1/channels/{channelId}/dkim-key (the `DeleteDkimKey` operationId).
+	DeleteDkimKey(ctx context.Context, channelId ChannelId, params *DeleteDkimKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDkimKeyWithBody Create a DKIM key for an e-mail channel
+	//
+	// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+	// deliverability probes with, once enabled. The private key is stored encrypted under the
+	// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+	// (a provider that limits TXT strings to 255 characters splits it into several strings of
+	// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+	// which looks the record up first. The signature uses `d=` the sending domain,
+	// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+	// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+	//
+	// `409 dkim_exists` when the channel has a key (remove it first); `409
+	// email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+	CreateDkimKeyWithBody(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateDkimKey Create a DKIM key for an e-mail channel
+	//
+	// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+	// deliverability probes with, once enabled. The private key is stored encrypted under the
+	// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+	// (a provider that limits TXT strings to 255 characters splits it into several strings of
+	// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+	// which looks the record up first. The signature uses `d=` the sending domain,
+	// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+	// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+	//
+	// `409 dkim_exists` when the channel has a key (remove it first); `409
+	// email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+	CreateDkimKey(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, body CreateDkimKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RotateChannelPublicKey Rotate a chat or app channel's public key
 	//
@@ -19848,6 +20217,139 @@ func (c *Client) UpdateChannelWithBody(ctx context.Context, channelId ChannelId,
 // Corresponds with PATCH /v1/channels/{channelId} (the `UpdateChannel` operationId).
 func (c *Client) UpdateChannel(ctx context.Context, channelId ChannelId, params *UpdateChannelParams, body UpdateChannelJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateChannelRequest(c.Server, channelId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetDeliverability Get the last deliverability check of an e-mail channel
+//
+// The last check and what it found. `404 not_found` when the channel was never checked. The
+// broadcast review reads it: a warning when the channel was never checked, the check did not
+// finish or found no DMARC record, blocking when it found no passing DKIM signature.
+//
+// Scope: `inboxes:read`.
+//
+// Corresponds with GET /v1/channels/{channelId}/deliverability (the `GetDeliverability` operationId).
+func (c *Client) GetDeliverability(ctx context.Context, channelId ChannelId, params *GetDeliverabilityParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDeliverabilityRequest(c.Server, channelId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CheckDeliverability Check how an e-mail channel's broadcasts authenticate
+//
+// Sends a probe through the channel's broadcast SMTP account (its support account when it
+// has none) to the channel's own address, with the headers a broadcast carries, and looks up
+// DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+// domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+// it arrives and never becomes a conversation; the result is read only from the
+// `Authentication-Results` of the receiving server the operator trusts
+// (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+// `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+// when it has not within 10 minutes. A new check replaces the previous one.
+//
+// `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+// at most 6 checks an hour per channel (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Corresponds with POST /v1/channels/{channelId}/deliverability-check (the `CheckDeliverability` operationId).
+func (c *Client) CheckDeliverability(ctx context.Context, channelId ChannelId, params *CheckDeliverabilityParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCheckDeliverabilityRequest(c.Server, channelId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteDkimKey Remove an e-mail channel's DKIM key
+//
+// Stops signing with it and deletes the key; a channel without a key also answers `204`.
+// `409 email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Corresponds with DELETE /v1/channels/{channelId}/dkim-key (the `DeleteDkimKey` operationId).
+func (c *Client) DeleteDkimKey(ctx context.Context, channelId ChannelId, params *DeleteDkimKeyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteDkimKeyRequest(c.Server, channelId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDkimKeyWithBody Create a DKIM key for an e-mail channel
+//
+// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+// deliverability probes with, once enabled. The private key is stored encrypted under the
+// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+// (a provider that limits TXT strings to 255 characters splits it into several strings of
+// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+// which looks the record up first. The signature uses `d=` the sending domain,
+// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+//
+// `409 dkim_exists` when the channel has a key (remove it first); `409
+// email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+func (c *Client) CreateDkimKeyWithBody(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDkimKeyRequestWithBody(c.Server, channelId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateDkimKey Create a DKIM key for an e-mail channel
+//
+// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+// deliverability probes with, once enabled. The private key is stored encrypted under the
+// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+// (a provider that limits TXT strings to 255 characters splits it into several strings of
+// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+// which looks the record up first. The signature uses `d=` the sending domain,
+// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+//
+// `409 dkim_exists` when the channel has a key (remove it first); `409
+// email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+func (c *Client) CreateDkimKey(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, body CreateDkimKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateDkimKeyRequest(c.Server, channelId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -28230,6 +28732,237 @@ func NewUpdateChannelRequestWithBody(server string, channelId ChannelId, params 
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetDeliverabilityRequest constructs an http.Request for the GetDeliverability method
+func NewGetDeliverabilityRequest(server string, channelId ChannelId, params *GetDeliverabilityParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channelId", channelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/channels/%s/deliverability", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCheckDeliverabilityRequest constructs an http.Request for the CheckDeliverability method
+func NewCheckDeliverabilityRequest(server string, channelId ChannelId, params *CheckDeliverabilityParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channelId", channelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/channels/%s/deliverability-check", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteDkimKeyRequest constructs an http.Request for the DeleteDkimKey method
+func NewDeleteDkimKeyRequest(server string, channelId ChannelId, params *DeleteDkimKeyParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channelId", channelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/channels/%s/dkim-key", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateDkimKeyRequest calls the generic CreateDkimKey builder with application/json body
+func NewCreateDkimKeyRequest(server string, channelId ChannelId, params *CreateDkimKeyParams, body CreateDkimKeyJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreateDkimKeyRequestWithBody(server, channelId, params, "application/json", bodyReader)
+}
+
+// NewCreateDkimKeyRequestWithBody constructs an http.Request for the CreateDkimKey method, with any body, and a specified content type
+func NewCreateDkimKeyRequestWithBody(server string, channelId ChannelId, params *CreateDkimKeyParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "channelId", channelId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/channels/%s/dkim-key", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
 		}
 
 	}
@@ -39382,6 +40115,95 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/channels/{channelId} (the `UpdateChannel` operationId).
 	UpdateChannelWithResponse(ctx context.Context, channelId ChannelId, params *UpdateChannelParams, body UpdateChannelJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateChannelResponse, error)
 
+	// GetDeliverabilityWithResponse Get the last deliverability check of an e-mail channel
+	//
+	// The last check and what it found. `404 not_found` when the channel was never checked. The
+	// broadcast review reads it: a warning when the channel was never checked, the check did not
+	// finish or found no DMARC record, blocking when it found no passing DKIM signature.
+	//
+	// Scope: `inboxes:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/channels/{channelId}/deliverability (the `GetDeliverability` operationId).
+	GetDeliverabilityWithResponse(ctx context.Context, channelId ChannelId, params *GetDeliverabilityParams, reqEditors ...RequestEditorFn) (*GetDeliverabilityResponse, error)
+
+	// CheckDeliverabilityWithResponse Check how an e-mail channel's broadcasts authenticate
+	//
+	// Sends a probe through the channel's broadcast SMTP account (its support account when it
+	// has none) to the channel's own address, with the headers a broadcast carries, and looks up
+	// DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+	// domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+	// it arrives and never becomes a conversation; the result is read only from the
+	// `Authentication-Results` of the receiving server the operator trusts
+	// (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+	// `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+	// when it has not within 10 minutes. A new check replaces the previous one.
+	//
+	// `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+	// at most 6 checks an hour per channel (`429 rate_limited`).
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/channels/{channelId}/deliverability-check (the `CheckDeliverability` operationId).
+	CheckDeliverabilityWithResponse(ctx context.Context, channelId ChannelId, params *CheckDeliverabilityParams, reqEditors ...RequestEditorFn) (*CheckDeliverabilityResponse, error)
+
+	// DeleteDkimKeyWithResponse Remove an e-mail channel's DKIM key
+	//
+	// Stops signing with it and deletes the key; a channel without a key also answers `204`.
+	// `409 email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/channels/{channelId}/dkim-key (the `DeleteDkimKey` operationId).
+	DeleteDkimKeyWithResponse(ctx context.Context, channelId ChannelId, params *DeleteDkimKeyParams, reqEditors ...RequestEditorFn) (*DeleteDkimKeyResponse, error)
+
+	// CreateDkimKeyWithBodyWithResponse Create a DKIM key for an e-mail channel
+	//
+	// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+	// deliverability probes with, once enabled. The private key is stored encrypted under the
+	// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+	// (a provider that limits TXT strings to 255 characters splits it into several strings of
+	// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+	// which looks the record up first. The signature uses `d=` the sending domain,
+	// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+	// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+	//
+	// `409 dkim_exists` when the channel has a key (remove it first); `409
+	// email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+	CreateDkimKeyWithBodyWithResponse(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDkimKeyResponse, error)
+
+	// CreateDkimKeyWithResponse Create a DKIM key for an e-mail channel
+	//
+	// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+	// deliverability probes with, once enabled. The private key is stored encrypted under the
+	// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+	// (a provider that limits TXT strings to 255 characters splits it into several strings of
+	// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+	// which looks the record up first. The signature uses `d=` the sending domain,
+	// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+	// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+	//
+	// `409 dkim_exists` when the channel has a key (remove it first); `409
+	// email_channel_required` when the channel is not an e-mail channel.
+	//
+	// Owners, admins and API keys. Scope: `inboxes:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+	CreateDkimKeyWithResponse(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, body CreateDkimKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDkimKeyResponse, error)
+
 	// RotateChannelPublicKeyWithResponse Rotate a chat or app channel's public key
 	//
 	// Owners, admins and API keys. Gives a `chat` or `app` channel a new public
@@ -46923,6 +47745,282 @@ func (r UpdateChannelResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r UpdateChannelResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetDeliverabilityResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *DeliverabilityCheck
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetDeliverabilityResponse) GetJSON200() *DeliverabilityCheck {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetDeliverabilityResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetDeliverabilityResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetDeliverabilityResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetDeliverabilityResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDeliverabilityResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDeliverabilityResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetDeliverabilityResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CheckDeliverabilityResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *DeliverabilityCheck
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CheckDeliverabilityResponse) GetJSON202() *DeliverabilityCheck {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CheckDeliverabilityResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CheckDeliverabilityResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CheckDeliverabilityResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CheckDeliverabilityResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r CheckDeliverabilityResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r CheckDeliverabilityResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CheckDeliverabilityResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CheckDeliverabilityResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CheckDeliverabilityResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteDkimKeyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteDkimKeyResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteDkimKeyResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteDkimKeyResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r DeleteDkimKeyResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteDkimKeyResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteDkimKeyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteDkimKeyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteDkimKeyResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateDkimKeyResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON201 the response for an HTTP 201 `application/json` response
+	JSON201 *EmailDkim
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON201 returns the response for an HTTP 201 `application/json` response
+func (r CreateDkimKeyResponse) GetJSON201() *EmailDkim {
+	return r.JSON201
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateDkimKeyResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateDkimKeyResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateDkimKeyResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateDkimKeyResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateDkimKeyResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateDkimKeyResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateDkimKeyResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateDkimKeyResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateDkimKeyResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -59078,6 +60176,125 @@ func (c *ClientWithResponses) UpdateChannelWithResponse(ctx context.Context, cha
 	return ParseUpdateChannelResponse(rsp)
 }
 
+// GetDeliverabilityWithResponse Get the last deliverability check of an e-mail channel
+//
+// The last check and what it found. `404 not_found` when the channel was never checked. The
+// broadcast review reads it: a warning when the channel was never checked, the check did not
+// finish or found no DMARC record, blocking when it found no passing DKIM signature.
+//
+// Scope: `inboxes:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/channels/{channelId}/deliverability (the `GetDeliverability` operationId).
+func (c *ClientWithResponses) GetDeliverabilityWithResponse(ctx context.Context, channelId ChannelId, params *GetDeliverabilityParams, reqEditors ...RequestEditorFn) (*GetDeliverabilityResponse, error) {
+	rsp, err := c.GetDeliverability(ctx, channelId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDeliverabilityResponse(rsp)
+}
+
+// CheckDeliverabilityWithResponse Check how an e-mail channel's broadcasts authenticate
+//
+// Sends a probe through the channel's broadcast SMTP account (its support account when it
+// has none) to the channel's own address, with the headers a broadcast carries, and looks up
+// DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+// domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+// it arrives and never becomes a conversation; the result is read only from the
+// `Authentication-Results` of the receiving server the operator trusts
+// (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+// `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+// when it has not within 10 minutes. A new check replaces the previous one.
+//
+// `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+// at most 6 checks an hour per channel (`429 rate_limited`).
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/channels/{channelId}/deliverability-check (the `CheckDeliverability` operationId).
+func (c *ClientWithResponses) CheckDeliverabilityWithResponse(ctx context.Context, channelId ChannelId, params *CheckDeliverabilityParams, reqEditors ...RequestEditorFn) (*CheckDeliverabilityResponse, error) {
+	rsp, err := c.CheckDeliverability(ctx, channelId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCheckDeliverabilityResponse(rsp)
+}
+
+// DeleteDkimKeyWithResponse Remove an e-mail channel's DKIM key
+//
+// Stops signing with it and deletes the key; a channel without a key also answers `204`.
+// `409 email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/channels/{channelId}/dkim-key (the `DeleteDkimKey` operationId).
+func (c *ClientWithResponses) DeleteDkimKeyWithResponse(ctx context.Context, channelId ChannelId, params *DeleteDkimKeyParams, reqEditors ...RequestEditorFn) (*DeleteDkimKeyResponse, error) {
+	rsp, err := c.DeleteDkimKey(ctx, channelId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteDkimKeyResponse(rsp)
+}
+
+// CreateDkimKeyWithBodyWithResponse Create a DKIM key for an e-mail channel
+//
+// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+// deliverability probes with, once enabled. The private key is stored encrypted under the
+// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+// (a provider that limits TXT strings to 255 characters splits it into several strings of
+// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+// which looks the record up first. The signature uses `d=` the sending domain,
+// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+//
+// `409 dkim_exists` when the channel has a key (remove it first); `409
+// email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+func (c *ClientWithResponses) CreateDkimKeyWithBodyWithResponse(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDkimKeyResponse, error) {
+	rsp, err := c.CreateDkimKeyWithBody(ctx, channelId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDkimKeyResponse(rsp)
+}
+
+// CreateDkimKeyWithResponse Create a DKIM key for an e-mail channel
+//
+// Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+// deliverability probes with, once enabled. The private key is stored encrypted under the
+// server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+// (a provider that limits TXT strings to 255 characters splits it into several strings of
+// one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+// which looks the record up first. The signature uses `d=` the sending domain,
+// relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+// `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+//
+// `409 dkim_exists` when the channel has a key (remove it first); `409
+// email_channel_required` when the channel is not an e-mail channel.
+//
+// Owners, admins and API keys. Scope: `inboxes:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/channels/{channelId}/dkim-key (the `CreateDkimKey` operationId).
+func (c *ClientWithResponses) CreateDkimKeyWithResponse(ctx context.Context, channelId ChannelId, params *CreateDkimKeyParams, body CreateDkimKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDkimKeyResponse, error) {
+	rsp, err := c.CreateDkimKey(ctx, channelId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateDkimKeyResponse(rsp)
+}
+
 // RotateChannelPublicKeyWithResponse Rotate a chat or app channel's public key
 //
 // Owners, admins and API keys. Gives a `chat` or `app` channel a new public
@@ -66769,6 +67986,225 @@ func ParseUpdateChannelResponse(rsp *http.Response) (*UpdateChannelResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDeliverabilityResponse parses an HTTP response from a GetDeliverabilityWithResponse call
+func ParseGetDeliverabilityResponse(rsp *http.Response) (*GetDeliverabilityResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDeliverabilityResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DeliverabilityCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCheckDeliverabilityResponse parses an HTTP response from a CheckDeliverabilityWithResponse call
+func ParseCheckDeliverabilityResponse(rsp *http.Response) (*CheckDeliverabilityResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CheckDeliverabilityResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest DeliverabilityCheck
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteDkimKeyResponse parses an HTTP response from a DeleteDkimKeyWithResponse call
+func ParseDeleteDkimKeyResponse(rsp *http.Response) (*DeleteDkimKeyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteDkimKeyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateDkimKeyResponse parses an HTTP response from a CreateDkimKeyWithResponse call
+func ParseCreateDkimKeyResponse(rsp *http.Response) (*CreateDkimKeyResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateDkimKeyResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+		var dest EmailDkim
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON201 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
 		var dest Problem
