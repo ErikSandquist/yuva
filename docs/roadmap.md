@@ -177,3 +177,22 @@ the page and in their account, and marks it accepted; a second reader replies an
 site installs the shadcn components and shows the same thread; nothing private of another
 workspace or another reader is visible.
 
+## M13 — Broadcasts and e-mail designs
+
+Status: in progress; plan in issue #25, decisions in `architecture.md` › Broadcasts and e-mail
+designs (M13).
+
+- Mailing lists with recorded consent and double opt-in, `<yuva-subscribe>`, CSV import and an API
+  for host backends.
+- Broadcasts to lists, narrowed by labels and attributes, scheduled, sent through an inbox's e-mail
+  channel (optionally its own SMTP for broadcasts), with one-click unsubscribe, postal address,
+  bounces and complaints; replies become conversations in the inbox.
+- A block-based designer in the panel and server-side rendering to responsive HTML and text.
+- A template gallery in the panel and on the website; templates added by pull request.
+
+Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter
+from a gallery template, sends a test, schedules it to the list and it arrives on Gmail and Apple
+Mail looking like the preview, in light and dark; one recipient replies and the reply is a
+conversation in the inbox; another unsubscribes with one click and gets no further broadcast; a
+bounce suppresses the address; another workspace sees none of it.
+

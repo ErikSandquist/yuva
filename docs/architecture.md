@@ -16,10 +16,11 @@ database.
 - Typed everywhere: OpenAPI 3.1 is the contract; clients are generated from it.
 - Ready to be hosted for others: every row belongs to a workspace and usage is counted from day one.
 
-Not goals: a CRM, a marketing e-mail tool, a public knowledge base, social-media channels
+Not goals: a CRM, a marketing automation suite (journeys, A/B tests, lead scoring), a public knowledge base, social-media channels
 (WhatsApp, Instagram, …). They may come later; the model must not block them. Yuva does not host
 documentation, but it collects feedback and questions on the documentation sites products already
-have (see "Documentation pages").
+have (see "Documentation pages"). Since M13 it sends broadcasts (newsletters, announcements) to
+contacts who subscribed, and replies to them land in the inbox (see "Broadcasts and e-mail designs").
 
 ## Concepts
 
@@ -1127,6 +1128,58 @@ Private help stays private: page feedback, live chat and e-mail are unchanged. D
   shadcn registry for React sites that want the code in their own design system: components built
   on shadcn/ui primitives and the headless `useyuva` client, sources in `sdk/shadcn/` (MIT), served
   as registry JSON by the site so `npx shadcn add <site>/r/discussions.json` installs them.
+
+### Broadcasts and e-mail designs (M13)
+
+A workspace sends e-mail to many contacts at once: newsletters, product updates, announcements.
+What sets it apart from a newsletter tool is that every broadcast is sent on behalf of an inbox and
+a reply becomes a conversation in that inbox. Decisions:
+
+- **Lists and consent.** `mailing_lists` per workspace (name, inbox it belongs to, double opt-in on
+  by default) and `list_subscriptions` (list, contact, address, state
+  `pending|subscribed|unsubscribed`, how and when consent was given: form, import, API, member, with
+  time, IP and the form's page). A contact may be on many lists. Consent is never assumed: an import
+  needs the importer to confirm the people agreed, and is recorded as such.
+- **Signing up.** `<yuva-subscribe>` (web component, Shadow DOM, on an existing chat channel's key
+  and origins like the documentation elements) and `POST /client/v1/subscribe`; double opt-in sends
+  a confirmation mail with a sealed link; rate limited per IP and channel. Host backends add
+  subscribers with an API key (`POST /v1/lists/{id}/subscriptions`), CSV import in the panel.
+- **Audiences.** A broadcast goes to one or more lists, optionally narrowed by labels and contact
+  attributes; the count is shown before sending. Suppressed addresses (bounces, complaints,
+  unsubscribes) are never sent to.
+- **Senders.** A broadcast is sent through an e-mail channel of its inbox (From that channel's
+  address, Reply-To the same, so replies thread into the inbox). A channel can have separate SMTP
+  settings for broadcasts (`broadcast_smtp`) so marketing volume uses its own account or SES
+  configuration set and never hurts support mail. Confirmation mails, test sends and broadcasts
+  all go through the sender channel, never through the server's own SMTP account (`YUVA_SMTP_*`),
+  so open sign-up cannot use the operator's mail account for bulk mail. `YUVA_BROADCAST_DAILY_RECIPIENTS`
+  (0 = no limit, the default) caps recipients per workspace per day on a hosted server.
+- **Sending.** River jobs, batches per sender with a per-sender rate (`messages per second`), one
+  `broadcast_deliveries` row per recipient (`queued|sent|bounced|complained|failed`, unsubscribed
+  and replied flags). `List-Unsubscribe` with one-click POST on every message, a footer with the
+  workspace's postal address (required before the first broadcast) and an unsubscribe link.
+  Test sends go to members only. A broadcast can be scheduled and cancelled until it starts.
+- **Replies.** A reply to a broadcast matches its delivery by Message-ID and opens (or continues) a
+  conversation with that contact in the inbox, with the broadcast linked; auto-replies are dropped
+  by the existing loop rules.
+- **Measuring.** Counts of sent, bounced, complained, unsubscribed and replied, per broadcast.
+  Click tracking is off by default (a per-broadcast switch rewrites links through `/c/{token}`);
+  there is no open pixel.
+- **Designs.** A design is a JSON document of blocks (sections, columns, heading, text, image,
+  button, divider, spacer, social links, footer) with a theme (colours, font stack, width), rendered
+  on the server to responsive table HTML and a text part by the same renderer the server's own mails
+  use. `email_designs` per workspace with versions; a broadcast stores the rendered HTML it sent.
+  Images are uploaded to object storage and served publicly at `/i/{token}` (immutable, no tracking);
+  PNG, JPEG, GIF and WebP only (no SVG, which can carry script).
+- **Designer.** A block editor in the panel: drag blocks, edit inline, theme panel, desktop and
+  phone preview, dark-mode preview, send a test, merge fields (`{{contact.name}}` …, with
+  fallbacks) checked before sending.
+- **Template gallery.** Starter designs ship with Yuva (`templates/email/`, MIT like `sdk/` and
+  listed in `LICENSING.md`, each a design JSON plus a preview image): newsletter, product update,
+  announcement, welcome, event, digest. The panel
+  shows the gallery when creating a design; the website shows it publicly at `/templates`, with a
+  "Use this template" link into the panel. Anyone can add a template by pull request; there is no
+  paid store.
 
 ### Contacts directory
 
