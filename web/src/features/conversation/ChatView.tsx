@@ -38,6 +38,7 @@ import { useCommandHandlers } from "@/features/conversation/commands"
 import { ReplyBox, type ReplyHandle } from "@/features/conversation/composer/ReplyBox"
 import { ConversationMenu } from "@/features/conversation/ConversationMenu"
 import { CategoryChip } from "@/features/conversation/Feedback"
+import { FromConversationDialog } from "@/features/docs/discussions/FromConversation"
 import { conversationPage, PageLine } from "@/features/docs/PageContext"
 import { CloseButton, HandMenu, LabelsMenu, SnoozeMenu, type HeaderMenu } from "@/features/conversation/HeaderActions"
 import { History } from "@/features/conversation/History"
@@ -236,6 +237,7 @@ function Loaded({
     onForward: forward,
   }
   const pageLine = !!conversationPage(c)
+  const [discussing, setDiscussing] = useState(false)
   const chipLabels = labels.filter((l) => c.labels.includes(l.id))
   const assignee = c.assignee_id ? members.get(c.assignee_id) : undefined
 
@@ -327,6 +329,7 @@ function Loaded({
     contact: togglePanel,
     more: () => setMoreOpen(true),
     history: () => setHistoryOpen((o) => !o),
+    discussion: () => setDiscussing(true),
   }
   useCommandHandlers(handlers)
   useHotkeys({
@@ -347,6 +350,7 @@ function Loaded({
     [SHORTCUTS.find]: openFind,
     [SHORTCUTS.pin]: togglePin,
     [SHORTCUTS.unread]: markUnread,
+    [SHORTCUTS.discussion]: handlers.discussion,
   })
 
   const sep = <span aria-hidden>·</span>
@@ -500,6 +504,7 @@ function Loaded({
             pinned={pinned}
             onPin={togglePin}
             onUnread={markUnread}
+            onDiscussion={handlers.discussion}
           />
         </div>
       </header>
@@ -658,6 +663,7 @@ function Loaded({
           autoFocus={fine && revision === 0}
         />
       </Composer>
+      {discussing && <FromConversationDialog c={c} messages={shown} onClose={() => setDiscussing(false)} />}
       {!inlinePanel && (
         <ContactSheet contactId={c.contact_id} conversationId={c.id} open={sheet} onOpenChange={setSheet} />
       )}

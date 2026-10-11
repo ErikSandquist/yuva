@@ -3,6 +3,7 @@ import {
   EllipsisIcon,
   FlagIcon,
   InboxIcon,
+  MessagesSquareIcon,
   MailIcon,
   PinIcon,
   PinOffIcon,
@@ -46,6 +47,7 @@ export function ConversationMenu({
   pinned,
   onPin,
   onUnread,
+  onDiscussion,
 }: {
   c: Conversation
   open: boolean
@@ -56,6 +58,7 @@ export function ConversationMenu({
   pinned: boolean
   onPin: () => void
   onUnread: () => void
+  onDiscussion: () => void
 }) {
   const { t } = useLingui()
   const text = useEnumText()
@@ -104,6 +107,17 @@ export function ConversationMenu({
             <Trans>Mark as unread</Trans>
           </span>
           <Kbd>{SHORTCUTS.unread}</Kbd>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={onDiscussion} data-testid="header-discussion">
+          <MessagesSquareIcon />
+          <span className="flex-1">
+            <Trans>Turn into a discussion</Trans>
+          </span>
+          <span className="flex gap-0.5">
+            {keyLabel(SHORTCUTS.discussion).map((k) => (
+              <Kbd key={k}>{k}</Kbd>
+            ))}
+          </span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>

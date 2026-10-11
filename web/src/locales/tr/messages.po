@@ -696,6 +696,10 @@ msgstr "başka bir konuşma"
 msgid "another inbox"
 msgstr "başka bir gelen kutusu"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Answer (optional)"
+msgstr "Yanıt (isteğe bağlı)"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Answer cleared"
 msgstr "Kabul edilen yanıt kaldırıldı"
@@ -719,6 +723,10 @@ msgstr "HTTP üzerinden MCP konuşan her istemci. Sizin adınıza, yalnızca izi
 #: src/features/setup/AddChannelStep.tsx
 msgid "Anyone on your site can write. Turn it off when only signed-in users may chat."
 msgstr "Sitenizdeki herkes yazabilir. Yalnızca oturum açmış kullanıcılar yazacaksa kapatın."
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Anyone who opens the page can read this. Remove names, e-mail addresses, order numbers and anything else personal."
+msgstr "Sayfayı açan herkes bunu okuyabilir. Adları, e-posta adreslerini, sipariş numaralarını ve kişisel olan her şeyi çıkarın."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Anything using this key stops working at once."
@@ -971,6 +979,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
@@ -1513,6 +1522,10 @@ msgstr "Tartışma"
 #: src/app/Palette.tsx
 msgid "Discussion posts waiting for approval"
 msgstr "Onay bekleyen tartışma gönderileri"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Discussion started"
+msgstr "Tartışma başlatıldı"
 
 #: src/app/Palette.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
@@ -2474,6 +2487,10 @@ msgstr "Küçük harf, rakam ve tire."
 msgid "Mail to your support address, answered from it"
 msgstr "Destek adresinize gelen postalar, aynı adresten yanıtlanır"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Make it public"
+msgstr "Herkese aç"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Manage"
@@ -2536,6 +2553,10 @@ msgstr "Seçili yanıtı kabul edilen yanıt yap ya da kabulü kaldır"
 #: src/features/docs/discussions/parts.tsx
 msgid "Mark this post as spam?"
 msgstr "Bu gönderi spam olarak işaretlensin mi?"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Markdown works."
+msgstr "Markdown kullanabilirsiniz."
 
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
@@ -3408,6 +3429,7 @@ msgid "Owners and admins see every inbox; members see the inboxes they are given
 msgstr "Sahipler ve yöneticiler her gelen kutusunu görür; üyeler sadece kendilerine verilenleri."
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Page"
 msgstr "Sayfa"
@@ -3564,6 +3586,10 @@ msgstr "Port"
 msgid "Post feedback for your app's users"
 msgstr "Uygulamanızın kullanıcıları adına geri bildirim gönderme"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Posted by you and marked as the accepted answer."
+msgstr "Sizin adınıza gönderilir ve kabul edilen yanıt olarak işaretlenir."
+
 #: src/components/common/text.ts
 msgid "Praise"
 msgstr "Övgü"
@@ -3631,6 +3657,10 @@ msgstr "Anlık bildirim: {label}"
 #: src/features/setup/InstallStep.tsx
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "SDK'nın konuşmalar ekranını uygulamanızda bir Yardım düğmesine bağlayın, sonra oradan bir mesaj gönderin."
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Question"
+msgstr "Soru"
 
 #: src/features/setup/previews.tsx
 msgid "Questions and answers"
@@ -4461,6 +4491,10 @@ msgstr "Başlatan: {authorName}"
 msgid "Started by {starter} · {started}"
 msgstr "Başlatan: {starter} · {started}"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
+msgstr "Aşağıdaki metinle herkese açık bir tartışma başlatır. Konuşma gizli ve olduğu gibi kalır; başka hiçbir kısmı gösterilmez."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
@@ -4628,6 +4662,10 @@ msgstr "İzin sayfası istemcinin istediklerini işaretli getirir. Yapmasını i
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "Müşteri görmez"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "The documentation page to put it under, on a site of this inbox."
+msgstr "Tartışmanın altına ekleneceği, bu gelen kutusunun sitelerinden birindeki dokümantasyon sayfası."
 
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
@@ -4865,6 +4903,7 @@ msgstr "Zaman"
 msgid "Time zone"
 msgstr "Saat dilimi"
 
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Title"
@@ -4931,6 +4970,16 @@ msgstr "Yeniden dene"
 #: src/components/common/text.ts
 msgid "Tuesday"
 msgstr "Salı"
+
+#: src/app/Palette.tsx
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Turn into a discussion"
+msgstr "Tartışmaya dönüştür"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Turn into a public discussion"
+msgstr "Herkese açık bir tartışmaya dönüştür"
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."

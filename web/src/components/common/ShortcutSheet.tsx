@@ -33,6 +33,7 @@ export const SHORTCUTS = {
   pin: "p",
   unread: "u",
   docs: "g d",
+  discussion: "P",
 } as const
 
 export const DISCUSSION_KEYS = {
@@ -95,6 +96,7 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [k(SHORTCUTS.find), t`Search in this conversation`],
         [k(SHORTCUTS.pin), t`Pin to the top of your list, or unpin`],
         [k(SHORTCUTS.unread), t`Mark as unread and go back to the list`],
+        [k(SHORTCUTS.discussion), t`Turn into a public discussion`],
       ],
     },
     {

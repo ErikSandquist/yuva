@@ -696,6 +696,10 @@ msgstr "another conversation"
 msgid "another inbox"
 msgstr "another inbox"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Answer (optional)"
+msgstr "Answer (optional)"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Answer cleared"
 msgstr "Answer cleared"
@@ -719,6 +723,10 @@ msgstr "Any client that speaks MCP over HTTP. It acts as you, with the access yo
 #: src/features/setup/AddChannelStep.tsx
 msgid "Anyone on your site can write. Turn it off when only signed-in users may chat."
 msgstr "Anyone on your site can write. Turn it off when only signed-in users may chat."
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Anyone who opens the page can read this. Remove names, e-mail addresses, order numbers and anything else personal."
+msgstr "Anyone who opens the page can read this. Remove names, e-mail addresses, order numbers and anything else personal."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Anything using this key stops working at once."
@@ -971,6 +979,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
@@ -1513,6 +1522,10 @@ msgstr "Discussion"
 #: src/app/Palette.tsx
 msgid "Discussion posts waiting for approval"
 msgstr "Discussion posts waiting for approval"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Discussion started"
+msgstr "Discussion started"
 
 #: src/app/Palette.tsx
 #: src/features/docs/discussions/DiscussionsPane.tsx
@@ -2474,6 +2487,10 @@ msgstr "Lowercase letters, digits and dashes."
 msgid "Mail to your support address, answered from it"
 msgstr "Mail to your support address, answered from it"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Make it public"
+msgstr "Make it public"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Manage"
@@ -2536,6 +2553,10 @@ msgstr "Mark the selected reply as the answer, or clear it"
 #: src/features/docs/discussions/parts.tsx
 msgid "Mark this post as spam?"
 msgstr "Mark this post as spam?"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Markdown works."
+msgstr "Markdown works."
 
 #: src/features/docs/discussions/parts.tsx
 msgid "Marked as spam"
@@ -3408,6 +3429,7 @@ msgid "Owners and admins see every inbox; members see the inboxes they are given
 msgstr "Owners and admins see every inbox; members see the inboxes they are given."
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Page"
 msgstr "Page"
@@ -3564,6 +3586,10 @@ msgstr "Port"
 msgid "Post feedback for your app's users"
 msgstr "Post feedback for your app's users"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Posted by you and marked as the accepted answer."
+msgstr "Posted by you and marked as the accepted answer."
+
 #: src/components/common/text.ts
 msgid "Praise"
 msgstr "Praise"
@@ -3631,6 +3657,10 @@ msgstr "Push: {label}"
 #: src/features/setup/InstallStep.tsx
 msgid "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
 msgstr "Put the SDK's conversations view behind a Help button in your app, then send a message from it."
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Question"
+msgstr "Question"
 
 #: src/features/setup/previews.tsx
 msgid "Questions and answers"
@@ -4461,6 +4491,10 @@ msgstr "Started by {authorName}"
 msgid "Started by {starter} · {started}"
 msgstr "Started by {starter} · {started}"
 
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
+msgstr "Starts a public thread with the text below. The conversation stays private and unchanged; nothing else of it is shown."
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
@@ -4628,6 +4662,10 @@ msgstr "The consent page ticks what the client asks for. Leave out what you do n
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "The customer does not see this"
 msgstr "The customer does not see this"
+
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "The documentation page to put it under, on a site of this inbox."
+msgstr "The documentation page to put it under, on a site of this inbox."
 
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
@@ -4865,6 +4903,7 @@ msgstr "Time"
 msgid "Time zone"
 msgstr "Time zone"
 
+#: src/features/docs/discussions/FromConversation.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Title"
@@ -4931,6 +4970,16 @@ msgstr "Try again"
 #: src/components/common/text.ts
 msgid "Tuesday"
 msgstr "Tuesday"
+
+#: src/app/Palette.tsx
+#: src/features/conversation/ConversationMenu.tsx
+#: src/features/docs/discussions/FromConversation.tsx
+msgid "Turn into a discussion"
+msgstr "Turn into a discussion"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Turn into a public discussion"
+msgstr "Turn into a public discussion"
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Turn it on again once the receiver works; send failed deliveries again from the log below."
