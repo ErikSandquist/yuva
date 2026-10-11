@@ -961,6 +961,51 @@ serve both.
 - Ratings are counters, so they send no events or webhooks; page feedback and questions are
   conversations and send the same ones as any conversation and feedback.
 
+### Discussions (M12)
+
+Discussions replace page questions and published answers. A documentation page gets a public
+discussion area like GitHub Discussions: threads, replies, votes, an accepted answer, followers.
+Private help stays private: page feedback, live chat and e-mail are unchanged. Decisions:
+
+- **Model.** Discussions are not conversations: a conversation is one contact and the team, private;
+  a discussion is public and has many authors. Tables `discussions` (workspace, inbox, channel,
+  page, title, body, author, state `open|answered|locked|hidden`, `answer_post_id`, vote count,
+  reply count, last activity) and `discussion_posts` (discussion, author, body as Markdown, one level
+  of replies through `parent_post_id`, state `published|pending|hidden`, edited time), plus
+  `discussion_votes` and `discussion_follows`. An author is a member or a contact; every row has
+  `workspace_id` and every query filters by it.
+- **Migration.** `question` conversations and `page_answers` go away: each published answer becomes a
+  discussion (the question as its body, the answer as an accepted post by the publishing member),
+  unpublished questions stay as ordinary conversations. `kind=question`, `/publish` and the
+  page-answers endpoints are removed from the contract; this is pre-1.0 and they shipped in M11.
+- **Readers.** A reader is a person with a server-wide account (`persons`, the table members sign in
+  with): one account per Yuva server, signing in by e-mail code or passkey on the server's own page,
+  never on the documentation site. The element opens `/account/connect` in a popup; the server
+  hands the element a short-lived reader token by `postMessage` to an origin the channel allows. In
+  each workspace a reader appears as a contact linked to the person (`contacts.person_id`, created
+  on first post); workspaces never see each other's data about a reader. Host apps with their own
+  login keep using identity tokens, which also let a user post.
+- **Reading is public** and needs no session: `GET /client/v1/channels/{key}/discussions?page=` and
+  `…/discussions/{id}`, cacheable for a minute, authors shown by display name and avatar only.
+- **Writing** needs a reader token, an identity token or a member. Per chat channel
+  `discussions: off|moderated|open` (default `moderated`: a reader's first post waits for a member;
+  members' and identity-token users' posts are published at once). Members hide, lock, mark spam,
+  mark the accepted answer and edit titles. Rate limits per person and IP as for session starts.
+- **Notifications.** Followers (the author follows by default) get one e-mail per thread per delay
+  for new replies and the accepted answer, with a one-click unsubscribe, and see them in the reader
+  account. Members see new threads and pending posts in the panel.
+- **Reader account (new UI).** `/account` on the server, in `web/`, separate from the team panel:
+  my discussions, followed threads, notifications, e-mail settings, delete account. A person who
+  is also a member reaches the team panel from it.
+- **Team panel.** A Discussions view per site and page (the Docs site picker), a moderation queue,
+  replying as a member, accepting an answer, and turning a private conversation into a discussion
+  (the member edits what becomes public).
+- **UI for sites.** `<yuva-discussions>` (web component, Shadow DOM, in `/yuva-docs.js` and
+  `useyuva/docs`, replacing `<yuva-page-questions>`; Nuxt and React wrappers as today) and a
+  shadcn registry for React sites that want the code in their own design system: components built
+  on shadcn/ui primitives and the headless `useyuva` client, sources in `sdk/shadcn/` (MIT), served
+  as registry JSON by the site so `npx shadcn add <site>/r/discussions.json` installs them.
+
 ### Contacts directory
 
 The panel lists contacts newest first or most recently active first (`sort=last_seen`), filtered

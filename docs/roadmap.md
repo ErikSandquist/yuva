@@ -157,3 +157,22 @@ Accept: on a Nuxt Content and a Fumadocs site, a visitor rates a page, sends fee
 question; the panel shows the counts and both conversations; a member answers the question and
 publishes it, and the answer appears on that page without the visitor's name or address; an
 element on an origin the channel does not allow is refused.
+
+## M12 — Discussions on documentation pages and reader accounts
+
+Status: in progress; plan in issue #24, decisions in `architecture.md` › Discussions (M12).
+
+- Public discussions under each documentation page, like GitHub Discussions: threads, replies,
+  votes, accepted answers, followers, moderation. They replace page questions and published answers.
+- Server-wide reader accounts (e-mail code or passkey), connected to documentation sites through a
+  popup; identity tokens keep working for host apps with their own login.
+- A reader account page: my discussions, followed threads, notifications, e-mail settings.
+- `<yuva-discussions>` for any site, Nuxt and React wrappers, and a shadcn registry for React sites.
+- A Discussions view and moderation queue in the team panel.
+
+Accept: on demo-nuxt.useyuva.com a reader signs in with an e-mail code, starts a discussion and
+waits for approval; a member approves it and answers; the reader is e-mailed, sees the answer on
+the page and in their account, and marks it accepted; a second reader replies and votes; a React
+site installs the shadcn components and shows the same thread; nothing private of another
+workspace or another reader is visible.
+
