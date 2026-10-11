@@ -12,6 +12,7 @@ your own code. The walkthroughs are the [Headless guide](../docs/headless.md) an
 | [draft-bot](draft-bot) | A webhook receiver that verifies the signature and answers every incoming message with a draft | Go 1.27 |
 | [nuxt-content](nuxt-content) | A Nuxt Content documentation site with `<yuva-page-feedback>` and `<yuva-discussions>` on every page | Node 22.5+, Nuxt 4, Nuxt Content 3 |
 | [fumadocs](fumadocs) | A Fumadocs site (from `create-fumadocs-app`) with `YuvaPageFeedback` and `YuvaDiscussions` on every docs page | Node 20.9+, Next.js 16, Fumadocs 16 |
+| [shadcn-next](shadcn-next) | A Next.js app on shadcn/ui with the `yuva-discussions` and `yuva-page-feedback` components installed from Yuva's shadcn registry | Node 20.9+, Next.js 16, shadcn 4 |
 
 The JS examples point at the SDK in this repository (`file:../../sdk/js`); build it once with
 `bun install && bun run build` in `sdk/js`. In your own project, depend on `useyuva` from npm
@@ -95,3 +96,22 @@ npm run dev                  # http://localhost:3102/docs
 `NEXT_PUBLIC_` values are built into the client bundle, so build again after changing them.
 `turbopack.root` in `next.config.mjs` is there only because `useyuva` is linked from `sdk/js`;
 drop it when you use `useyuva` from npm.
+
+## shadcn-next
+
+A `create-next-app` project with `shadcn init`, then
+`npx shadcn add <site>/r/yuva-discussions.json <site>/r/yuva-page-feedback.json` from the registry
+the site builds out of [`sdk/shadcn`](../sdk/shadcn), set up as in
+[Documentation pages](../docs/documentation-pages.md#shadcnui). Everything that command wrote is
+committed (`components/`, `hooks/`, `lib/`), so it shows what you get. Three pages render the
+block. Needs a chat channel with `http://localhost:3103` among its allowed origins.
+
+```sh
+cd examples/shadcn-next
+npm install
+cp .env.example .env.local   # set NEXT_PUBLIC_YUVA_SERVER and NEXT_PUBLIC_YUVA_CHANNEL
+npm run dev                  # http://localhost:3103/docs/getting-started
+```
+
+As in the Fumadocs example, `turbopack.root` in `next.config.ts` is there only because `useyuva` is
+linked from `sdk/js`.
