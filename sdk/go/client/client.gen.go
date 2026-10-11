@@ -1677,6 +1677,150 @@ func (e IngressResultStatus) Valid() bool {
 	}
 }
 
+// Defines values for ListImportDelimiter.
+const (
+	Comma     ListImportDelimiter = "comma"
+	Semicolon ListImportDelimiter = "semicolon"
+	Tab       ListImportDelimiter = "tab"
+)
+
+// Valid indicates whether the value is a known member of the ListImportDelimiter enum.
+func (e ListImportDelimiter) Valid() bool {
+	switch e {
+	case Comma:
+		return true
+	case Semicolon:
+		return true
+	case Tab:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportEncoding.
+const (
+	Utf16be     ListImportEncoding = "utf-16be"
+	Utf16le     ListImportEncoding = "utf-16le"
+	Utf8        ListImportEncoding = "utf-8"
+	Windows1252 ListImportEncoding = "windows-1252"
+	Windows1254 ListImportEncoding = "windows-1254"
+)
+
+// Valid indicates whether the value is a known member of the ListImportEncoding enum.
+func (e ListImportEncoding) Valid() bool {
+	switch e {
+	case Utf16be:
+		return true
+	case Utf16le:
+		return true
+	case Utf8:
+		return true
+	case Windows1252:
+		return true
+	case Windows1254:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportEventType.
+const (
+	ListImportUpdated ListImportEventType = "list_import.updated"
+)
+
+// Valid indicates whether the value is a known member of the ListImportEventType enum.
+func (e ListImportEventType) Valid() bool {
+	switch e {
+	case ListImportUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportField.
+const (
+	ListImportFieldAttribute  ListImportField = "attribute"
+	ListImportFieldEmail      ListImportField = "email"
+	ListImportFieldExternalId ListImportField = "external_id"
+	ListImportFieldFirstName  ListImportField = "first_name"
+	ListImportFieldLastName   ListImportField = "last_name"
+	ListImportFieldLocale     ListImportField = "locale"
+	ListImportFieldName       ListImportField = "name"
+	ListImportFieldSkip       ListImportField = "skip"
+)
+
+// Valid indicates whether the value is a known member of the ListImportField enum.
+func (e ListImportField) Valid() bool {
+	switch e {
+	case ListImportFieldAttribute:
+		return true
+	case ListImportFieldEmail:
+		return true
+	case ListImportFieldExternalId:
+		return true
+	case ListImportFieldFirstName:
+		return true
+	case ListImportFieldLastName:
+		return true
+	case ListImportFieldLocale:
+		return true
+	case ListImportFieldName:
+		return true
+	case ListImportFieldSkip:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportProgressEventType.
+const (
+	ListImportProgressEventTypeListImportProgress ListImportProgressEventType = "list_import.progress"
+)
+
+// Valid indicates whether the value is a known member of the ListImportProgressEventType enum.
+func (e ListImportProgressEventType) Valid() bool {
+	switch e {
+	case ListImportProgressEventTypeListImportProgress:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ListImportState.
+const (
+	ListImportStateCancelled  ListImportState = "cancelled"
+	ListImportStateDone       ListImportState = "done"
+	ListImportStateFailed     ListImportState = "failed"
+	ListImportStateImporting  ListImportState = "importing"
+	ListImportStateReady      ListImportState = "ready"
+	ListImportStateValidating ListImportState = "validating"
+)
+
+// Valid indicates whether the value is a known member of the ListImportState enum.
+func (e ListImportState) Valid() bool {
+	switch e {
+	case ListImportStateCancelled:
+		return true
+	case ListImportStateDone:
+		return true
+	case ListImportStateFailed:
+		return true
+	case ListImportStateImporting:
+		return true
+	case ListImportStateReady:
+		return true
+	case ListImportStateValidating:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for Locale.
 const (
 	En Locale = "en"
@@ -2087,13 +2231,13 @@ func (e ReaderNotificationKind) Valid() bool {
 
 // Defines values for RealtimeReadyType.
 const (
-	Ready RealtimeReadyType = "ready"
+	RealtimeReadyTypeReady RealtimeReadyType = "ready"
 )
 
 // Valid indicates whether the value is a known member of the RealtimeReadyType enum.
 func (e RealtimeReadyType) Valid() bool {
 	switch e {
-	case Ready:
+	case RealtimeReadyTypeReady:
 		return true
 	default:
 		return false
@@ -4011,9 +4155,12 @@ type ConsentEvent struct {
 	ConsentText *string   `json:"consent_text,omitempty"`
 	CreatedAt   time.Time `json:"created_at"`
 
-	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token.
+	// Detail More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token, `import_id` and `consent_source` for an import.
 	Detail map[string]interface{} `json:"detail"`
 	Id     uuid.UUID              `json:"id"`
+
+	// ImportId The CSV import that wrote it; `consent_text` then holds the importer's attestation.
+	ImportId *uuid.UUID `json:"import_id,omitempty"`
 
 	// Ip The client's IP address, when the person acted.
 	Ip *string `json:"ip,omitempty"`
@@ -4027,7 +4174,7 @@ type ConsentEvent struct {
 	// PageUrl The page the person subscribed on, or the one the API caller declared.
 	PageUrl *string `json:"page_url,omitempty"`
 
-	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`.
+	// Source Who or what caused it, such as `form`, `identity`, `api`, `member`, `import`, `link`, `one_click`, `preferences`, `client`, `complaint`.
 	Source         string    `json:"source"`
 	SubscriptionId uuid.UUID `json:"subscription_id"`
 	UserAgent      *string   `json:"user_agent,omitempty"`
@@ -6461,6 +6608,199 @@ type LabelUpdate struct {
 // Examples: en, tr
 type LanguageTag = string
 
+// ListImport defines model for ListImport.
+type ListImport struct {
+	// ApiKeyId The key that uploaded it.
+	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
+
+	// Attestation The statement the importer accepted.
+	Attestation string `json:"attestation"`
+
+	// Columns The file's columns with what each holds; empty until validated.
+	Columns []ListImportColumn `json:"columns"`
+
+	// ConsentSource Where and when the people in the file agreed, as the importer wrote it.
+	ConsentSource string `json:"consent_source"`
+
+	// Counts `valid` is found by the validation: rows that would be added. The rest are refused rows
+	// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+	// importing, `added` and `created_contacts`.
+	Counts    ListImportCounts `json:"counts"`
+	CreatedAt time.Time        `json:"created_at"`
+
+	// Delimiter The column separator found in the header row.
+	Delimiter *ListImportDelimiter `json:"delimiter,omitempty"`
+	Encoding  *ListImportEncoding  `json:"encoding,omitempty"`
+
+	// Error Why the import failed.
+	Error *string `json:"error,omitempty"`
+
+	// ErrorsUntil When the refused rows (`/errors`) are deleted.
+	ErrorsUntil *time.Time `json:"errors_until,omitempty"`
+	Filename    string     `json:"filename"`
+	FinishedAt  *time.Time `json:"finished_at,omitempty"`
+	Id          uuid.UUID  `json:"id"`
+	ListId      uuid.UUID  `json:"list_id"`
+
+	// MemberId The member who uploaded it.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Preview The first 20 data rows, cells cut at 200 characters; absent once the import ends.
+	Preview *[][]string `json:"preview,omitempty"`
+
+	// Reconfirm New addresses become `pending` and get a confirmation mail instead of being subscribed.
+	Reconfirm bool  `json:"reconfirm"`
+	RowsDone  int32 `json:"rows_done"`
+
+	// RowsTotal Data rows in the file, empty rows left out; 0 until validated.
+	RowsTotal int32      `json:"rows_total"`
+	StartedAt *time.Time `json:"started_at,omitempty"`
+
+	// State `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+	// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+	State     ListImportState `json:"state"`
+	UpdatedAt time.Time       `json:"updated_at"`
+}
+
+// ListImportDelimiter The column separator found in the header row.
+type ListImportDelimiter string
+
+// ListImportColumn defines model for ListImportColumn.
+type ListImportColumn struct {
+	// Attribute The attribute key, with `field` `attribute`.
+	Attribute *string `json:"attribute,omitempty"`
+
+	// Field What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+	// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+	// column.
+	Field ListImportField `json:"field"`
+
+	// Header The column's name in the header row.
+	Header string `json:"header"`
+
+	// Index The column's position, from 0.
+	Index int32 `json:"index"`
+}
+
+// ListImportColumnMapping defines model for ListImportColumnMapping.
+type ListImportColumnMapping struct {
+	// Attribute Required with `field` `attribute`.
+	Attribute *string `json:"attribute,omitempty"`
+
+	// Field What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+	// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+	// column.
+	Field ListImportField `json:"field"`
+	Index int32           `json:"index"`
+}
+
+// ListImportCounts `valid` is found by the validation: rows that would be added. The rest are refused rows
+// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+// importing, `added` and `created_contacts`.
+type ListImportCounts struct {
+	Added           int64 `json:"added"`
+	CreatedContacts int64 `json:"created_contacts"`
+
+	// Duplicate The address appears earlier in the file.
+	Duplicate    int64 `json:"duplicate"`
+	Existing     int64 `json:"existing"`
+	InvalidEmail int64 `json:"invalid_email"`
+
+	// NoMailDomain The address's domain has no MX, A or AAAA record, or a null MX.
+	NoMailDomain int64 `json:"no_mail_domain"`
+	OptedOut     int64 `json:"opted_out"`
+
+	// RoleAddress Such as `postmaster@`, `abuse@`, `noreply@`.
+	RoleAddress int64 `json:"role_address"`
+	Suppressed  int64 `json:"suppressed"`
+
+	// Unsubscribed The address unsubscribed from this list.
+	Unsubscribed int64 `json:"unsubscribed"`
+	Valid        int64 `json:"valid"`
+}
+
+// ListImportEncoding defines model for ListImportEncoding.
+type ListImportEncoding string
+
+// ListImportEvent `list_import.updated`, on `/v1/realtime` only: an import became `ready`, `importing`,
+// `done`, `failed` or `cancelled`. Not stored, no id, never replayed, no webhook; reload the
+// import after a reconnect. Delivered to callers who hold `lists:read` and can see the list's
+// inbox.
+type ListImportEvent struct {
+	CreatedAt   time.Time           `json:"created_at"`
+	Data        ListImport          `json:"data"`
+	InboxId     uuid.UUID           `json:"inbox_id"`
+	Type        ListImportEventType `json:"type"`
+	WorkspaceId uuid.UUID           `json:"workspace_id"`
+}
+
+// ListImportEventType defines model for ListImportEvent.Type.
+type ListImportEventType string
+
+// ListImportField What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+// it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+// column.
+type ListImportField string
+
+// ListImportMappingUpdate defines model for ListImportMappingUpdate.
+type ListImportMappingUpdate struct {
+	// Columns Columns left out are skipped. Exactly one must be `email`.
+	Columns []ListImportColumnMapping `json:"columns"`
+}
+
+// ListImportPage defines model for ListImportPage.
+type ListImportPage struct {
+	Items []ListImport `json:"items"`
+
+	// NextCursor Absent on the last page.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
+
+// ListImportProgress defines model for ListImportProgress.
+type ListImportProgress struct {
+	// Counts `valid` is found by the validation: rows that would be added. The rest are refused rows
+	// by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+	// importing, `added` and `created_contacts`.
+	Counts    ListImportCounts `json:"counts"`
+	Id        uuid.UUID        `json:"id"`
+	ListId    uuid.UUID        `json:"list_id"`
+	RowsDone  int32            `json:"rows_done"`
+	RowsTotal int32            `json:"rows_total"`
+
+	// State `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+	// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+	State ListImportState `json:"state"`
+}
+
+// ListImportProgressEvent `list_import.progress`, on `/v1/realtime` only: the progress of an importing CSV file, at
+// most once a second. Not stored, no id, never replayed. Delivered to callers who hold
+// `lists:read` and can see the list's inbox.
+type ListImportProgressEvent struct {
+	CreatedAt   time.Time                   `json:"created_at"`
+	Data        ListImportProgress          `json:"data"`
+	InboxId     uuid.UUID                   `json:"inbox_id"`
+	Type        ListImportProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                   `json:"workspace_id"`
+}
+
+// ListImportProgressEventType defines model for ListImportProgressEvent.Type.
+type ListImportProgressEventType string
+
+// ListImportState `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+// for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+type ListImportState string
+
+// ListImportUpload defines model for ListImportUpload.
+type ListImportUpload struct {
+	Attestation   string             `json:"attestation"`
+	ConsentSource string             `json:"consent_source"`
+	File          openapi_types.File `json:"file"`
+
+	// Mapping A `ListImportMappingUpdate` as JSON.
+	Mapping   *string `json:"mapping,omitempty"`
+	Reconfirm *bool   `json:"reconfirm,omitempty"`
+}
+
 // Locale The language of e-mails sent to the person.
 type Locale string
 
@@ -8387,6 +8727,9 @@ type IdempotencyKey = string
 // ImageId defines model for ImageId.
 type ImageId = uuid.UUID
 
+// ImportId defines model for ImportId.
+type ImportId = uuid.UUID
+
 // InboxId defines model for InboxId.
 type InboxId = uuid.UUID
 
@@ -9645,6 +9988,54 @@ type GetMailingListGrowthParams struct {
 // GetMailingListGrowthParamsDays defines parameters for GetMailingListGrowth.
 type GetMailingListGrowthParamsDays int32
 
+// ListListImportsParams defines parameters for ListListImports.
+type ListListImportsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateListImportParams defines parameters for CreateListImport.
+type CreateListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CancelListImportParams defines parameters for CancelListImport.
+type CancelListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetListImportParams defines parameters for GetListImport.
+type GetListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateListImportParams defines parameters for UpdateListImport.
+type UpdateListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetListImportErrorsParams defines parameters for GetListImportErrors.
+type GetListImportErrorsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// StartListImportParams defines parameters for StartListImport.
+type StartListImportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListSubscriptionsParams defines parameters for ListSubscriptions.
 type ListSubscriptionsParams struct {
 	State *SubscriptionState `form:"state,omitempty" json:"state,omitempty"`
@@ -10369,6 +10760,12 @@ type CreateMailingListJSONRequestBody = MailingListCreate
 
 // UpdateMailingListJSONRequestBody defines body for UpdateMailingList for application/json ContentType.
 type UpdateMailingListJSONRequestBody = MailingListUpdate
+
+// CreateListImportMultipartRequestBody defines body for CreateListImport for multipart/form-data ContentType.
+type CreateListImportMultipartRequestBody = ListImportUpload
+
+// UpdateListImportJSONRequestBody defines body for UpdateListImport for application/json ContentType.
+type UpdateListImportJSONRequestBody = ListImportMappingUpdate
 
 // CreateSubscriptionJSONRequestBody defines body for CreateSubscription for application/json ContentType.
 type CreateSubscriptionJSONRequestBody = SubscriptionCreate
@@ -12282,6 +12679,58 @@ func (t *RealtimeMessage) MergeBroadcastProgressEvent(v BroadcastProgressEvent) 
 	return err
 }
 
+// AsListImportEvent returns the union data inside the RealtimeMessage as a ListImportEvent
+func (t RealtimeMessage) AsListImportEvent() (ListImportEvent, error) {
+	var body ListImportEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListImportEvent overwrites any union data inside the RealtimeMessage as the provided ListImportEvent
+func (t *RealtimeMessage) FromListImportEvent(v ListImportEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListImportEvent performs a merge with any union data inside the RealtimeMessage, using the provided ListImportEvent
+func (t *RealtimeMessage) MergeListImportEvent(v ListImportEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsListImportProgressEvent returns the union data inside the RealtimeMessage as a ListImportProgressEvent
+func (t RealtimeMessage) AsListImportProgressEvent() (ListImportProgressEvent, error) {
+	var body ListImportProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromListImportProgressEvent overwrites any union data inside the RealtimeMessage as the provided ListImportProgressEvent
+func (t *RealtimeMessage) FromListImportProgressEvent(v ListImportProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeListImportProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided ListImportProgressEvent
+func (t *RealtimeMessage) MergeListImportProgressEvent(v ListImportProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsTypingEvent returns the union data inside the RealtimeMessage as a TypingEvent
 func (t RealtimeMessage) AsTypingEvent() (TypingEvent, error) {
 	var body TypingEvent
@@ -12496,6 +12945,10 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsInboxUpdatedEvent()
 	case "inbox_access.changed":
 		return t.AsInboxAccessChangedEvent()
+	case "list_import.progress":
+		return t.AsListImportProgressEvent()
+	case "list_import.updated":
+		return t.AsListImportEvent()
 	case "member.presence":
 		return t.AsMemberPresenceEvent()
 	case "message.created":
@@ -16046,6 +16499,119 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
 	GetMailingListGrowth(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListListImports List a list's CSV imports
+	//
+	// Newest first.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports (the `ListListImports` operationId).
+	ListListImports(ctx context.Context, listId ListId, params *ListListImportsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreateListImportWithBody Upload a CSV file of subscribers
+	//
+	// One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+	// declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+	// this file agreed to receive {list} from {sender}; I can show how and when"), and
+	// `consent_source`, where and when the people agreed. Both are required
+	// (`422 attestation_required`) and are stored on the import and on every consent event it
+	// writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+	// the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+	// list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+	// optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+	// headers.
+	//
+	// The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+	// BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+	// found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+	// that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+	// or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+	// `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+	// limit, 100,000 by default, fails). Start it with `/start`.
+	//
+	// One import per workspace validates or imports at a time (`409 import_running`). A file
+	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/lists/{listId}/imports (the `CreateListImport` operationId).
+	CreateListImportWithBody(ctx context.Context, listId ListId, params *CreateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelListImport Cancel an import
+	//
+	// Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+	// Subscriptions it already added stay, with their consent events. A finished import is left
+	// as it is.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Corresponds with DELETE /v1/lists/{listId}/imports/{importId} (the `CancelListImport` operationId).
+	CancelListImport(ctx context.Context, listId ListId, importId ImportId, params *CancelListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetListImport A CSV import
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports/{importId} (the `GetListImport` operationId).
+	GetListImport(ctx context.Context, listId ListId, importId ImportId, params *GetListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateListImportWithBody Change an import's column mapping
+	//
+	// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+	// again (the import goes back to `validating`). Exactly one column must be `email`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+	UpdateListImportWithBody(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateListImport Change an import's column mapping
+	//
+	// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+	// again (the import goes back to `validating`). Exactly one column must be `email`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+	UpdateListImport(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, body UpdateListImportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetListImportErrors Download an import's refused rows
+	//
+	// A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+	// the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+	// `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+	// Cells are quoted and formula-like values defused as in the consent export. Filled while
+	// the import runs; `404` once it is 7 days past its end.
+	//
+	// Scope: `lists:read`.
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports/{importId}/errors (the `GetListImportErrors` operationId).
+	GetListImportErrors(ctx context.Context, listId ListId, importId ImportId, params *GetListImportErrorsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StartListImport Start a validated import
+	//
+	// Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+	// email_column_required` when no column is mapped to `email`; `409 import_running` while
+	// another import of the workspace runs). Rows are added 1,000 per transaction, each address
+	// checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+	// `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+	// of the workspace or are suppressed are never added. Contacts are found by address or
+	// created with the row's name and locale; mapped attributes only fill keys a contact does
+	// not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+	// mail. The upload is deleted when the import ends; refused rows stay downloadable from
+	// `/errors` for 7 days.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Corresponds with POST /v1/lists/{listId}/imports/{importId}/start (the `StartListImport` operationId).
+	StartListImport(ctx context.Context, listId ListId, importId ImportId, params *StartListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSubscriptions List a list's subscriptions
 	//
@@ -22076,6 +22642,199 @@ func (c *Client) ExportListConsent(ctx context.Context, listId ListId, params *E
 // Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
 func (c *Client) GetMailingListGrowth(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetMailingListGrowthRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListListImports List a list's CSV imports
+//
+// Newest first.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/imports (the `ListListImports` operationId).
+func (c *Client) ListListImports(ctx context.Context, listId ListId, params *ListListImportsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListListImportsRequest(c.Server, listId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CreateListImportWithBody Upload a CSV file of subscribers
+//
+// One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+// declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+// this file agreed to receive {list} from {sender}; I can show how and when"), and
+// `consent_source`, where and when the people agreed. Both are required
+// (`422 attestation_required`) and are stored on the import and on every consent event it
+// writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+// the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+// list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+// optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+// headers.
+//
+// The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+// BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+// found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+// that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+// or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+// `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+// limit, 100,000 by default, fails). Start it with `/start`.
+//
+// One import per workspace validates or imports at a time (`409 import_running`). A file
+// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/lists/{listId}/imports (the `CreateListImport` operationId).
+func (c *Client) CreateListImportWithBody(ctx context.Context, listId ListId, params *CreateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateListImportRequestWithBody(c.Server, listId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelListImport Cancel an import
+//
+// Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+// Subscriptions it already added stay, with their consent events. A finished import is left
+// as it is.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Corresponds with DELETE /v1/lists/{listId}/imports/{importId} (the `CancelListImport` operationId).
+func (c *Client) CancelListImport(ctx context.Context, listId ListId, importId ImportId, params *CancelListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelListImportRequest(c.Server, listId, importId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetListImport A CSV import
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/imports/{importId} (the `GetListImport` operationId).
+func (c *Client) GetListImport(ctx context.Context, listId ListId, importId ImportId, params *GetListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetListImportRequest(c.Server, listId, importId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateListImportWithBody Change an import's column mapping
+//
+// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+// again (the import goes back to `validating`). Exactly one column must be `email`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+func (c *Client) UpdateListImportWithBody(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateListImportRequestWithBody(c.Server, listId, importId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateListImport Change an import's column mapping
+//
+// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+// again (the import goes back to `validating`). Exactly one column must be `email`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+func (c *Client) UpdateListImport(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, body UpdateListImportJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateListImportRequest(c.Server, listId, importId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetListImportErrors Download an import's refused rows
+//
+// A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+// the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+// `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+// Cells are quoted and formula-like values defused as in the consent export. Filled while
+// the import runs; `404` once it is 7 days past its end.
+//
+// Scope: `lists:read`.
+//
+// Corresponds with GET /v1/lists/{listId}/imports/{importId}/errors (the `GetListImportErrors` operationId).
+func (c *Client) GetListImportErrors(ctx context.Context, listId ListId, importId ImportId, params *GetListImportErrorsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetListImportErrorsRequest(c.Server, listId, importId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StartListImport Start a validated import
+//
+// Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+// email_column_required` when no column is mapped to `email`; `409 import_running` while
+// another import of the workspace runs). Rows are added 1,000 per transaction, each address
+// checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+// `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+// of the workspace or are suppressed are never added. Contacts are found by address or
+// created with the row's name and locale; mapped attributes only fill keys a contact does
+// not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+// mail. The upload is deleted when the import ends; refused rows stay downloadable from
+// `/errors` for 7 days.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Corresponds with POST /v1/lists/{listId}/imports/{importId}/start (the `StartListImport` operationId).
+func (c *Client) StartListImport(ctx context.Context, listId ListId, importId ImportId, params *StartListImportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStartListImportRequest(c.Server, listId, importId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -33797,6 +34556,438 @@ func NewGetMailingListGrowthRequest(server string, listId ListId, params *GetMai
 	return req, nil
 }
 
+// NewListListImportsRequest constructs an http.Request for the ListListImports method
+func NewListListImportsRequest(server string, listId ListId, params *ListListImportsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreateListImportRequestWithBody constructs an http.Request for the CreateListImport method, with any body, and a specified content type
+func NewCreateListImportRequestWithBody(server string, listId ListId, params *CreateListImportParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCancelListImportRequest constructs an http.Request for the CancelListImport method
+func NewCancelListImportRequest(server string, listId ListId, importId ImportId, params *CancelListImportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "importId", importId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetListImportRequest constructs an http.Request for the GetListImport method
+func NewGetListImportRequest(server string, listId ListId, importId ImportId, params *GetListImportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "importId", importId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateListImportRequest calls the generic UpdateListImport builder with application/json body
+func NewUpdateListImportRequest(server string, listId ListId, importId ImportId, params *UpdateListImportParams, body UpdateListImportJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateListImportRequestWithBody(server, listId, importId, params, "application/json", bodyReader)
+}
+
+// NewUpdateListImportRequestWithBody constructs an http.Request for the UpdateListImport method, with any body, and a specified content type
+func NewUpdateListImportRequestWithBody(server string, listId ListId, importId ImportId, params *UpdateListImportParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "importId", importId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetListImportErrorsRequest constructs an http.Request for the GetListImportErrors method
+func NewGetListImportErrorsRequest(server string, listId ListId, importId ImportId, params *GetListImportErrorsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "importId", importId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports/%s/errors", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewStartListImportRequest constructs an http.Request for the StartListImport method
+func NewStartListImportRequest(server string, listId ListId, importId ImportId, params *StartListImportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "listId", listId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "importId", importId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/lists/%s/imports/%s/start", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListSubscriptionsRequest constructs an http.Request for the ListSubscriptions method
 func NewListSubscriptionsRequest(server string, listId ListId, params *ListSubscriptionsParams) (*http.Request, error) {
 	var err error
@@ -39874,6 +41065,129 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/lists/{listId}/growth (the `GetMailingListGrowth` operationId).
 	GetMailingListGrowthWithResponse(ctx context.Context, listId ListId, params *GetMailingListGrowthParams, reqEditors ...RequestEditorFn) (*GetMailingListGrowthResponse, error)
+
+	// ListListImportsWithResponse List a list's CSV imports
+	//
+	// Newest first.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports (the `ListListImports` operationId).
+	ListListImportsWithResponse(ctx context.Context, listId ListId, params *ListListImportsParams, reqEditors ...RequestEditorFn) (*ListListImportsResponse, error)
+
+	// CreateListImportWithBodyWithResponse Upload a CSV file of subscribers
+	//
+	// One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+	// declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+	// this file agreed to receive {list} from {sender}; I can show how and when"), and
+	// `consent_source`, where and when the people agreed. Both are required
+	// (`422 attestation_required`) and are stored on the import and on every consent event it
+	// writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+	// the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+	// list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+	// optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+	// headers.
+	//
+	// The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+	// BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+	// found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+	// that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+	// or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+	// `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+	// limit, 100,000 by default, fails). Start it with `/start`.
+	//
+	// One import per workspace validates or imports at a time (`409 import_running`). A file
+	// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists/{listId}/imports (the `CreateListImport` operationId).
+	CreateListImportWithBodyWithResponse(ctx context.Context, listId ListId, params *CreateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateListImportResponse, error)
+
+	// CancelListImportWithResponse Cancel an import
+	//
+	// Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+	// Subscriptions it already added stay, with their consent events. A finished import is left
+	// as it is.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/lists/{listId}/imports/{importId} (the `CancelListImport` operationId).
+	CancelListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *CancelListImportParams, reqEditors ...RequestEditorFn) (*CancelListImportResponse, error)
+
+	// GetListImportWithResponse A CSV import
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports/{importId} (the `GetListImport` operationId).
+	GetListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *GetListImportParams, reqEditors ...RequestEditorFn) (*GetListImportResponse, error)
+
+	// UpdateListImportWithBodyWithResponse Change an import's column mapping
+	//
+	// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+	// again (the import goes back to `validating`). Exactly one column must be `email`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+	UpdateListImportWithBodyWithResponse(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateListImportResponse, error)
+
+	// UpdateListImportWithResponse Change an import's column mapping
+	//
+	// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+	// again (the import goes back to `validating`). Exactly one column must be `email`.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+	UpdateListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, body UpdateListImportJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateListImportResponse, error)
+
+	// GetListImportErrorsWithResponse Download an import's refused rows
+	//
+	// A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+	// the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+	// `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+	// Cells are quoted and formula-like values defused as in the consent export. Filled while
+	// the import runs; `404` once it is 7 days past its end.
+	//
+	// Scope: `lists:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/lists/{listId}/imports/{importId}/errors (the `GetListImportErrors` operationId).
+	GetListImportErrorsWithResponse(ctx context.Context, listId ListId, importId ImportId, params *GetListImportErrorsParams, reqEditors ...RequestEditorFn) (*GetListImportErrorsResponse, error)
+
+	// StartListImportWithResponse Start a validated import
+	//
+	// Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+	// email_column_required` when no column is mapped to `email`; `409 import_running` while
+	// another import of the workspace runs). Rows are added 1,000 per transaction, each address
+	// checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+	// `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+	// of the workspace or are suppressed are never added. Contacts are found by address or
+	// created with the row's name and locale; mapped attributes only fill keys a contact does
+	// not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+	// mail. The upload is deleted when the import ends; refused rows stay downloadable from
+	// `/errors` for 7 days.
+	//
+	// Owners, admins and API keys. Scope: `lists:write`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/lists/{listId}/imports/{importId}/start (the `StartListImport` operationId).
+	StartListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *StartListImportParams, reqEditors ...RequestEditorFn) (*StartListImportResponse, error)
 
 	// ListSubscriptionsWithResponse List a list's subscriptions
 	//
@@ -51795,6 +53109,503 @@ func (r GetMailingListGrowthResponse) ContentType() string {
 	return ""
 }
 
+type ListListImportsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListImportPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListListImportsResponse) GetJSON200() *ListImportPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListListImportsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListListImportsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListListImportsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListListImportsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListListImportsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListListImportsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListListImportsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListListImportsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreateListImportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *ListImport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON415 the response for an HTTP 415 `application/problem+json` response
+	ApplicationproblemJSON415 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r CreateListImportResponse) GetJSON202() *ListImport {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON415 returns the response for an HTTP 415 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON415() *Problem {
+	return r.ApplicationproblemJSON415
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CreateListImportResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CreateListImportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CreateListImportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreateListImportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreateListImportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CancelListImportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CancelListImportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CancelListImportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CancelListImportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelListImportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelListImportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelListImportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelListImportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetListImportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListImport
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetListImportResponse) GetJSON200() *ListImport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetListImportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetListImportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetListImportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetListImportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetListImportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetListImportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetListImportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateListImportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *ListImport
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateListImportResponse) GetJSON200() *ListImport {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateListImportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateListImportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateListImportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateListImportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UpdateListImportResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateListImportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateListImportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateListImportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateListImportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// GetListImportErrorsResponse200Headers the declared response headers of an HTTP 200 response for GetListImportErrors
+type GetListImportErrorsResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type GetListImportErrorsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *GetListImportErrorsResponse200Headers
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetListImportErrorsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetListImportErrorsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetListImportErrorsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetListImportErrorsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetListImportErrorsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetListImportErrorsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetListImportErrorsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StartListImportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *ListImport
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r StartListImportResponse) GetJSON202() *ListImport {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r StartListImportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r StartListImportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StartListImportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StartListImportResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r StartListImportResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r StartListImportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StartListImportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StartListImportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StartListImportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListSubscriptionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -59687,6 +61498,177 @@ func (c *ClientWithResponses) GetMailingListGrowthWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseGetMailingListGrowthResponse(rsp)
+}
+
+// ListListImportsWithResponse List a list's CSV imports
+//
+// Newest first.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/imports (the `ListListImports` operationId).
+func (c *ClientWithResponses) ListListImportsWithResponse(ctx context.Context, listId ListId, params *ListListImportsParams, reqEditors ...RequestEditorFn) (*ListListImportsResponse, error) {
+	rsp, err := c.ListListImports(ctx, listId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListListImportsResponse(rsp)
+}
+
+// CreateListImportWithBodyWithResponse Upload a CSV file of subscribers
+//
+// One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+// declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+// this file agreed to receive {list} from {sender}; I can show how and when"), and
+// `consent_source`, where and when the people agreed. Both are required
+// (`422 attestation_required`) and are stored on the import and on every consent event it
+// writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+// the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+// list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+// optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+// headers.
+//
+// The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+// BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+// found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+// that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+// or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+// `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+// limit, 100,000 by default, fails). Start it with `/start`.
+//
+// One import per workspace validates or imports at a time (`409 import_running`). A file
+// that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists/{listId}/imports (the `CreateListImport` operationId).
+func (c *ClientWithResponses) CreateListImportWithBodyWithResponse(ctx context.Context, listId ListId, params *CreateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateListImportResponse, error) {
+	rsp, err := c.CreateListImportWithBody(ctx, listId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreateListImportResponse(rsp)
+}
+
+// CancelListImportWithResponse Cancel an import
+//
+// Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+// Subscriptions it already added stay, with their consent events. A finished import is left
+// as it is.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/lists/{listId}/imports/{importId} (the `CancelListImport` operationId).
+func (c *ClientWithResponses) CancelListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *CancelListImportParams, reqEditors ...RequestEditorFn) (*CancelListImportResponse, error) {
+	rsp, err := c.CancelListImport(ctx, listId, importId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelListImportResponse(rsp)
+}
+
+// GetListImportWithResponse A CSV import
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/imports/{importId} (the `GetListImport` operationId).
+func (c *ClientWithResponses) GetListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *GetListImportParams, reqEditors ...RequestEditorFn) (*GetListImportResponse, error) {
+	rsp, err := c.GetListImport(ctx, listId, importId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetListImportResponse(rsp)
+}
+
+// UpdateListImportWithBodyWithResponse Change an import's column mapping
+//
+// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+// again (the import goes back to `validating`). Exactly one column must be `email`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+func (c *ClientWithResponses) UpdateListImportWithBodyWithResponse(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateListImportResponse, error) {
+	rsp, err := c.UpdateListImportWithBody(ctx, listId, importId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateListImportResponse(rsp)
+}
+
+// UpdateListImportWithResponse Change an import's column mapping
+//
+// Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+// again (the import goes back to `validating`). Exactly one column must be `email`.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PATCH /v1/lists/{listId}/imports/{importId} (the `UpdateListImport` operationId).
+func (c *ClientWithResponses) UpdateListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *UpdateListImportParams, body UpdateListImportJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateListImportResponse, error) {
+	rsp, err := c.UpdateListImport(ctx, listId, importId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateListImportResponse(rsp)
+}
+
+// GetListImportErrorsWithResponse Download an import's refused rows
+//
+// A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+// the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+// `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+// Cells are quoted and formula-like values defused as in the consent export. Filled while
+// the import runs; `404` once it is 7 days past its end.
+//
+// Scope: `lists:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/lists/{listId}/imports/{importId}/errors (the `GetListImportErrors` operationId).
+func (c *ClientWithResponses) GetListImportErrorsWithResponse(ctx context.Context, listId ListId, importId ImportId, params *GetListImportErrorsParams, reqEditors ...RequestEditorFn) (*GetListImportErrorsResponse, error) {
+	rsp, err := c.GetListImportErrors(ctx, listId, importId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetListImportErrorsResponse(rsp)
+}
+
+// StartListImportWithResponse Start a validated import
+//
+// Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+// email_column_required` when no column is mapped to `email`; `409 import_running` while
+// another import of the workspace runs). Rows are added 1,000 per transaction, each address
+// checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+// `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+// of the workspace or are suppressed are never added. Contacts are found by address or
+// created with the row's name and locale; mapped attributes only fill keys a contact does
+// not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+// mail. The upload is deleted when the import ends; refused rows stay downloadable from
+// `/errors` for 7 days.
+//
+// Owners, admins and API keys. Scope: `lists:write`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/lists/{listId}/imports/{importId}/start (the `StartListImport` operationId).
+func (c *ClientWithResponses) StartListImportWithResponse(ctx context.Context, listId ListId, importId ImportId, params *StartListImportParams, reqEditors ...RequestEditorFn) (*StartListImportResponse, error) {
+	rsp, err := c.StartListImport(ctx, listId, importId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStartListImportResponse(rsp)
 }
 
 // ListSubscriptionsWithResponse List a list's subscriptions
@@ -69679,6 +71661,407 @@ func ParseGetMailingListGrowthResponse(rsp *http.Response) (*GetMailingListGrowt
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListListImportsResponse parses an HTTP response from a ListListImportsWithResponse call
+func ParseListListImportsResponse(rsp *http.Response) (*ListListImportsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListListImportsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListImportPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCreateListImportResponse parses an HTTP response from a CreateListImportWithResponse call
+func ParseCreateListImportResponse(rsp *http.Response) (*CreateListImportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreateListImportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest ListImport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 415:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON415 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCancelListImportResponse parses an HTTP response from a CancelListImportWithResponse call
+func ParseCancelListImportResponse(rsp *http.Response) (*CancelListImportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelListImportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetListImportResponse parses an HTTP response from a GetListImportWithResponse call
+func ParseGetListImportResponse(rsp *http.Response) (*GetListImportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetListImportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListImport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateListImportResponse parses an HTTP response from a UpdateListImportWithResponse call
+func ParseUpdateListImportResponse(rsp *http.Response) (*UpdateListImportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateListImportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ListImport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetListImportErrorsResponse parses an HTTP response from a GetListImportErrorsWithResponse call
+func ParseGetListImportErrorsResponse(rsp *http.Response) (*GetListImportErrorsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetListImportErrorsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers GetListImportErrorsResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseStartListImportResponse parses an HTTP response from a StartListImportWithResponse call
+func ParseStartListImportResponse(rsp *http.Response) (*StartListImportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StartListImportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest ListImport
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	}
 
