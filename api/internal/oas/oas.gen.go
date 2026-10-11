@@ -797,6 +797,7 @@ func (e EmailDesignDocumentSchema) Valid() bool {
 // Defines values for EmailDesignVersionReason.
 const (
 	VersionAutosave  EmailDesignVersionReason = "autosave"
+	VersionConflict  EmailDesignVersionReason = "conflict"
 	VersionManual    EmailDesignVersionReason = "manual"
 	VersionRestored  EmailDesignVersionReason = "restored"
 	VersionScheduled EmailDesignVersionReason = "scheduled"
@@ -807,6 +808,8 @@ const (
 func (e EmailDesignVersionReason) Valid() bool {
 	switch e {
 	case VersionAutosave:
+		return true
+	case VersionConflict:
 		return true
 	case VersionManual:
 		return true

@@ -795,6 +795,7 @@ func (e EmailDesignDocumentSchema) Valid() bool {
 // Defines values for EmailDesignVersionReason.
 const (
 	VersionAutosave  EmailDesignVersionReason = "autosave"
+	VersionConflict  EmailDesignVersionReason = "conflict"
 	VersionManual    EmailDesignVersionReason = "manual"
 	VersionRestored  EmailDesignVersionReason = "restored"
 	VersionScheduled EmailDesignVersionReason = "scheduled"
@@ -805,6 +806,8 @@ const (
 func (e EmailDesignVersionReason) Valid() bool {
 	switch e {
 	case VersionAutosave:
+		return true
+	case VersionConflict:
 		return true
 	case VersionManual:
 		return true
@@ -14063,9 +14066,10 @@ type ClientInterface interface {
 	//
 	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
 	// from; when the design has moved on since, nothing is saved and the answer is
-	// `409 version_conflict` with the current design in `design`. Each save increases
-	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-	// `snapshot` is true. Saving an archived design brings it back.
+	// `409 version_conflict` with the current design in `design`, and the current version is
+	// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+	// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+	// brings it back.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -14078,9 +14082,10 @@ type ClientInterface interface {
 	//
 	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
 	// from; when the design has moved on since, nothing is saved and the answer is
-	// `409 version_conflict` with the current design in `design`. Each save increases
-	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-	// `snapshot` is true. Saving an archived design brings it back.
+	// `409 version_conflict` with the current design in `design`, and the current version is
+	// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+	// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+	// brings it back.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -19123,9 +19128,10 @@ func (c *Client) GetEmailDesign(ctx context.Context, designId DesignId, params *
 //
 // Replaces the name, inbox and document. `base_version` is the `version` the edit started
 // from; when the design has moved on since, nothing is saved and the answer is
-// `409 version_conflict` with the current design in `design`. Each save increases
-// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-// `snapshot` is true. Saving an archived design brings it back.
+// `409 version_conflict` with the current design in `design`, and the current version is
+// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+// brings it back.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -19148,9 +19154,10 @@ func (c *Client) UpdateEmailDesignWithBody(ctx context.Context, designId DesignI
 //
 // Replaces the name, inbox and document. `base_version` is the `version` the edit started
 // from; when the design has moved on since, nothing is saved and the answer is
-// `409 version_conflict` with the current design in `design`. Each save increases
-// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-// `snapshot` is true. Saving an archived design brings it back.
+// `409 version_conflict` with the current design in `design`, and the current version is
+// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+// brings it back.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -35954,9 +35961,10 @@ type ClientWithResponsesInterface interface {
 	//
 	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
 	// from; when the design has moved on since, nothing is saved and the answer is
-	// `409 version_conflict` with the current design in `design`. Each save increases
-	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-	// `snapshot` is true. Saving an archived design brings it back.
+	// `409 version_conflict` with the current design in `design`, and the current version is
+	// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+	// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+	// brings it back.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -35969,9 +35977,10 @@ type ClientWithResponsesInterface interface {
 	//
 	// Replaces the name, inbox and document. `base_version` is the `version` the edit started
 	// from; when the design has moved on since, nothing is saved and the answer is
-	// `409 version_conflict` with the current design in `design`. Each save increases
-	// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-	// `snapshot` is true. Saving an archived design brings it back.
+	// `409 version_conflict` with the current design in `design`, and the current version is
+	// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+	// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+	// brings it back.
 	//
 	// Owners, admins and API keys. Scope: `broadcasts:write`.
 	//
@@ -53932,9 +53941,10 @@ func (c *ClientWithResponses) GetEmailDesignWithResponse(ctx context.Context, de
 //
 // Replaces the name, inbox and document. `base_version` is the `version` the edit started
 // from; when the design has moved on since, nothing is saved and the answer is
-// `409 version_conflict` with the current design in `design`. Each save increases
-// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-// `snapshot` is true. Saving an archived design brings it back.
+// `409 version_conflict` with the current design in `design`, and the current version is
+// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+// brings it back.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //
@@ -53953,9 +53963,10 @@ func (c *ClientWithResponses) UpdateEmailDesignWithBodyWithResponse(ctx context.
 //
 // Replaces the name, inbox and document. `base_version` is the `version` the edit started
 // from; when the design has moved on since, nothing is saved and the answer is
-// `409 version_conflict` with the current design in `design`. Each save increases
-// `version` by one and takes a snapshot when the newest is older than 10 minutes or
-// `snapshot` is true. Saving an archived design brings it back.
+// `409 version_conflict` with the current design in `design`, and the current version is
+// kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+// when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+// brings it back.
 //
 // Owners, admins and API keys. Scope: `broadcasts:write`.
 //

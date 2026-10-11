@@ -55,7 +55,15 @@ WHERE ev.workspace_id = @workspace_id AND ev.design_id = @design_id
   AND ev.version NOT IN (
       SELECT k.version FROM email_design_versions k
       WHERE k.workspace_id = @workspace_id AND k.design_id = @design_id
-      ORDER BY k.version DESC LIMIT @keep);
+      ORDER BY k.version = (
+          SELECT max(c.version) FROM email_design_versions c
+          WHERE c.workspace_id = @workspace_id AND c.design_id = @design_id AND c.reason = 'conflict'
+      ) IS TRUE DESC, k.version DESC LIMIT @keep);
+
+-- name: InsertEmailDesignConflictVersion :exec
+INSERT INTO email_design_versions (workspace_id, design_id, version, document, reason, member_id, created_at)
+VALUES (@workspace_id, @design_id, @version, @document, 'conflict', sqlc.narg(member_id), @now)
+ON CONFLICT (workspace_id, design_id, version) DO NOTHING;
 
 -- name: ListEmailDesignVersions :many
 SELECT version, reason, member_id, created_at FROM email_design_versions

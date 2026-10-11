@@ -13,6 +13,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/textproto"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -130,7 +131,7 @@ func TestEmailDesigns(t *testing.T) {
 	}
 	o.expect(http.StatusOK, "PUT", "/v1/email-designs/"+id, map[string]any{"name": "October news", "document": designDoc(), "base_version": 2, "snapshot": true, "inbox_id": tm.inbox})
 	versions := o.expect(http.StatusOK, "GET", "/v1/email-designs/"+id+"/versions", nil).body["items"].([]any)
-	if len(versions) != 2 || versions[0].(map[string]any)["reason"] != "manual" || versions[1].(map[string]any)["version"].(float64) != 1 {
+	if len(versions) != 3 || versions[0].(map[string]any)["reason"] != "manual" || versions[1].(map[string]any)["reason"] != "conflict" || versions[2].(map[string]any)["version"].(float64) != 1 {
 		t.Fatalf("versions: %v", versions)
 	}
 	restored := o.expect(http.StatusOK, "POST", "/v1/email-designs/"+id+"/versions/1/restore", map[string]any{"base_version": 3})
@@ -173,6 +174,51 @@ func TestEmailDesigns(t *testing.T) {
 	none.bearer = o.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "lists", "scopes": []string{"lists:read"}}).str("secret")
 	none.expectProblem(http.StatusForbidden, "insufficient_scope", "GET", "/v1/email-designs", nil)
 	o.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/api-keys", map[string]any{"name": "send", "scopes": []string{"broadcasts:send"}})
+}
+
+func TestEmailDesignConflictKeepsTheirs(t *testing.T) {
+	h := newHarness(t)
+	o := newTeam(t, h).owner
+
+	id := o.expect(http.StatusCreated, "POST", "/v1/email-designs", map[string]any{"name": "News"}).str("id")
+	theirs := designDoc(map[string]any{"id": "a", "type": "heading", "level": 1, "text": "Tab A"})
+	mine := designDoc(map[string]any{"id": "b", "type": "heading", "level": 1, "text": "Tab B"})
+	o.expect(http.StatusOK, "PUT", "/v1/email-designs/"+id, map[string]any{"name": "News", "document": theirs, "base_version": 1})
+	o.expectProblem(http.StatusConflict, "version_conflict", "PUT", "/v1/email-designs/"+id, map[string]any{"name": "News", "document": mine, "base_version": 1})
+	o.expectProblem(http.StatusConflict, "version_conflict", "PUT", "/v1/email-designs/"+id, map[string]any{"name": "News", "document": mine, "base_version": 1})
+	kept := o.expect(http.StatusOK, "PUT", "/v1/email-designs/"+id, map[string]any{"name": "News", "document": mine, "base_version": 2})
+	if kept.body["version"].(float64) != 3 {
+		t.Fatalf("keep mine: %s", kept.raw)
+	}
+
+	heading := func(v int) string {
+		r := o.expect(http.StatusOK, "GET", "/v1/email-designs/"+id+"/versions/"+strconv.Itoa(v), nil)
+		return r.body["document"].(map[string]any)["blocks"].([]any)[0].(map[string]any)["text"].(string)
+	}
+	if got := heading(2); got != "Tab A" {
+		t.Fatalf("their version: %q", got)
+	}
+	versions := o.expect(http.StatusOK, "GET", "/v1/email-designs/"+id+"/versions", nil).body["items"].([]any)
+	if len(versions) != 2 || versions[0].(map[string]any)["version"].(float64) != 2 || versions[0].(map[string]any)["reason"] != "conflict" {
+		t.Fatalf("versions: %v", versions)
+	}
+
+	o.expectProblem(http.StatusConflict, "version_conflict", "POST", "/v1/email-designs/"+id+"/versions/2/restore", map[string]any{"base_version": 2})
+	if got := heading(3); got != "Tab B" {
+		t.Fatalf("restore conflict version: %q", got)
+	}
+
+	for v := 3; v < 60; v++ {
+		o.expect(http.StatusOK, "PUT", "/v1/email-designs/"+id, map[string]any{"name": "News", "document": mine, "base_version": v, "snapshot": true})
+	}
+	versions = o.expect(http.StatusOK, "GET", "/v1/email-designs/"+id+"/versions", nil).body["items"].([]any)
+	last := versions[len(versions)-1].(map[string]any)
+	if len(versions) != 50 || versions[0].(map[string]any)["version"].(float64) != 60 || last["version"].(float64) != 3 || last["reason"] != "conflict" {
+		t.Fatalf("pruned versions: %d, newest %v, oldest %v", len(versions), versions[0], last)
+	}
+	if versions[len(versions)-2].(map[string]any)["version"].(float64) != 12 {
+		t.Fatalf("kept besides the conflict snapshot: %v", versions[len(versions)-2])
+	}
 }
 
 func TestEmailImages(t *testing.T) {

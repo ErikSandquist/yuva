@@ -360,6 +360,33 @@ func (q *Queries) GetPublicEmailImage(ctx context.Context, token string) (EmailI
 	return i, err
 }
 
+const insertEmailDesignConflictVersion = `-- name: InsertEmailDesignConflictVersion :exec
+INSERT INTO email_design_versions (workspace_id, design_id, version, document, reason, member_id, created_at)
+VALUES ($1, $2, $3, $4, 'conflict', $5, $6)
+ON CONFLICT (workspace_id, design_id, version) DO NOTHING
+`
+
+type InsertEmailDesignConflictVersionParams struct {
+	WorkspaceID uuid.UUID
+	DesignID    uuid.UUID
+	Version     int32
+	Document    []byte
+	MemberID    *uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) InsertEmailDesignConflictVersion(ctx context.Context, arg InsertEmailDesignConflictVersionParams) error {
+	_, err := q.db.Exec(ctx, insertEmailDesignConflictVersion,
+		arg.WorkspaceID,
+		arg.DesignID,
+		arg.Version,
+		arg.Document,
+		arg.MemberID,
+		arg.Now,
+	)
+	return err
+}
+
 const insertEmailDesignVersion = `-- name: InsertEmailDesignVersion :exec
 INSERT INTO email_design_versions (workspace_id, design_id, version, document, reason, member_id, created_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -749,7 +776,10 @@ WHERE ev.workspace_id = $1 AND ev.design_id = $2
   AND ev.version NOT IN (
       SELECT k.version FROM email_design_versions k
       WHERE k.workspace_id = $1 AND k.design_id = $2
-      ORDER BY k.version DESC LIMIT $3)
+      ORDER BY k.version = (
+          SELECT max(c.version) FROM email_design_versions c
+          WHERE c.workspace_id = $1 AND c.design_id = $2 AND c.reason = 'conflict'
+      ) IS TRUE DESC, k.version DESC LIMIT $3)
 `
 
 type PruneEmailDesignVersionsParams struct {

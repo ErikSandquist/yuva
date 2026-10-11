@@ -176,8 +176,10 @@ tags:
       Saves are optimistic: `PUT` sends the `version` it started from as `base_version`; when
       someone saved in between it answers `409 version_conflict` with the current design in
       `design`. The server keeps the newest 50 snapshots of a design (`versions`): one at most every
-      10 minutes of editing, one when a save asks for it (`snapshot: true`) and one on every
-      restore.
+      10 minutes of editing, one when a save asks for it (`snapshot: true`), one on every
+      restore and one of the current version (`conflict`) whenever a save or restore answers
+      `409 version_conflict`, so the edit that won is never lost whatever the other tab does next.
+      The newest `conflict` snapshot is never pruned.
 
       Images are uploaded (PNG, JPEG, GIF, WebP; never SVG), re-encoded without metadata and at
       most 1,200 pixels wide (WebP is stored as PNG or JPEG) and served publicly at
@@ -4708,9 +4710,10 @@ paths:
       description: |
         Replaces the name, inbox and document. `base_version` is the `version` the edit started
         from; when the design has moved on since, nothing is saved and the answer is
-        `409 version_conflict` with the current design in `design`. Each save increases
-        `version` by one and takes a snapshot when the newest is older than 10 minutes or
-        `snapshot` is true. Saving an archived design brings it back.
+        `409 version_conflict` with the current design in `design`, and the current version is
+        kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+        when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+        brings it back.
 
         Owners, admins and API keys. Scope: `broadcasts:write`.
       tags: [designs]
@@ -14510,8 +14513,8 @@ components:
           minimum: 1
     EmailDesignVersionReason:
       type: string
-      enum: [autosave, test, scheduled, restored, manual]
-      x-enum-varnames: [VersionAutosave, VersionTest, VersionScheduled, VersionRestored, VersionManual]
+      enum: [autosave, test, scheduled, restored, manual, conflict]
+      x-enum-varnames: [VersionAutosave, VersionTest, VersionScheduled, VersionRestored, VersionManual, VersionConflict]
     EmailDesignVersion:
       type: object
       required: [version, reason, created_at]

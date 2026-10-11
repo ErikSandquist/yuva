@@ -339,6 +339,18 @@ func (s *Server) snapshotDesign(ctx context.Context, q *store.Queries, p princip
 	return q.PruneEmailDesignVersions(ctx, store.PruneEmailDesignVersionsParams{WorkspaceID: row.WorkspaceID, DesignID: row.ID, Keep: designVersionsKept})
 }
 
+// keepConflictVersion snapshots the version a stale save or restore lost against, so no choice the
+// other tab makes next can drop it.
+func (s *Server) keepConflictVersion(ctx context.Context, q *store.Queries, cur store.EmailDesign) error {
+	if err := q.InsertEmailDesignConflictVersion(ctx, store.InsertEmailDesignConflictVersionParams{
+		WorkspaceID: cur.WorkspaceID, DesignID: cur.ID, Version: cur.Version, Document: cur.Document,
+		MemberID: cur.UpdatedBy, Now: s.now(),
+	}); err != nil {
+		return err
+	}
+	return q.PruneEmailDesignVersions(ctx, store.PruneEmailDesignVersionsParams{WorkspaceID: cur.WorkspaceID, DesignID: cur.ID, Keep: designVersionsKept})
+}
+
 func designName(name string) (string, error) { return trimmed(name, 1, 200, "name") }
 
 func (s *Server) ListEmailDesigns(ctx context.Context, req oas.ListEmailDesignsRequestObject) (oas.ListEmailDesignsResponseObject, error) {
@@ -501,7 +513,7 @@ func (s *Server) UpdateEmailDesign(ctx context.Context, req oas.UpdateEmailDesig
 		row, err = s.saveDesign(ctx, q, p, cur, b.BaseVersion, name, b.InboxId, d)
 		if errors.Is(err, errVersionConflict) {
 			conflict = cur
-			return err
+			return s.keepConflictVersion(ctx, q, cur)
 		}
 		if err != nil {
 			return err
@@ -511,11 +523,11 @@ func (s *Server) UpdateEmailDesign(ctx context.Context, req oas.UpdateEmailDesig
 		}
 		return s.snapshotDesign(ctx, q, p, row, "autosave", false)
 	})
-	if errors.Is(err, errVersionConflict) {
-		return nil, s.versionConflict(ctx, conflict)
-	}
 	if err != nil {
 		return nil, err
+	}
+	if conflict.ID != uuid.Nil() {
+		return nil, s.versionConflict(ctx, conflict)
 	}
 	out, err := s.designBody(ctx, s.st.Queries, row)
 	if err != nil {
@@ -654,18 +666,18 @@ func (s *Server) RestoreEmailDesignVersion(ctx context.Context, req oas.RestoreE
 		row, err = s.saveDesign(ctx, q, p, cur, req.Body.BaseVersion, cur.Name, cur.InboxID, d)
 		if errors.Is(err, errVersionConflict) {
 			conflict = cur
-			return err
+			return s.keepConflictVersion(ctx, q, cur)
 		}
 		if err != nil {
 			return err
 		}
 		return s.snapshotDesign(ctx, q, p, row, "restored", true)
 	})
-	if errors.Is(err, errVersionConflict) {
-		return nil, s.versionConflict(ctx, conflict)
-	}
 	if err != nil {
 		return nil, err
+	}
+	if conflict.ID != uuid.Nil() {
+		return nil, s.versionConflict(ctx, conflict)
 	}
 	out, err := s.designBody(ctx, s.st.Queries, row)
 	if err != nil {
