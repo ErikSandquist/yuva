@@ -79,12 +79,57 @@ Commands that print an id or a secret write only that to stdout.
 | `channel create-chat --workspace <ws> --inbox <id\|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]` | Creates a chat (web widget) channel and prints its id and public key (`yuva_pk_…`), separated by a tab. Repeat `--origin` for each site. |
 | `channel list --workspace <ws> --inbox <id\|slug>` | Lists an inbox's channels, with a chat channel's public key and origins. |
 | `workspace delete --workspace <ws> --yes` | Deletes a workspace ([below](#deleting-a-workspace-or-an-account)). Without `--yes`, a dry run. |
+| `workspace broadcasts approve\|deny\|suspend --workspace <ws> [--reason <text>]` | Answers a workspace's broadcast approval, or suspends it ([below](#broadcasts-on-a-hosted-server)). |
+| `workspace broadcasts limit --workspace <ws> --daily <n>` | Sets the workspace's recipients per UTC day; `0` removes the limit. |
+| `workspace broadcasts show --workspace <ws>` | Prints its status, limit, 30-day rates and latest broadcasts. |
 | `person delete --email <address> --yes` | Deletes a person's account. Refused while they are a workspace's only owner. |
 | `ingest-email --to <address> [--from <address>]` | Delivers a raw message from stdin ([E-mail](email.md#any-mta-yuva-ingest-email)). |
 | `vapid-keys` | Prints a new Web Push key pair. Needs no database. |
 
 Everything else (chat and app channels, members, webhooks, identity secrets) is managed in the
 panel or through `/v1`.
+
+## Broadcasts on a hosted server
+
+How [broadcasts](broadcasts.md) are limited is set by `YUVA_BROADCASTS` ([Configuration](configuration.md#broadcasts)).
+With `on` there is nothing to do. With `approval`, which is the default when `YUVA_SIGNUP=open`, a
+workspace created through sign-up cannot schedule broadcasts until you approve it, and every workspace
+warms up from 500 recipients a day, doubling after each clean day. Workspaces made with
+`yuva bootstrap` before or after are `allowed`, but still warm up.
+
+Set `YUVA_OPERATOR_EMAIL` so you hear about it. The digest (at most one e-mail every 5 minutes) lists,
+without mail content or recipients' addresses:
+
+| Line | When |
+|---|---|
+| Broadcast approval requested | An owner asked: the workspace name, the person's address, the website, who sends and what, how subscribers agreed. |
+| Workspace suspended from broadcasts | The server suspended it because of its 30-day complaint or bounce rate, with the rates. |
+| Broadcast paused | A broadcast paused itself (bounce rate, complaint rate or sender error), with the broadcast id and the reason. |
+
+A workspace is suspended when at least 0.3% of at least 1,000 broadcast mails of the last 30 days were
+reported as spam, or at least 8% of at least 2,000 bounced. Its running broadcasts pause.
+
+Answer with the CLI. A workspace is a name or an id, and `--reason` (up to 500 characters) is shown to
+the workspace's owners:
+
+```sh
+docker compose exec -T yuva /yuva workspace broadcasts approve --workspace Example
+docker compose exec -T yuva /yuva workspace broadcasts deny --workspace Example --reason "No subscribe form on the site"
+docker compose exec -T yuva /yuva workspace broadcasts suspend --workspace Example --reason "Complaints"
+docker compose exec -T yuva /yuva workspace broadcasts limit --workspace Example --daily 2000
+docker compose exec -T yuva /yuva workspace broadcasts show --workspace Example
+```
+
+| Command | Effect |
+|---|---|
+| `approve` | The workspace may send. Also lifts a suspension; broadcasts that paused stay paused until a member resumes them. |
+| `deny` | The request is answered with no; the workspace may ask again. |
+| `suspend` | Refuses scheduling and resuming, and pauses the running broadcasts (reason `workspace_suspended`). |
+| `limit --daily <n>` | The workspace's recipients per UTC day, across its broadcasts. The smallest of this, `YUVA_BROADCAST_DAILY_RECIPIENTS` and the warm-up applies. `0` removes this limit only. |
+| `show` | The status and its reason, the daily limit and today's count, the last 30 days (sent, bounce and complaint rates), the sender domains it used and its latest 10 broadcasts. |
+
+Only the operator lifts a suspension. Before approving, look at the website and how the subscribers
+agreed.
 
 ## Deleting a workspace or an account
 
@@ -113,6 +158,8 @@ Yuva cleans up once an hour:
 | Finished webhook deliveries | 7 days; the newest 100 per endpoint stay |
 | Stale realtime connection records | 1 hour |
 | Closed conversations, with messages and files (when `retention_days` is set) | that many days since their last change |
+| Recipients of a finished broadcast (its counts stay) | 400 days after it finished |
+| Daily sending totals behind the limits | 90 days |
 | Original `.eml` of inbound mail (when `retention_days` is set) | that many days; the message itself stays |
 
 ## Monitoring

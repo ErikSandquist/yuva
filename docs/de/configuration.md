@@ -55,7 +55,7 @@ und `t`/`f`.
 | `YUVA_SIGNUP` | `invite` | `invite`: Nur bestehende Personen und eingeladene Adressen erhalten einen Anmeldecode; Workspaces entstehen mit `yuva bootstrap`. `open`: Jeder kann sich mit einem Code anmelden und im Panel Workspaces anlegen. |
 | `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | Bei `open`: Workspaces, die eine Person angelegt und nicht gelöscht hat; weitere erhalten `403`. |
 | `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | Bei `open`: Workspaces, die von einer IP-Adresse (IPv6 /64) in 24 Stunden angelegt werden; weitere erhalten `429`. |
-| `YUVA_OPERATOR_EMAIL` | nicht gesetzt | Adressen, kommagetrennt, die eine E-Mail erhalten, wenn sich eine neue Person mit einem Code registriert (Leser als solche markiert) oder einen Workspace anlegt: Adresse, Workspace-Name, Zeit und Land (hinter Cloudflare, mit `YUVA_CLIENT_IP_HEADER=CF-Connecting-IP`) oder sonst die IP-Adresse. Höchstens eine E-Mail alle 5 Minuten, mit allem seit der vorigen. Auf Englisch, über das SMTP des Servers. Nicht gesetzt heißt aus. |
+| `YUVA_OPERATOR_EMAIL` | nicht gesetzt | Adressen, kommagetrennt, die eine E-Mail erhalten, wenn sich eine neue Person mit einem Code registriert (Leser als solche markiert) oder einen Workspace anlegt: Adresse, Workspace-Name, Zeit und Land (hinter Cloudflare, mit `YUVA_CLIENT_IP_HEADER=CF-Connecting-IP`) oder sonst die IP-Adresse. Höchstens eine E-Mail alle 5 Minuten, mit allem seit der vorigen. Auf Englisch, über das SMTP des Servers. Dieselbe E-Mail listet auch [Freigabeanfragen, Sperren und automatische Pausen](operations.md#broadcasts-auf-einem-gehosteten-server) von Broadcasts. Nicht gesetzt heißt aus. |
 
 ## Server-E-Mail
 
@@ -99,6 +99,17 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | Nachrichten, die `/ingress/email` pro Prozess gleichzeitig verarbeitet; weitere erhalten `503`. |
 | `YUVA_SES_TOPIC_ARNS` | nicht gesetzt | SNS-Topic-ARNs, deren SES-Bounces und -Beschwerden `/ingress/ses` annimmt. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Eingehende E-Mails, die ein Absender pro Stunde an einen Workspace senden darf; weitere werden abgelehnt (`429`). |
+
+## Broadcasts
+
+[Broadcasts versenden](broadcasts.md). Listen und ihre Formulare funktionieren unabhängig davon, was hier steht.
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_BROADCASTS` | `approval` bei `YUVA_SIGNUP=open`, sonst `on` | `on`: jeder Workspace sendet. `approval`: ein über die Anmeldung angelegter Workspace sendet erst nach Freigabe durch den Operator, und jeder Workspace unterliegt einem [Warm-up-Limit](broadcasts.md#freigabe-auf-gehosteten-servern). `off`: Broadcasts anlegen, ändern und senden antwortet mit `403 broadcasts_disabled`. |
+| `YUVA_BROADCAST_WORKERS` | `2` | Broadcast-Versandjobs, die ein Prozess gleichzeitig ausführt, je einer für einen sendenden Kanal. Support-Antworten haben eine eigene Queue und werden nicht langsamer. Mindestens 1. |
+| `YUVA_BROADCAST_DAILY_RECIPIENTS` | `0` (kein Limit) | Höchstzahl der Empfänger der Broadcasts eines Workspaces pro UTC-Tag. Ein Versand, der es erreicht, geht am nächsten Tag weiter. Der Operator kann pro Workspace ein kleineres Limit setzen ([Betrieb](operations.md#broadcasts-auf-einem-gehosteten-server)). |
+| `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Ursprung (Schema und Host, kein Pfad), auf den die Abmelde-, Bestätigungs-, Klick- und Bild-Links in Listen- und Broadcast-Mails zeigen, z. B. `https://links.example.com`. Er muss diesen Server erreichen. Dieser Host beantwortet nur diese Links (`/m/`, `/s/`, `/c/`, `/i/`) und liefert für alles andere `404`; Panel und API bleiben auf Ihrem Haupt-Host. |
 
 ## Chat
 

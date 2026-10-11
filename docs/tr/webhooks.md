@@ -48,6 +48,7 @@ göre sıralayın.
 | `contact.updated` | Bir kişi değişti | `contact` |
 | `contact.deleted` | Bir kişi silindi ya da birleştirildi (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Bir [taslak](headless.md#taslakla-yanıtlayan-bot) değişti; gönderilmesi `message.created` üretir | `message`, `conversation`, `contact` |
+| `broadcast.updated` | Bir [bülten](broadcasts.md) durum değiştirdi: zamanlandı, gönderiliyor, duraklatıldı, gönderildi, iptal edildi, başarısız oldu ya da taslağa döndü | `broadcast`, `previous_state` |
 
 Her gövdede `type`, `timestamp` (olayın zamanı), `workspace_id`, `inbox_id` (kişi olaylarında yok)
 ve `data` bulunur. Kişinin canlı bağlantısı yoksa `data.contact.online` `false` olur:

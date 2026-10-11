@@ -1,0 +1,381 @@
+# Bülten gönderme
+
+Bülten, [e-posta listelerinizin](lists.md) abonelerine giden tek bir e-postadır: haber bülteni, ürün
+güncellemesi, duyuru. Bir [e-posta tasarımı](designs.md) kullanır, gelen kutunuzun e-posta
+kanallarından biri üzerinden gider ve ona verilen yanıt o gelen kutusunda bir konuşma olur. Yuva sonra
+ne olduğunu gösterir: kime ulaştı, kim geri döndü, kim abonelikten çıktı ya da yanıtladı.
+
+Akış şöyledir: liste, sonra tasarım, sonra bülten. Bültenleri sahipler ve yöneticiler gönderir;
+temsilciler, bir yanıtı anlayabilmek için gelen kutularındaki bültenleri okur.
+
+## 1. İlk bültenden önce
+
+1. Bir [liste](lists.md#2-liste-oluşturun) oluşturun ve aboneleri ekleyin. Bülten yalnızca bir listeye
+   `subscribed` olan kişilere gider.
+2. Gelen kutusunun [gönderen bilgilerini](lists.md#1-gönderen-bilgilerini-girin) doldurun. Her bülten
+   bunlarla biter; yasal unvan ve posta adresi yoksa gözden geçirme göndermeyi engeller.
+3. Bir [tasarım](designs.md) yapın ya da bir şablonla başlayın.
+4. Gelen kutusunda SMTP hesabı ve gönderilecek adresi olan bir [e-posta kanalı](email.md) bulunduğundan
+   emin olun. Catch-all kanalın bir From adresi olmalıdır. O adresin alan adı için SPF, DKIM ve DMARC
+   kurun ([Teslim edilebilirlik](#teslim-edilebilirlik)).
+5. İsteğe bağlı ama akıllıca: kanala bültenler için ayrı bir hesap verin ([aşağıda](#gönderen)).
+
+Başkasının işlettiği bir sunucuda yeni bir çalışma alanının göndermeden önce
+[onaylanması](#barındırılan-sunucularda-onay) da gerekebilir.
+
+## 2. Bülteni yazın
+
+Panelde: Bültenler, sonra Yeni bülten. Yalnızca ekibinizin göreceği bir ad verin ve gelen kutusunu
+seçin. Siz gönderene ya da zamanlayana kadar taslak olarak kalır ve her değişiklik yaptıkça kaydedilir.
+
+### Gönderen
+
+Bülteni gönderecek e-posta kanalını seçin. Oluşturucu, kanalın hazır olup olmadığını, hangi hesabı
+kullanacağını ve ne hızla göndereceğini söyler.
+
+Bülten e-postaları sunucunun kendi posta göndericisinden hiçbir zaman geçmez. Kanalın ayrı bülten
+hesabı varsa o, yoksa destek hesabı kullanılır. Ayrı hesap, pazarlama e-postalarına gelen şikâyetleri
+destek yanıtlarınızı taşıyan hesaptan uzak tutar; yavaş bir gönderim de bir destek yanıtını geciktirmez.
+
+Ayarlamak için: Ayarlar → gelen kutusu → Müşteriler nereden yazıyor → E-posta, sonra Bülten gönderimi
+bölümü. "Bültenler için ayrı bir hesap kullan" seçeneğini açın; sunucu, port, şifreleme, kullanıcı adı ve
+parolayı girin. Seçenek kapalıyken kaydetmek hesabı kaldırır. Hız, kanalın saniyede gönderdiği e-posta
+sayısıdır: 1 ile 100 arası (yeni kanalda 5); sağlayıcınızın izin verdiğinin altında tutun.
+
+### Alıcılar
+
+Gelen kutusunun en fazla 10 listesini seçin. Birden çok listede olan kişi tek e-posta alır; bu e-posta,
+sizin sıraladığınız listelerden ilkinin altında gider.
+
+İsterseniz daraltın:
+
+- **Koşullar** (en fazla 10; hepsi uymalı) bir kişi özniteliğini karşılaştırır: eşittir, eşit değildir,
+  içerir (büyük/küçük harf fark etmez), şundan büyüktür, şundan küçüktür, şunlardan biridir, vardır,
+  yoktur. Özniteliği olmayan kişi yalnızca "eşit değildir" ve "yoktur" koşullarına uyar.
+- **Diller** (en fazla 20) yalnızca dili bunlardan biri olan kişileri tutar; `tr` aynı zamanda `tr-TR`
+  kişilerini de tutar. Boş bırakırsanız herkes kalır.
+
+Oluşturucu, alıcılar değiştikçe alıcı sayısını ve "Dışarıda kalanlar" altında diğerlerinin neden e-posta
+almayacağını gösterir:
+
+| Neden | Kim |
+|---|---|
+| Ayrıldı | Listelerin hepsinden ayrılmış. |
+| Henüz onaylamadı | Listelerde yalnızca `pending` (çift onay tamamlanmamış). |
+| Geri döndü ya da spam bildirildi | Adres engelli listesinde. |
+| Tüm e-postalara itiraz etti | Kişi çalışma alanınızdan gelen e-postalara itiraz etti. |
+| Engellenmiş kişiler | Kişiyi siz engellediniz. |
+| Bir koşul ya da dil nedeniyle dışarıda | Bir koşul ya da dil uymuyor. |
+| Birden çok listede, her birine tek e-posta | Fazladan abonelikler. |
+
+### İçerik
+
+Tasarımı seçin. Konuyu yazın (en fazla 300 karakter; gelen kutuları yaklaşık ilk 80 karakteri gösterir)
+ve isterseniz çoğu gelen kutusunda konudan sonra görünen önizleme metnini yazın. Boş bırakırsanız
+tasarımın kendi metni kullanılır. `{{ contact.first_name | "there" }}` gibi birleştirme alanları konuda
+da çalışır; yedek değeri olmayan bir alan birinde boş kalacaksa gözden geçirme sizi durdurur.
+
+### Seçenekler
+
+"Tıklamaları say" kapalıdır. Bkz. [Tıklama takibi](#tıklama-takibi).
+
+### Deneme gönderimleri
+
+Her gönderimden önce kendinize ya da en fazla beş üyeye deneme gönderin. Gerçek e-postayla aynı görünür;
+konunun başında `[Test]` yazar. Denemeler yalnızca çalışma alanının üyelerine gider, başka hiçbir adrese
+gitmez, abonelikten çıkma bağlantısı da bunun bir deneme olduğunu söyler. Birleştirme alanlarını örnek
+değerlerle ya da bir kişinin değerleriyle doldurabilirsiniz (deneme yine yalnızca seçtiğiniz üyelere
+gider). Çalışma alanı başına saatte en fazla 20 deneme.
+
+## 3. Gözden geçirin ve gönderin
+
+"Gözden geçir ve gönder", zamanladığınızda sunucunun çalıştırdığı kontrol listesini gösterir. Engelleyen
+maddeler göndermeyi durdurur; uyarılar durdurmaz.
+
+| Madde | Engeller, eğer |
+|---|---|
+| Alt bilgi için gönderen bilgileri | Gelen kutusunda yasal unvan ya da posta adresi yok. |
+| Gönderen kanal | Kanal seçilmemiş ya da kanalda SMTP hesabı veya From adresi yok. |
+| Gönderim izni | Sunucuda bültenler kapalı, çalışma alanı [onay](#barındırılan-sunucularda-onay) bekliyor ya da askıda. |
+| Tasarım | Seçilmemiş ya da 500 KB'tan fazla HTML'ye dönüşüyor. |
+| Alıcılar | Liste seçilmemiş ya da hiç kimse e-posta almayacak. |
+| Birleştirme alanları | Yedek değeri olmayan bir alan bir alıcıda boş kalacak. |
+| E-posta boyutu | 102 KB'tan fazla HTML; Gmail e-postayı keser (alt bilgi ve abonelikten çıkma bağlantısıyla birlikte). 90 KB üstü uyarıdır. |
+| Görsel açıklamaları | Uyarı: bir görselde alternatif metin yok. |
+| Bağlantılar | Uyarı: bir bağlantı `http:` kullanıyor. |
+| Konu | Boş ya da 300 karakterden uzun. 80 üstü uyarıdır. |
+| Günlük sınır | Uyarı: [günlük sınır](#günlük-sınır) gönderimi bir günden uzun sürdürür. |
+| Deneme e-postası | Uyarı: son değişiklikten beri deneme gitmedi. |
+| Tıklama sayımı | Açıksa uyarı: bağlantılar sunucunun bağlantı alan adına işaret eder. |
+
+Sonra Şimdi gönder'i seçin ya da Zamanla'yı seçip saat diliminizde en fazla 90 gün sonrası için bir
+zaman belirleyin. Panel alıcı sayısını onaylamanızı ister. Siz bakarken alıcılar değiştiyse yeniden
+gözden geçirmenizi ister.
+
+Zamanladığınızda olanlar:
+
+- Tasarım o anki sürümünde dondurulur. Tasarımda sonradan yapılan düzenlemeler bu bülteni değiştirmez.
+- Gönderim başlarken alıcılar bir kez belirlenir. Sonradan abone olanlar dahil edilmez. E-postası
+  gitmeden abonelikten çıkan, geri dönen ya da şikâyet eden herkes atlanır; her adres, e-postasından
+  hemen önce yeniden denetlenir.
+- Başlayana kadar, "Taslağa dön" zamanlanmış bir bülteni değişiklik için geri alır.
+
+## 4. Gönderilirken
+
+Bülten sayfası ilerlemeyi canlı izler: belirlenen alıcılar, gönderilenler, başarısızlar, geri dönenler ve
+yaklaşık ne zaman biteceği.
+
+| Durum | Anlamı |
+|---|---|
+| Taslak | Yazılıyor. |
+| Zamanlandı | Vakti bekliyor. |
+| Hazırlanıyor | Alıcılar belirleniyor. |
+| Gönderiliyor | E-postalar çıkıyor. |
+| Duraklatıldı | Biri sürdürene kadar durdu. |
+| Gönderildi | Bitti. |
+| İptal edildi | Kalıcı olarak durdu. |
+| Başarısız | Devam edemiyor, örneğin kanalı kaldırıldı. |
+
+**Duraklat**, sürmekte olan toplu işlemin içinde (en fazla 50 e-posta) gönderimi durdurur. **Sürdür**
+kaldığı yerden devam eder. **İptal**, bülteni kalıcı olarak bitirir; henüz gitmemiş e-postalar atlanır.
+Bir taslak ya da bitmiş bülten alıcı listesiyle birlikte silinebilir; yanıtların açtığı konuşmalar kalır.
+
+Geçici SMTP hataları 5 dakika, 30 dakika, 2 saat ve 6 saat sonra yeniden denenir, sonra e-posta başarısız
+sayılır. Adresin kendisini reddeden bir SMTP yanıtı (5.1.x ve 5.2.1) geri dönme sayılır.
+
+### Günlük sınır
+
+Bir çalışma alanının, tüm bültenleri toplamında günde (UTC) en fazla kaç alıcıya gönderebileceği
+sınırlanabilir. Sınır sunucunun [`YUVA_BROADCAST_DAILY_RECIPIENTS`](configuration.md#bültenler) ayarından,
+operatörün çalışma alanı için koyduğu sınırdan ve barındırılan sunucuda ısınma sınırından
+([aşağıda](#barındırılan-sunucularda-onay)) gelir; en küçüğü geçerlidir. Gönderim sınıra ulaşınca bülten
+bekler ve panel, 00:00 UTC'de ne zaman devam edeceğini gösterir. Günde 100 sınırında 250 alıcılı bir
+bülten üç gün sürer. Gözden geçirme başlamadan önce uyarır; Ayarlar → Çalışma alanı → Bültenler,
+bugünkü sayıyı sınırla birlikte gösterir.
+
+### Yuva'nın yaptığı duraklatmalar
+
+Bir bülten kendiliğinden duraklar ve nedeni sayfada görünür, eğer:
+
+| Neden | Tetikleyici |
+|---|---|
+| Geri dönme oranı | Başladığından ya da son sürdürülmesinden beri gönderilen e-postaların %5 veya fazlası geri döndü (en az 200 e-postadan sonra). |
+| Şikâyet oranı | %0,3 veya fazlası spam bildirildi (en az 1.000 e-postadan sonra). |
+| Gönderici hatası | SMTP sunucusu hesabı ya da TLS'i reddediyor, art arda 20 e-postayı reddediyor ya da 30 dakika boyunca erişilemiyor. Sunucunun yanıtı gösterilir. |
+| Çalışma alanı askıya alındı | Aşağıya bakın. |
+| Üye, operatör | Biri duraklattı. |
+
+Nedeni giderin, sonra sürdürün. Sürdürdükten sonra oranlar o andan itibaren sayılır.
+
+Bir çalışma alanı, son 30 günde en az 1.000 bülten e-postasının en az %0,3'ü spam bildirildiğinde ya da
+en az 2.000 e-postanın en az %8'i geri döndüğünde gönderimden **askıya alınır**. Çalışan bültenleri
+duraklar; zamanlama ve sürdürme reddedilir. Askıyı yalnızca sunucunun operatörü kaldırır: sahip nedeni
+Ayarlar → Çalışma alanı → Bültenler altında görür.
+
+### Geri dönenler ve şikâyetler
+
+Yuva geri dönen e-postaları Amazon SES'ten (SNS ile, bkz. [Geri dönen e-postalar](email.md#geri-dönen-e-postalar)),
+kanala gelen teslimat raporlarından, gönderim sırasındaki SMTP reddlerinden ve kanala gelen kötüye
+kullanım raporlarından (ARF) okur; ARF raporları yalnızca DMARC sonucunu alıcı sunucunun doğruladığı bir
+göndericiden gelirse sayılır.
+
+- Kalıcı bir geri dönme, adresi çalışma alanının tüm e-postaları için engeller.
+- Bir bülten hakkındaki spam şikâyeti, o adrese bülten gitmesini durdurur, adresi çalışma alanının tüm
+  listelerinden çıkarır ve itirazı hatırlar. Destek yanıtları yine de ulaşabilir.
+
+## 5. Yanıtlar
+
+Bir bültene verilen yanıt, o kişiyle bültenin gelen kutusunda "{bülten} bültenine yanıt" diye işaretli,
+bültene bağlı bir konuşma açar. Sonraki yanıtlar konuşmaya eklenir. Gelen kutusunda tür süzgecinde
+"Bülten yanıtları" bunları gösterir; bültenin raporu ilk 50'sini listeler.
+
+Otomatik yanıtlar (ofis dışında) konuşma olarak saklanmaz: yalnızca `auto_replied` olarak sayılır; böylece
+bir gönderim gelen kutusunu doldurmaz. Alıcıdan başkasından gelen e-posta, örneğin bir yönlendirme, kendi
+konuşmasını açar.
+
+Üyeler, bir bültenin yeni yanıtları için 10 dakikada bir gruplanmış tek bir anlık bildirim alır; bunlar
+için e-posta gitmez.
+
+## 6. Raporlar
+
+Bülten sayfası, gönderim başlar başlamaz raporunu gösterir.
+
+| Sayı | Anlamı |
+|---|---|
+| Alıcılar | Gönderim başlarken belirlenen alıcılar. |
+| Gönderildi | SMTP sunucusunun kabul ettiği e-postalar. |
+| Başarısız | Kötü bir adres belirtilmeden kalıcı olarak reddedilenler. |
+| Geri döndü | E-postası geri dönen alıcılar. |
+| Spam bildirildi | Şikâyet eden alıcılar. |
+| Ayrıldı | Bu bültenin bağlantılarıyla bir listeden ayrılan alıcılar. |
+| Yanıtladı | Yanıt veren alıcılar; her biri bir konuşmadır. |
+| Otomatik yanıtlar | Ofis dışı yanıtlar, yalnızca sayılır. |
+| Tıkladı | Bir bağlantı açan alıcılar; yalnızca tıklama takibiyle. |
+| Atlandı | Engelli, itiraz etmiş, e-postasından önce abonelikten çıkmış olanlar ya da bülten iptal edildi. |
+
+Oranlar, gönderilen e-postaların payıdır. Zaman çizelgesi, gönderim başladıktan sonraki ilk 72 saat için
+saatlik, sonra günlüktür. Alıcı listesi her kişinin durumunu ve başarısızlıklar için SMTP yanıtını
+gösterir; duruma göre süzebilir, adres ya da adla arayabilir ya da yalnızca yanıtlayanları
+gösterebilirsiniz. Alıcı listesi, bülten bittikten 400 gün sonra silinir; sayılar kalır.
+
+### Tıklama takibi
+
+Varsayılan olarak kapalıdır. Açılırsa e-postadaki bağlantılar sunucunun bağlantı alan adında `/c/…`
+üzerinden geçer ve rapor bağlantı başına tekil tıklamaları gösterir. Yalnızca her alıcı için aynı olan
+(birleştirme alanı içermeyen) web bağlantıları izlenir; bunlar bülten zamanlanırken bulunur. Tıklamalar
+yaklaşık değerdir: bir `HEAD` isteği ve güvenlik tarayıcılarının yaptığı gibi bir e-postanın üç
+bağlantısının iki saniye içinde açılması sayılmaz.
+
+Açılma takibi ve izleme pikseli yoktur. E-posta uygulamaları görselleri önceden yüklediği için açılma
+oranları güvenilir değildir ve bir piksel, e-postada üçüncü bir tarafa haber veren tek şey olurdu.
+
+## 7. Anahtarlar ve asistanlar
+
+Göndermek, API anahtarlarının ve OAuth belirteçlerinin varsayılan olarak alamadığı tek şeydir:
+
+- `broadcasts:send` kapsamı hiçbir zaman örtük verilmez; anahtarı oluştururken adıyla yazın.
+- O zaman bile bir anahtar ya da belirteç, bir sahip veya yönetici Ayarlar → Çalışma alanı → Bültenler
+  altında "Anahtarlar ve asistanlar bülten gönderebilir" seçeneğini açtığı sürece bülten zamanlayabilir ve
+  sürdürebilir. Varsayılan olarak kapalıdır ve değiştirmek bir üye oturumu gerektirir. Aksi halde
+  zamanlama `403 broadcasts_by_keys_disabled` yanıtı verir.
+- Taslak oluşturmak, değiştirmek ve denemek `broadcasts:write`, okumak `broadcasts:read` ister.
+  Duraklatmak ve iptal etmek `broadcasts:send` ister ve bu anahtar tarafından engellenmez.
+
+## Barındırılan sunucularda onay
+
+Herkese kayıt açan bir sunucu (`YUVA_SIGNUP=open`) bültenleri varsayılan olarak `approval` kipinde
+çalıştırır; böylece tek bir özensiz çalışma alanı bütün sunucunun gönderim itibarına zarar veremez.
+Yalnızca davetle çalışan kendi sunucunuz için bu geçerli değildir.
+
+`approval` kipinde, kayıt yoluyla oluşturulan bir çalışma alanı, operatör onaylayana kadar bülten
+zamanlayamaz. Bu sırada taslak yazabilir ve deneme gönderebilirsiniz.
+
+1. Ayarlar → Çalışma alanı → Bültenler'i açın. Sahip durumu görür: izinli, operatörün onayı gerekiyor,
+   operatör bekleniyor ya da askıda.
+2. Onay iste'yi seçin; web sitenizi, kimin gönderdiğini ve e-postaların ne hakkında olduğunu, abonelerinizin
+   nasıl izin verdiğini yazın. Operatör tam olarak bunu okur.
+3. Durum "Sunucu yöneticisi bekleniyor" olur. Operatör onaylar ya da sizin göreceğiniz bir gerekçeyle
+   reddeder; reddedildikten sonra yeniden isteyebilirsiniz. O zamana kadar gözden geçirmede "Gönderim izni"
+   engelleyici görünür.
+
+Onaylı çalışma alanları ve bir `approval` sunucusundaki her çalışma alanı ısınır: ilk gün 500 alıcıya
+gönderebilir, her temiz günden sonra sınır ikiye katlanır (en az 100 e-posta gönderilmiş, geri dönme %3'ün,
+şikâyet %0,1'in altında). Kötü bir gün bir katlamayı geri alır. Böyle bir sunucuda bir çalışma alanının
+en fazla 1.000 bülteni olabilir; eskileri silin.
+
+Bültenlerin `off` olduğu bir sunucuda listeler ve formlar çalışmaya devam eder, ama bülten oluşturmak,
+değiştirmek ve göndermek `403 broadcasts_disabled` yanıtı verir.
+
+## Teslim edilebilirlik
+
+Yeni bir göndericinin e-postası, temeller doğru değilse spam'e düşer.
+
+- Kanalın From adresinin alan adı için **SPF, DKIM ve DMARC**; geçen ve hizalı olmalı. Bkz.
+  [DNS kontrol listesi](email.md#dns-kontrol-listesi). Kendi posta kutunuza bir deneme gönderin ve
+  `spf=pass`, `dkim=pass`, `dmarc=pass` arayın.
+- **Gmail ve Yahoo**, toplu e-posta gönderenlerin SPF, DKIM ve DMARC ile kimlik doğrulamasını, iki gün
+  içinde yerine getirilen tek tıkla abonelikten çıkmayı sunmasını ve spam şikâyetlerini %0,3'ün altında
+  (hedef %0,1'in altı) tutmasını bekler. Yuva her bültene abonelikten çıkma başlıklarını ve alt bilgi
+  bağlantısını ekler, %0,3'te duraklatır. Kurallar [Google'ın gönderen yönergelerinde](https://support.google.com/a/answer/81126)
+  ve [Yahoo'nun gönderen en iyi uygulamalarında](https://senders.yahooinc.com/best-practices/) yazılıdır.
+- **Küçük başlayın.** Önce birkaç yüz ilgili aboneye gönderin, sonra büyütün.
+- **Yalnızca izin verenlere gönderin.** İzin kayıtlarından kurulmuş bir liste en iyi korumanızdır.
+- Bültenler için **ayrı bir hesap** kullanın; isterseniz `news.example.com` gibi bir alt alan adından.
+
+Yuva her bülten e-postasına tek tıkla abonelikten çıkmalı (RFC 8058) `List-Unsubscribe`, `List-Id`,
+`Feedback-ID` ve `X-Auto-Response-Suppress` ekler; böylece e-posta programları kendi abonelikten çık
+düğmesini gösterir.
+
+## API
+
+Panel, diğer her şeyle aynı API'yi kullanır. Bir betikten bülten:
+
+```sh
+curl -X POST https://support.example.com/v1/broadcasts \
+  -H "Authorization: Bearer $YUVA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "inbox_id": "INBOX-ID",
+    "channel_id": "CHANNEL-ID",
+    "name": "October newsletter",
+    "subject": "What is new in October",
+    "design_id": "DESIGN-ID",
+    "audience": { "list_ids": ["LIST-ID"] }
+  }'
+```
+
+Sonra kontrol listesi için `GET /v1/broadcasts/{broadcastId}/review`, alıcı sayısı için
+`POST .../audience` ve bir üyeye deneme göndermek için `POST .../test` (API anahtarı üyeleri
+`member_ids` içinde belirtir). Anahtarlar [aşağıdaki kapsamları](#kapsamlar) ister. Gördüğünüz sayıyı
+`confirm_recipients` olarak vererek zamanlayın:
+
+```sh
+curl -X POST https://support.example.com/v1/broadcasts/BROADCAST-ID/schedule \
+  -H "Authorization: Bearer $YUVA_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"send_at": "2026-10-20T08:00:00Z", "confirm_recipients": 1280}'
+```
+
+## Başvuru
+
+### Uç noktalar
+
+| Uç nokta | Kullanım |
+|---|---|
+| `GET`, `POST /v1/broadcasts` | Taslakları listeler (`inbox_id`, `state`) ve oluşturur. |
+| `GET`, `PATCH`, `DELETE /v1/broadcasts/{broadcastId}` | Okur, taslağı değiştirir, taslağı ya da bitmiş bülteni siler. |
+| `POST /v1/broadcasts/{broadcastId}/audience` | Alıcıları sayar: alıcılar, kimin neden dışarıda kaldığı, boş kalacak birleştirme alanları. |
+| `GET /v1/broadcasts/{broadcastId}/review` | Kontrol listesi. |
+| `POST /v1/broadcasts/{broadcastId}/test` | Üyelere deneme gönderir (`member_ids`, `contact_id`). |
+| `POST /v1/broadcasts/{broadcastId}/schedule` | Zamanlar ya da hemen gönderir (`send_at`, `confirm_recipients`). |
+| `POST /v1/broadcasts/{broadcastId}/unschedule` | Başlamadan önce taslağa döndürür. |
+| `POST /v1/broadcasts/{broadcastId}/pause`, `resume`, `cancel` | Çalışan bülteni yönetir. |
+| `GET /v1/broadcasts/{broadcastId}/deliveries` | Alıcılar (`state`, `q`, `replied`). |
+| `GET /v1/broadcasts/{broadcastId}/report` | Sayılar, oranlar, zaman çizelgesi, bağlantılar ve yanıtlar. |
+| `GET /v1/conversations?broadcast_id=` | Bir bültene verilen yanıtların açtığı konuşmalar. |
+| `PATCH /v1/workspace` | `broadcasts_by_keys`, anahtarlar ve asistanlar için anahtar. |
+| `POST /v1/workspace/broadcast-approval` | Operatörden onay ister (sahipler, üye oturumu). |
+
+`GET /v1/workspace`, sunucunun `mode` değerini, çalışma alanının `status`, `daily_limit`, `sent_today` ve
+`by_keys` değerlerini içeren bir `broadcasts` nesnesi döndürür. Bir kanalın `email.broadcast_smtp` ve
+`email.broadcast_rate` alanları `PATCH /v1/channels/{channelId}` ile ayarlanır (`broadcast_smtp_remove: true`
+hesabı kaldırır). Tam şekiller [API sözleşmesinde](../../openapi/openapi.yaml). İşlemeye değer hatalar:
+`409 review_failed` (engelleyen `items` ile), `409 audience_changed`, `409 not_draft`, `409 invalid_state`,
+`403 broadcasts_approval_required`, `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled`,
+`403 broadcasts_disabled` ve `429 test_limit`.
+
+### Kapsamlar
+
+| Kapsam | Anlamı |
+|---|---|
+| `broadcasts:read` | Bültenleri, alıcı sayılarını, gözden geçirmeleri ve raporları okur; alıcı listesi ayrıca `contacts:read` ister. |
+| `broadcasts:write` | Taslak oluşturur, değiştirir ve siler; deneme gönderir. |
+| `broadcasts:send` | Zamanlar, zamanlamayı geri alır, duraklatır, sürdürür ve iptal eder. Hiçbir zaman örtük verilmez. |
+
+Bu kapsamlar var olmadan önce yapılmış anahtarlar bunları almaz.
+
+### Olaylar
+
+| Ad | Anlamı |
+|---|---|
+| `broadcast.updated` | [Webhook](webhooks.md) ve olay akışı olayı: bülten durum değiştirdi. `data.broadcast` bültendir, `data.previous_state` eski durumdur. |
+| `broadcast.progress` | Yalnızca gerçek zamanlı (`/v1/realtime`): hazırlanan ya da gönderilen bir bültenin sayıları, en fazla 5 saniyede bir. Saklanmaz, yeniden oynatılmaz; yeniden bağlandıktan sonra bülteni tekrar okuyun. |
+
+İkisi de bültenin gelen kutusunu görebilen, `broadcasts:read` sahibi çağıranlara ulaşır. Yanıtlar,
+konuşmanın zaman çizelgesine bir `broadcast_reply` girdisi ekler.
+
+### Sınırlar
+
+| Sınır | Değer |
+|---|---|
+| Bülten başına liste | 10 |
+| Koşul, dil | 10, 20 |
+| Ad, konu, önizleme metni | 200, 300, 300 karakter |
+| İleri zamanlama | 90 gün |
+| Deneme gönderimi | Çalışma alanı başına saatte 20; her biri 1 ile 5 üyeye |
+| Duraklatma ve iptal şu sürede etki eder | Bir toplu işlem, en fazla 50 e-posta |
+| Hız | Kanal başına saniyede 1 ile 100 e-posta; varsayılan 5 |
+| Geçici hatanın yeniden denemeleri | 5 dakika, 30 dakika, 2 saat, 6 saat sonra |
+| HTML | 90 KB uyarı, 102 KB engeller, 500 KB reddedilir |
+| Çalışma alanı başına bülten | `approval` sunucusunda 1.000 |
+| Alıcı listesinin saklanması | Bülten bittikten 400 gün |

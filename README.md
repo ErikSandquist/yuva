@@ -63,6 +63,7 @@ products land in one shared inbox. You host it yourself: one Docker image and Po
 | | [Documentation pages](docs/documentation-pages.md) | | |
 | | [Mailing lists](docs/lists.md) | | |
 | | [E-mail designs](docs/designs.md) | | |
+| | [Sending broadcasts](docs/broadcasts.md) | | |
 
 How it is built: [architecture](docs/architecture.md). What changed: [changelog](CHANGELOG.md).
 

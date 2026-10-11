@@ -54,7 +54,7 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_SIGNUP` | `invite` | `invite`: giriş kodu yalnızca mevcut kişilere ve davet edilmiş adreslere gider; çalışma alanları `yuva bootstrap` ile açılır. `open`: herkes kodla giriş yapıp panelde çalışma alanı oluşturabilir. |
 | `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | `open` kayıtta bir kişinin oluşturup silmediği çalışma alanı sayısı; fazlası `403` alır. |
 | `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | `open` kayıtta bir IP adresinden (IPv6 /64) 24 saatte oluşturulan çalışma alanı sayısı; fazlası `429` alır. |
-| `YUVA_OPERATOR_EMAIL` | boş | Yeni biri kodla kaydolduğunda (okuyucular ayrıca işaretlenir) ya da çalışma alanı oluşturduğunda e-posta alan adresler, virgülle ayrılmış: adres, çalışma alanı adı, zaman ve ülke (Cloudflare arkasında, `YUVA_CLIENT_IP_HEADER=CF-Connecting-IP` ile) ya da IP adresi. En fazla 5 dakikada bir e-posta gider, öncekinden bu yana olanların hepsini listeler. İngilizce, sunucunun SMTP'si üzerinden. Boş ise kapalı. |
+| `YUVA_OPERATOR_EMAIL` | boş | Yeni biri kodla kaydolduğunda (okuyucular ayrıca işaretlenir) ya da çalışma alanı oluşturduğunda e-posta alan adresler, virgülle ayrılmış: adres, çalışma alanı adı, zaman ve ülke (Cloudflare arkasında, `YUVA_CLIENT_IP_HEADER=CF-Connecting-IP` ile) ya da IP adresi. En fazla 5 dakikada bir e-posta gider, öncekinden bu yana olanların hepsini listeler. İngilizce, sunucunun SMTP'si üzerinden. Aynı e-posta bülten [onay isteklerini, askıya almaları ve otomatik duraklatmaları](operations.md#barındırılan-sunucuda-bültenler) de listeler. Boş ise kapalı. |
 
 ## Sunucu e-postası
 
@@ -99,6 +99,17 @@ Varsayılan türler: `image/png,image/jpeg,image/gif,image/webp,image/heic,appli
 | `YUVA_INGRESS_MAX_CONCURRENT` | `8` | `/ingress/email`'in süreç başına aynı anda işlediği mesaj sayısı; fazlası `503` alır. |
 | `YUVA_SES_TOPIC_ARNS` | atanmamış | `/ingress/ses`'in SES geri dönme (bounce) ve şikâyet bildirimlerini kabul ettiği SNS topic ARN'leri. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Bir göndericinin bir çalışma alanına saatte gönderebileceği e-posta sayısı; fazlası reddedilir (`429`). |
+
+## Bültenler
+
+[Bülten gönderme](broadcasts.md). Listeler ve formları, bu ayarlar ne derse desin çalışır.
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_BROADCASTS` | `YUVA_SIGNUP=open` ise `approval`, değilse `on` | `on`: her çalışma alanı gönderir. `approval`: kayıt yoluyla oluşturulan bir çalışma alanı, operatör onaylayana kadar gönderemez ve her çalışma alanı bir [ısınma sınırına](broadcasts.md#barındırılan-sunucularda-onay) tabidir. `off`: bülten oluşturmak, değiştirmek ve göndermek `403 broadcasts_disabled` yanıtı verir. |
+| `YUVA_BROADCAST_WORKERS` | `2` | Bir sürecin aynı anda çalıştırdığı bülten gönderim işleri; her biri bir gönderen kanal içindir. Destek yanıtlarının kendi kuyruğu vardır ve yavaşlamaz. En az 1. |
+| `YUVA_BROADCAST_DAILY_RECIPIENTS` | `0` (sınır yok) | Bir çalışma alanının bültenlerinin UTC günü başına en fazla kaç alıcısı olabileceği. Sınıra ulaşan gönderim ertesi gün devam eder. Operatör çalışma alanı başına daha küçük bir sınır koyabilir ([Operasyon](operations.md#barındırılan-sunucuda-bültenler)). |
+| `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Liste ve bülten e-postalarındaki abonelikten çıkma, onay, tıklama ve görsel bağlantılarının işaret ettiği kaynak (şema ve alan adı, yol yok), örn. `https://links.example.com`. Bu sunucuya ulaşmalıdır. O alan adı yalnızca bu bağlantılara (`/m/`, `/s/`, `/c/`, `/i/`) yanıt verir, geri kalan her şey için `404` döner; panel ve API ana alan adınızda kalır. |
 
 ## Sohbet
 

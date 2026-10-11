@@ -48,6 +48,7 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `contact.updated` | Ein Kontakt hat sich geändert | `contact` |
 | `contact.deleted` | Ein Kontakt wurde gelöscht oder zusammengeführt (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Ein [Entwurf](headless.md#ein-bot-der-antworten-entwirft) hat sich geändert; wird er gesendet, folgt `message.created` | `message`, `conversation`, `contact` |
+| `broadcast.updated` | Ein [Broadcast](broadcasts.md) hat den Status gewechselt: geplant, sendend, pausiert, gesendet, abgebrochen, fehlgeschlagen oder zurück zum Entwurf | `broadcast`, `previous_state` |
 
 Jeder Body hat `type`, `timestamp` (wann es passiert ist), `workspace_id`, `inbox_id` (nicht bei
 Kontaktereignissen) und `data`. `data.contact.online` ist `false`, wenn der Kontakt keine

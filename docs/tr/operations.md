@@ -80,12 +80,56 @@ Bir id ya da gizli anahtar yazdıran komutlar stdout'a yalnızca onu yazar.
 | `channel create-chat --workspace <ws> --inbox <id\|slug> --name <name> --origin <origin>... [--allow-anonymous] [--ask-email-offline=false] [--greeting <text>]` | Bir sohbet (web widget) kanalı oluşturur; id'sini ve genel anahtarını (`yuva_pk_…`) aralarında bir sekmeyle yazdırır. Her site için `--origin` yinelenir. |
 | `channel list --workspace <ws> --inbox <id\|slug>` | Bir gelen kutusunun kanallarını listeler; sohbet kanallarında genel anahtarı ve origin'leri de gösterir. |
 | `workspace delete --workspace <ws> --yes` | Bir çalışma alanını siler ([aşağıda](#çalışma-alanını-veya-hesabı-silme)). `--yes` olmadan yalnızca deneme yapar. |
+| `workspace broadcasts approve\|deny\|suspend --workspace <ws> [--reason <text>]` | Bir çalışma alanının bülten onayını yanıtlar ya da onu askıya alır ([aşağıda](#barındırılan-sunucuda-bültenler)). |
+| `workspace broadcasts limit --workspace <ws> --daily <n>` | Çalışma alanının UTC günü başına alıcı sayısını belirler; `0` sınırı kaldırır. |
+| `workspace broadcasts show --workspace <ws>` | Durumunu, sınırını, 30 günlük oranlarını ve son bültenlerini yazdırır. |
 | `person delete --email <address> --yes` | Bir kullanıcının hesabını siler. Bir çalışma alanının tek sahibiyse reddedilir. |
 | `ingest-email --to <address> [--from <address>]` | stdin'den gelen ham bir mesajı teslim eder ([E-posta](email.md#herhangi-bir-mta-yuva-ingest-email)). |
 | `vapid-keys` | Yeni bir Web Push anahtar çifti yazdırır. Veritabanı gerektirmez. |
 
 Geri kalan her şey (sohbet ve uygulama kanalları, üyeler, webhook'lar, kimlik anahtarları) panelden
 ya da `/v1` üzerinden yönetilir.
+
+## Barındırılan sunucuda bültenler
+
+[Bültenlerin](broadcasts.md) nasıl sınırlandığını `YUVA_BROADCASTS` belirler ([Yapılandırma](configuration.md#bültenler)).
+`on` ile yapacak bir şey yoktur. `approval` ile (`YUVA_SIGNUP=open` iken varsayılan), kayıt yoluyla
+oluşturulan bir çalışma alanı siz onaylayana kadar bülten zamanlayamaz ve her çalışma alanı günde 500
+alıcıdan başlayarak ısınır, her temiz günden sonra bu sayı ikiye katlanır. `yuva bootstrap` ile önce ya
+da sonra yapılan çalışma alanları `allowed` durumundadır ama yine ısınır.
+
+Haberiniz olsun diye `YUVA_OPERATOR_EMAIL` atayın. Özet e-postası (5 dakikada en fazla bir) e-posta
+içeriğini ve alıcıların adreslerini içermeden şunları listeler:
+
+| Satır | Ne zaman |
+|---|---|
+| Bülten onayı istendi | Bir sahip istedi: çalışma alanı adı, kişinin adresi, web sitesi, kimin neyi gönderdiği, abonelerin nasıl izin verdiği. |
+| Çalışma alanı bültenlerden askıya alındı | Sunucu, 30 günlük şikâyet ya da geri dönme oranı nedeniyle askıya aldı; oranlarla birlikte. |
+| Bülten duraklatıldı | Bir bülten kendiliğinden duraklatıldı (geri dönme oranı, şikâyet oranı ya da gönderici hatası); bülten id'si ve nedeniyle. |
+
+Son 30 günde en az 1.000 bülten e-postasının en az %0,3'ü spam bildirildiğinde ya da en az 2.000
+e-postanın en az %8'i geri döndüğünde bir çalışma alanı askıya alınır. Çalışan bültenleri duraklar.
+
+CLI ile yanıtlayın. Çalışma alanı bir ad ya da id'dir; `--reason` (en fazla 500 karakter) çalışma
+alanının sahiplerine gösterilir:
+
+```sh
+docker compose exec -T yuva /yuva workspace broadcasts approve --workspace Example
+docker compose exec -T yuva /yuva workspace broadcasts deny --workspace Example --reason "No subscribe form on the site"
+docker compose exec -T yuva /yuva workspace broadcasts suspend --workspace Example --reason "Complaints"
+docker compose exec -T yuva /yuva workspace broadcasts limit --workspace Example --daily 2000
+docker compose exec -T yuva /yuva workspace broadcasts show --workspace Example
+```
+
+| Komut | Etkisi |
+|---|---|
+| `approve` | Çalışma alanı gönderebilir. Askıyı da kaldırır; duraklayan bültenler bir üye sürdürene kadar duraklamış kalır. |
+| `deny` | İstek hayır olarak yanıtlanır; çalışma alanı yeniden isteyebilir. |
+| `suspend` | Zamanlamayı ve sürdürmeyi reddeder, çalışan bültenleri duraklatır (neden `workspace_suspended`). |
+| `limit --daily <n>` | Çalışma alanının bültenleri toplamında UTC günü başına alıcı sayısı. Bunun, `YUVA_BROADCAST_DAILY_RECIPIENTS` ve ısınmanın en küçüğü geçerlidir. `0` yalnızca bu sınırı kaldırır. |
+| `show` | Durum ve nedeni, günlük sınır ve bugünkü sayı, son 30 gün (gönderilen, geri dönme ve şikâyet oranları), kullandığı gönderen alan adları ve son 10 bülteni. |
+
+Askıyı yalnızca operatör kaldırır. Onaylamadan önce web sitesine ve abonelerin nasıl izin verdiğine bakın.
 
 ## Çalışma alanını veya hesabı silme
 
@@ -114,6 +158,8 @@ Yuva saatte bir temizlik yapar:
 | Tamamlanmış webhook teslimatları | 7 gün; uç nokta başına en yeni 100 tanesi kalır |
 | Bayat gerçek zamanlı bağlantı kayıtları | 1 saat |
 | Kapalı konuşmalar, mesajları ve dosyalarıyla (`retention_days` atanmışsa) | son değişiklikten itibaren o kadar gün |
+| Biten bir bültenin alıcıları (sayıları kalır) | bittikten 400 gün sonra |
+| Sınırların dayandığı günlük gönderim toplamları | 90 gün |
 | Gelen e-postaların özgün `.eml` dosyası (`retention_days` atanmışsa) | o kadar gün; mesajın kendisi kalır |
 
 ## Sağlık kontrolleri ve loglar
