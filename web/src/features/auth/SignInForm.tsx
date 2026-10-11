@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { api, unwrap, type Me } from "@/lib/api"
+import { api, unwrap, type Locale, type Me } from "@/lib/api"
 import { signInWithPasskey } from "@/lib/passkey"
 import { meKey } from "@/lib/session"
 
@@ -28,7 +28,7 @@ export function SignInForm({
   note?: React.ReactNode
   onSignedIn?: (me: Me) => void
 }) {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const qc = useQueryClient()
   const [email, setEmail] = useState("")
   const [code, setCode] = useState("")
@@ -41,7 +41,10 @@ export function SignInForm({
   }
 
   const request = useMutation({
-    mutationFn: () => unwrap(api.POST("/v1/auth/code", { body: reader ? { email, reader: true } : { email } })),
+    mutationFn: () => {
+      const locale: Locale = i18n.locale === "tr" ? "tr" : "en"
+      return unwrap(api.POST("/v1/auth/code", { body: reader ? { email, reader: true, locale } : { email, locale } }))
+    },
     onSuccess: () => {
       setResent(step === "code")
       setStep("code")
@@ -187,7 +190,6 @@ export function SignInForm({
               type="button"
               variant="link"
               size="sm"
-              className="-me-2.5"
               disabled={request.isPending}
               onClick={() => request.mutate()}
             >

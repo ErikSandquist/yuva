@@ -3892,6 +3892,13 @@ export interface components {
              *     to any address, and verifying it creates the person when there is none yet.
              */
             reader?: boolean;
+            /**
+             * @description The language the sign-in page is shown in. Used only when the address belongs to no
+             *     person and has no invite: the code e-mail is written in it, and the person that
+             *     verifying the code creates gets it as their locale. An existing person keeps their own
+             *     locale, and an invite's locale wins over it. Absent: English.
+             */
+            locale?: components["schemas"]["Locale"];
         };
         SignInCodeVerify: {
             email: components["schemas"]["Email"];
