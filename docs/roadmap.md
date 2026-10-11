@@ -144,7 +144,8 @@ real phone through the relay within seconds and the relay holds no message text.
 
 ## M11 — Feedback and questions on documentation pages
 
-Status: in progress; plan in issue #23, decisions in `architecture.md` › Documentation pages.
+Status: done in `v0.0.7`; questions and published answers were replaced by discussions in M12. Plan in
+issue #23, decisions in `architecture.md` › Documentation pages.
 
 - `<yuva-page-feedback>` (was this page helpful, then optional text and e-mail) and
   `<yuva-page-questions>` (published answers and a question form) for any documentation site,
