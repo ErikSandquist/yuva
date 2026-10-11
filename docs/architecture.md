@@ -683,9 +683,13 @@ remote images, http(s)):
   Appearance: Original or Reading, Original by default); each message can still be switched.
 - Setup: a full-screen, two-column page in the sign-in design (steps and form on the left, a live
   preview on the right) takes an owner or admin from an empty workspace to its first
-  conversation: name the inbox, pick a channel (website chat, e-mail or app), install it (snippet,
-  forwarding address or SDK lines), then wait live for the first message, which the preview's own
-  chat widget can send. It opens on its own while the workspace has no conversation (it can be put
+  conversation: name the inbox, pick a channel (website chat, e-mail, app or documentation site),
+  install it (snippet, forwarding address, SDK lines or the documentation elements), then wait live
+  for the first message, which the preview's own chat widget can send. A documentation site asks
+  for the site's name and address, creates a chat channel named after it with that origin and
+  anonymous visitors allowed, and shows the elements for plain HTML, Nuxt and Fumadocs/React filled
+  with this server's URL and the channel key, with a link to the guide; the inbox settings start
+  the same flow for another docs site. It opens on its own while the workspace has no conversation (it can be put
   off; that is remembered per workspace on the device), and adding an inbox later uses the same page.
 - Connect an assistant (Settings › Connected apps): one page per client (Claude, Claude Code, Codex,
   ChatGPT, Cursor, VS Code, other MCP clients) with the server's own `/mcp` URL, a copyable command

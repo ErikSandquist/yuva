@@ -1,15 +1,22 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { ArrowRightIcon, MailIcon, PartyPopperIcon } from "lucide-react"
-import { useNavigate } from "react-router"
+import { useNavigate, useSearchParams } from "react-router"
 
 import { Notice } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useConversations } from "@/features/inbox/queries"
 import { useInbox } from "@/features/settings/inboxes/queries"
-import { setupKind, useChannel } from "@/features/setup/InstallStep"
+import { hostOfOrigin, setupKind, useChannel } from "@/features/setup/InstallStep"
 import { LiveChat, useForgetPreviewVisitor } from "@/features/setup/LiveChat"
-import { DEFAULT_COLOR, FirstConversation, MailMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
+import {
+  DEFAULT_COLOR,
+  DocsMock,
+  FirstConversation,
+  MailMock,
+  PhoneMock,
+  PreviewCaption,
+} from "@/features/setup/previews"
 import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import type { Channel } from "@/lib/api"
 import { useRealtimeStatus } from "@/lib/realtime"
@@ -49,8 +56,10 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   const navigate = useNavigate()
   const inbox = useInbox(inboxId).data
   const channel = useChannel(channelId).data
-  const kind = channel ? setupKind(channel) : null
-  const first = useConversations({ inbox_id: inboxId }).data?.pages[0]?.items[0]
+  const docs = useSearchParams()[0].has("docs")
+  const kind = channel ? setupKind(channel, docs) : null
+  const recent = useConversations({ inbox_id: inboxId }).data?.pages[0]?.items
+  const first = docs ? recent?.find((c) => c.channel_id === channelId && c.kind !== "conversation") : recent?.[0]
   const name = inbox?.name ?? ""
   const color = inbox?.branding.color ?? DEFAULT_COLOR
   const step = first ? 5 : 4
@@ -61,6 +70,13 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
       <FirstConversation item={first} name={name} kind={kind ?? "chat"} />
       <PreviewCaption>
         <Trans>New conversations show up at the top of your conversation list.</Trans>
+      </PreviewCaption>
+    </>
+  ) : kind === "docs" ? (
+    <>
+      <DocsMock host={hostOfOrigin(channel.chat!.allowed_origins[0])} color={color} waiting />
+      <PreviewCaption>
+        <Trans>It shows up here as soon as it reaches Yuva.</Trans>
       </PreviewCaption>
     </>
   ) : kind === "chat" ? (
@@ -84,7 +100,7 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
   return (
     <SetupLayout
       step={step}
-      back={first ? undefined : `/setup/${inboxId}/${channelId}`}
+      back={first ? undefined : `/setup/${inboxId}/${channelId}${docs ? "?docs" : ""}`}
       preview={preview}
       previewOpen={!!first || kind === "chat"}
     >
@@ -111,7 +127,9 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
         <>
           <StepHeader
             title={
-              kind === "chat" ? (
+              kind === "docs" ? (
+                <Trans>Send feedback or a question from a page</Trans>
+              ) : kind === "chat" ? (
                 <Trans>Say hello from your site</Trans>
               ) : kind === "email" ? (
                 <Trans>Send a test e-mail</Trans>
@@ -120,7 +138,12 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
               )
             }
           >
-            {kind === "chat" ? (
+            {kind === "docs" ? (
+              <Trans>
+                Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts;
+                feedback and questions appear here the moment they are sent.
+              </Trans>
+            ) : kind === "chat" ? (
               <Trans>
                 Write in the chat in the preview, or on a page with the snippet, as a visitor would. The conversation
                 appears here the moment it starts.

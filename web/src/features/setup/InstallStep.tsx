@@ -2,14 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowRightIcon, KeyRoundIcon } from "lucide-react"
 import { useState } from "react"
-import { Link, useLocation } from "react-router"
+import { Link, useLocation, useSearchParams } from "react-router"
 
 import { CodeLine, CopyButton, Notice, Segmented } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { LiveChat, useForgetPreviewVisitor } from "@/features/setup/LiveChat"
-import { DEFAULT_COLOR, MailMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
+import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption } from "@/features/setup/previews"
 import type { SetupKind, SetupState } from "@/features/setup/setup"
 import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { api, unwrap, useVersion, type Channel, type EmailChannel } from "@/lib/api"
@@ -17,6 +17,14 @@ import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
 const DOCS = "https://github.com/productdevbook/yuva/blob/main/docs"
+
+export function hostOfOrigin(origin?: string) {
+  try {
+    return origin ? new URL(origin).host : "docs.example.com"
+  } catch {
+    return origin ?? ""
+  }
+}
 
 export function useChannel(channelId: string) {
   const { workspaceId: ws } = useSession()
@@ -26,8 +34,8 @@ export function useChannel(channelId: string) {
   })
 }
 
-export function setupKind(ch: Channel): SetupKind | null {
-  return ch.chat ? "chat" : ch.email ? "email" : ch.app ? "app" : null
+export function setupKind(ch: Channel, docs = false): SetupKind | null {
+  return ch.chat ? (docs ? "docs" : "chat") : ch.email ? "email" : ch.app ? "app" : null
 }
 
 export function CodeBlock({ value, label, testId }: { value: string; label: string; testId?: string }) {
@@ -97,6 +105,111 @@ function ChatInstallSteps({ channel, secret }: { channel: Channel; secret?: stri
       <Numbered n={2} title={<Trans>Open your site</Trans>}>
         <p className="text-muted-foreground">
           <Trans>The chat bubble appears on these addresses:</Trans>
+        </p>
+        <ul className="flex flex-wrap gap-1.5">
+          {chat.allowed_origins.map((o) => (
+            <li key={o} className="rounded-full border bg-card px-2.5 py-0.5 font-mono text-caption">
+              {o}
+            </li>
+          ))}
+        </ul>
+      </Numbered>
+      {secret && <IdentitySecret secret={secret} />}
+    </ol>
+  )
+}
+
+type DocsStack = "html" | "nuxt" | "react"
+
+function docsLines(stack: DocsStack, server: string, key: string) {
+  if (stack === "nuxt") {
+    return [
+      `// npm install useyuva`,
+      `// nuxt.config.ts`,
+      `export default defineNuxtConfig({`,
+      `  modules: ["useyuva/nuxt"],`,
+      `  yuva: {`,
+      `    server: "${server}",`,
+      `    channel: "${key}",`,
+      `  },`,
+      `})`,
+      ``,
+      `<!-- your docs page, after the content -->`,
+      `<YuvaPageQuestions :page-title="page.title" />`,
+      `<YuvaPageFeedback :page-title="page.title" />`,
+    ].join("\n")
+  }
+  if (stack === "react") {
+    return [
+      `// npm install useyuva`,
+      `"use client"`,
+      `import { YuvaPageFeedback, YuvaPageQuestions } from "useyuva/react"`,
+      ``,
+      `const server = "${server}"`,
+      `const channel = "${key}"`,
+      ``,
+      `export function PageHelp({ title }: { title: string }) {`,
+      `  return (`,
+      `    <>`,
+      `      <YuvaPageQuestions channel={channel} server={server} pageTitle={title} />`,
+      `      <YuvaPageFeedback channel={channel} server={server} pageTitle={title} />`,
+      `    </>`,
+      `  )`,
+      `}`,
+    ].join("\n")
+  }
+  return [
+    `<script src="${server}/yuva-docs.js" defer></script>`,
+    ``,
+    `<yuva-page-questions`,
+    `  channel="${key}"`,
+    `  server="${server}"`,
+    `></yuva-page-questions>`,
+    `<yuva-page-feedback`,
+    `  channel="${key}"`,
+    `  server="${server}"`,
+    `></yuva-page-feedback>`,
+  ].join("\n")
+}
+
+function DocsInstallSteps({ channel, secret }: { channel: Channel; secret?: string }) {
+  const { t } = useLingui()
+  const chat = channel.chat!
+  const [stack, setStack] = useState<DocsStack>("html")
+  const names: Record<DocsStack, string> = { html: "HTML", nuxt: "Nuxt", react: t`Fumadocs / React` }
+  const langs: Record<DocsStack, string> = { html: "HTML", nuxt: "Nuxt", react: "TSX" }
+  return (
+    <ol className="flex flex-col gap-7">
+      <Numbered n={1} title={<Trans>Add the two elements under every docs page</Trans>}>
+        <Segmented
+          value={stack}
+          onChange={setStack}
+          label={t`Site generator`}
+          items={(["html", "nuxt", "react"] as const).map((s) => ({
+            value: s,
+            label: names[s],
+            testId: `setup-docs-${s}`,
+          }))}
+          className="self-start"
+        />
+        <CodeBlock
+          value={docsLines(stack, window.location.origin, chat.public_key)}
+          label={langs[stack]}
+          testId="setup-docs-snippet"
+        />
+        <a
+          href={`${DOCS}/documentation-pages.md`}
+          target="_blank"
+          rel="noreferrer"
+          className="w-fit text-body text-brand underline-offset-4 hover:underline"
+          data-testid="setup-docs-guide"
+        >
+          <Trans>Full guide, with Starlight, VitePress, Docusaurus and the options</Trans>
+        </a>
+      </Numbered>
+      <Numbered n={2} title={<Trans>Open a page of your docs</Trans>}>
+        <p className="text-muted-foreground">
+          <Trans>The elements work on these addresses; add your dev server in the inbox settings:</Trans>
         </p>
         <ul className="flex flex-wrap gap-1.5">
           {chat.allowed_origins.map((o) => (
@@ -254,11 +367,19 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
   const state = (useLocation().state ?? {}) as SetupState
   const inbox = useInbox(inboxId).data
   const channel = useChannel(channelId).data
-  const kind = channel ? setupKind(channel) : null
+  const docs = useSearchParams()[0].has("docs")
+  const kind = channel ? setupKind(channel, docs) : null
   const name = inbox?.name ?? ""
   const color = inbox?.branding.color ?? DEFAULT_COLOR
   useForgetPreviewVisitor(channel?.chat?.public_key, `/setup/${inboxId}/${channelId}`)
-  const preview = !channel ? null : kind === "chat" ? (
+  const preview = !channel ? null : kind === "docs" ? (
+    <>
+      <DocsMock host={hostOfOrigin(channel.chat!.allowed_origins[0])} color={color} />
+      <PreviewCaption>
+        <Trans>Under each page: “Was this page helpful?”, then feedback, and the questions you answered.</Trans>
+      </PreviewCaption>
+    </>
+  ) : kind === "chat" ? (
     <>
       <LiveChat publicKey={channel.chat!.public_key} />
       <PreviewCaption>
@@ -284,6 +405,7 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
     chat: <Trans>Add the chat to your site</Trans>,
     email: <Trans>Route your mail to Yuva</Trans>,
     app: <Trans>Add Yuva to your app</Trans>,
+    docs: <Trans>Add Yuva to your documentation</Trans>,
   }
   return (
     <SetupLayout step={3} preview={preview}>
@@ -308,11 +430,12 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
             {kind === "chat" && <ChatInstallSteps channel={channel} secret={state.secret} />}
             {kind === "email" && <EmailInstallSteps email={channel.email!} />}
             {kind === "app" && <AppInstallSteps channel={channel} secret={state.secret} />}
+            {kind === "docs" && <DocsInstallSteps channel={channel} secret={state.secret} />}
           </div>
           <Button
             size="lg"
             className="mt-9"
-            render={<Link to={`/setup/${inboxId}/${channelId}/wait`} state={state} />}
+            render={<Link to={`/setup/${inboxId}/${channelId}/wait${docs ? "?docs" : ""}`} state={state} />}
             data-testid="setup-install-continue"
           >
             <Trans>Continue</Trans>

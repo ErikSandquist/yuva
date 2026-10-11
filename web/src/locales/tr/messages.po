@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/features/setup/ChannelStep.tsx
+msgid "“Was this page helpful?”, feedback and questions on your docs"
+msgstr "Dokümanlarınızda “Bu sayfa işinize yaradı mı?”, geri bildirim ve sorular"
+
 #: src/features/settings/members/MemberList.tsx
 msgid "(you)"
 msgstr "(siz)"
@@ -314,6 +318,10 @@ msgstr "1 ayar"
 msgid "A chat bubble on your site, from one line of HTML"
 msgstr "Tek satır HTML ile sitenizde bir sohbet balonu"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address later in the inbox settings."
+msgstr "Site için onun adını taşıyan, anonim okuyuculara açık bir sohbet kanalı oluşturulur. Geliştirme sunucunuzun adresini sonra gelen kutusu ayarlarından ekleyin."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
 msgstr "Oturum açamayan bir istemci, API anahtarını <0>Authorization: Bearer</0> olarak gönderebilir; anahtarı bir sahip ya da yönetici oluşturur."
@@ -420,6 +428,10 @@ msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresi
 msgid "Access"
 msgstr "Erişim"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Acme docs"
+msgstr "Acme dokümanları"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
 msgstr "Acme Destek"
@@ -482,6 +494,14 @@ msgstr "SDK'yı ekleyin ve bir istemci oluşturun"
 msgid "Add the server in a terminal:"
 msgstr "Sunucuyu bir terminalde ekleyin:"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Add the site's address."
+msgstr "Sitenin adresini girin."
+
+#: src/features/setup/InstallStep.tsx
+msgid "Add the two elements under every docs page"
+msgstr "İki öğeyi her doküman sayfasının altına ekleyin"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "Cursor'a ekle"
@@ -489,6 +509,10 @@ msgstr "Cursor'a ekle"
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
 msgstr "Yuva'yı uygulamanıza ekleyin"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Add Yuva to your documentation"
+msgstr "Yuva'yı dokümantasyonunuza ekleyin"
 
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
@@ -707,6 +731,10 @@ msgstr "{name} olarak, {when} tarihinden beri"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "As above ({current})"
 msgstr "Yukarıdaki gibi ({current})"
+
+#: src/features/setup/previews.tsx
+msgid "Ask a question"
+msgstr "Soru sorun"
 
 #: src/app/Gate.tsx
 msgid "Ask an owner or admin of your workspace to invite you."
@@ -1452,9 +1480,18 @@ msgstr "Dokümanlar"
 msgid "Documentation pages"
 msgstr "Dokümantasyon sayfaları"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/ChannelStep.tsx
+msgid "Documentation site"
+msgstr "Dokümantasyon sitesi"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Documents"
 msgstr "Belgeler"
+
+#: src/features/setup/previews.tsx
+msgid "Does it work with server-side rendering?"
+msgstr "Sunucu tarafında oluşturmayla çalışıyor mu?"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -1846,8 +1883,16 @@ msgid "Full API"
 msgstr "Tüm API"
 
 #: src/features/setup/InstallStep.tsx
+msgid "Full guide, with Starlight, VitePress, Docusaurus and the options"
+msgstr "Starlight, VitePress, Docusaurus ve tüm seçeneklerle ayrıntılı rehber"
+
+#: src/features/setup/InstallStep.tsx
 msgid "Full guide, with the screens and push notifications"
 msgstr "Ekranlar ve anlık bildirimlerle tam rehber"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Fumadocs / React"
+msgstr "Fumadocs / React"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Get notified on your phone or computer, even when the panel is closed."
@@ -1860,6 +1905,10 @@ msgstr "SDK satırlarını göster"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Get the snippet"
 msgstr "Kodu göster"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Get the snippets"
+msgstr "Kodları al"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -2629,6 +2678,10 @@ msgstr "sonraki deneme {when}"
 msgid "Next week"
 msgstr "Gelecek hafta"
 
+#: src/features/setup/previews.tsx
+msgid "No"
+msgstr "Hayır"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "yanıt yok"
@@ -3042,6 +3095,14 @@ msgstr "Açık"
 msgid "Open {0}"
 msgstr "{0} dosyasını aç"
 
+#: src/features/setup/InstallStep.tsx
+msgid "Open a page of your docs"
+msgstr "Dokümanlarınızdan bir sayfa açın"
+
+#: src/features/setup/WaitStep.tsx
+msgid "Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts; feedback and questions appear here the moment they are sent."
+msgstr "Öğelerin olduğu bir sayfayı açın, puan verip geri bildirim gönderin ya da bir soru sorun. Tek başına puan yalnızca sayılır; geri bildirim ve sorular gönderildiği anda burada görünür."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
 msgstr "ChatGPT eklentilerini aç"
@@ -3419,6 +3480,10 @@ msgstr "soru"
 msgid "Questions"
 msgstr "Sorular"
 
+#: src/features/setup/previews.tsx
+msgid "Questions and answers"
+msgstr "Sorular ve cevaplar"
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Queued. The new attempt shows up below in a moment."
 msgstr "Sıraya alındı. Yeni deneme birazdan aşağıda görünür."
@@ -3471,6 +3536,10 @@ msgstr "Konuşmaları, mesajları, etiketleri ve hazır yanıtları görme"
 #: src/components/common/text.ts
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Çalışma alanını, üyeleri, gelen kutularını ve kanalları görme"
+
+#: src/features/setup/ChannelStep.tsx
+msgid "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
+msgstr "Okuyucular her sayfayı puanlar, geri bildirim gönderir ve soru sorar; siz yanıtlar ve sayfada yayımlarsınız."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Reading"
@@ -3897,6 +3966,10 @@ msgstr "Olayları gönder"
 msgid "Send events to your own server"
 msgstr "Olayları kendi sunucuna gönder"
 
+#: src/features/setup/WaitStep.tsx
+msgid "Send feedback or a question from a page"
+msgstr "Bir sayfadan geri bildirim ya da soru gönderin"
+
 #. placeholder {0}: email.address
 #: src/features/setup/InstallStep.tsx
 msgid "Send mail for {0} to Yuva"
@@ -4053,6 +4126,10 @@ msgstr "İlk mesajdan önce gösterilir. Boşsa gelen kutusunun karşılama mesa
 msgid "Shown in the chat window"
 msgstr "Sohbet penceresinde görünür"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Shown in the panel."
+msgstr "Panelde bu adla görünür."
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Mesajlarında görünür. Boşsa anahtarın adı kullanılır."
@@ -4115,6 +4192,18 @@ msgstr "İmzalama anahtarı"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Site"
 msgstr "Site"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Site address"
+msgstr "Site adresi"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Site generator"
+msgstr "Site oluşturucu"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Site name"
+msgstr "Site adı"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
@@ -4352,6 +4441,10 @@ msgstr "Müşteri görmez"
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
 msgstr "E-posta kanalı alan adının tüm adreslerini (*@) alıyor ve gönderen adresi yok, bu yüzden bu konuşmayı gönderecek bir adres bulunamadı. Gelen kutusu ayarlarından bir gönderen adresi belirleyin."
+
+#: src/features/setup/InstallStep.tsx
+msgid "The elements work on these addresses; add your dev server in the inbox settings:"
+msgstr "Öğeler şu adreslerde çalışır; geliştirme sunucunuzu gelen kutusu ayarlarından ekleyin:"
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -4695,6 +4788,11 @@ msgstr "Ulaşmıyor: geri döndü, {since}"
 msgid "Undeliverable: marked as spam by the recipient, {since}"
 msgstr "Ulaşmıyor: alıcı spam olarak işaretledi, {since}"
 
+#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/InstallStep.tsx
+msgid "Under each page: “Was this page helpful?”, then feedback, and the questions you answered."
+msgstr "Her sayfanın altında: “Bu sayfa işinize yaradı mı?”, ardından geri bildirim ve yanıtladığınız sorular."
+
 #: src/components/common/Toast.tsx
 msgid "Undo"
 msgstr "Geri al"
@@ -4710,7 +4808,6 @@ msgstr "Bilinmeyen cihaz"
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/setup/previews.tsx
 msgid "Unnamed contact"
 msgstr "Adsız kişi"
 
@@ -4781,6 +4878,10 @@ msgstr "En fazla 500 karakter kullanın."
 msgid "Use origins such as https://www.example.com, without a path."
 msgstr "https://www.example.com gibi, yol içermeyen kaynaklar kullanın."
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Use the site's address, such as https://docs.example.com."
+msgstr "Sitenin adresini girin, örneğin https://docs.example.com."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Use the suggested reply"
 msgstr "Önerilen yanıtı kullan"
@@ -4812,6 +4913,7 @@ msgstr "Her isteğe güvenmeden önce doğrulayın: <0>webhook-signature</0> ba�
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "Ziyaretçi"
 
@@ -4842,6 +4944,10 @@ msgstr "Müşteriden yanıt bekleniyor"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "İlk mesaj bekleniyor"
+
+#: src/features/setup/previews.tsx
+msgid "Was this page helpful?"
+msgstr "Bu sayfa işinize yaradı mı?"
 
 #: src/features/auth/SignInPage.tsx
 msgid "We e-mail you a one-time code. No password to remember."
@@ -4958,6 +5064,10 @@ msgstr "Müşteriler hangi adrese yazıyor?"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which apps will use it?"
 msgstr "Hangi uygulamalarda kullanılacak?"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Which documentation site?"
+msgstr "Hangi dokümantasyon sitesi?"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which sites will show the chat?"
@@ -5101,6 +5211,10 @@ msgstr "Başka bir adresten {0} adresine yazın. Posta geldiği anda konuşma bu
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "{first} için yaz…"
+
+#: src/features/setup/previews.tsx
+msgid "Yes"
+msgstr "Evet"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Yesterday"

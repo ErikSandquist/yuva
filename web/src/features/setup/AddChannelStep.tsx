@@ -27,7 +27,7 @@ import { FieldError } from "@/features/settings/channels/parts"
 import { useInbox } from "@/features/settings/inboxes/queries"
 import { Field, ToggleRow } from "@/features/settings/ui"
 import { useKindText } from "@/features/setup/ChannelStep"
-import { DEFAULT_COLOR, MailMock, PhoneMock, PreviewCaption, SiteMock } from "@/features/setup/previews"
+import { DEFAULT_COLOR, DocsMock, MailMock, PhoneMock, PreviewCaption, SiteMock } from "@/features/setup/previews"
 import type { SetupKind, SetupState } from "@/features/setup/setup"
 import { SetupLayout, StepHeader } from "@/features/setup/SetupLayout"
 import { api, ApiError, unwrap } from "@/lib/api"
@@ -46,6 +46,15 @@ function hostOf(origins: string) {
   return "www.example.com"
 }
 
+function originOfUrl(url: string) {
+  try {
+    const u = new URL(url.trim())
+    return u.protocol === "https:" || u.protocol === "http:" ? u.origin : null
+  } catch {
+    return null
+  }
+}
+
 export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: SetupKind }) {
   const { t } = useLingui()
   const qc = useQueryClient()
@@ -59,6 +68,8 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   const [chat, setChat] = useState<ChatForm>(() => ({ ...chatForm(), allowAnonymous: true }))
   const [email, setEmail] = useState<EmailForm>(() => emailForm())
   const [app, setApp] = useState<AppForm>(() => appForm())
+  const [docs, setDocs] = useState({ name: "", url: "", touched: false })
+  const docsOrigin = kind === "docs" ? originOfUrl(docs.url) : null
   const name = inbox?.name ?? ""
   const color = inbox?.branding.color ?? DEFAULT_COLOR
   const chatInput = kind === "chat" ? chatChannelInput(chat) : null
@@ -66,24 +77,36 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
 
   const save = useMutation({
     mutationFn: () => {
+      if (kind === "docs")
+        return unwrap(
+          api.POST("/v1/inboxes/{inboxId}/channels", {
+            params: { path: { inboxId } },
+            body: {
+              kind: "chat",
+              name: docs.name.trim(),
+              chat: { allowed_origins: [docsOrigin!], allow_anonymous: true },
+            },
+          })
+        )
       const typed =
         kind === "email"
           ? { email: emailInput(email) }
           : kind === "chat" && chatInput?.ok
             ? { chat: chatInput.value }
             : { app: appInput! }
+      const channelKind = kind as "chat" | "email" | "app"
       const channelName = kind === "email" ? name || kindText.email.title : kindText[kind].title
       return unwrap(
         api.POST("/v1/inboxes/{inboxId}/channels", {
           params: { path: { inboxId } },
-          body: { kind, name: channelName, ...typed },
+          body: { kind: channelKind, name: channelName, ...typed },
         })
       )
     },
     onSuccess: (ch) => {
       void qc.invalidateQueries({ queryKey: keys.channels(ws, inboxId) })
       qc.setQueryData(keys.channel(ws, ch.id), ch)
-      navigate(`/setup/${inboxId}/${ch.id}`, { state })
+      navigate(`/setup/${inboxId}/${ch.id}${kind === "docs" ? "?docs" : ""}`, { state })
     },
   })
 
@@ -91,7 +114,20 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
   const badChat = chatErrorField(save.error)
   const taken = save.error instanceof ApiError && save.error.code === "email_address_taken"
   const emailError = (f: EmailField) => (bad === f && !taken ? fieldErrors[f] : undefined)
-  const valid = kind === "chat" ? chatInput?.ok === true : kind === "app" ? !!appInput : email.address.trim() !== ""
+  const valid =
+    kind === "chat"
+      ? chatInput?.ok === true
+      : kind === "app"
+        ? !!appInput
+        : kind === "docs"
+          ? !!docs.name.trim() && !!docsOrigin
+          : email.address.trim() !== ""
+  const urlError =
+    kind !== "docs" ? null : badChat === "allowed_origins" || (docs.touched && docs.url.trim() && !docsOrigin) ? (
+      <Trans>Use the site's address, such as https://docs.example.com.</Trans>
+    ) : docs.touched && !docs.url.trim() ? (
+      <Trans>Add the site's address.</Trans>
+    ) : null
 
   const notOrigins = chatInput && !chatInput.ok ? chatInput.bad.join(", ") : ""
   const originsError =
@@ -115,6 +151,13 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
           <Trans>The chat appears in the corner of every page that has the snippet.</Trans>
         </PreviewCaption>
       </>
+    ) : kind === "docs" ? (
+      <>
+        <DocsMock host={docsOrigin ? new URL(docsOrigin).host : "docs.example.com"} color={color} />
+        <PreviewCaption>
+          <Trans>Under each page: “Was this page helpful?”, then feedback, and the questions you answered.</Trans>
+        </PreviewCaption>
+      </>
     ) : kind === "email" ? (
       <>
         <MailMock name={name} to={email.address.trim()} />
@@ -135,16 +178,24 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
     chat: <Trans>Which sites will show the chat?</Trans>,
     email: <Trans>Which address do customers write to?</Trans>,
     app: <Trans>Which apps will use it?</Trans>,
+    docs: <Trans>Which documentation site?</Trans>,
   }[kind]
   const lead = {
     chat: <Trans>Only pages on these addresses can open the chat. Enter scheme and host, without a path.</Trans>,
     email: <Trans>Use the support address you already have. Mail sent to it will arrive here.</Trans>,
     app: <Trans>Pick the platforms; the next step shows the lines to add to each app.</Trans>,
+    docs: (
+      <Trans>
+        A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address
+        later in the inbox settings.
+      </Trans>
+    ),
   }[kind]
   const submit = {
     chat: <Trans>Get the snippet</Trans>,
     email: <Trans>Continue</Trans>,
     app: <Trans>Get the SDK lines</Trans>,
+    docs: <Trans>Get the snippets</Trans>,
   }[kind]
 
   return (
@@ -156,6 +207,7 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
           e.preventDefault()
           setApp((a) => ({ ...a, touched: true }))
           setChat((c) => ({ ...c, touched: true }))
+          setDocs((d) => ({ ...d, touched: true }))
           if (valid) save.mutate()
         }}
         data-testid={`setup-add-${kind}`}
@@ -192,6 +244,39 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
                 aria-label={t`Allow anonymous visitors`}
               />
             </ToggleRow>
+          </>
+        )}
+        {kind === "docs" && (
+          <>
+            <Field label={<Trans>Site name</Trans>} htmlFor="setup-docs-name" hint={<Trans>Shown in the panel.</Trans>}>
+              <Input
+                id="setup-docs-name"
+                autoFocus
+                required
+                maxLength={200}
+                className="h-10 rounded-xl"
+                value={docs.name}
+                placeholder={t`Acme docs`}
+                onChange={(e) => setDocs((d) => ({ ...d, name: e.target.value }))}
+                data-testid="setup-docs-name"
+              />
+            </Field>
+            <Field label={<Trans>Site address</Trans>} htmlFor="setup-docs-url">
+              <Input
+                id="setup-docs-url"
+                type="url"
+                required
+                spellCheck={false}
+                className="h-10 rounded-xl font-mono"
+                value={docs.url}
+                placeholder="https://docs.example.com"
+                onChange={(e) => setDocs((d) => ({ ...d, url: e.target.value }))}
+                aria-invalid={!!urlError || undefined}
+                aria-describedby={urlError ? "err-setup-docs-url" : undefined}
+                data-testid="setup-docs-url"
+              />
+              <FieldError id="err-setup-docs-url">{urlError}</FieldError>
+            </Field>
           </>
         )}
         {kind === "email" && (

@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Trash2Icon } from "lucide-react"
 import { createContext, useContext, useMemo, useState } from "react"
-import { Link, useParams } from "react-router"
+import { Link, useLocation, useParams } from "react-router"
 
 import { ChannelIcon, ErrorLine, toast, useConfirm } from "@/components/common"
 import { useEnumText, useErrorText, WEEKDAYS } from "@/components/common/text"
@@ -88,6 +88,7 @@ function Channels({ inbox }: { inbox: Inbox }) {
       void qc.invalidateQueries({ queryKey: keys.channels(ws, inbox.id) })
     },
   })
+  const { pathname } = useLocation()
   const adds: [ChannelKind, string][] = [
     ["email", t`E-mail`],
     ["chat", t`Website chat`],
@@ -168,6 +169,15 @@ function Channels({ inbox }: { inbox: Inbox }) {
               + {label}
             </Button>
           ))}
+          <Button
+            variant="outline"
+            size="sm"
+            className="bg-card"
+            render={<Link to={`/setup/${inbox.id}/add/docs`} state={{ back: pathname }} />}
+            data-testid="add-docs"
+          >
+            + <Trans>Documentation site</Trans>
+          </Button>
         </div>
       )}
       {editing && (

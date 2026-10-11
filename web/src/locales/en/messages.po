@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/setup/ChannelStep.tsx
+msgid "“Was this page helpful?”, feedback and questions on your docs"
+msgstr "“Was this page helpful?”, feedback and questions on your docs"
+
 #: src/features/settings/members/MemberList.tsx
 msgid "(you)"
 msgstr "(you)"
@@ -314,6 +318,10 @@ msgstr "1 setting"
 msgid "A chat bubble on your site, from one line of HTML"
 msgstr "A chat bubble on your site, from one line of HTML"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address later in the inbox settings."
+msgstr "A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address later in the inbox settings."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
 msgstr "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -420,6 +428,10 @@ msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted
 msgid "Access"
 msgstr "Access"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Acme docs"
+msgstr "Acme docs"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Acme Support"
 msgstr "Acme Support"
@@ -482,6 +494,14 @@ msgstr "Add the SDK and create one client"
 msgid "Add the server in a terminal:"
 msgstr "Add the server in a terminal:"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Add the site's address."
+msgstr "Add the site's address."
+
+#: src/features/setup/InstallStep.tsx
+msgid "Add the two elements under every docs page"
+msgstr "Add the two elements under every docs page"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add to Cursor"
 msgstr "Add to Cursor"
@@ -489,6 +509,10 @@ msgstr "Add to Cursor"
 #: src/features/setup/InstallStep.tsx
 msgid "Add Yuva to your app"
 msgstr "Add Yuva to your app"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Add Yuva to your documentation"
+msgstr "Add Yuva to your documentation"
 
 #: src/features/settings/notifications/PushSection.tsx
 #: src/features/settings/profile/Passkeys.tsx
@@ -707,6 +731,10 @@ msgstr "As {name}, since {when}"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "As above ({current})"
 msgstr "As above ({current})"
+
+#: src/features/setup/previews.tsx
+msgid "Ask a question"
+msgstr "Ask a question"
 
 #: src/app/Gate.tsx
 msgid "Ask an owner or admin of your workspace to invite you."
@@ -1452,9 +1480,18 @@ msgstr "Docs"
 msgid "Documentation pages"
 msgstr "Documentation pages"
 
+#: src/features/settings/inboxes/InboxPage.tsx
+#: src/features/setup/ChannelStep.tsx
+msgid "Documentation site"
+msgstr "Documentation site"
+
 #: src/features/contact/ConversationMedia.tsx
 msgid "Documents"
 msgstr "Documents"
+
+#: src/features/setup/previews.tsx
+msgid "Does it work with server-side rendering?"
+msgstr "Does it work with server-side rendering?"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
@@ -1846,8 +1883,16 @@ msgid "Full API"
 msgstr "Full API"
 
 #: src/features/setup/InstallStep.tsx
+msgid "Full guide, with Starlight, VitePress, Docusaurus and the options"
+msgstr "Full guide, with Starlight, VitePress, Docusaurus and the options"
+
+#: src/features/setup/InstallStep.tsx
 msgid "Full guide, with the screens and push notifications"
 msgstr "Full guide, with the screens and push notifications"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Fumadocs / React"
+msgstr "Fumadocs / React"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Get notified on your phone or computer, even when the panel is closed."
@@ -1860,6 +1905,10 @@ msgstr "Get the SDK lines"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Get the snippet"
 msgstr "Get the snippet"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Get the snippets"
+msgstr "Get the snippets"
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -2629,6 +2678,10 @@ msgstr "next attempt {when}"
 msgid "Next week"
 msgstr "Next week"
 
+#: src/features/setup/previews.tsx
+msgid "No"
+msgstr "No"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "no answer"
@@ -3042,6 +3095,14 @@ msgstr "Open"
 msgid "Open {0}"
 msgstr "Open {0}"
 
+#: src/features/setup/InstallStep.tsx
+msgid "Open a page of your docs"
+msgstr "Open a page of your docs"
+
+#: src/features/setup/WaitStep.tsx
+msgid "Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts; feedback and questions appear here the moment they are sent."
+msgstr "Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts; feedback and questions appear here the moment they are sent."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
 msgstr "Open ChatGPT plugins"
@@ -3419,6 +3480,10 @@ msgstr "questions"
 msgid "Questions"
 msgstr "Questions"
 
+#: src/features/setup/previews.tsx
+msgid "Questions and answers"
+msgstr "Questions and answers"
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Queued. The new attempt shows up below in a moment."
 msgstr "Queued. The new attempt shows up below in a moment."
@@ -3471,6 +3536,10 @@ msgstr "Read conversations, messages, labels and canned replies"
 #: src/components/common/text.ts
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Read the workspace, members, inboxes and channels"
+
+#: src/features/setup/ChannelStep.tsx
+msgid "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
+msgstr "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Reading"
@@ -3897,6 +3966,10 @@ msgstr "Send events"
 msgid "Send events to your own server"
 msgstr "Send events to your own server"
 
+#: src/features/setup/WaitStep.tsx
+msgid "Send feedback or a question from a page"
+msgstr "Send feedback or a question from a page"
+
 #. placeholder {0}: email.address
 #: src/features/setup/InstallStep.tsx
 msgid "Send mail for {0} to Yuva"
@@ -4053,6 +4126,10 @@ msgstr "Shown before the first message. The inbox greeting when empty."
 msgid "Shown in the chat window"
 msgstr "Shown in the chat window"
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Shown in the panel."
+msgstr "Shown in the panel."
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "Shown on its messages. The key's name when empty."
 msgstr "Shown on its messages. The key's name when empty."
@@ -4115,6 +4192,18 @@ msgstr "Signing secret"
 #: src/features/inbox/SourceFilter.tsx
 msgid "Site"
 msgstr "Site"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Site address"
+msgstr "Site address"
+
+#: src/features/setup/InstallStep.tsx
+msgid "Site generator"
+msgstr "Site generator"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Site name"
+msgstr "Site name"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
@@ -4352,6 +4441,10 @@ msgstr "The customer does not see this"
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
 msgstr "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
+
+#: src/features/setup/InstallStep.tsx
+msgid "The elements work on these addresses; add your dev server in the inbox settings:"
+msgstr "The elements work on these addresses; add your dev server in the inbox settings:"
 
 #: src/components/common/text.ts
 msgid "The endpoint is disabled. Enable it to send deliveries again."
@@ -4695,6 +4788,11 @@ msgstr "Undeliverable: bounced, {since}"
 msgid "Undeliverable: marked as spam by the recipient, {since}"
 msgstr "Undeliverable: marked as spam by the recipient, {since}"
 
+#: src/features/setup/AddChannelStep.tsx
+#: src/features/setup/InstallStep.tsx
+msgid "Under each page: “Was this page helpful?”, then feedback, and the questions you answered."
+msgstr "Under each page: “Was this page helpful?”, then feedback, and the questions you answered."
+
 #: src/components/common/Toast.tsx
 msgid "Undo"
 msgstr "Undo"
@@ -4710,7 +4808,6 @@ msgstr "Unknown device"
 #: src/features/contact/ContactSearch.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/contact/MergeContactDialog.tsx
-#: src/features/setup/previews.tsx
 msgid "Unnamed contact"
 msgstr "Unnamed contact"
 
@@ -4781,6 +4878,10 @@ msgstr "Use at most 500 characters."
 msgid "Use origins such as https://www.example.com, without a path."
 msgstr "Use origins such as https://www.example.com, without a path."
 
+#: src/features/setup/AddChannelStep.tsx
+msgid "Use the site's address, such as https://docs.example.com."
+msgstr "Use the site's address, such as https://docs.example.com."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Use the suggested reply"
 msgstr "Use the suggested reply"
@@ -4812,6 +4913,7 @@ msgstr "Verify every request before trusting it: the <0>webhook-signature</0> he
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/setup/previews.tsx
 msgid "Visitor"
 msgstr "Visitor"
 
@@ -4842,6 +4944,10 @@ msgstr "Waiting for the customer"
 #: src/features/setup/previews.tsx
 msgid "Waiting for the first message"
 msgstr "Waiting for the first message"
+
+#: src/features/setup/previews.tsx
+msgid "Was this page helpful?"
+msgstr "Was this page helpful?"
 
 #: src/features/auth/SignInPage.tsx
 msgid "We e-mail you a one-time code. No password to remember."
@@ -4958,6 +5064,10 @@ msgstr "Which address do customers write to?"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which apps will use it?"
 msgstr "Which apps will use it?"
+
+#: src/features/setup/AddChannelStep.tsx
+msgid "Which documentation site?"
+msgstr "Which documentation site?"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which sites will show the chat?"
@@ -5101,6 +5211,10 @@ msgstr "Write to {0} from any other address. The conversation appears here the m
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Write to {first}…"
 msgstr "Write to {first}…"
+
+#: src/features/setup/previews.tsx
+msgid "Yes"
+msgstr "Yes"
 
 #: src/features/conversation/messages/Thread.tsx
 msgid "Yesterday"

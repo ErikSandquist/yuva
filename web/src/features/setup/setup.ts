@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router"
 import { useConversations, useCounts } from "@/features/inbox/queries"
 import { useSession } from "@/lib/session"
 
-export type SetupKind = "chat" | "email" | "app"
-export const SETUP_KINDS: SetupKind[] = ["chat", "email", "app"]
+export type SetupKind = "chat" | "email" | "app" | "docs"
+export const SETUP_KINDS: SetupKind[] = ["chat", "email", "app", "docs"]
 
 export type SetupState = { secret?: string; back?: string }
 

@@ -1,5 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowUpIcon, CheckIcon, MessageCircleIcon, PaperclipIcon, ReplyIcon } from "lucide-react"
+import {
+  ArrowUpIcon,
+  BookOpenTextIcon,
+  CheckIcon,
+  MessageCircleIcon,
+  PaperclipIcon,
+  ReplyIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+} from "lucide-react"
 
 import { ChannelIcon } from "@/components/common"
 import { TypingDots } from "@/components/common/TypingDots"
@@ -165,6 +174,53 @@ export function SiteMock({
   )
 }
 
+export function DocsMock({ host, color, waiting }: { host: string; color: string; waiting?: boolean }) {
+  return (
+    <BrowserFrame host={host} className="h-[30rem]">
+      <div className="flex flex-col gap-3 p-6" aria-hidden="true">
+        <span className="h-3 w-24 rounded-full bg-muted" />
+        <span className="mt-2 h-5 w-2/3 rounded-full bg-muted" />
+        <span className="mt-1 h-2.5 w-5/6 rounded-full bg-muted/70" />
+        <span className="h-2.5 w-4/6 rounded-full bg-muted/70" />
+        <span className="h-10 rounded-lg bg-muted/50" />
+        <div className="mt-2 flex flex-col gap-2 rounded-xl border p-3.5">
+          <p className="text-small font-medium">
+            <Trans>Questions and answers</Trans>
+          </p>
+          <p className="text-small">
+            <Trans>Does it work with server-side rendering?</Trans>
+          </p>
+          <span className="h-2 w-5/6 rounded-full bg-muted/70" />
+          <span className="mt-1 w-fit rounded-lg border px-2.5 py-1 text-caption" style={{ borderColor: color, color }}>
+            <Trans>Ask a question</Trans>
+          </span>
+        </div>
+        <div className="flex items-center gap-2.5 border-t pt-3 text-small">
+          <span className="text-muted-foreground">
+            <Trans>Was this page helpful?</Trans>
+          </span>
+          <span
+            className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-caption"
+            style={waiting ? undefined : { borderColor: color, color }}
+          >
+            <ThumbsUpIcon className="size-3.5" />
+            <Trans>Yes</Trans>
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-lg border px-2 py-1 text-caption">
+            <ThumbsDownIcon className="size-3.5" />
+            <Trans>No</Trans>
+          </span>
+          {waiting && (
+            <span className="ms-auto flex items-center gap-2 text-caption text-faint">
+              <TypingDots />
+            </span>
+          )}
+        </div>
+      </div>
+    </BrowserFrame>
+  )
+}
+
 export function MailMock({ name, to, waiting }: { name: string; to: string; waiting?: boolean }) {
   const { t } = useLingui()
   return (
@@ -282,12 +338,13 @@ export function KindPreview({
 }) {
   if (kind === "email") return <MailMock name={name} to="" />
   if (kind === "app") return <PhoneMock name={name} color={color} />
+  if (kind === "docs") return <DocsMock host={host.replace(/^www\./, "docs.")} color={color} />
   return <SiteMock host={host} name={name} color={color} />
 }
 
 export function FirstConversation({ item, name, kind }: { item: ConversationListItem; name: string; kind: SetupKind }) {
   const { t } = useLingui()
-  const who = item.contact.name || item.contact.email || t`Unnamed contact`
+  const who = item.contact.name || item.contact.email || t`Visitor`
   return (
     <div
       className={cn("w-full max-w-md overflow-hidden rounded-2xl border bg-card", lift)}
@@ -302,7 +359,7 @@ export function FirstConversation({ item, name, kind }: { item: ConversationList
       </div>
       <div className="flex items-start gap-3.5 px-5 py-4">
         <span className="grid size-9 shrink-0 place-items-center rounded-full border text-muted-foreground">
-          <ChannelIcon kind={kind} className="size-4" />
+          {kind === "docs" ? <BookOpenTextIcon className="size-4" /> : <ChannelIcon kind={kind} className="size-4" />}
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 text-body">
