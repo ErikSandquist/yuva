@@ -106,28 +106,14 @@ func (s *Server) resolveDiscussant(ctx context.Context, token string) (*discussa
 	return d, nil
 }
 
-// ensureWriter makes sure the caller can write: anonymous visitors cannot, and a reader gets the
-// contact linked to their person in this workspace on their first write.
-func (s *Server) ensureWriter(ctx context.Context, d *discussant) error {
-	if d.readerTokenID == nil && !d.identified {
-		return errSignInRequired
-	}
+// bindWriter gives a reader the contact linked to their person in this workspace, inside the
+// transaction of their first write and only once that write has passed its checks, so a refused
+// write discloses nothing about the reader to the workspace.
+func (s *Server) bindWriter(ctx context.Context, q *store.Queries, d *discussant) error {
 	if d.memberID != nil || d.contactID != nil {
 		return nil
 	}
-	var id uuid.UUID
-	err := s.inTx(ctx, d.workspaceID, func(q *store.Queries, _ *eventBatch) error {
-		var err error
-		id, err = s.readerContact(ctx, q, d.workspaceID, *d.personID)
-		return err
-	})
-	if store.IsUniqueViolation(err) {
-		c, ferr := s.st.FindContactByPerson(ctx, store.FindContactByPersonParams{WorkspaceID: d.workspaceID, PersonID: d.personID})
-		if ferr != nil {
-			return ferr
-		}
-		id, err = c.ID, nil
-	}
+	id, err := s.readerContact(ctx, q, d.workspaceID, *d.personID)
 	if err != nil {
 		return err
 	}
@@ -380,6 +366,9 @@ func (s *Server) CreateClientDiscussion(ctx context.Context, req oas.CreateClien
 	}
 	var id uuid.UUID
 	err = s.inTx(ctx, d.workspaceID, func(q *store.Queries, events *eventBatch) error {
+		if err := s.bindWriter(ctx, q, d); err != nil {
+			return err
+		}
 		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, d.chat.Discussions, d.actor, d.identified)
 		if err != nil {
 			return err
@@ -421,6 +410,9 @@ func (s *Server) CreateClientDiscussionPost(ctx context.Context, req oas.CreateC
 			return err
 		}
 		if err := d.mayChange(t); err != nil {
+			return err
+		}
+		if err := s.bindWriter(ctx, q, d); err != nil {
 			return err
 		}
 		state, err := newPostState(ctx, q, d.workspaceID, d.inboxID, d.chat.Discussions, d.actor, d.identified)
@@ -482,15 +474,20 @@ func (s *Server) clientFollow(ctx context.Context, id uuid.UUID, follow bool) er
 	if err := s.rateLimit(s.writeChecks(ctx, contactPrincipal{channelID: d.channelID})...); err != nil {
 		return err
 	}
-	t, err := d.thread(ctx, s.st.Queries, id, false)
-	if err != nil || d.contactID == nil {
-		return err
-	}
-	if follow {
-		return s.st.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID, Now: s.now()})
-	}
-	_, err = s.st.UnfollowDiscussion(ctx, store.UnfollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID})
-	return err
+	return s.inTx(ctx, d.workspaceID, func(q *store.Queries, _ *eventBatch) error {
+		t, err := d.thread(ctx, q, id, false)
+		if err != nil || d.memberID != nil || (!follow && d.contactID == nil) {
+			return err
+		}
+		if !follow {
+			_, err = q.UnfollowDiscussion(ctx, store.UnfollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID})
+			return err
+		}
+		if err := s.bindWriter(ctx, q, d); err != nil {
+			return err
+		}
+		return q.FollowDiscussion(ctx, store.FollowDiscussionParams{WorkspaceID: d.workspaceID, DiscussionID: t.d.ID, ContactID: *d.contactID, Now: s.now()})
+	})
 }
 
 func (s *Server) FollowClientDiscussion(ctx context.Context, req oas.FollowClientDiscussionRequestObject) (oas.FollowClientDiscussionResponseObject, error) {
@@ -596,6 +593,12 @@ func (s *Server) clientVote(ctx context.Context, id uuid.UUID, add bool) (oas.Di
 		}
 		if p.State != statePublished || p.DeletedAt != nil {
 			return errDiscussionPostGone
+		}
+		if !add && d.memberID == nil && d.contactID == nil {
+			return nil
+		}
+		if err := s.bindWriter(ctx, q, d); err != nil {
+			return err
 		}
 		return vote(ctx, q, d.workspaceID, p, d.actor, add, s.now())
 	})

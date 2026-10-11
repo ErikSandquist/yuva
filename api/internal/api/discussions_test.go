@@ -283,3 +283,36 @@ func TestDiscussionFromConversation(t *testing.T) {
 		t.Fatalf("an anonymous visitor became the author: %s", vd.raw)
 	}
 }
+
+func TestRefusedReaderWriteLeavesNoContact(t *testing.T) {
+	h := newHarness(t)
+	ct := newChatTeam(t, h, "live", true)
+	page := ct.origin + "/faq"
+	user := ct.session(h, map[string]any{"identity_token": ct.token(h, map[string]any{"sub": "u-" + unique("d"), "name": "Cem"})})
+	th := user.expect(http.StatusCreated, "POST", "/client/v1/discussions", map[string]any{"page_url": page, "title": "A question", "body": "Why?"})
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/discussions/"+th.str("id"), map[string]any{"locked": true})
+
+	ada := newReader(h, ct, "Ada")
+	missing := "00000000-0000-7000-8000-000000000000"
+	ada.site.expectProblem(http.StatusNotFound, "not_found", "PUT", "/client/v1/discussion-posts/"+missing+"/vote", nil)
+	ada.site.expectProblem(http.StatusNotFound, "not_found", "POST", "/client/v1/discussions/"+missing+"/posts", map[string]any{"body": "x"})
+	ada.site.expectProblem(http.StatusNotFound, "not_found", "PUT", "/client/v1/discussions/"+missing+"/follow", nil)
+	ada.site.expectProblem(http.StatusForbidden, "discussion_locked", "POST", "/client/v1/discussions/"+th.str("id")+"/posts", map[string]any{"body": "x"})
+	ada.site.expectProblem(http.StatusForbidden, "discussion_locked", "PUT", "/client/v1/discussion-posts/"+th.str("opening_post_id")+"/vote", nil)
+	ada.site.expectProblem(http.StatusBadRequest, "page_origin", "POST", "/client/v1/discussions", map[string]any{"page_url": "https://elsewhere.example/x", "title": "Hello there", "body": "x"})
+	contacts := func() int {
+		return len(items(ct.owner.expect(http.StatusOK, "GET", "/v1/contacts?q="+url.QueryEscape(ada.email), nil)))
+	}
+	if n := contacts(); n != 0 {
+		t.Fatalf("refused writes created %d contacts for the reader", n)
+	}
+	ct.owner.expect(http.StatusOK, "PATCH", "/v1/discussions/"+th.str("id"), map[string]any{"locked": false})
+	ada.site.expectProblem(http.StatusForbidden, "forbidden", "PUT", "/client/v1/discussions/"+th.str("id")+"/answer", map[string]any{"post_id": th.str("opening_post_id")})
+	if n := contacts(); n != 0 {
+		t.Fatalf("a refused answer created %d contacts", n)
+	}
+	ada.site.expect(http.StatusOK, "PUT", "/client/v1/discussion-posts/"+th.str("opening_post_id")+"/vote", nil)
+	if n := contacts(); n != 1 {
+		t.Fatalf("an accepted write made %d contacts", n)
+	}
+}

@@ -236,12 +236,15 @@ func (s *Server) authenticate(next oas.StrictHandlerFunc, operationID string) oa
 				return nil, err
 			}
 			if operationID != "DeleteReaderToken" {
-				if err := s.ensureWriter(ctx, d); err != nil {
-					return nil, err
+				if d.readerTokenID == nil && !d.identified {
+					return nil, errSignInRequired
 				}
 				callerType, callerID := callerContact, d.contactID
-				if d.memberID != nil {
+				switch {
+				case d.memberID != nil:
 					callerType, callerID = callerMember, d.memberID
+				case d.personID != nil:
+					callerID = d.personID
 				}
 				if replayed, err := s.claimIdempotency(ctx, w, r, d.workspaceID, callerType, *callerID); err != nil || replayed {
 					return nil, err

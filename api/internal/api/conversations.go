@@ -320,7 +320,7 @@ func (s *Server) ListConversations(ctx context.Context, req oas.ListConversation
 		InboxID: prm.InboxId, ContactID: prm.ContactId, LabelID: prm.LabelId, Q: pos, QNot: neg,
 		CursorAt: at, CursorID: cid, Lim: lim + 1, Spam: prm.Spam != nil && *prm.Spam,
 	}
-	if arg.Kinds, err = enumList(prm.Kind, "kind must be conversation, feedback or question"); err != nil {
+	if arg.Kinds, err = enumList(prm.Kind, "kind must be conversation or feedback"); err != nil {
 		return nil, err
 	}
 	if arg.ChannelKinds, err = enumList(prm.ChannelKind, "channel_kind must be chat, email, app or api"); err != nil {
