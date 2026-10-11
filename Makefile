@@ -4,8 +4,8 @@ build: web widget
 	@if [ -f web/dist/index.html ]; then \
 		find api/internal/ui/dist -mindepth 1 -delete && cp -R web/dist/. api/internal/ui/dist/; \
 	fi
-	@if [ -f sdk/js/dist/yuva.js ] && [ -f sdk/js/dist/yuva-chat.js ] && [ -f sdk/js/dist/yuva-docs.js ]; then \
-		cp sdk/js/dist/yuva.js sdk/js/dist/yuva-chat.js sdk/js/dist/yuva-docs.js api/internal/widget/dist/; \
+	@if [ -f sdk/js/dist/yuva.js ] && [ -f sdk/js/dist/yuva-chat.js ] && [ -f sdk/js/dist/yuva-docs.js ] && [ -f sdk/js/dist/yuva-subscribe.js ]; then \
+		cp sdk/js/dist/yuva.js sdk/js/dist/yuva-chat.js sdk/js/dist/yuva-docs.js sdk/js/dist/yuva-subscribe.js api/internal/widget/dist/; \
 		rm -rf api/internal/widget/dist/widget; \
 		if [ -d sdk/js/dist/widget ]; then cp -R sdk/js/dist/widget api/internal/widget/dist/; fi; \
 	fi

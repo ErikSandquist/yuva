@@ -120,7 +120,7 @@ func TestClientConversationMemberRead(t *testing.T) {
 
 func TestWidgetScripts(t *testing.T) {
 	h := newHarness(t)
-	for _, name := range []string{"/yuva.js", "/yuva-chat.js", "/yuva-docs.js"} {
+	for _, name := range []string{"/yuva.js", "/yuva-chat.js", "/yuva-docs.js", "/yuva-subscribe.js"} {
 		req, _ := http.NewRequest("GET", h.url+name, nil)
 		req.Header.Set("Origin", "https://any.example")
 		res, err := http.DefaultClient.Do(req)

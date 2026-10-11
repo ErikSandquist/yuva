@@ -15,7 +15,7 @@ import (
 //go:embed dist
 var embedded embed.FS
 
-var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js"}
+var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js", "yuva-subscribe.js"}
 
 func Handler(name string) http.Handler {
 	body, err := embedded.ReadFile("dist/" + name)
