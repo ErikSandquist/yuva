@@ -3045,7 +3045,7 @@ type Discussion struct {
 	// Body Markdown as written; empty once the opening post was deleted.
 	Body string `json:"body"`
 
-	// BodyHtml `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow ugc noopener"`).
+	// BodyHtml `body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel="nofollow noreferrer"`, and links to other sites also `target="_blank"` with `noopener`).
 	BodyHtml string `json:"body_html"`
 
 	// ChannelId The chat channel whose setting applied when it was started.

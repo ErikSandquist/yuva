@@ -975,7 +975,7 @@ Private help stays private: page feedback, live chat and e-mail are unchanged. D
   threads migrated from published answers, whose visitor was never named.
 - **Bodies** are stored as Markdown and served with `body_html`, rendered on the server by goldmark
   (no raw HTML, GitHub-flavoured tables, strikethrough and autolinks) and sanitized with
-  bluemonday's UGC policy (`rel="nofollow ugc noopener"`), so every client can show it without a
+  bluemonday's UGC policy (`rel="nofollow noreferrer"`, `target="_blank"` with `noopener` on links to other sites), so every client can show it without a
   Markdown library. Titles 3 to 200 characters, bodies up to 20,000.
 - **Migration.** Each `page_answers` row became a published discussion on its page, inbox and
   channel: the question as an `anonymous` opening post, the answer as an accepted reply by the

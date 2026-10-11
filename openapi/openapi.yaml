@@ -10308,7 +10308,7 @@ components:
           description: Markdown as written; empty once the opening post was deleted.
         body_html:
           type: string
-          description: "`body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel=\"nofollow ugc noopener\"`)."
+          description: "`body` rendered to HTML on the server and sanitized (no scripts, styles or raw HTML; links get `rel=\"nofollow noreferrer\"`, and links to other sites also `target=\"_blank\"` with `noopener`)."
         author:
           $ref: "#/components/schemas/DiscussionAuthor"
         state:
