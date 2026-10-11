@@ -8,8 +8,8 @@ msgstr ""
 "Language: tr\n"
 
 #: src/features/setup/ChannelStep.tsx
-msgid "“Was this page helpful?”, feedback and questions on your docs"
-msgstr "Dokümanlarınızda “Bu sayfa işinize yaradı mı?”, geri bildirim ve sorular"
+msgid "“Was this page helpful?”, feedback and discussions on your docs"
+msgstr "Dokümanlarınızda “Bu sayfa yararlı oldu mu?”, geri bildirim ve tartışmalar"
 
 #: src/features/settings/members/MemberList.tsx
 msgid "(you)"
@@ -338,8 +338,8 @@ msgid "A chat bubble on your site, from one line of HTML"
 msgstr "Tek satır HTML ile sitenizde bir sohbet balonu"
 
 #: src/features/setup/AddChannelStep.tsx
-msgid "A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address later in the inbox settings."
-msgstr "Site için onun adını taşıyan, anonim okuyuculara açık bir sohbet kanalı oluşturulur. Geliştirme sunucunuzun adresini sonra gelen kutusu ayarlarından ekleyin."
+msgid "A chat channel named after the site is created for it, open to anonymous readers, with moderated discussions: you approve a reader's first post. Add your dev server's address and change the discussions later in the inbox settings."
+msgstr "Site için onun adını taşıyan, anonim okuyuculara açık ve tartışmaları denetimli bir sohbet kanalı oluşturulur: bir okuyucunun ilk gönderisini siz onaylarsınız. Geliştirme sunucunuzun adresini ekleyip tartışma ayarını sonra gelen kutusu ayarlarından değiştirebilirsiniz."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -440,6 +440,10 @@ msgstr "Ekip için bir not… birini çağırmak için @ yaz"
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "{name} hakkında bir soru"
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once."
+msgstr "Bir okuyucunun gönderileri, onlardan biri onaylanana kadar bir üyeyi bekler. Uygulamanızda oturum açmış kullanıcılar hemen yayımlar."
 
 #: src/components/common/text.ts
 msgid "A reply was written in a discussion"
@@ -792,10 +796,6 @@ msgstr "{name} olarak, {when} tarihinden beri"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "As above ({current})"
 msgstr "Yukarıdaki gibi ({current})"
-
-#: src/features/setup/previews.tsx
-msgid "Ask a question"
-msgstr "Soru sorun"
 
 #: src/app/Gate.tsx
 msgid "Ask an owner or admin of your workspace to invite you."
@@ -1384,6 +1384,10 @@ msgstr "Veri saklama ve çalışma alanını silme"
 msgid "Days"
 msgstr "Günler"
 
+#: src/features/setup/InstallStep.tsx
+msgid "Decide who may write in discussions"
+msgstr "Tartışmalara kimin yazabileceğine karar verin"
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Default: {fallback}"
 msgstr "Varsayılan: {fallback}"
@@ -1533,6 +1537,7 @@ msgstr "Tartışma başlatıldı"
 #: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
+#: src/features/setup/previews.tsx
 msgid "Discussions"
 msgstr "Tartışmalar"
 
@@ -1543,6 +1548,10 @@ msgstr "Tartışmalar ve onaylar"
 #: src/components/common/text.ts
 msgid "Discussions are off on this site's chat channel."
 msgstr "Bu sitenin sohbet kanalında tartışmalar kapalı."
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Discussions on documentation pages"
+msgstr "Dokümantasyon sayfalarında tartışmalar"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Display name"
@@ -1798,6 +1807,10 @@ msgstr "Tüm türler"
 #: src/features/inbox/ChatsPage.tsx
 msgid "Everyone has been answered."
 msgstr "Herkes yanıtlandı."
+
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Everyone's posts are published at once, except those of authors you marked as spam."
+msgstr "Herkesin gönderisi hemen yayımlanır; spam olarak işaretlediğiniz yazarlarınki hariç."
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -2662,6 +2675,10 @@ msgstr "Bana atanan"
 msgid "Mobile app"
 msgstr "Mobil uygulama"
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "Moderated"
+msgstr "Denetimli"
+
 #: src/components/common/text.ts
 msgid "Monday"
 msgstr "Pazartesi"
@@ -2943,6 +2960,10 @@ msgstr "Henüz konuşma yok."
 msgid "No discussions on this page yet."
 msgstr "Bu sayfada henüz tartışma yok."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
+msgid "No discussions under the pages of these sites."
+msgstr "Bu sitelerin sayfalarının altında tartışma olmaz."
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "Henüz tartışma yok. Okuyucular tartışmaları dokümantasyon sayfalarınızın altında başlatır."
@@ -3182,6 +3203,7 @@ msgstr "Bildirimlere izin verilmedi."
 msgid "Notify differently for one inbox. Anything left on “As above” follows the settings above."
 msgstr "Bir gelen kutusu için farklı bildirim al. “Yukarıdaki gibi” bırakılanlar yukarıdaki ayarlara uyar."
 
+#: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "Off"
 msgstr "Kapalı"
@@ -3292,6 +3314,7 @@ msgstr "Yalnızca panel bu tarayıcıda açıkken. Uzaktayken yalnızca size ata
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/conversation/ConversationStatus.tsx
+#: src/features/settings/channels/chat/ChatFields.tsx
 msgid "Open"
 msgstr "Açık"
 
@@ -3305,8 +3328,8 @@ msgid "Open a page of your docs"
 msgstr "Dokümanlarınızdan bir sayfa açın"
 
 #: src/features/setup/WaitStep.tsx
-msgid "Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts; feedback and questions appear here the moment they are sent."
-msgstr "Öğelerin olduğu bir sayfayı açın, puan verip geri bildirim gönderin ya da bir soru sorun. Tek başına puan yalnızca sayılır; geri bildirim ve sorular gönderildiği anda burada görünür."
+msgid "Open a page with the elements, rate it and send feedback. A rating alone only counts; feedback appears here the moment it is sent. Discussions started there show up in Docs."
+msgstr "Öğelerin olduğu bir sayfayı açın, puan verin ve geri bildirim gönderin. Tek başına puan yalnızca sayılır; geri bildirim gönderildiği anda burada görünür. Orada başlatılan tartışmalar Dokümanlar'da görünür."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -3662,10 +3685,6 @@ msgstr "SDK'nın konuşmalar ekranını uygulamanızda bir Yardım düğmesine b
 msgid "Question"
 msgstr "Soru"
 
-#: src/features/setup/previews.tsx
-msgid "Questions and answers"
-msgstr "Sorular ve cevaplar"
-
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Queued. The new attempt shows up below in a moment."
 msgstr "Sıraya alındı. Yeni deneme birazdan aşağıda görünür."
@@ -3724,8 +3743,12 @@ msgid "Reader"
 msgstr "Okuyucu"
 
 #: src/features/setup/ChannelStep.tsx
-msgid "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
-msgstr "Okuyucular her sayfayı puanlar, geri bildirim gönderir ve soru sorar; siz yanıtlar ve sayfada yayımlarsınız."
+msgid "Readers rate each page, send feedback and discuss it in public; you answer and moderate here."
+msgstr "Okuyucular her sayfayı puanlar, geri bildirim gönderir ve herkese açık tartışır; siz burada yanıtlar ve denetlersiniz."
+
+#: src/features/setup/InstallStep.tsx
+msgid "Readers sign in with their e-mail address on this server to write. Discussions start moderated: a reader's first post waits for you in Docs › Waiting for approval, later ones publish at once. Turn them off or open them to everyone in the inbox settings, under the site's channel."
+msgstr "Okuyucular yazmak için bu sunucuda e-posta adresleriyle oturum açar. Tartışmalar denetimli başlar: bir okuyucunun ilk gönderisi Dokümanlar › Onay bekliyor bölümünde sizi bekler, sonrakiler hemen yayımlanır. Tartışmaları gelen kutusu ayarlarında, sitenin kanalında kapatabilir ya da herkese açabilirsiniz."
 
 #: src/features/docs/discussions/QueuePane.tsx
 msgid "Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest first."
@@ -4175,8 +4198,8 @@ msgid "Send events to your own server"
 msgstr "Olayları kendi sunucuna gönder"
 
 #: src/features/setup/WaitStep.tsx
-msgid "Send feedback or a question from a page"
-msgstr "Bir sayfadan geri bildirim ya da soru gönderin"
+msgid "Send feedback from a page"
+msgstr "Bir sayfadan geri bildirim gönderin"
 
 #. placeholder {0}: email.address
 #: src/features/setup/InstallStep.tsx
@@ -4470,6 +4493,10 @@ msgstr "Konuşmaları kendine göre ayır"
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Spam"
 msgstr "Spam"
+
+#: src/features/setup/previews.tsx
+msgid "Start a discussion"
+msgstr "Tartışma başlat"
 
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
@@ -5044,8 +5071,8 @@ msgstr "Ulaşmıyor: alıcı spam olarak işaretledi, {since}"
 
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
-msgid "Under each page: “Was this page helpful?”, then feedback, and the questions you answered."
-msgstr "Her sayfanın altında: “Bu sayfa işinize yaradı mı?”, ardından geri bildirim ve yanıtladığınız sorular."
+msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
+msgstr "Her sayfanın altında: “Bu sayfa yararlı oldu mu?”, ardından geri bildirim ve sayfanın tartışmaları."
 
 #: src/components/common/Toast.tsx
 msgid "Undo"

@@ -135,7 +135,7 @@ function docsLines(stack: DocsStack, server: string, key: string) {
       `})`,
       ``,
       `<!-- your docs page, after the content -->`,
-      `<YuvaPageQuestions :page-title="page.title" />`,
+      `<YuvaDiscussions :page-title="page.title" />`,
       `<YuvaPageFeedback :page-title="page.title" />`,
     ].join("\n")
   }
@@ -143,7 +143,7 @@ function docsLines(stack: DocsStack, server: string, key: string) {
     return [
       `// npm install useyuva`,
       `"use client"`,
-      `import { YuvaPageFeedback, YuvaPageQuestions } from "useyuva/react"`,
+      `import { YuvaDiscussions, YuvaPageFeedback } from "useyuva/react"`,
       ``,
       `const server = "${server}"`,
       `const channel = "${key}"`,
@@ -151,7 +151,7 @@ function docsLines(stack: DocsStack, server: string, key: string) {
       `export function PageHelp({ title }: { title: string }) {`,
       `  return (`,
       `    <>`,
-      `      <YuvaPageQuestions channel={channel} server={server} pageTitle={title} />`,
+      `      <YuvaDiscussions channel={channel} server={server} pageTitle={title} />`,
       `      <YuvaPageFeedback channel={channel} server={server} pageTitle={title} />`,
       `    </>`,
       `  )`,
@@ -161,10 +161,10 @@ function docsLines(stack: DocsStack, server: string, key: string) {
   return [
     `<script src="${server}/yuva-docs.js" defer></script>`,
     ``,
-    `<yuva-page-questions`,
+    `<yuva-discussions`,
     `  channel="${key}"`,
     `  server="${server}"`,
-    `></yuva-page-questions>`,
+    `></yuva-discussions>`,
     `<yuva-page-feedback`,
     `  channel="${key}"`,
     `  server="${server}"`,
@@ -207,7 +207,16 @@ function DocsInstallSteps({ channel, secret }: { channel: Channel; secret?: stri
           <Trans>Full guide, with Starlight, VitePress, Docusaurus and the options</Trans>
         </a>
       </Numbered>
-      <Numbered n={2} title={<Trans>Open a page of your docs</Trans>}>
+      <Numbered n={2} title={<Trans>Decide who may write in discussions</Trans>}>
+        <p className="text-muted-foreground" data-testid="setup-docs-discussions">
+          <Trans>
+            Readers sign in with their e-mail address on this server to write. Discussions start moderated: a reader's
+            first post waits for you in Docs › Waiting for approval, later ones publish at once. Turn them off or open
+            them to everyone in the inbox settings, under the site's channel.
+          </Trans>
+        </p>
+      </Numbered>
+      <Numbered n={3} title={<Trans>Open a page of your docs</Trans>}>
         <p className="text-muted-foreground">
           <Trans>The elements work on these addresses; add your dev server in the inbox settings:</Trans>
         </p>
@@ -376,7 +385,7 @@ export function InstallStep({ inboxId, channelId }: { inboxId: string; channelId
     <>
       <DocsMock host={hostOfOrigin(channel.chat!.allowed_origins[0])} color={color} />
       <PreviewCaption>
-        <Trans>Under each page: “Was this page helpful?”, then feedback, and the questions you answered.</Trans>
+        <Trans>Under each page: “Was this page helpful?”, then feedback and the page’s discussions.</Trans>
       </PreviewCaption>
     </>
   ) : kind === "chat" ? (

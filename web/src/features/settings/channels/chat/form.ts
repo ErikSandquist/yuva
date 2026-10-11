@@ -1,8 +1,15 @@
-import { ApiError, type ChatChannel, type ChatChannelInput, type ChatLauncherPosition } from "@/lib/api"
+import {
+  ApiError,
+  type ChatChannel,
+  type ChatChannelInput,
+  type ChatLauncherPosition,
+  type DiscussionMode,
+} from "@/lib/api"
 
 const MAX_ORIGINS = 20
 const DEFAULT_COLOR = "#d4431c"
 export const POSITIONS: ChatLauncherPosition[] = ["right", "left"]
+export const DISCUSSION_MODES: DiscussionMode[] = ["off", "moderated", "open"]
 
 export type ChatForm = {
   origins: string
@@ -12,6 +19,7 @@ export type ChatForm = {
   position: ChatLauncherPosition
   customColor: boolean
   color: string
+  discussions: DiscussionMode
   touched: boolean
 }
 
@@ -24,6 +32,7 @@ export function chatForm(c?: ChatChannel): ChatForm {
     position: c?.launcher.position ?? "right",
     customColor: !!c?.launcher.color,
     color: c?.launcher.color ?? DEFAULT_COLOR,
+    discussions: c?.discussions ?? "moderated",
     touched: false,
   }
 }
@@ -62,6 +71,7 @@ export function chatChannelInput(f: ChatForm): ChatInputResult {
       ask_email_offline: f.askEmailOffline,
       greeting: f.greeting.trim(),
       launcher: { position: f.position, ...(f.customColor ? { color: f.color.toLowerCase() } : {}) },
+      discussions: f.discussions,
     },
   }
 }

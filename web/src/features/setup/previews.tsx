@@ -185,14 +185,14 @@ export function DocsMock({ host, color, waiting }: { host: string; color: string
         <span className="h-10 rounded-lg bg-muted/50" />
         <div className="mt-2 flex flex-col gap-2 rounded-xl border p-3.5">
           <p className="text-small font-medium">
-            <Trans>Questions and answers</Trans>
+            <Trans>Discussions</Trans>
           </p>
           <p className="text-small">
             <Trans>Does it work with server-side rendering?</Trans>
           </p>
           <span className="h-2 w-5/6 rounded-full bg-muted/70" />
           <span className="mt-1 w-fit rounded-lg border px-2.5 py-1 text-caption" style={{ borderColor: color, color }}>
-            <Trans>Ask a question</Trans>
+            <Trans>Start a discussion</Trans>
           </span>
         </div>
         <div className="flex items-center gap-2.5 border-t pt-3 text-small">

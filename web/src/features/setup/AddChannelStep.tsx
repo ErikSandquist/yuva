@@ -155,7 +155,7 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
       <>
         <DocsMock host={docsOrigin ? new URL(docsOrigin).host : "docs.example.com"} color={color} />
         <PreviewCaption>
-          <Trans>Under each page: “Was this page helpful?”, then feedback, and the questions you answered.</Trans>
+          <Trans>Under each page: “Was this page helpful?”, then feedback and the page’s discussions.</Trans>
         </PreviewCaption>
       </>
     ) : kind === "email" ? (
@@ -186,8 +186,9 @@ export function AddChannelStep({ inboxId, kind }: { inboxId: string; kind: Setup
     app: <Trans>Pick the platforms; the next step shows the lines to add to each app.</Trans>,
     docs: (
       <Trans>
-        A chat channel named after the site is created for it, open to anonymous readers. Add your dev server's address
-        later in the inbox settings.
+        A chat channel named after the site is created for it, open to anonymous readers, with moderated discussions:
+        you approve a reader's first post. Add your dev server's address and change the discussions later in the inbox
+        settings.
       </Trans>
     ),
   }[kind]

@@ -16,7 +16,7 @@ export function useKindText() {
     chat: { title: t`Website chat`, hint: t`A chat bubble on your site, from one line of HTML` },
     email: { title: t`E-mail`, hint: t`Mail to your support address, answered from it` },
     app: { title: t`Mobile app`, hint: t`Help and feedback inside your iOS or Android app` },
-    docs: { title: t`Documentation site`, hint: t`“Was this page helpful?”, feedback and questions on your docs` },
+    docs: { title: t`Documentation site`, hint: t`“Was this page helpful?”, feedback and discussions on your docs` },
   } satisfies Record<SetupKind, { title: string; hint: string }>
 }
 
@@ -31,7 +31,7 @@ export function ChannelStep({ inboxId }: { inboxId: string }) {
     chat: <Trans>Visitors write from any page of your site; you answer here, live.</Trans>,
     email: <Trans>Customers keep writing to the address they know.</Trans>,
     app: <Trans>People write from inside your app, signed in as themselves.</Trans>,
-    docs: <Trans>Readers rate each page, send feedback and ask questions; you answer and publish to the page.</Trans>,
+    docs: <Trans>Readers rate each page, send feedback and discuss it in public; you answer and moderate here.</Trans>,
   }[focus]
   return (
     <SetupLayout

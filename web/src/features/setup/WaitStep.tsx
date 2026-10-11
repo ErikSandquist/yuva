@@ -128,7 +128,7 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
           <StepHeader
             title={
               kind === "docs" ? (
-                <Trans>Send feedback or a question from a page</Trans>
+                <Trans>Send feedback from a page</Trans>
               ) : kind === "chat" ? (
                 <Trans>Say hello from your site</Trans>
               ) : kind === "email" ? (
@@ -140,8 +140,8 @@ export function WaitStep({ inboxId, channelId }: { inboxId: string; channelId: s
           >
             {kind === "docs" ? (
               <Trans>
-                Open a page with the elements, rate it and send feedback, or ask a question. A rating alone only counts;
-                feedback and questions appear here the moment they are sent.
+                Open a page with the elements, rate it and send feedback. A rating alone only counts; feedback appears
+                here the moment it is sent. Discussions started there show up in Docs.
               </Trans>
             ) : kind === "chat" ? (
               <Trans>

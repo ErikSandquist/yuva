@@ -3,10 +3,16 @@ import { Trans, useLingui } from "@lingui/react/macro"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
-import { POSITIONS, type ChatField, type ChatForm, type ChatInputResult } from "@/features/settings/channels/chat/form"
+import {
+  DISCUSSION_MODES,
+  POSITIONS,
+  type ChatField,
+  type ChatForm,
+  type ChatInputResult,
+} from "@/features/settings/channels/chat/form"
 import { FieldError, FormBlock } from "@/features/settings/channels/parts"
 import { Field, ToggleRow } from "@/features/settings/ui"
-import type { ChatLauncherPosition } from "@/lib/api"
+import type { ChatLauncherPosition, DiscussionMode } from "@/lib/api"
 import { Input } from "@/components/ui/input"
 
 export function ChatFields({
@@ -22,6 +28,16 @@ export function ChatFields({
 }) {
   const { t } = useLingui()
   const positionText: Record<ChatLauncherPosition, string> = { right: t`Bottom right`, left: t`Bottom left` }
+  const modeText: Record<DiscussionMode, string> = { off: t`Off`, moderated: t`Moderated`, open: t`Open` }
+  const modeHint: Record<DiscussionMode, React.ReactNode> = {
+    off: <Trans>No discussions under the pages of these sites.</Trans>,
+    moderated: (
+      <Trans>
+        A reader's posts wait for a member until one of theirs is approved. Signed-in users of your app publish at once.
+      </Trans>
+    ),
+    open: <Trans>Everyone's posts are published at once, except those of authors you marked as spam.</Trans>,
+  }
   const notOrigins = invalid?.bad.join(", ") ?? ""
   const originsError =
     serverError === "allowed_origins" ? (
@@ -93,6 +109,24 @@ export function ChatFields({
         <FieldError id="err-chat-greeting">
           {serverError === "greeting" && <Trans>Use at most 500 characters.</Trans>}
         </FieldError>
+      </Field>
+      <Field label={<Trans>Discussions on documentation pages</Trans>} hint={modeHint[f.discussions]}>
+        <Select value={f.discussions} onValueChange={(v) => set({ discussions: v as DiscussionMode })} items={modeText}>
+          <SelectTrigger
+            className="w-full sm:w-64"
+            aria-label={t`Discussions on documentation pages`}
+            data-testid="chat-discussions"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {DISCUSSION_MODES.map((x) => (
+              <SelectItem key={x} value={x} data-testid={`chat-discussions-${x}`}>
+                {modeText[x]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={<Trans>Launcher position</Trans>}>
