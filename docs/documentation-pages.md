@@ -1,8 +1,9 @@
 # Documentation pages
 
-Add "Was this page helpful?" and a questions box to your documentation site, and read the answers
-in the Yuva inbox. Your pages stay where they are; two web components send ratings, feedback and
-questions to Yuva.
+Add "Was this page helpful?" and a public discussion area to your documentation site. Your pages
+stay where they are; two web components send ratings and private feedback to the Yuva inbox and
+show the page's discussions: threads with replies, votes and an accepted answer, like GitHub
+Discussions.
 
 ## 1. A chat channel
 
@@ -12,7 +13,10 @@ can serve both.
 - Add the docs site's origin to the channel's **allowed origins** (`https://docs.example.com`,
   plus your dev server, such as `http://localhost:3000`). On any other origin the elements stay
   empty.
-- Give the inbox an [e-mail channel](email.md): replies reach readers by e-mail.
+- Give the inbox an [e-mail channel](email.md): replies to feedback reach readers by e-mail.
+- Choose how discussions work with the channel's `discussions` setting: `moderated` (the default:
+  a reader's posts wait for your team until one of them was approved), `open` (published at once)
+  or `off` (no discussions; the element says so).
 
 ## 2. Add the elements
 
@@ -21,8 +25,8 @@ can serve both.
 ```html
 <script src="https://support.example.com/yuva-docs.js" defer></script>
 
-<yuva-page-questions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-questions>
 <yuva-page-feedback channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-feedback>
+<yuva-discussions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-discussions>
 ```
 
 Put them in the template every docs page shares, after the article. Your Yuva server hosts
@@ -46,13 +50,13 @@ export default defineNuxtConfig({
 
 ```vue
 <!-- app/pages/[...slug].vue, after <ContentRenderer> -->
-<YuvaPageQuestions :page-title="page.title" />
 <YuvaPageFeedback :page-title="page.title" />
+<YuvaDiscussions :page-title="page.title" />
 ```
 
 `NUXT_PUBLIC_YUVA_SERVER` and `NUXT_PUBLIC_YUVA_CHANNEL` override `yuva` at runtime. The components
 render on the server and load the elements in the browser, so `nuxt generate` works as well. Events
-are `@rating`, `@feedback` and `@question`. On a fresh site, `nuxt build` fails with "Nuxt Content
+are `@rating`, `@feedback`, `@discussion`, `@post` and `@reader`. On a fresh site, `nuxt build` fails with "Nuxt Content
 requires better-sqlite3": install it, or set `content.experimental.sqliteConnector: "native"` as the
 example does. The page queries a `content` collection; define it as in the example's
 [`content.config.ts`](../examples/nuxt-content/content.config.ts).
@@ -66,25 +70,25 @@ the React components in a client component:
 ```tsx
 // components/yuva.tsx
 "use client";
-import { YuvaPageFeedback, YuvaPageQuestions } from "useyuva/react";
+import { YuvaDiscussions, YuvaPageFeedback } from "useyuva/react";
 
 const channel = process.env.NEXT_PUBLIC_YUVA_CHANNEL!;
 const server = process.env.NEXT_PUBLIC_YUVA_SERVER;
 
-export const PageQuestions = ({ title }: { title: string }) =>
-  <YuvaPageQuestions channel={channel} server={server} pageTitle={title} />;
+export const PageDiscussions = ({ title }: { title: string }) =>
+  <YuvaDiscussions channel={channel} server={server} pageTitle={title} />;
 export const PageFeedback = ({ title }: { title: string }) =>
   <YuvaPageFeedback channel={channel} server={server} pageTitle={title} />;
 ```
 
 ```tsx
 // app/docs/[[...slug]]/page.tsx, after <DocsBody>
-<PageQuestions title={page.data.title} />
 <PageFeedback title={page.data.title} />
+<PageDiscussions title={page.data.title} />
 ```
 
 If you added Fumadocs' own `<Feedback>` component, replace it with `<PageFeedback />`, or keep it
-and add only `<PageQuestions />`. With `useyuva` linked by path from `sdk/js`, Next can load a
+and add only `<PageDiscussions />`. With `useyuva` linked by path from `sdk/js`, Next can load a
 second copy of React; set `turbopack.root` as in the example's `next.config.mjs`.
 
 ### Other generators
@@ -98,25 +102,48 @@ Load the script (or `useyuva/docs`) and put the elements under the article:
 
 ## What readers and your team see
 
-- **Readers** rate a page Yes or No (an anonymous counter), then may write feedback; anyone can
-  ask a question. Both take an optional e-mail address for the reply and stay private.
-- **Your team** gets feedback and questions in the inbox as `feedback` and `question`
-  conversations. The **Docs** view lists pages with their ratings, feedback and questions over 7, 30
-  or 90 days. On a question you answered, **Publish to page** puts the edited question and answer
-  under "Questions and answers" on that page, within a minute.
+- **Readers** rate a page Yes or No (an anonymous counter), then may write feedback, which stays
+  private and takes an optional e-mail address for the reply.
+- **Everyone** reads the page's discussions without signing in: threads sorted by New, Top or
+  Unanswered, each with its opening post, the accepted answer pinned first, replies (one level of
+  replies to replies), votes and an "Answered" badge. Authors are shown by name and initials only;
+  your team's posts carry a "Team" badge.
+- **Taking part** needs a sign-in. **Sign in** opens a small window on your Yuva server, where the
+  reader signs in with an e-mail code or a passkey; the account works on every site that uses
+  this Yuva server, and the window hands the page a token for this channel that lasts 24 hours.
+  Readers start threads, reply, vote, follow a thread (e-mail when someone replies or an answer is
+  accepted), mark an answer on their own thread, edit their posts for 30 minutes and delete them
+  at any time. Posts are Markdown, with a preview; the page shows the HTML the server made of it,
+  without scripts or raw HTML. **Sign out** ends the token on this site only.
+- **Moderation**: on a `moderated` channel a reader's first posts show "Awaiting approval" to them
+  and are hidden from everyone else until someone of your team approves one; after that they
+  publish at once. Marking a post as spam hides it and makes that author's posts wait again. A
+  locked thread takes no new replies, votes or answers from readers.
+- **Your team** gets feedback in the inbox as `feedback` conversations, and works on discussions in
+  the panel: threads per site and page, the queue of posts waiting for approval, replies as the
+  team, accepting answers, locking and retitling threads. A private conversation can become a
+  public thread with the text your team writes; nothing else of the conversation is published.
+  The **Docs** view lists pages with their ratings, feedback, open and unanswered threads and
+  pending posts over 7, 30 or 90 days.
 
 ## Good to know
 
 - **A page is its URL without query and fragment.** Per-language URLs (`/en/docs/install`,
   `/de/docs/install`) are separate pages with their own ratings; pass one URL as `page` to count
   them together, and set `locale` to the page's language.
-- **Signed-in readers**: give the elements an [identity token](identity.md) with
-  `setIdentityToken` (in React, the `identityToken` prop). They see no e-mail field and replies go
-  to the address in the token. Without **Anonymous visitors** on the channel, feedback and
-  questions need a token; ratings never do.
+- **Your own sign-in**: if your site has accounts, give the elements an
+  [identity token](identity.md) with `setIdentityToken` (in React, the `identityToken` prop). The
+  feedback form then has no e-mail field and replies go to the address in the token, and
+  `<yuva-discussions>` writes as that user without the sign-in window. Without **Anonymous
+  visitors** on the channel, feedback needs a token; ratings never do.
+- **Sign-in window**: browsers open it only from a click, which is how the element opens it. Pages
+  that send `Cross-Origin-Opener-Policy: same-origin` cut the window off from the page; use
+  `same-origin-allow-popups` there.
 - **Content Security Policy**: allow the Yuva server in `script-src` (for `/yuva-docs.js`) and
   `connect-src`.
 - **Elements stay empty**: the origin is not allowed or the key is wrong; see the browser console.
+- **Questions from before**: published answers became discussions on their pages, answered by the
+  member who published them.
 
 ## Reference
 
@@ -143,8 +170,11 @@ The React wrappers take the same as props (`channel`, `server`, `locale`, `dir`,
 | both | `setIdentityToken(fn)` | A function returning a token, or `null` for a reader not signed in. |
 | `yuva-page-feedback` | `rating` | `"up"`, `"down"` or `null` for this page in this browser. |
 | `yuva-page-feedback` | `rate("up" \| "down")` | The same as pressing Yes or No. |
-| `yuva-page-questions` | `answers` | The published answers shown. |
-| `yuva-page-questions` | `reload()` | Fetch the answers again. |
+| `yuva-discussions` | `discussions` | The threads listed. |
+| `yuva-discussions` | `reader` | The signed-in reader (`{ token, expires_at, reader: { name, initials } }`) or `null`. |
+| `yuva-discussions` | `reload()` | Fetch the list again. |
+| `yuva-discussions` | `open(id)` | Show a thread. |
+| `yuva-discussions` | `signIn()`, `signOut()` | The same as the buttons; call `signIn()` from a click. |
 
 ### Events
 
@@ -154,7 +184,9 @@ They bubble out of the Shadow DOM, so you can listen on `document`.
 |---|---|---|---|
 | `yuva-rating` | `yuva-page-feedback` | `{ page, rating, previous }` | `onRating` |
 | `yuva-feedback` | `yuva-page-feedback` | `{ page, rating, conversation_id }` | `onFeedback` |
-| `yuva-question` | `yuva-page-questions` | `{ page, conversation_id }` | `onQuestion` |
+| `yuva-discussion` | `yuva-discussions` | `{ page, discussion_id, state }` when the reader started a thread | `onDiscussion` |
+| `yuva-post` | `yuva-discussions` | `{ page, discussion_id, post_id, state }` when the reader replied | `onPost` |
+| `yuva-reader` | `yuva-discussions` | `{ name, initials }` after sign-in, `null` after sign-out | `onReader` |
 
 ### CSS variables
 
@@ -163,10 +195,10 @@ channel's launcher colour; to use your own, set it with `!important`.
 
 | Variable | Used for |
 |---|---|
-| `--yuva-accent` | Buttons, the selected rating, focus rings, links in answers. |
+| `--yuva-accent` | Buttons, the selected rating and sort, votes, focus rings, links in posts, team avatars. |
 | `--yuva-on-accent` | Text on the accent. |
-| `--yuva-border` | Borders of buttons, fields and answers. |
-| `--yuva-soft` | The selected rating's background, code in answers. |
+| `--yuva-border` | Borders of buttons, fields, threads and posts. |
+| `--yuva-soft` | The selected rating's background, hovered threads, code in posts. |
 | `--yuva-danger` | Error messages. |
 
 ### Endpoints
@@ -175,11 +207,15 @@ channel's launcher colour; to use your own, set it with `!important`.
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Count a rating. |
 | `POST /client/v1/feedback` | Send feedback with `page_url`, `page_title`, `rating`. |
-| `POST /client/v1/questions` | Ask a question. |
-| `GET /client/v1/channels/{channel_key}/page-answers?page=` | A page's published answers (cached for a minute). |
-| `POST /v1/conversations/{conversationId}/publish` | Publish a question and its answer. |
-| `GET /v1/page-answers`, `GET`, `PATCH`, `DELETE /v1/page-answers/{pageAnswerId}` | List, edit and unpublish answers. |
-| `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | The Docs view. |
-| `GET /v1/conversations?page=&kind=` | A page's feedback or questions. |
+| `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | A page's threads (cached for a minute without a token). |
+| `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | A thread with its replies. |
+| `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Start a thread, reply. |
+| `PATCH`, `DELETE /client/v1/discussion-posts/{postId}`, `PUT`, `DELETE …/vote` | Edit, delete, vote. |
+| `PUT`, `DELETE /client/v1/discussions/{discussionId}/answer`, `…/follow` | Accept an answer, follow. |
+| `POST /v1/account/reader-tokens`, `DELETE /client/v1/reader-token` | The sign-in window's token, sign out. |
+| `GET /v1/discussions`, `GET /v1/discussion-posts?state=pending` and the rest of `/v1/discussions*` | Your team's view and moderation. |
+| `POST /v1/conversations/{conversationId}/discussion` | Turn a conversation into a public thread. |
+| `GET /v1/docs/sites`, `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | The Docs view. |
+| `GET /v1/conversations?page=&kind=feedback` | A page's feedback. |
 
 Details: [API contract](../openapi/openapi.yaml).

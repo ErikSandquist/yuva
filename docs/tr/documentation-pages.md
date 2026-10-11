@@ -1,8 +1,9 @@
 # Dokümantasyon sayfaları
 
-Dokümantasyon sitenize "Bu sayfa işinize yaradı mı?" sorusunu ve bir soru kutusunu ekleyin,
-yanıtları Yuva'nın gelen kutusunda okuyun. Sayfalarınız olduğu yerde kalır; iki web bileşeni
-değerlendirmeleri, geri bildirimleri ve soruları Yuva'ya gönderir.
+Dokümantasyon sitenize "Bu sayfa işinize yaradı mı?" sorusunu ve herkese açık bir tartışma alanı
+ekleyin. Sayfalarınız olduğu yerde kalır; iki web bileşeni değerlendirmeleri ve gizli geri
+bildirimleri Yuva'nın gelen kutusuna gönderir ve sayfanın tartışmalarını gösterir: GitHub
+Discussions'taki gibi yanıtları, oyları ve kabul edilmiş bir yanıtı olan başlıklar.
 
 ## 1. Bir sohbet kanalı
 
@@ -12,7 +13,11 @@ kullanın; tek bir kanal ikisine de hizmet edebilir.
 - Dokümantasyon sitesinin origin'ini kanalın **izin verilen kaynaklarına** ekleyin
   (`https://docs.example.com`, ayrıca `http://localhost:3000` gibi geliştirme sunucunuz). Başka bir
   origin'de öğeler boş kalır.
-- Gelen kutusuna bir [e-posta kanalı](email.md) ekleyin: yanıtlar okuyuculara e-postayla ulaşır.
+- Gelen kutusuna bir [e-posta kanalı](email.md) ekleyin: geri bildirimlere verilen yanıtlar
+  okuyuculara e-postayla ulaşır.
+- Tartışmaların nasıl işleyeceğini kanalın `discussions` ayarıyla seçin: `moderated` (varsayılan:
+  bir okurun gönderileri, içlerinden biri onaylanana kadar ekibinizi bekler), `open` (hemen
+  yayımlanır) ya da `off` (tartışma yok; öğe bunu söyler).
 
 ## 2. Öğeleri ekleyin
 
@@ -21,8 +26,8 @@ kullanın; tek bir kanal ikisine de hizmet edebilir.
 ```html
 <script src="https://support.example.com/yuva-docs.js" defer></script>
 
-<yuva-page-questions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-questions>
 <yuva-page-feedback channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-feedback>
+<yuva-discussions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-discussions>
 ```
 
 Bunları her doküman sayfasının paylaştığı şablona, makalenin arkasına koyun. `/yuva-docs.js`
@@ -47,13 +52,13 @@ export default defineNuxtConfig({
 
 ```vue
 <!-- app/pages/[...slug].vue, <ContentRenderer> sonrasına -->
-<YuvaPageQuestions :page-title="page.title" />
 <YuvaPageFeedback :page-title="page.title" />
+<YuvaDiscussions :page-title="page.title" />
 ```
 
 `NUXT_PUBLIC_YUVA_SERVER` ve `NUXT_PUBLIC_YUVA_CHANNEL`, çalışma anında `yuva` değerlerinin yerine
 geçer. Bileşenler sunucuda render edilir ve öğeleri tarayıcıda yükler; bu yüzden `nuxt generate` de
-çalışır. Olaylar `@rating`, `@feedback` ve `@question`'dır. Yeni bir sitede `nuxt build` "Nuxt Content
+çalışır. Olaylar `@rating`, `@feedback`, `@discussion`, `@post` ve `@reader`'dır. Yeni bir sitede `nuxt build` "Nuxt Content
 requires better-sqlite3" hatasıyla durur: paketi kurun ya da örnekteki gibi
 `content.experimental.sqliteConnector: "native"` atayın. Sayfa bir `content` koleksiyonunu sorgular;
 onu örneğin [`content.config.ts`](../../examples/nuxt-content/content.config.ts) dosyasındaki gibi
@@ -68,25 +73,25 @@ olduğu için React bileşenlerini bir client component içine sarın:
 ```tsx
 // components/yuva.tsx
 "use client";
-import { YuvaPageFeedback, YuvaPageQuestions } from "useyuva/react";
+import { YuvaDiscussions, YuvaPageFeedback } from "useyuva/react";
 
 const channel = process.env.NEXT_PUBLIC_YUVA_CHANNEL!;
 const server = process.env.NEXT_PUBLIC_YUVA_SERVER;
 
-export const PageQuestions = ({ title }: { title: string }) =>
-  <YuvaPageQuestions channel={channel} server={server} pageTitle={title} />;
+export const PageDiscussions = ({ title }: { title: string }) =>
+  <YuvaDiscussions channel={channel} server={server} pageTitle={title} />;
 export const PageFeedback = ({ title }: { title: string }) =>
   <YuvaPageFeedback channel={channel} server={server} pageTitle={title} />;
 ```
 
 ```tsx
 // app/docs/[[...slug]]/page.tsx, <DocsBody> sonrasına
-<PageQuestions title={page.data.title} />
 <PageFeedback title={page.data.title} />
+<PageDiscussions title={page.data.title} />
 ```
 
 Fumadocs'un kendi `<Feedback>` bileşenini eklediyseniz onu `<PageFeedback />` ile değiştirin ya da
-tutup yalnızca `<PageQuestions />` ekleyin. `useyuva` `sdk/js`'ten yol üzerinden bağlıysa Next,
+tutup yalnızca `<PageDiscussions />` ekleyin. `useyuva` `sdk/js`'ten yol üzerinden bağlıysa Next,
 React'in ikinci bir kopyasını yükleyebilir; örnekteki `next.config.mjs` gibi `turbopack.root`
 atayın.
 
@@ -102,25 +107,48 @@ Betiği (ya da `useyuva/docs`'u) yükleyin ve öğeleri makalenin altına koyun:
 ## Okuyucular ve ekibiniz ne görür
 
 - **Okuyucular** bir sayfayı Evet ya da Hayır ile değerlendirir (anonim bir sayaç), ardından geri
-  bildirim yazabilir; herkes soru sorabilir. İkisi de yanıt için isteğe bağlı bir e-posta adresi
-  alır ve gizli kalır.
-- **Ekibiniz** geri bildirimleri ve soruları gelen kutusunda `feedback` ve `question` konuşmaları
-  olarak alır. **Dokümanlar** görünümü sayfaları 7, 30 ya da 90 gündeki değerlendirmeleri, geri
-  bildirimleri ve sorularıyla listeler. Yanıtladığınız bir soruda **Sayfada yayımla**, düzenlenmiş
-  soruyu ve yanıtı bir dakika içinde o sayfadaki "Sorular ve cevaplar" bölümüne koyar.
+  bildirim yazabilir; geri bildirim gizli kalır ve yanıt için isteğe bağlı bir e-posta adresi alır.
+- **Herkes** sayfanın tartışmalarını giriş yapmadan okur: Yeni, En çok oy alan ya da Yanıtsız
+  olarak sıralanan başlıklar; her birinde açılış gönderisi, en üste sabitlenmiş kabul edilen yanıt,
+  yanıtlar (yanıtlara bir düzey yanıt), oylar ve "Yanıtlandı" rozeti. Yazarlar yalnızca adları ve
+  baş harfleriyle görünür; ekibinizin gönderilerinde "Ekip" rozeti vardır.
+- **Katılmak** giriş ister. **Giriş yap**, Yuva sunucunuzda küçük bir pencere açar; okur orada
+  e-posta koduyla ya da passkey ile giriş yapar. Hesap bu Yuva sunucusunu kullanan her sitede
+  geçerlidir ve pencere sayfaya bu kanal için 24 saat geçerli bir token verir. Okurlar başlık açar,
+  yanıt yazar, oy verir, bir başlığı takip eder (biri yanıt yazdığında ya da bir yanıt kabul
+  edildiğinde e-posta), kendi başlıklarında bir yanıtı kabul eder, gönderilerini 30 dakika boyunca
+  düzenler ve istedikleri zaman siler. Gönderiler önizlemeli Markdown'dır; sayfa, sunucunun bundan
+  ürettiği, betik ve ham HTML içermeyen HTML'i gösterir. **Çıkış yap** yalnızca bu sitedeki
+  token'ı sonlandırır.
+- **Moderasyon**: `moderated` bir kanalda okurun ilk gönderileri kendisine "Onay bekliyor" olarak
+  görünür ve ekibinizden biri birini onaylayana kadar diğer herkesten gizlenir; ondan sonra hemen
+  yayımlanır. Bir gönderiyi spam olarak işaretlemek onu gizler ve o yazarın gönderilerini yeniden
+  beklemeye alır. Kilitli bir başlık okurlardan yeni yanıt, oy ya da yanıt kabulü almaz.
+- **Ekibiniz** geri bildirimleri gelen kutusunda `feedback` konuşmaları olarak alır, tartışmalarla
+  panelde çalışır: site ve sayfaya göre başlıklar, onay bekleyen gönderilerin kuyruğu, ekip olarak
+  yanıt yazma, yanıt kabul etme, başlıkları kilitleme ve yeniden adlandırma. Gizli bir konuşma,
+  ekibinizin yazdığı metinle herkese açık bir başlığa dönüşebilir; konuşmanın başka hiçbir yeri
+  yayımlanmaz. **Dokümanlar** görünümü sayfaları 7, 30 ya da 90 gündeki değerlendirmeleri, geri
+  bildirimleri, açık ve yanıtsız başlıkları ve bekleyen gönderileriyle listeler.
 
 ## Bilmekte fayda var
 
 - **Bir sayfa, sorgu ve fragment olmadan URL'sidir.** Dile göre ayrılan URL'ler
   (`/en/docs/install`, `/de/docs/install`) kendi değerlendirmeleri olan ayrı sayfalardır; birlikte
   saymak için `page` olarak tek bir URL verin ve `locale`'i sayfanın diline atayın.
-- **Oturum açmış okuyucular**: öğelere `setIdentityToken` ile (React'te `identityToken` prop'u) bir
-  [kimlik token'ı](identity.md) verin. E-posta alanını görmezler ve yanıtlar token'daki adrese gider.
-  Kanalda **Anonim ziyaretçiler** açık değilse geri bildirim ve sorular token ister;
+- **Kendi girişiniz**: sitenizde hesaplar varsa öğelere `setIdentityToken` ile (React'te
+  `identityToken` prop'u) bir [kimlik token'ı](identity.md) verin. Geri bildirim formunda e-posta
+  alanı olmaz, yanıtlar token'daki adrese gider ve `<yuva-discussions>` giriş penceresi olmadan o
+  kullanıcı olarak yazar. Kanalda **Anonim ziyaretçiler** açık değilse geri bildirim token ister;
   değerlendirmeler asla istemez.
+- **Giriş penceresi**: tarayıcılar onu yalnızca bir tıklamayla açar; öğe de öyle açar.
+  `Cross-Origin-Opener-Policy: same-origin` gönderen sayfalar pencereyle bağlantıyı keser; oralarda
+  `same-origin-allow-popups` kullanın.
 - **Content Security Policy**: Yuva sunucusuna `script-src` (`/yuva-docs.js` için) ve `connect-src`
   içinde izin verin.
 - **Öğeler boş kalıyor**: origin'e izin verilmemiş ya da anahtar yanlış; tarayıcı konsoluna bakın.
+- **Önceki sorular**: yayımlanmış yanıtlar, sayfalarında, onları yayımlayan üyenin yanıtıyla
+  tartışmalara dönüştü.
 
 ## Başvuru
 
@@ -147,8 +175,11 @@ React sarmalayıcıları aynılarını prop olarak alır (`channel`, `server`, `
 | ikisi de | `setIdentityToken(fn)` | Token, oturum açmamış okuyucu için `null` döndüren bir fonksiyon. |
 | `yuva-page-feedback` | `rating` | Bu tarayıcıda bu sayfa için `"up"`, `"down"` ya da `null`. |
 | `yuva-page-feedback` | `rate("up" \| "down")` | Evet ya da Hayır'a basmakla aynı. |
-| `yuva-page-questions` | `answers` | Gösterilen yayımlanmış yanıtlar. |
-| `yuva-page-questions` | `reload()` | Yanıtları yeniden getirir. |
+| `yuva-discussions` | `discussions` | Listelenen başlıklar. |
+| `yuva-discussions` | `reader` | Giriş yapmış okur (`{ token, expires_at, reader: { name, initials } }`) ya da `null`. |
+| `yuva-discussions` | `reload()` | Listeyi yeniden getirir. |
+| `yuva-discussions` | `open(id)` | Bir başlığı gösterir. |
+| `yuva-discussions` | `signIn()`, `signOut()` | Düğmelerle aynı; `signIn()`'i bir tıklamadan çağırın. |
 
 ### Olaylar
 
@@ -158,7 +189,9 @@ Shadow DOM'dan dışarı kabarcıklanırlar (bubble), bu yüzden `document` üze
 |---|---|---|---|
 | `yuva-rating` | `yuva-page-feedback` | `{ page, rating, previous }` | `onRating` |
 | `yuva-feedback` | `yuva-page-feedback` | `{ page, rating, conversation_id }` | `onFeedback` |
-| `yuva-question` | `yuva-page-questions` | `{ page, conversation_id }` | `onQuestion` |
+| `yuva-discussion` | `yuva-discussions` | Okur bir başlık açtığında `{ page, discussion_id, state }` | `onDiscussion` |
+| `yuva-post` | `yuva-discussions` | Okur yanıt yazdığında `{ page, discussion_id, post_id, state }` | `onPost` |
+| `yuva-reader` | `yuva-discussions` | Girişten sonra `{ name, initials }`, çıkıştan sonra `null` | `onReader` |
 
 ### CSS değişkenleri
 
@@ -167,10 +200,10 @@ renginden gelir; kendi renginizi kullanmak için `!important` ile atayın.
 
 | Değişken | Kullanıldığı yer |
 |---|---|
-| `--yuva-accent` | Düğmeler, seçili değerlendirme, odak halkaları, yanıtlardaki bağlantılar. |
+| `--yuva-accent` | Düğmeler, seçili değerlendirme ve sıralama, oylar, odak halkaları, gönderilerdeki bağlantılar, ekip avatarları. |
 | `--yuva-on-accent` | Vurgu rengi üzerindeki metin. |
-| `--yuva-border` | Düğmelerin, alanların ve yanıtların kenarlıkları. |
-| `--yuva-soft` | Seçili değerlendirmenin arka planı, yanıtlardaki kod. |
+| `--yuva-border` | Düğmelerin, alanların, başlıkların ve gönderilerin kenarlıkları. |
+| `--yuva-soft` | Seçili değerlendirmenin arka planı, üzerine gelinen başlıklar, gönderilerdeki kod. |
 | `--yuva-danger` | Hata mesajları. |
 
 ### Uç noktalar
@@ -179,11 +212,15 @@ renginden gelir; kendi renginizi kullanmak için `!important` ile atayın.
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Bir değerlendirmeyi sayar. |
 | `POST /client/v1/feedback` | `page_url`, `page_title`, `rating` ile geri bildirim gönderir. |
-| `POST /client/v1/questions` | Soru sorar. |
-| `GET /client/v1/channels/{channel_key}/page-answers?page=` | Bir sayfanın yayımlanmış yanıtları (bir dakika önbelleğe alınır). |
-| `POST /v1/conversations/{conversationId}/publish` | Bir soruyu ve yanıtını yayımlar. |
-| `GET /v1/page-answers`, `GET`, `PATCH`, `DELETE /v1/page-answers/{pageAnswerId}` | Yanıtları listeler, düzenler ve yayından kaldırır. |
-| `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | Dokümanlar görünümü. |
-| `GET /v1/conversations?page=&kind=` | Bir sayfanın geri bildirimleri ya da soruları. |
+| `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | Bir sayfanın başlıkları (token olmadan bir dakika önbelleğe alınır). |
+| `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | Yanıtlarıyla bir başlık. |
+| `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Başlık açar, yanıt yazar. |
+| `PATCH`, `DELETE /client/v1/discussion-posts/{postId}`, `PUT`, `DELETE …/vote` | Düzenler, siler, oy verir. |
+| `PUT`, `DELETE /client/v1/discussions/{discussionId}/answer`, `…/follow` | Yanıt kabul eder, takip eder. |
+| `POST /v1/account/reader-tokens`, `DELETE /client/v1/reader-token` | Giriş penceresinin token'ı, çıkış. |
+| `GET /v1/discussions`, `GET /v1/discussion-posts?state=pending` ve `/v1/discussions*`'ın geri kalanı | Ekibinizin görünümü ve moderasyon. |
+| `POST /v1/conversations/{conversationId}/discussion` | Bir konuşmayı herkese açık bir başlığa dönüştürür. |
+| `GET /v1/docs/sites`, `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | Dokümanlar görünümü. |
+| `GET /v1/conversations?page=&kind=feedback` | Bir sayfanın geri bildirimleri. |
 
 Ayrıntılar: [API sözleşmesi](../../openapi/openapi.yaml).

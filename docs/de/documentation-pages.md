@@ -1,8 +1,9 @@
 # Dokumentationsseiten
 
-Bringen Sie „War diese Seite hilfreich?“ und ein Fragefeld auf Ihre Dokumentationsseite und lesen Sie
-die Antworten im Yuva-Posteingang. Ihre Seiten bleiben, wo sie sind; zwei Web Components senden
-Bewertungen, Feedback und Fragen an Yuva.
+Bringen Sie „War diese Seite hilfreich?“ und einen öffentlichen Diskussionsbereich auf Ihre
+Dokumentationsseite. Ihre Seiten bleiben, wo sie sind; zwei Web Components senden Bewertungen und
+privates Feedback in den Yuva-Posteingang und zeigen die Diskussionen der Seite: Threads mit
+Antworten, Stimmen und einer akzeptierten Antwort, wie bei GitHub Discussions.
 
 ## 1. Ein Chat-Kanal
 
@@ -12,7 +13,11 @@ Verwenden Sie einen Chat-Kanal, eingerichtet wie für das
 - Tragen Sie die Origin der Doku-Seite in die **Allowed origins** des Kanals ein
   (`https://docs.example.com`, dazu Ihren Entwicklungsserver, etwa `http://localhost:3000`). Auf
   jeder anderen Origin bleiben die Elemente leer.
-- Geben Sie dem Posteingang einen [E-Mail-Kanal](email.md): Antworten erreichen Leser per E-Mail.
+- Geben Sie dem Posteingang einen [E-Mail-Kanal](email.md): Antworten auf Feedback erreichen Leser
+  per E-Mail.
+- Wählen Sie mit der Kanaleinstellung `discussions`, wie Diskussionen funktionieren: `moderated`
+  (Standard: Beiträge eines Lesers warten auf Ihr Team, bis einer davon freigegeben wurde), `open`
+  (sofort veröffentlicht) oder `off` (keine Diskussionen; das Element sagt das).
 
 ## 2. Die Elemente einbauen
 
@@ -21,8 +26,8 @@ Verwenden Sie einen Chat-Kanal, eingerichtet wie für das
 ```html
 <script src="https://support.example.com/yuva-docs.js" defer></script>
 
-<yuva-page-questions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-questions>
 <yuva-page-feedback channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-page-feedback>
+<yuva-discussions channel="yuva_pk_xxxxxxxxxxxxxxxx"></yuva-discussions>
 ```
 
 Setzen Sie sie in die Vorlage, die alle Doku-Seiten teilen, nach dem Artikel. Ihr Yuva-Server
@@ -47,13 +52,13 @@ export default defineNuxtConfig({
 
 ```vue
 <!-- app/pages/[...slug].vue, nach <ContentRenderer> -->
-<YuvaPageQuestions :page-title="page.title" />
 <YuvaPageFeedback :page-title="page.title" />
+<YuvaDiscussions :page-title="page.title" />
 ```
 
 `NUXT_PUBLIC_YUVA_SERVER` und `NUXT_PUBLIC_YUVA_CHANNEL` überschreiben `yuva` zur Laufzeit. Die
 Komponenten rendern auf dem Server und laden die Elemente im Browser, daher funktioniert auch
-`nuxt generate`. Die Events heißen `@rating`, `@feedback` und `@question`. Auf einer frischen Seite scheitert `nuxt build` mit „Nuxt
+`nuxt generate`. Die Events heißen `@rating`, `@feedback`, `@discussion`, `@post` und `@reader`. Auf einer frischen Seite scheitert `nuxt build` mit „Nuxt
 Content requires better-sqlite3“: Installieren Sie es, oder setzen Sie
 `content.experimental.sqliteConnector: "native"` wie im Beispiel. Die Seite fragt eine
 `content`-Collection ab; definieren Sie sie wie in der
@@ -68,25 +73,25 @@ packen Sie die React-Komponenten deshalb in eine Client Component:
 ```tsx
 // components/yuva.tsx
 "use client";
-import { YuvaPageFeedback, YuvaPageQuestions } from "useyuva/react";
+import { YuvaDiscussions, YuvaPageFeedback } from "useyuva/react";
 
 const channel = process.env.NEXT_PUBLIC_YUVA_CHANNEL!;
 const server = process.env.NEXT_PUBLIC_YUVA_SERVER;
 
-export const PageQuestions = ({ title }: { title: string }) =>
-  <YuvaPageQuestions channel={channel} server={server} pageTitle={title} />;
+export const PageDiscussions = ({ title }: { title: string }) =>
+  <YuvaDiscussions channel={channel} server={server} pageTitle={title} />;
 export const PageFeedback = ({ title }: { title: string }) =>
   <YuvaPageFeedback channel={channel} server={server} pageTitle={title} />;
 ```
 
 ```tsx
 // app/docs/[[...slug]]/page.tsx, nach <DocsBody>
-<PageQuestions title={page.data.title} />
 <PageFeedback title={page.data.title} />
+<PageDiscussions title={page.data.title} />
 ```
 
 Haben Sie die eigene `<Feedback>`-Komponente von Fumadocs eingebaut, ersetzen Sie sie durch
-`<PageFeedback />`, oder behalten Sie sie und ergänzen nur `<PageQuestions />`. Ist `useyuva` per
+`<PageFeedback />`, oder behalten Sie sie und ergänzen nur `<PageDiscussions />`. Ist `useyuva` per
 Pfad aus `sdk/js` verlinkt, kann Next eine zweite Kopie von React laden; setzen Sie
 `turbopack.root` wie in der `next.config.mjs` des Beispiels.
 
@@ -102,27 +107,51 @@ Laden Sie das Skript (oder `useyuva/docs`) und setzen Sie die Elemente unter den
 ## Was Leser und Ihr Team sehen
 
 - **Leser** bewerten eine Seite mit Ja oder Nein (ein anonymer Zähler) und können danach Feedback
-  schreiben; jeder kann eine Frage stellen. Beides nimmt eine optionale E-Mail-Adresse für die
-  Antwort und bleibt privat.
-- **Ihr Team** bekommt Feedback und Fragen im Posteingang als Unterhaltungen vom Typ `feedback` und
-  `question`. Die Ansicht **Docs** listet Seiten mit ihren Bewertungen, ihrem Feedback und ihren
-  Fragen über 7, 30 oder 90 Tage. Bei einer beantworteten Frage setzt **Publish to page** die
-  bearbeitete Frage und Antwort innerhalb einer Minute unter „Questions and answers“ auf diese
-  Seite.
+  schreiben; es bleibt privat und nimmt eine optionale E-Mail-Adresse für die Antwort.
+- **Alle** lesen die Diskussionen der Seite ohne Anmeldung: Threads, sortiert nach Neu, Top oder
+  Unbeantwortet, jeder mit seinem Eröffnungsbeitrag, der akzeptierten Antwort oben angeheftet,
+  Antworten (eine Ebene Antworten auf Antworten), Stimmen und einem „Beantwortet“-Abzeichen.
+  Autoren erscheinen nur mit Namen und Initialen; Beiträge Ihres Teams tragen ein „Team“-Abzeichen.
+- **Mitmachen** braucht eine Anmeldung. **Anmelden** öffnet ein kleines Fenster auf Ihrem
+  Yuva-Server, in dem sich der Leser mit einem E-Mail-Code oder einem Passkey anmeldet; das Konto
+  gilt auf jeder Seite, die diesen Yuva-Server nutzt, und das Fenster gibt der Seite ein Token für
+  diesen Kanal, das 24 Stunden gilt. Leser eröffnen Threads, antworten, stimmen ab, folgen einem
+  Thread (E-Mail, wenn jemand antwortet oder eine Antwort akzeptiert wird), markieren in ihrem
+  eigenen Thread eine Antwort, bearbeiten ihre Beiträge 30 Minuten lang und löschen sie jederzeit.
+  Beiträge sind Markdown mit Vorschau; die Seite zeigt das HTML, das der Server daraus macht, ohne
+  Skripte oder rohes HTML. **Abmelden** beendet das Token nur auf dieser Seite.
+- **Moderation**: In einem `moderated`-Kanal sehen Leser ihre ersten Beiträge als „Wartet auf
+  Freigabe“; für alle anderen bleiben sie verborgen, bis jemand aus Ihrem Team einen freigibt.
+  Danach erscheinen sie sofort. Einen Beitrag als Spam zu markieren verbirgt ihn und lässt die
+  Beiträge dieses Autors wieder warten. Ein gesperrter Thread nimmt von Lesern keine Antworten,
+  Stimmen oder Antwortmarkierungen mehr an.
+- **Ihr Team** bekommt Feedback im Posteingang als Unterhaltungen vom Typ `feedback` und arbeitet
+  im Panel mit den Diskussionen: Threads pro Site und Seite, die Warteschlange freizugebender
+  Beiträge, Antworten als Team, Antworten akzeptieren, Threads sperren und umbenennen. Eine private
+  Unterhaltung kann mit dem Text, den Ihr Team schreibt, zu einem öffentlichen Thread werden; sonst
+  wird nichts aus der Unterhaltung veröffentlicht. Die Ansicht **Docs** listet Seiten mit ihren
+  Bewertungen, ihrem Feedback, offenen und unbeantworteten Threads und wartenden Beiträgen über 7,
+  30 oder 90 Tage.
 
 ## Gut zu wissen
 
 - **Eine Seite ist ihre URL ohne Query und Fragment.** URLs pro Sprache (`/en/docs/install`,
   `/de/docs/install`) sind getrennte Seiten mit eigenen Bewertungen; übergeben Sie eine URL als
   `page`, um sie zusammen zu zählen, und setzen Sie `locale` auf die Sprache der Seite.
-- **Angemeldete Leser**: Geben Sie den Elementen mit `setIdentityToken` ein
-  [Identitäts-Token](identity.md) (in React die Prop `identityToken`). Sie sehen dann kein
-  E-Mail-Feld, und Antworten gehen an die Adresse im Token. Ohne **Anonymous visitors** am Kanal
-  brauchen Feedback und Fragen ein Token; Bewertungen nie.
+- **Ihre eigene Anmeldung**: Hat Ihre Seite Konten, geben Sie den Elementen mit
+  `setIdentityToken` ein [Identitäts-Token](identity.md) (in React die Prop `identityToken`). Das
+  Feedback-Formular hat dann kein E-Mail-Feld, Antworten gehen an die Adresse im Token, und
+  `<yuva-discussions>` schreibt ohne Anmeldefenster als dieser Nutzer. Ohne **Anonymous visitors**
+  am Kanal braucht Feedback ein Token; Bewertungen nie.
+- **Anmeldefenster**: Browser öffnen es nur nach einem Klick, und so öffnet es das Element. Seiten,
+  die `Cross-Origin-Opener-Policy: same-origin` senden, trennen das Fenster von der Seite;
+  verwenden Sie dort `same-origin-allow-popups`.
 - **Content Security Policy**: Erlauben Sie den Yuva-Server in `script-src` (für `/yuva-docs.js`)
   und `connect-src`.
 - **Elemente bleiben leer**: Die Origin ist nicht erlaubt oder der Schlüssel ist falsch; siehe die
   Browser-Konsole.
+- **Frühere Fragen**: Veröffentlichte Antworten wurden zu Diskussionen auf ihren Seiten,
+  beantwortet von dem Mitglied, das sie veröffentlicht hat.
 
 ## Referenz
 
@@ -149,8 +178,11 @@ Die React-Wrapper nehmen dasselbe als Props (`channel`, `server`, `locale`, `dir
 | beide | `setIdentityToken(fn)` | Eine Funktion, die ein Token zurückgibt, oder `null` für einen nicht angemeldeten Leser. |
 | `yuva-page-feedback` | `rating` | `"up"`, `"down"` oder `null` für diese Seite in diesem Browser. |
 | `yuva-page-feedback` | `rate("up" \| "down")` | Dasselbe wie ein Klick auf Ja oder Nein. |
-| `yuva-page-questions` | `answers` | Die angezeigten veröffentlichten Antworten. |
-| `yuva-page-questions` | `reload()` | Lädt die Antworten neu. |
+| `yuva-discussions` | `discussions` | Die aufgelisteten Threads. |
+| `yuva-discussions` | `reader` | Der angemeldete Leser (`{ token, expires_at, reader: { name, initials } }`) oder `null`. |
+| `yuva-discussions` | `reload()` | Lädt die Liste neu. |
+| `yuva-discussions` | `open(id)` | Zeigt einen Thread. |
+| `yuva-discussions` | `signIn()`, `signOut()` | Dasselbe wie die Buttons; rufen Sie `signIn()` aus einem Klick auf. |
 
 ### Ereignisse
 
@@ -160,7 +192,9 @@ Sie steigen aus dem Shadow DOM auf, Sie können also auf `document` lauschen.
 |---|---|---|---|
 | `yuva-rating` | `yuva-page-feedback` | `{ page, rating, previous }` | `onRating` |
 | `yuva-feedback` | `yuva-page-feedback` | `{ page, rating, conversation_id }` | `onFeedback` |
-| `yuva-question` | `yuva-page-questions` | `{ page, conversation_id }` | `onQuestion` |
+| `yuva-discussion` | `yuva-discussions` | `{ page, discussion_id, state }`, wenn der Leser einen Thread eröffnet hat | `onDiscussion` |
+| `yuva-post` | `yuva-discussions` | `{ page, discussion_id, post_id, state }`, wenn der Leser geantwortet hat | `onPost` |
+| `yuva-reader` | `yuva-discussions` | `{ name, initials }` nach der Anmeldung, `null` nach der Abmeldung | `onReader` |
 
 ### CSS-Variablen
 
@@ -169,10 +203,10 @@ kommt von der Launcher-Farbe des Kanals; für eine eigene setzen Sie sie mit `!i
 
 | Variable | Verwendet für |
 |---|---|
-| `--yuva-accent` | Buttons, die gewählte Bewertung, Fokusringe, Links in Antworten. |
+| `--yuva-accent` | Buttons, die gewählte Bewertung und Sortierung, Stimmen, Fokusringe, Links in Beiträgen, Team-Avatare. |
 | `--yuva-on-accent` | Text auf der Akzentfarbe. |
-| `--yuva-border` | Rahmen von Buttons, Feldern und Antworten. |
-| `--yuva-soft` | Hintergrund der gewählten Bewertung, Code in Antworten. |
+| `--yuva-border` | Rahmen von Buttons, Feldern, Threads und Beiträgen. |
+| `--yuva-soft` | Hintergrund der gewählten Bewertung, Threads unter dem Mauszeiger, Code in Beiträgen. |
 | `--yuva-danger` | Fehlermeldungen. |
 
 ### Endpunkte
@@ -181,11 +215,15 @@ kommt von der Launcher-Farbe des Kanals; für eine eigene setzen Sie sie mit `!i
 |---|---|
 | `POST /client/v1/channels/{channel_key}/page-ratings` | Eine Bewertung zählen. |
 | `POST /client/v1/feedback` | Feedback mit `page_url`, `page_title`, `rating` senden. |
-| `POST /client/v1/questions` | Eine Frage stellen. |
-| `GET /client/v1/channels/{channel_key}/page-answers?page=` | Die veröffentlichten Antworten einer Seite (eine Minute gecacht). |
-| `POST /v1/conversations/{conversationId}/publish` | Eine Frage und ihre Antwort veröffentlichen. |
-| `GET /v1/page-answers`, `GET`, `PATCH`, `DELETE /v1/page-answers/{pageAnswerId}` | Antworten auflisten, bearbeiten und zurückziehen. |
-| `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | Die Ansicht Docs. |
-| `GET /v1/conversations?page=&kind=` | Feedback oder Fragen einer Seite. |
+| `GET /client/v1/channels/{channel_key}/discussions?page=&sort=` | Die Threads einer Seite (ohne Token eine Minute gecacht). |
+| `GET /client/v1/channels/{channel_key}/discussions/{discussionId}` | Ein Thread mit seinen Antworten. |
+| `POST /client/v1/discussions`, `POST /client/v1/discussions/{discussionId}/posts` | Einen Thread eröffnen, antworten. |
+| `PATCH`, `DELETE /client/v1/discussion-posts/{postId}`, `PUT`, `DELETE …/vote` | Bearbeiten, löschen, abstimmen. |
+| `PUT`, `DELETE /client/v1/discussions/{discussionId}/answer`, `…/follow` | Eine Antwort akzeptieren, folgen. |
+| `POST /v1/account/reader-tokens`, `DELETE /client/v1/reader-token` | Das Token des Anmeldefensters, abmelden. |
+| `GET /v1/discussions`, `GET /v1/discussion-posts?state=pending` und der Rest von `/v1/discussions*` | Die Ansicht und Moderation Ihres Teams. |
+| `POST /v1/conversations/{conversationId}/discussion` | Eine Unterhaltung zu einem öffentlichen Thread machen. |
+| `GET /v1/docs/sites`, `GET /v1/docs/pages`, `GET /v1/docs/summary`, `GET /v1/docs/page` | Die Ansicht Docs. |
+| `GET /v1/conversations?page=&kind=feedback` | Das Feedback einer Seite. |
 
 Details: [API-Vertrag](../../openapi/openapi.yaml).
