@@ -108,7 +108,7 @@ func (s *Server) RequestSignInCode(ctx context.Context, req oas.RequestSignInCod
 	}); err != nil {
 		return nil, err
 	}
-	if !reader && (known == nil || !*known) {
+	if !reader && !s.auth.Signup.Open && (known == nil || !*known) {
 		return oas.RequestSignInCode202Response{}, nil
 	}
 	locale, err := s.localeFor(ctx, email, now)
@@ -217,7 +217,7 @@ func (s *Server) VerifySignInCode(ctx context.Context, req oas.VerifySignInCodeR
 		if err != nil {
 			return err
 		}
-		if !ok && lc.Reader {
+		if !ok && (lc.Reader || s.auth.Signup.Open) {
 			p, err := createPerson(ctx, q, email, "", "en")
 			if err != nil {
 				return err

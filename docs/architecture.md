@@ -813,8 +813,22 @@ remote images, http(s)):
   account in the profile.
 - Installable PWA with Web Push (VAPID), so members get notifications on phones without a native
   app. E-mail notifications as a fallback (see Member notifications).
-- Sign-in with an e-mailed one-time code and passkeys. There is no open sign-up: the first owner
-  is created with `yuva bootstrap`, everyone else is invited. A person whose memberships are all
+- Sign-in with an e-mailed one-time code and passkeys. Sign-up is a server setting,
+  `YUVA_SIGNUP`, reported to the panel without sign-in on `GET /v1/version` (`signup`). `invite`
+  (the default): the first owner is created with `yuva bootstrap`, everyone else is invited, and
+  a code goes only to a person or an invited address. `open`: a code goes to any address (same
+  rate limits, same fixed delay, same `202`), verifying it creates the person with no workspace,
+  and `POST /v1/workspaces` lets a signed-in person create a workspace they own, through the same
+  store path as `yuva bootstrap`. The workspace records who created it and from which IP address
+  (IPv6 /64); a person may have `YUVA_SIGNUP_WORKSPACES_PER_PERSON` (3) live workspaces they
+  created (`403 workspace_limit`) and one address may create `YUVA_SIGNUP_WORKSPACES_PER_IP` (5)
+  in 24 hours (`429 rate_limited`). Under `invite` that endpoint answers `403 signup_closed`.
+  The panel follows `signup`: with `open` its sign-in page says a new address gets an account
+  (`/?signup=1` opens it as "Create your Yuva account"), a person with no workspace is asked to
+  create one (name prefilled from the e-mail domain) and goes on to setup, and the workspace
+  switcher offers "Create workspace" (`/workspaces/new`); with `invite` the page says the server
+  is invite only and a person with no workspace sees that they are not in one yet.
+  A person whose memberships are all
   gone can still sign in, to see that and to delete their account. Sign-in and invitation e-mails are
   sent directly, not through the job queue, so a code never lands in job arguments; a code request
   answers after the same fixed delay for every address and its mail goes out after the answer, so
@@ -1004,7 +1018,7 @@ Private help stays private: page feedback, live chat and e-mail are unchanged. D
   with): one account per Yuva server, signing in by e-mail code or passkey on the server's own page,
   never on the documentation site. `POST /v1/auth/code` with `reader: true` sends a code to any
   address (same rate limits; the code row records it) and verifying that code creates the person,
-  which is the only open sign-up; a member signing in there is the same person. The reader's
+  whatever `YUVA_SIGNUP` says; a member signing in there is the same person. The reader's
   account page and its popup are panel routes (`/account`, `/account/connect`) served like the
   OAuth consent page, with the person's session cookie.
 - **Reader tokens.** `<yuva-discussions>` opens `/account/connect?channel=<key>&origin=<origin>` in
@@ -1185,10 +1199,13 @@ now; per-channel limits can narrow them later.
     `person_id`), leaving out deleted workspaces, like `/v1/me` lists a person's memberships. A
     reader token is looked up by its hash before its workspace is known, like a contact session.
     `people.reader_email_notifications` is a person-level setting.
+  - Open sign-up's limits count `workspaces` by `created_by` (a person) and `created_ip` across
+    the server, before the new workspace exists.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
     id, unique across the server, and revokes it scoped by the workspace that lookup returned.
 - Usage counters (conversations, messages, members, storage) recorded per workspace per month.
-- Billing, plans and the signup flow are not part of the open-source core.
+- Billing and plans are not part of the open-source core. Sign-up is: `YUVA_SIGNUP=open` lets
+  anyone create an account and a workspace, within per-person and per-address limits (see Panel).
 
 ## Deployment
 

@@ -23,5 +23,9 @@ func (s *Server) GetReadyz(ctx context.Context, _ oas.GetReadyzRequestObject) (o
 }
 
 func (s *Server) GetVersion(context.Context, oas.GetVersionRequestObject) (oas.GetVersionResponseObject, error) {
-	return oas.GetVersion200JSONResponse{Version: s.version}, nil
+	signup := oas.VersionSignupInvite
+	if s.auth.Signup.Open {
+		signup = oas.VersionSignupOpen
+	}
+	return oas.GetVersion200JSONResponse{Version: s.version, Signup: signup}, nil
 }

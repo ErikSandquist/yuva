@@ -87,7 +87,7 @@ curl -s http://127.0.0.1:8080/readyz     # {"status":"ok"}
 
 ### 4. Sahip hesabını oluşturun
 
-Açık kayıt yoktur:
+`YUVA_SIGNUP=open` ayarlamadıkça kayıt yalnızca davetle olur ([yapılandırma](configuration.md)); ilk sahibi oluşturun:
 
 ```sh
 docker compose exec yuva /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"

@@ -51,6 +51,9 @@ An empty variable means unset and takes the default, except for `YUVA_METRICS_AD
 | `YUVA_WEBAUTHN_RP_ID` | host name of `YUVA_PUBLIC_URL` | Passkey relying party id. Changing it makes existing passkeys unusable. |
 | `YUVA_WEBAUTHN_RP_NAME` | `Yuva` | Name browsers show for a new passkey. |
 | `YUVA_WEBAUTHN_ORIGINS` | origin of `YUVA_PUBLIC_URL` | Origins allowed for passkeys and the panel's realtime socket. |
+| `YUVA_SIGNUP` | `invite` | `invite`: only existing people and invited addresses get a sign-in code; workspaces come from `yuva bootstrap`. `open`: anyone can sign in with a code and create workspaces in the panel. |
+| `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | With `open` sign-up, workspaces one person may have created and not deleted; more get `403`. |
+| `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | With `open` sign-up, workspaces created from one IP address (IPv6 /64) in 24 hours; more get `429`. |
 
 ## Server e-mail
 

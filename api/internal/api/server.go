@@ -152,6 +152,15 @@ type AuthSettings struct {
 	TrustedProxies []netip.Prefix
 	// CodeReplyDelay is how long every sign-in code request takes; 0 means 800 ms.
 	CodeReplyDelay time.Duration
+	Signup         SignupSettings
+}
+
+// SignupSettings: Open lets anyone sign in with a code and create workspaces, within the limits;
+// zero limits mean the defaults.
+type SignupSettings struct {
+	Open                bool
+	WorkspacesPerPerson int
+	WorkspacesPerIP     int
 }
 
 func New(d Deps) *Server {

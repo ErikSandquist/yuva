@@ -29,8 +29,8 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 	if err != nil {
 		return BootstrapResult{}, errors.New("--email is not a valid address")
 	}
-	name := strings.TrimSpace(in.Workspace)
-	if name == "" || len([]rune(name)) > 200 {
+	name, ok := workspaceName(in.Workspace)
+	if !ok {
 		return BootstrapResult{}, errors.New("--workspace must be 1 to 200 characters")
 	}
 	if in.Locale == "" {
@@ -51,10 +51,6 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 		if n > 0 && !in.AllowExisting {
 			return errors.New("a workspace already exists; pass --allow-existing to create another one")
 		}
-		ws, err := q.CreateWorkspace(ctx, store.CreateWorkspaceParams{ID: uuid.New(), Name: name})
-		if err != nil {
-			return err
-		}
 		person, err := q.GetPersonByEmail(ctx, email)
 		if store.IsNotFound(err) {
 			person, err = createPerson(ctx, q, email, strings.TrimSpace(in.Name), in.Locale)
@@ -62,7 +58,7 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 		if err != nil {
 			return err
 		}
-		m, err := q.CreateMember(ctx, store.CreateMemberParams{ID: uuid.New(), WorkspaceID: ws.ID, PersonID: person.ID, Role: roleOwner})
+		ws, m, err := createOwnedWorkspace(ctx, q, store.CreateWorkspaceParams{ID: uuid.New(), Name: name}, person.ID)
 		if err != nil {
 			return err
 		}
@@ -70,4 +66,20 @@ func Bootstrap(ctx context.Context, st *store.Store, in BootstrapInput) (Bootstr
 		return nil
 	})
 	return res, err
+}
+
+func workspaceName(s string) (string, bool) {
+	name := strings.TrimSpace(s)
+	return name, name != "" && len([]rune(name)) <= 200
+}
+
+// createOwnedWorkspace is the one way a workspace comes to be, from `yuva bootstrap` or open
+// sign-up: the workspace and its owner.
+func createOwnedWorkspace(ctx context.Context, q *store.Queries, arg store.CreateWorkspaceParams, personID uuid.UUID) (store.Workspace, store.Member, error) {
+	ws, err := q.CreateWorkspace(ctx, arg)
+	if err != nil {
+		return ws, store.Member{}, err
+	}
+	m, err := q.CreateMember(ctx, store.CreateMemberParams{ID: uuid.New(), WorkspaceID: ws.ID, PersonID: personID, Role: roleOwner})
+	return ws, m, err
 }

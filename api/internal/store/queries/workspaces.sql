@@ -1,6 +1,13 @@
 -- name: CreateWorkspace :one
-INSERT INTO workspaces (id, name) VALUES ($1, $2)
+INSERT INTO workspaces (id, name, created_by, created_ip)
+VALUES (@id, @name, sqlc.narg(created_by), sqlc.narg(created_ip))
 RETURNING *;
+
+-- name: CountWorkspacesCreatedBy :one
+SELECT count(*) FROM workspaces WHERE created_by = @person_id AND deleted_at IS NULL;
+
+-- name: CountWorkspacesCreatedFromIP :one
+SELECT count(*) FROM workspaces WHERE created_ip = @ip AND created_at > @since;
 
 -- name: GetWorkspace :one
 SELECT * FROM workspaces WHERE id = $1;

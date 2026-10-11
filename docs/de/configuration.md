@@ -52,6 +52,9 @@ und `t`/`f`.
 | `YUVA_WEBAUTHN_RP_ID` | Hostname von `YUVA_PUBLIC_URL` | Relying-Party-ID für Passkeys. Eine Änderung macht vorhandene Passkeys unbrauchbar. |
 | `YUVA_WEBAUTHN_RP_NAME` | `Yuva` | Name, den Browser für einen neuen Passkey anzeigen. |
 | `YUVA_WEBAUTHN_ORIGINS` | Origin von `YUVA_PUBLIC_URL` | Erlaubte Origins für Passkeys und den Realtime-Socket des Panels. |
+| `YUVA_SIGNUP` | `invite` | `invite`: Nur bestehende Personen und eingeladene Adressen erhalten einen Anmeldecode; Workspaces entstehen mit `yuva bootstrap`. `open`: Jeder kann sich mit einem Code anmelden und im Panel Workspaces anlegen. |
+| `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | Bei `open`: Workspaces, die eine Person angelegt und nicht gelöscht hat; weitere erhalten `403`. |
+| `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | Bei `open`: Workspaces, die von einer IP-Adresse (IPv6 /64) in 24 Stunden angelegt werden; weitere erhalten `429`. |
 
 ## Server-E-Mail
 

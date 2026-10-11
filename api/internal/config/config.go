@@ -27,6 +27,10 @@ type Config struct {
 	WebAuthnRPName  string
 	WebAuthnOrigins []string
 
+	SignupOpen                bool
+	SignupWorkspacesPerPerson int
+	SignupWorkspacesPerIP     int
+
 	SMTP SMTP
 
 	MasterKey string
@@ -201,6 +205,19 @@ func Load(version string) (Config, error) {
 	}
 	if c.IngressMaxConcurrent, err = strconv.Atoi(env("YUVA_INGRESS_MAX_CONCURRENT", "8")); err != nil || c.IngressMaxConcurrent < 1 {
 		return c, errors.New("YUVA_INGRESS_MAX_CONCURRENT must be a positive number of messages")
+	}
+	switch strings.ToLower(env("YUVA_SIGNUP", "invite")) {
+	case "invite":
+	case "open":
+		c.SignupOpen = true
+	default:
+		return c, errors.New("YUVA_SIGNUP must be invite or open")
+	}
+	if c.SignupWorkspacesPerPerson, err = strconv.Atoi(env("YUVA_SIGNUP_WORKSPACES_PER_PERSON", "3")); err != nil || c.SignupWorkspacesPerPerson < 1 {
+		return c, errors.New("YUVA_SIGNUP_WORKSPACES_PER_PERSON must be a positive number of workspaces")
+	}
+	if c.SignupWorkspacesPerIP, err = strconv.Atoi(env("YUVA_SIGNUP_WORKSPACES_PER_IP", "5")); err != nil || c.SignupWorkspacesPerIP < 1 {
+		return c, errors.New("YUVA_SIGNUP_WORKSPACES_PER_IP must be a positive number of workspaces")
 	}
 	if c.AnonymousContactsPerHour, err = strconv.Atoi(env("YUVA_ANONYMOUS_CONTACTS_PER_HOUR", "20")); err != nil || c.AnonymousContactsPerHour < 1 {
 		return c, errors.New("YUVA_ANONYMOUS_CONTACTS_PER_HOUR must be a positive number of visitors")

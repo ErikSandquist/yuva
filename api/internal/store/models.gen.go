@@ -734,4 +734,6 @@ type Workspace struct {
 	RetentionDays *int32
 	DeletedAt     *time.Time
 	BotsMaySend   bool
+	CreatedBy     *uuid.UUID
+	CreatedIp     *string
 }

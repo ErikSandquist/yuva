@@ -51,6 +51,9 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_WEBAUTHN_RP_ID` | `YUVA_PUBLIC_URL` alan adı | Geçiş anahtarı relying party id'si. Değiştirmek mevcut geçiş anahtarlarını kullanılamaz yapar. |
 | `YUVA_WEBAUTHN_RP_NAME` | `Yuva` | Tarayıcıların yeni geçiş anahtarı için gösterdiği ad. |
 | `YUVA_WEBAUTHN_ORIGINS` | `YUVA_PUBLIC_URL` origin'i | Geçiş anahtarları ve panelin gerçek zamanlı soketi için izin verilen origin'ler. |
+| `YUVA_SIGNUP` | `invite` | `invite`: giriş kodu yalnızca mevcut kişilere ve davet edilmiş adreslere gider; çalışma alanları `yuva bootstrap` ile açılır. `open`: herkes kodla giriş yapıp panelde çalışma alanı oluşturabilir. |
+| `YUVA_SIGNUP_WORKSPACES_PER_PERSON` | `3` | `open` kayıtta bir kişinin oluşturup silmediği çalışma alanı sayısı; fazlası `403` alır. |
+| `YUVA_SIGNUP_WORKSPACES_PER_IP` | `5` | `open` kayıtta bir IP adresinden (IPv6 /64) 24 saatte oluşturulan çalışma alanı sayısı; fazlası `429` alır. |
 
 ## Sunucu e-postası
 

@@ -205,6 +205,11 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 			CookieSecure:   cfg.CookieSecure,
 			ClientIPHeader: cfg.ClientIPHeader,
 			TrustedProxies: cfg.TrustedProxies,
+			Signup: api.SignupSettings{
+				Open:                cfg.SignupOpen,
+				WorkspacesPerPerson: cfg.SignupWorkspacesPerPerson,
+				WorkspacesPerIP:     cfg.SignupWorkspacesPerIP,
+			},
 		},
 		Secrets: masterKey,
 		Storage: objects,

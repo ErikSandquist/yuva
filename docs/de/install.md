@@ -87,7 +87,7 @@ Datenbankmigrationen aus.
 
 ### 4. Den ersten Inhaber anlegen
 
-Eine offene Registrierung gibt es nicht:
+Ohne `YUVA_SIGNUP=open` ist die Registrierung nur auf Einladung möglich ([Konfiguration](configuration.md)); den ersten Inhaber anlegen:
 
 ```sh
 docker compose exec yuva /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"

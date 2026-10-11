@@ -85,7 +85,7 @@ The first line adds the Web Push keys. The server runs database migrations befor
 
 ### 4. Create the first owner
 
-There is no open sign-up:
+Sign-up is invite only unless you set `YUVA_SIGNUP=open` ([configuration](configuration.md)); create the first owner:
 
 ```sh
 docker compose exec yuva /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"

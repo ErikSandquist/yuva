@@ -58,6 +58,7 @@ var operationAccess = map[string]access{
 	"FinishPasskeyRegistration": accessPerson,
 	"DeletePasskey":             accessPerson,
 	"DeleteMe":                  accessPerson,
+	"CreateWorkspace":           accessPerson,
 
 	"MarkConversationRead":   accessMember,
 	"MarkConversationUnread": accessMember,
