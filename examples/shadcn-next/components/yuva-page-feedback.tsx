@@ -22,6 +22,7 @@ export function YuvaPageFeedback({ page: pageProp, pageTitle, labels: overrides,
 
   React.useEffect(() => {
     const here = currentPage()
+    // oxlint-disable-next-line react/set-state-in-effect -- the page comes from location, read after hydration so the server render matches
     setPage({ url: pageProp ?? here.url, title: pageTitle ?? here.title })
     setThanked(false)
   }, [pageProp, pageTitle])

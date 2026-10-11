@@ -44,11 +44,14 @@ export function YuvaDiscussionsProvider({
   children,
 }: YuvaDiscussionsProviderProps) {
   const identity = React.useRef(identityToken)
-  identity.current = identityToken
+  React.useEffect(() => {
+    identity.current = identityToken
+  })
   const [own, setOwn] = React.useState<YuvaClient | null>(null)
 
   React.useEffect(() => {
     if (client || !server || !channel) {
+      // oxlint-disable-next-line react/set-state-in-effect -- the client is made after mount, so the server and the first client render agree
       setOwn(null)
       return
     }
@@ -101,6 +104,7 @@ export function useYuvaReader(): YuvaReaderState {
           setWriter(value)
           setReady(true)
         })
+    // oxlint-disable-next-line react/set-state-in-effect -- the reader comes from the client's storage, read after hydration so the server render matches
     setReader(client.reader)
     void refresh()
     const off = client.on("reader", (value) => {
@@ -190,6 +194,7 @@ export function useDiscussions(page: string | null | undefined, sort: Discussion
 
   React.useEffect(() => {
     cursor.current = undefined
+    // oxlint-disable-next-line react/set-state-in-effect -- loading from the client is syncing with an external system
     void load(false)
     if (!client) return
     return client.on("reader", () => void load(false))
@@ -254,8 +259,14 @@ export function useDiscussion(id: string | null | undefined): DiscussionResult {
     }
   }, [client, id])
 
-  React.useEffect(() => {
+  const [loadedFor, setLoadedFor] = React.useState({ client, id })
+  if (loadedFor.client !== client || loadedFor.id !== id) {
+    setLoadedFor({ client, id })
     setState({ detail: null, loading: true, error: null })
+  }
+
+  React.useEffect(() => {
+    // oxlint-disable-next-line react/set-state-in-effect -- loading from the client is syncing with an external system
     void load()
     if (!client) return
     return client.on("reader", () => void load())
@@ -356,6 +367,7 @@ export function usePageRating(page: string | null | undefined, title?: string) {
   React.useEffect(() => {
     if (!key || !page) return
     try {
+      // oxlint-disable-next-line react/set-state-in-effect -- localStorage is read after hydration so the server render matches
       setRating((JSON.parse(localStorage.getItem(key) ?? "{}") as Record<string, "up" | "down">)[page] ?? null)
     } catch {
       setRating(null)

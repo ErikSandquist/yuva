@@ -224,8 +224,12 @@ export function YuvaDiscussionThread({ id, labels: overrides, className, onBack,
     signIn().catch((failure) => setError(yuvaErrorMessage(failure, labels)))
   }
 
+  const gone = React.useRef(onGone)
   React.useEffect(() => {
-    if (!loading && !discussion && !thread.error) onGone?.()
+    gone.current = onGone
+  })
+  React.useEffect(() => {
+    if (!loading && !discussion && !thread.error) gone.current?.()
   }, [loading, discussion, thread.error])
 
   const back = onBack && (
