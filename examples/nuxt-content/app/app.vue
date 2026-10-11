@@ -34,7 +34,11 @@ useHead({
   --line: #d1d9e0;
   --soft: #f6f8fa;
   --accent: #2563eb;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
   line-height: 1.6;
   -webkit-text-size-adjust: 100%;
 }
