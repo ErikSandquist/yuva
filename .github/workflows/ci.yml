@@ -101,6 +101,37 @@ jobs:
       - working-directory: sdk/shadcn
         run: bun install --frozen-lockfile && bun run check
 
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: sdk/js
+        working-directory: sdk/js
+        run: bun install --frozen-lockfile && bun run build
+      - name: format and lint
+        run: >-
+          npx --yes oxfmt@0.72.0 --check examples/nuxt-content examples/fumadocs examples/shadcn-next examples/headless-chat examples/inbox-feed
+          && npx --yes oxlint@1.87.0 examples/nuxt-content examples/fumadocs examples/shadcn-next examples/headless-chat examples/inbox-feed
+      - name: nuxt-content
+        working-directory: examples/nuxt-content
+        run: npm ci && npm run -s build
+      - name: fumadocs
+        working-directory: examples/fumadocs
+        run: npm ci && npm run -s types:check && npm run -s build
+      - name: shadcn-next
+        working-directory: examples/shadcn-next
+        run: npm ci && npm run -s build
+      - name: headless-chat
+        working-directory: examples/headless-chat
+        run: npm ci && npm run -s typecheck
+      - name: inbox-feed
+        working-directory: examples/inbox-feed
+        run: npm ci && npm run -s typecheck
+
   site:
     runs-on: ubuntu-latest
     steps:
