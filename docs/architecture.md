@@ -21,6 +21,8 @@ Not goals: a CRM, a marketing automation suite (journeys, A/B tests, lead scorin
 documentation, but it collects feedback and questions on the documentation sites products already
 have (see "Documentation pages"). Since M13 it sends broadcasts (newsletters, announcements) to
 contacts who subscribed, and replies to them land in the inbox (see "Broadcasts and e-mail designs").
+Since M15 it measures the workspace's own websites and apps without cookies, for the team and in
+aggregate with support (see "Analytics").
 
 ## Concepts
 
@@ -114,6 +116,8 @@ panel (embedded SPA) ─────────► /v1 + WS ──────�
 |---|---|---|
 | `/v1` | panel, host backends, scripts | member session cookie, or workspace API key |
 | `/client/v1` | widget, mobile SDKs | channel public key + contact session, or a reader token on the discussion endpoints |
+| `/client/v1/analytics/{key}` | the analytics script, `useyuva/analytics`, the mobile analytics modules | an analytics property's public key; browsers only from the property's domains |
+| `/v1/analytics/shared/{token}` | read-only analytics shares | a share token (and its password session) |
 | `/ingress/email` | edge Worker, MTAs | HMAC signature over the raw message |
 | `/ingress/ses` | SES bounce and complaint notifications via SNS | SNS signature |
 | `/s/{token}`, `/m/{token}`, `/c/{token}`, `/i/{token}` | people who receive list and broadcast mail | a token sealed under the master key; an image token |
@@ -197,6 +201,9 @@ scoped API keys, and every key-authored message names its bot.
 | `broadcasts:read` | broadcasts, deliveries, reports, designs, templates, images, previews |
 | `broadcasts:write` | drafts, designs, images, test sends |
 | `broadcasts:send` | schedule, unschedule, pause, resume, cancel (only while the workspace allows keys and assistants to) |
+| `analytics:read` | analytics properties, queries, realtime, goals, funnels, segments, annotations, health, exports (read) |
+| `analytics:write` | server-side analytics events (API keys only) |
+| `analytics:manage` | create, change and delete properties, keys, goals, funnels, shares, exports, data deletion |
 
 A call without its scope gets `403 insufficient_scope` with the missing scope in `scope`. Keys made
 before scopes existed hold every scope above. Scopes added later (`lists:*`, `broadcasts:*`) are never
@@ -1289,7 +1296,9 @@ losing a message and without changing anything at the source. Decisions:
   iCloud, Zoho, Yahoo, Fastmail, GMX and any server connect with an app password or password.
   Outlook.com and Microsoft 365 accept no passwords: "Sign in with Microsoft" obtains only an IMAP
   token (`https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`, sent with
-  `AUTHENTICATE XOAUTH2`) when the operator configured the Entra app (`YUVA_MICROSOFT_*`). Export
+  `AUTHENTICATE XOAUTH2`) when the operator configured the Entra app (`YUVA_MICROSOFT_*`); the app
+  is not publisher-verified, so Outlook.com and tenants that allow user consent connect, and other
+  tenants use export files or an admin's consent. Export
   files (Google Takeout mbox, mbox, .eml or Maildir in a zip; no PST, for want of a permissively
   licensed reader) need no access to the account and are the fast way for very large Gmail
   mailboxes: Takeout first, then IMAP for newer mail and the cutover. Help desks: Zendesk with OAuth
@@ -1360,6 +1369,80 @@ losing a message and without changing anything at the source. Decisions:
   Yuva for the list, a banner in the target inbox while it runs. MCP tools for every operation
   (`create_migration` returns the connect link) and the `move_to_yuva` prompt.
 
+### Analytics (M15)
+
+A workspace measures its own websites and apps: pageviews, screens, events, goals, funnels, revenue,
+sources, locations and devices, in the panel, the API and MCP. Plan in the M15 umbrella issue; it ships
+in six steps (M15.1–M15.6 in the roadmap). Decisions:
+
+- **Properties.** `analytics_properties` belong to a workspace and optionally to an inbox (who sees them,
+  what support data they join): name, a public key (`yuva_ak_…`, unique on the server, rotatable with
+  24 hours' overlap), 1–50 domains (`*.example.com` allowed), platforms (`web`, `ios`, `android`), time
+  zone (the property's day), currency, `collection` (`anonymous` or `consent`), `consent_features`
+  (`persistent`, `identify`), `audience` (`general` or `children`), exclusions, path rules, up to 10
+  tracked props, `retention_months` (25). Owners and admins manage them; agents read the properties of
+  their inboxes.
+- **Default mode: nothing on the device, no IP stored.** The address is shortened (IPv4 /24, IPv6 /48)
+  in the first function that sees it; GeoIP and the hash use only that. A visitor is
+  `HMAC-SHA256(salt, property ‖ short IP ‖ user agent)` truncated to 64 bits; apps hash a random key held
+  in memory for the life of the process instead of the address. Salts are random, one per property and
+  local day in `analytics_salts`, deleted 2 hours after the day ends (`YUVA_ANALYTICS_SALT_GRACE`) and
+  never derived from a persistent secret. So visitors are counted per day; a visitor over a range is the
+  sum of daily visitors. A visit is a visitor's events without a 30-minute gap within the day.
+- **Law.** Built to meet the CNIL audience-measurement exemption (purpose, no cross-checking, one
+  publisher, shortened IP, no tracker), PECR Schedule A1 (statistics with information and an
+  objection), the KVKK cookie guide's Criterion B for first-party analytics, CCPA (no sale or sharing),
+  LGPD and COPPA (children's properties keep country only, no props, no consent features). The EDPB
+  (Guidelines 2/2023) reads ePrivacy Art. 5(3) as covering any script that makes a browser send data, so
+  the docs say where a banner is still needed and `collection: consent` sends nothing until
+  `yuva.consent({analytics: true})`. DNT and GPC stop collection unconditionally; `yuva.optOut()` stores
+  the objection, the only default-mode write to the device. Raw rows are treated as pseudonymous
+  personal data until the raw window ends; rollups are anonymous.
+- **Consent features.** Only for visitors who consented, through the host's own consent tool:
+  `persistent` keeps a random id on the device for at most 13 months (returning visitors, retention,
+  cross-day funnels), hashed with a per-property key; `identify` sends the inbox's identity JWT, checked
+  like `/client/v1/session`, and links the visitor's visits to the contact, shown on the contact page.
+  Without consent no visitor is ever joined to a contact or conversation.
+- **Collection.** `POST /client/v1/analytics/{key}` (one event, or up to 100 for apps), a plain handler
+  outside the strict server; `text/plain` JSON so browsers send no preflight; its CORS branch matches the
+  `Origin` host against the property's domains; no cookie, no session, request logs without addresses.
+  Host backends send `POST /v1/analytics/properties/{id}/events` with `analytics:write`, forwarding the
+  visitor's IP and user agent (never stored) or their own visitor key. Ingest scrubs e-mail-shaped
+  values, keeps only UTM keys of the query string, parses the user agent (`medama-io/go-useragent`), looks
+  up GeoIP (DB-IP Lite downloaded monthly by default under CC BY 4.0 with attribution, any MMDB file, or
+  off; GeoLite2 only from the operator's own account), drops bots (crawler list, `webdriver`, header and
+  volume rules, referrer spam), and answers `202` before writing.
+- **Storage.** Events wait in a per-process buffer (`YUVA_ANALYTICS_BUFFER`, full → `503`) and are flushed
+  every second by `COPY` into `analytics_events` with one upsert per visit into `analytics_visits`; both
+  are partitioned by the property's local `day`, created ahead and dropped after
+  `YUVA_ANALYTICS_RAW_DAYS` (90) by the `analytics_partitions` job. Finished days are folded into rollups
+  (`analytics_daily` per dimension and value, top 1,000 values plus `(other)`; hourly, goals, props,
+  support) by `analytics_rollup` jobs on the `analytics` River queue; late events and new goals mark days
+  dirty. Queries add rollups for built days and raw rows for open ones; filter combinations the rollups
+  cannot answer are served from raw rows inside the raw window only. No Postgres extension. The query
+  layer sits behind a `Store` interface so a column store can be added later without a contract change;
+  Postgres is the only store in M15 and fits up to about 100M events a month per property.
+- **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
+  automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
+  React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
+  privacy manifest with `CA92.1`, no IDFA) and Kotlin `yuva-analytics` (Compose `TrackScreen`, no
+  advertising id); `sdk/go/analytics` for server events. Apps queue offline up to 72 hours.
+- **Support, in aggregate.** A property linked to an inbox gets conversations, page feedback, ratings and
+  discussion threads per page and day next to its views (`<yuva-chat>` records the page a conversation
+  starts on); broadcasts add UTM parameters and show the visits of their campaign. Alerts (spike, drop,
+  goal drop, support load, new referrer), insights and weekly or monthly e-mail reports are fixed rules;
+  Yuva runs no model.
+- **Panel, API, MCP.** An Analytics rail section per property (overview, realtime, pages, sources,
+  locations, devices, events, goals, funnels, retention for consented traffic, support, settings),
+  filters, comparisons, segments, annotations, read-only share links (password, expiry, embeddable on
+  listed origins), CSV and NDJSON exports. One query operation (`POST
+  /v1/analytics/properties/{id}/query`) serves the panel, the API and the MCP tools. Scopes
+  `analytics:read`, `analytics:write`, `analytics:manage`. Analytics writes no stored event per page view;
+  `analytics.alert` is a stored event and webhook type.
+- **Hosting.** `usage_counters.analytics_events`; `YUVA_ANALYTICS_MONTHLY_EVENTS` (per workspace,
+  operator overrides with `yuva workspace analytics-limit`), per-property and per-address ingest limits,
+  4 concurrent queries per workspace; `YUVA_ANALYTICS=off` removes the feature.
+
 ### Storage
 
 Attachments and raw e-mails in S3-compatible storage (R2, S3, MinIO) or on local disk for a
@@ -1409,7 +1492,13 @@ now; per-channel limits can narrow them later.
   (an API key or an owner or admin): the contact goes with all their conversations, messages,
   attachments, sessions and addresses in every inbox, the stored files are removed, and
   `contact.deleted` tells the other endpoints which external ids are gone.
-- Nothing is sent to third parties except what a channel is configured to send (SMTP, webhooks).
+- Analytics keeps no IP address and puts nothing on a visitor's device by default (see "Analytics"). Raw
+  visits and events are kept `YUVA_ANALYTICS_RAW_DAYS` (90), rollups the property's `retention_months`
+  (25); salts are deleted two hours after their day. Members delete a property's data for a range or in
+  full; a property, a consented visitor, a contact with linked visits and a deleted workspace take their
+  analytics rows with them. Workspace `retention_days` does not apply to analytics.
+- Nothing is sent to third parties except what a channel is configured to send (SMTP, webhooks);
+  the monthly GeoIP download from DB-IP fetches a file and sends nothing about anyone.
 
 ## Hosting for others later
 
@@ -1450,6 +1539,13 @@ now; per-channel limits can narrow them later.
   - `operator_notices` is the server operator's feed of new people and workspaces
     (`YUVA_OPERATOR_EMAIL`): it is about the server, not a workspace, and is read only by the
     operator digest job.
+  - Analytics collection names only a property's public key: `POST /client/v1/analytics/{key}` finds
+    the property by `analytics_properties.public_key` (or its `previous_key` during a rotation), unique
+    across the server, and a share link finds its share by `analytics_shares.token_hash`; everything
+    after those lookups is scoped by the workspace they returned. The `analytics_partitions` job creates
+    and drops whole day partitions of `analytics_visits` and `analytics_events`, which hold every
+    workspace's rows of that day; every other read, write and delete of those tables filters by
+    `workspace_id`.
   - A forwarding address names only its token: ingress finds the channel by
     `email_channels.forward_token` (unique across the server), like an address. A migration probe is
     recognised by its HMAC before the channel's workspace matters.

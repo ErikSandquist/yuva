@@ -229,3 +229,33 @@ finishing deletes the credentials; the source mailbox is byte-identical (UIDs, f
 and after. An Outlook.com and a Microsoft 365 mailbox, a Takeout file, a Zendesk and a Help Scout
 account import the same way. An assistant runs the whole flow through MCP without ever handling a
 password.
+
+## M15 — Analytics
+
+Status: planned; umbrella issue #42, decisions in `architecture.md` › Analytics (M15). Ships in six
+steps; M15.1 first, then M15.2, M15.3 and M15.5 in parallel, then M15.4 (after M15.2; its broadcast part
+after M13.3) and M15.6 (after M15.2 and M15.3).
+
+- **M15.1 Count the web:** properties, the cookieless collect endpoint with daily salts and shortened
+  addresses, GeoIP, bot filtering, partitions and rollups, the ~1 KB script and `useyuva/analytics` with
+  React and Nuxt helpers, overview, realtime, pages, sources, locations and devices with filters and
+  comparisons, consent mode, usage and limits, the privacy guide.
+- **M15.2 Events, goals, funnels:** custom and built-in events, props, revenue, goals, funnels, segments,
+  annotations.
+- **M15.3 Apps and servers:** Swift `YuvaAnalytics` and Kotlin `yuva-analytics` with offline queues and
+  store privacy answers, server-side events and the Go helper.
+- **M15.4 Support, alerts, reports, MCP:** support load per page next to traffic, docs ratings and
+  discussions with views, broadcast campaigns to visits, alerts, insights, e-mail reports, MCP tools.
+- **M15.5 Sharing and export:** read-only share links with password, expiry and embedding; CSV and
+  NDJSON exports.
+- **M15.6 Consent features:** a stored id and identified users only with consent: returning visitors,
+  retention, cross-day funnels, a contact's recent visits.
+
+Accept: a demo site with the script and the Swift and Kotlin samples report pageviews, screens and a
+revenue goal that appear in Realtime and, the next day, from rollups with the same numbers; the
+browser holds no cookie or storage entry and Postgres holds no IP address; GPC stops collection; a
+children's property keeps country only; the Support report ranks pages by conversations per 1,000 views
+without joining any visitor to a contact; Claude Code answers a traffic question through the MCP tools;
+a share link shows only its views; after consent and identify a contact's page lists their visits and
+without consent it never does; another workspace sees none of it; the load test meets the targets at
+10M events a month.
