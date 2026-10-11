@@ -140,24 +140,25 @@ const getDocsSummaryCounts = `-- name: GetDocsSummaryCounts :one
 WITH visible AS (
     SELECT i.id FROM inboxes i
     WHERE i.workspace_id = $1
-      AND ($4::uuid IS NULL OR i.id = $4::uuid)
-      AND ($5::bool OR EXISTS (
+      AND ($5::uuid IS NULL OR i.id = $5::uuid)
+      AND ($6::bool OR EXISTS (
           SELECT 1 FROM inbox_viewers iv
-          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $6::uuid))
+          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $7::uuid))
 )
 SELECT
     (SELECT count(*) FROM (
         SELECT DISTINCT r.inbox_id, r.page FROM page_ratings r
         WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $2::date
-          AND r.up + r.down > 0) rp)::bigint AS rated_pages,
+          AND r.up + r.down > 0 AND ($3::text IS NULL OR left(r.page, length($3::text) + 1) = $3::text || '/')) rp)::bigint AS rated_pages,
     (SELECT count(*) FROM page_answers a
      WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
-       AND a.published_at >= $3::timestamptz)::bigint AS published_answers
+       AND a.published_at >= $4::timestamptz AND ($3::text IS NULL OR left(a.page, length($3::text) + 1) = $3::text || '/'))::bigint AS published_answers
 `
 
 type GetDocsSummaryCountsParams struct {
 	WorkspaceID uuid.UUID
 	Since       time.Time
+	Site        *string
 	SinceAt     time.Time
 	InboxID     *uuid.UUID
 	AllInboxes  bool
@@ -173,6 +174,7 @@ func (q *Queries) GetDocsSummaryCounts(ctx context.Context, arg GetDocsSummaryCo
 	row := q.db.QueryRow(ctx, getDocsSummaryCounts,
 		arg.WorkspaceID,
 		arg.Since,
+		arg.Site,
 		arg.SinceAt,
 		arg.InboxID,
 		arg.AllInboxes,
@@ -271,6 +273,7 @@ WITH visible AS (
     FROM page_ratings r
     WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $9::date
       AND ($10::text IS NULL OR r.page = $10::text)
+      AND ($11::text IS NULL OR left(r.page, length($11::text) + 1) = $11::text || '/')
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
@@ -280,12 +283,14 @@ WITH visible AS (
     WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
       AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
       AND ($10::text IS NULL OR c.page_url = $10::text)
+      AND ($11::text IS NULL OR left(c.page_url, length($11::text) + 1) = $11::text || '/')
     GROUP BY c.inbox_id, c.page_url
 ), answered AS (
     SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
     FROM page_answers a
     WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
       AND ($10::text IS NULL OR a.page = $10::text)
+      AND ($11::text IS NULL OR left(a.page, length($11::text) + 1) = $11::text || '/')
     GROUP BY a.inbox_id, a.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
@@ -338,6 +343,7 @@ type ListDocsPagesParams struct {
 	ViewerID    uuid.UUID
 	Since       time.Time
 	Page        *string
+	Site        *string
 }
 
 type ListDocsPagesRow struct {
@@ -363,6 +369,7 @@ func (q *Queries) ListDocsPages(ctx context.Context, arg ListDocsPagesParams) ([
 		arg.ViewerID,
 		arg.Since,
 		arg.Page,
+		arg.Site,
 	)
 	if err != nil {
 		return nil, err
@@ -375,6 +382,130 @@ func (q *Queries) ListDocsPages(ctx context.Context, arg ListDocsPagesParams) ([
 			&i.InboxID,
 			&i.Page,
 			&i.Title,
+			&i.Up,
+			&i.Down,
+			&i.OpenFeedback,
+			&i.OpenQuestions,
+			&i.PublishedAnswers,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listDocsSites = `-- name: ListDocsSites :many
+WITH visible AS (
+    SELECT i.id FROM inboxes i
+    WHERE i.workspace_id = $1
+      AND ($2::uuid IS NULL OR i.id = $2::uuid)
+      AND ($3::bool OR EXISTS (
+          SELECT 1 FROM inbox_viewers iv
+          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = $4::uuid))
+), rated AS (
+    SELECT r.inbox_id, r.page, sum(r.up)::bigint AS up, sum(r.down)::bigint AS down
+    FROM page_ratings r
+    WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $5::date
+    GROUP BY r.inbox_id, r.page
+), opened AS (
+    SELECT c.inbox_id, c.page_url AS page,
+           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
+           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+    FROM conversations c
+    WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
+      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+    GROUP BY c.inbox_id, c.page_url
+), answered AS (
+    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
+    FROM page_answers a
+    WHERE a.workspace_id = $1 AND a.inbox_id IN (SELECT id FROM visible)
+    GROUP BY a.inbox_id, a.page
+), pages AS (
+    SELECT rated.inbox_id, rated.page FROM rated
+    UNION SELECT opened.inbox_id, opened.page FROM opened
+    UNION SELECT answered.inbox_id, answered.page FROM answered
+), data AS (
+    SELECT p.inbox_id, substring(p.page from '^[a-z]+://[^/]+') AS origin, count(*)::bigint AS pages,
+           coalesce(sum(rated.up), 0)::bigint AS up, coalesce(sum(rated.down), 0)::bigint AS down,
+           coalesce(sum(opened.open_feedback), 0)::bigint AS open_feedback,
+           coalesce(sum(opened.open_questions), 0)::bigint AS open_questions,
+           coalesce(sum(answered.published_answers), 0)::bigint AS published_answers
+    FROM pages p
+    LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
+    LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
+    LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+    GROUP BY 1, 2
+), allowed AS (
+    SELECT ch.inbox_id, o.origin, ch.id AS channel_id, ch.name AS channel_name,
+           row_number() OVER (PARTITION BY ch.inbox_id, o.origin ORDER BY ch.created_at, ch.id) AS n
+    FROM channels ch
+    JOIN chat_channels cc ON cc.workspace_id = ch.workspace_id AND cc.channel_id = ch.id
+    CROSS JOIN LATERAL unnest(cc.allowed_origins) AS o(origin)
+    WHERE ch.workspace_id = $1 AND ch.kind = 'chat' AND ch.inbox_id IN (SELECT id FROM visible)
+), sites AS (
+    SELECT data.inbox_id, data.origin FROM data
+    UNION SELECT allowed.inbox_id, allowed.origin FROM allowed
+)
+SELECT s.origin::text AS origin, s.inbox_id::uuid AS inbox_id,
+    al.channel_id, al.channel_name,
+    coalesce(d.pages, 0)::bigint AS pages,
+    coalesce(d.up, 0)::bigint AS up,
+    coalesce(d.down, 0)::bigint AS down,
+    coalesce(d.open_feedback, 0)::bigint AS open_feedback,
+    coalesce(d.open_questions, 0)::bigint AS open_questions,
+    coalesce(d.published_answers, 0)::bigint AS published_answers
+FROM sites s
+LEFT JOIN data d ON d.inbox_id = s.inbox_id AND d.origin = s.origin
+LEFT JOIN allowed al ON al.inbox_id = s.inbox_id AND al.origin = s.origin AND al.n = 1
+ORDER BY s.origin, s.inbox_id
+`
+
+type ListDocsSitesParams struct {
+	WorkspaceID uuid.UUID
+	InboxID     *uuid.UUID
+	AllInboxes  bool
+	ViewerID    uuid.UUID
+	Since       time.Time
+}
+
+type ListDocsSitesRow struct {
+	Origin           string
+	InboxID          uuid.UUID
+	ChannelID        *uuid.UUID
+	ChannelName      *string
+	Pages            int64
+	Up               int64
+	Down             int64
+	OpenFeedback     int64
+	OpenQuestions    int64
+	PublishedAnswers int64
+}
+
+func (q *Queries) ListDocsSites(ctx context.Context, arg ListDocsSitesParams) ([]ListDocsSitesRow, error) {
+	rows, err := q.db.Query(ctx, listDocsSites,
+		arg.WorkspaceID,
+		arg.InboxID,
+		arg.AllInboxes,
+		arg.ViewerID,
+		arg.Since,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListDocsSitesRow
+	for rows.Next() {
+		var i ListDocsSitesRow
+		if err := rows.Scan(
+			&i.Origin,
+			&i.InboxID,
+			&i.ChannelID,
+			&i.ChannelName,
+			&i.Pages,
 			&i.Up,
 			&i.Down,
 			&i.OpenFeedback,
@@ -405,6 +536,7 @@ WITH visible AS (
     SELECT r.day, sum(r.up)::bigint AS up, sum(r.down)::bigint AS down
     FROM page_ratings r
     WHERE r.workspace_id = $1 AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= $5::date
+      AND ($7::text IS NULL OR left(r.page, length($7::text) + 1) = $7::text || '/')
     GROUP BY r.day
 ), sent AS (
     SELECT (c.created_at AT TIME ZONE 'UTC')::date AS day,
@@ -412,7 +544,8 @@ WITH visible AS (
            count(*) FILTER (WHERE c.kind = 'question')::bigint AS questions
     FROM conversations c
     WHERE c.workspace_id = $1 AND c.inbox_id IN (SELECT id FROM visible)
-      AND c.page_url IS NOT NULL AND NOT c.spam AND c.created_at >= $7::timestamptz
+      AND c.page_url IS NOT NULL AND NOT c.spam AND c.created_at >= $8::timestamptz
+      AND ($7::text IS NULL OR left(c.page_url, length($7::text) + 1) = $7::text || '/')
     GROUP BY 1
 )
 SELECT days.day::date AS day,
@@ -433,6 +566,7 @@ type ListDocsSummaryDaysParams struct {
 	ViewerID    uuid.UUID
 	Since       time.Time
 	Until       time.Time
+	Site        *string
 	SinceAt     time.Time
 }
 
@@ -452,6 +586,7 @@ func (q *Queries) ListDocsSummaryDays(ctx context.Context, arg ListDocsSummaryDa
 		arg.ViewerID,
 		arg.Since,
 		arg.Until,
+		arg.Site,
 		arg.SinceAt,
 	)
 	if err != nil {

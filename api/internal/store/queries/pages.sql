@@ -73,6 +73,7 @@ WITH visible AS (
     FROM page_ratings r
     WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
       AND (sqlc.narg(page)::text IS NULL OR r.page = sqlc.narg(page)::text)
+      AND (sqlc.narg(site)::text IS NULL OR left(r.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY r.inbox_id, r.page
 ), opened AS (
     SELECT c.inbox_id, c.page_url AS page,
@@ -82,12 +83,14 @@ WITH visible AS (
     WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
       AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
       AND (sqlc.narg(page)::text IS NULL OR c.page_url = sqlc.narg(page)::text)
+      AND (sqlc.narg(site)::text IS NULL OR left(c.page_url, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY c.inbox_id, c.page_url
 ), answered AS (
     SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
     FROM page_answers a
     WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
       AND (sqlc.narg(page)::text IS NULL OR a.page = sqlc.narg(page)::text)
+      AND (sqlc.narg(site)::text IS NULL OR left(a.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY a.inbox_id, a.page
 ), pages AS (
     SELECT rated.inbox_id, rated.page FROM rated
@@ -149,6 +152,7 @@ WITH visible AS (
     SELECT r.day, sum(r.up)::bigint AS up, sum(r.down)::bigint AS down
     FROM page_ratings r
     WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
+      AND (sqlc.narg(site)::text IS NULL OR left(r.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY r.day
 ), sent AS (
     SELECT (c.created_at AT TIME ZONE 'UTC')::date AS day,
@@ -157,6 +161,7 @@ WITH visible AS (
     FROM conversations c
     WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
       AND c.page_url IS NOT NULL AND NOT c.spam AND c.created_at >= @since_at::timestamptz
+      AND (sqlc.narg(site)::text IS NULL OR left(c.page_url, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')
     GROUP BY 1
 )
 SELECT days.day::date AS day,
@@ -182,7 +187,72 @@ SELECT
     (SELECT count(*) FROM (
         SELECT DISTINCT r.inbox_id, r.page FROM page_ratings r
         WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
-          AND r.up + r.down > 0) rp)::bigint AS rated_pages,
+          AND r.up + r.down > 0 AND (sqlc.narg(site)::text IS NULL OR left(r.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/')) rp)::bigint AS rated_pages,
     (SELECT count(*) FROM page_answers a
      WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
-       AND a.published_at >= @since_at::timestamptz)::bigint AS published_answers;
+       AND a.published_at >= @since_at::timestamptz AND (sqlc.narg(site)::text IS NULL OR left(a.page, length(sqlc.narg(site)::text) + 1) = sqlc.narg(site)::text || '/'))::bigint AS published_answers;
+
+-- name: ListDocsSites :many
+WITH visible AS (
+    SELECT i.id FROM inboxes i
+    WHERE i.workspace_id = @workspace_id
+      AND (sqlc.narg(inbox_id)::uuid IS NULL OR i.id = sqlc.narg(inbox_id)::uuid)
+      AND (@all_inboxes::bool OR EXISTS (
+          SELECT 1 FROM inbox_viewers iv
+          WHERE iv.workspace_id = i.workspace_id AND iv.inbox_id = i.id AND iv.viewer_id = @viewer_id::uuid))
+), rated AS (
+    SELECT r.inbox_id, r.page, sum(r.up)::bigint AS up, sum(r.down)::bigint AS down
+    FROM page_ratings r
+    WHERE r.workspace_id = @workspace_id AND r.inbox_id IN (SELECT id FROM visible) AND r.day >= @since::date
+    GROUP BY r.inbox_id, r.page
+), opened AS (
+    SELECT c.inbox_id, c.page_url AS page,
+           count(*) FILTER (WHERE c.kind = 'feedback')::bigint AS open_feedback,
+           count(*) FILTER (WHERE c.kind = 'question')::bigint AS open_questions
+    FROM conversations c
+    WHERE c.workspace_id = @workspace_id AND c.inbox_id IN (SELECT id FROM visible)
+      AND c.page_url IS NOT NULL AND c.status = 'open' AND NOT c.spam
+    GROUP BY c.inbox_id, c.page_url
+), answered AS (
+    SELECT a.inbox_id, a.page, count(*)::bigint AS published_answers
+    FROM page_answers a
+    WHERE a.workspace_id = @workspace_id AND a.inbox_id IN (SELECT id FROM visible)
+    GROUP BY a.inbox_id, a.page
+), pages AS (
+    SELECT rated.inbox_id, rated.page FROM rated
+    UNION SELECT opened.inbox_id, opened.page FROM opened
+    UNION SELECT answered.inbox_id, answered.page FROM answered
+), data AS (
+    SELECT p.inbox_id, substring(p.page from '^[a-z]+://[^/]+') AS origin, count(*)::bigint AS pages,
+           coalesce(sum(rated.up), 0)::bigint AS up, coalesce(sum(rated.down), 0)::bigint AS down,
+           coalesce(sum(opened.open_feedback), 0)::bigint AS open_feedback,
+           coalesce(sum(opened.open_questions), 0)::bigint AS open_questions,
+           coalesce(sum(answered.published_answers), 0)::bigint AS published_answers
+    FROM pages p
+    LEFT JOIN rated ON rated.inbox_id = p.inbox_id AND rated.page = p.page
+    LEFT JOIN opened ON opened.inbox_id = p.inbox_id AND opened.page = p.page
+    LEFT JOIN answered ON answered.inbox_id = p.inbox_id AND answered.page = p.page
+    GROUP BY 1, 2
+), allowed AS (
+    SELECT ch.inbox_id, o.origin, ch.id AS channel_id, ch.name AS channel_name,
+           row_number() OVER (PARTITION BY ch.inbox_id, o.origin ORDER BY ch.created_at, ch.id) AS n
+    FROM channels ch
+    JOIN chat_channels cc ON cc.workspace_id = ch.workspace_id AND cc.channel_id = ch.id
+    CROSS JOIN LATERAL unnest(cc.allowed_origins) AS o(origin)
+    WHERE ch.workspace_id = @workspace_id AND ch.kind = 'chat' AND ch.inbox_id IN (SELECT id FROM visible)
+), sites AS (
+    SELECT data.inbox_id, data.origin FROM data
+    UNION SELECT allowed.inbox_id, allowed.origin FROM allowed
+)
+SELECT s.origin::text AS origin, s.inbox_id::uuid AS inbox_id,
+    al.channel_id, al.channel_name,
+    coalesce(d.pages, 0)::bigint AS pages,
+    coalesce(d.up, 0)::bigint AS up,
+    coalesce(d.down, 0)::bigint AS down,
+    coalesce(d.open_feedback, 0)::bigint AS open_feedback,
+    coalesce(d.open_questions, 0)::bigint AS open_questions,
+    coalesce(d.published_answers, 0)::bigint AS published_answers
+FROM sites s
+LEFT JOIN data d ON d.inbox_id = s.inbox_id AND d.origin = s.origin
+LEFT JOIN allowed al ON al.inbox_id = s.inbox_id AND al.origin = s.origin AND al.n = 1
+ORDER BY s.origin, s.inbox_id;

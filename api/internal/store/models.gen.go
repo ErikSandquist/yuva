@@ -179,6 +179,7 @@ type Conversation struct {
 	LastReadByContactAt   *time.Time
 	PageUrl               *string
 	PageTitle             *string
+	ChannelKind           *string
 }
 
 type ConversationLabel struct {

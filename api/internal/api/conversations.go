@@ -163,7 +163,7 @@ func (s *Server) listItems(ctx context.Context, p principal, rows []store.Conver
 	for i, r := range rows {
 		c := conversationBody(r, labels[r.ID])
 		out[i] = oas.ConversationListItem{
-			Id: c.Id, InboxId: c.InboxId, ContactId: c.ContactId, ChannelId: c.ChannelId, Kind: c.Kind, Feedback: c.Feedback, Question: c.Question, Subject: c.Subject,
+			Id: c.Id, InboxId: c.InboxId, ContactId: c.ContactId, ChannelId: c.ChannelId, ChannelKind: c.ChannelKind, Kind: c.Kind, Feedback: c.Feedback, Question: c.Question, Subject: c.Subject,
 			Status: c.Status, SnoozeUntil: c.SnoozeUntil, Priority: c.Priority, Spam: c.Spam, AssigneeId: c.AssigneeId, Labels: c.Labels,
 			LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt, CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt,
 			RelatedConversationId: c.RelatedConversationId, ClosedAt: c.ClosedAt, Rating: c.Rating, LastReadByContactAt: c.LastReadByContactAt,
@@ -178,7 +178,7 @@ func conversationBody(c store.Conversation, labels []uuid.UUID) oas.Conversation
 		labels = []uuid.UUID{}
 	}
 	return oas.Conversation{
-		Id: c.ID, InboxId: c.InboxID, ContactId: c.ContactID, ChannelId: c.ChannelID, Subject: c.Subject,
+		Id: c.ID, InboxId: c.InboxID, ContactId: c.ContactID, ChannelId: c.ChannelID, ChannelKind: (*oas.ChannelKind)(c.ChannelKind), Subject: c.Subject,
 		Kind: oas.ConversationKind(c.Kind), Feedback: conversationFeedback(c), Question: conversationQuestion(c), Status: oas.ConversationStatus(c.Status), SnoozeUntil: c.SnoozeUntil, Priority: oas.Priority(c.Priority), Spam: c.Spam,
 		AssigneeId: c.AssigneeID, Labels: labels, LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt,
 		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, RelatedConversationId: c.RelatedConversationID,
@@ -320,22 +320,28 @@ func (s *Server) ListConversations(ctx context.Context, req oas.ListConversation
 		InboxID: prm.InboxId, ContactID: prm.ContactId, LabelID: prm.LabelId, Q: pos, QNot: neg,
 		CursorAt: at, CursorID: cid, Lim: lim + 1, Spam: prm.Spam != nil && *prm.Spam,
 	}
-	if prm.Kind != nil {
-		if !prm.Kind.Valid() {
-			return nil, errValidation("kind must be conversation, feedback or question")
-		}
-		k := string(*prm.Kind)
-		arg.Kind = &k
+	if arg.Kinds, err = enumList(prm.Kind, "kind must be conversation, feedback or question"); err != nil {
+		return nil, err
+	}
+	if arg.ChannelKinds, err = enumList(prm.ChannelKind, "channel_kind must be chat, email, app or api"); err != nil {
+		return nil, err
 	}
 	if prm.Category != nil {
 		if !prm.Category.Valid() {
 			return nil, errValidation("category must be bug, idea, praise or other")
 		}
 		k, c := string(oas.ConversationKindFeedback), string(*prm.Category)
-		if arg.Kind != nil && *arg.Kind != k {
+		if arg.Kinds != nil && !slices.Contains(arg.Kinds, k) {
 			return nil, errValidation("category is only for kind=feedback")
 		}
-		arg.Kind, arg.Category = &k, &c
+		arg.Kinds, arg.Category = []string{k}, &c
+	}
+	if prm.Site != nil {
+		site, ok := normalizeOrigin(*prm.Site)
+		if !ok {
+			return nil, errValidation("site must be an origin, scheme://host[:port]")
+		}
+		arg.Site = &site
 	}
 	if prm.InboxId != nil {
 		if _, err := visibleInbox(ctx, s.st.Queries, p, *prm.InboxId); err != nil {
@@ -685,4 +691,26 @@ func (s *Server) changeConversation(ctx context.Context, q *store.Queries, event
 		events.conversation(realtime.ConversationUpdated, updated, out)
 	}
 	return out, s.recordChanges(ctx, q, events, p, cur, updated, added, removed, now)
+}
+
+func enumList[T interface {
+	~string
+	Valid() bool
+}](vals *[]T, msg string) ([]string, error) {
+	if vals == nil {
+		return nil, nil
+	}
+	var out []string
+	for _, v := range *vals {
+		for part := range strings.SplitSeq(string(v), ",") {
+			part = strings.TrimSpace(part)
+			if !T(part).Valid() {
+				return nil, errValidation(msg)
+			}
+			if !slices.Contains(out, part) {
+				out = append(out, part)
+			}
+		}
+	}
+	return out, nil
 }

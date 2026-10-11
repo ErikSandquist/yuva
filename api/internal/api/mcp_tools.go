@@ -480,9 +480,9 @@ var mcpTools = []mcpTool{
 		readOnly, map[string][]any{"category": {"bug", "idea", "praise", "other"}, "status": conversationStatuses},
 		mcpTool{ops: []string{"ListConversations"}},
 		func(ctx context.Context, c *mcpCall, in listFeedbackIn) (mcpPage[mcpConversation], error) {
-			kind := oas.ConversationKindFeedback
+			kinds := []oas.ConversationKind{oas.ConversationKindFeedback}
 			return c.listConversations(ctx, oas.ListConversationsParams{
-				Kind: &kind, InboxId: in.InboxID, Category: optString[oas.FeedbackCategory](in.Category),
+				Kind: &kinds, InboxId: in.InboxID, Category: optString[oas.FeedbackCategory](in.Category),
 				Status: optString[oas.ConversationStatus](in.Status), Q: optString[string](in.Query),
 				Cursor: optString[string](in.Cursor), Limit: optLimit(in.Limit),
 			})

@@ -2485,6 +2485,10 @@ type Conversation struct {
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
 
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
+
 	// ClosedAt When it was last closed; absent when it never was.
 	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	ContactId uuid.UUID  `json:"contact_id"`
@@ -2645,6 +2649,10 @@ type ConversationListItem struct {
 
 	// ChannelId The channel it started on; absent when unknown or removed.
 	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelKind Read-only: the kind of the channel it started on, kept when that channel is removed or
+	// the conversation moves to another inbox. Absent when it started without a channel.
+	ChannelKind *ChannelKind `json:"channel_kind,omitempty"`
 
 	// ClosedAt When it was last closed; absent when it never was.
 	ClosedAt *time.Time `json:"closed_at,omitempty"`
@@ -2895,6 +2903,30 @@ type DocsPagePage struct {
 
 // DocsPageSort defines model for DocsPageSort.
 type DocsPageSort string
+
+// DocsSite defines model for DocsSite.
+type DocsSite struct {
+	// ChannelId The chat channel of the inbox that allows the origin; absent when none does.
+	ChannelId *uuid.UUID `json:"channel_id,omitempty"`
+
+	// ChannelName That channel's name; absent with `channel_id`.
+	ChannelName   *string   `json:"channel_name,omitempty"`
+	Down          int64     `json:"down"`
+	InboxId       uuid.UUID `json:"inbox_id"`
+	OpenFeedback  int64     `json:"open_feedback"`
+	OpenQuestions int64     `json:"open_questions"`
+
+	// Origin The site, `scheme://host[:port]`.
+	Origin           string `json:"origin"`
+	Pages            int64  `json:"pages"`
+	PublishedAnswers int64  `json:"published_answers"`
+	Up               int64  `json:"up"`
+}
+
+// DocsSiteList defines model for DocsSiteList.
+type DocsSiteList struct {
+	Items []DocsSite `json:"items"`
+}
 
 // DocsSummary defines model for DocsSummary.
 type DocsSummary struct {
@@ -4872,6 +4904,9 @@ type DeliveryId = uuid.UUID
 // DocsDays defines model for DocsDays.
 type DocsDays = int32
 
+// DocsSiteFilter Examples: https://docs.example.com
+type DocsSiteFilter = string
+
 // IdempotencyKey defines model for IdempotencyKey.
 type IdempotencyKey = string
 
@@ -5219,10 +5254,23 @@ type ListConversationsParams struct {
 	// `false`, spam is left out.
 	Spam *bool `form:"spam,omitempty" json:"spam,omitempty"`
 
-	// Kind Only conversations of this kind, e.g. `feedback` for the feedback view.
-	Kind *ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
+	// Kind Only conversations of these kinds, e.g. `feedback` for the feedback view. Repeat the
+	// parameter (`kind=feedback&kind=question`) or give a comma-separated list
+	// (`kind=feedback,question`).
+	Kind *[]ConversationKind `form:"kind,omitempty" json:"kind,omitempty"`
 
-	// Category Only feedback of this category (implies `kind=feedback`).
+	// ChannelKind Only conversations that started on a channel of these kinds (`channel_kind` on the
+	// conversation). Repeat the parameter or give a comma-separated list. Conversations
+	// without a `channel_kind` never match.
+	ChannelKind *[]ChannelKind `form:"channel_kind,omitempty" json:"channel_kind,omitempty"`
+
+	// Site Only feedback and questions sent from a page of this site: an origin,
+	// `scheme://host[:port]`, matched against the origin of `feedback.page_url` or
+	// `question.page_url`.
+	Site *string `form:"site,omitempty" json:"site,omitempty"`
+
+	// Category Only feedback of this category (implies `kind=feedback`; with a `kind` list that lacks
+	// `feedback`, `400`).
 	Category *FeedbackCategory `form:"category,omitempty" json:"category,omitempty"`
 
 	// Page Only feedback and questions sent from this documentation page (a URL; query and
@@ -5372,6 +5420,10 @@ type GetDocsPageParams struct {
 	// Page The page's URL; query and fragment are ignored.
 	Page string `form:"page" json:"page"`
 
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
+
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
 
@@ -5382,6 +5434,10 @@ type GetDocsPageParams struct {
 // ListDocsPagesParams defines parameters for ListDocsPages.
 type ListDocsPagesParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
 
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays     `form:"days,omitempty" json:"days,omitempty"`
@@ -5397,9 +5453,24 @@ type ListDocsPagesParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListDocsSitesParams defines parameters for ListDocsSites.
+type ListDocsSitesParams struct {
+	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
+	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // GetDocsSummaryParams defines parameters for GetDocsSummary.
 type GetDocsSummaryParams struct {
 	InboxId *uuid.UUID `form:"inbox_id,omitempty" json:"inbox_id,omitempty"`
+
+	// Site Only the pages of this site: an origin, `scheme://host[:port]` (as in `GET /v1/docs/sites`).
+	// Without it, every site.
+	Site *DocsSiteFilter `form:"site,omitempty" json:"site,omitempty"`
 
 	// Days The rating window in days, `7`, `30` or `90`; 30 by default.
 	Days *DocsDays `form:"days,omitempty" json:"days,omitempty"`
@@ -7684,6 +7755,9 @@ type ServerInterface interface {
 	// ListDocsPages Documentation pages with their ratings, feedback and questions
 	// (GET /v1/docs/pages)
 	ListDocsPages(w http.ResponseWriter, r *http.Request, params ListDocsPagesParams)
+	// ListDocsSites Documentation sites
+	// (GET /v1/docs/sites)
+	ListDocsSites(w http.ResponseWriter, r *http.Request, params ListDocsSitesParams)
 	// GetDocsSummary Documentation pages in total and per day
 	// (GET /v1/docs/summary)
 	GetDocsSummary(w http.ResponseWriter, r *http.Request, params GetDocsSummaryParams)
@@ -10220,13 +10294,39 @@ func (siw *ServerInterfaceWrapper) ListConversations(w http.ResponseWriter, r *h
 
 	// ------------- Optional query parameter "kind" -------------
 
-	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "kind", r.URL.Query(), &params.Kind, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
 	if err != nil {
 		var requiredError *runtime.RequiredParameterError
 		if errors.As(err, &requiredError) {
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "kind"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "channel_kind" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "channel_kind", r.URL.Query(), &params.ChannelKind, runtime.BindQueryParameterOptions{Type: "array", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "channel_kind"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "channel_kind", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
 		}
 		return
 	}
@@ -11240,6 +11340,19 @@ func (siw *ServerInterfaceWrapper) GetDocsPage(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
+		}
+		return
+	}
+
 	// ------------- Optional query parameter "days" -------------
 
 	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
@@ -11303,6 +11416,19 @@ func (siw *ServerInterfaceWrapper) ListDocsPages(w http.ResponseWriter, r *http.
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
 		}
 		return
 	}
@@ -11391,6 +11517,73 @@ func (siw *ServerInterfaceWrapper) ListDocsPages(w http.ResponseWriter, r *http.
 	handler.ServeHTTP(w, r)
 }
 
+// ListDocsSites operation middleware
+func (siw *ServerInterfaceWrapper) ListDocsSites(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListDocsSitesParams
+
+	// ------------- Optional query parameter "inbox_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "inbox_id", r.URL.Query(), &params.InboxId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "days" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "days"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "days", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListDocsSites(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // GetDocsSummary operation middleware
 func (siw *ServerInterfaceWrapper) GetDocsSummary(w http.ResponseWriter, r *http.Request) {
 
@@ -11409,6 +11602,19 @@ func (siw *ServerInterfaceWrapper) GetDocsSummary(w http.ResponseWriter, r *http
 			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "inbox_id"})
 		} else {
 			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "inbox_id", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "site" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "site", r.URL.Query(), &params.Site, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "site"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "site", Err: err})
 		}
 		return
 	}
@@ -15112,6 +15318,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.DeletePageAnswer)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.GetPageAnswer)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/page-answers/{pageAnswerId}", wrapper.UpdatePageAnswer)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/sites", wrapper.ListDocsSites)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/pages", wrapper.ListDocsPages)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/summary", wrapper.GetDocsSummary)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/docs/page", wrapper.GetDocsPage)
@@ -21179,6 +21386,86 @@ func (response ListDocsPages404ApplicationProblemPlusJSONResponse) VisitListDocs
 	return err
 }
 
+type ListDocsSitesRequestObject struct {
+	Params ListDocsSitesParams
+}
+
+type ListDocsSitesResponseObject interface {
+	VisitListDocsSitesResponse(w http.ResponseWriter) error
+}
+
+type ListDocsSites200JSONResponse DocsSiteList
+
+func (response ListDocsSites200JSONResponse) VisitListDocsSitesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDocsSites400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListDocsSites400ApplicationProblemPlusJSONResponse) VisitListDocsSitesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDocsSites401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDocsSites401ApplicationProblemPlusJSONResponse) VisitListDocsSitesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDocsSites403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDocsSites403ApplicationProblemPlusJSONResponse) VisitListDocsSitesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListDocsSites404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListDocsSites404ApplicationProblemPlusJSONResponse) VisitListDocsSitesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type GetDocsSummaryRequestObject struct {
 	Params GetDocsSummaryParams
 }
@@ -26350,6 +26637,9 @@ type StrictServerInterface interface {
 	// ListDocsPages Documentation pages with their ratings, feedback and questions
 	// (GET /v1/docs/pages)
 	ListDocsPages(ctx context.Context, request ListDocsPagesRequestObject) (ListDocsPagesResponseObject, error)
+	// ListDocsSites Documentation sites
+	// (GET /v1/docs/sites)
+	ListDocsSites(ctx context.Context, request ListDocsSitesRequestObject) (ListDocsSitesResponseObject, error)
 	// GetDocsSummary Documentation pages in total and per day
 	// (GET /v1/docs/summary)
 	GetDocsSummary(ctx context.Context, request GetDocsSummaryRequestObject) (GetDocsSummaryResponseObject, error)
@@ -28653,6 +28943,32 @@ func (sh *strictHandler) ListDocsPages(w http.ResponseWriter, r *http.Request, p
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(ListDocsPagesResponseObject); ok {
 		if err := validResponse.VisitListDocsPagesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListDocsSites operation middleware
+func (sh *strictHandler) ListDocsSites(w http.ResponseWriter, r *http.Request, params ListDocsSitesParams) {
+	var request ListDocsSitesRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListDocsSites(ctx, request.(ListDocsSitesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListDocsSites")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListDocsSitesResponseObject); ok {
+		if err := validResponse.VisitListDocsSitesResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

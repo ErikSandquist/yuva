@@ -588,9 +588,13 @@ func (s *Server) ListDocsPages(ctx context.Context, req oas.ListDocsPagesRequest
 			return nil, err
 		}
 	}
+	site, err := docsSite(prm.Site)
+	if err != nil {
+		return nil, err
+	}
 	rows, err := s.st.ListDocsPages(ctx, store.ListDocsPagesParams{
 		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId,
-		Since: since, Lim: lim + 1, Off: off, Sort: string(sort), HelpfulMin: helpfulMinRatings,
+		Site: site, Since: since, Lim: lim + 1, Off: off, Sort: string(sort), HelpfulMin: helpfulMinRatings,
 	})
 	if err != nil {
 		return nil, err
@@ -615,9 +619,16 @@ func (s *Server) GetDocsPage(ctx context.Context, req oas.GetDocsPageRequestObje
 	if err != nil {
 		return nil, err
 	}
-	page, _, err := pageURL(prm.Page)
+	page, origin, err := pageURL(prm.Page)
 	if err != nil {
 		return nil, err
+	}
+	site, err := docsSite(prm.Site)
+	if err != nil {
+		return nil, err
+	}
+	if site != nil && *site != origin {
+		return nil, errValidation("page is not on site")
 	}
 	if _, err := visibleInbox(ctx, s.st.Queries, p, prm.InboxId); err != nil {
 		return nil, err
@@ -656,15 +667,19 @@ func (s *Server) GetDocsSummary(ctx context.Context, req oas.GetDocsSummaryReque
 			return nil, err
 		}
 	}
+	site, err := docsSite(prm.Site)
+	if err != nil {
+		return nil, err
+	}
 	days, err := s.st.ListDocsSummaryDays(ctx, store.ListDocsSummaryDaysParams{
 		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId,
-		Since: since, Until: utcDay(s.now()), SinceAt: since,
+		Site: site, Since: since, Until: utcDay(s.now()), SinceAt: since,
 	})
 	if err != nil {
 		return nil, err
 	}
 	counts, err := s.st.GetDocsSummaryCounts(ctx, store.GetDocsSummaryCountsParams{
-		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId,
+		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId, Site: site,
 		Since: since, SinceAt: since,
 	})
 	if err != nil {
@@ -682,4 +697,43 @@ func (s *Server) GetDocsSummary(ctx context.Context, req oas.GetDocsSummaryReque
 		out.Totals.Questions += d.Questions
 	}
 	return oas.GetDocsSummary200JSONResponse(out), nil
+}
+
+func docsSite(v *string) (*string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	site, ok := normalizeOrigin(*v)
+	if !ok {
+		return nil, errValidation("site must be an origin, scheme://host[:port]")
+	}
+	return &site, nil
+}
+
+func (s *Server) ListDocsSites(ctx context.Context, req oas.ListDocsSitesRequestObject) (oas.ListDocsSitesResponseObject, error) {
+	p := principalFrom(ctx)
+	prm := req.Params
+	since, err := docsSince(s, prm.Days)
+	if err != nil {
+		return nil, err
+	}
+	if prm.InboxId != nil {
+		if _, err := visibleInbox(ctx, s.st.Queries, p, *prm.InboxId); err != nil {
+			return nil, err
+		}
+	}
+	rows, err := s.st.ListDocsSites(ctx, store.ListDocsSitesParams{
+		WorkspaceID: p.workspaceID, AllInboxes: p.seesAllInboxes(), ViewerID: p.viewerID(), InboxID: prm.InboxId, Since: since,
+	})
+	if err != nil {
+		return nil, err
+	}
+	items := make([]oas.DocsSite, len(rows))
+	for i, r := range rows {
+		items[i] = oas.DocsSite{
+			Origin: r.Origin, InboxId: r.InboxID, ChannelId: r.ChannelID, ChannelName: r.ChannelName, Pages: r.Pages,
+			Up: r.Up, Down: r.Down, OpenFeedback: r.OpenFeedback, OpenQuestions: r.OpenQuestions, PublishedAnswers: r.PublishedAnswers,
+		}
+	}
+	return oas.ListDocsSites200JSONResponse{Items: items}, nil
 }

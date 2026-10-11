@@ -74,6 +74,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"ListDocsPages":         {oas.ConversationsRead},
 	"GetDocsPage":           {oas.ConversationsRead},
 	"GetDocsSummary":        {oas.ConversationsRead},
+	"ListDocsSites":         {oas.ConversationsRead},
 
 	"CreateConversation":      {oas.ConversationsWrite},
 	"UpdateConversation":      {oas.ConversationsWrite},
