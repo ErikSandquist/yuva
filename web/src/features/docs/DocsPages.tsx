@@ -10,6 +10,7 @@ import type { ChartConfig } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CategoryChip } from "@/features/conversation/Feedback"
 import { DailyChart, zeroFill } from "@/features/docs/DailyChart"
+import { ThreadList } from "@/features/docs/discussions/DiscussionsPane"
 import { DocsGuide, DocsSitePicker, DocsWindow, helpfulShare, usePickedSite } from "@/features/docs/DocsColumn"
 import { pageLabel, PageRatingMark } from "@/features/docs/PageContext"
 import { useDocsDays, useDocsPage, useDocsPages, useDocsSort, useDocsSummary } from "@/features/docs/queries"
@@ -291,6 +292,14 @@ export function DocsPagePane() {
           <Tiles tiles={tiles} testId="docs-tiles" />
           <Section title={<Trans>Ratings per day</Trans>}>
             <Days days={detail.data?.days ?? []} window={days} />
+          </Section>
+          <Section title={<Trans>Discussions</Trans>}>
+            <ThreadList
+              filters={{ inbox_id: inboxId, page }}
+              showPage={false}
+              from={`/docs/page?${params}`}
+              empty={<Trans>No discussions on this page yet.</Trans>}
+            />
           </Section>
           <Conversations
             inboxId={inboxId}

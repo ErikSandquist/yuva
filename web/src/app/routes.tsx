@@ -6,6 +6,9 @@ import { SignInPage } from "@/features/auth/SignInPage"
 import { ContactPage } from "@/features/contact/ContactPage"
 import { ContactsHome } from "@/features/contact/ContactsColumn"
 import { DocsHome, DocsOverview, DocsPagePane } from "@/features/docs/DocsPages"
+import { DiscussionsPane } from "@/features/docs/discussions/DiscussionsPane"
+import { QueuePane } from "@/features/docs/discussions/QueuePane"
+import { ThreadPane } from "@/features/docs/discussions/ThreadPane"
 import { ChatsPage } from "@/features/inbox/ChatsPage"
 import { ConsentPage } from "@/features/oauth/ConsentPage"
 import { ApiKeysPage } from "@/features/settings/api-keys/ApiKeysPage"
@@ -57,6 +60,9 @@ export function AppRoutes() {
           <Route path="docs" element={<DocsHome />} />
           <Route path="docs/overview" element={<DocsOverview />} />
           <Route path="docs/page" element={<DocsPagePane />} />
+          <Route path="docs/discussions" element={<DiscussionsPane />} />
+          <Route path="docs/discussions/queue" element={<QueuePane />} />
+          <Route path="docs/discussions/:discussionId" element={<ThreadPane />} />
           <Route path="settings">
             <Route index element={<SettingsHome />} />
             <Route element={<SettingsPane />}>

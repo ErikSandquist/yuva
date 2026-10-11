@@ -25,6 +25,11 @@ msgstr "{0, plural, one {# conversation} other {# conversations}}"
 msgid "{0, plural, one {# open} other {# open}}"
 msgstr "{0, plural, one {# open} other {# open}}"
 
+#. placeholder {0}: d.reply_count
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "{0, plural, one {# reply} other {# replies}}"
+msgstr "{0, plural, one {# reply} other {# replies}}"
+
 #. placeholder {0}: g.requests_this_month
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
@@ -258,9 +263,18 @@ msgstr "{pct} satisfied"
 msgid "{pending} posts waiting for approval"
 msgstr "{pending} posts waiting for approval"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} waiting for approval"
+
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
 msgstr "{replies, plural, one {# reply} other {# replies}}"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "{replies} replies"
+msgstr "{replies} replies"
 
 #: src/app/TeamMenu.tsx
 msgid "{satisfied} satisfied"
@@ -277,6 +291,11 @@ msgstr "{threads} open discussions"
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} helpful"
+
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "{votes} votes"
+msgstr "{votes} votes"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "{who} in {contact}"
@@ -439,6 +458,10 @@ msgstr "A teammate"
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Accepted answer"
+msgstr "Accepted answer"
+
 #: src/features/oauth/ConsentPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
@@ -565,6 +588,7 @@ msgstr "Alert me while the tab is in the background"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -646,6 +670,10 @@ msgstr "An invite is accepted when the person signs in with a code sent to that 
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "An owner or admin can let assistants send on their own with Bots may send."
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Anonymous"
+msgstr "Anonymous"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "anonymous users allowed"
 msgstr "anonymous users allowed"
@@ -667,6 +695,14 @@ msgstr "another conversation"
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
 msgstr "another inbox"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Answer cleared"
+msgstr "Answer cleared"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Answered"
+msgstr "Answered"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
@@ -719,6 +755,23 @@ msgstr "Appear online only in business hours"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Appearance"
 msgstr "Appearance"
+
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Approve"
+msgstr "Approve"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Approve or show the selected post"
+msgstr "Approve or show the selected post"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Approve the selected post"
+msgstr "Approve the selected post"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Approved"
+msgstr "Approved"
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -918,6 +971,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
 msgstr "Cancel"
@@ -994,6 +1048,10 @@ msgstr "claude.ai and Claude Desktop"
 #: src/features/contact/ContactDetails.tsx
 msgid "Clear"
 msgstr "Clear"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Clear the answer"
+msgstr "Clear the answer"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1370,16 +1428,25 @@ msgstr "Delete this workspace"
 msgid "Delete your account?"
 msgstr "Delete your account?"
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Deleted by its author."
+msgstr "Deleted by its author."
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
 msgstr "Deleted inbox"
 
+#: src/features/docs/discussions/parts.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Deleted member"
 msgstr "Deleted member"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Deleted reader"
+msgstr "Deleted reader"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Deletes its channels, conversations, messages and attachments. This cannot be undone."
@@ -1439,9 +1506,26 @@ msgstr "Discard"
 msgid "Discard the suggested reply"
 msgstr "Discard the suggested reply"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Discussion"
+msgstr "Discussion"
+
+#: src/app/Palette.tsx
+msgid "Discussion posts waiting for approval"
+msgstr "Discussion posts waiting for approval"
+
+#: src/app/Palette.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Discussions"
 msgstr "Discussions"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Discussions and approvals"
+msgstr "Discussions and approvals"
 
 #: src/components/common/text.ts
 msgid "Discussions are off on this site's chat channel."
@@ -1470,6 +1554,7 @@ msgstr "Do this later"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Docs"
@@ -1611,6 +1696,15 @@ msgstr "Edit endpoint"
 msgid "Edit label"
 msgstr "Edit label"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Edit the title"
+msgstr "Edit the title"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "edited"
+msgstr "edited"
+
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
 msgstr "Embed snippet"
@@ -1671,6 +1765,10 @@ msgstr "Every inbox follows the settings above."
 #: src/features/inbox/ChatList.tsx
 msgid "Every open conversation has someone."
 msgstr "Every open conversation has someone."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Every open discussion has an answer."
+msgstr "Every open discussion has an answer."
 
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
@@ -1856,6 +1954,10 @@ msgstr "Friday"
 msgid "From"
 msgstr "From"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "From a conversation"
+msgstr "From a conversation"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "From address (optional)"
@@ -1960,7 +2062,14 @@ msgstr "Hi! Ask us anything."
 msgid "Hi! How can we help?"
 msgstr "Hi! How can we help?"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "Hidden"
+msgstr "Hidden"
+
 #: src/features/conversation/History.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Hide"
 
@@ -1971,6 +2080,10 @@ msgstr "Hide quoted text"
 #: src/features/setup/SetupLayout.tsx
 msgid "Hide the preview"
 msgstr "Hide the preview"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Hide the selected post"
+msgstr "Hide the selected post"
 
 #: src/components/common/text.ts
 msgid "High"
@@ -2126,6 +2239,10 @@ msgstr "It goes into <0>~/.codex/config.toml</0>, which the Codex CLI and IDE ex
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "It is added for you in the current project. Add <0>--scope user</0> for every project, or <1>--scope project</1> to share it in <2>.mcp.json</2>."
 msgstr "It is added for you in the current project. Add <0>--scope user</0> for every project, or <1>--scope project</1> to share it in <2>.mcp.json</2>."
+
+#: src/features/docs/discussions/parts.tsx
+msgid "It is hidden with every other post of its author still waiting for approval, and their later posts always wait for a member."
+msgstr "It is hidden with every other post of its author still waiting for approval, and their later posts always wait for a member."
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "It is removed from every conversation."
@@ -2299,6 +2416,7 @@ msgstr "Load images"
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/discussions/parts.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -2317,6 +2435,24 @@ msgstr "Loading…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "Locale"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Lock"
+msgstr "Lock"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Lock or unlock"
+msgstr "Lock or unlock"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Locked"
+msgstr "Locked"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Locked: readers can no longer write here. You still can."
+msgstr "Locked: readers can no longer write here. You still can."
 
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
@@ -2363,11 +2499,16 @@ msgstr "Manage webhooks"
 msgid "manual"
 msgstr "manual"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Mark as answer"
+msgstr "Mark as answer"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Mark as read"
 msgstr "Mark as read"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/docs/discussions/parts.tsx
 msgid "Mark as spam"
 msgstr "Mark as spam"
 
@@ -2384,9 +2525,29 @@ msgstr "Mark as unread and go back to the list"
 msgid "Mark or unmark as spam"
 msgstr "Mark or unmark as spam"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mark the selected post as spam"
+msgstr "Mark the selected post as spam"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mark the selected reply as the answer, or clear it"
+msgstr "Mark the selected reply as the answer, or clear it"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Mark this post as spam?"
+msgstr "Mark this post as spam?"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Marked as spam"
+msgstr "Marked as spam"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Marked as spam: never answered automatically."
 msgstr "Marked as spam: never answered automatically."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Marked as the answer"
+msgstr "Marked as the answer"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
@@ -2520,9 +2681,17 @@ msgstr "Most liked"
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "Most ratings, open feedback, open discussions and waiting posts first"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Most votes"
+msgstr "Most votes"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Move through the list"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the posts"
+msgstr "Move through the posts"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
@@ -2602,6 +2771,10 @@ msgstr "New conversation in an async inbox"
 msgid "New conversations show up at the top of your conversation list."
 msgstr "New conversations show up at the top of your conversation list."
 
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New discussion"
+msgstr "New discussion"
+
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "new discussions"
@@ -2647,6 +2820,10 @@ msgstr "Newer match"
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match (⇧Enter)"
 msgstr "Newer match (⇧Enter)"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Newest"
+msgstr "Newest"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Newest first. Finished deliveries are kept for 7 days."
@@ -2741,6 +2918,14 @@ msgstr "No conversations here."
 msgid "No conversations yet."
 msgstr "No conversations yet."
 
+#: src/features/docs/DocsPages.tsx
+msgid "No discussions on this page yet."
+msgstr "No discussions on this page yet."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No discussions yet. Readers start them under your documentation pages."
+msgstr "No discussions yet. Readers start them under your documentation pages."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -2761,6 +2946,10 @@ msgstr "No endpoints yet."
 msgid "No feedback from this page."
 msgstr "No feedback from this page."
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No hidden discussions."
+msgstr "No hidden discussions."
+
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "No labels yet"
 msgstr "No labels yet"
@@ -2769,6 +2958,10 @@ msgstr "No labels yet"
 #: src/features/conversation/HeaderActions.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "No labels yet. Add them in settings."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No locked discussions."
+msgstr "No locked discussions."
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -2809,6 +3002,10 @@ msgstr "No ratings today"
 #: src/features/reports/ReportPages.tsx
 msgid "No ratings today."
 msgstr "No ratings today."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "No replies yet."
+msgstr "No replies yet."
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -2932,6 +3129,11 @@ msgstr "Nothing is done yet."
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Nothing is snoozed."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Nothing is waiting for approval."
+msgstr "Nothing is waiting for approval."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -3110,6 +3312,11 @@ msgstr "open discussions"
 msgid "open feedback"
 msgstr "open feedback"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Open on its page"
+msgstr "Open on its page"
+
 #: src/features/contact/ContactSheet.tsx
 msgid "Open page"
 msgstr "Open page"
@@ -3118,6 +3325,10 @@ msgstr "Open page"
 #: src/features/setup/WaitStep.tsx
 msgid "Open the conversation"
 msgstr "Open the conversation"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the discussion"
+msgstr "Open the discussion"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
@@ -3197,6 +3408,7 @@ msgid "Owners and admins see every inbox; members see the inboxes they are given
 msgstr "Owners and admins see every inbox; members see the inboxes they are given."
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Page"
 msgstr "Page"
 
@@ -3387,6 +3599,14 @@ msgstr "Profile"
 msgid "Public key"
 msgstr "Public key"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Public threads under your documentation pages, in every state."
+msgstr "Public threads under your documentation pages, in every state."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Published at once and sent to the followers."
+msgstr "Published at once and sent to the followers."
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push"
 msgstr "Push"
@@ -3469,9 +3689,17 @@ msgstr "Read conversations, messages, labels and canned replies"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Read the workspace, members, inboxes and channels"
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Reader"
+msgstr "Reader"
+
 #: src/features/setup/ChannelStep.tsx
 msgid "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
 msgstr "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest first."
+msgstr "Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest first."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Reading"
@@ -3488,6 +3716,10 @@ msgstr "receives only, no SMTP account"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Receiving"
 msgstr "Receiving"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Recent activity"
+msgstr "Recent activity"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Redeliver"
@@ -3606,12 +3838,34 @@ msgid "replies today"
 msgstr "replies today"
 
 #: src/features/conversation/composer/ReplyBox.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply"
 msgstr "Reply"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply ({mod}↵)"
+msgstr "Reply ({mod}↵)"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply posted"
+msgstr "Reply posted"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Reply time"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to the discussion"
+msgstr "Reply to the discussion"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply to the discussion instead"
+msgstr "Reply to the discussion instead"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to the selected post"
+msgstr "Reply to the selected post"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Reply with a quote"
@@ -3620,6 +3874,10 @@ msgstr "Reply with a quote"
 #: src/features/auth/AuthLayout.tsx
 msgid "Reply, assign and follow up together, across all of your products."
 msgstr "Reply, assign and follow up together, across all of your products."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Replying to {to}"
+msgstr "Replying to {to}"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -3720,6 +3978,7 @@ msgstr "satisfied · 👍 {good} 👎 {bad}"
 msgid "Saturday"
 msgstr "Saturday"
 
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
@@ -3910,6 +4169,10 @@ msgstr "Send or add the note, in a chat or app conversation (⇧↵ for a new li
 msgid "Send the e-mail after"
 msgstr "Send the e-mail after"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send the reply"
+msgstr "Send the reply"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Sending"
 msgstr "Sending"
@@ -3986,6 +4249,8 @@ msgid "Shortcut"
 msgstr "Shortcut"
 
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Show"
 msgstr "Show"
 
@@ -4158,6 +4423,7 @@ msgstr "Something the team should know…"
 msgid "Something went wrong on the server. Try again."
 msgstr "Something went wrong on the server. Try again."
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/DocsColumn.tsx
 msgid "Sort"
 msgstr "Sort"
@@ -4170,6 +4436,11 @@ msgstr "Sort conversations by topic. Each label also gets its own view in the si
 msgid "Sort conversations your way"
 msgstr "Sort conversations your way"
 
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Spam"
+msgstr "Spam"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
 msgstr "Start conversation"
@@ -4181,6 +4452,14 @@ msgstr "Start the server. VS Code asks to sign in to Yuva and opens your browser
 #: src/features/setup/ChannelStep.tsx
 msgid "Start with one. You can add the others later in the inbox settings."
 msgstr "Start with one. You can add the others later in the inbox settings."
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Started by {authorName}"
+msgstr "Started by {authorName}"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Started by {starter} · {started}"
+msgstr "Started by {starter} · {started}"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "STARTTLS (port 587)"
@@ -4266,6 +4545,7 @@ msgstr "System follows your device"
 #: src/app/TeamMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
+#: src/features/docs/discussions/parts.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/MemberPage.tsx
 #: src/features/team/TeamColumn.tsx
@@ -4520,6 +4800,10 @@ msgstr "This conversation's e-mail channel has no SMTP account, so the reply was
 msgid "This device"
 msgstr "This device"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "This discussion no longer exists or you cannot see it."
+msgstr "This discussion no longer exists or you cannot see it."
+
 #: src/components/common/text.ts
 msgid "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
 msgstr "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
@@ -4581,6 +4865,7 @@ msgstr "Time"
 msgid "Time zone"
 msgstr "Time zone"
 
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Title"
 msgstr "Title"
@@ -4687,6 +4972,11 @@ msgstr "Typing · {where}"
 msgid "typing…"
 msgstr "typing…"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "Unanswered"
+msgstr "Unanswered"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "Unassigned"
@@ -4715,6 +5005,14 @@ msgstr "Undo"
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Unknown device"
 msgstr "Unknown device"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Unlock"
+msgstr "Unlock"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Unlocked"
+msgstr "Unlocked"
 
 #: src/app/Palette.tsx
 #: src/app/TeamMenu.tsx
@@ -4838,6 +5136,14 @@ msgstr "Visitors write from any page of your site; you answer here, live."
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
 msgstr "waiting for approval"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsColumn.tsx
+msgid "Waiting for approval"
+msgstr "Waiting for approval"
 
 #: src/features/setup/previews.tsx
 msgid "Waiting for it to arrive"
@@ -5079,6 +5385,10 @@ msgstr "Write a message…"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Write a note for the team"
 msgstr "Write a note for the team"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Write a public reply. Markdown works."
+msgstr "Write a public reply. Markdown works."
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx

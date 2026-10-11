@@ -144,3 +144,69 @@
     @apply outline-2 outline-offset-2 outline-ring;
   }
 }
+
+@layer components {
+  .rich-text {
+    overflow-wrap: anywhere;
+  }
+  .rich-text > * + * {
+    margin-top: 0.75em;
+  }
+  .rich-text :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 600;
+  }
+  .rich-text a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .rich-text ul {
+    list-style: disc;
+    padding-inline-start: 1.25rem;
+  }
+  .rich-text ol {
+    list-style: decimal;
+    padding-inline-start: 1.25rem;
+  }
+  .rich-text li + li {
+    margin-top: 0.25em;
+  }
+  .rich-text code {
+    border-radius: 0.3rem;
+    background: var(--muted);
+    padding: 0.1em 0.3em;
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+  }
+  .rich-text pre {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    background: var(--surface);
+    padding: 0.75rem;
+  }
+  .rich-text pre code {
+    background: none;
+    padding: 0;
+  }
+  .rich-text blockquote {
+    border-inline-start: 3px solid var(--border);
+    padding-inline-start: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .rich-text table {
+    display: block;
+    overflow-x: auto;
+    border-collapse: collapse;
+  }
+  .rich-text :is(th, td) {
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.5rem;
+  }
+  .rich-text img {
+    max-width: 100%;
+  }
+  .rich-text hr {
+    border-color: var(--border);
+  }
+}

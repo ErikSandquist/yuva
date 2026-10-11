@@ -25,6 +25,11 @@ msgstr "{0, plural, one {# konuşmada} other {# konuşmada}}"
 msgid "{0, plural, one {# open} other {# open}}"
 msgstr "{0, plural, one {# açık} other {# açık}}"
 
+#. placeholder {0}: d.reply_count
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "{0, plural, one {# reply} other {# replies}}"
+msgstr "{0, plural, one {# yanıt} other {# yanıt}}"
+
 #. placeholder {0}: g.requests_this_month
 #: src/features/inbox/SidePanels.tsx
 msgid "{0, plural, one {# request this month} other {# requests this month}}"
@@ -258,9 +263,18 @@ msgstr "{pct} memnun"
 msgid "{pending} posts waiting for approval"
 msgstr "Onay bekleyen {pending} gönderi"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "{pending} waiting for approval"
+msgstr "{pending} onay bekliyor"
+
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
 msgstr "{replies, plural, one {# yanıt} other {# yanıt}}"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "{replies} replies"
+msgstr "{replies} yanıt"
 
 #: src/app/TeamMenu.tsx
 msgid "{satisfied} satisfied"
@@ -277,6 +291,11 @@ msgstr "{threads} açık tartışma"
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} yararlı"
+
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "{votes} votes"
+msgstr "{votes} oy"
 
 #: src/features/inbox/SidePanels.tsx
 msgid "{who} in {contact}"
@@ -439,6 +458,10 @@ msgstr "Bir ekip arkadaşı"
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresiz gönderilmez."
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Accepted answer"
+msgstr "Kabul edilen yanıt"
+
 #: src/features/oauth/ConsentPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
@@ -565,6 +588,7 @@ msgstr "Sekme arka plandayken beni uyar"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -646,6 +670,10 @@ msgstr "Davet, kişi o adrese gönderilen kodla giriş yaptığında kabul edili
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "Bir sahip ya da yönetici, Botlar gönderebilir ayarıyla asistanların kendi başına göndermesine izin verebilir."
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Anonymous"
+msgstr "Anonim"
+
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "anonymous users allowed"
 msgstr "anonim kullanıcılara açık"
@@ -667,6 +695,14 @@ msgstr "başka bir konuşma"
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
 msgstr "başka bir gelen kutusu"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Answer cleared"
+msgstr "Kabul edilen yanıt kaldırıldı"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Answered"
+msgstr "Yanıtlandı"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Answering"
@@ -719,6 +755,23 @@ msgstr "Sadece mesai saatlerinde çevrimiçi görün"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Appearance"
 msgstr "Görünüm"
+
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Approve"
+msgstr "Onayla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Approve or show the selected post"
+msgstr "Seçili gönderiyi onayla ya da yeniden göster"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Approve the selected post"
+msgstr "Seçili gönderiyi onayla"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Approved"
+msgstr "Onaylandı"
 
 #: src/features/setup/previews.tsx
 msgid "Arrived"
@@ -918,6 +971,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
@@ -994,6 +1048,10 @@ msgstr "claude.ai ve Claude Desktop"
 #: src/features/contact/ContactDetails.tsx
 msgid "Clear"
 msgstr "Temizle"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Clear the answer"
+msgstr "Kabulü kaldır"
 
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/inbox/ChatList.tsx
@@ -1370,16 +1428,25 @@ msgstr "Bu çalışma alanını sil"
 msgid "Delete your account?"
 msgstr "Hesabınız silinsin mi?"
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Deleted by its author."
+msgstr "Yazarı tarafından silindi."
+
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Deleted inbox"
 msgstr "Silinmiş gelen kutusu"
 
+#: src/features/docs/discussions/parts.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/reports/ReportPages.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Deleted member"
 msgstr "Silinmiş üye"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Deleted reader"
+msgstr "Silinmiş okuyucu"
 
 #: src/features/settings/inboxes/InboxSecurity.tsx
 msgid "Deletes its channels, conversations, messages and attachments. This cannot be undone."
@@ -1439,9 +1506,26 @@ msgstr "Sil"
 msgid "Discard the suggested reply"
 msgstr "Önerilen yanıtı sil"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Discussion"
+msgstr "Tartışma"
+
+#: src/app/Palette.tsx
+msgid "Discussion posts waiting for approval"
+msgstr "Onay bekleyen tartışma gönderileri"
+
+#: src/app/Palette.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Discussions"
 msgstr "Tartışmalar"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Discussions and approvals"
+msgstr "Tartışmalar ve onaylar"
 
 #: src/components/common/text.ts
 msgid "Discussions are off on this site's chat channel."
@@ -1470,6 +1554,7 @@ msgstr "Sonra yaparım"
 #: src/app/Palette.tsx
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 msgid "Docs"
@@ -1611,6 +1696,15 @@ msgstr "Uç noktayı düzenle"
 msgid "Edit label"
 msgstr "Etiketi düzenle"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Edit the title"
+msgstr "Başlığı düzenle"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "edited"
+msgstr "düzenlendi"
+
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Embed snippet"
 msgstr "Yerleştirme kodu"
@@ -1671,6 +1765,10 @@ msgstr "Tüm gelen kutuları yukarıdaki ayarlara uyar."
 #: src/features/inbox/ChatList.tsx
 msgid "Every open conversation has someone."
 msgstr "Açık konuşmaların hepsinin bir sorumlusu var."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Every open discussion has an answer."
+msgstr "Açık tartışmaların hepsinin bir yanıtı var."
 
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Every request to this endpoint, newest first. The newest 100 are kept."
@@ -1856,6 +1954,10 @@ msgstr "Cuma"
 msgid "From"
 msgstr "Kimden"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "From a conversation"
+msgstr "Bir konuşmadan"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "Gönderen adresi (isteğe bağlı)"
@@ -1960,7 +2062,14 @@ msgstr "Merhaba! Bize her şeyi sorabilirsiniz."
 msgid "Hi! How can we help?"
 msgstr "Merhaba! Size nasıl yardımcı olabiliriz?"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "Hidden"
+msgstr "Gizli"
+
 #: src/features/conversation/History.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Hide"
 msgstr "Gizle"
 
@@ -1971,6 +2080,10 @@ msgstr "Alıntıyı gizle"
 #: src/features/setup/SetupLayout.tsx
 msgid "Hide the preview"
 msgstr "Önizlemeyi gizle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Hide the selected post"
+msgstr "Seçili gönderiyi gizle"
 
 #: src/components/common/text.ts
 msgid "High"
@@ -2126,6 +2239,10 @@ msgstr "<0>~/.codex/config.toml</0> dosyasına yazılır; Codex komut satırı v
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "It is added for you in the current project. Add <0>--scope user</0> for every project, or <1>--scope project</1> to share it in <2>.mcp.json</2>."
 msgstr "Yalnızca sizin için, geçerli projeye eklenir. Tüm projeler için <0>--scope user</0>, <2>.mcp.json</2> ile ekiple paylaşmak için <1>--scope project</1> ekleyin."
+
+#: src/features/docs/discussions/parts.tsx
+msgid "It is hidden with every other post of its author still waiting for approval, and their later posts always wait for a member."
+msgstr "Gönderi, yazarının onay bekleyen diğer gönderileriyle birlikte gizlenir; yazarın sonraki gönderileri de her zaman bir üyenin onayını bekler."
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "It is removed from every conversation."
@@ -2299,6 +2416,7 @@ msgstr "Görselleri yükle"
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactsColumn.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/docs/discussions/parts.tsx
 #: src/features/docs/DocsColumn.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/settings/webhooks/Deliveries.tsx
@@ -2317,6 +2435,24 @@ msgstr "Yükleniyor…"
 #: src/features/conversation/Feedback.tsx
 msgid "Locale"
 msgstr "Dil ve bölge"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Lock"
+msgstr "Kilitle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Lock or unlock"
+msgstr "Kilitle ya da kilidi aç"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Locked"
+msgstr "Kilitli"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Locked: readers can no longer write here. You still can."
+msgstr "Kilitli: okuyucular artık buraya yazamaz. Siz hâlâ yazabilirsiniz."
 
 #: src/features/contact/ConversationMedia.tsx
 msgid "Look in older messages"
@@ -2363,11 +2499,16 @@ msgstr "Webhook'ları yönetme"
 msgid "manual"
 msgstr "elle"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Mark as answer"
+msgstr "Yanıt olarak işaretle"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Mark as read"
 msgstr "Okundu olarak işaretle"
 
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/docs/discussions/parts.tsx
 msgid "Mark as spam"
 msgstr "Spam olarak işaretle"
 
@@ -2384,9 +2525,29 @@ msgstr "Okunmadı olarak işaretle ve listeye dön"
 msgid "Mark or unmark as spam"
 msgstr "Spam olarak işaretle ya da işareti kaldır"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mark the selected post as spam"
+msgstr "Seçili gönderiyi spam olarak işaretle"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Mark the selected reply as the answer, or clear it"
+msgstr "Seçili yanıtı kabul edilen yanıt yap ya da kabulü kaldır"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Mark this post as spam?"
+msgstr "Bu gönderi spam olarak işaretlensin mi?"
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Marked as spam"
+msgstr "Spam olarak işaretlendi"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Marked as spam: never answered automatically."
 msgstr "Spam olarak işaretli: otomatik olarak hiç yanıtlanmaz."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Marked as the answer"
+msgstr "Yanıt olarak işaretlendi"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
@@ -2520,9 +2681,17 @@ msgstr "En çok beğenilen"
 msgid "Most ratings, open feedback, open discussions and waiting posts first"
 msgstr "En çok puan, açık geri bildirim, açık tartışma ve bekleyen gönderi önce"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Most votes"
+msgstr "En çok oy"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Move through the list"
 msgstr "Listede gezin"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Move through the posts"
+msgstr "Gönderiler arasında gezin"
 
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Move to inbox"
@@ -2602,6 +2771,10 @@ msgstr "Eşzamansız bir gelen kutusunda yeni konuşma"
 msgid "New conversations show up at the top of your conversation list."
 msgstr "Yeni konuşmalar konuşma listenizin en üstünde görünür."
 
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "New discussion"
+msgstr "Yeni tartışma"
+
 #: src/features/docs/DocsPages.tsx
 msgid "new discussions"
 msgstr "yeni tartışma"
@@ -2647,6 +2820,10 @@ msgstr "Sonraki eşleşme"
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match (⇧Enter)"
 msgstr "Sonraki eşleşme (⇧Enter)"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Newest"
+msgstr "En yeni"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Newest first. Finished deliveries are kept for 7 days."
@@ -2741,6 +2918,14 @@ msgstr "Burada konuşma yok."
 msgid "No conversations yet."
 msgstr "Henüz konuşma yok."
 
+#: src/features/docs/DocsPages.tsx
+msgid "No discussions on this page yet."
+msgstr "Bu sayfada henüz tartışma yok."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No discussions yet. Readers start them under your documentation pages."
+msgstr "Henüz tartışma yok. Okuyucular tartışmaları dokümantasyon sayfalarınızın altında başlatır."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "Bekleyen taslak yok. Bir asistanın, botun ya da ekip arkadaşının yazdığı yanıt taslakları, biri gönderene ya da silene kadar burada görünür."
@@ -2761,6 +2946,10 @@ msgstr "Henüz uç nokta yok."
 msgid "No feedback from this page."
 msgstr "Bu sayfadan geri bildirim yok."
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No hidden discussions."
+msgstr "Gizli tartışma yok."
+
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "No labels yet"
 msgstr "Henüz etiket yok"
@@ -2769,6 +2958,10 @@ msgstr "Henüz etiket yok"
 #: src/features/conversation/HeaderActions.tsx
 msgid "No labels yet. Add them in settings."
 msgstr "Henüz etiket yok. Ayarlardan ekleyebilirsiniz."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "No locked discussions."
+msgstr "Kilitli tartışma yok."
 
 #: src/features/conversation/ChatView.tsx
 msgid "No matches"
@@ -2809,6 +3002,10 @@ msgstr "Bugün değerlendirme yok"
 #: src/features/reports/ReportPages.tsx
 msgid "No ratings today."
 msgstr "Bugün değerlendirme yok."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "No replies yet."
+msgstr "Henüz yanıt yok."
 
 #: src/app/Palette.tsx
 msgid "No results"
@@ -2932,6 +3129,11 @@ msgstr "Henüz biten bir şey yok."
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
 msgstr "Ertelenmiş bir şey yok."
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Nothing is waiting for approval."
+msgstr "Onay bekleyen bir şey yok."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing matches these filters."
@@ -3110,6 +3312,11 @@ msgstr "açık tartışma"
 msgid "open feedback"
 msgstr "açık geri bildirim"
 
+#: src/components/common/ShortcutSheet.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Open on its page"
+msgstr "Sayfasında aç"
+
 #: src/features/contact/ContactSheet.tsx
 msgid "Open page"
 msgstr "Sayfayı aç"
@@ -3118,6 +3325,10 @@ msgstr "Sayfayı aç"
 #: src/features/setup/WaitStep.tsx
 msgid "Open the conversation"
 msgstr "Konuşmayı aç"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Open the discussion"
+msgstr "Tartışmayı aç"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
@@ -3197,6 +3408,7 @@ msgid "Owners and admins see every inbox; members see the inboxes they are given
 msgstr "Sahipler ve yöneticiler her gelen kutusunu görür; üyeler sadece kendilerine verilenleri."
 
 #: src/features/conversation/Feedback.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Page"
 msgstr "Sayfa"
 
@@ -3387,6 +3599,14 @@ msgstr "Profil"
 msgid "Public key"
 msgstr "Genel anahtar"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Public threads under your documentation pages, in every state."
+msgstr "Dokümantasyon sayfalarınızın altındaki herkese açık tartışmalar, her durumda."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Published at once and sent to the followers."
+msgstr "Hemen yayımlanır ve takipçilere gönderilir."
+
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "Push"
 msgstr "Anlık"
@@ -3469,9 +3689,17 @@ msgstr "Konuşmaları, mesajları, etiketleri ve hazır yanıtları görme"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Çalışma alanını, üyeleri, gelen kutularını ve kanalları görme"
 
+#: src/features/docs/discussions/parts.tsx
+msgid "Reader"
+msgstr "Okuyucu"
+
 #: src/features/setup/ChannelStep.tsx
 msgid "Readers rate each page, send feedback and ask questions; you answer and publish to the page."
 msgstr "Okuyucular her sayfayı puanlar, geri bildirim gönderir ve soru sorar; siz yanıtlar ve sayfada yayımlarsınız."
+
+#: src/features/docs/discussions/QueuePane.tsx
+msgid "Readers' posts wait here until a member approves one of theirs; after that, they publish at once. Oldest first."
+msgstr "Okuyucuların gönderileri, bir üye onlardan birini onaylayana kadar burada bekler; sonrasında hemen yayımlanırlar. En eskisi önce."
 
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Reading"
@@ -3488,6 +3716,10 @@ msgstr "yalnızca alır, SMTP hesabı yok"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Receiving"
 msgstr "Alma"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+msgid "Recent activity"
+msgstr "Son etkinlik"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Redeliver"
@@ -3606,12 +3838,34 @@ msgid "replies today"
 msgstr "bugün yanıt"
 
 #: src/features/conversation/composer/ReplyBox.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Reply"
 msgstr "Yanıt"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply ({mod}↵)"
+msgstr "Yanıtla ({mod}↵)"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply posted"
+msgstr "Yanıt gönderildi"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Reply time"
 msgstr "Yanıt süresi"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to the discussion"
+msgstr "Tartışmayı yanıtla"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Reply to the discussion instead"
+msgstr "Bunun yerine tartışmayı yanıtla"
+
+#: src/components/common/ShortcutSheet.tsx
+msgid "Reply to the selected post"
+msgstr "Seçili gönderiyi yanıtla"
 
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Reply with a quote"
@@ -3620,6 +3874,10 @@ msgstr "Alıntılayarak yanıtla"
 #: src/features/auth/AuthLayout.tsx
 msgid "Reply, assign and follow up together, across all of your products."
 msgstr "Tüm ürünleriniz için birlikte yanıtlayın, atayın ve takip edin."
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Replying to {to}"
+msgstr "Yanıtlanan: {to}"
 
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -3720,6 +3978,7 @@ msgstr "memnun · 👍 {good} 👎 {bad}"
 msgid "Saturday"
 msgstr "Cumartesi"
 
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
@@ -3910,6 +4169,10 @@ msgstr "Sohbet ya da uygulama konuşmasında gönder veya notu ekle (yeni satır
 msgid "Send the e-mail after"
 msgstr "E-postayı gönderme zamanı"
 
+#: src/components/common/ShortcutSheet.tsx
+msgid "Send the reply"
+msgstr "Yanıtı gönder"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Sending"
 msgstr "Gönderme"
@@ -3986,6 +4249,8 @@ msgid "Shortcut"
 msgstr "Kısayol"
 
 #: src/features/contact/ContactsColumn.tsx
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
 msgid "Show"
 msgstr "Göster"
 
@@ -4158,6 +4423,7 @@ msgstr "Ekibin bilmesi gereken bir şey…"
 msgid "Something went wrong on the server. Try again."
 msgstr "Sunucuda bir sorun oluştu. Yeniden deneyin."
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
 #: src/features/docs/DocsColumn.tsx
 msgid "Sort"
 msgstr "Sırala"
@@ -4170,6 +4436,11 @@ msgstr "Konuşmaları konuya göre ayırın. Her etiketin kenar çubuğunda kend
 msgid "Sort conversations your way"
 msgstr "Konuşmaları kendine göre ayır"
 
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Spam"
+msgstr "Spam"
+
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
 msgstr "Konuşmayı başlat"
@@ -4181,6 +4452,14 @@ msgstr "Sunucuyu başlatın. VS Code, Yuva'da oturum açmak için izin ister ve 
 #: src/features/setup/ChannelStep.tsx
 msgid "Start with one. You can add the others later in the inbox settings."
 msgstr "Biriyle başlayın. Diğerlerini sonra gelen kutusu ayarlarından ekleyebilirsiniz."
+
+#: src/features/docs/discussions/parts.tsx
+msgid "Started by {authorName}"
+msgstr "Başlatan: {authorName}"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Started by {starter} · {started}"
+msgstr "Başlatan: {starter} · {started}"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "STARTTLS (port 587)"
@@ -4266,6 +4545,7 @@ msgstr "Sistem, cihazının ayarını izler"
 #: src/app/TeamMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/History.tsx
+#: src/features/docs/discussions/parts.tsx
 #: src/features/settings/SettingsColumn.tsx
 #: src/features/team/MemberPage.tsx
 #: src/features/team/TeamColumn.tsx
@@ -4520,6 +4800,10 @@ msgstr "Bu konuşmanın e-posta kanalında SMTP hesabı yok, yanıt gönderilmed
 msgid "This device"
 msgstr "Bu cihaz"
 
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "This discussion no longer exists or you cannot see it."
+msgstr "Bu tartışma artık yok ya da onu göremiyorsunuz."
+
 #: src/components/common/text.ts
 msgid "This e-mail address bounced or complained, so the reply was not sent. Clear it on the contact to send again."
 msgstr "Bu e-posta adresi geri döndü ya da şikâyet etti, yanıt gönderilmedi. Yeniden göndermek için kişi panelinden temizleyin."
@@ -4581,6 +4865,7 @@ msgstr "Zaman"
 msgid "Time zone"
 msgstr "Saat dilimi"
 
+#: src/features/docs/discussions/ThreadPane.tsx
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Title"
 msgstr "Başlık"
@@ -4687,6 +4972,11 @@ msgstr "Yazıyor · {where}"
 msgid "typing…"
 msgstr "yazıyor…"
 
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+msgid "Unanswered"
+msgstr "Yanıtsız"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Unassigned"
 msgstr "Atanmamış"
@@ -4715,6 +5005,14 @@ msgstr "Geri al"
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Unknown device"
 msgstr "Bilinmeyen cihaz"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Unlock"
+msgstr "Kilidi aç"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Unlocked"
+msgstr "Kilit açıldı"
 
 #: src/app/Palette.tsx
 #: src/app/TeamMenu.tsx
@@ -4838,6 +5136,14 @@ msgstr "Ziyaretçiler sitenizin her sayfasından yazar; siz buradan anında yan�
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
 msgstr "onay bekliyor"
+
+#: src/features/docs/discussions/DiscussionsPane.tsx
+#: src/features/docs/discussions/parts.tsx
+#: src/features/docs/discussions/QueuePane.tsx
+#: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/docs/DocsColumn.tsx
+msgid "Waiting for approval"
+msgstr "Onay bekliyor"
 
 #: src/features/setup/previews.tsx
 msgid "Waiting for it to arrive"
@@ -5079,6 +5385,10 @@ msgstr "Bir mesaj yazın…"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Write a note for the team"
 msgstr "Ekibe not yaz"
+
+#: src/features/docs/discussions/ThreadPane.tsx
+msgid "Write a public reply. Markdown works."
+msgstr "Herkese açık bir yanıt yazın. Markdown kullanabilirsiniz."
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx

@@ -9,7 +9,7 @@ export const WINDOWS: DocsDays[] = [7, 30, 90]
 
 export const SORTS: DocsPageSort[] = ["down", "up", "helpful", "activity"]
 
-function store<T>(initial: T) {
+export function store<T>(initial: T) {
   let value = initial
   const listeners = new Set<() => void>()
   const subscribe = (l: () => void) => {

@@ -25,6 +25,7 @@ import {
   useDocsSite,
   useDocsSites,
   useDocsSort,
+  useDocsSummary,
   WINDOWS,
 } from "@/features/docs/queries"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
@@ -295,7 +296,7 @@ export function DocsSitePicker({ className }: { className?: string }) {
 }
 
 export function DocsColumn() {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [params] = useSearchParams()
@@ -308,18 +309,23 @@ export function DocsColumn() {
   const site = usePickedSite(inboxId)
   const pages = useDocsPages(inboxId, site, days, sort)
   const items = pages.data?.pages.flatMap((p) => p.items) ?? []
+  const pending = useDocsSummary(inboxId, site, days).data?.totals.pending_posts ?? 0
+  const pendingText = new Intl.NumberFormat(i18n.locale).format(pending)
   const currentKey = pathname === "/docs/page" ? `${params.get("inbox")} ${params.get("url")}` : ""
   const [cursor, setCursor] = useState(-1)
   const list = useRef<HTMLUListElement>(null)
   useEffect(() => setCursor(-1), [inboxId, site, days, sort])
 
-  useHotkeys({
-    j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
-    k: () => setCursor((i) => Math.max(0, i - 1)),
-    ArrowDown: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
-    ArrowUp: () => setCursor((i) => Math.max(0, i - 1)),
-    Enter: () => cursor >= 0 && items[cursor] && navigate(docsPageLink(items[cursor].inbox_id, items[cursor].page)),
-  })
+  useHotkeys(
+    {
+      j: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
+      k: () => setCursor((i) => Math.max(0, i - 1)),
+      ArrowDown: () => setCursor((i) => Math.min(items.length - 1, i + 1)),
+      ArrowUp: () => setCursor((i) => Math.max(0, i - 1)),
+      Enter: () => cursor >= 0 && items[cursor] && navigate(docsPageLink(items[cursor].inbox_id, items[cursor].page)),
+    },
+    !pathname.startsWith("/docs/discussions")
+  )
   useEffect(() => {
     if (cursor >= 0)
       list.current?.querySelectorAll("[data-testid=docs-row]")[cursor]?.scrollIntoView({ block: "nearest" })
@@ -343,6 +349,30 @@ export function DocsColumn() {
           <span className="text-body">
             <Trans>Overview</Trans>
           </span>
+        </ColumnLink>
+        <ColumnLink to="/docs/discussions" end testId="docs-discussions-link">
+          <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground">
+            <MessagesSquareIcon className="size-4" />
+          </span>
+          <span className="text-body">
+            <Trans>Discussions</Trans>
+          </span>
+        </ColumnLink>
+        <ColumnLink to="/docs/discussions/queue" end testId="docs-queue-link">
+          <span className="grid size-[34px] shrink-0 place-items-center rounded-[10px] border bg-surface text-muted-foreground">
+            <HourglassIcon className="size-4" />
+          </span>
+          <span className="flex-1 text-body">
+            <Trans>Waiting for approval</Trans>
+          </span>
+          {pending > 0 && (
+            <span
+              className="min-w-6 rounded-full bg-warning/12 px-1.5 text-center text-caption font-medium text-warning tabular-nums"
+              data-testid="docs-queue-count"
+            >
+              {pendingText}
+            </span>
+          )}
         </ColumnLink>
         {pages.isPending ? (
           <div className="flex flex-col gap-2 p-2">

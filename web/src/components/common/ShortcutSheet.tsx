@@ -35,6 +35,20 @@ export const SHORTCUTS = {
   docs: "g d",
 } as const
 
+export const DISCUSSION_KEYS = {
+  next: "j",
+  previous: "k",
+  reply: "r",
+  replyTo: "R",
+  answer: "a",
+  approve: "y",
+  hide: "x",
+  spam: "!",
+  title: "t",
+  lock: "l",
+  page: "o",
+} as const
+
 export function keyLabel(k: string): string[] {
   if (k.includes(" ")) return k.split(" ").flatMap(keyLabel)
   return /^[A-Z]$/.test(k) ? ["⇧", k] : [k.toUpperCase()]
@@ -90,6 +104,32 @@ export function ShortcutSheet({ open, onOpenChange }: { open: boolean; onOpenCha
         [["↵"], t`Open the conversation`],
         [[k(SHORTCUTS.next)[0], k(SHORTCUTS.previous)[0]], t`Open the next or previous conversation`],
         [[SHORTCUTS.search], t`Search conversations`],
+      ],
+    },
+    {
+      title: t`Discussion`,
+      items: [
+        [["↑", "↓"], t`Move through the posts`],
+        [k(DISCUSSION_KEYS.reply), t`Reply to the discussion`],
+        [k(DISCUSSION_KEYS.replyTo), t`Reply to the selected post`],
+        [k(DISCUSSION_KEYS.answer), t`Mark the selected reply as the answer, or clear it`],
+        [k(DISCUSSION_KEYS.approve), t`Approve or show the selected post`],
+        [k(DISCUSSION_KEYS.hide), t`Hide the selected post`],
+        [k(DISCUSSION_KEYS.spam), t`Mark the selected post as spam`],
+        [k(DISCUSSION_KEYS.title), t`Edit the title`],
+        [k(DISCUSSION_KEYS.lock), t`Lock or unlock`],
+        [k(DISCUSSION_KEYS.page), t`Open on its page`],
+        [[mod, "↵"], t`Send the reply`],
+      ],
+    },
+    {
+      title: t`Discussions and approvals`,
+      items: [
+        [["↑", "↓"], t`Move through the list`],
+        [["↵"], t`Open the discussion`],
+        [k(DISCUSSION_KEYS.approve), t`Approve the selected post`],
+        [k(DISCUSSION_KEYS.hide), t`Hide the selected post`],
+        [k(DISCUSSION_KEYS.spam), t`Mark the selected post as spam`],
       ],
     },
     {
