@@ -5,8 +5,8 @@
   "private": true,
   "license": "AGPL-3.0-only",
   "scripts": {
-    "dev": "astro dev --host 127.0.0.1 --port 4321",
-    "build": "astro build",
+    "dev": "bun run registry && astro dev --host 127.0.0.1 --port 4321",
+    "build": "bun run registry && astro build",
     "preview": "astro preview --host 127.0.0.1 --port 4321",
     "astro": "astro",
     "i18n": "lingui extract --clean && lingui compile --strict && bun scripts/i18n-check.ts",
@@ -14,7 +14,8 @@
     "check": "bun run format:check && bun run lint && bun run i18n && bun run build && bun run links",
     "lint": "oxlint",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "registry": "bun scripts/registry.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.2",
@@ -46,6 +47,7 @@
     "opentype.js": "2.0.0",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
+    "shadcn": "4.21.4",
     "typescript": "~6"
   }
 }
