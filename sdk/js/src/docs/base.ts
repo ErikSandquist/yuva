@@ -4,6 +4,7 @@ import { ApiError, type ClientInbox } from "../client/api"
 import { createYuvaClient, type IdentityTokenSource, type YuvaClient } from "../client/client"
 import { directionOf, resolveLocale, translatePlain } from "../i18n"
 import { messages as en } from "../locales/en/docs"
+import { messages as de } from "../locales/de/docs"
 import { messages as tr } from "../locales/tr/docs"
 import { contrastOn, launcherOf, readStored, writeStored } from "../types"
 import { el } from "./dom"
@@ -11,7 +12,7 @@ import { followPage, pageOf } from "./page"
 
 export { el }
 
-const catalogs: Record<string, Messages> = { en, tr }
+const catalogs: Record<string, Messages> = { en, tr, de }
 
 const settings = new Map<string, Promise<ClientInbox>>()
 

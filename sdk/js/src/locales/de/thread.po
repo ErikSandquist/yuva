@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-11 14:02+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: de\n"
+
+#: src/docs/thread.ts
+msgid "Accepted answer"
+msgstr "Akzeptierte Antwort"
+
+#: src/docs/thread.ts
+msgid "All discussions"
+msgstr "Alle Diskussionen"
+
+#: src/docs/thread.ts
+msgid "Ask a question, share an idea or describe a problem with this page."
+msgstr "Stellen Sie eine Frage, teilen Sie eine Idee oder beschreiben Sie ein Problem mit dieser Seite."
+
+#: src/docs/thread.ts
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: src/docs/thread.ts
+msgid "Delete"
+msgstr "Löschen"
+
+#: src/docs/thread.ts
+msgid "Delete this discussion?"
+msgstr "Diese Diskussion löschen?"
+
+#: src/docs/thread.ts
+msgid "Delete this reply?"
+msgstr "Diese Antwort löschen?"
+
+#: src/docs/thread.ts
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: src/docs/thread.ts
+msgid "Edit your post"
+msgstr "Beitrag bearbeiten"
+
+#: src/docs/thread.ts
+msgid "edited"
+msgstr "bearbeitet"
+
+#: src/docs/thread.ts
+msgid "Follow"
+msgstr "Folgen"
+
+#: src/docs/thread.ts
+msgid "Following"
+msgstr "Gefolgt"
+
+#: src/docs/thread.ts
+msgid "Get an e-mail when someone replies or an answer is accepted."
+msgstr "Erhalten Sie eine E-Mail, wenn jemand antwortet oder eine Antwort akzeptiert wird."
+
+#: src/docs/thread.ts
+msgid "Keep"
+msgstr "Behalten"
+
+#: src/docs/thread.ts
+msgid "Loading…"
+msgstr "Wird geladen…"
+
+#: src/docs/thread.ts
+msgid "Mark as answer"
+msgstr "Als Antwort markieren"
+
+#: src/docs/thread.ts
+msgid "Markdown is supported."
+msgstr "Markdown wird unterstützt."
+
+#: src/docs/thread.ts
+msgid "Nothing to preview."
+msgstr "Noch nichts für die Vorschau."
+
+#: src/docs/thread.ts
+msgid "Preview"
+msgstr "Vorschau"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Remove your vote ({0} votes)"
+msgstr "Stimme zurückziehen ({0} Stimmen)"
+
+#. placeholder {0}: discussion.reply_count
+#: src/docs/thread.ts
+msgid "Replies: {0}"
+msgstr "Antworten: {0}"
+
+#: src/docs/thread.ts
+msgid "Reply"
+msgstr "Antworten"
+
+#: src/docs/thread.ts
+msgid "Save"
+msgstr "Speichern"
+
+#: src/docs/thread.ts
+msgid "Sending…"
+msgstr "Wird gesendet…"
+
+#: src/docs/thread.ts
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: src/docs/thread.ts
+msgid "Sign in to reply, vote and follow this discussion."
+msgstr "Melden Sie sich an, um zu antworten, abzustimmen und dieser Diskussion zu folgen."
+
+#: src/docs/thread.ts
+msgid "Sign in to start a discussion. Your name is shown with your post."
+msgstr "Melden Sie sich an, um eine Diskussion zu starten. Ihr Name wird mit Ihrem Beitrag angezeigt."
+
+#: src/docs/thread.ts
+msgid "Start a discussion"
+msgstr "Diskussion starten"
+
+#: src/docs/thread.ts
+msgid "Start discussion"
+msgstr "Diskussion starten"
+
+#: src/docs/thread.ts
+msgid "Thanks! Your discussion will appear for everyone once the team approves it."
+msgstr "Danke! Ihre Diskussion ist für alle sichtbar, sobald das Team sie freigibt."
+
+#: src/docs/thread.ts
+msgid "Thanks! Your reply will appear for everyone once the team approves it."
+msgstr "Danke! Ihre Antwort ist für alle sichtbar, sobald das Team sie freigibt."
+
+#: src/docs/thread.ts
+msgid "The opening post was deleted."
+msgstr "Der erste Beitrag wurde gelöscht."
+
+#: src/docs/thread.ts
+msgid "This discussion is locked. New replies are closed."
+msgstr "Diese Diskussion ist gesperrt. Neue Antworten sind nicht möglich."
+
+#: src/docs/thread.ts
+msgid "This discussion is no longer available."
+msgstr "Diese Diskussion ist nicht mehr verfügbar."
+
+#: src/docs/thread.ts
+msgid "This reply was deleted."
+msgstr "Diese Antwort wurde gelöscht."
+
+#: src/docs/thread.ts
+msgid "Title"
+msgstr "Titel"
+
+#: src/docs/thread.ts
+msgid "Unmark as answer"
+msgstr "Antwortmarkierung entfernen"
+
+#. placeholder {0}: target.votes
+#: src/docs/thread.ts
+msgid "Upvote ({0} votes)"
+msgstr "Zustimmen ({0} Stimmen)"
+
+#: src/docs/thread.ts
+msgid "Write"
+msgstr "Schreiben"
+
+#: src/docs/thread.ts
+msgid "Write a reply…"
+msgstr "Antwort schreiben…"
+
+#: src/docs/thread.ts
+msgid "Your first posts are checked by the team before they appear for everyone."
+msgstr "Ihre ersten Beiträge prüft das Team, bevor sie für alle sichtbar sind."
+
+#: src/docs/thread.ts
+msgid "Your question or idea"
+msgstr "Ihre Frage oder Idee"
+
+#: src/docs/thread.ts
+msgid "Your reply"
+msgstr "Ihre Antwort"

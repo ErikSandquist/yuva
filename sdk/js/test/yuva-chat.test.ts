@@ -93,8 +93,9 @@ describe("<yuva-chat> embedded", () => {
 describe("locale", () => {
   test("resolves to a supported locale", () => {
     expect(resolveLocale("tr-TR")).toBe("tr")
-    expect(resolveLocale("de", "tr")).toBe("tr")
-    expect(resolveLocale("de", null)).toBe("en")
+    expect(resolveLocale("de-DE")).toBe("de")
+    expect(resolveLocale("fr", "tr")).toBe("tr")
+    expect(resolveLocale("fr", null)).toBe("en")
   })
 
   test("knows text direction", () => {

@@ -1,6 +1,7 @@
 import { setupI18n, type I18n, type MessageDescriptor, type Messages } from "@lingui/core"
 import { msg } from "@lingui/core/macro"
 import { messages as en } from "../locales/en/panel"
+import { messages as de } from "../locales/de/panel"
 import { messages as tr } from "../locales/tr/panel"
 import { launcherOf, readStored, writeStored, type PanelController, type PanelHost } from "../types"
 import {
@@ -17,7 +18,7 @@ import { createYuvaClient, randomId, type YuvaClient } from "../client/client"
 import { styles } from "./styles"
 import { richText } from "./text"
 
-const catalogs: Record<string, Messages> = { en, tr }
+const catalogs: Record<string, Messages> = { en, tr, de }
 const maxFiles = 10
 const groupGap = 5 * 60_000
 

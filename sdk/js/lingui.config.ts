@@ -4,7 +4,7 @@ import { createSwcExtractor } from "@lingui/native-tools"
 
 export default defineConfig({
   sourceLocale: "en",
-  locales: ["en", "tr"],
+  locales: ["en", "tr", "de"],
   catalogs: [
     { path: "<rootDir>/src/locales/{locale}/loader", include: ["<rootDir>/src/element.ts"] },
     { path: "<rootDir>/src/locales/{locale}/panel", include: ["<rootDir>/src/panel"] },
