@@ -6339,10 +6339,38 @@ export interface components {
              */
             ask_for_rating: boolean;
             sender: components["schemas"]["InboxSender"];
+            import?: components["schemas"]["InboxImport"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description A migration is filling the inbox with the history of an old mailbox: while it scans,
+         *     copies or syncs, and while a copy that has started is paused or needs attention. Absent
+         *     otherwise. Everyone who can see the inbox sees it; the migration itself, its counts and
+         *     its errors stay with owners, admins and holders of `migrations:manage`. When more than one
+         *     migration targets the inbox, the most recently created one. Its appearance, state changes
+         *     and disappearance come as `inbox.updated`; `percent` moves between them without an event.
+         */
+        InboxImport: {
+            /**
+             * @description The old mailbox's address.
+             * @example support@example.com
+             */
+            address: string;
+            /**
+             * @description `scanning` (reading the mailbox before the copy starts), `copying`, `paused`,
+             *     `needs_attention` (stopped until an owner or admin acts), `syncing` (the history is
+             *     copied; new mail in the old mailbox is still read until the switch is done).
+             * @enum {string}
+             */
+            state: "scanning" | "copying" | "paused" | "needs_attention" | "syncing";
+            /**
+             * Format: int32
+             * @description Messages done of those planned, rounded down; 0 while scanning, 100 while syncing.
+             */
+            percent: number;
         };
         InboxCreate: {
             name: string;
@@ -8687,7 +8715,7 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ContactRef"];
         };
-        /** @description An inbox's settings changed. */
+        /** @description An inbox's settings changed, or an import into it (`import`) started, changed state or ended. */
         InboxUpdatedEvent: {
             /** Format: int64 */
             id: number;
@@ -11662,6 +11690,15 @@ export interface components {
             document: components["schemas"]["EmailDesignDocument"];
             images: components["schemas"]["EmailTemplateImage"][];
         };
+        /**
+         * @description `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+         *     `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+         *     the workspace already runs as many migrations at a time as the server allows;
+         *     `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+         *     allows.
+         * @enum {string}
+         */
+        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES";
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -11679,6 +11716,7 @@ export interface components {
              * @example messages:write
              */
             scope?: string;
+            limit?: components["schemas"]["HostedLimit"];
             detail?: string;
         };
     };

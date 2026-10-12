@@ -1,26 +1,31 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { HistoryIcon } from "lucide-react"
+import { useEffect } from "react"
 import { Link } from "react-router"
 
 import { ProgressBar } from "@/components/common"
 import { Alert } from "@/components/ui/alert"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
-import { percentOf, useMigrations } from "@/features/migrations/queries"
 import { useSession } from "@/lib/session"
-
-const IMPORTING = ["copying", "paused", "needs_attention"]
+import { useInboxes } from "@/lib/workspace"
 
 export function ImportBanner() {
   const { t } = useLingui()
   const { canManage } = useSession()
   const [inboxId] = useInboxFilter()
-  const list = useMigrations()
-  const m = (list.data?.pages.flatMap((p) => p.items) ?? []).find(
-    (x) => IMPORTING.includes(x.state) && !!x.started_at && (!inboxId || x.inbox_id === inboxId)
-  )
-  if (!m) return null
-  const address = m.source_address
-  const percent = percentOf(m)
+  const inboxes = useInboxes()
+  const inbox = inboxes.data?.find((x) => x.import && x.import.state !== "syncing" && (!inboxId || x.id === inboxId))
+  const copying = inbox?.import?.state === "copying"
+  const { refetch } = inboxes
+  useEffect(() => {
+    if (!copying) return
+    const id = setInterval(() => void refetch(), 30_000)
+    return () => clearInterval(id)
+  }, [copying, refetch])
+  const imp = inbox?.import
+  if (!imp) return null
+  const address = imp.address
+  const percent = imp.percent
   return (
     <Alert
       role="status"
@@ -36,7 +41,7 @@ export function ImportBanner() {
         </span>
         {canManage && (
           <Link
-            to={`/migrations/${m.id}`}
+            to="/migrations"
             className="shrink-0 font-medium text-foreground underline-offset-2 hover:underline"
             data-testid="import-banner-details"
           >

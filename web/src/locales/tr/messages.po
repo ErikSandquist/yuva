@@ -8437,6 +8437,10 @@ msgstr "E-posta sunucusuna ulaşılamadı"
 msgid "The mailbox has too many connections open. Close a mail app or wait a few minutes, then test again."
 msgstr "Posta kutusunda açık çok fazla bağlantı var. Bir e-posta uygulamasını kapatın ya da birkaç dakika bekleyip yeniden deneyin."
 
+#: src/components/common/text.ts
+msgid "The mailbox is larger than this server allows for one migration. Ask the server's operator."
+msgstr "Posta kutusu, bu sunucunun tek bir taşıma için izin verdiğinden büyük. Sunucunun yöneticisine sorun."
+
 #: src/features/migrations/text.ts
 msgid "The mailbox lists no folders."
 msgstr "Posta kutusu hiç klasör listelemiyor."
@@ -8883,6 +8887,10 @@ msgstr "Bu isteğin süresi doldu ya da zaten kullanıldı. Bağlanmayı uygulam
 msgid "This request has ended"
 msgstr "Bu istek artık geçerli değil"
 
+#: src/components/common/text.ts
+msgid "This server does not offer imports from this kind of mailbox."
+msgstr "Bu sunucu bu tür bir posta kutusundan içe aktarma sunmuyor."
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
 msgstr "Bu sunucuda yönlendirme adresi yok; e-postalar Yuva'ya bir MX değişikliğiyle ulaşır."
@@ -8894,6 +8902,10 @@ msgstr "Bu sunucu anlık bildirim gönderecek şekilde ayarlanmamış."
 #: src/features/auth/CreateWorkspace.tsx
 msgid "This server no longer lets people create workspaces. Ask your team for an invitation."
 msgstr "Bu sunucuda artık çalışma alanı oluşturulamıyor. Ekibinizden davet isteyin."
+
+#: src/components/common/text.ts
+msgid "This server runs as many migrations at once as it allows. Wait until a running one ends, or ask the server's operator."
+msgstr "Bu sunucu aynı anda izin verdiği kadar taşıma çalıştırıyor. Çalışan birinin bitmesini bekleyin ya da sunucunun yöneticisine sorun."
 
 #: src/features/broadcasts/BroadcastParts.tsx
 msgid "This server sends broadcasts for a workspace once its operator approves it. An owner of the workspace can ask. Until then you can build lists, designs and drafts and send tests."

@@ -310,8 +310,16 @@ export function useErrorText() {
       return t`A file's content does not match its type. Check the file and try again.`
     if (err.code === "migration_state")
       return t`The migration moved on in the meantime. Look at its state and try again.`
-    if (err.code === "hosted_limit")
+    if (err.code === "hosted_limit") {
+      const limit = (err.body as { limit?: string } | undefined)?.limit
+      if (limit === "YUVA_MIGRATION_SOURCES") return t`This server does not offer imports from this kind of mailbox.`
+      if (limit === "YUVA_MIGRATION_MAX_ACTIVE")
+        return t`This server runs as many migrations at once as it allows. Wait until a running one ends, or ask the server's operator.`
+      if (limit === "YUVA_MIGRATION_MAX_BYTES")
+        return t`The mailbox is larger than this server allows for one migration. Ask the server's operator.`
+      if (err.detail) return err.detail
       return t`This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator.`
+    }
     if (err.code === "provider_not_configured")
       return t`Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet.`
     if (err.code === "confirm_count_mismatch")
