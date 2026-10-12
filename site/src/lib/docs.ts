@@ -36,6 +36,8 @@ const groups = [
       "migrate-yahoo",
       "migrate-fastmail",
       "migrate-gmx",
+      "migrate-zendesk",
+      "migrate-helpscout",
       "migrate-imap",
       "migrate-files",
       "migrate-operators",

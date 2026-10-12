@@ -9,7 +9,9 @@ available to [assistants](#from-claude-code-or-another-assistant) and the [API](
 Pick your provider's guide: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
 [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
 [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX and mail.com](migrate-gmx.md),
+[Zendesk](migrate-zendesk.md), [Help Scout](migrate-helpscout.md),
 [any other IMAP server](migrate-imap.md) or [an export file](migrate-files.md) (Google Takeout, mbox, .eml or Maildir in a zip). Running your own server? See [Move to Yuva for operators](migrate-operators.md).
+Moving from a help desk? Zendesk and Help Scout connect with a sign-in instead of a password.
 Outlook.com and Microsoft 365 accept no passwords and cannot be moved yet.
 
 ## What Yuva does and does not do with your mailbox
