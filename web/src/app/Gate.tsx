@@ -16,6 +16,7 @@ import { pickMembership, SessionProvider, useMe, useSignOut, useWorkspaceChoice 
 import { Item } from "@/components/ui/item"
 
 const heading = "text-page"
+const LINK_PARAMS = ["workspace", "workspace_id"]
 
 function NoWorkspace({ email }: { email: string }) {
   const signOut = useSignOut()
@@ -91,11 +92,21 @@ export function Gate() {
   const location = useLocation()
   const navigate = useNavigate()
   const [chosen, choose] = useWorkspaceChoice()
-  const linked = new URLSearchParams(location.search).get("workspace_id")
+  const params = new URLSearchParams(location.search)
+  const linkParam = LINK_PARAMS.find((p) => params.has(p))
+  const linked = linkParam ? params.get(linkParam) : null
   const linkedMember = !!linked && !!me.data?.memberships.some((m) => m.workspace.id === linked)
   useEffect(() => {
-    if (linkedMember && linked !== chosen) choose(linked)
-  }, [linkedMember, linked, chosen, choose])
+    if (!linkedMember || !linked) return
+    if (linked !== chosen) choose(linked)
+    const rest = new URLSearchParams(location.search)
+    LINK_PARAMS.forEach((p) => rest.delete(p))
+    const search = rest.toString()
+    navigate(
+      { pathname: location.pathname, search: search ? `?${search}` : "", hash: location.hash },
+      { replace: true, state: location.state }
+    )
+  }, [linkedMember, linked, chosen, choose, navigate, location])
   const personLocale = me.data?.person.locale
   useEffect(() => {
     if (personLocale && personLocale !== i18n.locale) activate(personLocale)
