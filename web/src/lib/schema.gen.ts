@@ -3483,7 +3483,9 @@ export interface paths {
          *     or `helpscout` migration is connected by signing in with the team's own OAuth client
          *     (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
          *     conversations go to unless `options.inboxes` names another inbox for their brand or
-         *     mailbox.
+         *     mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+         *     connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+         *     `source_address`, which only obtains a token for IMAP.
          *
          *     An `imap` migration into a channel that a `file` migration of the same mailbox imported
          *     into, without `options.since`, starts with `options.since` at the day of the newest
@@ -3495,8 +3497,10 @@ export interface paths {
          *     be set later; a channel names its inbox.
          *
          *     A source this server does not offer answers `422 hosted_limit` (the operator's
-         *     `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-         *     "Sign in with Microsoft" is set up on the server.
+         *     `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+         *     server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+         *     (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+         *     URL for a team's own app (HTTPS, or `http://localhost`).
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
@@ -3546,9 +3550,10 @@ export interface paths {
          *     domain's MX records (5 seconds), else from the domain's own autoconfig file
          *     (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
          *     record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-         *     connections follow the same address rules as the connection test. Outlook.com and
-         *     Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-         *     offered; Proton and Cloudflare Email Routing get a `note`.
+         *     connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+         *     Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+         *     `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+         *     with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
@@ -3620,8 +3625,8 @@ export interface paths {
          *
          *     In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
          *     test passes. In `needs_attention` it reconnects the same account on the same server
-         *     (`409 migration_state` otherwise, and for help desks and export files, which connect
-         *     otherwise).
+         *     (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+         *     connect otherwise).
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
@@ -3651,7 +3656,11 @@ export interface paths {
          *     passing test moves a `draft` migration to `connected` and reports the folders and
          *     messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
          *     when it is about to expire, reads the signed-in user) and `folders` (its brands or
-         *     mailboxes, with conversations counted where the help desk tells).
+         *     mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+         *     signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+         *     again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+         *     the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+         *     `xoauth2_failed`.
          *
          *     The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
          *     refuses to send any command that could change the mailbox.
@@ -3679,12 +3688,35 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Connect a help desk with the team's OAuth client
+         * Connect a help desk or a Microsoft mailbox with a sign-in
          * @description Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
          *     created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
          *     in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
          *     in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
          *     once, never returned or logged, and deleted with the migration's other credentials.
+         *
+         *     A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+         *     authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+         *     `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+         *     `login_hint`. It uses the server's own app registration when the preset has
+         *     `team_client: false` and the body names no client; otherwise the body carries the
+         *     `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+         *     admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+         *     the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+         *     `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+         *     `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+         *     Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+         *     write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+         *     Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+         *     every other command). The callback refuses, storing nothing, a token whose granted scopes
+         *     differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+         *     the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+         *     name it, from the mailbox refusing the token), then signs in to
+         *     `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+         *     tokens encrypted; they are refreshed before a connection when they expire within five
+         *     minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+         *     account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+         *     account) when the migration is done.
          *
          *     The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
          *     asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -3698,7 +3730,9 @@ export interface paths {
          *
          *     In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
          *     account. `409 migration_state` for other states and for sources that do not sign in this
-         *     way.
+         *     way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+         *     the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+         *     not `available`.
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
@@ -7975,7 +8009,8 @@ export interface components {
          *     `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
          *     `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
          *     switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
-         *     desk's sign-in with the team's OAuth client). A server lists only the actions it offers.
+         *     desk's sign-in with the team's OAuth client, or Sign in with Microsoft). A server lists
+         *     only the actions it offers.
          * @enum {string}
          */
         MigrationAction: "update" | "set_credentials" | "test_connection" | "scan" | "start" | "pause" | "resume" | "cancel" | "finish" | "retry" | "remove_history" | "delete" | "probe" | "upload" | "sign_in";
@@ -7992,14 +8027,18 @@ export interface components {
         };
         /**
          * @description `password`: a user name with an app password or password. `microsoft`: Sign in with
-         *     Microsoft. `oauth`: a help desk's sign-in with an OAuth client the team creates in its own
-         *     account (`POST /v1/migrations/{migrationId}/sign-in`).
+         *     Microsoft (`POST /v1/migrations/{migrationId}/sign-in`), whose token is sent with
+         *     `AUTHENTICATE XOAUTH2`. `oauth`: a help desk's sign-in with an OAuth client the team
+         *     creates in its own account (`POST /v1/migrations/{migrationId}/sign-in`).
          * @enum {string}
          */
         MigrationAuth: "password" | "microsoft" | "oauth";
         /**
          * @description The stored credentials, without the secret. A help desk's are `oauth`, with the account's
-         *     API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+         *     API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+         *     sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+         *     `scopes` and when the access token expires; the token is refreshed before a connection
+         *     when it expires within five minutes.
          */
         MigrationCredentials: {
             /** @enum {string} */
@@ -8028,12 +8067,26 @@ export interface components {
             /** @description Trust this certificate (SHA-256, hexadecimal, colons allowed) even if it is not valid for the host. */
             certificate_sha256?: string;
         };
+        /**
+         * @description Help desks need `client_id` and `client_secret`. Microsoft needs them when the preset has
+         *     `team_client: true`; otherwise they are left out to use the server's own app, or given to
+         *     use the team's own app registration instead.
+         */
         MigrationSignInStart: {
             /** @description Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`. */
             subdomain?: string;
-            /** @description The OAuth client's identifier (Zendesk) or the app's ID (Help Scout). */
-            client_id: string;
-            client_secret: string;
+            /**
+             * @description The OAuth client's identifier (Zendesk), the app's ID (Help Scout) or the app
+             *     registration's Application (client) ID (Microsoft).
+             */
+            client_id?: string;
+            client_secret?: string;
+            /**
+             * @description Microsoft, with the team's own app registration only: the Directory (tenant) ID or a
+             *     verified domain of the tenant that holds a single-tenant app. Without it the authority
+             *     follows the mailbox's address.
+             */
+            tenant?: string;
         };
         MigrationSignIn: {
             /**
@@ -8053,16 +8106,30 @@ export interface components {
             expires_at: string;
         };
         /**
-         * @description The `result` of the redirect to `/migrations/{migrationId}/connect` after a help-desk
-         *     sign-in: `connected`; `access_denied` (the person declined); `expired` (unknown, used or
-         *     older than 10 minutes); `session_mismatch` (it came back in another member's browser);
-         *     `scope_too_broad` (the token grants more than `read`; nothing was stored); `not_admin`,
-         *     `plan_has_no_api`, `subdomain_not_found` (as the connection test's codes);
-         *     `account_mismatch` (a reconnect signed in to another account); `token_failed` (the help
-         *     desk refused the code: usually a wrong client secret or redirect URL); `source_unreachable`.
+         * @description The `result` of the redirect to `/migrations/{migrationId}/connect` after a sign-in:
+         *     `connected`; `access_denied` (the person declined); `expired` (unknown, used or older
+         *     than 10 minutes); `session_mismatch` (it came back in another member's browser);
+         *     `scope_too_broad` (the token grants other permissions than the requested ones: more than
+         *     `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
+         *     stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
+         *     codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
+         *     Microsoft sign-in to another account than the mailbox; nothing was stored);
+         *     `token_failed` (the provider refused the code: usually a wrong client secret or redirect
+         *     URL); `source_unreachable`.
+         *
+         *     Microsoft only: `consent_required` (Microsoft wants the person to consent again: sign in
+         *     again and accept); `admin_consent_required` (`AADSTS65001`, `AADSTS90094`, `AADSTS90095`:
+         *     the organization lets only an admin consent to the app; the migration's
+         *     `admin_consent_url` is the link to send the admin); `conditional_access` (a Conditional
+         *     Access policy of the organization blocked the sign-in, `AADSTS53000`–`AADSTS53011`);
+         *     `xoauth2_failed` (Microsoft signed the mailbox in but the mailbox refused the token over
+         *     IMAP: usually IMAP is turned off for it, which an admin turns on in the Microsoft 365
+         *     admin center › Users › Mail › Email apps, or with `Set-CASMailbox -ImapEnabled $true`).
+         *     `admin_consented` is where an admin lands after granting consent through
+         *     `admin_consent_url` (`/settings/migrations?result=admin_consented`).
          * @enum {string}
          */
-        MigrationSignInResult: "connected" | "access_denied" | "expired" | "session_mismatch" | "scope_too_broad" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "account_mismatch" | "token_failed" | "source_unreachable";
+        MigrationSignInResult: "connected" | "access_denied" | "expired" | "session_mismatch" | "scope_too_broad" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "account_mismatch" | "token_failed" | "source_unreachable" | "consent_required" | "admin_consent_required" | "conditional_access" | "xoauth2_failed" | "admin_consented";
         /**
          * @description What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
          *     labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
@@ -8325,8 +8392,16 @@ export interface components {
             counts: components["schemas"]["MigrationCounts"];
             credentials?: components["schemas"]["MigrationCredentials"];
             upload?: components["schemas"]["MigrationFile"];
-            /** @description Help desks: how the last sign-in ended, the same `result` its redirect carried. */
+            /** @description Help desks and `microsoft`: how the last sign-in ended, the same `result` its redirect carried. */
             sign_in_result?: components["schemas"]["MigrationSignInResult"];
+            /**
+             * Format: uri
+             * @description `microsoft`, after `admin_consent_required`: the link an admin of the mailbox's
+             *     organization opens to grant consent to the app for everyone in it
+             *     (`login.microsoftonline.com/<domain>/v2.0/adminconsent`, asking for
+             *     `IMAP.AccessAsUser.All` only); afterwards the person signs in again.
+             */
+            admin_consent_url?: string;
             /**
              * Format: uuid
              * @description An `imap` migration of a mailbox whose export file this workspace imported into the
@@ -8544,20 +8619,36 @@ export interface components {
             budget: components["schemas"]["MigrationBudget"];
             /** @description The slug of the provider's guide in the documentation. */
             guide: string;
-            /** @description `false` when this server cannot connect to the provider yet. */
+            /**
+             * @description `false` when this server cannot connect to the provider yet; for `microsoft`, when it
+             *     has no Microsoft app of its own and its public URL is not one Microsoft accepts as a
+             *     redirect URL (HTTPS, or `http://localhost`).
+             */
             available: boolean;
             /**
              * Format: uri
-             * @description `oauth` presets: the redirect URL to enter in the OAuth client the team creates in its
-             *     help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps).
+             * @description `oauth` and `microsoft` presets: the redirect URL to enter in the OAuth client the team
+             *     creates in its help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps)
+             *     or, for Microsoft, as the Web redirect URI of the team's own app registration.
              */
             redirect_url?: string;
             /**
-             * @description `oauth` presets: the scopes the sign-in asks for and accepts nothing beyond (Zendesk
-             *     `read`). Empty for Help Scout, which has no read-only permission: the connection's
-             *     refusal of every request but `GET` is what keeps it read-only.
+             * @description `oauth` and `microsoft` presets: the scopes the sign-in asks for and accepts nothing
+             *     beyond (Zendesk `read`; Microsoft
+             *     `https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`). Empty for Help
+             *     Scout, which has no read-only permission: the connection's refusal of every request but
+             *     `GET` is what keeps it read-only. Microsoft's IMAP permission is not read-only either
+             *     (its consent screen says "read and write"); the connection's refusal of every command
+             *     that changes anything is what keeps it so.
              */
             scopes?: string[];
+            /**
+             * @description `oauth` and `microsoft` presets: the sign-in takes the client id and secret of an
+             *     OAuth client or app registration the team creates itself, with `redirect_url`. Always
+             *     `true` for help desks; `false` for `microsoft` when the server has a Microsoft app of
+             *     its own (`YUVA_MICROSOFT_CLIENT_ID`), which a team may still replace with its own.
+             */
+            team_client?: boolean;
             /** @description The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`). */
             subdomain?: boolean;
         };
@@ -8576,7 +8667,8 @@ export interface components {
             /** @description `false` when this server cannot connect to the provider yet. */
             available: boolean;
             /**
-             * @description `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+             * @description `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+             *     offer (see the `microsoft` preset's `available`).
              *     `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
              *     computer; export the mail instead. `cloudflare`: the domain forwards mail through
              *     Cloudflare Email Routing; connect the mailbox it ends up in.
@@ -8618,9 +8710,17 @@ export interface components {
          *       may read the incremental export.
          *     - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
          *     - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+         *     - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+         *       failed, or the server answers "User is authenticated but not connected"): usually IMAP
+         *       is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+         *       or `Set-CASMailbox -ImapEnabled $true`).
+         *     - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+         *       password changed, or the sign-in expired after long disuse): sign in again.
+         *     - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+         *       `IMAP.AccessAsUser.All`; it is not used.
          * @enum {string}
          */
-        MigrationTestCode: "dns_failed" | "address_not_allowed" | "connect_failed" | "tls_failed" | "not_imap" | "starttls_unavailable" | "auth_failed" | "app_password_required" | "imap_disabled" | "basic_auth_disabled" | "web_login_required" | "too_many_connections" | "throttled" | "no_folders" | "examine_failed" | "timeout" | "unexpected_answer" | "not_admin" | "plan_has_no_api" | "subdomain_not_found";
+        MigrationTestCode: "dns_failed" | "address_not_allowed" | "connect_failed" | "tls_failed" | "not_imap" | "starttls_unavailable" | "auth_failed" | "app_password_required" | "imap_disabled" | "basic_auth_disabled" | "web_login_required" | "too_many_connections" | "throttled" | "no_folders" | "examine_failed" | "timeout" | "unexpected_answer" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "xoauth2_failed" | "token_refresh_failed" | "scope_too_broad";
         MigrationTestStep: {
             /** @enum {string} */
             step: "resolve" | "connect" | "tls" | "greeting" | "sign_in" | "folders";
@@ -8876,7 +8976,10 @@ export interface components {
              *     `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
              *     `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
              *     again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
-             *     a bug).
+             *     a bug), and for `microsoft` `token_refresh_failed` (Microsoft refused to refresh the
+             *     sign-in) and `xoauth2_failed` (the mailbox refused the token, usually because IMAP was
+             *     turned off for it); both stop the migration in `needs_attention` until the person
+             *     signs in again.
              */
             code: string;
             detail: string;

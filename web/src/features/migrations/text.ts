@@ -38,6 +38,14 @@ export function isHelpdesk(source: MigrationSource | undefined) {
   return source === "zendesk" || source === "helpscout"
 }
 
+const TLDISH = /^[a-z]{2,3}(\.[a-z]{2,3})?$/
+
+export function isPersonalMicrosoft(address: string) {
+  const domain = address.split("@")[1]?.toLowerCase() ?? ""
+  const [first = "", ...rest] = domain.split(".")
+  return domain === "msn.com" || (["outlook", "hotmail", "live"].includes(first) && TLDISH.test(rest.join(".")))
+}
+
 export function guideUrl(slug: string) {
   return `${DOCS}/${slug}.md`
 }
@@ -105,7 +113,7 @@ export function useTestCodeText() {
       auth_failed: t`${provider} did not accept the user name or password. Check both, or create a new app password.`,
       app_password_required: t`${provider} wants an app password, not your account's password. Create one with the steps above.`,
       imap_disabled: t`IMAP is off for this mailbox. Turn it on in ${provider}'s settings, then test again.`,
-      basic_auth_disabled: t`${provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later.`,
+      basic_auth_disabled: t`${provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365.`,
       web_login_required: t`${provider} wants you to sign in once in the browser. Sign in to your mail on the web, then test again.`,
       too_many_connections: t`The mailbox has too many connections open. Close a mail app or wait a few minutes, then test again.`,
       throttled: t`${provider} limits this account for now. Wait a while, then test again.`,
@@ -116,6 +124,9 @@ export function useTestCodeText() {
       not_admin: t`The ${provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin.`,
       plan_has_no_api: t`This ${provider} account's plan has no API access, which Yuva reads through.`,
       subdomain_not_found: t`No ${provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com.`,
+      xoauth2_failed: t`The mailbox refused Microsoft's sign-in over IMAP. Usually IMAP is turned off for it: an admin turns it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps. Then sign in again.`,
+      token_refresh_failed: t`Microsoft no longer accepts Yuva's sign-in: access was removed, the password changed, or it went unused too long. Sign in with Microsoft again.`,
+      scope_too_broad: t`Microsoft's token grants more than reading mail over IMAP, so Yuva does not use it. Check the app's API permissions, then sign in again.`,
     })[code]
 }
 
@@ -143,7 +154,7 @@ export function useGuides() {
       linkLabel: t`Open App passwords`,
     },
     microsoft: {
-      steps: [t`Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version.`],
+      steps: [t`Outlook.com and Microsoft 365 accept no passwords. Yuva connects with “Sign in with Microsoft”.`],
       link: guideUrl("migrate-microsoft"),
       linkLabel: t`Read the guide`,
     },
@@ -250,11 +261,50 @@ export function useGuides() {
   } satisfies Record<MigrationPresetId, Guide>
 }
 
+export function useMicrosoftAppSteps() {
+  const { t } = useLingui()
+  return (personal: boolean) => [
+    t`Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”.`,
+    personal
+      ? t`Under Supported account types, choose personal Microsoft accounts only, for Outlook.com, Hotmail and Live.`
+      : t`Under Supported account types, choose accounts in this organizational directory only for your organization's mailboxes, or any organizational directory and personal accounts if you are not sure.`,
+    t`Under Redirect URI, choose Web and enter the redirect URL below.`,
+    t`In Certificates & secrets, add a new client secret and copy its Value, which is shown only once.`,
+    t`In API permissions, add a permission: APIs my organization uses › Office 365 Exchange Online › Delegated permissions › IMAP.AccessAsUser.All. Add offline_access from Microsoft Graph too.`,
+    t`Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID.`,
+  ]
+}
+
+export type SignInApp = "server" | "team"
+
 export function useSignInResultText() {
   const { t } = useLingui()
-  return (result: MigrationSignInResult, provider: string) =>
-    (
-      ({
+  return (result: MigrationSignInResult, provider: string, microsoft?: SignInApp) => {
+    if (microsoft) {
+      const own = microsoft === "team"
+      const texts: Partial<Record<MigrationSignInResult, { title: string; text: string }>> = {
+        scope_too_broad: {
+          title: t`Microsoft granted more than IMAP access`,
+          text: own
+            ? t`Yuva stored nothing. Give the app registration only the permissions IMAP.AccessAsUser.All and offline_access, then sign in again.`
+            : t`Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server.`,
+        },
+        account_mismatch: {
+          title: t`Another account`,
+          text: t`The Microsoft account you signed in with cannot open this mailbox, and Yuva stored nothing. Sign in with the mailbox's own account; use a private window if the browser keeps choosing the other one.`,
+        },
+        token_failed: {
+          title: t`Microsoft refused the sign-in`,
+          text: own
+            ? t`Usually the client secret is wrong or expired, or the redirect URL is not a Web redirect URI of the app registration. Check both, then sign in again.`
+            : t`Try again; if this keeps happening, tell the operator of this Yuva server.`,
+        },
+      }
+      const text = texts[result]
+      if (text) return text
+    }
+    return (
+      {
         connected: {
           title: t`Signed in to ${provider}`,
           text: t`Yuva can read the account now. Next, choose what to bring.`,
@@ -299,8 +349,29 @@ export function useSignInResultText() {
           title: t`${provider} could not be reached`,
           text: t`Try again in a few minutes.`,
         },
-      }) satisfies Record<MigrationSignInResult, { title: string; text: string }>
+        consent_required: {
+          title: t`Microsoft wants your consent again`,
+          text: t`Sign in again and accept on Microsoft's page.`,
+        },
+        admin_consent_required: {
+          title: t`Your organization's admin must allow Yuva`,
+          text: t`Your Microsoft 365 organization lets only an admin consent to apps. Send your admin the link below; once they accept, sign in again.`,
+        },
+        conditional_access: {
+          title: t`Your organization blocked the sign-in`,
+          text: t`A Conditional Access policy of your Microsoft 365 organization does not allow this sign-in. Ask your admin to allow it, or upload an export file of the mailbox instead.`,
+        },
+        xoauth2_failed: {
+          title: t`The mailbox refused the sign-in over IMAP`,
+          text: t`Microsoft signed you in, but the mailbox refused the token: usually IMAP is turned off for it. Ask your admin to turn it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps, then sign in again.`,
+        },
+        admin_consented: {
+          title: t`Your admin allowed Yuva`,
+          text: t`Sign in with Microsoft again to connect the mailbox.`,
+        },
+      } satisfies Record<MigrationSignInResult, { title: string; text: string }>
     )[result]
+  }
 }
 
 export function useFormatText() {
@@ -339,6 +410,8 @@ export function useItemErrorText() {
     folder_changed: t`The folder was recreated and read again`,
     hosted_limit: t`This server's limit was reached`,
     source_write_refused: t`Yuva held back a command that would have changed the mailbox`,
+    token_refresh_failed: t`Microsoft no longer accepts the sign-in`,
+    xoauth2_failed: t`The mailbox refused the sign-in over IMAP`,
   }
   return (code: string) => texts[code]
 }

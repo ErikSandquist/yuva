@@ -219,6 +219,7 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
 }
 
 function PresetTile({ p, on, onPick }: { p: MigrationPreset; on: boolean; onPick: () => void }) {
+  const name = usePresetName()(p.id, p.name)
   return (
     <button
       type="button"
@@ -232,13 +233,19 @@ function PresetTile({ p, on, onPick }: { p: MigrationPreset; on: boolean; onPick
       data-testid={`migration-preset-${p.id}`}
     >
       <span className="flex w-full items-center gap-1.5 font-medium">
-        <span className="min-w-0 flex-1">{p.name}</span>
+        <span className="min-w-0 flex-1">{name}</span>
         {on && <CheckIcon className="size-4 shrink-0 text-brand" aria-hidden="true" />}
       </span>
-      {!p.available && (
+      {p.id === "microsoft" ? (
         <span className="text-caption text-faint">
-          <Trans>Coming later</Trans>
+          {p.available ? <Trans>Sign in with Microsoft</Trans> : <Trans>Not offered on this server</Trans>}
         </span>
+      ) : (
+        !p.available && (
+          <span className="text-caption text-faint">
+            <Trans>Coming later</Trans>
+          </span>
+        )
       )}
     </button>
   )
@@ -263,8 +270,8 @@ function DetectionNote({ d }: { d: MigrationDetection }) {
         <p className="font-medium">{name}</p>
         <p>
           <Trans>
-            This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be
-            moved here.
+            This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its
+            operator to set it up.
           </Trans>
         </p>
       </Notice>

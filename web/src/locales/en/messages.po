@@ -485,8 +485,8 @@ msgid "{percent}%, {sent} of {size}"
 msgstr "{percent}%, {sent} of {size}"
 
 #: src/features/migrations/text.ts
-msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
-msgstr "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
+msgid "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
+msgstr "{provider} accepts no passwords over IMAP. This mailbox connects only with “Sign in with Microsoft”: go back and pick Outlook.com and Microsoft 365."
 
 #: src/features/migrations/text.ts
 msgid "{provider} could not be reached"
@@ -740,6 +740,10 @@ msgstr "A client that cannot sign in can send an API key as <0>Authorization: Be
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>. Make one in <1>API keys</1>."
 msgstr "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>. Make one in <1>API keys</1>."
+
+#: src/features/migrations/text.ts
+msgid "A Conditional Access policy of your Microsoft 365 organization does not allow this sign-in. Ask your admin to allow it, or upload an export file of the mailbox instead."
+msgstr "A Conditional Access policy of your Microsoft 365 organization does not allow this sign-in. Ask your admin to allow it, or upload an export file of the mailbox instead."
 
 #: src/components/common/text.ts
 msgid "A contact changed"
@@ -2540,6 +2544,10 @@ msgstr "Copy it now and update your receiver; the old secret keeps signing for 2
 msgid "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 msgstr "Copy the 16-character password and paste it below. Gmail's IMAP is always on."
 
+#: src/features/migrations/text.ts
+msgid "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
+msgstr "Copy the Application (client) ID from Overview and paste it below with the secret. For an app limited to your organization, also enter its Directory (tenant) ID."
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/Feedback.tsx
 msgid "Copy the feedback details"
@@ -4187,6 +4195,14 @@ msgstr "In 1 hour"
 msgid "in an hour"
 msgstr "in an hour"
 
+#: src/features/migrations/text.ts
+msgid "In API permissions, add a permission: APIs my organization uses › Office 365 Exchange Online › Delegated permissions › IMAP.AccessAsUser.All. Add offline_access from Microsoft Graph too."
+msgstr "In API permissions, add a permission: APIs my organization uses › Office 365 Exchange Online › Delegated permissions › IMAP.AccessAsUser.All. Add offline_access from Microsoft Graph too."
+
+#: src/features/migrations/text.ts
+msgid "In Certificates & secrets, add a new client secret and copy its Value, which is shown only once."
+msgstr "In Certificates & secrets, add a new client secret and copy its Value, which is shown only once."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "In ChatGPT on the web, open <0>Plugins</0>, select the plus button, then <1>Add custom MCP server</1>."
 msgstr "In ChatGPT on the web, open <0>Plugins</0>, select the plus button, then <1>Add custom MCP server</1>."
@@ -5065,6 +5081,34 @@ msgstr "Messages copied"
 msgid "Messages imported"
 msgstr "Messages imported"
 
+#: src/features/migrations/text.ts
+msgid "Microsoft granted more than IMAP access"
+msgstr "Microsoft granted more than IMAP access"
+
+#: src/features/migrations/text.ts
+msgid "Microsoft no longer accepts the sign-in"
+msgstr "Microsoft no longer accepts the sign-in"
+
+#: src/features/migrations/text.ts
+msgid "Microsoft no longer accepts Yuva's sign-in: access was removed, the password changed, or it went unused too long. Sign in with Microsoft again."
+msgstr "Microsoft no longer accepts Yuva's sign-in: access was removed, the password changed, or it went unused too long. Sign in with Microsoft again."
+
+#: src/features/migrations/text.ts
+msgid "Microsoft refused the sign-in"
+msgstr "Microsoft refused the sign-in"
+
+#: src/features/migrations/text.ts
+msgid "Microsoft signed you in, but the mailbox refused the token: usually IMAP is turned off for it. Ask your admin to turn it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps, then sign in again."
+msgstr "Microsoft signed you in, but the mailbox refused the token: usually IMAP is turned off for it. Ask your admin to turn it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps, then sign in again."
+
+#: src/features/migrations/text.ts
+msgid "Microsoft wants your consent again"
+msgstr "Microsoft wants your consent again"
+
+#: src/features/migrations/text.ts
+msgid "Microsoft's token grants more than reading mail over IMAP, so Yuva does not use it. Check the app's API permissions, then sign in again."
+msgstr "Microsoft's token grants more than reading mail over IMAP, so Yuva does not use it. Check the app's API permissions, then sign in again."
+
 #: src/features/migrations/DoneStep.tsx
 msgid "Migration cancelled"
 msgstr "Migration cancelled"
@@ -5862,6 +5906,10 @@ msgstr "Not helpful"
 msgid "Not imported"
 msgstr "Not imported"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Not offered on this server"
+msgstr "Not offered on this server"
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Not on any mailing list."
 msgstr "Not on any mailing list."
@@ -6357,6 +6405,10 @@ msgstr "Open the inbox"
 msgid "Open the inbox settings"
 msgstr "Open the inbox settings"
 
+#: src/features/migrations/text.ts
+msgid "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
+msgstr "Open the Microsoft Entra admin center or the Azure portal, go to App registrations and choose New registration. Name it “Yuva”."
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the next or previous conversation"
 msgstr "Open the next or previous conversation"
@@ -6460,8 +6512,8 @@ msgid "Outlook.com and Microsoft 365"
 msgstr "Outlook.com and Microsoft 365"
 
 #: src/features/migrations/text.ts
-msgid "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version."
-msgstr "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version."
+msgid "Outlook.com and Microsoft 365 accept no passwords. Yuva connects with “Sign in with Microsoft”."
+msgstr "Outlook.com and Microsoft 365 accept no passwords. Yuva connects with “Sign in with Microsoft”."
 
 #: src/components/common/text.ts
 msgid "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
@@ -8189,6 +8241,10 @@ msgstr "Shown to your team and to customers you reply to"
 msgid "Sign in"
 msgstr "Sign in"
 
+#: src/features/migrations/text.ts
+msgid "Sign in again and accept on Microsoft's page."
+msgstr "Sign in again and accept on Microsoft's page."
+
 #: src/features/migrations/HelpdeskConnectStep.tsx
 msgid "Sign in again only to change the client or the account's access."
 msgstr "Sign in again only to change the client or the account's access."
@@ -8232,6 +8288,14 @@ msgstr "Sign in with a passkey"
 #: src/features/migrations/HelpdeskConnectStep.tsx
 msgid "Sign in with Help Scout"
 msgstr "Sign in with Help Scout"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Sign in with Microsoft"
+msgstr "Sign in with Microsoft"
+
+#: src/features/migrations/text.ts
+msgid "Sign in with Microsoft again to connect the mailbox."
+msgstr "Sign in with Microsoft again to connect the mailbox."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Sign in with the mailbox's user name and password."
@@ -9132,8 +9196,16 @@ msgid "The mailbox lists no folders."
 msgstr "The mailbox lists no folders."
 
 #: src/features/migrations/text.ts
+msgid "The mailbox refused Microsoft's sign-in over IMAP. Usually IMAP is turned off for it: an admin turns it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps. Then sign in again."
+msgstr "The mailbox refused Microsoft's sign-in over IMAP. Usually IMAP is turned off for it: an admin turns it on in the Microsoft 365 admin center › Users › Active users › the mailbox › Mail › Manage email apps. Then sign in again."
+
+#: src/features/migrations/text.ts
 msgid "The mailbox refused the sign-in"
 msgstr "The mailbox refused the sign-in"
+
+#: src/features/migrations/text.ts
+msgid "The mailbox refused the sign-in over IMAP"
+msgstr "The mailbox refused the sign-in over IMAP"
 
 #: src/components/common/text.ts
 msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
@@ -9142,6 +9214,10 @@ msgstr "The mbox file is compressed inside the zip. Unzip the Takeout archive an
 #: src/features/migrations/text.ts
 msgid "The message could not be read"
 msgstr "The message could not be read"
+
+#: src/features/migrations/text.ts
+msgid "The Microsoft account you signed in with cannot open this mailbox, and Yuva stored nothing. Sign in with the mailbox's own account; use a private window if the browser keeps choosing the other one."
+msgstr "The Microsoft account you signed in with cannot open this mailbox, and Yuva stored nothing. Sign in with the mailbox's own account; use a private window if the browser keeps choosing the other one."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "The migration continues where it stopped."
@@ -9631,8 +9707,8 @@ msgid "This list is private, so forms do not offer it. Make it public in the set
 msgstr "This list is private, so forms do not offer it. Make it public in the settings to use a form."
 
 #: src/features/migrations/SourceStep.tsx
-msgid "This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be moved here."
-msgstr "This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be moved here."
+msgid "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
+msgstr "This mailbox connects only with “Sign in with Microsoft”, which this Yuva server does not offer. Ask its operator to set it up."
 
 #: src/features/team/MemberPage.tsx
 msgid "This member is not in the workspace any more."
@@ -9870,6 +9946,10 @@ msgstr "Try again"
 msgid "Try again in a few minutes."
 msgstr "Try again in a few minutes."
 
+#: src/features/migrations/text.ts
+msgid "Try again; if this keeps happening, tell the operator of this Yuva server."
+msgstr "Try again; if this keeps happening, tell the operator of this Yuva server."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Trying again"
 msgstr "Trying again"
@@ -9961,6 +10041,18 @@ msgstr "Undeliverable: marked as spam by the recipient, {since}"
 #: src/features/setup/InstallStep.tsx
 msgid "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
 msgstr "Under each page: “Was this page helpful?”, then feedback and the page’s discussions."
+
+#: src/features/migrations/text.ts
+msgid "Under Redirect URI, choose Web and enter the redirect URL below."
+msgstr "Under Redirect URI, choose Web and enter the redirect URL below."
+
+#: src/features/migrations/text.ts
+msgid "Under Supported account types, choose accounts in this organizational directory only for your organization's mailboxes, or any organizational directory and personal accounts if you are not sure."
+msgstr "Under Supported account types, choose accounts in this organizational directory only for your organization's mailboxes, or any organizational directory and personal accounts if you are not sure."
+
+#: src/features/migrations/text.ts
+msgid "Under Supported account types, choose personal Microsoft accounts only, for Outlook.com, Hotmail and Live."
+msgstr "Under Supported account types, choose personal Microsoft accounts only, for Outlook.com, Hotmail and Live."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Under the workspace’s daily limit, sending takes {days} days."
@@ -10221,6 +10313,10 @@ msgstr "Username"
 #: src/features/setup/previews.tsx
 msgid "Usually replies within a day"
 msgstr "Usually replies within a day"
+
+#: src/features/migrations/text.ts
+msgid "Usually the client secret is wrong or expired, or the redirect URL is not a Web redirect URI of the app registration. Check both, then sign in again."
+msgstr "Usually the client secret is wrong or expired, or the redirect URL is not a Web redirect URI of the app registration. Check both, then sign in again."
 
 #: src/features/migrations/text.ts
 msgid "Usually the client secret, or the redirect URL in the OAuth client, is wrong. Check both, then sign in again."
@@ -10861,6 +10957,10 @@ msgstr "you@example.com"
 msgid "Your account"
 msgstr "Your account"
 
+#: src/features/migrations/text.ts
+msgid "Your admin allowed Yuva"
+msgstr "Your admin allowed Yuva"
+
 #: src/features/contact/ContactPage.tsx
 msgid "Your app or widget sends these when it identifies the contact."
 msgstr "Your app or widget sends these when it identifies the contact."
@@ -10909,6 +11009,10 @@ msgstr "Your mail provider"
 msgid "Your mailbox"
 msgstr "Your mailbox"
 
+#: src/features/migrations/text.ts
+msgid "Your Microsoft 365 organization lets only an admin consent to apps. Send your admin the link below; once they accept, sign in again."
+msgstr "Your Microsoft 365 organization lets only an admin consent to apps. Send your admin the link below; once they accept, sign in again."
+
 #: src/features/account/ConnectPage.tsx
 #: src/features/auth/CreateWorkspace.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -10918,6 +11022,14 @@ msgstr "Your name"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Your new API key"
 msgstr "Your new API key"
+
+#: src/features/migrations/text.ts
+msgid "Your organization blocked the sign-in"
+msgstr "Your organization blocked the sign-in"
+
+#: src/features/migrations/text.ts
+msgid "Your organization's admin must allow Yuva"
+msgstr "Your organization's admin must allow Yuva"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Your plan and workspace policies decide whether custom MCP servers are available."
@@ -11070,8 +11182,16 @@ msgid "Yuva stops signing with it at once. Remove the DNS record afterwards; a n
 msgstr "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
 
 #: src/features/migrations/text.ts
+msgid "Yuva stored nothing. Give the app registration only the permissions IMAP.AccessAsUser.All and offline_access, then sign in again."
+msgstr "Yuva stored nothing. Give the app registration only the permissions IMAP.AccessAsUser.All and offline_access, then sign in again."
+
+#: src/features/migrations/text.ts
 msgid "Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again."
 msgstr "Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again."
+
+#: src/features/migrations/text.ts
+msgid "Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server."
+msgstr "Yuva stored nothing. Sign in again; if this keeps happening, tell the operator of this Yuva server."
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."
