@@ -1373,9 +1373,12 @@ losing a message and without changing anything at the source. Decisions:
   iCloud, Zoho, Yahoo, Fastmail, GMX and any server connect with an app password or password.
   Outlook.com and Microsoft 365 accept no passwords: "Sign in with Microsoft" obtains only an IMAP
   token (`https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`, sent with
-  `AUTHENTICATE XOAUTH2`) when the operator configured the Entra app (`YUVA_MICROSOFT_*`); the app
-  is not publisher-verified, so Outlook.com and tenants that allow user consent connect, and other
-  tenants use export files or an admin's consent. Export
+  `AUTHENTICATE XOAUTH2`) through the operator's Entra app (`YUVA_MICROSOFT_*`) or, without one, an
+  app registration the team created and entered on the connect page, as for help desks; the
+  authority is `consumers` for Outlook.com addresses, `organizations` for domains whose MX is
+  Exchange Online, else `common`. The app is not publisher-verified, so Outlook.com and tenants that
+  allow user consent connect, and other tenants use export files or an admin's consent (the panel
+  shows the admin-consent link). Export
   files (Google Takeout mbox, mbox, .eml or Maildir in a zip; no PST, for want of a permissively
   licensed reader) need no access to the account and are the fast way for very large Gmail
   mailboxes: Takeout first, then IMAP for newer mail and the cutover. Help desks: Zendesk with OAuth
