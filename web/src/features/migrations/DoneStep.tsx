@@ -31,6 +31,8 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const completed = m.state === "completed"
   const deletedAt = m.credentials_deleted_at ? formatDateTime(m.credentials_deleted_at, i18n.locale) : ""
   const removable = m.removable_conversations ?? 0
+  const file = m.source === "file"
+  const fileDeletedAt = m.upload?.deleted_at ? formatDateTime(m.upload.deleted_at, i18n.locale) : ""
   const openInbox = () => {
     if (m.inbox_id) setInbox(m.inbox_id)
     navigate("/")
@@ -51,7 +53,9 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
           )
         }
       >
-        {completed ? (
+        {completed && file ? (
+          <Trans>The history from the export file is copied into Yuva.</Trans>
+        ) : completed ? (
           <Trans>The history is copied and its mail now reaches Yuva.</Trans>
         ) : removed ? (
           <Trans>Conversations nobody wrote in after the import are deleted. Nothing changed in {address}.</Trans>
@@ -92,50 +96,68 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
 
         {completed && m.preset === "takeout" && <NewerMail m={m} />}
 
-        <section className="flex flex-col gap-3" aria-labelledby="migration-access">
-          <h2 id="migration-access" className="text-title">
-            <Trans>Access to the mailbox</Trans>
-          </h2>
-          <p className="flex items-start gap-2 text-body" data-testid="migration-credentials">
-            <ShieldCheckIcon className="mt-0.5 size-4 shrink-0 text-success" />
-            <span>
-              {deletedAt ? (
-                <Trans>
-                  Credentials deleted {deletedAt}. Yuva can no longer read {address}.
-                </Trans>
+        {file ? (
+          <section className="flex flex-col gap-3" aria-labelledby="migration-file">
+            <h2 id="migration-file" className="text-title">
+              <Trans>The export file</Trans>
+            </h2>
+            <p className="flex items-start gap-2 text-body" data-testid="migration-file-deleted">
+              <ShieldCheckIcon className="mt-0.5 size-4 shrink-0 text-success" />
+              <span>
+                {fileDeletedAt ? (
+                  <Trans>The uploaded file was deleted {fileDeletedAt}. Yuva keeps only what it imported.</Trans>
+                ) : (
+                  <Trans>The uploaded file is deleted when the migration ends. Yuva keeps only what it imported.</Trans>
+                )}
+              </span>
+            </p>
+          </section>
+        ) : (
+          <section className="flex flex-col gap-3" aria-labelledby="migration-access">
+            <h2 id="migration-access" className="text-title">
+              <Trans>Access to the mailbox</Trans>
+            </h2>
+            <p className="flex items-start gap-2 text-body" data-testid="migration-credentials">
+              <ShieldCheckIcon className="mt-0.5 size-4 shrink-0 text-success" />
+              <span>
+                {deletedAt ? (
+                  <Trans>
+                    Credentials deleted {deletedAt}. Yuva can no longer read {address}.
+                  </Trans>
+                ) : (
+                  <Trans>Credentials deleted. Yuva can no longer read {address}.</Trans>
+                )}
+              </span>
+            </p>
+            <p className="text-body text-muted-foreground">
+              {preset.app_password ? (
+                <Trans>Remove the app password you made for Yuva in {provider}; it is not needed any more.</Trans>
               ) : (
-                <Trans>Credentials deleted. Yuva can no longer read {address}.</Trans>
+                <Trans>If you made a password just for Yuva, remove it in {provider}.</Trans>
               )}
-            </span>
-          </p>
-          <p className="text-body text-muted-foreground">
-            {preset.app_password ? (
-              <Trans>Remove the app password you made for Yuva in {provider}; it is not needed any more.</Trans>
-            ) : (
-              <Trans>If you made a password just for Yuva, remove it in {provider}.</Trans>
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              className="self-start"
+              render={<a href={guide.link} target="_blank" rel="noreferrer" />}
+              data-testid="migration-revoke"
+            >
+              {guide.linkLabel}
+              <ArrowUpRightIcon className="rtl:-scale-x-100" />
+            </Button>
+            {completed && (
+              <ul className="flex list-disc flex-col gap-1 ps-5 text-body text-muted-foreground">
+                <li>
+                  <Trans>Keep the forwarding, routing or MX as it is: that is how mail reaches Yuva now.</Trans>
+                </li>
+                <li>
+                  <Trans>The old mailbox is untouched; keep it as an archive if you like.</Trans>
+                </li>
+              </ul>
             )}
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="self-start"
-            render={<a href={guide.link} target="_blank" rel="noreferrer" />}
-            data-testid="migration-revoke"
-          >
-            {guide.linkLabel}
-            <ArrowUpRightIcon className="rtl:-scale-x-100" />
-          </Button>
-          {completed && (
-            <ul className="flex list-disc flex-col gap-1 ps-5 text-body text-muted-foreground">
-              <li>
-                <Trans>Keep the forwarding, routing or MX as it is: that is how mail reaches Yuva now.</Trans>
-              </li>
-              <li>
-                <Trans>The old mailbox is untouched; keep it as an archive if you like.</Trans>
-              </li>
-            </ul>
-          )}
-        </section>
+          </section>
+        )}
 
         <ErrorLine error={ask.error} />
         <div className="flex flex-wrap items-center gap-2">

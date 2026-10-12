@@ -8566,6 +8566,10 @@ msgstr "The endpoint is disabled. Enable it to send deliveries again."
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "The exact words they saw next to the checkbox or signature."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "The export file"
+msgstr "The export file"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "The file"
 msgstr "The file"
@@ -8645,6 +8649,10 @@ msgstr "The form works on these addresses:"
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
 msgstr "The full API: MCP, the REST API and live updates, like a member app."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The history from the export file is copied into Yuva."
+msgstr "The history from the export file is copied into Yuva."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The history is copied and its mail now reaches Yuva."
@@ -8946,6 +8954,14 @@ msgstr "The test still goes only to the members you picked, never to the contact
 #: src/features/migrations/ConnectStep.tsx
 msgid "The test stopped at a step."
 msgstr "The test stopped at a step."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
+msgstr "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The uploaded file was deleted {fileDeletedAt}. Yuva keeps only what it imported."
+msgstr "The uploaded file was deleted {fileDeletedAt}. Yuva keeps only what it imported."
 
 #: src/features/migrations/text.ts
 msgid "The user name is your iCloud address without @icloud.com."

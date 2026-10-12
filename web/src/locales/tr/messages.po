@@ -8566,6 +8566,10 @@ msgstr "Uç nokta kapalı. Yeniden göndermek için önce açın."
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "Onay kutusunun ya da imzanın yanında gördükleri metnin aynısı."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "The export file"
+msgstr "Dışa aktarım dosyası"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "The file"
 msgstr "Dosya"
@@ -8645,6 +8649,10 @@ msgstr "Form şu adreslerde çalışır:"
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
 msgstr "Tüm API: bir üye uygulaması gibi MCP, REST API ve canlı güncellemeler."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The history from the export file is copied into Yuva."
+msgstr "Dışa aktarım dosyasındaki geçmiş Yuva'ya kopyalandı."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The history is copied and its mail now reaches Yuva."
@@ -8946,6 +8954,14 @@ msgstr "Deneme yine yalnızca seçtiğiniz üyelere gider, kişiye asla gitmez."
 #: src/features/migrations/ConnectStep.tsx
 msgid "The test stopped at a step."
 msgstr "Deneme bir adımda durdu."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The uploaded file is deleted when the migration ends. Yuva keeps only what it imported."
+msgstr "Yüklenen dosya taşıma bitince silinir. Yuva yalnızca içe aktardıklarını tutar."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The uploaded file was deleted {fileDeletedAt}. Yuva keeps only what it imported."
+msgstr "Yüklenen dosya silindi ({fileDeletedAt}). Yuva yalnızca içe aktardıklarını tutar."
 
 #: src/features/migrations/text.ts
 msgid "The user name is your iCloud address without @icloud.com."
