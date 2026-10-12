@@ -72,6 +72,9 @@ export const API_KEY_SCOPES: ApiKeyScope[] = [
   "broadcasts:write",
   "broadcasts:send",
   "migrations:manage",
+  "analytics:read",
+  "analytics:write",
+  "analytics:manage",
 ]
 export const OPT_IN_SCOPES: ApiKeyScope[] = ["broadcasts:send"]
 export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = [
@@ -79,6 +82,7 @@ export const WORKSPACE_WIDE_SCOPES: ApiKeyScope[] = [
   "webhooks:manage",
   "workspace:manage",
   "migrations:manage",
+  "analytics:manage",
 ]
 export const DELIVERY_STATES: WebhookDeliveryState[] = ["pending", "succeeded", "failed"]
 export const SUBSCRIPTION_STATES: SubscriptionState[] = ["subscribed", "pending", "unsubscribed"]
@@ -150,6 +154,9 @@ export function useEnumText() {
       "broadcasts:write": t`Write broadcasts and e-mail designs`,
       "broadcasts:send": t`Schedule and send broadcasts, when the workspace lets keys and assistants send them`,
       "migrations:manage": t`Move mailboxes to Yuva: find the provider, connect, scan, copy and switch`,
+      "analytics:read": t`Read analytics properties and their numbers`,
+      "analytics:write": t`Send analytics events from your servers`,
+      "analytics:manage": t`Manage analytics properties, their keys and their data`,
     } satisfies Record<ApiKeyScope, string>,
     delivery: { pending: t`Pending`, succeeded: t`Succeeded`, failed: t`Failed` } satisfies Record<
       WebhookDeliveryState,
