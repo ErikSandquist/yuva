@@ -295,8 +295,8 @@ func (s *scope) visitsCTE() string {
 	if s.engagement {
 		eng = "coalesce(ev.eng_ms, 0) AS eng_ms, coalesce(ev.eng_views, 0) AS eng_views, coalesce(ev.scroll_sum, 0) AS scroll_sum, coalesce(ev.scroll_views, 0) AS scroll_views"
 		from = `analytics_visits v LEFT JOIN (
-    SELECT day, visit, sum(engaged_ms) AS eng_ms, count(*) AS eng_views, coalesce(sum(scroll), 0) AS scroll_sum, count(scroll) AS scroll_views
-    FROM analytics_events WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4 AND kind = 4
+    SELECT day, visit, sum(eng_ms) AS eng_ms, sum(eng_views) AS eng_views, sum(scroll_sum) AS scroll_sum, sum(scroll_views) AS scroll_views
+    FROM analytics_visit_pages WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4 AND eng_views > 0
     GROUP BY day, visit) ev ON ev.day = v.day AND ev.visit = v.visit`
 	}
 	where := append([]string{"v.workspace_id = $1", "v.property_id = $2", "v.day BETWEEN $3 AND $4", "NOT v.bot"}, s.visitWhere...)
@@ -314,11 +314,8 @@ WHERE ` + strings.Join(where, " AND ") + `)`
 func (s *scope) pagesCTE() string {
 	where := append([]string{"workspace_id = $1", "property_id = $2", "day BETWEEN $3 AND $4"}, s.pathWhere...)
 	return `pv AS (
-SELECT day, visit, path, count(*) FILTER (WHERE kind = 1) AS views, count(*) FILTER (WHERE kind = 3) AS events,
-    coalesce(sum(engaged_ms) FILTER (WHERE kind = 4), 0) AS eng_ms, count(*) FILTER (WHERE kind = 4) AS eng_views,
-    coalesce(sum(scroll) FILTER (WHERE kind = 4), 0) AS scroll_sum, count(scroll) FILTER (WHERE kind = 4) AS scroll_views
-FROM analytics_events WHERE ` + strings.Join(where, " AND ") + `
-GROUP BY day, visit, path)`
+SELECT day, visit, path, views, events, eng_ms, eng_views, scroll_sum, scroll_views
+FROM analytics_visit_pages WHERE ` + strings.Join(where, " AND ") + `)`
 }
 
 // visitRowsSQL: per day, the visits' sums (dimension 0) and, with groups, per combined value of
@@ -446,6 +443,16 @@ func patternRegex(pattern string, path bool) string {
 	return b.String()
 }
 
+// patternPrefix is the text every value a pattern matches starts with, checked before the regular
+// expression because it is much cheaper; on paths a `/**` may match nothing, so its slash is left out.
+func patternPrefix(pattern string, path bool) string {
+	prefix, _, wild := strings.Cut(pattern, "*")
+	if wild && path {
+		prefix = strings.TrimSuffix(prefix, "/")
+	}
+	return prefix
+}
+
 func (s *scope) cond(expr string, f Filter, path bool) string {
 	switch f.Op {
 	case "is":
@@ -466,6 +473,9 @@ func (s *scope) cond(expr string, f Filter, path bool) string {
 		parts := make([]string, len(f.Values))
 		for i, v := range f.Values {
 			parts[i] = "(" + expr + ") ~ " + s.arg(patternRegex(v, path))
+			if prefix := patternPrefix(v, path); prefix != "" {
+				parts[i] = "starts_with(" + expr + ", " + s.arg(prefix) + ") AND " + parts[i]
+			}
 		}
 		return "(" + strings.Join(parts, " OR ") + ")"
 	}
@@ -481,8 +491,8 @@ func (s *scope) addFilter(f Filter) error {
 	}
 	if d.Page {
 		c := s.cond("\x00path", f, true)
-		s.visitWhere = append(s.visitWhere, `(v.day, v.visit) IN (SELECT pe.day, pe.visit FROM analytics_events pe
-    WHERE pe.workspace_id = $1 AND pe.property_id = $2 AND pe.day BETWEEN $3 AND $4 AND pe.kind = 1 AND `+strings.ReplaceAll(c, "\x00path", "pe.path")+")")
+		s.visitWhere = append(s.visitWhere, `(v.day, v.visit) IN (SELECT pe.day, pe.visit FROM analytics_visit_pages pe
+    WHERE pe.workspace_id = $1 AND pe.property_id = $2 AND pe.day BETWEEN $3 AND $4 AND pe.views > 0 AND `+strings.ReplaceAll(c, "\x00path", "pe.path")+")")
 		s.pathWhere = append(s.pathWhere, strings.ReplaceAll(c, "\x00path", "path"))
 		return nil
 	}

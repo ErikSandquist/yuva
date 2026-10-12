@@ -72,7 +72,10 @@ WHERE workspace_id = @workspace_id AND property_id = @property_id AND day BETWEE
 
 -- name: DeleteAnalyticsRollups :exec
 WITH d AS (DELETE FROM analytics_daily WHERE analytics_daily.workspace_id = @workspace_id AND analytics_daily.property_id = @property_id),
-     h AS (DELETE FROM analytics_hourly WHERE analytics_hourly.workspace_id = @workspace_id AND analytics_hourly.property_id = @property_id)
+     h AS (DELETE FROM analytics_hourly WHERE analytics_hourly.workspace_id = @workspace_id AND analytics_hourly.property_id = @property_id),
+     pd AS (DELETE FROM analytics_partial_daily WHERE analytics_partial_daily.workspace_id = @workspace_id AND analytics_partial_daily.property_id = @property_id),
+     ph AS (DELETE FROM analytics_partial_hourly WHERE analytics_partial_hourly.workspace_id = @workspace_id AND analytics_partial_hourly.property_id = @property_id),
+     pf AS (DELETE FROM analytics_partial_days WHERE analytics_partial_days.workspace_id = @workspace_id AND analytics_partial_days.property_id = @property_id)
 DELETE FROM analytics_rollup_days WHERE analytics_rollup_days.workspace_id = @workspace_id AND analytics_rollup_days.property_id = @property_id;
 
 -- name: GetAnalyticsUsage :one
@@ -99,7 +102,7 @@ ORDER BY m.created_at, m.id;
 SELECT DISTINCT workspace_id FROM analytics_properties ORDER BY workspace_id;
 
 -- name: ListAnalyticsRollupTodo :many
-SELECT d.property_id, d.day, p.timezone FROM analytics_rollup_days d
+SELECT d.property_id, d.day, d.built_at, p.timezone FROM analytics_rollup_days d
 JOIN analytics_properties p ON p.workspace_id = d.workspace_id AND p.id = d.property_id
 WHERE d.workspace_id = @workspace_id AND (d.built_at IS NULL OR d.dirty) AND p.deleted_at IS NULL AND d.day >= @oldest
 ORDER BY d.property_id, d.day;

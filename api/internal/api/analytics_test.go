@@ -463,7 +463,7 @@ func TestAnalyticsKeyRotationAndDeletion(t *testing.T) {
 	if err != nil || !done {
 		t.Fatalf("deletion %v %v", done, err)
 	}
-	for _, table := range []string{"analytics_events", "analytics_visits", "analytics_salts", "analytics_properties", "analytics_ingest_stats", "analytics_rollup_days"} {
+	for _, table := range []string{"analytics_events", "analytics_visit_pages", "analytics_visits", "analytics_salts", "analytics_properties", "analytics_ingest_stats", "analytics_rollup_days"} {
 		col := "property_id"
 		if table == "analytics_properties" {
 			col = "id"
@@ -485,7 +485,8 @@ func TestAnalyticsKeyRotationAndDeletion(t *testing.T) {
 	if err != nil || !done {
 		t.Fatalf("range deletion %v %v", done, err)
 	}
-	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); n != 0 {
+	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2", tm.ws, id) +
+		h.count("SELECT count(*) FROM analytics_visit_pages WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); n != 0 {
 		t.Fatalf("%d events left", n)
 	}
 	tm.owner.expect(http.StatusOK, "GET", "/v1/analytics/properties/"+id, nil)
@@ -504,7 +505,8 @@ func TestAnalyticsKeyRotationAndDeletion(t *testing.T) {
 	if p, err := h.srv.PurgeWorkspace(context.Background(), ws, time.Minute); err != nil || !p.Done {
 		t.Fatalf("purge %v %v", p, err)
 	}
-	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1", tm.ws) + h.count("SELECT count(*) FROM analytics_visits WHERE workspace_id = $1", tm.ws); n != 0 {
+	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1", tm.ws) + h.count("SELECT count(*) FROM analytics_visits WHERE workspace_id = $1", tm.ws) +
+		h.count("SELECT count(*) FROM analytics_visit_pages WHERE workspace_id = $1", tm.ws); n != 0 {
 		t.Fatalf("%d raw rows outlive their workspace", n)
 	}
 }

@@ -140,13 +140,18 @@ var loadAgents = []string{uaMac, uaPixel, uaWindows,
 
 // loadIngest drives the collection endpoint at a steady rate from many addresses while a flusher
 // writes every second, and reports what it took. It runs first, so the memory it reports is its
-// own, and deletes its rows afterwards, so the query views read one property's days as planned.
+// own, and deletes its rows afterwards and compacts the day they were in, so the query views read
+// one property's days as planned.
 func loadIngest(t *testing.T, h *harness, rep *loadReport) {
 	tm := newTeam(t, h)
 	id, key := createProperty(tm.owner, map[string]any{"name": "Load ingest", "domains": []string{"example.com"}})
+	day := analytics.LocalDay(h.clock.Now(), time.UTC)
 	defer func() {
-		for _, table := range []string{analytics.EventsTable, analytics.VisitsTable} {
+		for _, table := range []string{analytics.EventsTable, analytics.VisitPagesTable, analytics.VisitsTable} {
 			if _, err := h.st.Pool.Exec(context.Background(), "DELETE FROM "+table+" WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); err != nil {
+				t.Error(err)
+			}
+			if _, err := h.st.Pool.Exec(context.Background(), "VACUUM FULL "+analytics.PartitionName(table, day)); err != nil {
 				t.Error(err)
 			}
 		}
@@ -262,6 +267,8 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 	id, _ := createProperty(tm.owner, map[string]any{"name": "Load " + size, "domains": []string{"example.com"}})
 	ws, prop := uuid.MustParse(tm.ws), uuid.MustParse(id)
 	today := analytics.LocalDay(h.clock.Now(), time.UTC)
+	now := today.Add(16 * time.Hour)
+	h.clock.Set(now)
 	first := today.AddDate(0, 0, 1-loadRawDays)
 	pg := &analytics.PGStore{Pool: h.st.Pool}
 	if err := pg.EnsurePartitions(ctx, first, today.AddDate(0, 0, 1)); err != nil {
@@ -280,7 +287,11 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 		go func(day time.Time) {
 			defer wg.Done()
 			defer func() { <-sem }()
-			e, v, err := writeLoadDay(ctx, h, ws, prop, day, perDay)
+			var until time.Time
+			if day.Equal(today) {
+				until = now
+			}
+			e, v, err := writeLoadDay(ctx, h, ws, prop, day, perDay, until)
 			if err != nil {
 				errs <- err
 				return
@@ -296,12 +307,12 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 		t.Fatal(err)
 	}
 	loaded := time.Since(start)
-	if _, err := h.st.Pool.Exec(ctx, "ANALYZE analytics_events, analytics_visits"); err != nil {
+	if _, err := h.st.Pool.Exec(ctx, "ANALYZE analytics_events, analytics_visit_pages, analytics_visits"); err != nil {
 		t.Fatal(err)
 	}
 	var size64 int64
 	if err := h.st.Pool.QueryRow(ctx, `SELECT coalesce(sum(pg_total_relation_size(c.oid)), 0)::bigint FROM pg_inherits i JOIN pg_class c ON c.oid = i.inhrelid
-		JOIN pg_class p ON p.oid = i.inhparent WHERE p.relname IN ('analytics_events', 'analytics_visits')`).Scan(&size64); err != nil {
+		JOIN pg_class p ON p.oid = i.inhparent WHERE p.relname IN ('analytics_events', 'analytics_visit_pages', 'analytics_visits')`).Scan(&size64); err != nil {
 		t.Fatal(err)
 	}
 	start = time.Now()
@@ -325,12 +336,18 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 	}
 	wg.Wait()
 	rolled := time.Since(start)
-	if _, err := h.st.Pool.Exec(ctx, "VACUUM ANALYZE analytics_daily, analytics_hourly, analytics_rollup_days"); err != nil {
+	start = time.Now()
+	if err := h.srv.FoldAnalyticsDay(ctx, ws, prop, today); err != nil {
+		t.Fatal(err)
+	}
+	folded := time.Since(start)
+	if _, err := h.st.Pool.Exec(ctx, "VACUUM ANALYZE analytics_daily, analytics_hourly, analytics_rollup_days, analytics_partial_daily, analytics_partial_hourly, analytics_partial_days"); err != nil {
 		t.Fatal(err)
 	}
 	rep.add(t, "## %s events a month: 90 days, %d events and %d visits (%.1f GB raw with indexes, all partitions)", size, events, visits, float64(size64)/1e9)
-	rep.add(t, "- written in %v; %d days rolled up in %v (2 workers), one day p50 %v, max %v", loaded.Round(time.Second), len(rollups), rolled.Round(time.Second),
-		quantile(rollups, 0.5).Round(time.Millisecond), slices.Max(append(rollups, 0)).Round(time.Millisecond))
+	rep.add(t, "- written in %v; %d days rolled up in %v (2 workers), one day p50 %v, max %v; today folded up to %s in %v", loaded.Round(time.Second), len(rollups),
+		rolled.Round(time.Second), quantile(rollups, 0.5).Round(time.Millisecond), slices.Max(append(rollups, 0)).Round(time.Millisecond),
+		now.Add(-analytics.FoldMargin).Format("15:04"), folded.Round(time.Millisecond))
 
 	base := analytics.Query{WorkspaceID: ws, PropertyID: prop, Timezone: "UTC", To: today, RawFrom: first,
 		Metrics: []string{"visitors", "visits", "pageviews", "bounce_rate", "visit_duration"}, SortBy: []string{"visitors"}}
@@ -349,7 +366,7 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 		target1 time.Duration
 		target2 time.Duration
 	}{
-		{"Overview, 30 days, no filter (rollups + today raw)", overview(today.AddDate(0, 0, -29)), 150 * time.Millisecond, 300 * time.Millisecond},
+		{"Overview, 30 days, no filter (rollups + today folded)", overview(today.AddDate(0, 0, -29)), 150 * time.Millisecond, 300 * time.Millisecond},
 		{"Overview, 12 months, no filter (rollups)", overview(today.AddDate(-1, 0, 1)), 150 * time.Millisecond, 250 * time.Millisecond},
 		{"Pages, 30 days, country is TR (rollup pairs)", []analytics.Query{with(today.AddDate(0, 0, -29), []string{"page"}, analytics.Filter{Dimension: "country", Op: "is", Values: []string{"TR"}})}, 200 * time.Millisecond, time.Second},
 		{"Sources, 30 days, device is mobile (raw)", []analytics.Query{with(today.AddDate(0, 0, -29), []string{"source"}, analytics.Filter{Dimension: "device", Op: "is", Values: []string{"mobile"}})}, 200 * time.Millisecond, time.Second},
@@ -419,8 +436,9 @@ var loadCountries = func() []string {
 
 // writeLoadDay copies one day of synthetic visits and their events: Zipf-distributed pages over
 // 10,000 paths, 40 sources, 150 countries, visits of 1 to 15 page views with an engagement after
-// most of them, 3% bots, busier in the afternoon.
-func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.Time, perDay int) (int, int, error) {
+// most of them, 3% bots, busier in the afternoon. A day in progress (until set) keeps only what
+// happened by until.
+func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.Time, perDay int, until time.Time) (int, int, error) {
 	r := rand.New(rand.NewPCG(uint64(day.Unix()), uint64(perDay)))
 	zipf := rand.NewZipf(rand.New(rand.NewPCG(uint64(day.Unix()), 1)), 1.1, 1, 9999)
 	sections := []string{"/blog/", "/docs/", "/p/", "/help/"}
@@ -433,8 +451,9 @@ func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.
 	}
 	browsers := []string{"Chrome", "Safari", "Firefox", "Edge", "Samsung Browser"}
 	oses := []string{"Windows", "MacOS", "iOS", "Android", "Linux"}
-	var evRows, visitRows [][]any
-	events := 0
+	var evRows, visitRows, pageRows [][]any
+	events, written := 0, 0
+	happened := func(t time.Time) bool { return until.IsZero() || !t.After(until) }
 	for events < perDay {
 		views := 1 + r.IntN(15)
 		if r.IntN(2) == 0 {
@@ -447,21 +466,48 @@ func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.
 		ts := start
 		entry, exit := "", ""
 		var engaged int64
+		type pageSums struct{ views, engViews, scrollViews, engMS, scrollSum int64 }
+		pages := map[string]*pageSums{}
+		var order []string
+		kept := 0
 		for v := 0; v < views; v++ {
 			p := path()
-			if v == 0 {
-				entry = p
+			view := happened(ts)
+			if view {
+				if v == 0 {
+					entry = p
+				}
+				exit = p
+				kept++
+				if pages[p] == nil {
+					pages[p] = &pageSums{}
+					order = append(order, p)
+				}
+				pages[p].views++
+				evRows = append(evRows, []any{ws, prop, day, ts, visit, visitor, int16(1), "pageview", "example.com", p, nil, nil, nil, nil, nil, true})
+				written++
 			}
-			exit = p
-			evRows = append(evRows, []any{ws, prop, day, ts, visit, visitor, int16(1), "pageview", "example.com", p, nil, nil, nil, nil, nil, true})
 			events++
 			if r.IntN(10) < 7 {
 				ms := int32(1000 + r.IntN(120_000))
-				engaged += int64(ms)
-				evRows = append(evRows, []any{ws, prop, day, ts.Add(time.Duration(ms) * time.Millisecond), visit, visitor, int16(4), "engagement", "example.com", p, nil, nil, nil, ms, int16(r.IntN(101)), false})
+				scroll := int16(r.IntN(101))
+				if at := ts.Add(time.Duration(ms) * time.Millisecond); view && happened(at) {
+					ps := pages[p]
+					engaged += int64(ms)
+					ps.engViews, ps.scrollViews, ps.engMS, ps.scrollSum = ps.engViews+1, ps.scrollViews+1, ps.engMS+int64(ms), ps.scrollSum+int64(scroll)
+					evRows = append(evRows, []any{ws, prop, day, at, visit, visitor, int16(4), "engagement", "example.com", p, nil, nil, nil, ms, scroll, false})
+					written++
+				}
 				events++
 			}
 			ts = ts.Add(time.Duration(10+r.IntN(300)) * time.Second)
+		}
+		if !until.IsZero() && ts.After(until) {
+			ts = until
+		}
+		for _, p := range order {
+			ps := pages[p]
+			pageRows = append(pageRows, []any{ws, prop, day, visit, p, int32(ps.views), int32(0), ps.engMS, int32(ps.engViews), ps.scrollSum, int32(ps.scrollViews)})
 		}
 		src := r.IntN(40)
 		channel := int16(1 + src%9)
@@ -471,9 +517,12 @@ func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.
 		}
 		country := loadCountries[min(len(loadCountries)-1, int(r.ExpFloat64()*20))]
 		b := r.IntN(len(browsers))
-		visitRows = append(visitRows, []any{ws, prop, day, visit, visitor, start, ts, "example.com", entry, exit, int32(views), int32(0), false, engaged,
+		row := []any{ws, prop, day, visit, visitor, start, ts, "example.com", entry, exit, int32(kept), int32(0), false, engaged,
 			channel, source, source, "", source, "", "", "", "", country, "", "", int16(1 + r.IntN(3)), browsers[b], int16(120 + r.IntN(20)),
-			oses[r.IntN(len(oses))], int16(10 + r.IntN(8)), int16(1 + r.IntN(4)), "en", int16(1), "", false, nil, bot})
+			oses[r.IntN(len(oses))], int16(10 + r.IntN(8)), int16(1 + r.IntN(4)), "en", int16(1), "", false, nil, bot}
+		if kept > 0 {
+			visitRows = append(visitRows, row)
+		}
 	}
 	err := pgx.BeginFunc(ctx, h.st.Pool, func(tx pgx.Tx) error {
 		if _, err := tx.CopyFrom(ctx, pgx.Identifier{analytics.PartitionName(analytics.EventsTable, day)}, []string{"workspace_id", "property_id", "day", "ts",
@@ -488,8 +537,12 @@ func writeLoadDay(ctx context.Context, h *harness, ws, prop uuid.UUID, day time.
 			pgx.CopyFromRows(visitRows)); err != nil {
 			return err
 		}
+		if _, err := tx.CopyFrom(ctx, pgx.Identifier{analytics.PartitionName(analytics.VisitPagesTable, day)}, []string{"workspace_id", "property_id", "day", "visit",
+			"path", "views", "events", "eng_ms", "eng_views", "scroll_sum", "scroll_views"}, pgx.CopyFromRows(pageRows)); err != nil {
+			return err
+		}
 		_, err := tx.Exec(ctx, `INSERT INTO analytics_rollup_days (workspace_id, property_id, day) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`, ws, prop, day)
 		return err
 	})
-	return events, len(visitRows), err
+	return written, len(visitRows), err
 }

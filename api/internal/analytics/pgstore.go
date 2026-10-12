@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"maps"
 	"slices"
+	"strings"
 	"time"
 	"uuid"
 
@@ -15,8 +16,9 @@ import (
 )
 
 const (
-	VisitsTable = "analytics_visits"
-	EventsTable = "analytics_events"
+	VisitsTable     = "analytics_visits"
+	EventsTable     = "analytics_events"
+	VisitPagesTable = "analytics_visit_pages"
 	// PartitionLock is the advisory lock every creation or removal of a raw partition holds.
 	PartitionLock  = 7_310_015_001
 	lastEventEvery = time.Minute
@@ -44,6 +46,7 @@ func (s *PGStore) EnsurePartitions(ctx context.Context, from, to time.Time) erro
 			for _, t := range []struct{ table, with string }{
 				{VisitsTable, " WITH (fillfactor = 70, autovacuum_vacuum_scale_factor = 0.02)"},
 				{EventsTable, ""},
+				{VisitPagesTable, ""},
 			} {
 				name := PartitionName(t.table, d)
 				var exists bool
@@ -153,13 +156,17 @@ func liveProperties(ctx context.Context, tx pgx.Tx, b Batch) (map[uuid.UUID]bool
 
 func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestResult, error) {
 	res := IngestResult{Month: monthOf(now), Usage: map[uuid.UUID]int64{}}
+	began := time.Now()
 	err := pgx.BeginFunc(ctx, s.Pool, func(tx pgx.Tx) error {
 		live, err := liveProperties(ctx, tx, b)
 		if err != nil {
 			return err
 		}
 		visits := map[visitKey3]*visitRow{}
+		pages := map[visitPageKey]*visitPage{}
 		accepted := map[dayKey]int64{}
+		changed := foldChanges{late: map[dayKey]bool{}, engagement: map[dayKey]bool{}}
+		stale := now.Add(-FoldMargin / 2)
 		usage := map[uuid.UUID]int64{}
 		type firstLast struct{ first, last time.Time }
 		seenAt := map[[2]uuid.UUID]*firstLast{}
@@ -179,6 +186,9 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 			rows = append(rows, []any{e.WorkspaceID, e.PropertyID, e.Day, e.TS, e.Visit, e.Visitor, int16(e.Kind), e.Name, e.Hostname, e.Path,
 				nil, nil, nil, engaged, scroll, e.Interactive})
 			accepted[dayKey{e.WorkspaceID, e.PropertyID, e.Day}]++
+			if !e.TS.After(stale) {
+				changed.late[dayKey{e.WorkspaceID, e.PropertyID, e.Day}] = true
+			}
 			usage[e.WorkspaceID]++
 			pk := [2]uuid.UUID{e.WorkspaceID, e.PropertyID}
 			if fl := seenAt[pk]; fl == nil {
@@ -194,6 +204,13 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 				visits[k] = v
 			}
 			v.add(e)
+			pk3 := visitPageKey{visitKey3: k, path: e.Path}
+			vp := pages[pk3]
+			if vp == nil {
+				vp = &visitPage{ws: e.WorkspaceID}
+				pages[pk3] = vp
+			}
+			vp.add(e)
 		}
 		drops := slices.DeleteFunc(slices.Clone(b.Drops), func(c Count) bool { return !live[c.PropertyID] })
 		if len(rows) > 0 {
@@ -203,10 +220,17 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 				return fmt.Errorf("copy events: %w", err)
 			}
 		}
-		if err := upsertVisits(ctx, tx, visits); err != nil {
+		old, err := upsertVisits(ctx, tx, visits, stale.Add(-VisitGap))
+		if err != nil {
 			return err
 		}
-		if err := markBots(ctx, tx, b.Bots); err != nil {
+		if err := changed.oldVisits(ctx, tx, visits, pages, old); err != nil {
+			return err
+		}
+		if err := upsertVisitPages(ctx, tx, pages); err != nil {
+			return err
+		}
+		if err := markBots(ctx, tx, b.Bots, stale.Add(-VisitGap), changed.late); err != nil {
 			return err
 		}
 		if err := addCounts(ctx, tx, accepted, drops); err != nil {
@@ -226,12 +250,19 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 				return err
 			}
 		}
-		return nil
+		if time.Since(began) > FoldMargin/4 {
+			for k := range accepted {
+				changed.late[k] = true
+			}
+		}
+		return changed.bump(ctx, tx)
 	})
 	return res, err
 }
 
-func upsertVisits(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow) error {
+// upsertVisits writes the batch's visits and returns those of its engagements that joined a visit
+// which had ended by endedBy.
+func upsertVisits(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow, endedBy time.Time) (map[visitKey3]bool, error) {
 	list := make([]*visitRow, 0, len(visits))
 	for _, v := range visits {
 		list = append(list, v)
@@ -239,14 +270,17 @@ func upsertVisits(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow
 	slices.SortFunc(list, func(a, b *visitRow) int {
 		return cmp.Or(a.property.Compare(b.property), a.day.Compare(b.day), cmp.Compare(a.visit, b.visit))
 	})
-	var ins, eng []*visitRow
+	var ins, eng, joined []*visitRow
 	for _, v := range list {
 		if v.active {
 			ins = append(ins, v)
 		} else if v.engaged > 0 {
 			eng = append(eng, v)
+		} else {
+			joined = append(joined, v)
 		}
 	}
+	old := map[visitKey3]bool{}
 	if len(ins) > 0 {
 		n := len(ins)
 		var (
@@ -295,7 +329,7 @@ ON CONFLICT (property_id, day, visit) DO UPDATE SET
 			ws, props, days, visit, visitor, started, ended, hostname, entry, exit, views, events, interactive, engaged, channel, source, refHost,
 			refPath, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, country, region, city, device, browser, browserMajor, osName,
 			osMajor, screen, language, platform, appVersion); err != nil {
-			return fmt.Errorf("upsert visits: %w", err)
+			return nil, fmt.Errorf("upsert visits: %w", err)
 		}
 	}
 	if len(eng) > 0 {
@@ -304,18 +338,198 @@ ON CONFLICT (property_id, day, visit) DO UPDATE SET
 		for i, v := range eng {
 			ws[i], props[i], days[i], visit[i], engaged[i] = v.ws, v.property, v.day, v.visit, v.engaged
 		}
-		if _, err := tx.Exec(ctx, `
+		rows, err := tx.Query(ctx, `
 UPDATE analytics_visits v SET engaged_ms = v.engaged_ms + u.engaged
 FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[], $5::bigint[]) AS u(workspace_id, property_id, day, visit, engaged)
-WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visit = u.visit`,
-			ws, props, days, visit, engaged); err != nil {
-			return fmt.Errorf("add engagement: %w", err)
+WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visit = u.visit
+RETURNING v.property_id, v.day, v.visit, v.ended_at <= $6`,
+			ws, props, days, visit, engaged, endedBy)
+		if err != nil {
+			return nil, fmt.Errorf("add engagement: %w", err)
 		}
+		if err := collectOld(rows, old); err != nil {
+			return nil, fmt.Errorf("add engagement: %w", err)
+		}
+	}
+	if len(joined) > 0 {
+		n := len(joined)
+		ws, props, days, visit := make([]uuid.UUID, n), make([]uuid.UUID, n), make([]time.Time, n), make([]int64, n)
+		for i, v := range joined {
+			ws[i], props[i], days[i], visit[i] = v.ws, v.property, v.day, v.visit
+		}
+		rows, err := tx.Query(ctx, `
+SELECT v.property_id, v.day, v.visit, v.ended_at <= $5
+FROM analytics_visits v JOIN unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[]) AS u(workspace_id, property_id, day, visit)
+    ON v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visit = u.visit`,
+			ws, props, days, visit, endedBy)
+		if err != nil {
+			return nil, fmt.Errorf("engaged visits: %w", err)
+		}
+		if err := collectOld(rows, old); err != nil {
+			return nil, fmt.Errorf("engaged visits: %w", err)
+		}
+	}
+	return old, nil
+}
+
+func collectOld(rows pgx.Rows, old map[visitKey3]bool) error {
+	defer rows.Close()
+	for rows.Next() {
+		var k visitKey3
+		var ended bool
+		if err := rows.Scan(&k.property, &k.day, &k.visit, &ended); err != nil {
+			return err
+		}
+		if ended {
+			old[visitKey3{k.property, k.day.UTC(), k.visit}] = true
+		}
+	}
+	return rows.Err()
+}
+
+// foldChanges are the days whose folds no longer hold: late for every query, engagement for the
+// engagement metrics.
+type foldChanges struct {
+	late, engagement map[dayKey]bool
+}
+
+// oldVisits records engagements that joined a visit which had ended before any fold's cut: they
+// change the visit's engagement, and a path the visit had no row for changes its page numbers.
+func (c foldChanges) oldVisits(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow, pages map[visitPageKey]*visitPage, old map[visitKey3]bool) error {
+	if len(old) == 0 {
+		return nil
+	}
+	var ws, props []uuid.UUID
+	var days []time.Time
+	var visit []int64
+	var paths []string
+	for k := range pages {
+		if !old[k.visitKey3] {
+			continue
+		}
+		v := visits[k.visitKey3]
+		c.engagement[dayKey{v.ws, k.property, k.day}] = true
+		ws, props, days, visit, paths = append(ws, v.ws), append(props, k.property), append(days, k.day), append(visit, k.visit), append(paths, k.path)
+	}
+	rows, err := tx.Query(ctx, `
+SELECT u.workspace_id, u.property_id, u.day FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[], $5::text[]) AS u(workspace_id, property_id, day, visit, path)
+WHERE NOT EXISTS (SELECT 1 FROM analytics_visit_pages p WHERE p.workspace_id = u.workspace_id AND p.property_id = u.property_id
+    AND p.day = u.day AND p.visit = u.visit AND p.path = u.path)`, ws, props, days, visit, paths)
+	if err != nil {
+		return fmt.Errorf("new paths of old visits: %w", err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var k dayKey
+		if err := rows.Scan(&k.ws, &k.property, &k.day); err != nil {
+			return err
+		}
+		c.late[dayKey{k.ws, k.property, k.day.UTC()}] = true
+	}
+	return rows.Err()
+}
+
+// bump moves the sequences of the changed days, in the transaction that changed them, so a fold
+// that did not see the change sees its sequence move.
+func (c foldChanges) bump(ctx context.Context, tx pgx.Tx) error {
+	all := map[dayKey]bool{}
+	for k := range c.late {
+		all[k] = true
+	}
+	for k := range c.engagement {
+		all[k] = true
+	}
+	if len(all) == 0 {
+		return nil
+	}
+	keys := slices.SortedFunc(maps.Keys(all), func(a, b dayKey) int {
+		return cmp.Or(a.property.Compare(b.property), a.day.Compare(b.day))
+	})
+	n := len(keys)
+	ws, props, days, late, eng := make([]uuid.UUID, n), make([]uuid.UUID, n), make([]time.Time, n), make([]bool, n), make([]bool, n)
+	for i, k := range keys {
+		ws[i], props[i], days[i], late[i], eng[i] = k.ws, k.property, k.day, c.late[k], c.engagement[k]
+	}
+	_, err := tx.Exec(ctx, `
+UPDATE analytics_rollup_days d SET late_seq = d.late_seq + u.late::int, engagement_seq = d.engagement_seq + u.eng::int
+FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::boolean[], $5::boolean[]) AS u(workspace_id, property_id, day, late, eng)
+WHERE d.workspace_id = u.workspace_id AND d.property_id = u.property_id AND d.day = u.day`, ws, props, days, late, eng)
+	if err != nil {
+		return fmt.Errorf("fold changes: %w", err)
 	}
 	return nil
 }
 
-func markBots(ctx context.Context, tx pgx.Tx, bots []BotVisitor) error {
+type visitPageKey struct {
+	visitKey3
+	path string
+}
+
+// visitPage is a visit's numbers on one path, as the page breakdowns sum them.
+type visitPage struct {
+	ws                                   uuid.UUID
+	views, events, engViews, scrollViews int32
+	engMS, scrollSum                     int64
+}
+
+func (p *visitPage) add(e *Event) {
+	switch e.Kind {
+	case KindPageview:
+		p.views++
+	case KindCustom:
+		p.events++
+	case KindEngagement:
+		p.engViews++
+		if e.EngagedMS != nil {
+			p.engMS += int64(*e.EngagedMS)
+		}
+		if e.Scroll != nil {
+			p.scrollViews++
+			p.scrollSum += int64(*e.Scroll)
+		}
+	}
+}
+
+func upsertVisitPages(ctx context.Context, tx pgx.Tx, pages map[visitPageKey]*visitPage) error {
+	if len(pages) == 0 {
+		return nil
+	}
+	keys := slices.SortedFunc(maps.Keys(pages), func(a, b visitPageKey) int {
+		return cmp.Or(a.property.Compare(b.property), a.day.Compare(b.day), cmp.Compare(a.visit, b.visit), strings.Compare(a.path, b.path))
+	})
+	n := len(keys)
+	var (
+		ws, props                            = make([]uuid.UUID, n), make([]uuid.UUID, n)
+		days                                 = make([]time.Time, n)
+		visit, engMS, scrollSum              = make([]int64, n), make([]int64, n), make([]int64, n)
+		paths                                = make([]string, n)
+		views, events, engViews, scrollViews = make([]int32, n), make([]int32, n), make([]int32, n), make([]int32, n)
+	)
+	for i, k := range keys {
+		p := pages[k]
+		ws[i], props[i], days[i], visit[i], paths[i] = p.ws, k.property, k.day, k.visit, k.path
+		views[i], events[i], engMS[i], engViews[i], scrollSum[i], scrollViews[i] = p.views, p.events, p.engMS, p.engViews, p.scrollSum, p.scrollViews
+	}
+	if _, err := tx.Exec(ctx, `
+INSERT INTO analytics_visit_pages (workspace_id, property_id, day, visit, path, views, events, eng_ms, eng_views, scroll_sum, scroll_views)
+SELECT * FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[], $5::text[], $6::integer[], $7::integer[], $8::bigint[], $9::integer[],
+    $10::bigint[], $11::integer[])
+ON CONFLICT (property_id, day, visit, path) DO UPDATE SET
+    views = analytics_visit_pages.views + EXCLUDED.views,
+    events = analytics_visit_pages.events + EXCLUDED.events,
+    eng_ms = analytics_visit_pages.eng_ms + EXCLUDED.eng_ms,
+    eng_views = analytics_visit_pages.eng_views + EXCLUDED.eng_views,
+    scroll_sum = analytics_visit_pages.scroll_sum + EXCLUDED.scroll_sum,
+    scroll_views = analytics_visit_pages.scroll_views + EXCLUDED.scroll_views`,
+		ws, props, days, visit, paths, views, events, engMS, engViews, scrollSum, scrollViews); err != nil {
+		return fmt.Errorf("upsert visit pages: %w", err)
+	}
+	return nil
+}
+
+// markBots marks the bots' visits of their day; a bot with a visit that had ended by endedBy makes
+// its day late.
+func markBots(ctx context.Context, tx pgx.Tx, bots []BotVisitor, endedBy time.Time, late map[dayKey]bool) error {
 	if len(bots) == 0 {
 		return nil
 	}
@@ -324,15 +538,27 @@ func markBots(ctx context.Context, tx pgx.Tx, bots []BotVisitor) error {
 	for i, b := range bots {
 		ws[i], props[i], days[i], visitors[i] = b.WorkspaceID, b.PropertyID, b.Day, b.Visitor
 	}
-	_, err := tx.Exec(ctx, `
+	rows, err := tx.Query(ctx, `
 UPDATE analytics_visits v SET bot = true
 FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[]) AS u(workspace_id, property_id, day, visitor)
-WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visitor = u.visitor AND NOT v.bot`,
-		ws, props, days, visitors)
+WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visitor = u.visitor AND NOT v.bot
+RETURNING v.workspace_id, v.property_id, v.day, v.ended_at <= $5`,
+		ws, props, days, visitors, endedBy)
 	if err != nil {
 		return fmt.Errorf("mark bots: %w", err)
 	}
-	return nil
+	defer rows.Close()
+	for rows.Next() {
+		var k dayKey
+		var ended bool
+		if err := rows.Scan(&k.ws, &k.property, &k.day, &ended); err != nil {
+			return fmt.Errorf("mark bots: %w", err)
+		}
+		if ended {
+			late[dayKey{k.ws, k.property, k.day.UTC()}] = true
+		}
+	}
+	return rows.Err()
 }
 
 func addCounts(ctx context.Context, tx pgx.Tx, accepted map[dayKey]int64, drops []Count) error {
@@ -467,25 +693,36 @@ func (s *PGStore) VisitorsToday(ctx context.Context, workspaceID uuid.UUID, days
 	return out, rows.Err()
 }
 
+// DeleteRaw deletes up to limit rows of each raw table of a property's day; the day's folds stop
+// counting.
 func (s *PGStore) DeleteRaw(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, limit int) (int64, error) {
 	var total int64
-	for _, table := range []string{EventsTable, VisitsTable} {
-		name := PartitionName(table, day)
-		var exists bool
-		if err := s.Pool.QueryRow(ctx, "SELECT to_regclass($1) IS NOT NULL", name).Scan(&exists); err != nil {
-			return total, err
+	err := pgx.BeginFunc(ctx, s.Pool, func(tx pgx.Tx) error {
+		total = 0
+		for _, table := range []string{EventsTable, VisitPagesTable, VisitsTable} {
+			name := PartitionName(table, day)
+			var exists bool
+			if err := tx.QueryRow(ctx, "SELECT to_regclass($1) IS NOT NULL", name).Scan(&exists); err != nil {
+				return err
+			}
+			if !exists {
+				continue
+			}
+			tag, err := tx.Exec(ctx, fmt.Sprintf(`DELETE FROM %[1]s WHERE ctid = ANY(ARRAY(
+				SELECT ctid FROM %[1]s WHERE workspace_id = $1 AND property_id = $2 LIMIT $3))`, name), workspaceID, propertyID, limit)
+			if err != nil {
+				return err
+			}
+			total += tag.RowsAffected()
 		}
-		if !exists {
-			continue
+		if total == 0 {
+			return nil
 		}
-		tag, err := s.Pool.Exec(ctx, fmt.Sprintf(`DELETE FROM %[1]s WHERE ctid = ANY(ARRAY(
-			SELECT ctid FROM %[1]s WHERE workspace_id = $1 AND property_id = $2 LIMIT $3))`, name), workspaceID, propertyID, limit)
-		if err != nil {
-			return total, err
-		}
-		total += tag.RowsAffected()
-	}
-	return total, nil
+		_, err := tx.Exec(ctx, `UPDATE analytics_rollup_days SET late_seq = late_seq + 1 WHERE workspace_id = $1 AND property_id = $2 AND day = $3`,
+			workspaceID, propertyID, day)
+		return err
+	})
+	return total, err
 }
 
 func monthOf(t time.Time) time.Time {

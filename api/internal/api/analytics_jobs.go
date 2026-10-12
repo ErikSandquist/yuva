@@ -212,6 +212,36 @@ func (w *analyticsRollupWorker) Work(ctx context.Context, job *river.Job[Analyti
 	return w.s.RollupAnalyticsDay(ctx, job.Args.WorkspaceID, job.Args.PropertyID, day)
 }
 
+// AnalyticsFoldArgs folds the visitors of an open local day of a property whose visits are over.
+type AnalyticsFoldArgs struct {
+	WorkspaceID uuid.UUID `json:"workspace_id"`
+	PropertyID  uuid.UUID `json:"property_id"`
+	Day         string    `json:"day"`
+}
+
+func (AnalyticsFoldArgs) Kind() string { return "analytics_fold" }
+
+func (AnalyticsFoldArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{Queue: jobs.AnalyticsQueue, UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: analyticsRollupStates}}
+}
+
+type analyticsFoldWorker struct {
+	river.WorkerDefaults[AnalyticsFoldArgs]
+	s *Server
+}
+
+func (w *analyticsFoldWorker) Timeout(*river.Job[AnalyticsFoldArgs]) time.Duration {
+	return analyticsRollupTimeout
+}
+
+func (w *analyticsFoldWorker) Work(ctx context.Context, job *river.Job[AnalyticsFoldArgs]) error {
+	day, err := time.Parse(time.DateOnly, job.Args.Day)
+	if err != nil {
+		return err
+	}
+	return w.s.FoldAnalyticsDay(ctx, job.Args.WorkspaceID, job.Args.PropertyID, day)
+}
+
 type analyticsPartitionsWorker struct {
 	river.WorkerDefaults[jobs.AnalyticsPartitionsArgs]
 	s *Server
@@ -258,6 +288,7 @@ func (w *analyticsGeoIPWorker) Work(ctx context.Context, _ *river.Job[jobs.Analy
 func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsDeleteWorker{s: s})
 	river.AddWorker(workers, &analyticsRollupWorker{s: s})
+	river.AddWorker(workers, &analyticsFoldWorker{s: s})
 	river.AddWorker(workers, &analyticsPartitionsWorker{s: s})
 	river.AddWorker(workers, &analyticsRollupScanWorker{s: s})
 	river.AddWorker(workers, &analyticsSaltsWorker{s: s})
@@ -327,7 +358,8 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 }
 
 // ScanAnalyticsRollups queues a rollup for every day that ended more than the salt grace ago
-// without one, and for every dirty day; it returns how many it queued.
+// without one, and for every dirty day, and a fold for every open day; it returns how many
+// rollups it queued.
 func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
 	if s.analytics == nil {
 		return 0, nil
@@ -342,9 +374,12 @@ func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
 		if err != nil {
 			return queued, err
 		}
-		var batch []river.InsertManyParams
+		var batch, folds []river.InsertManyParams
 		for _, t := range todo {
 			if now.Before(analytics.DayEnd(t.Day, propertyLocation(t.Timezone)).Add(s.analytics.settings.SaltGrace)) {
+				if t.BuiltAt == nil {
+					folds = append(folds, river.InsertManyParams{Args: AnalyticsFoldArgs{WorkspaceID: ws, PropertyID: t.PropertyID, Day: t.Day.Format(time.DateOnly)}})
+				}
 				continue
 			}
 			batch = append(batch, river.InsertManyParams{Args: AnalyticsRollupArgs{WorkspaceID: ws, PropertyID: t.PropertyID, Day: t.Day.Format(time.DateOnly)}})
@@ -354,6 +389,11 @@ func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
 				return queued, err
 			}
 			queued += len(batch)
+		}
+		if len(folds) > 0 {
+			if _, err := s.jobs.InsertMany(ctx, folds); err != nil {
+				return queued, err
+			}
 		}
 	}
 	return queued, nil
@@ -388,6 +428,22 @@ func (s *Server) RollupAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUI
 		ID: uuid.New(), Kind: noticeAnalyticsDropped, WorkspaceName: &w.Name, CreatedAt: s.now(),
 		Detail: new(formatCount(res.Dropped) + " of " + formatCount(res.Dropped+res.Accepted) + " analytics events on " + day.Format(time.DateOnly) + " were dropped"),
 	})
+}
+
+// FoldAnalyticsDay folds a property's open local day up to FoldMargin before now.
+func (s *Server) FoldAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUID, day time.Time) error {
+	if s.analytics == nil {
+		return nil
+	}
+	prop, err := s.st.GetAnalyticsProperty(ctx, store.GetAnalyticsPropertyParams{WorkspaceID: ws, ID: propertyID})
+	if store.IsNotFound(err) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	pg := &analytics.PGStore{Pool: s.st.Pool}
+	return pg.FoldDay(ctx, ws, propertyID, day, prop.Timezone, s.now().Add(-analytics.FoldMargin))
 }
 
 // DeleteExpiredAnalyticsSalts deletes every salt whose day ended more than the grace ago; without

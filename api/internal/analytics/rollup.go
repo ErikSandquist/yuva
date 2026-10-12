@@ -104,6 +104,9 @@ func (s *PGStore) RollupDay(ctx context.Context, ws, property uuid.UUID, day tim
 				return err
 			}
 		}
+		if err := deleteFold(ctx, tx, ws, property, day); err != nil {
+			return err
+		}
 		sc := newScope(ws, property, day, day)
 		sc.engagement = true
 		var all []dailyRow
@@ -151,7 +154,7 @@ func (s *PGStore) RollupDay(ctx context.Context, ws, property uuid.UUID, day tim
 	return res, err
 }
 
-var partitionDay = regexp.MustCompile(`^analytics_(?:events|visits)_(\d{8})$`)
+var partitionDay = regexp.MustCompile(`^analytics_(?:events|visits|visit_pages)_(\d{8})$`)
 
 // DropPartitionsBefore drops the raw partitions of days before day. It is server maintenance over
 // every workspace's rows of those days (an exception to the workspace rule, see architecture.md).
@@ -167,7 +170,7 @@ func (s *PGStore) DropPartitionsBefore(ctx context.Context, day time.Time) ([]st
 	defer conn.Exec(context.WithoutCancel(ctx), "SELECT pg_advisory_unlock($1)", int64(PartitionLock))
 	rows, err := conn.Query(ctx, `SELECT c.relname, p.relname, i.inhdetachpending FROM pg_inherits i
 		JOIN pg_class c ON c.oid = i.inhrelid JOIN pg_class p ON p.oid = i.inhparent
-		WHERE p.relname IN ('analytics_events', 'analytics_visits') ORDER BY c.relname`)
+		WHERE p.relname IN ('analytics_events', 'analytics_visits', 'analytics_visit_pages') ORDER BY c.relname`)
 	if err != nil {
 		return nil, err
 	}

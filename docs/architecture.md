@@ -1532,7 +1532,13 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   (`analytics_daily` per dimension and value, top 1,000 values plus `(other)`; hourly, goals, props,
   support) by `analytics_rollup` jobs on the `analytics` River queue; late events and new goals mark days
   dirty. Queries add rollups for built days and raw rows for open ones; filter combinations the rollups
-  cannot answer are served from raw rows inside the raw window only. No Postgres extension. The query
+  cannot answer are served from raw rows inside the raw window only. The flusher also keeps each
+  visit's numbers per path (`analytics_visit_pages`), which page breakdowns and page filters read instead
+  of the events. Every five minutes an open day is folded up to two minutes ago (`analytics_partial_*`)
+  for the visitors whose every visit begun by then had ended half an hour earlier, so a query adds only
+  the other visitors' raw rows and takes away what the fold already holds of theirs, and a change to a
+  folded visit (a delayed write, an engagement joining an old visit, a bot found later, a deletion)
+  moves the day's sequence so the fold stops counting until the next one. No Postgres extension. The query
   layer sits behind a `Store` interface so a column store can be added later without a contract change;
   Postgres is the only store in M15 and fits up to about 100M events a month per property.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
@@ -1661,8 +1667,8 @@ now; per-channel limits can narrow them later.
     the property by `analytics_properties.public_key` (or its `previous_key` during a rotation), unique
     across the server, and a share link finds its share by `analytics_shares.token_hash`; everything
     after those lookups is scoped by the workspace they returned. Whole day partitions of
-    `analytics_visits` and `analytics_events`, which hold every workspace's rows of that day, are
-    created by the flusher (yesterday to the day after tomorrow in UTC when it starts, and any day it
+    `analytics_visits`, `analytics_events` and `analytics_visit_pages`, which hold every workspace's
+    rows of that day, are created by the flusher (yesterday to the day after tomorrow in UTC when it starts, and any day it
     is about to write that has none) and by the `analytics_partitions` job, which also drops them;
     every other read, write and delete of those tables filters by `workspace_id`.
   - A forwarding address names only its token: ingress finds the channel by

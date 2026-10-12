@@ -268,6 +268,113 @@ func TestAnalyticsRollupsEqualRawAcrossTimeZones(t *testing.T) {
 	}
 }
 
+func TestAnalyticsTodayFoldEqualsRaw(t *testing.T) {
+	h := geoHarness(t, nil)
+	tm := newTeam(t, h)
+	id, key := createProperty(tm.owner, map[string]any{"name": "Today", "domains": []string{"example.com"}, "timezone": "Europe/Istanbul"})
+	ctx := context.Background()
+	ws, prop := uuid.MustParse(tm.ws), uuid.MustParse(id)
+	day := time.Date(2026, 10, 12, 0, 0, 0, 0, time.UTC)
+	seq := func(col string) int {
+		return h.count("SELECT "+col+"::int FROM analytics_rollup_days WHERE workspace_id = $1 AND property_id = $2 AND day = $3", tm.ws, id, day)
+	}
+	refold := func() {
+		t.Helper()
+		if err := h.srv.FoldAnalyticsDay(ctx, ws, prop, day); err != nil {
+			t.Fatal(err)
+		}
+	}
+	engage := func(ip, ua, page string) {
+		t.Helper()
+		r := collect(h, key, collectReq{origin: "https://example.com", ip: ip, header: map[string]string{"User-Agent": ua},
+			body: map[string]any{"n": "engagement", "u": page, "ms": 4000, "sd": 40}})
+		if r.status != http.StatusAccepted {
+			t.Fatalf("collect %d %s", r.status, r.raw)
+		}
+		h.flushAnalytics()
+	}
+
+	h.clock.Set(time.Date(2026, 10, 12, 5, 0, 0, 0, time.UTC))
+	sendVisits(h, key, trafficOf(1))
+	h.clock.Set(time.Date(2026, 10, 12, 6, 20, 0, 0, time.UTC))
+	sendVisits(h, key, []visitStep{{uaWindows, "203.0.113.99", "https://example.com/docs/setup", "", 2000}})
+	h.clock.Set(time.Date(2026, 10, 12, 6, 40, 0, 0, time.UTC))
+	sendVisits(h, key, []visitStep{{uaMac, "198.51.100.77", "https://example.com/pricing", "", 0}})
+	h.clock.Set(time.Date(2026, 10, 12, 7, 0, 0, 0, time.UTC))
+	refold()
+	if n := h.count("SELECT count(*) FROM analytics_partial_daily WHERE workspace_id = $1 AND property_id = $2 AND dim = 0 AND visitors = 4", tm.ws, id); n != 1 {
+		t.Fatal("the fold does not hold the four visitors whose visits are over")
+	}
+	h.clock.Set(time.Date(2026, 10, 12, 7, 30, 0, 0, time.UTC))
+	sendVisits(h, key, []visitStep{
+		{uaMac, "203.0.113.10", "https://example.com/pricing", "https://www.google.com/", 3000},
+		{uaMac, "203.0.113.10", "https://example.com/new", "", 0},
+		{uaMac, "198.51.100.77", "https://example.com/docs", "", 1000},
+		{uaPixel, "203.0.113.50", "https://example.com/?utm_source=newsletter", "", 0},
+	})
+
+	queries := append(rollupQueries("2026-10-12"),
+		map[string]any{"metrics": []string{"visitors", "visits", "pageviews"}, "range": map[string]any{"from": "2026-10-11", "to": "2026-10-12"}, "dimensions": []string{"time:day", "channel"}},
+		map[string]any{"metrics": allMetrics, "range": dayRange("2026-10-12"), "filters": []map[string]any{{"dimension": "country", "op": "is", "values": []string{"TR"}}}})
+	answers := func(want string) []string {
+		t.Helper()
+		h.clock.Advance(time.Minute)
+		var out []string
+		for _, q := range queries {
+			r := query(tm.owner, id, q)
+			pair := q["filters"] != nil && q["dimensions"] != nil
+			if got := served(r); want != "" && got != want && !(pair && got == "raw") {
+				t.Fatalf("%v was served from %s", q, got)
+			}
+			out = append(out, numbers(r))
+		}
+		return out
+	}
+	folded := answers("mixed")
+	if _, err := h.st.Pool.Exec(ctx, "UPDATE analytics_rollup_days SET late_seq = late_seq + 1 WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); err != nil {
+		t.Fatal(err)
+	}
+	raw := answers("raw")
+	for i := range queries {
+		if folded[i] != raw[i] {
+			t.Fatalf("%v:\nfold %s\nraw  %s", queries[i], folded[i], raw[i])
+		}
+	}
+
+	h.clock.Set(time.Date(2026, 10, 12, 8, 10, 0, 0, time.UTC))
+	refold()
+	late, eng := seq("late_seq"), seq("engagement_seq")
+	engage("198.51.100.20", uaPixel, "https://example.com/signup")
+	if seq("late_seq") != late || seq("engagement_seq") != eng+1 {
+		t.Fatal("an engagement of a visit the fold holds did not stop the fold for the engagement metrics only")
+	}
+	h.clock.Advance(time.Minute)
+	if r := query(tm.owner, id, map[string]any{"metrics": []string{"visitors", "pageviews"}, "range": dayRange("2026-10-12")}); served(r) != "mixed" {
+		t.Fatalf("visitors and page views no longer read the fold: %s", served(r))
+	}
+	if r := query(tm.owner, id, map[string]any{"metrics": []string{"time_on_page"}, "range": dayRange("2026-10-12")}); served(r) != "raw" {
+		t.Fatalf("time on page reads a fold that misses an engagement: %s", served(r))
+	}
+	engage("198.51.100.20", uaPixel, "https://example.com/elsewhere")
+	if seq("late_seq") != late+1 {
+		t.Fatal("an engagement on a new page of a visit the fold holds did not stop the fold")
+	}
+
+	refold()
+	late = seq("late_seq")
+	for i := 0; i < analytics.BotBurstViews+1; i++ {
+		h.clock.Advance(2 * time.Second)
+		if r := collect(h, key, collectReq{origin: "https://example.com", ip: "203.0.113.99", header: map[string]string{"User-Agent": uaWindows},
+			body: pageview(fmt.Sprintf("https://example.com/p/%d", i))}); r.status != http.StatusAccepted {
+			t.Fatalf("collect %d %s", r.status, r.raw)
+		}
+	}
+	h.flushAnalytics()
+	if seq("late_seq") != late+1 {
+		t.Fatal("a bot whose earlier visits the fold holds did not stop the fold")
+	}
+}
+
 func TestAnalyticsSaltIsGoneTwoHoursAfterMidnight(t *testing.T) {
 	h := newHarness(t)
 	tm := newTeam(t, h)
@@ -484,11 +591,13 @@ func TestAnalyticsMaintenance(t *testing.T) {
 	exists := func(name string) bool {
 		return h.count("SELECT count(*) FROM pg_class WHERE relname = $1", name) == 1
 	}
-	if exists(analytics.PartitionName(analytics.EventsTable, old)) || exists(analytics.PartitionName(analytics.VisitsTable, old)) {
+	if exists(analytics.PartitionName(analytics.EventsTable, old)) || exists(analytics.PartitionName(analytics.VisitsTable, old)) ||
+		exists(analytics.PartitionName(analytics.VisitPagesTable, old)) {
 		t.Fatal("a partition past the raw window was kept")
 	}
 	for _, d := range []time.Time{today.AddDate(0, 0, -4), today, today.AddDate(0, 0, 7)} {
-		if !exists(analytics.PartitionName(analytics.EventsTable, d)) || !exists(analytics.PartitionName(analytics.VisitsTable, d)) {
+		if !exists(analytics.PartitionName(analytics.EventsTable, d)) || !exists(analytics.PartitionName(analytics.VisitsTable, d)) ||
+			!exists(analytics.PartitionName(analytics.VisitPagesTable, d)) {
 			t.Fatalf("no partition for %s", d.Format(time.DateOnly))
 		}
 	}

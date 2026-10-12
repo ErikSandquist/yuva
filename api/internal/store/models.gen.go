@@ -67,6 +67,45 @@ type AnalyticsIngestStat struct {
 	Events      int64
 }
 
+type AnalyticsPartialDaily struct {
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Day          time.Time
+	Dim          int16
+	Value        string
+	Visitors     int64
+	Visits       int64
+	Views        int64
+	Bounces      int64
+	DurationS    int64
+	Events       int64
+	EngagedMs    int64
+	EngagedViews int64
+	ScrollSum    int64
+	ScrollViews  int64
+}
+
+type AnalyticsPartialDay struct {
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	UntilAt       time.Time
+	LateSeq       int64
+	EngagementSeq int64
+	BuiltAt       time.Time
+}
+
+type AnalyticsPartialHourly struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Hour        int16
+	Visitors    int64
+	Visits      int64
+	Views       int64
+	Events      int64
+}
+
 type AnalyticsProperty struct {
 	ID               uuid.UUID
 	WorkspaceID      uuid.UUID
@@ -98,11 +137,13 @@ type AnalyticsProperty struct {
 }
 
 type AnalyticsRollupDay struct {
-	WorkspaceID uuid.UUID
-	PropertyID  uuid.UUID
-	Day         time.Time
-	BuiltAt     *time.Time
-	Dirty       bool
+	WorkspaceID   uuid.UUID
+	PropertyID    uuid.UUID
+	Day           time.Time
+	BuiltAt       *time.Time
+	Dirty         bool
+	LateSeq       int64
+	EngagementSeq int64
 }
 
 type AnalyticsSalt struct {
@@ -152,6 +193,20 @@ type AnalyticsVisit struct {
 	Persistent   bool
 	ContactID    *uuid.UUID
 	Bot          bool
+}
+
+type AnalyticsVisitPage struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Visit       int64
+	Path        string
+	Views       int32
+	Events      int32
+	EngMs       int64
+	EngViews    int32
+	ScrollSum   int64
+	ScrollViews int32
 }
 
 type ApiKey struct {
