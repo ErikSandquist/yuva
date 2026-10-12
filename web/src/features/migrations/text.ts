@@ -35,6 +35,15 @@ export function guideUrl(slug: string) {
   return `${DOCS}/${slug}.md`
 }
 
+export function usePresetName() {
+  const { t } = useLingui()
+  const names: Partial<Record<MigrationPresetId, string>> = {
+    microsoft: t`Outlook.com and Microsoft 365`,
+    imap: t`Other IMAP server`,
+  }
+  return (id: MigrationPresetId, name: string) => names[id] ?? name
+}
+
 export function useMigrationText() {
   const { t } = useLingui()
   return {

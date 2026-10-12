@@ -5991,9 +5991,17 @@ msgstr "Other"
 msgid "Other conversations"
 msgstr "Other conversations"
 
+#: src/features/migrations/text.ts
+msgid "Other IMAP server"
+msgstr "Other IMAP server"
+
 #: src/features/settings/connected-apps/assistants.ts
 msgid "Other MCP client"
 msgstr "Other MCP client"
+
+#: src/features/migrations/text.ts
+msgid "Outlook.com and Microsoft 365"
+msgstr "Outlook.com and Microsoft 365"
 
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version."

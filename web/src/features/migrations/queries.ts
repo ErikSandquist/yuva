@@ -10,6 +10,7 @@ import {
   type MigrationState,
   type MigrationUpdate,
 } from "@/lib/api"
+import { usePresetName } from "@/features/migrations/text"
 import { keys } from "@/lib/keys"
 import { setMigration } from "@/lib/live"
 import { useRealtimeStatus } from "@/lib/realtime"
@@ -64,9 +65,11 @@ export function useMigrationFolders(id: string, enabled = true) {
 
 export function usePresets() {
   const { workspaceId: ws, canManage } = useSession()
+  const presetName = usePresetName()
   return useQuery({
     queryKey: keys.migrationPresets(ws),
     queryFn: () => unwrap(api.GET("/v1/migrations/presets")).then((r) => r.items),
+    select: (items) => items.map((p) => ({ ...p, name: presetName(p.id, p.name) })),
     staleTime: 10 * 60_000,
     enabled: canManage,
   })

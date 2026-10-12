@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useCreateMigration, useDetect, usePresets, useUpdateMigration } from "@/features/migrations/queries"
+import { usePresetName } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { Field } from "@/features/settings/ui"
 import { StepHeader } from "@/features/setup/SetupLayout"
@@ -173,6 +174,7 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
 
 function DetectionNote({ d }: { d: MigrationDetection }) {
   const { t } = useLingui()
+  const name = usePresetName()(d.preset, d.name)
   const host = d.server?.host ?? ""
   const domain = d.domain
   const how = {
@@ -186,7 +188,7 @@ function DetectionNote({ d }: { d: MigrationDetection }) {
   if (d.note === "microsoft_later" || (!d.available && !d.note))
     return (
       <Notice tone="warning" icon={InfoIcon} data-testid="migration-detected">
-        <p className="font-medium">{d.name}</p>
+        <p className="font-medium">{name}</p>
         <p>
           <Trans>
             This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be
@@ -198,7 +200,7 @@ function DetectionNote({ d }: { d: MigrationDetection }) {
   if (d.note === "proton")
     return (
       <Notice tone="warning" icon={InfoIcon} data-testid="migration-detected">
-        <p className="font-medium">{d.name}</p>
+        <p className="font-medium">Proton Mail</p>
         <p>
           <Trans>
             Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server
@@ -231,7 +233,7 @@ function DetectionNote({ d }: { d: MigrationDetection }) {
     )
   return (
     <Notice icon={CheckIcon} data-testid="migration-detected">
-      <p className="font-medium text-foreground">{d.name}</p>
+      <p className="font-medium text-foreground">{name}</p>
       <p>
         {how}
         {host && d.found_by !== "guess" && <span className="font-mono text-small"> {host}</span>}
