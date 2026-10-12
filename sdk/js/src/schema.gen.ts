@@ -1068,6 +1068,32 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/channels/{channelId}/forwarding-address/rotate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Give an e-mail channel a new forwarding address
+         * @description Owners, admins and API keys. Every e-mail channel receives mail at
+         *     `forwarding_address` (`<token>@` the server's forwarding domain) besides its own address,
+         *     so a mailbox can forward to Yuva without a loop. Rotating gives it a new token; mail to the
+         *     old forwarding address is refused from then on, so change the forwarding at the provider
+         *     too. Other kinds, and servers without a forwarding domain, answer `400`.
+         *
+         *     Scope: `inboxes:manage`.
+         */
+        post: operations["rotateForwardingAddress"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/channels/{channelId}/deliverability-check": {
         parameters: {
             query?: never;
@@ -3431,6 +3457,707 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/migrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List migrations
+         * @description Newest first. `state` may be repeated.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["listMigrations"];
+        put?: never;
+        /**
+         * Start moving a mailbox to Yuva
+         * @description A `draft` migration of the mailbox `source_address` with a preset (`GET
+         *     /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
+         *     is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
+         *     test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+         *     migration (preset `takeout` or `file`) is connected by uploading the export file of that
+         *     mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`). A `zendesk`
+         *     or `helpscout` migration is connected by signing in with the team's own OAuth client
+         *     (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
+         *     conversations go to unless `options.inboxes` names another inbox for their brand or
+         *     mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+         *     connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+         *     `source_address`, which only obtains a token for IMAP.
+         *
+         *     An `imap` migration into a channel that a `file` migration of the same mailbox imported
+         *     into, without `options.since`, starts with `options.since` at the day of the newest
+         *     message of that file and names it in `follows_migration_id`: after a Google Takeout
+         *     import, the mailbox is read only for newer mail, and its cutover follows as usual.
+         *
+         *     `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
+         *     channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
+         *     be set later; a channel names its inbox.
+         *
+         *     A source this server does not offer answers `422 hosted_limit` (the operator's
+         *     `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+         *     server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+         *     (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+         *     URL for a team's own app (HTTPS, or `http://localhost`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["createMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/presets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Mail providers Yuva can move from
+         * @description The presets this server offers, with their IMAP servers, how they sign in, the folders
+         *     read by default and the pace Yuva keeps so the team's own mail clients are not slowed.
+         *     `available: false` marks a provider whose way to connect this server does not offer yet.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["listMigrationPresets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/detect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Find the provider of a mailbox
+         * @description Picks the preset for an address: by the domain for consumer mail services, else by the
+         *     domain's MX records (5 seconds), else from the domain's own autoconfig file
+         *     (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
+         *     record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
+         *     connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+         *     Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+         *     `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+         *     with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["detectMigrationSource"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A migration
+         * @description State, options, counts, the actions allowed now and, while credentials are stored, their
+         *     kind and server (never the password).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["getMigration"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a migration
+         * @description Deletes the migration with its credentials, folders and progress. Not while it scans,
+         *     copies, syncs or removes history (`409 migration_state`). Imported history stays; its
+         *     conversations keep `imported.at` but no longer name the migration. The activity record of
+         *     the migration is kept.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        delete: operations["deleteMigration"];
+        options?: never;
+        head?: never;
+        /**
+         * Change a migration
+         * @description Target inbox and channel, and the options: folders, date range, automatic mail, the status
+         *     rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
+         *     `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+         *     sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        patch: operations["updateMigration"];
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/credentials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Connect the mailbox with a password
+         * @description The user name and the app password (or password) of the mailbox, and for `imap` the
+         *     server; presets take their own server, and a preset with several servers (Zoho's data
+         *     centres, GMX) takes `host` from its list. The credentials are encrypted at once, replace
+         *     any stored before, are never returned or logged, and are deleted when the migration
+         *     completes, is cancelled or deleted. `certificate_sha256` trusts a server whose certificate
+         *     is not valid for its name (a self-hosted server with its own certificate): the SHA-256 of
+         *     the certificate the connection test reported, checked on every connection.
+         *
+         *     In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
+         *     test passes. In `needs_attention` it reconnects the same account on the same server
+         *     (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+         *     connect otherwise).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        put: operations["setMigrationCredentials"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test the connection to the mailbox
+         * @description Runs the steps the copy will, within 20 seconds, and stops at the first that fails:
+         *     resolve the server and check its address, connect, TLS, greeting, sign in, list the
+         *     folders and open the inbox read-only. Each step answers `ok` and, when it failed, a `code`
+         *     with the server's answer in `detail` (passwords, tokens and base64 arguments removed). A
+         *     passing test moves a `draft` migration to `connected` and reports the folders and
+         *     messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
+         *     when it is about to expire, reads the signed-in user) and `folders` (its brands or
+         *     mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+         *     signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+         *     again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+         *     the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+         *     `xoauth2_failed`.
+         *
+         *     The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
+         *     refuses to send any command that could change the mailbox.
+         *
+         *     Limited to 10 tests per migration and 30 per workspace an hour, and after three failed
+         *     sign-ins in a row to none for 15 minutes (`429 rate_limited` with `Retry-After`). Without
+         *     credentials, or while the migration runs or has ended, `409 migration_state`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["testMigrationConnection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Connect a help desk or a Microsoft mailbox with a sign-in
+         * @description Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
+         *     created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
+         *     in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
+         *     in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
+         *     once, never returned or logged, and deleted with the migration's other credentials.
+         *
+         *     A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+         *     authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+         *     `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+         *     `login_hint`. It uses the server's own app registration when the preset has
+         *     `team_client: false` and the body names no client; otherwise the body carries the
+         *     `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+         *     admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+         *     the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+         *     `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+         *     `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+         *     Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+         *     write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+         *     Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+         *     every other command). The callback refuses, storing nothing, a token whose granted scopes
+         *     differ from the requested set (`scope_too_broad`), then signs in to
+         *     `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+         *     account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+         *     from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+         *     the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+         *     mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+         *     stores the tokens encrypted; they are refreshed before a connection when they expire
+         *     within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+         *     account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+         *     account) when the migration is done.
+         *
+         *     The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
+         *     asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
+         *     desk sends the browser back to `GET /migrations/sign-in/callback` on this server, which
+         *     exchanges the code (the only request besides `GET`s Yuva sends to the help desk), refuses
+         *     a Zendesk token granted more than `read` (`scope_too_broad`), checks that the account can
+         *     be read, stores the tokens and lists the brands or mailboxes as the migration's folders.
+         *     It then redirects to the panel's `/migrations/{migrationId}/connect?result=<result>` (see
+         *     `MigrationSignInResult`); a `draft` migration becomes `connected`. The sign-in is good
+         *     for 10 minutes and once, and must come back in the browser of the member who started it.
+         *
+         *     In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
+         *     account. `409 migration_state` for other states and for sources that do not sign in this
+         *     way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+         *     the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+         *     not `available`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["startMigrationSignIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The export file's upload
+         * @description Which parts of the export file the server has, so an upload that was cut off resumes with
+         *     the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+         *     Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+         *     bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["getMigrationUpload"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/upload/parts/{part}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload a part of the export file
+         * @description One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+         *     file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+         *     `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+         *     checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+         *     parallel. The parts, and so the file, are deleted when the migration completes, is
+         *     cancelled or deleted.
+         *
+         *     In `draft`, until the upload is completed; another file needs a new migration. `413
+         *     part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+         *     for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+         *     in other states or for a migration that reads a mailbox.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["uploadMigrationPart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/upload/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish the export file's upload
+         * @description Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+         *     and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+         *     missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+         *     `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+         *     with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+         *     whose folders become labels. A zip is checked before anything is read from it: an entry
+         *     with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+         *     compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+         *     file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+         *     `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+         *     holds no message is refused as `empty`.
+         *
+         *     The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+         *     next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+         *     `connected` answers as is. `409 migration_state` otherwise.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["completeMigrationUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/folders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The mailbox's folders
+         * @description Every folder the mailbox lists, from the last passing connection test or scan: what it
+         *     holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+         *     becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+         *     what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["listMigrationFolders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Read the mailbox's headers for the dry run
+         * @description Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+         *     reads the headers of the selected ones (never a body, never a flag), joins the threads,
+         *     and fetches the five newest threads for the preview. The migration then becomes `ready`
+         *     with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+         *     labels, storage and time. Nothing is written outside the migration until `start`. A
+         *     second scan reads only what is new and plans again with the current options.
+         *
+         *     A `file` migration reads its export file instead, once: a second scan plans again from
+         *     what the first read. A Takeout file's labels appear as folders as the scan reads them.
+         *
+         *     `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+         *     as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["scanMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The newest threads as they will look
+         * @description The five newest threads the scan will import, as conversations: subject, contact,
+         *     status, labels and their messages with direction, author and the visible text. `409
+         *     migration_state` before the first scan finished.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["getMigrationPreview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start copying
+         * @description Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+         *     message in a transaction of its own, so a restart never duplicates one. Imported history
+         *     is quiet: it keeps its original times, writes no conversation or message events, sends no
+         *     webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+         *     counts in the `imported_*` usage columns. A message the channel already has, in either
+         *     direction, is not imported again, and a thread whose earlier messages it has continues in
+         *     their conversation. When every thread is done the migration is `syncing`;
+         *     a `file` migration is `completed` and its export file deleted.
+         *
+         *     Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+         *     other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+         *     running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+         *     (`YUVA_MIGRATION_MAX_BYTES`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["startMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause copying
+         * @description A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+         *     its place; `paused` answers as is. `409 migration_state` otherwise.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["pauseMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume copying
+         * @description A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+         *     continues where it stopped: copying when the copy had started, else back to `connected`
+         *     for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+         *     hosted_limit` at the server's limit on running migrations.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["resumeMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel the migration
+         * @description Stops for good. What was imported stays; the credentials are deleted in the same step.
+         *     `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+         *     finished migration.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["cancelMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retry failed messages
+         * @description Puts the messages that failed five times back in line; a `syncing` migration copies them
+         *     before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+         *     states other than `copying`, `paused` and `syncing`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["retryMigrationItems"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/probe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send a test message to check the switch
+         * @description While a migration is `syncing`, mails the mailbox address a short test message from the
+         *     server's own mailer (or, without one, the channel's SMTP account) with a `Yuva-Probe`
+         *     header signed for this migration. When it reaches Yuva at the channel's forwarding address
+         *     or at the channel's own address, `verified_at` and `verified_route` are set and nothing is
+         *     stored; when catch-up sync finds it only in the old mailbox, `probe_synced_at` is set,
+         *     which means mail still reaches the old provider but is not forwarded yet. At most one a
+         *     minute (`429`); `409 migration_state` in other states.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["sendMigrationProbe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/finish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Finish the migration
+         * @description Stops catch-up sync and completes a `syncing` migration (or one that `needs_attention`
+         *     after its copy ended): it becomes `completed` and its credentials are deleted in the same
+         *     step. Delivery must be verified first (`verified_at`, see the probe) unless `force` is
+         *     true; finishing before `quiet_until` is allowed, but mail that reaches only the old
+         *     mailbox afterwards is not copied. A migration also finishes on its own once delivery is
+         *     verified and the quiet period passed, and stops syncing after the server's limit
+         *     (`sync_until`). `completed` answers as is; `409 migration_state` otherwise.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["finishMigration"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/remove-history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Remove imported history
+         * @description Deletes the conversations a `completed` or `cancelled` migration imported that nobody
+         *     wrote in since (no message, note, draft or event added in Yuva), with their messages and
+         *     files, then the contacts it created that are left without a conversation. Conversations
+         *     someone wrote in stay. The migration becomes `removing` and then `removed`; `removing` and
+         *     `removed` answer as is. With `confirm_count`, nothing happens unless it equals the
+         *     migration's `removable_conversations` (`409 confirm_count_mismatch`). `409
+         *     migration_state` in other states.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["removeMigrationHistory"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/errors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * What went wrong
+         * @description Newest first: messages that were skipped or failed and problems with the source, each with
+         *     a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+         *     per migration; `counts` on the migration are always complete.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        get: operations["listMigrationErrors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/usage": {
         parameters: {
             query?: never;
@@ -3839,6 +4566,126 @@ export interface paths {
         get: operations["getLatestEvent"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List analytics properties
+         * @description The properties the caller can see, oldest first, with today's visitors (in each property's
+         *     time zone) and the workspace's analytics usage this month: `usage.limit` is its monthly
+         *     event cap, absent when there is none, and `usage.limit_reached_at` says when this month's
+         *     events reached it; events over the cap are dropped until the month ends.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsProperties"];
+        put?: never;
+        /**
+         * Create an analytics property
+         * @description A website or app to measure. The answer carries its `public_key`, which pages and apps send
+         *     events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
+         *     it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
+         *     (`403 property_limit`). A children's property (`audience: children`) cannot offer
+         *     `consent_features` or `tracked_props`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createAnalyticsProperty"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An analytics property
+         * @description Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsProperty"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an analytics property
+         * @description The body repeats the property's name exactly. Its key stops working at once (`404` on the
+         *     collection endpoint); a background job then deletes its visits, events, rollups and salts,
+         *     and finally the property.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsProperty"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an analytics property
+         * @description Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
+         *     `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
+         *     received from then on: finished days keep the zone they were counted in.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsProperty"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/rotate-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Give an analytics property a new public key
+         * @description The property gets a new `public_key`. The old one keeps working for 24 hours
+         *     (`previous_key_expires_at`), so pages and apps can be updated without losing events; a
+         *     second rotation within that time ends the key before it at once.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["rotateAnalyticsKey"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/delete-data": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Delete a property's collected data
+         * @description Deletes the visits and events of the days `from` to `to` (dates in the property's time
+         *     zone, at most 400 days apart), or with `all: true` every day's together with the rollups.
+         *     The property and its key stay. A background job does the work; days it touched are rolled
+         *     up again.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["deleteAnalyticsData"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4613,6 +5460,42 @@ export interface paths {
         get: operations["downloadClientAttachment"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send analytics events
+         * @description Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
+         *     key: one event, or up to 100 as `{"e": [...]}`, at most 64 KiB. Send the JSON as
+         *     `text/plain` so a browser needs no preflight; `application/json` works too, with a
+         *     preflight. No cookie, session or `Set-Cookie`, and the answer is `202` before anything is
+         *     written.
+         *
+         *     A browser's `Origin` host and every event's page host (`u`) must be one of the property's
+         *     `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
+         *     `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
+         *     are refused until app collection exists. An unknown or deleted key answers `404`.
+         *
+         *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+         *     of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+         *     path; events over the property's per-minute limit or the workspace's monthly cap. One
+         *     shortened address may send 120 events a minute to a property (`429 rate_limited` with
+         *     `Retry-After`). When the server cannot take more events it answers `503` with
+         *     `Retry-After`.
+         */
+        post: operations["collectAnalytics"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5497,11 +6380,19 @@ export interface components {
          *     - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
          *       and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
          *       without naming its scopes does not hold it.
+         *     - `migrations:manage`: detect, create, change, connect, test and delete migrations into
+         *       Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
+         *       to inboxes.
+         *     - `analytics:read`: analytics properties.
+         *     - `analytics:write`: server-side analytics events; for API keys only, never offered to
+         *       OAuth clients.
+         *     - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
+         *       delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
          *
-         *     `lists:*` and `broadcasts:*` are never added to keys made before they existed.
+         *     `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -5797,10 +6688,38 @@ export interface components {
              */
             ask_for_rating: boolean;
             sender: components["schemas"]["InboxSender"];
+            import?: components["schemas"]["InboxImport"];
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        /**
+         * @description A migration is filling the inbox with the history of an old mailbox: while it scans,
+         *     copies or syncs, and while a copy that has started is paused or needs attention. Absent
+         *     otherwise. Everyone who can see the inbox sees it; the migration itself, its counts and
+         *     its errors stay with owners, admins and holders of `migrations:manage`. When more than one
+         *     migration targets the inbox, the most recently created one. Its appearance, state changes
+         *     and disappearance come as `inbox.updated`; `percent` moves between them without an event.
+         */
+        InboxImport: {
+            /**
+             * @description The old mailbox's address.
+             * @example support@example.com
+             */
+            address: string;
+            /**
+             * @description `scanning` (reading the mailbox before the copy starts), `copying`, `paused`,
+             *     `needs_attention` (stopped until an owner or admin acts), `syncing` (the history is
+             *     copied; new mail in the old mailbox is still read until the switch is done).
+             * @enum {string}
+             */
+            state: "scanning" | "copying" | "paused" | "needs_attention" | "syncing";
+            /**
+             * Format: int32
+             * @description Messages done of those planned, rounded down; 0 while scanning, 100 while syncing.
+             */
+            percent: number;
         };
         InboxCreate: {
             name: string;
@@ -5969,11 +6888,18 @@ export interface components {
             dns_name: string;
             /** @example v=DKIM1; k=rsa; p=MIIBIjANBgkqh... */
             dns_value: string;
+            /**
+             * @description Why Yuva does not sign the channel's mail even when `enabled`: its broadcasts go through
+             *     Amazon SES, which rewrites `From`, `To`, `Reply-To` and `Date` after any signature added
+             *     before it and signs with the verified domain itself. Absent when Yuva signs.
+             */
+            unsupported_reason?: string;
         };
         /**
          * @description Absent keeps the stored state. `enabled: true` needs a key (`POST
          *     /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
-         *     same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+         *     same public key (`409 dkim_dns_missing`), and an account other than Amazon SES sending the
+         *     broadcasts (`409 dkim_relay_unsupported`). Changing the sending domain turns signing off
          *     until it is enabled again for the new domain.
          */
         EmailDkimInput: {
@@ -6081,6 +7007,12 @@ export interface components {
             email?: components["schemas"]["EmailChannel"];
             chat?: components["schemas"]["ChatChannel"];
             app?: components["schemas"]["AppChannel"];
+            /**
+             * @description `email` channels, when the server has a forwarding domain: another address the channel
+             *     receives mail at, for a mailbox to forward to (its own address would loop).
+             *     `POST …/forwarding-address/rotate` changes it.
+             */
+            forwarding_address?: string;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -6509,6 +7441,12 @@ export interface components {
              *     deleted.
              */
             broadcast_id?: string;
+            /**
+             * @description Set on history moved into Yuva from another mailbox: such conversations keep their
+             *     original times, were never unread and wrote no events, notifications or webhooks when
+             *     they were imported. Absent otherwise.
+             */
+            imported?: components["schemas"]["ConversationImport"];
             /**
              * Format: uuid
              * @description Set when this conversation was opened for a sender who answered in the e-mail thread of
@@ -6988,6 +7926,14 @@ export interface components {
             mentions?: string[];
             /**
              * Format: date-time
+             * @description When the message was moved into Yuva from another mailbox; `created_at` keeps its
+             *     original time. Absent for messages written or received in Yuva.
+             */
+            imported_at?: string;
+            /** @description An imported outgoing message whose sender is not mapped to a member; absent otherwise. */
+            imported_author?: components["schemas"]["ImportedAuthor"];
+            /**
+             * Format: date-time
              * @description For a sent draft, when it was sent.
              */
             created_at: string;
@@ -7167,9 +8113,1172 @@ export interface components {
              * @description Broadcast mails accepted by the SMTP server.
              */
             broadcast_recipients: number;
+            /**
+             * Format: int64
+             * @description Conversations moved into Yuva from another mailbox; not in `conversations`.
+             */
+            imported_conversations: number;
+            /**
+             * Format: int64
+             * @description Messages moved into Yuva; not in `messages`.
+             */
+            imported_messages: number;
+            /**
+             * Format: int64
+             * @description Bytes read from mailboxes moved into Yuva.
+             */
+            imported_bytes: number;
+            /**
+             * Format: int64
+             * @description Analytics events stored.
+             */
+            analytics_events: number;
         };
         UsageList: {
             items: components["schemas"]["UsageMonth"][];
+        };
+        /**
+         * @description Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
+         *     `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
+         *     (`YUVA_MIGRATION_SOURCES`) among those built: all four.
+         * @enum {string}
+         */
+        MigrationSource: "imap" | "file" | "zendesk" | "helpscout";
+        /**
+         * @description The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
+         *     and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
+         *     `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+         *     Google Takeout file, or `file`, any other export file; both read every format the server
+         *     knows, which `upload.format` names once the upload is complete. A help desk has the preset
+         *     of its source: `zendesk` or `helpscout`.
+         * @enum {string}
+         */
+        MigrationPresetId: "gmail" | "google_workspace" | "microsoft" | "yandex" | "icloud" | "zoho" | "yahoo" | "fastmail" | "gmx" | "imap" | "takeout" | "file" | "zendesk" | "helpscout";
+        /**
+         * @description - `draft`: created; not connected yet.
+         *     - `connected`: the connection test passed; choose what to read.
+         *     - `scanning`: reading message headers for the dry run.
+         *     - `ready`: the dry run is ready; nothing is imported yet.
+         *     - `copying`: importing history, newest threads first.
+         *     - `paused`: stopped by a member; resumes where it was.
+         *     - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
+         *       revoked app password; reconnect to continue.
+         *     - `syncing`: history copied; new mail in the old mailbox, or what changed in the help
+         *       desk, is fetched every two minutes while the team switches its mail over.
+         *     - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+         *       migration completes when its copy ends.
+         *     - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
+         *     - `removing`, `removed`: imported history is being, or was, removed.
+         * @enum {string}
+         */
+        MigrationState: "draft" | "connected" | "scanning" | "ready" | "copying" | "paused" | "needs_attention" | "syncing" | "completed" | "cancelled" | "removing" | "removed";
+        /**
+         * @description What can be done with a migration in its current state: `update` (`PATCH`),
+         *     `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
+         *     `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
+         *     switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
+         *     desk's sign-in with the team's OAuth client, or Sign in with Microsoft). A server lists
+         *     only the actions it offers.
+         * @enum {string}
+         */
+        MigrationAction: "update" | "set_credentials" | "test_connection" | "scan" | "start" | "pause" | "resume" | "cancel" | "finish" | "retry" | "remove_history" | "delete" | "probe" | "upload" | "sign_in";
+        /**
+         * @description `tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143).
+         * @enum {string}
+         */
+        MigrationTls: "tls" | "starttls";
+        MigrationServer: {
+            host: string;
+            /** Format: int32 */
+            port: number;
+            tls: components["schemas"]["MigrationTls"];
+        };
+        /**
+         * @description `password`: a user name with an app password or password. `microsoft`: Sign in with
+         *     Microsoft (`POST /v1/migrations/{migrationId}/sign-in`), whose token is sent with
+         *     `AUTHENTICATE XOAUTH2`. `oauth`: a help desk's sign-in with an OAuth client the team
+         *     creates in its own account (`POST /v1/migrations/{migrationId}/sign-in`).
+         * @enum {string}
+         */
+        MigrationAuth: "password" | "microsoft" | "oauth";
+        /**
+         * @description The stored credentials, without the secret. A help desk's are `oauth`, with the account's
+         *     API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+         *     sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+         *     `scopes` and when the access token expires; the token is refreshed before a connection
+         *     when it expires within five minutes.
+         */
+        MigrationCredentials: {
+            /** @enum {string} */
+            kind: "password" | "oauth";
+            server: components["schemas"]["MigrationServer"];
+            /** @description The trusted certificate's SHA-256, when one is pinned. */
+            certificate_sha256?: string;
+            /** @description `oauth` only: the scopes granted. */
+            scopes?: string[];
+            /**
+             * Format: date-time
+             * @description `oauth` only: when the access token expires.
+             */
+            expires_at?: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        MigrationCredentialsInput: {
+            /** @description Usually the mailbox address; iCloud takes the part before `@`. */
+            username: string;
+            password: string;
+            host?: string;
+            /** Format: int32 */
+            port?: number;
+            tls?: components["schemas"]["MigrationTls"];
+            /** @description Trust this certificate (SHA-256, hexadecimal, colons allowed) even if it is not valid for the host. */
+            certificate_sha256?: string;
+        };
+        /**
+         * @description Help desks need `client_id` and `client_secret`. Microsoft needs them when the preset has
+         *     `team_client: true`; otherwise they are left out to use the server's own app, or given to
+         *     use the team's own app registration instead.
+         */
+        MigrationSignInStart: {
+            /** @description Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`. */
+            subdomain?: string;
+            /**
+             * @description The OAuth client's identifier (Zendesk), the app's ID (Help Scout) or the app
+             *     registration's Application (client) ID (Microsoft).
+             */
+            client_id?: string;
+            client_secret?: string;
+            /**
+             * @description Microsoft, with the team's own app registration only: the Directory (tenant) ID or a
+             *     verified domain of the tenant that holds a single-tenant app. Without it the authority
+             *     follows the mailbox's address.
+             */
+            tenant?: string;
+        };
+        MigrationSignIn: {
+            /**
+             * Format: uri
+             * @description The help desk's consent page; open it in the browser.
+             */
+            authorize_url: string;
+            /**
+             * Format: uri
+             * @description Where the help desk sends the browser back; it must be the OAuth client's redirect URL.
+             */
+            redirect_url: string;
+            /**
+             * Format: date-time
+             * @description The sign-in must come back before this.
+             */
+            expires_at: string;
+        };
+        /**
+         * @description The `result` of the redirect to `/migrations/{migrationId}/connect` after a sign-in:
+         *     `connected`; `access_denied` (the person declined); `expired` (unknown, used or older
+         *     than 10 minutes); `session_mismatch` (it came back in another member's browser);
+         *     `scope_too_broad` (the token grants other permissions than the requested ones: more than
+         *     `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
+         *     stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
+         *     codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
+         *     Microsoft sign-in by an account whose token Exchange did not let open the mailbox;
+         *     nothing was stored);
+         *     `token_failed` (the provider refused the code: usually a wrong client secret or redirect
+         *     URL); `source_unreachable`.
+         *
+         *     Microsoft only: `consent_required` (Microsoft wants the person to consent again: sign in
+         *     again and accept); `admin_consent_required` (`AADSTS65001`, `AADSTS90094`, `AADSTS90095`:
+         *     the organization lets only an admin consent to the app; the migration's
+         *     `admin_consent_url` is the link to send the admin); `conditional_access` (a Conditional
+         *     Access policy of the organization blocked the sign-in, `AADSTS53000`–`AADSTS53011`);
+         *     `xoauth2_failed` (Microsoft signed the mailbox in but the mailbox refused the token over
+         *     IMAP: usually IMAP is turned off for it, which an admin turns on in the Microsoft 365
+         *     admin center › Users › Mail › Email apps, or with `Set-CASMailbox -ImapEnabled $true`).
+         *     `admin_consented` is where an admin lands after granting consent through
+         *     `admin_consent_url` (`/settings/migrations?result=admin_consented`).
+         * @enum {string}
+         */
+        MigrationSignInResult: "connected" | "access_denied" | "expired" | "session_mismatch" | "scope_too_broad" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "account_mismatch" | "token_failed" | "source_unreachable" | "consent_required" | "admin_consent_required" | "conditional_access" | "xoauth2_failed" | "admin_consented";
+        /**
+         * @description What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
+         *     labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
+         *     uncompressed mbox files, one folder each; `eml_zip`, a zip of `.eml` files whose
+         *     directories are folders; `maildir_zip`, a zip of a Maildir (`cur` and `new`, Maildir++
+         *     subfolders), whose folders are folders.
+         * @enum {string}
+         */
+        MigrationFileFormat: "takeout" | "mbox" | "mbox_zip" | "eml_zip" | "maildir_zip";
+        /**
+         * @description How an mbox escapes lines that start with `From `: `mboxrd` (Google Takeout, most
+         *     programs) takes one `>` off every `>…>From ` line; `mboxo` only off `>From `. The two read
+         *     alike except for lines of `>>From ` and more.
+         * @enum {string}
+         */
+        MigrationMboxFormat: "mboxrd" | "mboxo";
+        /** @description A `file` migration's export file. */
+        MigrationFile: {
+            filename?: string;
+            /**
+             * Format: int64
+             * @description Bytes uploaded so far; the file's size once complete.
+             */
+            size_bytes: number;
+            /**
+             * Format: int32
+             * @description Parts stored.
+             */
+            parts: number;
+            /**
+             * Format: int64
+             * @description The size of every part but the last, 8 MiB.
+             */
+            part_size: number;
+            /** @description Once the upload is complete. */
+            format?: components["schemas"]["MigrationFileFormat"];
+            /** @description For the mbox formats. */
+            mbox_format?: components["schemas"]["MigrationMboxFormat"];
+            /**
+             * Format: date-time
+             * @description When the upload was completed and the file accepted.
+             */
+            completed_at?: string;
+            /**
+             * Format: date-time
+             * @description When the parts were deleted because the migration ended.
+             */
+            deleted_at?: string;
+        };
+        MigrationUploadPart: {
+            /** Format: int32 */
+            part: number;
+            /** Format: int64 */
+            size_bytes: number;
+            sha256: string;
+        };
+        MigrationUpload: {
+            /**
+             * Format: int64
+             * @description The size of every part but the last, 8 MiB.
+             */
+            part_size: number;
+            /**
+             * Format: int64
+             * @description The largest file the server takes (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`).
+             */
+            max_bytes: number;
+            /** @description The parts the server has, by number. */
+            parts: components["schemas"]["MigrationUploadPart"][];
+            /** Format: int64 */
+            received_bytes: number;
+            /** Format: date-time */
+            completed_at?: string;
+            /**
+             * Format: date-time
+             * @description The parts were deleted when the migration ended; nothing more can be uploaded.
+             */
+            deleted_at?: string;
+        };
+        MigrationUploadPartInput: {
+            /**
+             * Format: binary
+             * @description At most 8 MiB.
+             */
+            file: string;
+            /** @description The part's SHA-256, hexadecimal. */
+            sha256: string;
+        };
+        MigrationUploadComplete: {
+            /**
+             * Format: int32
+             * @description How many parts the file has.
+             */
+            parts: number;
+            /** Format: int64 */
+            size_bytes: number;
+            /** @description The file's name, as the person chose it; shown back only. */
+            filename?: string;
+            /** @description `mboxrd` when absent. */
+            mbox_format?: components["schemas"]["MigrationMboxFormat"];
+        };
+        /**
+         * @description Why an export file was refused: `unknown_format` (not an mbox or a zip), `empty` (no
+         *     message in it), `corrupt` (a zip that cannot be read), `path_traversal` (an entry with
+         *     `..` or an absolute path), `symlink` (an entry that is a symbolic link),
+         *     `too_many_entries` (over 1,000,000), `zip_bomb` (an entry compressed more than 100:1),
+         *     `entry_too_large` (an entry larger than `YUVA_MIGRATION_UPLOAD_MAX_BYTES` unpacked),
+         *     `encrypted` (an entry with a password), `unsupported_compression` (neither stored nor
+         *     deflated) or `compressed_mbox` (an mbox in a zip must be stored uncompressed: unzip the
+         *     archive and upload the mbox file itself).
+         * @enum {string}
+         */
+        MigrationFileRefusal: "unknown_format" | "empty" | "corrupt" | "path_traversal" | "symlink" | "too_many_entries" | "zip_bomb" | "entry_too_large" | "encrypted" | "unsupported_compression" | "compressed_mbox";
+        MigrationFileProblem: components["schemas"]["Problem"] & {
+            /** @description `file_refused` only. */
+            reason?: components["schemas"]["MigrationFileRefusal"];
+            /** @description `file_refused` only: the zip entry it is about, when one is. */
+            entry?: string;
+            /** @description `upload_incomplete` only: the first parts that are missing, at most 100. */
+            missing_parts?: number[];
+        };
+        MigrationCounts: {
+            /**
+             * Format: int64
+             * @description Messages read from the chosen folders: those to import and those the dry run already set
+             *     aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed. A
+             *     help desk counts conversations (tickets) instead: each is imported whole, with all its
+             *     messages and notes.
+             */
+            total: number;
+            /** Format: int64 */
+            imported: number;
+            /**
+             * Format: int64
+             * @description Already in Yuva, or a second copy of the same message.
+             */
+            duplicate: number;
+            /**
+             * Format: int64
+             * @description Not imported: automatic or internal mail, outside the date range, from a blocked contact,
+             *     too large, or gone from the mailbox.
+             */
+            skipped: number;
+            /** Format: int64 */
+            failed: number;
+            /**
+             * Format: int64
+             * @description Bytes read from the source.
+             */
+            bytes: number;
+        };
+        /**
+         * @description A team address and the member its mail is imported as; without `member_id`, its own name
+         *     and address are kept. For a help desk, an agent's address: the agent's replies, notes and
+         *     assigned conversations become the member's.
+         */
+        MigrationPerson: {
+            address: components["schemas"]["Email"];
+            /** Format: uuid */
+            member_id?: string;
+        };
+        /**
+         * @description What a folder, Gmail label or help-desk tag becomes: `create` a label of the same name, an
+         *     `existing` label (`label_id`), or `none`. For a help desk `folder` names a tag.
+         */
+        MigrationLabelMapping: {
+            folder: string;
+            /** @enum {string} */
+            action: "create" | "existing" | "none";
+            /** Format: uuid */
+            label_id?: string;
+        };
+        /**
+         * @description Help desks: the inbox a Zendesk brand's or Help Scout mailbox's conversations go to, by the
+         *     folder's name. They are bound to that inbox's e-mail channel (the one whose address is the
+         *     mailbox's, else its oldest), so replies from Yuva reach the customer; an inbox without an
+         *     e-mail channel keeps them as history without a channel.
+         */
+        MigrationInboxMapping: {
+            folder: string;
+            /** Format: uuid */
+            inbox_id: string;
+        };
+        MigrationOptions: {
+            /**
+             * @description The folders to read, by name; absent for the preset's default (inbox, sent, archive and
+             *     user folders; Gmail's All Mail; a help desk's every brand or mailbox).
+             */
+            folders?: string[];
+            /** @description Help desks only; a brand or mailbox not named goes to the migration's inbox and channel. */
+            inboxes?: components["schemas"]["MigrationInboxMapping"][];
+            /**
+             * Format: date-time
+             * @description Only threads whose last message is newer; absent for everything.
+             */
+            since?: string;
+            /** @description Skip threads of only automatic mail (auto-replies, newsletters, delivery reports). */
+            skip_automatic: boolean;
+            /**
+             * Format: int32
+             * @description Threads whose last message is older are imported `closed`; newer ones `open` or
+             *     `pending`. `0` closes everything. Help desks keep their own status instead.
+             */
+            close_after_days: number;
+            /** @description Keep each message's original source, as for mail that arrives live. */
+            keep_originals: boolean;
+            /** @description Addresses besides the mailbox's whose mail counts as sent by the team. */
+            team_addresses: components["schemas"]["Email"][];
+            people: components["schemas"]["MigrationPerson"][];
+            labels: components["schemas"]["MigrationLabelMapping"][];
+            /**
+             * Format: int32
+             * @description How long sync runs after delivery is verified without finding mail that did not also arrive at Yuva.
+             */
+            quiet_period_hours: number;
+        };
+        /** @description The options to change; others keep their value. */
+        MigrationOptionsInput: {
+            /** @description `null` for the preset's default. */
+            folders?: string[] | null;
+            /** Format: date-time */
+            since?: string | null;
+            skip_automatic?: boolean;
+            /** Format: int32 */
+            close_after_days?: number;
+            keep_originals?: boolean;
+            team_addresses?: components["schemas"]["Email"][];
+            people?: components["schemas"]["MigrationPerson"][];
+            labels?: components["schemas"]["MigrationLabelMapping"][];
+            inboxes?: components["schemas"]["MigrationInboxMapping"][];
+            /** Format: int32 */
+            quiet_period_hours?: number;
+        };
+        Migration: {
+            /** Format: uuid */
+            id: string;
+            source: components["schemas"]["MigrationSource"];
+            preset: components["schemas"]["MigrationPresetId"];
+            /** @description The mailbox address; for a help desk, the support address whose channel is the default target. */
+            source_address: string;
+            /**
+             * Format: uuid
+             * @description The inbox the history goes to; absent until chosen or when deleted.
+             */
+            inbox_id?: string;
+            /**
+             * Format: uuid
+             * @description The inbox's e-mail channel whose address is the mailbox address; absent until chosen or when deleted.
+             */
+            channel_id?: string;
+            state: components["schemas"]["MigrationState"];
+            /** @description Why it needs attention, or what it waits for. */
+            state_reason?: string;
+            /**
+             * Format: date-time
+             * @description While `copying` or `syncing` waits for a provider's limit, when it continues.
+             */
+            waiting_until?: string;
+            options: components["schemas"]["MigrationOptions"];
+            counts: components["schemas"]["MigrationCounts"];
+            credentials?: components["schemas"]["MigrationCredentials"];
+            upload?: components["schemas"]["MigrationFile"];
+            /** @description Help desks and `microsoft`: how the last sign-in ended, the same `result` its redirect carried. */
+            sign_in_result?: components["schemas"]["MigrationSignInResult"];
+            /**
+             * Format: uri
+             * @description `microsoft`, after `admin_consent_required`: the link an admin of the mailbox's
+             *     organization opens to grant consent to the app for everyone in it
+             *     (`login.microsoftonline.com/<domain>/v2.0/adminconsent`, asking for
+             *     `IMAP.AccessAsUser.All` only); afterwards the person signs in again.
+             */
+            admin_consent_url?: string;
+            /**
+             * Format: uuid
+             * @description An `imap` migration of a mailbox whose export file this workspace imported into the
+             *     same channel: that `file` migration. `options.since` started at the day of the newest
+             *     message the file held, so only newer mail is read; mail both have is not imported
+             *     twice.
+             */
+            follows_migration_id?: string;
+            /**
+             * Format: date-time
+             * @description When the credentials were deleted because the migration ended.
+             */
+            credentials_deleted_at?: string;
+            /** @description The dry run, once a scan finished. */
+            estimate?: components["schemas"]["MigrationEstimate"];
+            /**
+             * Format: int64
+             * @description While copying, messages done per minute over the last five minutes.
+             */
+            rate_per_minute?: number;
+            /**
+             * Format: int64
+             * @description While copying, how long the rest takes at that rate.
+             */
+            seconds_left?: number;
+            actions: components["schemas"]["MigrationAction"][];
+            /**
+             * Format: uuid
+             * @description The member who created it; absent for API keys or when the member left.
+             */
+            member_id?: string;
+            /**
+             * Format: uuid
+             * @description The API key that created it.
+             */
+            api_key_id?: string;
+            /** @description The OAuth client it was created through. */
+            via?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /**
+             * Format: date-time
+             * @description When the copy ended and catch-up sync began. Mail the old mailbox received before is
+             *     imported quietly as history; mail received after is new mail, with notifications, as
+             *     if it had reached Yuva directly (without the inbox's greeting).
+             */
+            live_from?: string;
+            /**
+             * Format: date-time
+             * @description When catch-up sync last read the old mailbox.
+             */
+            synced_at?: string;
+            /**
+             * Format: date-time
+             * @description While `syncing`, when sync stops on its own and the credentials are deleted (`YUVA_MIGRATION_SYNC_MAX_DAYS`).
+             */
+            sync_until?: string;
+            /** @description The channel's forwarding address, when the server has a forwarding domain; forward the old mailbox there. */
+            forwarding_address?: string;
+            forwarding_confirmation?: components["schemas"]["MigrationForwardingConfirmation"];
+            /**
+             * Format: date-time
+             * @description When the last test message was sent.
+             */
+            probe_sent_at?: string;
+            /**
+             * Format: date-time
+             * @description When catch-up sync found a test message in the old mailbox: mail still reaches the old
+             *     provider. Without `verified_at` some minutes later, it is not forwarded to Yuva yet.
+             */
+            probe_synced_at?: string;
+            /**
+             * Format: date-time
+             * @description When a test message first reached Yuva by the new route.
+             */
+            verified_at?: string;
+            /**
+             * @description How the test message arrived: `forwarding` at the forwarding address, `direct` at the channel's own address (routing or MX).
+             * @enum {string}
+             */
+            verified_route?: "forwarding" | "direct";
+            /**
+             * Format: date-time
+             * @description Once delivery is verified: when the quiet period ends, the time after which sync has
+             *     found no mail that did not also reach Yuva directly for `quiet_period_hours`. Sync
+             *     finishes the migration then; mail found only by sync moves it later.
+             */
+            quiet_until?: string;
+            /**
+             * Format: int64
+             * @description Conversations of this migration still in Yuva.
+             */
+            imported_conversations?: number;
+            /**
+             * Format: int64
+             * @description Of those, the ones nobody wrote in since the import, which "Remove imported history" deletes.
+             */
+            removable_conversations?: number;
+            /**
+             * @description Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
+             *     the All Mail messages that are also in Sent), other than the mailbox address, most
+             *     messages first; for a help desk, its agents, by the conversations assigned to them. They are the team's aliases and
+             *     colleagues the Map step offers as `options.team_addresses`, whether or not they are
+             *     already team addresses.
+             */
+            team_suggestions?: components["schemas"]["MigrationTeamSuggestion"][];
+        };
+        MigrationTeamSuggestion: {
+            /** @description Lowercased. */
+            address: string;
+            /** @description The display name it sent with most often. */
+            name?: string;
+            /**
+             * Format: int64
+             * @description Messages from it in the Sent folders, each message once.
+             */
+            messages: number;
+        };
+        /**
+         * @description A forwarding confirmation the provider mailed to the forwarding address while the
+         *     migration waited for forwarding; it opened no conversation. Open `link` or enter `code` in
+         *     the provider's settings. Only Google's is recognised so far.
+         */
+        MigrationForwardingConfirmation: {
+            /** @enum {string} */
+            provider: "google";
+            code: string;
+            /** @description The provider's confirmation page; Yuva never opens it. */
+            link?: string;
+            /** @description The mailbox that asked to forward. */
+            from?: string;
+            /** Format: date-time */
+            received_at: string;
+        };
+        MigrationFinish: {
+            /** @description Finish although delivery to Yuva was never verified. */
+            force?: boolean;
+        };
+        MigrationRemoveHistory: {
+            /**
+             * Format: int64
+             * @description The `removable_conversations` the person confirmed; nothing is removed when it changed.
+             */
+            confirm_count?: number;
+        };
+        MigrationCreate: {
+            /** @description `imap` when absent. */
+            source?: components["schemas"]["MigrationSource"];
+            preset: components["schemas"]["MigrationPresetId"];
+            source_address: components["schemas"]["Email"];
+            /** Format: uuid */
+            inbox_id?: string;
+            /** Format: uuid */
+            channel_id?: string;
+            options?: components["schemas"]["MigrationOptionsInput"];
+        };
+        MigrationUpdate: {
+            preset?: components["schemas"]["MigrationPresetId"];
+            source_address?: components["schemas"]["Email"];
+            /** Format: uuid */
+            inbox_id?: string | null;
+            /** Format: uuid */
+            channel_id?: string | null;
+            options?: components["schemas"]["MigrationOptionsInput"];
+        };
+        MigrationPage: {
+            items: components["schemas"]["Migration"][];
+            next_cursor?: string;
+        };
+        /** @description The pace Yuva keeps with this provider, below its published limits. */
+        MigrationBudget: {
+            /** Format: int32 */
+            connections: number;
+            /** Format: int64 */
+            bytes_per_day?: number;
+            /** Format: int64 */
+            bytes_per_second?: number;
+            /**
+             * Format: int32
+             * @description Help desks: requests a minute until the provider reports its limit; then at most half
+             *     of the per-minute limit it reports (`X-Rate-Limit`, `X-RateLimit-Limit-Minute`).
+             */
+            requests_per_minute?: number;
+            /**
+             * Format: int32
+             * @description Zendesk: incremental export requests a minute (of the 10 Zendesk allows).
+             */
+            incremental_per_minute?: number;
+        };
+        MigrationPreset: {
+            id: components["schemas"]["MigrationPresetId"];
+            source: components["schemas"]["MigrationSource"];
+            name: string;
+            /** @description The IMAP servers it uses, the first by default; empty for `imap`, whose server is typed or detected. */
+            servers: components["schemas"]["MigrationServer"][];
+            auth: components["schemas"]["MigrationAuth"][];
+            /** @description The provider wants an app password rather than the account's password. */
+            app_password: boolean;
+            /**
+             * @description What the user name is: the whole `address` or its `local_part`.
+             * @enum {string}
+             */
+            username: "address" | "local_part";
+            /**
+             * @description Folders read by default, by special use (`\All`, `\Sent`, `\Archive`) or name
+             *     (`INBOX`), and `user` for the user's own folders.
+             */
+            folders: string[];
+            budget: components["schemas"]["MigrationBudget"];
+            /** @description The slug of the provider's guide in the documentation. */
+            guide: string;
+            /**
+             * @description `false` when this server cannot connect to the provider yet; for `microsoft`, when it
+             *     has no Microsoft app of its own and its public URL is not one Microsoft accepts as a
+             *     redirect URL (HTTPS, or `http://localhost`).
+             */
+            available: boolean;
+            /**
+             * Format: uri
+             * @description `oauth` and `microsoft` presets: the redirect URL to enter in the OAuth client the team
+             *     creates in its help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps)
+             *     or, for Microsoft, as the Web redirect URI of the team's own app registration.
+             */
+            redirect_url?: string;
+            /**
+             * @description `oauth` and `microsoft` presets: the scopes the sign-in asks for and accepts nothing
+             *     beyond (Zendesk `read`; Microsoft
+             *     `https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`). Empty for Help
+             *     Scout, which has no read-only permission: the connection's refusal of every request but
+             *     `GET` is what keeps it read-only. Microsoft's IMAP permission is not read-only either
+             *     (its consent screen says "read and write"); the connection's refusal of every command
+             *     that changes anything is what keeps it so.
+             */
+            scopes?: string[];
+            /**
+             * @description `oauth` and `microsoft` presets: the sign-in takes the client id and secret of an
+             *     OAuth client or app registration the team creates itself, with `redirect_url`. Always
+             *     `true` for help desks; `false` for `microsoft` when the server has a Microsoft app of
+             *     its own (`YUVA_MICROSOFT_CLIENT_ID`), which a team may still replace with its own.
+             */
+            team_client?: boolean;
+            /** @description The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`). */
+            subdomain?: boolean;
+        };
+        MigrationPresetList: {
+            items: components["schemas"]["MigrationPreset"][];
+        };
+        MigrationDetect: {
+            address: components["schemas"]["Email"];
+        };
+        MigrationDetection: {
+            address: string;
+            domain: string;
+            preset: components["schemas"]["MigrationPresetId"];
+            /** @description The provider's name. */
+            name: string;
+            /** @description `false` when this server cannot connect to the provider yet. */
+            available: boolean;
+            /**
+             * @description `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+             *     offer (see the `microsoft` preset's `available`).
+             *     `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
+             *     computer; export the mail instead. `cloudflare`: the domain forwards mail through
+             *     Cloudflare Email Routing; connect the mailbox it ends up in.
+             * @enum {string}
+             */
+            note?: "microsoft_later" | "proton" | "cloudflare";
+            /** @description The IMAP server to use; absent when none was found. */
+            server?: components["schemas"]["MigrationServer"];
+            auth: components["schemas"]["MigrationAuth"][];
+            guide: string;
+            /** @description The domain's MX hosts, by preference. */
+            mx: string[];
+            /**
+             * @description `domain`, `mx`, `autoconfig`, `srv` or `guess` (`imap.` or `mail.` of the domain answered); `none` when nothing was found.
+             * @enum {string}
+             */
+            found_by: "domain" | "mx" | "autoconfig" | "srv" | "guess" | "none";
+        };
+        /**
+         * @description - `dns_failed`: the server's name does not resolve.
+         *     - `address_not_allowed`: the server is on a private or local network.
+         *     - `connect_failed`: nothing answers on the port.
+         *     - `tls_failed`: the certificate is not valid for the server; `certificate_sha256` says
+         *       which one it sent, which can be trusted for a self-hosted server.
+         *     - `not_imap`: the server does not speak IMAP.
+         *     - `starttls_unavailable`: the server offers no `STARTTLS`.
+         *     - `auth_failed`: wrong user name or password.
+         *     - `app_password_required`: the provider wants an app password.
+         *     - `imap_disabled`: IMAP is switched off for the mailbox.
+         *     - `basic_auth_disabled`: the provider accepts no passwords (Microsoft).
+         *     - `web_login_required`: the provider wants a sign-in in the browser first.
+         *     - `too_many_connections`: the mailbox has too many connections open.
+         *     - `throttled`: the provider limits this account for now.
+         *     - `no_folders`: the mailbox lists no folders.
+         *     - `examine_failed`: the inbox could not be opened read-only.
+         *     - `timeout`: the test ran out of its 20 seconds.
+         *     - `unexpected_answer`: anything else; `detail` has the server's answer.
+         *     - `not_admin`: help desks: the signed-in Zendesk user is not an admin, and only admins
+         *       may read the incremental export.
+         *     - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
+         *     - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+         *     - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+         *       failed, or the server answers "User is authenticated but not connected"): usually IMAP
+         *       is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+         *       or `Set-CASMailbox -ImapEnabled $true`).
+         *     - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+         *       password changed, or the sign-in expired after long disuse): sign in again.
+         *     - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+         *       `IMAP.AccessAsUser.All`; it is not used.
+         * @enum {string}
+         */
+        MigrationTestCode: "dns_failed" | "address_not_allowed" | "connect_failed" | "tls_failed" | "not_imap" | "starttls_unavailable" | "auth_failed" | "app_password_required" | "imap_disabled" | "basic_auth_disabled" | "web_login_required" | "too_many_connections" | "throttled" | "no_folders" | "examine_failed" | "timeout" | "unexpected_answer" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "xoauth2_failed" | "token_refresh_failed" | "scope_too_broad";
+        MigrationTestStep: {
+            /** @enum {string} */
+            step: "resolve" | "connect" | "tls" | "greeting" | "sign_in" | "folders";
+            ok: boolean;
+            code?: components["schemas"]["MigrationTestCode"];
+            /** @description The server's answer or the error, without secrets. */
+            detail?: string;
+        };
+        MigrationTestResult: {
+            ok: boolean;
+            /** @description The steps run, in order; the last failed when `ok` is `false`. */
+            steps: components["schemas"]["MigrationTestStep"][];
+            /**
+             * Format: int32
+             * @description Folders the mailbox lists.
+             */
+            folders?: number;
+            /**
+             * Format: int64
+             * @description Messages in the folders read by default.
+             */
+            messages?: number;
+            /** @description `tls_failed`: the SHA-256 of the certificate the server sent. */
+            certificate_sha256?: string;
+            migration: components["schemas"]["Migration"];
+        };
+        /**
+         * @description What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+         *     All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+         *     `drafts` and `other` (outbox, chats, notes), which are never read. A help desk lists each
+         *     Zendesk brand or Help Scout mailbox as an `inbox`.
+         * @enum {string}
+         */
+        MigrationFolderKind: "inbox" | "sent" | "archive" | "all" | "user" | "label" | "spam" | "trash" | "drafts" | "other";
+        MigrationFolder: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            kind: components["schemas"]["MigrationFolderKind"];
+            /** @description Help desks: the brand's or mailbox's support address, when the help desk names one. */
+            address?: string;
+            /**
+             * Format: uuid
+             * @description Help desks: the inbox its conversations go to (`options.inboxes`, else the migration's).
+             */
+            inbox_id?: string;
+            /** @description Its messages are read (`options.folders`, else the preset's default). */
+            selected: boolean;
+            /**
+             * @description `import`: its messages are imported. `labels`: only read, for the labels and the Sent
+             *     folder's senders of mail that comes from All Mail (a Gmail label, or the Sent folder while
+             *     All Mail is read). `skip`: not read.
+             * @enum {string}
+             */
+            use: "import" | "labels" | "skip";
+            /**
+             * @description What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+             * @enum {string}
+             */
+            label_action: "create" | "existing" | "none";
+            /**
+             * Format: uuid
+             * @description The label, once it exists.
+             */
+            label_id?: string;
+            /**
+             * Format: int64
+             * @description Messages in the folder at the last count: the connection test's, then the scan's. Every
+             *     folder is counted, including those `kind` and `use` show are never imported.
+             */
+            messages: number;
+            /**
+             * Format: int64
+             * @description Their size, once scanned.
+             */
+            size_bytes: number;
+            /** Format: date-time */
+            oldest_at?: string;
+            /** Format: date-time */
+            newest_at?: string;
+            /** Format: int64 */
+            imported: number;
+            /** Format: int64 */
+            duplicate: number;
+            /** Format: int64 */
+            skipped: number;
+            /** Format: int64 */
+            failed: number;
+            /**
+             * Format: int64
+             * @description Bytes copied from this folder.
+             */
+            bytes: number;
+        };
+        MigrationFolderList: {
+            items: components["schemas"]["MigrationFolder"][];
+        };
+        /** @description Messages that will not be imported, by reason. */
+        MigrationSkipped: {
+            /** Format: int64 */
+            spam: number;
+            /** Format: int64 */
+            trash: number;
+            /** Format: int64 */
+            drafts: number;
+            /**
+             * Format: int64
+             * @description In folders that are never read (outbox, chats, notes) or that were not chosen.
+             */
+            other_folders: number;
+            /**
+             * Format: int64
+             * @description In threads of only the team's own mail.
+             */
+            internal: number;
+            /**
+             * Format: int64
+             * @description In threads of only automatic mail, with `skip_automatic`.
+             */
+            automatic: number;
+            /**
+             * Format: int64
+             * @description In threads whose last message is older than `since`.
+             */
+            outside_range: number;
+            /**
+             * Format: int64
+             * @description Already stored for the channel, by an earlier migration or live mail.
+             */
+            already_in_yuva: number;
+            /**
+             * Format: int64
+             * @description From blocked contacts.
+             */
+            blocked: number;
+            /**
+             * Format: int64
+             * @description Larger than the server's limit for one message.
+             */
+            too_large: number;
+            /**
+             * Format: int64
+             * @description Further copies of a message found in several folders; their folders still label it.
+             */
+            duplicate_copies: number;
+        };
+        MigrationEstimateLabel: {
+            name: string;
+            /** @enum {string} */
+            action: "create" | "existing";
+            /** Format: uuid */
+            label_id?: string;
+            /** Format: int64 */
+            conversations: number;
+        };
+        /** @description The dry run of the last scan, with the options it was planned with. */
+        MigrationEstimate: {
+            /** Format: date-time */
+            scanned_at: string;
+            /**
+             * Format: int64
+             * @description Conversations to create; a thread whose earlier messages the channel has continues in their conversation and is not counted.
+             */
+            conversations: number;
+            /** Format: int64 */
+            messages: number;
+            /** Format: int64 */
+            messages_in: number;
+            /** Format: int64 */
+            messages_out: number;
+            /** Format: int64 */
+            contacts_new: number;
+            /** Format: int64 */
+            contacts_existing: number;
+            labels: components["schemas"]["MigrationEstimateLabel"][];
+            skipped: components["schemas"]["MigrationSkipped"];
+            /**
+             * Format: int64
+             * @description Attachments of the messages to import.
+             */
+            attachments: number;
+            /** Format: int64 */
+            attachment_bytes: number;
+            /**
+             * Format: int64
+             * @description Attachments over the server's size limit or of a type it does not keep; they stay in the original message.
+             */
+            attachments_skipped: number;
+            /**
+             * Format: int64
+             * @description Bytes to read from the source.
+             */
+            bytes: number;
+            /**
+             * Format: int64
+             * @description Storage the imported history needs, originals included when kept.
+             */
+            storage_bytes: number;
+            /** Format: date-time */
+            oldest_at?: string;
+            /** Format: date-time */
+            newest_at?: string;
+            /**
+             * Format: int64
+             * @description How long the copy takes at the provider's pace, at the least.
+             */
+            seconds_min: number;
+            /** Format: int64 */
+            seconds_max: number;
+        };
+        MigrationPreviewMessage: {
+            direction: components["schemas"]["Direction"];
+            from: components["schemas"]["ImportedAuthor"];
+            /**
+             * Format: uuid
+             * @description The member an outgoing message is imported as.
+             */
+            member_id?: string;
+            /** @description Help desks: an internal note (a private comment), imported as a note. */
+            note?: boolean;
+            /** Format: date-time */
+            at: string;
+            /** @description The visible text, quotes removed, at most 1,000 characters. */
+            text: string;
+            /** Format: int32 */
+            attachments: number;
+        };
+        MigrationPreviewThread: {
+            subject: string;
+            contact: components["schemas"]["ImportedAuthor"];
+            status: components["schemas"]["ConversationStatus"];
+            /** @description Help desks: the agent the conversation is assigned to. */
+            assignee?: components["schemas"]["ImportedAuthor"];
+            /**
+             * Format: uuid
+             * @description The member it is assigned to in Yuva; absent when the agent maps to none.
+             */
+            assignee_member_id?: string;
+            labels: string[];
+            /** Format: int32 */
+            messages_total: number;
+            /** @description The thread's messages, oldest first, at most 20. */
+            messages: components["schemas"]["MigrationPreviewMessage"][];
+        };
+        MigrationPreview: {
+            items: components["schemas"]["MigrationPreviewThread"][];
+        };
+        MigrationError: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description `too_large` (over the message limit), `unparseable`, `gone` (no longer in the mailbox),
+             *     `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
+             *     `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
+             *     again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
+             *     a bug), and for `microsoft` `token_refresh_failed` (Microsoft refused to refresh the
+             *     sign-in) and `xoauth2_failed` (the mailbox refused the token, usually because IMAP was
+             *     turned off for it); both stop the migration in `needs_attention` until the person
+             *     signs in again.
+             */
+            code: string;
+            detail: string;
+            folder: string;
+            /** Format: date-time */
+            item_date?: string;
+            subject: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        MigrationErrorPage: {
+            items: components["schemas"]["MigrationError"][];
+            next_cursor?: string;
+        };
+        MigrationFolderProgress: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int64 */
+            imported: number;
+            /** Format: int64 */
+            duplicate: number;
+            /** Format: int64 */
+            skipped: number;
+            /** Format: int64 */
+            failed: number;
+            /** Format: int64 */
+            bytes: number;
+        };
+        MigrationProgress: {
+            /** Format: uuid */
+            id: string;
+            state: components["schemas"]["MigrationState"];
+            counts: components["schemas"]["MigrationCounts"];
+            folders: components["schemas"]["MigrationFolderProgress"][];
+            /**
+             * Format: int64
+             * @description Messages done per minute over the last five minutes.
+             */
+            rate_per_minute?: number;
+            /** Format: int64 */
+            seconds_left?: number;
+            /** Format: date-time */
+            waiting_until?: string;
+        };
+        /**
+         * @description `migration.progress`, on `/v1/realtime` only: the counts of a copying migration, at most
+         *     every 2 seconds, and when it starts or stops waiting for the provider. Not stored, no id, never replayed, never a webhook;
+         *     reload the migration after a reconnect. Delivered to owners, admins and API keys or
+         *     tokens holding `migrations:manage`.
+         */
+        MigrationProgressEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "migration.progress";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["MigrationProgress"];
+        };
+        MigrationForwardingConfirmationData: {
+            /** Format: uuid */
+            migration_id: string;
+            confirmation: components["schemas"]["MigrationForwardingConfirmation"];
+        };
+        /**
+         * @description `migration.forwarding_confirmation`, on `/v1/realtime` only: the provider mailed a
+         *     forwarding confirmation to the forwarding address of a migration's channel. Not stored,
+         *     never a webhook; the migration keeps it as `forwarding_confirmation`. Delivered to owners,
+         *     admins and API keys or tokens holding `migrations:manage`.
+         */
+        MigrationForwardingConfirmationEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "migration.forwarding_confirmation";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["MigrationForwardingConfirmationData"];
+        };
+        MigrationEventData: {
+            migration: components["schemas"]["Migration"];
+            /** @description Absent when the migration was just created. */
+            previous_state?: components["schemas"]["MigrationState"];
+        };
+        /**
+         * @description `migration.updated`: a migration was created or changed state, delivery to Yuva was
+         *     verified, or a forwarding confirmation arrived. Delivered to owners, admins and API keys
+         *     or tokens holding `migrations:manage`; never a webhook.
+         */
+        MigrationEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "migration.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["MigrationEventData"];
+        };
+        /** @description Where an imported conversation came from. */
+        ConversationImport: {
+            /**
+             * Format: uuid
+             * @description Absent once the migration was deleted.
+             */
+            migration_id?: string;
+            /** @description Absent once the migration was deleted. */
+            source?: components["schemas"]["MigrationSource"];
+            /** @description Absent once the migration was deleted. */
+            preset?: components["schemas"]["MigrationPresetId"];
+            /**
+             * Format: date-time
+             * @description When it was imported.
+             */
+            at: string;
+        };
+        /** @description An imported message's sender from the team who is not mapped to a member. */
+        ImportedAuthor: {
+            name: string;
+            address: string;
         };
         /** @description A conversation was created, or its status, snooze, assignee, priority, labels or subject changed. */
         ConversationEvent: {
@@ -7313,7 +9422,7 @@ export interface components {
             created_at: string;
             data: components["schemas"]["ContactRef"];
         };
-        /** @description An inbox's settings changed. */
+        /** @description An inbox's settings changed, or an import into it (`import`) started, changed state or ended. */
         InboxUpdatedEvent: {
             /** Format: int64 */
             id: number;
@@ -7489,7 +9598,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -7508,7 +9617,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["MigrationEvent"] | components["schemas"]["MigrationProgressEvent"] | components["schemas"]["MigrationForwardingConfirmationEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -9585,6 +11694,239 @@ export interface components {
         };
         /** @description One server message on `/client/v1/realtime`, told apart by `type`. */
         ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        /**
+         * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+         * @enum {string}
+         */
+        AnalyticsPlatform: "web" | "ios" | "android";
+        /**
+         * @description `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+         *     address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+         *     script sends after `yuva.consent({analytics: true})`.
+         * @enum {string}
+         */
+        AnalyticsCollection: "anonymous" | "consent";
+        /**
+         * @description Offered only to visitors who consented: `persistent` keeps a random id on the device for at
+         *     most 13 months, `identify` links a verified user's visits to their contact.
+         * @enum {string}
+         */
+        AnalyticsConsentFeature: "persistent" | "identify";
+        /**
+         * @description `children` keeps location at country level and allows no consent features or tracked props.
+         * @enum {string}
+         */
+        AnalyticsAudience: "general" | "children";
+        /**
+         * @description A host name whose pages may send events, without scheme or port: `example.com`,
+         *     `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
+         *     `localhost`, `127.0.0.1` and `[::1]` count only when listed.
+         * @example www.example.com
+         * @example *.example.com
+         */
+        AnalyticsDomain: string;
+        /**
+         * @description A path starting with `/`, where `*` matches one segment and `**` any number of them.
+         * @example /admin/**
+         * @example /preview/*
+         */
+        AnalyticsPathPattern: string;
+        /** @description Pages whose path matches `pattern` are stored as `replacement`, so `/orders/*` can count as `/orders/:id`. */
+        AnalyticsPathRule: {
+            pattern: components["schemas"]["AnalyticsPathPattern"];
+            /** @example /orders/:id */
+            replacement: string;
+        };
+        /**
+         * @description An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
+         * @example 203.0.113.7
+         * @example 198.51.100.0/24
+         */
+        AnalyticsExcludedAddress: string;
+        AnalyticsTrackedProp: string;
+        /** @description A website or app the workspace measures. */
+        AnalyticsProperty: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Format: uuid
+             * @description The linked inbox, whose agents can read the property; absent when none.
+             */
+            inbox_id?: string;
+            name: string;
+            /**
+             * @description Sent by pages and apps, `yuva_ak_…`. Public like a chat channel's key.
+             * @example yuva_ak_3kq9TzWb0xY1aB2cD3eF4gH5
+             */
+            public_key: string;
+            /**
+             * Format: date-time
+             * @description After a rotation, when the previous key stops working; absent when there is none.
+             */
+            previous_key_expires_at?: string;
+            domains: components["schemas"]["AnalyticsDomain"][];
+            platforms: components["schemas"]["AnalyticsPlatform"][];
+            /** @description IANA time zone that defines the property's day. */
+            timezone: string;
+            /** @description ISO 4217 code revenue is reported in. */
+            currency: string;
+            collection: components["schemas"]["AnalyticsCollection"];
+            consent_features: components["schemas"]["AnalyticsConsentFeature"][];
+            audience: components["schemas"]["AnalyticsAudience"];
+            excluded_paths: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description Rollups older than this are deleted; absent when they are kept forever.
+             */
+            retention_months?: number;
+            /**
+             * Format: int64
+             * @description Distinct visitors so far today, in the property's time zone.
+             */
+            visitors_today: number;
+            /**
+             * Format: date-time
+             * @description When the first event was stored; absent until then.
+             */
+            first_event_at?: string;
+            /**
+             * Format: date-time
+             * @description When an event was last stored, to the minute.
+             */
+            last_event_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsPropertyCreate: {
+            name: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            domains: components["schemas"]["AnalyticsDomain"][];
+            /** @description `[web]` when absent. */
+            platforms?: components["schemas"]["AnalyticsPlatform"][];
+            /** @description The linked inbox's time zone when absent, else `UTC`. */
+            timezone?: string;
+            /** @default EUR */
+            currency: string;
+            collection?: components["schemas"]["AnalyticsCollection"];
+            consent_features?: components["schemas"]["AnalyticsConsentFeature"][];
+            audience?: components["schemas"]["AnalyticsAudience"];
+            excluded_paths?: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips?: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules?: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props?: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description 25 when absent; `null` keeps rollups forever.
+             */
+            retention_months?: number | null;
+        };
+        AnalyticsPropertyUpdate: {
+            name?: string;
+            /**
+             * Format: uuid
+             * @description `null` unlinks the property from its inbox.
+             */
+            inbox_id?: string | null;
+            domains?: components["schemas"]["AnalyticsDomain"][];
+            platforms?: components["schemas"]["AnalyticsPlatform"][];
+            timezone?: string;
+            currency?: string;
+            collection?: components["schemas"]["AnalyticsCollection"];
+            consent_features?: components["schemas"]["AnalyticsConsentFeature"][];
+            audience?: components["schemas"]["AnalyticsAudience"];
+            excluded_paths?: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips?: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules?: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props?: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description `null` keeps rollups forever.
+             */
+            retention_months?: number | null;
+        };
+        /** @description The workspace's analytics events this calendar month (UTC). */
+        AnalyticsUsage: {
+            /** @example 2026-10 */
+            month: string;
+            /**
+             * Format: int64
+             * @description Events stored this month.
+             */
+            events: number;
+            /**
+             * Format: int64
+             * @description The monthly event cap; absent when there is none.
+             */
+            limit?: number;
+            /**
+             * Format: date-time
+             * @description When this month's events reached the cap; later events are dropped until the month ends.
+             */
+            limit_reached_at?: string;
+        };
+        AnalyticsPropertyList: {
+            items: components["schemas"]["AnalyticsProperty"][];
+            usage: components["schemas"]["AnalyticsUsage"];
+        };
+        AnalyticsPropertyDeletion: {
+            /** @description The property's name, exactly. */
+            name: string;
+        };
+        /** @description Either `from` and `to`, or `all: true`. */
+        AnalyticsDataDeletion: {
+            /** Format: date */
+            from?: string;
+            /** Format: date */
+            to?: string;
+            all?: boolean;
+        };
+        AnalyticsConsent: {
+            /**
+             * @description `1` when the visitor agreed to analytics.
+             * @enum {integer}
+             */
+            a?: 0 | 1;
+        };
+        /**
+         * @description One event. Keys the server does not know are ignored, so newer scripts keep working with
+         *     older servers.
+         */
+        AnalyticsEvent: {
+            /**
+             * @description `pageview`, or `engagement` (sent once per view when the page is hidden or left).
+             * @enum {string}
+             */
+            n: "pageview" | "engagement";
+            /**
+             * @description The page URL. Only the host and the path are kept; of the query, only `utm_source`,
+             *     `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
+             *     the visit's acquisition. Path segments shaped like e-mail addresses are stored as
+             *     `:email`.
+             */
+            u: string;
+            /** @description `document.referrer`; only its host and path are kept, and none when it is the page's own host. */
+            r?: string;
+            /** @description Viewport width in CSS pixels, turned into a screen size class and not stored. */
+            w?: number;
+            /** @description The page uses hash routing, so the fragment is part of the path. */
+            h?: boolean;
+            /** @description `engagement` only: milliseconds the page was visible and focused, at most 30 minutes. */
+            ms?: number;
+            /** @description `engagement` only: the deepest scroll position reached, in percent. */
+            sd?: number;
+            c?: components["schemas"]["AnalyticsConsent"];
+        };
+        AnalyticsEventBatch: {
+            e: components["schemas"]["AnalyticsEvent"][];
+        };
+        /** @description One event, or up to 100 in `e`. */
+        AnalyticsBatch: components["schemas"]["AnalyticsEvent"] | components["schemas"]["AnalyticsEventBatch"];
         IngressResult: {
             /**
              * @description `stored` (a message was added), `duplicate` (seen before), `bounce` (a delivery report
@@ -10288,6 +12630,15 @@ export interface components {
             document: components["schemas"]["EmailDesignDocument"];
             images: components["schemas"]["EmailTemplateImage"][];
         };
+        /**
+         * @description `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+         *     `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+         *     the workspace already runs as many migrations at a time as the server allows;
+         *     `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+         *     allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+         * @enum {string}
+         */
+        HostedLimit: "YUVA_MIGRATION_SOURCES" | "YUVA_MIGRATION_MAX_ACTIVE" | "YUVA_MIGRATION_MAX_BYTES" | "YUVA_MIGRATION_UPLOAD_MAX_BYTES";
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -10305,6 +12656,7 @@ export interface components {
              * @example messages:write
              */
             scope?: string;
+            limit?: components["schemas"]["HostedLimit"];
             detail?: string;
         };
     };
@@ -10316,6 +12668,15 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["Problem"];
+            };
+        };
+        /** @description The export file was refused or is incomplete; `reason` or `missing_parts` say why. */
+        MigrationFileProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["MigrationFileProblem"];
             };
         };
         /** @description The broadcast was refused; `items` or `recipients` say why. */
@@ -10391,7 +12752,9 @@ export interface components {
         CannedReplyId: string;
         /** @description The chat channel's public key. */
         ChannelKey: string;
+        AnalyticsPropertyId: string;
         ListId: string;
+        MigrationId: string;
         ImportId: string;
         DesignId: string;
         BroadcastId: string;
@@ -12111,6 +14474,37 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description The channel with its new key. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Channel"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    rotateForwardingAddress: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The channel with its new forwarding address. */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -15944,6 +18338,807 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listMigrations: {
+        parameters: {
+            query?: {
+                state?: components["schemas"]["MigrationState"][];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of migrations. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    createMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationCreate"];
+            };
+        };
+        responses: {
+            /** @description The migration, `draft`. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    listMigrationPresets: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The presets. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationPresetList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    detectMigrationSource: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationDetect"];
+            };
+        };
+        responses: {
+            /** @description What was found. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationDetection"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    getMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    updateMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationUpdate"];
+            };
+        };
+        responses: {
+            /** @description The migration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    setMigrationCredentials: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationCredentialsInput"];
+            };
+        };
+        responses: {
+            /** @description Stored. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    testMigrationConnection: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The steps. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationTestResult"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    startMigrationSignIn: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationSignInStart"];
+            };
+        };
+        responses: {
+            /** @description Where to send the browser. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationSignIn"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getMigrationUpload: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The upload. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationUpload"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    uploadMigrationPart: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+                /** @description The part's number, from 0. */
+                part: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["MigrationUploadPartInput"];
+            };
+        };
+        responses: {
+            /** @description The part, stored. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationUploadPart"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    completeMigrationUpload: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationUploadComplete"];
+            };
+        };
+        responses: {
+            /** @description The migration, `connected`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["MigrationFileProblem"];
+        };
+    };
+    listMigrationFolders: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The folders, in the mailbox's order. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationFolderList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    scanMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration, `scanning`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getMigrationPreview: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The preview. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationPreview"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    startMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration, `copying`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    pauseMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration, `paused`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    resumeMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    cancelMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration, `cancelled`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    retryMigrationItems: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    sendMigrationProbe: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The migration, with `probe_sent_at`; the mail goes out shortly. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    finishMigration: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["MigrationFinish"];
+            };
+        };
+        responses: {
+            /** @description The migration, `completed`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    removeMigrationHistory: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["MigrationRemoveHistory"];
+            };
+        };
+        responses: {
+            /** @description The migration, `removing`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Migration"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    listMigrationErrors: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of errors. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationErrorPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     getUsage: {
         parameters: {
             query?: never;
@@ -16501,6 +19696,220 @@ export interface operations {
             };
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsProperties: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The properties. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsPropertyList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyCreate"];
+            };
+        };
+        responses: {
+            /** @description The property. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The property. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyDeletion"];
+            };
+        };
+        responses: {
+            /** @description The property is gone and its data is being deleted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated property. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    rotateAnalyticsKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The property with its new key. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsData: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsDataDeletion"];
+            };
+        };
+        responses: {
+            /** @description The data is being deleted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     realtime: {
@@ -17506,6 +20915,38 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+        };
+    };
+    collectAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The analytics property's public key, `yuva_ak_…`. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "text/plain": components["schemas"]["AnalyticsBatch"];
+                "application/json": components["schemas"]["AnalyticsBatch"];
+            };
+        };
+        responses: {
+            /** @description Taken; stored unless one of the rules above dropped it. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
         };
     };
     clientRealtime: {
