@@ -44,10 +44,12 @@ SELECT e.message_id, e.direction, e.header_message_id, e.from_address, e.to_addr
        (e.raw_key IS NOT NULL)::bool AS has_raw, e.auto, e.dmarc,
        (e.direction = 'in' AND NOT EXISTS (
            SELECT 1 FROM contact_emails ce
-           WHERE ce.workspace_id = e.workspace_id AND ce.contact_id = c.contact_id AND ce.email = e.from_address
+           WHERE ce.workspace_id = e.workspace_id AND ce.contact_id = coalesce(m.author_contact_id, c.contact_id)
+             AND ce.email = e.from_address
        ))::bool AS unverified_sender
 FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
+JOIN messages m ON m.workspace_id = e.workspace_id AND m.id = e.message_id
 WHERE e.workspace_id = @workspace_id AND e.message_id = ANY(@message_ids::uuid[]);
 
 -- name: FindInboundEmailByHeader :one
@@ -88,14 +90,14 @@ LIMIT 1;
 
 -- name: FindOutboundEmailByHeader :one
 SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
-WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.header_message_id = $2;
+WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $2;
 
 -- SES reports name only our Message-ID, so the message is found before the workspace is known
 -- (see "Hosting for others later" in docs/architecture.md).
 -- name: FindOutboundEmailAnyWorkspace :one
 SELECT e.workspace_id, e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
 JOIN workspaces w ON w.id = e.workspace_id
-WHERE e.direction = 'out' AND e.header_message_id = $1 AND w.deleted_at IS NULL
+WHERE e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $1 AND w.deleted_at IS NULL
 LIMIT 1;
 
 -- name: CountRecentConversations :one
@@ -163,8 +165,8 @@ WHERE workspace_id = @workspace_id AND conversation_id = ANY(@ids::uuid[]) AND r
 
 -- name: ListExpiredRawKeys :many
 SELECT raw_key::text FROM message_emails
-WHERE workspace_id = @workspace_id AND raw_key IS NOT NULL AND created_at < @before
-ORDER BY created_at
+WHERE workspace_id = @workspace_id AND raw_key IS NOT NULL AND coalesce(imported_at, created_at) < @before::timestamptz
+ORDER BY coalesce(imported_at, created_at)
 LIMIT @max_rows;
 
 -- name: ClearRawKeys :execrows

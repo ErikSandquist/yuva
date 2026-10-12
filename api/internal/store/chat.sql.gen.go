@@ -695,7 +695,7 @@ func (q *Queries) GetSessionChannel(ctx context.Context, arg GetSessionChannelPa
 }
 
 const inboxEmailChannel = `-- name: InboxEmailChannel :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 WHERE e.workspace_id = $1 AND c.inbox_id = $2
 ORDER BY (e.address LIKE '*@%'), c.created_at, c.id
@@ -734,6 +734,7 @@ func (q *Queries) InboxEmailChannel(ctx context.Context, arg InboxEmailChannelPa
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }
@@ -874,7 +875,7 @@ func (q *Queries) ListContactConversationIDs(ctx context.Context, arg ListContac
 }
 
 const listContactConversations = `-- name: ListContactConversations :many
-SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id FROM conversations c
+SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at FROM conversations c
 WHERE c.workspace_id = $1 AND c.inbox_id = $2 AND c.contact_id = $3
   AND ($4::timestamptz IS NULL
        OR (coalesce(c.last_message_at, c.created_at), c.id) < ($4::timestamptz, $5::uuid))
@@ -940,6 +941,8 @@ func (q *Queries) ListContactConversations(ctx context.Context, arg ListContactC
 			&i.PageTitle,
 			&i.ChannelKind,
 			&i.BroadcastID,
+			&i.MigrationID,
+			&i.ImportedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1196,7 +1199,7 @@ func (q *Queries) ListPersonWorkspaceIDs(ctx context.Context, personID uuid.UUID
 const listPublicMessages = `-- name: ListPublicMessages :many
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -1241,6 +1244,8 @@ type ListPublicMessagesRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1285,6 +1290,8 @@ func (q *Queries) ListPublicMessages(ctx context.Context, arg ListPublicMessages
 			&i.Via,
 			&i.SentVia,
 			&i.Mentions,
+			&i.ImportedAt,
+			&i.ImportedAuthor,
 			&i.BotName,
 			&i.BotAvatarUrl,
 			&i.SentByBotName,
@@ -1302,7 +1309,7 @@ func (q *Queries) ListPublicMessages(ctx context.Context, arg ListPublicMessages
 const listPublicMessagesDesc = `-- name: ListPublicMessagesDesc :many
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -1347,6 +1354,8 @@ type ListPublicMessagesDescRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1391,6 +1400,8 @@ func (q *Queries) ListPublicMessagesDesc(ctx context.Context, arg ListPublicMess
 			&i.Via,
 			&i.SentVia,
 			&i.Mentions,
+			&i.ImportedAt,
+			&i.ImportedAuthor,
 			&i.BotName,
 			&i.BotAvatarUrl,
 			&i.SentByBotName,
@@ -1412,7 +1423,7 @@ WHERE c.workspace_id = $1 AND c.id = ANY($2::uuid[])
   AND EXISTS (
       SELECT 1 FROM messages m
       WHERE m.workspace_id = c.workspace_id AND m.conversation_id = c.id
-        AND m.kind = 'message' AND m.direction = 'out' AND NOT m.draft
+        AND m.kind = 'message' AND m.direction = 'out' AND NOT m.draft AND m.imported_at IS NULL
         AND (r.last_read_at IS NULL OR (m.created_at, m.id) > (r.last_read_at, r.last_read_message_id)))
 `
 
@@ -1481,7 +1492,7 @@ const moveContactConversations = `-- name: MoveContactConversations :many
 WITH moved AS (
     UPDATE conversations SET contact_id = $1, updated_at = $2
     WHERE conversations.workspace_id = $3 AND conversations.contact_id = $4
-    RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id),
+    RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at),
 seen AS (
     UPDATE contacts t SET last_active_at = greatest(t.last_active_at, f.last_active_at)
     FROM contacts f
@@ -1490,7 +1501,7 @@ seen AS (
 notes AS (
     UPDATE contact_notes SET contact_id = $1
     WHERE contact_notes.workspace_id = $3 AND contact_notes.contact_id = $4)
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id FROM moved
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at FROM moved
 `
 
 type MoveContactConversationsParams struct {
@@ -1533,6 +1544,8 @@ type MoveContactConversationsRow struct {
 	PageTitle             *string
 	ChannelKind           *string
 	BroadcastID           *uuid.UUID
+	MigrationID           *uuid.UUID
+	ImportedAt            *time.Time
 }
 
 func (q *Queries) MoveContactConversations(ctx context.Context, arg MoveContactConversationsParams) ([]MoveContactConversationsRow, error) {
@@ -1582,6 +1595,8 @@ func (q *Queries) MoveContactConversations(ctx context.Context, arg MoveContactC
 			&i.PageTitle,
 			&i.ChannelKind,
 			&i.BroadcastID,
+			&i.MigrationID,
+			&i.ImportedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -1876,7 +1891,7 @@ const setConversationContactRead = `-- name: SetConversationContactRead :one
 UPDATE conversations SET last_read_by_contact_at = $1
 WHERE workspace_id = $2 AND id = $3
   AND (last_read_by_contact_at IS NULL OR last_read_by_contact_at < $1)
-RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id
+RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at
 `
 
 type SetConversationContactReadParams struct {
@@ -1921,6 +1936,8 @@ func (q *Queries) SetConversationContactRead(ctx context.Context, arg SetConvers
 		&i.PageTitle,
 		&i.ChannelKind,
 		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
 	)
 	return i, err
 }

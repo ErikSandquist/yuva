@@ -150,7 +150,7 @@ ON CONFLICT (workspace_id, channel_id) DO UPDATE SET
     smtp_password = excluded.smtp_password, smtp_tls = excluded.smtp_tls,
     auto_reply_enabled = excluded.auto_reply_enabled, auto_reply_text = excluded.auto_reply_text,
     auto_reply_interval_hours = excluded.auto_reply_interval_hours
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
 `
 
 type CreateEmailChannelParams struct {
@@ -210,6 +210,7 @@ func (q *Queries) CreateEmailChannel(ctx context.Context, arg CreateEmailChannel
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }
@@ -218,7 +219,7 @@ const createEmailChannelDkimKey = `-- name: CreateEmailChannelDkimKey :one
 UPDATE email_channels SET dkim_selector = $1, dkim_private_key = $2, dkim_public_key = $3,
     dkim_enabled = false
 WHERE workspace_id = $4 AND channel_id = $5 AND dkim_private_key IS NULL
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
 `
 
 type CreateEmailChannelDkimKeyParams struct {
@@ -262,6 +263,7 @@ func (q *Queries) CreateEmailChannelDkimKey(ctx context.Context, arg CreateEmail
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }
@@ -346,7 +348,7 @@ func (q *Queries) DeleteEmailChannelDkimKey(ctx context.Context, arg DeleteEmail
 }
 
 const findConversationByEmailToken = `-- name: FindConversationByEmailToken :one
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND email_token = ANY($3::text[])
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at FROM conversations WHERE workspace_id = $1 AND inbox_id = $2 AND email_token = ANY($3::text[])
 ORDER BY (contact_id = $4) DESC, created_at DESC
 LIMIT 1
 `
@@ -399,12 +401,14 @@ func (q *Queries) FindConversationByEmailToken(ctx context.Context, arg FindConv
 		&i.PageTitle,
 		&i.ChannelKind,
 		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
 	)
 	return i, err
 }
 
 const findConversationByHeaders = `-- name: FindConversationByHeaders :one
-SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id FROM message_emails e
+SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
 WHERE e.workspace_id = $1 AND c.inbox_id = $2 AND e.header_message_id = ANY($3::text[])
 ORDER BY (c.contact_id = $4) DESC, e.created_at DESC, e.message_id DESC
@@ -459,12 +463,14 @@ func (q *Queries) FindConversationByHeaders(ctx context.Context, arg FindConvers
 		&i.PageTitle,
 		&i.ChannelKind,
 		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
 	)
 	return i, err
 }
 
 const findEmailChannelByAddress = `-- name: FindEmailChannelByAddress :one
-SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, c.inbox_id, c.name AS channel_name FROM email_channels e
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
 JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.address = $1 AND w.deleted_at IS NULL
@@ -494,6 +500,7 @@ type FindEmailChannelByAddressRow struct {
 	DkimPrivateKey         []byte
 	DkimEnabled            bool
 	DkimPublicKey          []byte
+	ForwardToken           *string
 	InboxID                uuid.UUID
 	ChannelName            string
 }
@@ -527,6 +534,7 @@ func (q *Queries) FindEmailChannelByAddress(ctx context.Context, address string)
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 		&i.InboxID,
 		&i.ChannelName,
 	)
@@ -559,7 +567,7 @@ func (q *Queries) FindInboundEmailByHeader(ctx context.Context, arg FindInboundE
 const findOutboundEmailAnyWorkspace = `-- name: FindOutboundEmailAnyWorkspace :one
 SELECT e.workspace_id, e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
 JOIN workspaces w ON w.id = e.workspace_id
-WHERE e.direction = 'out' AND e.header_message_id = $1 AND w.deleted_at IS NULL
+WHERE e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $1 AND w.deleted_at IS NULL
 LIMIT 1
 `
 
@@ -586,7 +594,7 @@ func (q *Queries) FindOutboundEmailAnyWorkspace(ctx context.Context, headerMessa
 
 const findOutboundEmailByHeader = `-- name: FindOutboundEmailByHeader :one
 SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
-WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.header_message_id = $2
+WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $2
 `
 
 type FindOutboundEmailByHeaderParams struct {
@@ -624,7 +632,7 @@ func (q *Queries) GetContactIDByEmail(ctx context.Context, arg GetContactIDByEma
 }
 
 const getEmailChannel = `-- name: GetEmailChannel :one
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token FROM email_channels WHERE workspace_id = $1 AND channel_id = $2
 `
 
 type GetEmailChannelParams struct {
@@ -659,12 +667,13 @@ func (q *Queries) GetEmailChannel(ctx context.Context, arg GetEmailChannelParams
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }
 
 const getMessageEmail = `-- name: GetMessageEmail :one
-SELECT workspace_id, message_id, conversation_id, channel_id, direction, header_message_id, in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers, raw_key, raw_size, authentication_results, dmarc, auto, created_at FROM message_emails WHERE workspace_id = $1 AND message_id = $2
+SELECT workspace_id, message_id, conversation_id, channel_id, direction, header_message_id, in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers, raw_key, raw_size, authentication_results, dmarc, auto, created_at, imported_at FROM message_emails WHERE workspace_id = $1 AND message_id = $2
 `
 
 type GetMessageEmailParams struct {
@@ -698,6 +707,7 @@ func (q *Queries) GetMessageEmail(ctx context.Context, arg GetMessageEmailParams
 		&i.Dmarc,
 		&i.Auto,
 		&i.CreatedAt,
+		&i.ImportedAt,
 	)
 	return i, err
 }
@@ -731,7 +741,7 @@ func (q *Queries) IsEmailSuppressed(ctx context.Context, arg IsEmailSuppressedPa
 }
 
 const latestContactConversation = `-- name: LatestContactConversation :one
-SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id FROM conversations
+SELECT id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at FROM conversations
 WHERE workspace_id = $1 AND channel_id = $2 AND contact_id = $3
 ORDER BY created_at DESC, id DESC
 LIMIT 1
@@ -779,6 +789,8 @@ func (q *Queries) LatestContactConversation(ctx context.Context, arg LatestConta
 		&i.PageTitle,
 		&i.ChannelKind,
 		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
 	)
 	return i, err
 }
@@ -925,7 +937,7 @@ func (q *Queries) ListConversationsRawKeys(ctx context.Context, arg ListConversa
 }
 
 const listEmailChannels = `-- name: ListEmailChannels :many
-SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
+SELECT workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token FROM email_channels WHERE workspace_id = $1 AND channel_id = ANY($2::uuid[])
 `
 
 type ListEmailChannelsParams struct {
@@ -966,6 +978,7 @@ func (q *Queries) ListEmailChannels(ctx context.Context, arg ListEmailChannelsPa
 			&i.DkimPrivateKey,
 			&i.DkimEnabled,
 			&i.DkimPublicKey,
+			&i.ForwardToken,
 		); err != nil {
 			return nil, err
 		}
@@ -979,8 +992,8 @@ func (q *Queries) ListEmailChannels(ctx context.Context, arg ListEmailChannelsPa
 
 const listExpiredRawKeys = `-- name: ListExpiredRawKeys :many
 SELECT raw_key::text FROM message_emails
-WHERE workspace_id = $1 AND raw_key IS NOT NULL AND created_at < $2
-ORDER BY created_at
+WHERE workspace_id = $1 AND raw_key IS NOT NULL AND coalesce(imported_at, created_at) < $2::timestamptz
+ORDER BY coalesce(imported_at, created_at)
 LIMIT $3
 `
 
@@ -1046,10 +1059,12 @@ SELECT e.message_id, e.direction, e.header_message_id, e.from_address, e.to_addr
        (e.raw_key IS NOT NULL)::bool AS has_raw, e.auto, e.dmarc,
        (e.direction = 'in' AND NOT EXISTS (
            SELECT 1 FROM contact_emails ce
-           WHERE ce.workspace_id = e.workspace_id AND ce.contact_id = c.contact_id AND ce.email = e.from_address
+           WHERE ce.workspace_id = e.workspace_id AND ce.contact_id = coalesce(m.author_contact_id, c.contact_id)
+             AND ce.email = e.from_address
        ))::bool AS unverified_sender
 FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
+JOIN messages m ON m.workspace_id = e.workspace_id AND m.id = e.message_id
 WHERE e.workspace_id = $1 AND e.message_id = ANY($2::uuid[])
 `
 
@@ -1145,7 +1160,7 @@ UPDATE email_channels SET broadcast_smtp_host = $1, broadcast_smtp_port = $2,
     broadcast_smtp_username = $3, broadcast_smtp_password = $4,
     broadcast_smtp_tls = $5, broadcast_rate = $6
 WHERE workspace_id = $7 AND channel_id = $8
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
 `
 
 type SetEmailChannelBroadcastParams struct {
@@ -1195,6 +1210,7 @@ func (q *Queries) SetEmailChannelBroadcast(ctx context.Context, arg SetEmailChan
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }
@@ -1202,7 +1218,7 @@ func (q *Queries) SetEmailChannelBroadcast(ctx context.Context, arg SetEmailChan
 const setEmailChannelDkimEnabled = `-- name: SetEmailChannelDkimEnabled :one
 UPDATE email_channels SET dkim_enabled = $1
 WHERE workspace_id = $2 AND channel_id = $3 AND (dkim_private_key IS NOT NULL OR NOT $1)
-RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
 `
 
 type SetEmailChannelDkimEnabledParams struct {
@@ -1238,6 +1254,7 @@ func (q *Queries) SetEmailChannelDkimEnabled(ctx context.Context, arg SetEmailCh
 		&i.DkimPrivateKey,
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
+		&i.ForwardToken,
 	)
 	return i, err
 }

@@ -203,6 +203,7 @@ type Contact struct {
 	LastActiveAt         *time.Time
 	PersonID             *uuid.UUID
 	DiscussionsBlockedAt *time.Time
+	MigrationID          *uuid.UUID
 }
 
 type ContactEmail struct {
@@ -283,6 +284,8 @@ type Conversation struct {
 	PageTitle             *string
 	ChannelKind           *string
 	BroadcastID           *uuid.UUID
+	MigrationID           *uuid.UUID
+	ImportedAt            *time.Time
 }
 
 type ConversationLabel struct {
@@ -422,6 +425,7 @@ type EmailChannel struct {
 	DkimPrivateKey         []byte
 	DkimEnabled            bool
 	DkimPublicKey          []byte
+	ForwardToken           *string
 }
 
 type EmailConfirmation struct {
@@ -722,6 +726,8 @@ type Message struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 }
 
 type MessageEmail struct {
@@ -747,6 +753,126 @@ type MessageEmail struct {
 	Dmarc                 string
 	Auto                  bool
 	CreatedAt             time.Time
+	ImportedAt            *time.Time
+}
+
+type Migration struct {
+	ID                     uuid.UUID
+	WorkspaceID            uuid.UUID
+	Source                 string
+	Preset                 string
+	SourceAddress          string
+	InboxID                *uuid.UUID
+	ChannelID              *uuid.UUID
+	State                  string
+	StateReason            string
+	WaitingUntil           *time.Time
+	Options                []byte
+	Estimate               []byte
+	Counts                 []byte
+	Throttle               []byte
+	Checkpoint             []byte
+	LiveFrom               *time.Time
+	VerifiedAt             *time.Time
+	VerifiedRoute          *string
+	ForwardingConfirmation []byte
+	LeaseUntil             *time.Time
+	LeaseJobID             *int64
+	CreatedByMemberID      *uuid.UUID
+	CreatedByApiKeyID      *uuid.UUID
+	CreatedVia             *string
+	CreatedAt              time.Time
+	UpdatedAt              time.Time
+	StartedAt              *time.Time
+	FinishedAt             *time.Time
+	CredentialsDeletedAt   *time.Time
+}
+
+type MigrationAudit struct {
+	ID            int64
+	WorkspaceID   uuid.UUID
+	MigrationID   uuid.UUID
+	Action        string
+	ActorMemberID *uuid.UUID
+	ActorApiKeyID *uuid.UUID
+	Via           *string
+	Detail        []byte
+	CreatedAt     time.Time
+}
+
+type MigrationCredential struct {
+	WorkspaceID       uuid.UUID
+	MigrationID       uuid.UUID
+	Kind              string
+	Sealed            []byte
+	Host              string
+	Port              int32
+	Tls               string
+	CertificateSha256 *string
+	Scopes            []string
+	ExpiresAt         *time.Time
+	CreatedAt         time.Time
+	UpdatedAt         time.Time
+}
+
+type MigrationError struct {
+	ID          int64
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Code        string
+	Detail      string
+	Folder      string
+	ItemDate    *time.Time
+	ItemSubject string
+	CreatedAt   time.Time
+}
+
+type MigrationFolder struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+	Name        string
+	Kind        string
+	Selected    bool
+	LabelAction string
+	LabelID     *uuid.UUID
+	Uidvalidity *int64
+	ScannedUid  int64
+	SeenUid     int64
+	Cursor      *string
+	Total       int32
+	Imported    int32
+	Duplicate   int32
+	Skipped     int32
+	Failed      int32
+	Bytes       int64
+}
+
+type MigrationItem struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+	FolderID    *int32
+	ThreadKey   string
+	DedupeKey   string
+	Refs        []string
+	ReceivedAt  time.Time
+	SizeBytes   int64
+	Labels      []string
+	State       string
+	Reason      string
+	Attempts    int16
+	MessageID   *uuid.UUID
+}
+
+type MigrationThread struct {
+	WorkspaceID    uuid.UUID
+	MigrationID    uuid.UUID
+	ThreadKey      string
+	ConversationID *uuid.UUID
+	LastAt         time.Time
+	Items          int32
+	Done           int32
 }
 
 type NotificationEmail struct {
@@ -921,12 +1047,15 @@ type Session struct {
 }
 
 type UsageCounter struct {
-	WorkspaceID         uuid.UUID
-	Month               time.Time
-	Conversations       int64
-	Messages            int64
-	AttachmentBytes     int64
-	BroadcastRecipients int64
+	WorkspaceID           uuid.UUID
+	Month                 time.Time
+	Conversations         int64
+	Messages              int64
+	AttachmentBytes       int64
+	BroadcastRecipients   int64
+	ImportedConversations int64
+	ImportedMessages      int64
+	ImportedBytes         int64
 }
 
 type WebauthnCeremony struct {

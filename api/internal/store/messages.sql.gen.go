@@ -168,13 +168,13 @@ WITH m AS (
             CASE WHEN $16::text IS NULL THEN NULL ELSE $14::timestamptz END,
             $17, coalesce($18::uuid[], '{}'))
     ON CONFLICT (workspace_id, conversation_id, client_id) DO NOTHING
-    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions),
+    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions, imported_at, imported_author),
 seen AS (
     UPDATE contacts SET last_active_at = greatest(coalesce(contacts.last_active_at, m.created_at), m.created_at)
     FROM m WHERE contacts.workspace_id = m.workspace_id AND contacts.id = m.author_contact_id)
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM m
@@ -227,6 +227,8 @@ type CreateMessageRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -278,6 +280,8 @@ func (q *Queries) CreateMessage(ctx context.Context, arg CreateMessageParams) (C
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
@@ -374,7 +378,7 @@ func (q *Queries) GetLatestMessagePosition(ctx context.Context, arg GetLatestMes
 const getMessage = `-- name: GetMessage :one
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -412,6 +416,8 @@ type GetMessageRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -444,6 +450,8 @@ func (q *Queries) GetMessage(ctx context.Context, arg GetMessageParams) (GetMess
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
@@ -454,7 +462,7 @@ func (q *Queries) GetMessage(ctx context.Context, arg GetMessageParams) (GetMess
 const getMessageByClientID = `-- name: GetMessageByClientID :one
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -493,6 +501,8 @@ type GetMessageByClientIDRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -525,6 +535,8 @@ func (q *Queries) GetMessageByClientID(ctx context.Context, arg GetMessageByClie
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
@@ -685,7 +697,7 @@ func (q *Queries) ListConversationSummaries(ctx context.Context, arg ListConvers
 const listDrafts = `-- name: ListDrafts :many
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -742,6 +754,8 @@ type ListDraftsRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -789,6 +803,8 @@ func (q *Queries) ListDrafts(ctx context.Context, arg ListDraftsParams) ([]ListD
 			&i.Via,
 			&i.SentVia,
 			&i.Mentions,
+			&i.ImportedAt,
+			&i.ImportedAuthor,
 			&i.BotName,
 			&i.BotAvatarUrl,
 			&i.SentByBotName,
@@ -890,7 +906,7 @@ func (q *Queries) ListMentions(ctx context.Context, arg ListMentionsParams) ([]L
 const listMessages = `-- name: ListMessages :many
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -935,6 +951,8 @@ type ListMessagesRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -979,6 +997,8 @@ func (q *Queries) ListMessages(ctx context.Context, arg ListMessagesParams) ([]L
 			&i.Via,
 			&i.SentVia,
 			&i.Mentions,
+			&i.ImportedAt,
+			&i.ImportedAuthor,
 			&i.BotName,
 			&i.BotAvatarUrl,
 			&i.SentByBotName,
@@ -996,7 +1016,7 @@ func (q *Queries) ListMessages(ctx context.Context, arg ListMessagesParams) ([]L
 const listMessagesDesc = `-- name: ListMessagesDesc :many
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM messages m
@@ -1041,6 +1061,8 @@ type ListMessagesDescRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1085,6 +1107,8 @@ func (q *Queries) ListMessagesDesc(ctx context.Context, arg ListMessagesDescPara
 			&i.Via,
 			&i.SentVia,
 			&i.Mentions,
+			&i.ImportedAt,
+			&i.ImportedAuthor,
 			&i.BotName,
 			&i.BotAvatarUrl,
 			&i.SentByBotName,
@@ -1129,10 +1153,10 @@ WITH m AS (
         delivery_state = $5,
         delivery_updated_at = CASE WHEN $5::text IS NULL THEN NULL ELSE $1::timestamptz END
     WHERE messages.workspace_id = $6 AND messages.id = $7 AND draft
-    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions)
+    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions, imported_at, imported_author)
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM m
@@ -1174,6 +1198,8 @@ type SendDraftRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1214,6 +1240,8 @@ func (q *Queries) SendDraft(ctx context.Context, arg SendDraftParams) (SendDraft
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
@@ -1225,10 +1253,10 @@ const setMessageDelivery = `-- name: SetMessageDelivery :one
 WITH m AS (
     UPDATE messages SET delivery_state = $1::text, delivery_error = $2, delivery_updated_at = $3::timestamptz
     WHERE messages.workspace_id = $4 AND messages.id = $5
-    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions)
+    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions, imported_at, imported_author)
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM m
@@ -1268,6 +1296,8 @@ type SetMessageDeliveryRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1306,6 +1336,8 @@ func (q *Queries) SetMessageDelivery(ctx context.Context, arg SetMessageDelivery
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
@@ -1317,10 +1349,10 @@ const updateDraft = `-- name: UpdateDraft :one
 WITH m AS (
     UPDATE messages SET body = $1, html = $2
     WHERE messages.workspace_id = $3 AND messages.id = $4 AND draft
-    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions)
+    RETURNING id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id, body, html, client_id, event, search, created_at, delivery_state, delivery_error, delivery_updated_at, author_api_key_id, draft, sent_by_member_id, sent_by_api_key_id, via, sent_via, mentions, imported_at, imported_author)
 SELECT m.id, m.workspace_id, m.conversation_id, m.kind, m.direction, m.author_type, m.author_member_id,
        m.author_contact_id, m.body, m.html, m.client_id, m.event, m.created_at, m.delivery_state, m.delivery_error,
-       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions,
+       m.delivery_updated_at, m.author_api_key_id, m.draft, m.sent_by_member_id, m.sent_by_api_key_id, m.via, m.sent_via, m.mentions, m.imported_at, m.imported_author,
        coalesce(ak.bot_name, ak.name, '')::text AS bot_name, coalesce(ak.bot_avatar_url, '')::text AS bot_avatar_url,
        coalesce(sk.bot_name, sk.name, '')::text AS sent_by_bot_name
 FROM m
@@ -1359,6 +1391,8 @@ type UpdateDraftRow struct {
 	Via               *string
 	SentVia           *string
 	Mentions          []uuid.UUID
+	ImportedAt        *time.Time
+	ImportedAuthor    []byte
 	BotName           string
 	BotAvatarUrl      string
 	SentByBotName     string
@@ -1396,6 +1430,8 @@ func (q *Queries) UpdateDraft(ctx context.Context, arg UpdateDraftParams) (Updat
 		&i.Via,
 		&i.SentVia,
 		&i.Mentions,
+		&i.ImportedAt,
+		&i.ImportedAuthor,
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.SentByBotName,
