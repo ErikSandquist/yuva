@@ -150,7 +150,9 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
                     </span>
                   </span>
                   <span className="text-small text-faint">
-                    {f.use === "labels" ? (
+                    {f.use === "labels" && f.kind === "sent" ? (
+                      <Trans>Read to suggest your team's addresses: its mail comes from All mail.</Trans>
+                    ) : f.use === "labels" ? (
                       <Trans>Label only: its mail comes from All mail, and its conversations get the label.</Trans>
                     ) : (
                       text.folderKind[f.kind]

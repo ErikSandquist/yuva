@@ -6560,6 +6560,10 @@ msgstr "Rehberi okuyun"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Çalışma alanını, üyeleri, gelen kutularını ve kanalları görme"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Read to suggest your team's addresses: its mail comes from All mail."
+msgstr "Ekibinizin adreslerini önermek için okunur; e-postaları Tüm postalar'dan gelir."
+
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
 msgid "Reader"

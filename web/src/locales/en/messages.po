@@ -6560,6 +6560,10 @@ msgstr "Read the guide"
 msgid "Read the workspace, members, inboxes and channels"
 msgstr "Read the workspace, members, inboxes and channels"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Read to suggest your team's addresses: its mail comes from All mail."
+msgstr "Read to suggest your team's addresses: its mail comes from All mail."
+
 #: src/components/common/DiscussionAuthor.tsx
 #: src/features/account/ConnectPage.tsx
 msgid "Reader"
