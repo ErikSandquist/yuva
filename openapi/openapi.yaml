@@ -231,6 +231,22 @@ tags:
       Keys and OAuth tokens need `migrations:manage`, which agents' tokens are never offered.
       Credentials are encrypted under the server's master key, never returned or logged, and
       deleted when the migration ends. Every action is recorded with who did it.
+  - name: analytics
+    description: |
+      Cookieless analytics for the workspace's own websites and apps. A property
+      (`AnalyticsProperty`) is one product's sites and apps; its public key names it on
+      `POST /client/v1/analytics/{key}`, which the `/yuva-analytics.js` script calls. No IP address
+      is stored and nothing is put on the visitor's device: the address is shortened (IPv4 /24,
+      IPv6 /48) before anything else uses it, and a visitor is a keyed hash of the shortened address
+      and the user agent under a salt that exists for one day of the property's time zone.
+
+      Owners and admins manage properties. Agents read the properties linked to inboxes they can
+      access; a property without an inbox is visible to owners, admins and API keys without an
+      inbox limit. Properties the caller cannot see answer `404`. Keys and OAuth tokens need
+      `analytics:read` or `analytics:manage`; keys limited to inboxes cannot hold
+      `analytics:manage`, agents' tokens are never offered it, and no `analytics:*` scope is added
+      to keys made before they existed. `YUVA_ANALYTICS=off` removes the feature: these endpoints
+      and the collection endpoint answer `404`.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -7578,6 +7594,216 @@ paths:
           $ref: "#/components/responses/Problem"
         "403":
           $ref: "#/components/responses/Problem"
+  /v1/analytics/properties:
+    get:
+      operationId: listAnalyticsProperties
+      summary: List analytics properties
+      description: |
+        The properties the caller can see, oldest first, with today's visitors (in each property's
+        time zone) and the workspace's analytics usage this month: `usage.limit` is its monthly
+        event cap, absent when there is none, and `usage.limit_reached_at` says when this month's
+        events reached it; events over the cap are dropped until the month ends.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      responses:
+        "200":
+          description: The properties.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsPropertyList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createAnalyticsProperty
+      summary: Create an analytics property
+      description: |
+        A website or app to measure. The answer carries its `public_key`, which pages and apps send
+        events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
+        it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
+        (`403 property_limit`). A children's property (`audience: children`) cannot offer
+        `consent_features` or `tracked_props`.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsPropertyCreate"
+      responses:
+        "201":
+          description: The property.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsProperty"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}:
+    get:
+      operationId: getAnalyticsProperty
+      summary: An analytics property
+      description: "Scope: `analytics:read`."
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The property.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsProperty"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateAnalyticsProperty
+      summary: Update an analytics property
+      description: |
+        Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
+        `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
+        received from then on: finished days keep the zone they were counted in.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsPropertyUpdate"
+      responses:
+        "200":
+          description: The updated property.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsProperty"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteAnalyticsProperty
+      summary: Delete an analytics property
+      description: |
+        The body repeats the property's name exactly. Its key stops working at once (`404` on the
+        collection endpoint); a background job then deletes its visits, events, rollups and salts,
+        and finally the property.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsPropertyDeletion"
+      responses:
+        "202":
+          description: The property is gone and its data is being deleted.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/rotate-key:
+    post:
+      operationId: rotateAnalyticsKey
+      summary: Give an analytics property a new public key
+      description: |
+        The property gets a new `public_key`. The old one keeps working for 24 hours
+        (`previous_key_expires_at`), so pages and apps can be updated without losing events; a
+        second rotation within that time ends the key before it at once.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The property with its new key.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsProperty"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/delete-data:
+    post:
+      operationId: deleteAnalyticsData
+      summary: Delete a property's collected data
+      description: |
+        Deletes the visits and events of the days `from` to `to` (dates in the property's time
+        zone, at most 400 days apart), or with `all: true` every day's together with the rollups.
+        The property and its key stay. A background job does the work; days it touched are rolled
+        up again.
+
+        Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsDataDeletion"
+      responses:
+        "202":
+          description: The data is being deleted.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/realtime:
     get:
       operationId: realtime
@@ -8822,6 +9048,62 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /client/v1/analytics/{key}:
+    post:
+      operationId: collectAnalytics
+      summary: Send analytics events
+      description: |
+        Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
+        key: one event, or up to 100 as `{"e": [...]}`, at most 64 KiB. Send the JSON as
+        `text/plain` so a browser needs no preflight; `application/json` works too, with a
+        preflight. No cookie, session or `Set-Cookie`, and the answer is `202` before anything is
+        written.
+
+        A browser's `Origin` host and every event's page host (`u`) must be one of the property's
+        `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
+        `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
+        are refused until app collection exists. An unknown or deleted key answers `404`.
+
+        Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+        of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+        path; events over the property's per-minute limit or the workspace's monthly cap. One
+        shortened address may send 120 events a minute to a property (`429 rate_limited` with
+        `Retry-After`). When the server cannot take more events it answers `503` with
+        `Retry-After`.
+      tags: [client]
+      security: []
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: The analytics property's public key, `yuva_ak_…`.
+          schema:
+            type: string
+            maxLength: 200
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              $ref: "#/components/schemas/AnalyticsBatch"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsBatch"
+      responses:
+        "202":
+          description: Taken; stored unless one of the rules above dropped it.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+        "503":
+          $ref: "#/components/responses/Problem"
   /client/v1/realtime:
     get:
       operationId: clientRealtime
@@ -9772,6 +10054,13 @@ components:
       schema:
         type: string
         maxLength: 200
+    AnalyticsPropertyId:
+      name: propertyId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     ListId:
       name: listId
       in: path
@@ -10319,8 +10608,13 @@ components:
         - `migrations:manage`: detect, create, change, connect, test and delete migrations into
           Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
           to inboxes.
+        - `analytics:read`: analytics properties.
+        - `analytics:write`: server-side analytics events; for API keys only, never offered to
+          OAuth clients.
+        - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
+          delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 
-        `lists:*`, `broadcasts:*` and `migrations:manage` are never added to keys made before they existed.
+        `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -10342,6 +10636,9 @@ components:
         - broadcasts:write
         - broadcasts:send
         - migrations:manage
+        - analytics:read
+        - analytics:write
+        - analytics:manage
     BotAvatarUrl:
       type: string
       format: uri
@@ -13050,7 +13347,7 @@ components:
             $ref: "#/components/schemas/CannedReply"
     UsageMonth:
       type: object
-      required: [month, conversations, messages, attachment_bytes, broadcast_recipients, imported_conversations, imported_messages, imported_bytes]
+      required: [month, conversations, messages, attachment_bytes, broadcast_recipients, imported_conversations, imported_messages, imported_bytes, analytics_events]
       properties:
         month:
           type: string
@@ -13081,6 +13378,10 @@ components:
           type: integer
           format: int64
           description: Bytes read from mailboxes moved into Yuva.
+        analytics_events:
+          type: integer
+          format: int64
+          description: Analytics events stored.
     UsageList:
       type: object
       required: [items]
@@ -18465,6 +18766,386 @@ components:
           inbox.updated: "#/components/schemas/ClientInboxUpdatedEvent"
           ready: "#/components/schemas/RealtimeReady"
           resync_required: "#/components/schemas/RealtimeResyncRequired"
+    AnalyticsPlatform:
+      type: string
+      description: Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+      enum: [web, ios, android]
+      x-enum-varnames: [AnalyticsPlatformWeb, AnalyticsPlatformIos, AnalyticsPlatformAndroid]
+    AnalyticsCollection:
+      type: string
+      description: |
+        `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+        address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+        script sends after `yuva.consent({analytics: true})`.
+      enum: [anonymous, consent]
+    AnalyticsConsentFeature:
+      type: string
+      description: |
+        Offered only to visitors who consented: `persistent` keeps a random id on the device for at
+        most 13 months, `identify` links a verified user's visits to their contact.
+      enum: [persistent, identify]
+      x-enum-varnames: [AnalyticsConsentPersistent, AnalyticsConsentIdentify]
+    AnalyticsAudience:
+      type: string
+      description: "`children` keeps location at country level and allows no consent features or tracked props."
+      enum: [general, children]
+      x-enum-varnames: [AnalyticsAudienceGeneral, AnalyticsAudienceChildren]
+    AnalyticsDomain:
+      type: string
+      description: |
+        A host name whose pages may send events, without scheme or port: `example.com`,
+        `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
+        `localhost`, `127.0.0.1` and `[::1]` count only when listed.
+      maxLength: 253
+      examples: ["www.example.com", "*.example.com"]
+    AnalyticsPathPattern:
+      type: string
+      description: A path starting with `/`, where `*` matches one segment and `**` any number of them.
+      minLength: 1
+      maxLength: 300
+      examples: ["/admin/**", "/preview/*"]
+    AnalyticsPathRule:
+      type: object
+      description: Pages whose path matches `pattern` are stored as `replacement`, so `/orders/*` can count as `/orders/:id`.
+      required: [pattern, replacement]
+      properties:
+        pattern:
+          $ref: "#/components/schemas/AnalyticsPathPattern"
+        replacement:
+          type: string
+          minLength: 1
+          maxLength: 300
+          examples: ["/orders/:id"]
+    AnalyticsExcludedAddress:
+      type: string
+      description: An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
+      maxLength: 50
+      examples: ["203.0.113.7", "198.51.100.0/24"]
+    AnalyticsTrackedProp:
+      type: string
+      minLength: 1
+      maxLength: 300
+    AnalyticsProperty:
+      type: object
+      description: A website or app the workspace measures.
+      required: [id, name, public_key, domains, platforms, timezone, currency, collection, consent_features, audience,
+        excluded_paths, excluded_ips, path_rules, tracked_props, visitors_today, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        inbox_id:
+          type: string
+          format: uuid
+          description: The linked inbox, whose agents can read the property; absent when none.
+        name:
+          type: string
+        public_key:
+          type: string
+          description: Sent by pages and apps, `yuva_ak_…`. Public like a chat channel's key.
+          examples: [yuva_ak_3kq9TzWb0xY1aB2cD3eF4gH5]
+        previous_key_expires_at:
+          type: string
+          format: date-time
+          description: After a rotation, when the previous key stops working; absent when there is none.
+        domains:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsDomain"
+        platforms:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsPlatform"
+        timezone:
+          type: string
+          description: IANA time zone that defines the property's day.
+        currency:
+          type: string
+          description: ISO 4217 code revenue is reported in.
+          pattern: "^[A-Z]{3}$"
+        collection:
+          $ref: "#/components/schemas/AnalyticsCollection"
+        consent_features:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsConsentFeature"
+        audience:
+          $ref: "#/components/schemas/AnalyticsAudience"
+        excluded_paths:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsPathPattern"
+        excluded_ips:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsExcludedAddress"
+        path_rules:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsPathRule"
+        tracked_props:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsTrackedProp"
+        retention_months:
+          type: integer
+          format: int32
+          description: Rollups older than this are deleted; absent when they are kept forever.
+        visitors_today:
+          type: integer
+          format: int64
+          description: Distinct visitors so far today, in the property's time zone.
+        first_event_at:
+          type: string
+          format: date-time
+          description: When the first event was stored; absent until then.
+        last_event_at:
+          type: string
+          format: date-time
+          description: When an event was last stored, to the minute.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AnalyticsPropertyCreate:
+      type: object
+      required: [name, domains]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        inbox_id:
+          type: string
+          format: uuid
+        domains:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsDomain"
+        platforms:
+          type: array
+          description: "`[web]` when absent."
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/AnalyticsPlatform"
+        timezone:
+          type: string
+          description: The linked inbox's time zone when absent, else `UTC`.
+        currency:
+          type: string
+          default: EUR
+          pattern: "^[A-Z]{3}$"
+        collection:
+          $ref: "#/components/schemas/AnalyticsCollection"
+        consent_features:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsConsentFeature"
+        audience:
+          $ref: "#/components/schemas/AnalyticsAudience"
+        excluded_paths:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsPathPattern"
+        excluded_ips:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsExcludedAddress"
+        path_rules:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsPathRule"
+        tracked_props:
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/AnalyticsTrackedProp"
+        retention_months:
+          type: [integer, "null"]
+          format: int32
+          minimum: 1
+          maximum: 120
+          description: 25 when absent; `null` keeps rollups forever.
+    AnalyticsPropertyUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        inbox_id:
+          type: [string, "null"]
+          format: uuid
+          description: "`null` unlinks the property from its inbox."
+        domains:
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsDomain"
+        platforms:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/AnalyticsPlatform"
+        timezone:
+          type: string
+        currency:
+          type: string
+          pattern: "^[A-Z]{3}$"
+        collection:
+          $ref: "#/components/schemas/AnalyticsCollection"
+        consent_features:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsConsentFeature"
+        audience:
+          $ref: "#/components/schemas/AnalyticsAudience"
+        excluded_paths:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsPathPattern"
+        excluded_ips:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsExcludedAddress"
+        path_rules:
+          type: array
+          maxItems: 50
+          items:
+            $ref: "#/components/schemas/AnalyticsPathRule"
+        tracked_props:
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/AnalyticsTrackedProp"
+        retention_months:
+          type: [integer, "null"]
+          format: int32
+          minimum: 1
+          maximum: 120
+          description: "`null` keeps rollups forever."
+    AnalyticsUsage:
+      type: object
+      description: The workspace's analytics events this calendar month (UTC).
+      required: [month, events]
+      properties:
+        month:
+          type: string
+          pattern: "^[0-9]{4}-[0-9]{2}$"
+          examples: ["2026-10"]
+        events:
+          type: integer
+          format: int64
+          description: Events stored this month.
+        limit:
+          type: integer
+          format: int64
+          description: The monthly event cap; absent when there is none.
+        limit_reached_at:
+          type: string
+          format: date-time
+          description: When this month's events reached the cap; later events are dropped until the month ends.
+    AnalyticsPropertyList:
+      type: object
+      required: [items, usage]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsProperty"
+        usage:
+          $ref: "#/components/schemas/AnalyticsUsage"
+    AnalyticsPropertyDeletion:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          description: The property's name, exactly.
+    AnalyticsDataDeletion:
+      type: object
+      description: "Either `from` and `to`, or `all: true`."
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        all:
+          type: boolean
+    AnalyticsConsent:
+      type: object
+      properties:
+        a:
+          type: integer
+          enum: [0, 1]
+          description: "`1` when the visitor agreed to analytics."
+    AnalyticsEvent:
+      type: object
+      description: |
+        One event. Keys the server does not know are ignored, so newer scripts keep working with
+        older servers.
+      required: [n, u]
+      properties:
+        n:
+          type: string
+          description: "`pageview`, or `engagement` (sent once per view when the page is hidden or left)."
+          enum: [pageview, engagement]
+        u:
+          type: string
+          description: |
+            The page URL. Only the host and the path are kept; of the query, only `utm_source`,
+            `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
+            the visit's acquisition. Path segments shaped like e-mail addresses are stored as
+            `:email`.
+          maxLength: 2000
+        r:
+          type: string
+          description: "`document.referrer`; only its host and path are kept, and none when it is the page's own host."
+          maxLength: 2000
+        w:
+          type: integer
+          description: Viewport width in CSS pixels, turned into a screen size class and not stored.
+        h:
+          type: boolean
+          description: The page uses hash routing, so the fragment is part of the path.
+        ms:
+          type: integer
+          description: "`engagement` only: milliseconds the page was visible and focused, at most 30 minutes."
+        sd:
+          type: integer
+          description: "`engagement` only: the deepest scroll position reached, in percent."
+          minimum: 0
+          maximum: 100
+        c:
+          $ref: "#/components/schemas/AnalyticsConsent"
+    AnalyticsEventBatch:
+      type: object
+      required: [e]
+      properties:
+        e:
+          type: array
+          minItems: 1
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/AnalyticsEvent"
+    AnalyticsBatch:
+      description: One event, or up to 100 in `e`.
+      oneOf:
+        - $ref: "#/components/schemas/AnalyticsEvent"
+        - $ref: "#/components/schemas/AnalyticsEventBatch"
     IngressResult:
       type: object
       required: [status]
