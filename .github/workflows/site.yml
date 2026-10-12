@@ -3,7 +3,14 @@ name: Site
 on:
   push:
     branches: [main]
-    paths: ["site/**", "sdk/shadcn/**", "openapi/openapi.yaml", "CHANGELOG.md", ".github/workflows/site.yml"]
+    paths:
+      - "site/**"
+      - "sdk/shadcn/**"
+      - "openapi/openapi.yaml"
+      - "CHANGELOG.md"
+      - "templates/email/**"
+      - "api/internal/mail/design/icons/**"
+      - ".github/workflows/site.yml"
   workflow_dispatch:
 
 permissions:
