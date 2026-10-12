@@ -1416,7 +1416,8 @@ losing a message and without changing anything at the source. Decisions:
   hash the live ingest uses), its rows get ids derived from both, and it is imported in one
   transaction, so a retry never duplicates. A message the channel already has, in either direction,
   is not imported again, which also lets a Takeout import and a later IMAP migration of the same
-  mailbox meet without duplicates. Each source has a budget below its published limit (Gmail IMAP
+  mailbox meet without duplicates; a thread whose earlier messages the channel already has continues
+  in that conversation, in every migration. Each source has a budget below its published limit (Gmail IMAP
   1,500 MB a day, other servers one connection and 4 MB/s, help desks half their rate limit), kept on
   the migration row; limit answers and `Retry-After` are honoured. Microsoft tokens are refreshed
   before a connection and resealed. Pause stops after the batch in progress (at most 50 messages);
@@ -1646,7 +1647,9 @@ now; per-channel limits can narrow them later.
     `email_channels.forward_token` (unique across the server), like an address. A migration probe is
     recognised by its HMAC before the channel's workspace matters.
   - The migration watchdog lists migrations whose lease expired across workspaces
-    (`migrations_lease_idx`); everything after that lookup is scoped by the workspace it returned.
+    (`migrations_lease_idx`), and the hourly upload sweep lists ended migrations that still have
+    uploaded parts (`ListEndedMigrationUploads`); everything after those lookups is scoped by the
+    workspace they returned.
   - `migration_audit` rows outlive their migration (no foreign key to it) but carry `workspace_id`
     and go with the workspace.
   - `yuva api-key revoke <id>` runs on the server with no workspace given: it finds the key by its
