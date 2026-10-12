@@ -16,6 +16,7 @@ import {
   ContactAvatar,
   Dot,
   EmptyState,
+  ImportedChip,
   isVisitor,
   MemberAvatar,
   placeOf,
@@ -535,12 +536,14 @@ function Loaded({
         pageLine ||
         c.related_conversation_id ||
         c.broadcast_id ||
+        c.imported ||
         viewers.length > 0 ||
         typingMate) && (
         <div
           className="flex shrink-0 flex-wrap items-center gap-x-1.5 gap-y-1 border-b bg-background px-4 py-1.5 text-caption text-faint"
           data-testid="header-details"
         >
+          {c.imported && <ImportedChip at={c.imported.at} />}
           {c.broadcast_id && <BroadcastLine id={c.broadcast_id} />}
           {c.broadcast_id && (chipLabels.length > 0 || (c.kind === "feedback" && c.feedback) || pageLine) && sep}
           {c.kind === "feedback" && c.feedback && <CategoryChip category={c.feedback.category} />}

@@ -27,6 +27,7 @@ import { UserMenu } from "@/app/UserMenu"
 import {
   ContactAvatar,
   ErrorLine,
+  ImportedChip,
   isVisitor,
   Kbd,
   MemberAvatar,
@@ -60,6 +61,7 @@ import { useLiveIds } from "@/features/conversation/liveness"
 import { Ticks } from "@/features/conversation/messages/MessageActions"
 import { currentRating, RatingMark } from "@/features/conversation/rating"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
+import { ImportBanner } from "@/features/migrations/ImportBanner"
 import { InboxPicker } from "@/features/inbox/InboxPicker"
 import { useListActions } from "@/features/inbox/memberState"
 import { setListQuery, useListSearch } from "@/features/inbox/listSearch"
@@ -250,8 +252,9 @@ function Row({
               {formatShort(c.last_activity_at, i18n.locale)}
             </time>
           </span>
-          {(source || place || c.broadcast_id) && (
+          {(source || place || c.broadcast_id || c.imported) && (
             <span className="flex min-w-0 items-center gap-1.5 text-caption text-faint" data-testid="row-source">
+              {c.imported && <ImportedChip at={c.imported.at} />}
               {source && <SourceBadge source={source} />}
               {c.broadcast_id && (
                 <MegaphoneIcon
@@ -681,6 +684,7 @@ export function ChatList({
       </div>
       <AwayBanner />
       <CleanupBanner onReview={onOpen} />
+      <ImportBanner />
       <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto" data-testid="list">
         {list.isPending ? (
           <div className="grid gap-1 p-3">

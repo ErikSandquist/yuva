@@ -430,6 +430,10 @@ msgstr "{pending} waiting for confirmation"
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 
+#: src/features/migrations/ImportBanner.tsx
+msgid "{percent}%"
+msgstr "{percent}%"
+
 #: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "{percent}%, {done} of {total} messages"
@@ -2668,6 +2672,7 @@ msgstr "Desktop notifications are blocked for this site in the browser's setting
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Details"
 
@@ -3668,6 +3673,10 @@ msgstr "Highest share of “helpful” first, among pages with at least 5 rating
 msgid "History arrives quietly, newest first: no notifications, no auto-replies, nothing unread. Your team can work meanwhile."
 msgstr "History arrives quietly, newest first: no notifications, no auto-replies, nothing unread. Your team can work meanwhile."
 
+#: src/features/migrations/ImportBanner.tsx
+msgid "History imported from {address}"
+msgstr "History imported from {address}"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to Yuva."
 msgstr "History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to Yuva."
@@ -3806,17 +3815,30 @@ msgstr "Import from a CSV file"
 msgid "Import steps"
 msgstr "Import steps"
 
+#: src/components/common/ImportedChip.tsx
 #: src/features/migrations/Wizard.tsx
 msgid "Imported"
 msgstr "Imported"
+
+#: src/features/conversation/messages/Thread.tsx
+msgid "Imported history above · new in Yuva below"
+msgstr "Imported history above · new in Yuva below"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Imported history removed"
 msgstr "Imported history removed"
 
+#: src/components/common/ImportedChip.tsx
+msgid "Imported into Yuva on {date}"
+msgstr "Imported into Yuva on {date}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Importing"
 msgstr "Importing"
+
+#: src/features/migrations/ImportBanner.tsx
+msgid "Importing history from {address} · {percent}% · new mail keeps arriving as usual"
+msgstr "Importing history from {address} · {percent}% · new mail keeps arriving as usual"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"

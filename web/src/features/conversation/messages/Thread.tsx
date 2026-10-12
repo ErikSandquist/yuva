@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { FileDownIcon, LockIcon } from "lucide-react"
+import { FileDownIcon, HistoryIcon, LockIcon } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { BotAvatar, ContactAvatar, ErrorLine, Kbd, PersonAvatar, TypingDots } from "@/components/common"
@@ -45,6 +45,7 @@ import { cn } from "@/lib/utils"
 
 const GROUP_MS = 5 * 60_000
 const DAY_ID = "day:"
+const IMPORTED_END = "imported-end"
 
 type Side = "in" | "me" | "mate" | "bot"
 
@@ -58,7 +59,7 @@ function sideOf(m: Message, me: string): Side {
 
 function authorKey(m: Message) {
   const a = m.author
-  return `${a.type}:${a.member_id ?? a.contact_id ?? a.api_key_id ?? ""}:${m.sent_by?.member_id ?? ""}`
+  return `${a.type}:${a.member_id ?? a.contact_id ?? a.api_key_id ?? m.imported_author?.address ?? ""}:${m.sent_by?.member_id ?? ""}`
 }
 
 function isMail(m: Message) {
@@ -659,6 +660,17 @@ function DayMarker({ label }: { label: string }) {
   )
 }
 
+function ImportedMarker() {
+  return (
+    <Marker variant="separator" className="py-2.5" data-testid="imported-separator">
+      <MarkerContent className="flex items-center gap-1.5 rounded-full border border-dashed bg-card px-3 py-1 text-caption text-muted-foreground">
+        <HistoryIcon className="size-3 shrink-0" aria-hidden />
+        <Trans>Imported history above · new in Yuva below</Trans>
+      </MarkerContent>
+    </Marker>
+  )
+}
+
 function Pending({ p }: { p: PendingReply }) {
   return (
     <MessageFrame align="end" className="pb-2" data-testid="pending-reply">
@@ -863,6 +875,7 @@ function ThreadView({
     const out: { key: string; day?: string; m?: Message; i: number }[] = []
     let lastDay = ""
     items.forEach((m, i) => {
+      if (i > 0 && items[i - 1].imported_at && !m.imported_at) out.push({ key: IMPORTED_END, i })
       const day = new Date(m.created_at).toDateString()
       if (day !== lastDay) out.push({ key: `${DAY_ID}${day}`, day: m.created_at, i })
       lastDay = day
@@ -929,6 +942,10 @@ function ThreadView({
               r.m ? (
                 <Row key={r.key} messageId={r.m.id}>
                   {render(r.m, r.i)}
+                </Row>
+              ) : r.key === IMPORTED_END ? (
+                <Row key={r.key} messageId={r.key}>
+                  <ImportedMarker />
                 </Row>
               ) : (
                 <Row key={r.key} messageId={r.key}>

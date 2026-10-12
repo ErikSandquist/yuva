@@ -430,6 +430,10 @@ msgstr "{pending} kişi onay bekliyor"
 msgid "{people, plural, one {Its # subscription and its consent record are deleted.} other {Its # subscriptions and their consent records are deleted.}}"
 msgstr "{people, plural, one {# aboneliği ve izin kaydı silinir.} other {# aboneliği ve izin kayıtları silinir.}}"
 
+#: src/features/migrations/ImportBanner.tsx
+msgid "{percent}%"
+msgstr "%{percent}"
+
 #: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "%{percent}, {total} mesajın {done} tanesi"
@@ -2668,6 +2672,7 @@ msgstr "Masaüstü bildirimleri bu site için tarayıcı ayarlarında engelli, b
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/ImportBanner.tsx
 msgid "Details"
 msgstr "Bilgiler"
 
@@ -3668,6 +3673,10 @@ msgstr "En az 5 değerlendirmesi olan sayfalar arasında “yararlı” oranı e
 msgid "History arrives quietly, newest first: no notifications, no auto-replies, nothing unread. Your team can work meanwhile."
 msgstr "Geçmiş sessizce ve en yeniden başlayarak gelir: bildirim yok, otomatik yanıt yok, okunmamış bir şey yok. Ekibiniz bu sırada çalışmaya devam edebilir."
 
+#: src/features/migrations/ImportBanner.tsx
+msgid "History imported from {address}"
+msgstr "{address} adresinden aktarılan geçmiş"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to Yuva."
 msgstr "Geçmiş aktarıldı. Siz e-postaları Yuva'ya yönlendirirken hiçbir şey kaybolmasın diye Yuva {address} adresini iki dakikada bir okumaya devam eder."
@@ -3806,17 +3815,30 @@ msgstr "CSV dosyasından içe aktar"
 msgid "Import steps"
 msgstr "İçe aktarma adımları"
 
+#: src/components/common/ImportedChip.tsx
 #: src/features/migrations/Wizard.tsx
 msgid "Imported"
 msgstr "Aktarıldı"
+
+#: src/features/conversation/messages/Thread.tsx
+msgid "Imported history above · new in Yuva below"
+msgstr "Yukarıda aktarılan geçmiş · aşağıda Yuva'ya yeni gelenler"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Imported history removed"
 msgstr "Aktarılan geçmiş kaldırıldı"
 
+#: src/components/common/ImportedChip.tsx
+msgid "Imported into Yuva on {date}"
+msgstr "{date} tarihinde Yuva'ya aktarıldı"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Importing"
 msgstr "İçe aktarılıyor"
+
+#: src/features/migrations/ImportBanner.tsx
+msgid "Importing history from {address} · {percent}% · new mail keeps arriving as usual"
+msgstr "{address} geçmişi aktarılıyor · %{percent} · yeni e-postalar her zamanki gibi gelmeye devam ediyor"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Importing…"

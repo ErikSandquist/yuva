@@ -4,6 +4,7 @@ export { CodeBlock, CodeLine, CopyButton, useCopy } from "@/components/common/Co
 export { Dot, LabelChip } from "@/components/common/Dot"
 export { EmptyState } from "@/components/common/EmptyState"
 export { ErrorLine } from "@/components/common/ErrorLine"
+export { ImportedChip } from "@/components/common/ImportedChip"
 export { Kbd } from "@/components/common/Kbd"
 export { Notice } from "@/components/common/Notice"
 export { ProgressBar } from "@/components/common/ProgressBar"
