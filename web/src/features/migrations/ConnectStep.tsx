@@ -11,7 +11,7 @@ import {
   ShieldCheckIcon,
   XIcon,
 } from "lucide-react"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { Link, useLocation } from "react-router"
 
 import { ErrorLine, Notice } from "@/components/common"
@@ -290,7 +290,20 @@ export function ConnectStep({ m, preset }: { m: Migration; preset: MigrationPres
               <p className="text-small text-faint">
                 <Trans>SHA-256 fingerprint of the certificate the server sent</Trans>
               </p>
-              <code className="font-mono text-caption break-all">{fingerprint(pinned)}</code>
+              <code className="font-mono text-caption">
+                {fingerprint(pinned)
+                  .split(":")
+                  .map((octet, i) => (
+                    <Fragment key={i}>
+                      {i > 0 && (
+                        <>
+                          :<wbr />
+                        </>
+                      )}
+                      {octet}
+                    </Fragment>
+                  ))}
+              </code>
               <Label className="mt-1 gap-3 font-normal">
                 <Checkbox checked={trust} onCheckedChange={setTrust} data-testid="migration-trust" />
                 <span>
