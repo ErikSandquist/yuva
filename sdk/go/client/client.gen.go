@@ -1634,9 +1634,10 @@ func (e HealthStatus) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
-	LimitMigrationMaxActive HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
-	LimitMigrationMaxBytes  HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
-	LimitMigrationSources   HostedLimit = "YUVA_MIGRATION_SOURCES"
+	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
+	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
+	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
+	LimitMigrationUploadMaxBytes HostedLimit = "YUVA_MIGRATION_UPLOAD_MAX_BYTES"
 )
 
 // Valid indicates whether the value is a known member of the HostedLimit enum.
@@ -1647,6 +1648,8 @@ func (e HostedLimit) Valid() bool {
 	case LimitMigrationMaxBytes:
 		return true
 	case LimitMigrationSources:
+		return true
+	case LimitMigrationUploadMaxBytes:
 		return true
 	default:
 		return false
@@ -2178,6 +2181,7 @@ const (
 	MigrationActionStart          MigrationAction = "start"
 	MigrationActionTestConnection MigrationAction = "test_connection"
 	MigrationActionUpdate         MigrationAction = "update"
+	MigrationActionUpload         MigrationAction = "upload"
 )
 
 // Valid indicates whether the value is a known member of the MigrationAction enum.
@@ -2208,6 +2212,8 @@ func (e MigrationAction) Valid() bool {
 	case MigrationActionTestConnection:
 		return true
 	case MigrationActionUpdate:
+		return true
+	case MigrationActionUpload:
 		return true
 	default:
 		return false
@@ -2328,6 +2334,78 @@ const (
 func (e MigrationEventType) Valid() bool {
 	switch e {
 	case MigrationUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFileFormat.
+const (
+	FileEmlZip     MigrationFileFormat = "eml_zip"
+	FileMaildirZip MigrationFileFormat = "maildir_zip"
+	FileMbox       MigrationFileFormat = "mbox"
+	FileMboxZip    MigrationFileFormat = "mbox_zip"
+	FileTakeout    MigrationFileFormat = "takeout"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFileFormat enum.
+func (e MigrationFileFormat) Valid() bool {
+	switch e {
+	case FileEmlZip:
+		return true
+	case FileMaildirZip:
+		return true
+	case FileMbox:
+		return true
+	case FileMboxZip:
+		return true
+	case FileTakeout:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFileRefusal.
+const (
+	RefusedCompressedMbox         MigrationFileRefusal = "compressed_mbox"
+	RefusedCorrupt                MigrationFileRefusal = "corrupt"
+	RefusedEmpty                  MigrationFileRefusal = "empty"
+	RefusedEncrypted              MigrationFileRefusal = "encrypted"
+	RefusedEntryTooLarge          MigrationFileRefusal = "entry_too_large"
+	RefusedPathTraversal          MigrationFileRefusal = "path_traversal"
+	RefusedSymlink                MigrationFileRefusal = "symlink"
+	RefusedTooManyEntries         MigrationFileRefusal = "too_many_entries"
+	RefusedUnknownFormat          MigrationFileRefusal = "unknown_format"
+	RefusedUnsupportedCompression MigrationFileRefusal = "unsupported_compression"
+	RefusedZipBomb                MigrationFileRefusal = "zip_bomb"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFileRefusal enum.
+func (e MigrationFileRefusal) Valid() bool {
+	switch e {
+	case RefusedCompressedMbox:
+		return true
+	case RefusedCorrupt:
+		return true
+	case RefusedEmpty:
+		return true
+	case RefusedEncrypted:
+		return true
+	case RefusedEntryTooLarge:
+		return true
+	case RefusedPathTraversal:
+		return true
+	case RefusedSymlink:
+		return true
+	case RefusedTooManyEntries:
+		return true
+	case RefusedUnknownFormat:
+		return true
+	case RefusedUnsupportedCompression:
+		return true
+	case RefusedZipBomb:
 		return true
 	default:
 		return false
@@ -2469,6 +2547,24 @@ func (e MigrationLabelMappingAction) Valid() bool {
 	}
 }
 
+// Defines values for MigrationMboxFormat.
+const (
+	Mboxo  MigrationMboxFormat = "mboxo"
+	Mboxrd MigrationMboxFormat = "mboxrd"
+)
+
+// Valid indicates whether the value is a known member of the MigrationMboxFormat enum.
+func (e MigrationMboxFormat) Valid() bool {
+	switch e {
+	case Mboxo:
+		return true
+	case Mboxrd:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MigrationPresetUsername.
 const (
 	UsernameAddress   MigrationPresetUsername = "address"
@@ -2490,12 +2586,14 @@ func (e MigrationPresetUsername) Valid() bool {
 // Defines values for MigrationPresetId.
 const (
 	PresetFastmail        MigrationPresetId = "fastmail"
+	PresetFile            MigrationPresetId = "file"
 	PresetGmail           MigrationPresetId = "gmail"
 	PresetGmx             MigrationPresetId = "gmx"
 	PresetGoogleWorkspace MigrationPresetId = "google_workspace"
 	PresetIcloud          MigrationPresetId = "icloud"
 	PresetImap            MigrationPresetId = "imap"
 	PresetMicrosoft       MigrationPresetId = "microsoft"
+	PresetTakeout         MigrationPresetId = "takeout"
 	PresetYahoo           MigrationPresetId = "yahoo"
 	PresetYandex          MigrationPresetId = "yandex"
 	PresetZoho            MigrationPresetId = "zoho"
@@ -2505,6 +2603,8 @@ const (
 func (e MigrationPresetId) Valid() bool {
 	switch e {
 	case PresetFastmail:
+		return true
+	case PresetFile:
 		return true
 	case PresetGmail:
 		return true
@@ -2517,6 +2617,8 @@ func (e MigrationPresetId) Valid() bool {
 	case PresetImap:
 		return true
 	case PresetMicrosoft:
+		return true
+	case PresetTakeout:
 		return true
 	case PresetYahoo:
 		return true
@@ -3964,7 +4066,7 @@ type BroadcastProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -6485,7 +6587,7 @@ type EmailDesignProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -6816,7 +6918,7 @@ type EmailImageProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -7263,7 +7365,7 @@ type HealthStatus string
 // `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 // the workspace already runs as many migrations at a time as the server allows;
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-// allows.
+// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 type HostedLimit string
 
 // IdentitySecret defines model for IdentitySecret.
@@ -8350,6 +8452,12 @@ type Migration struct {
 	Estimate   *MigrationEstimate `json:"estimate,omitempty"`
 	FinishedAt *time.Time         `json:"finished_at,omitempty"`
 
+	// FollowsMigrationId An `imap` migration of a mailbox whose export file this workspace imported into the
+	// same channel: that `file` migration. `options.since` started at the day of the newest
+	// message the file held, so only newer mail is read; mail both have is not imported
+	// twice.
+	FollowsMigrationId *uuid.UUID `json:"follows_migration_id,omitempty"`
+
 	// ForwardingAddress The channel's forwarding address, when the server has a forwarding domain; forward the old mailbox there.
 	ForwardingAddress *string `json:"forwarding_address,omitempty"`
 
@@ -8376,7 +8484,9 @@ type Migration struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// ProbeSentAt When the last test message was sent.
@@ -8402,7 +8512,7 @@ type Migration struct {
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 	Source MigrationSource `json:"source"`
 
 	// SourceAddress The mailbox address.
@@ -8419,7 +8529,8 @@ type Migration struct {
 	//   revoked app password; reconnect to continue.
 	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 	//   while the team switches its mail over.
-	// - `completed`: finished; the credentials are deleted.
+	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 	// - `removing`, `removed`: imported history is being, or was, removed.
 	State MigrationState `json:"state"`
@@ -8441,6 +8552,9 @@ type Migration struct {
 	TeamSuggestions *[]MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
 	UpdatedAt       time.Time                  `json:"updated_at"`
 
+	// Upload A `file` migration's export file.
+	Upload *MigrationFile `json:"upload,omitempty"`
+
 	// VerifiedAt When a test message first reached Yuva by the new route.
 	VerifiedAt *time.Time `json:"verified_at,omitempty"`
 
@@ -8459,8 +8573,9 @@ type MigrationVerifiedRoute string
 
 // MigrationAction What can be done with a migration in its current state: `update` (`PATCH`),
 // `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
-// `retry` (failed items), `remove_history`, `delete` and `probe` (a test mail to check the
-// switch). A server lists only the actions it offers.
+// `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
+// switch) and `upload` (parts of the export file, and completing it). A server lists only
+// the actions it offers.
 type MigrationAction string
 
 // MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with Microsoft.
@@ -8502,7 +8617,9 @@ type MigrationCreate struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Source `imap` when absent.
@@ -8578,7 +8695,9 @@ type MigrationDetection struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Server The IMAP server to use; absent when none was found.
@@ -8627,18 +8746,20 @@ type MigrationEstimate struct {
 	AttachmentsSkipped int64 `json:"attachments_skipped"`
 
 	// Bytes Bytes to read from the source.
-	Bytes            int64                    `json:"bytes"`
-	ContactsExisting int64                    `json:"contacts_existing"`
-	ContactsNew      int64                    `json:"contacts_new"`
-	Conversations    int64                    `json:"conversations"`
-	Labels           []MigrationEstimateLabel `json:"labels"`
-	Messages         int64                    `json:"messages"`
-	MessagesIn       int64                    `json:"messages_in"`
-	MessagesOut      int64                    `json:"messages_out"`
-	NewestAt         *time.Time               `json:"newest_at,omitempty"`
-	OldestAt         *time.Time               `json:"oldest_at,omitempty"`
-	ScannedAt        time.Time                `json:"scanned_at"`
-	SecondsMax       int64                    `json:"seconds_max"`
+	Bytes            int64 `json:"bytes"`
+	ContactsExisting int64 `json:"contacts_existing"`
+	ContactsNew      int64 `json:"contacts_new"`
+
+	// Conversations Conversations to create; a thread whose earlier messages the channel has continues in their conversation and is not counted.
+	Conversations int64                    `json:"conversations"`
+	Labels        []MigrationEstimateLabel `json:"labels"`
+	Messages      int64                    `json:"messages"`
+	MessagesIn    int64                    `json:"messages_in"`
+	MessagesOut   int64                    `json:"messages_out"`
+	NewestAt      *time.Time               `json:"newest_at,omitempty"`
+	OldestAt      *time.Time               `json:"oldest_at,omitempty"`
+	ScannedAt     time.Time                `json:"scanned_at"`
+	SecondsMax    int64                    `json:"seconds_max"`
 
 	// SecondsMin How long the copy takes at the provider's pace, at the least.
 	SecondsMin int64 `json:"seconds_min"`
@@ -8682,6 +8803,83 @@ type MigrationEventData struct {
 	// PreviousState Absent when the migration was just created.
 	PreviousState *MigrationState `json:"previous_state,omitempty"`
 }
+
+// MigrationFile A `file` migration's export file.
+type MigrationFile struct {
+	// CompletedAt When the upload was completed and the file accepted.
+	CompletedAt *time.Time `json:"completed_at,omitempty"`
+
+	// DeletedAt When the parts were deleted because the migration ended.
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	Filename  *string    `json:"filename,omitempty"`
+
+	// Format Once the upload is complete.
+	Format *MigrationFileFormat `json:"format,omitempty"`
+
+	// MboxFormat For the mbox formats.
+	MboxFormat *MigrationMboxFormat `json:"mbox_format,omitempty"`
+
+	// PartSize The size of every part but the last, 8 MiB.
+	PartSize int64 `json:"part_size"`
+
+	// Parts Parts stored.
+	Parts int32 `json:"parts"`
+
+	// SizeBytes Bytes uploaded so far; the file's size once complete.
+	SizeBytes int64 `json:"size_bytes"`
+}
+
+// MigrationFileFormat What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
+// labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
+// uncompressed mbox files, one folder each; `eml_zip`, a zip of `.eml` files whose
+// directories are folders; `maildir_zip`, a zip of a Maildir (`cur` and `new`, Maildir++
+// subfolders), whose folders are folders.
+type MigrationFileFormat string
+
+// MigrationFileProblem defines model for MigrationFileProblem.
+type MigrationFileProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Entry `file_refused` only: the zip entry it is about, when one is.
+	Entry *string `json:"entry,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
+	MissingParts *[]int32 `json:"missing_parts,omitempty"`
+
+	// Reason `file_refused` only.
+	Reason *MigrationFileRefusal `json:"reason,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// MigrationFileRefusal Why an export file was refused: `unknown_format` (not an mbox or a zip), `empty` (no
+// message in it), `corrupt` (a zip that cannot be read), `path_traversal` (an entry with
+// `..` or an absolute path), `symlink` (an entry that is a symbolic link),
+// `too_many_entries` (over 1,000,000), `zip_bomb` (an entry compressed more than 100:1),
+// `entry_too_large` (an entry larger than `YUVA_MIGRATION_UPLOAD_MAX_BYTES` unpacked),
+// `encrypted` (an entry with a password), `unsupported_compression` (neither stored nor
+// deflated) or `compressed_mbox` (an mbox in a zip must be stored uncompressed: unzip the
+// archive and upload the mbox file itself).
+type MigrationFileRefusal string
 
 // MigrationFinish defines model for MigrationFinish.
 type MigrationFinish struct {
@@ -8809,6 +9007,11 @@ type MigrationLabelMapping struct {
 // MigrationLabelMappingAction defines model for MigrationLabelMapping.Action.
 type MigrationLabelMappingAction string
 
+// MigrationMboxFormat How an mbox escapes lines that start with `From `: `mboxrd` (Google Takeout, most
+// programs) takes one `>` off every `>…>From ` line; `mboxo` only off `>From `. The two read
+// alike except for lines of `>>From ` and more.
+type MigrationMboxFormat string
+
 // MigrationOptions defines model for MigrationOptions.
 type MigrationOptions struct {
 	// CloseAfterDays Threads whose last message is older are imported `closed`; newer ones `open` or `pending`. `0` closes everything.
@@ -8884,7 +9087,9 @@ type MigrationPreset struct {
 
 	// Id The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Id   MigrationPresetId `json:"id"`
 	Name string            `json:"name"`
 
@@ -8893,7 +9098,7 @@ type MigrationPreset struct {
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 	Source MigrationSource `json:"source"`
 
 	// Username What the user name is: the whole `address` or its `local_part`.
@@ -8905,7 +9110,9 @@ type MigrationPresetUsername string
 
 // MigrationPresetId The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 // and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-// `fastmail`, `gmx`, or `imap` for any other server.
+// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+// Google Takeout file, or `file`, any other export file; both read every format the server
+// knows, which `upload.format` names once the upload is complete.
 type MigrationPresetId string
 
 // MigrationPresetList defines model for MigrationPresetList.
@@ -8967,7 +9174,8 @@ type MigrationProgress struct {
 	//   revoked app password; reconnect to continue.
 	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 	//   while the team switches its mail over.
-	// - `completed`: finished; the credentials are deleted.
+	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 	// - `removing`, `removed`: imported history is being, or was, removed.
 	State        MigrationState `json:"state"`
@@ -9035,7 +9243,7 @@ type MigrationSkipped struct {
 
 // MigrationSource Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 // `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 type MigrationSource string
 
 // MigrationState - `draft`: created; not connected yet.
@@ -9048,7 +9256,8 @@ type MigrationSource string
 //     revoked app password; reconnect to continue.
 //   - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 //     while the team switches its mail over.
-//   - `completed`: finished; the credentials are deleted.
+//   - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+//     migration completes when its copy ends.
 //   - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 //   - `removing`, `removed`: imported history is being, or was, removed.
 type MigrationState string
@@ -9146,11 +9355,60 @@ type MigrationUpdate struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset *MigrationPresetId `json:"preset,omitempty"`
 
 	// SourceAddress Examples: owner@example.com
 	SourceAddress *Email `json:"source_address,omitempty"`
+}
+
+// MigrationUpload defines model for MigrationUpload.
+type MigrationUpload struct {
+	CompletedAt *time.Time `json:"completed_at,omitempty"`
+
+	// DeletedAt The parts were deleted when the migration ended; nothing more can be uploaded.
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+
+	// MaxBytes The largest file the server takes (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`).
+	MaxBytes int64 `json:"max_bytes"`
+
+	// PartSize The size of every part but the last, 8 MiB.
+	PartSize int64 `json:"part_size"`
+
+	// Parts The parts the server has, by number.
+	Parts         []MigrationUploadPart `json:"parts"`
+	ReceivedBytes int64                 `json:"received_bytes"`
+}
+
+// MigrationUploadComplete defines model for MigrationUploadComplete.
+type MigrationUploadComplete struct {
+	// Filename The file's name, as the person chose it; shown back only.
+	Filename *string `json:"filename,omitempty"`
+
+	// MboxFormat `mboxrd` when absent.
+	MboxFormat *MigrationMboxFormat `json:"mbox_format,omitempty"`
+
+	// Parts How many parts the file has.
+	Parts     int32 `json:"parts"`
+	SizeBytes int64 `json:"size_bytes"`
+}
+
+// MigrationUploadPart defines model for MigrationUploadPart.
+type MigrationUploadPart struct {
+	Part      int32  `json:"part"`
+	Sha256    string `json:"sha256"`
+	SizeBytes int64  `json:"size_bytes"`
+}
+
+// MigrationUploadPartInput defines model for MigrationUploadPartInput.
+type MigrationUploadPartInput struct {
+	// File At most 8 MiB.
+	File openapi_types.File `json:"file"`
+
+	// Sha256 The part's SHA-256, hexadecimal.
+	Sha256 string `json:"sha256"`
 }
 
 // NotificationChannels defines model for NotificationChannels.
@@ -9481,7 +9739,7 @@ type Problem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12270,6 +12528,27 @@ type TestMigrationConnectionParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetMigrationUploadParams defines parameters for GetMigrationUpload.
+type GetMigrationUploadParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CompleteMigrationUploadParams defines parameters for CompleteMigrationUpload.
+type CompleteMigrationUploadParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadMigrationPartParams defines parameters for UploadMigrationPart.
+type UploadMigrationPartParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListOAuthGrantsParams defines parameters for ListOAuthGrants.
 type ListOAuthGrantsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -12904,6 +13183,12 @@ type FinishMigrationJSONRequestBody = MigrationFinish
 
 // RemoveMigrationHistoryJSONRequestBody defines body for RemoveMigrationHistory for application/json ContentType.
 type RemoveMigrationHistoryJSONRequestBody = MigrationRemoveHistory
+
+// CompleteMigrationUploadJSONRequestBody defines body for CompleteMigrationUpload for application/json ContentType.
+type CompleteMigrationUploadJSONRequestBody = MigrationUploadComplete
+
+// UploadMigrationPartMultipartRequestBody defines body for UploadMigrationPart for multipart/form-data ContentType.
+type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
@@ -19401,7 +19686,14 @@ type ClientInterface interface {
 	// A `draft` migration of the mailbox `source_address` with a preset (`GET
 	// /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 	// is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-	// test the connection (`POST .../test`), which moves the migration to `connected`.
+	// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+	// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+	// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+	//
+	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+	// into, without `options.since`, starts with `options.since` at the day of the newest
+	// message of that file and names it in `follows_migration_id`: after a Google Takeout
+	// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 	//
 	// `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 	// channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -19423,7 +19715,14 @@ type ClientInterface interface {
 	// A `draft` migration of the mailbox `source_address` with a preset (`GET
 	// /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 	// is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-	// test the connection (`POST .../test`), which moves the migration to `connected`.
+	// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+	// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+	// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+	//
+	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+	// into, without `options.since`, starts with `options.since` at the day of the newest
+	// message of that file and names it in `follows_migration_id`: after a Google Takeout
+	// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 	//
 	// `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 	// channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -19747,6 +20046,9 @@ type ClientInterface interface {
 	// labels, storage and time. Nothing is written outside the migration until `start`. A
 	// second scan reads only what is new and plans again with the current options.
 	//
+	// A `file` migration reads its export file instead, once: a second scan plans again from
+	// what the first read. A Takeout file's labels appear as folders as the scan reads them.
+	//
 	// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
 	// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
 	//
@@ -19762,7 +20064,9 @@ type ClientInterface interface {
 	// is quiet: it keeps its original times, writes no conversation or message events, sends no
 	// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
 	// counts in the `imported_*` usage columns. A message the channel already has, in either
-	// direction, is not imported again. When every thread is done the migration is `syncing`.
+	// direction, is not imported again, and a thread whose earlier messages it has continues in
+	// their conversation. When every thread is done the migration is `syncing`;
+	// a `file` migration is `completed` and its export file deleted.
 	//
 	// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
 	// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
@@ -19794,6 +20098,89 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/migrations/{migrationId}/test (the `TestMigrationConnection` operationId).
 	TestMigrationConnection(ctx context.Context, migrationId MigrationId, params *TestMigrationConnectionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMigrationUpload The export file's upload
+	//
+	// Which parts of the export file the server has, so an upload that was cut off resumes with
+	// the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+	// Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+	// bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/upload (the `GetMigrationUpload` operationId).
+	GetMigrationUpload(ctx context.Context, migrationId MigrationId, params *GetMigrationUploadParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CompleteMigrationUploadWithBody Finish the export file's upload
+	//
+	// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+	// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+	// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+	// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+	// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+	// whose folders become labels. A zip is checked before anything is read from it: an entry
+	// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+	// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+	// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+	// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+	// holds no message is refused as `empty`.
+	//
+	// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+	// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+	// `connected` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+	CompleteMigrationUploadWithBody(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CompleteMigrationUpload Finish the export file's upload
+	//
+	// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+	// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+	// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+	// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+	// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+	// whose folders become labels. A zip is checked before anything is read from it: an entry
+	// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+	// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+	// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+	// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+	// holds no message is refused as `empty`.
+	//
+	// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+	// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+	// `connected` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+	CompleteMigrationUpload(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, body CompleteMigrationUploadJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UploadMigrationPartWithBody Upload a part of the export file
+	//
+	// One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+	// file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+	// `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+	// checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+	// parallel. The parts, and so the file, are deleted when the migration completes, is
+	// cancelled or deleted.
+	//
+	// In `draft`, until the upload is completed; another file needs a new migration. `413
+	// part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+	// for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+	// in other states or for a migration that reads a mailbox.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
+	UploadMigrationPartWithBody(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListOAuthGrants List connected apps
 	//
@@ -26626,7 +27013,14 @@ func (c *Client) ListMigrations(ctx context.Context, params *ListMigrationsParam
 // A `draft` migration of the mailbox `source_address` with a preset (`GET
 // /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 // is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-// test the connection (`POST .../test`), which moves the migration to `connected`.
+// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+//
+// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+// into, without `options.since`, starts with `options.since` at the day of the newest
+// message of that file and names it in `follows_migration_id`: after a Google Takeout
+// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 //
 // `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 // channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -26658,7 +27052,14 @@ func (c *Client) CreateMigrationWithBody(ctx context.Context, params *CreateMigr
 // A `draft` migration of the mailbox `source_address` with a preset (`GET
 // /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 // is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-// test the connection (`POST .../test`), which moves the migration to `connected`.
+// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+//
+// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+// into, without `options.since`, starts with `options.since` at the day of the newest
+// message of that file and names it in `follows_migration_id`: after a Google Takeout
+// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 //
 // `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 // channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -27202,6 +27603,9 @@ func (c *Client) RetryMigrationItems(ctx context.Context, migrationId MigrationI
 // labels, storage and time. Nothing is written outside the migration until `start`. A
 // second scan reads only what is new and plans again with the current options.
 //
+// A `file` migration reads its export file instead, once: a second scan plans again from
+// what the first read. A Takeout file's labels appear as folders as the scan reads them.
+//
 // `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
 // as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
 //
@@ -27227,7 +27631,9 @@ func (c *Client) ScanMigration(ctx context.Context, migrationId MigrationId, par
 // is quiet: it keeps its original times, writes no conversation or message events, sends no
 // webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
 // counts in the `imported_*` usage columns. A message the channel already has, in either
-// direction, is not imported again. When every thread is done the migration is `syncing`.
+// direction, is not imported again, and a thread whose earlier messages it has continues in
+// their conversation. When every thread is done the migration is `syncing`;
+// a `file` migration is `completed` and its export file deleted.
 //
 // Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
 // other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
@@ -27270,6 +27676,129 @@ func (c *Client) StartMigration(ctx context.Context, migrationId MigrationId, pa
 // Corresponds with POST /v1/migrations/{migrationId}/test (the `TestMigrationConnection` operationId).
 func (c *Client) TestMigrationConnection(ctx context.Context, migrationId MigrationId, params *TestMigrationConnectionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewTestMigrationConnectionRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMigrationUpload The export file's upload
+//
+// Which parts of the export file the server has, so an upload that was cut off resumes with
+// the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+// Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+// bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with GET /v1/migrations/{migrationId}/upload (the `GetMigrationUpload` operationId).
+func (c *Client) GetMigrationUpload(ctx context.Context, migrationId MigrationId, params *GetMigrationUploadParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMigrationUploadRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CompleteMigrationUploadWithBody Finish the export file's upload
+//
+// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+// whose folders become labels. A zip is checked before anything is read from it: an entry
+// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+// holds no message is refused as `empty`.
+//
+// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+// `connected` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+func (c *Client) CompleteMigrationUploadWithBody(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCompleteMigrationUploadRequestWithBody(c.Server, migrationId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CompleteMigrationUpload Finish the export file's upload
+//
+// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+// whose folders become labels. A zip is checked before anything is read from it: an entry
+// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+// holds no message is refused as `empty`.
+//
+// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+// `connected` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+func (c *Client) CompleteMigrationUpload(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, body CompleteMigrationUploadJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCompleteMigrationUploadRequest(c.Server, migrationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UploadMigrationPartWithBody Upload a part of the export file
+//
+// One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+// file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+// `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+// checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+// parallel. The parts, and so the file, are deleted when the migration completes, is
+// cancelled or deleted.
+//
+// In `draft`, until the upload is completed; another file needs a new migration. `413
+// part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+// for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+// in other states or for a migration that reads a mailbox.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
+func (c *Client) UploadMigrationPartWithBody(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUploadMigrationPartRequestWithBody(c.Server, migrationId, part, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -41746,6 +42275,186 @@ func NewTestMigrationConnectionRequest(server string, migrationId MigrationId, p
 	return req, nil
 }
 
+// NewGetMigrationUploadRequest constructs an http.Request for the GetMigrationUpload method
+func NewGetMigrationUploadRequest(server string, migrationId MigrationId, params *GetMigrationUploadParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/upload", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCompleteMigrationUploadRequest calls the generic CompleteMigrationUpload builder with application/json body
+func NewCompleteMigrationUploadRequest(server string, migrationId MigrationId, params *CompleteMigrationUploadParams, body CompleteMigrationUploadJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCompleteMigrationUploadRequestWithBody(server, migrationId, params, "application/json", bodyReader)
+}
+
+// NewCompleteMigrationUploadRequestWithBody constructs an http.Request for the CompleteMigrationUpload method, with any body, and a specified content type
+func NewCompleteMigrationUploadRequestWithBody(server string, migrationId MigrationId, params *CompleteMigrationUploadParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/upload/complete", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUploadMigrationPartRequestWithBody constructs an http.Request for the UploadMigrationPart method, with any body, and a specified content type
+func NewUploadMigrationPartRequestWithBody(server string, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "part", part, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/upload/parts/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListOAuthGrantsRequest constructs an http.Request for the ListOAuthGrants method
 func NewListOAuthGrantsRequest(server string, params *ListOAuthGrantsParams) (*http.Request, error) {
 	var err error
@@ -46977,7 +47686,14 @@ type ClientWithResponsesInterface interface {
 	// A `draft` migration of the mailbox `source_address` with a preset (`GET
 	// /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 	// is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-	// test the connection (`POST .../test`), which moves the migration to `connected`.
+	// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+	// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+	// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+	//
+	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+	// into, without `options.since`, starts with `options.since` at the day of the newest
+	// message of that file and names it in `follows_migration_id`: after a Google Takeout
+	// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 	//
 	// `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 	// channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -46999,7 +47715,14 @@ type ClientWithResponsesInterface interface {
 	// A `draft` migration of the mailbox `source_address` with a preset (`GET
 	// /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 	// is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-	// test the connection (`POST .../test`), which moves the migration to `connected`.
+	// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+	// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+	// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+	//
+	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+	// into, without `options.since`, starts with `options.since` at the day of the newest
+	// message of that file and names it in `follows_migration_id`: after a Google Takeout
+	// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 	//
 	// `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 	// channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -47345,6 +48068,9 @@ type ClientWithResponsesInterface interface {
 	// labels, storage and time. Nothing is written outside the migration until `start`. A
 	// second scan reads only what is new and plans again with the current options.
 	//
+	// A `file` migration reads its export file instead, once: a second scan plans again from
+	// what the first read. A Takeout file's labels appear as folders as the scan reads them.
+	//
 	// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
 	// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
 	//
@@ -47362,7 +48088,9 @@ type ClientWithResponsesInterface interface {
 	// is quiet: it keeps its original times, writes no conversation or message events, sends no
 	// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
 	// counts in the `imported_*` usage columns. A message the channel already has, in either
-	// direction, is not imported again. When every thread is done the migration is `syncing`.
+	// direction, is not imported again, and a thread whose earlier messages it has continues in
+	// their conversation. When every thread is done the migration is `syncing`;
+	// a `file` migration is `completed` and its export file deleted.
 	//
 	// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
 	// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
@@ -47398,6 +48126,91 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/migrations/{migrationId}/test (the `TestMigrationConnection` operationId).
 	TestMigrationConnectionWithResponse(ctx context.Context, migrationId MigrationId, params *TestMigrationConnectionParams, reqEditors ...RequestEditorFn) (*TestMigrationConnectionResponse, error)
+
+	// GetMigrationUploadWithResponse The export file's upload
+	//
+	// Which parts of the export file the server has, so an upload that was cut off resumes with
+	// the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+	// Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+	// bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/upload (the `GetMigrationUpload` operationId).
+	GetMigrationUploadWithResponse(ctx context.Context, migrationId MigrationId, params *GetMigrationUploadParams, reqEditors ...RequestEditorFn) (*GetMigrationUploadResponse, error)
+
+	// CompleteMigrationUploadWithBodyWithResponse Finish the export file's upload
+	//
+	// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+	// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+	// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+	// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+	// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+	// whose folders become labels. A zip is checked before anything is read from it: an entry
+	// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+	// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+	// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+	// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+	// holds no message is refused as `empty`.
+	//
+	// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+	// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+	// `connected` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+	CompleteMigrationUploadWithBodyWithResponse(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CompleteMigrationUploadResponse, error)
+
+	// CompleteMigrationUploadWithResponse Finish the export file's upload
+	//
+	// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+	// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+	// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+	// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+	// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+	// whose folders become labels. A zip is checked before anything is read from it: an entry
+	// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+	// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+	// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+	// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+	// holds no message is refused as `empty`.
+	//
+	// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+	// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+	// `connected` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+	CompleteMigrationUploadWithResponse(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, body CompleteMigrationUploadJSONRequestBody, reqEditors ...RequestEditorFn) (*CompleteMigrationUploadResponse, error)
+
+	// UploadMigrationPartWithBodyWithResponse Upload a part of the export file
+	//
+	// One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+	// file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+	// `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+	// checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+	// parallel. The parts, and so the file, are deleted when the migration completes, is
+	// cancelled or deleted.
+	//
+	// In `draft`, until the upload is completed; another file needs a new migration. `413
+	// part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+	// for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+	// in other states or for a migration that reads a mailbox.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
+	UploadMigrationPartWithBodyWithResponse(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadMigrationPartResponse, error)
 
 	// ListOAuthGrantsWithResponse List connected apps
 	//
@@ -63056,6 +63869,248 @@ func (r TestMigrationConnectionResponse) ContentType() string {
 	return ""
 }
 
+type GetMigrationUploadResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MigrationUpload
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMigrationUploadResponse) GetJSON200() *MigrationUpload {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMigrationUploadResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMigrationUploadResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMigrationUploadResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r GetMigrationUploadResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMigrationUploadResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMigrationUploadResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMigrationUploadResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMigrationUploadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CompleteMigrationUploadResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *MigrationFileProblem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CompleteMigrationUploadResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r CompleteMigrationUploadResponse) GetApplicationproblemJSON422() *MigrationFileProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r CompleteMigrationUploadResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CompleteMigrationUploadResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CompleteMigrationUploadResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CompleteMigrationUploadResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UploadMigrationPartResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MigrationUploadPart
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON413 the response for an HTTP 413 `application/problem+json` response
+	ApplicationproblemJSON413 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UploadMigrationPartResponse) GetJSON200() *MigrationUploadPart {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON413 returns the response for an HTTP 413 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON413() *Problem {
+	return r.ApplicationproblemJSON413
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r UploadMigrationPartResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r UploadMigrationPartResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UploadMigrationPartResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UploadMigrationPartResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UploadMigrationPartResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListOAuthGrantsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -70127,7 +71182,14 @@ func (c *ClientWithResponses) ListMigrationsWithResponse(ctx context.Context, pa
 // A `draft` migration of the mailbox `source_address` with a preset (`GET
 // /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 // is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-// test the connection (`POST .../test`), which moves the migration to `connected`.
+// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+//
+// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+// into, without `options.since`, starts with `options.since` at the day of the newest
+// message of that file and names it in `follows_migration_id`: after a Google Takeout
+// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 //
 // `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 // channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -70155,7 +71217,14 @@ func (c *ClientWithResponses) CreateMigrationWithBodyWithResponse(ctx context.Co
 // A `draft` migration of the mailbox `source_address` with a preset (`GET
 // /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
 // is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-// test the connection (`POST .../test`), which moves the migration to `connected`.
+// test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+// migration (preset `takeout` or `file`) is connected by uploading the export file of that
+// mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+//
+// An `imap` migration into a channel that a `file` migration of the same mailbox imported
+// into, without `options.since`, starts with `options.since` at the day of the newest
+// message of that file and names it in `follows_migration_id`: after a Google Takeout
+// import, the mailbox is read only for newer mail, and its cutover follows as usual.
 //
 // `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
 // channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -70633,6 +71702,9 @@ func (c *ClientWithResponses) RetryMigrationItemsWithResponse(ctx context.Contex
 // labels, storage and time. Nothing is written outside the migration until `start`. A
 // second scan reads only what is new and plans again with the current options.
 //
+// A `file` migration reads its export file instead, once: a second scan plans again from
+// what the first read. A Takeout file's labels appear as folders as the scan reads them.
+//
 // `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
 // as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
 //
@@ -70656,7 +71728,9 @@ func (c *ClientWithResponses) ScanMigrationWithResponse(ctx context.Context, mig
 // is quiet: it keeps its original times, writes no conversation or message events, sends no
 // webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
 // counts in the `imported_*` usage columns. A message the channel already has, in either
-// direction, is not imported again. When every thread is done the migration is `syncing`.
+// direction, is not imported again, and a thread whose earlier messages it has continues in
+// their conversation. When every thread is done the migration is `syncing`;
+// a `file` migration is `completed` and its export file deleted.
 //
 // Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
 // other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
@@ -70703,6 +71777,115 @@ func (c *ClientWithResponses) TestMigrationConnectionWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseTestMigrationConnectionResponse(rsp)
+}
+
+// GetMigrationUploadWithResponse The export file's upload
+//
+// Which parts of the export file the server has, so an upload that was cut off resumes with
+// the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+// Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+// bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/migrations/{migrationId}/upload (the `GetMigrationUpload` operationId).
+func (c *ClientWithResponses) GetMigrationUploadWithResponse(ctx context.Context, migrationId MigrationId, params *GetMigrationUploadParams, reqEditors ...RequestEditorFn) (*GetMigrationUploadResponse, error) {
+	rsp, err := c.GetMigrationUpload(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMigrationUploadResponse(rsp)
+}
+
+// CompleteMigrationUploadWithBodyWithResponse Finish the export file's upload
+//
+// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+// whose folders become labels. A zip is checked before anything is read from it: an entry
+// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+// holds no message is refused as `empty`.
+//
+// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+// `connected` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+func (c *ClientWithResponses) CompleteMigrationUploadWithBodyWithResponse(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CompleteMigrationUploadResponse, error) {
+	rsp, err := c.CompleteMigrationUploadWithBody(ctx, migrationId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCompleteMigrationUploadResponse(rsp)
+}
+
+// CompleteMigrationUploadWithResponse Finish the export file's upload
+//
+// Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+// and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+// missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+// `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+// with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+// whose folders become labels. A zip is checked before anything is read from it: an entry
+// with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+// compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+// file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+// `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+// holds no message is refused as `empty`.
+//
+// The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+// next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+// `connected` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/complete (the `CompleteMigrationUpload` operationId).
+func (c *ClientWithResponses) CompleteMigrationUploadWithResponse(ctx context.Context, migrationId MigrationId, params *CompleteMigrationUploadParams, body CompleteMigrationUploadJSONRequestBody, reqEditors ...RequestEditorFn) (*CompleteMigrationUploadResponse, error) {
+	rsp, err := c.CompleteMigrationUpload(ctx, migrationId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCompleteMigrationUploadResponse(rsp)
+}
+
+// UploadMigrationPartWithBodyWithResponse Upload a part of the export file
+//
+// One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+// file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+// `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+// checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+// parallel. The parts, and so the file, are deleted when the migration completes, is
+// cancelled or deleted.
+//
+// In `draft`, until the upload is completed; another file needs a new migration. `413
+// part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+// for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+// in other states or for a migration that reads a mailbox.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/upload/parts/{part} (the `UploadMigrationPart` operationId).
+func (c *ClientWithResponses) UploadMigrationPartWithBodyWithResponse(ctx context.Context, migrationId MigrationId, part int32, params *UploadMigrationPartParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadMigrationPartResponse, error) {
+	rsp, err := c.UploadMigrationPartWithBody(ctx, migrationId, part, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUploadMigrationPartResponse(rsp)
 }
 
 // ListOAuthGrantsWithResponse List connected apps
@@ -83286,6 +84469,203 @@ func ParseTestMigrationConnectionResponse(rsp *http.Response) (*TestMigrationCon
 			return nil, err
 		}
 		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMigrationUploadResponse parses an HTTP response from a GetMigrationUploadWithResponse call
+func ParseGetMigrationUploadResponse(rsp *http.Response) (*GetMigrationUploadResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMigrationUploadResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MigrationUpload
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseCompleteMigrationUploadResponse parses an HTTP response from a CompleteMigrationUploadWithResponse call
+func ParseCompleteMigrationUploadResponse(rsp *http.Response) (*CompleteMigrationUploadResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CompleteMigrationUploadResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest MigrationFileProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUploadMigrationPartResponse parses an HTTP response from a UploadMigrationPartWithResponse call
+func ParseUploadMigrationPartResponse(rsp *http.Response) (*UploadMigrationPartResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UploadMigrationPartResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MigrationUploadPart
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 413:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON413 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
 
 	}
 

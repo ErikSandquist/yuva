@@ -118,7 +118,7 @@ func folderLabel(ctx context.Context, q *store.Queries, ws uuid.UUID, opts oas.M
 // whose UIDVALIDITY changed loses what was scanned of it; a folder that is gone goes.
 func (s *Server) recordFolders(ctx context.Context, q *store.Queries, m store.Migration, listed []listedFolder) error {
 	opts := migrationOptions(m.Options)
-	preset, _ := migrate.LookupPreset(m.Preset)
+	preset := folderPreset(m)
 	existing, err := q.ListMigrationFolders(ctx, store.ListMigrationFoldersParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID})
 	if err != nil {
 		return err
@@ -278,7 +278,12 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 		switch phase {
 		case scanPhaseHeaders:
 			var more bool
-			if more, err = r.scanHeaders(ctx); err == nil && !more {
+			if fileMigration(r.m) {
+				more, err = r.scanFile(ctx)
+			} else {
+				more, err = r.scanHeaders(ctx)
+			}
+			if err == nil && !more {
 				phase = scanPhasePlan
 			}
 		case scanPhasePlan:
@@ -291,7 +296,12 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 				return MigrationSlice{Done: true}, r.scanned(ctx)
 			}
 		default:
-			if err = r.listFolders(ctx); err == nil {
+			if fileMigration(r.m) {
+				err = r.listFileFolders(ctx)
+			} else {
+				err = r.listFolders(ctx)
+			}
+			if err == nil {
 				phase = scanPhaseHeaders
 			}
 		}
@@ -669,6 +679,9 @@ func (r *migrationRun) planNodes(ctx context.Context, cp migrationCheckpoint, ps
 	for _, row := range rows {
 		var refs []string
 		_ = json.Unmarshal(row.Refs, &refs)
+		if row.Thread != "" {
+			refs = []string{migrate.ThreadNode(row.Thread)}
+		}
 		nodes[row.DedupeKey] = true
 		for _, ref := range refs {
 			n := planNode(ref)
@@ -1033,13 +1046,18 @@ func sortedKeysInt(m map[string]int64) []string {
 }
 
 type fetchedItem struct {
-	raw     []byte
-	present bool
+	raw        []byte
+	present    bool
+	unreadable bool
 }
 
 // fetch reads whole messages, grouped by folder, and notes which ones the mailbox no longer has.
 // It reports false when a folder's UIDVALIDITY changed.
 func (r *migrationRun) fetch(ctx context.Context, folders map[int32]store.MigrationFolder, sourceIDs []string) (map[string]fetchedItem, int64, *store.MigrationFolder, error) {
+	if fileMigration(r.m) {
+		out, read, err := r.fetchFile(ctx, sourceIDs)
+		return out, read, nil, err
+	}
 	rd, err := r.source(ctx)
 	if err != nil {
 		return nil, 0, nil, fromSource(err)

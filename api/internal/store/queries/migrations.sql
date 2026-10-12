@@ -504,7 +504,8 @@ SELECT email, name FROM migration_plan_names
 WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND email = ANY(@emails::text[]);
 
 -- name: ListMigrationPlanPrimaries :many
-SELECT DISTINCT ON (dedupe_key) dedupe_key, coalesce(meta->'refs', '[]'::jsonb)::jsonb AS refs FROM migration_items
+SELECT DISTINCT ON (dedupe_key) dedupe_key, coalesce(meta->'refs', '[]'::jsonb)::jsonb AS refs, coalesce(meta->>'thread', '')::text AS thread
+FROM migration_items
 WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND folder_id = ANY(@folder_ids::int[]) AND dedupe_key > @after
 ORDER BY dedupe_key, array_position(@folder_ids::int[], folder_id), source_id COLLATE "C"
 LIMIT @lim;
@@ -568,3 +569,71 @@ FROM s LEFT JOIN n ON n.email = s.email
 GROUP BY s.email, n.name
 ORDER BY messages DESC, s.email COLLATE "C"
 LIMIT @lim;
+
+-- name: SetMigrationUpload :one
+UPDATE migrations SET upload = @upload, state = @state, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: SetMigrationUploadScan :exec
+UPDATE migrations SET upload = jsonb_set(coalesce(upload, '{}'), '{scan}', @scan::jsonb)
+WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: SetMigrationFollows :exec
+UPDATE migrations SET follows_migration_id = sqlc.narg(follows_migration_id)
+WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: GetMigrationUploadPart :one
+SELECT * FROM migration_upload_parts WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND part = @part FOR UPDATE;
+
+-- name: UpsertMigrationUploadPart :exec
+INSERT INTO migration_upload_parts (workspace_id, migration_id, part, size_bytes, sha256, storage_key, created_at)
+VALUES (@workspace_id, @migration_id, @part, @size_bytes, @sha256, @storage_key, @now)
+ON CONFLICT (workspace_id, migration_id, part) DO UPDATE SET
+    size_bytes = excluded.size_bytes, sha256 = excluded.sha256, storage_key = excluded.storage_key, created_at = excluded.created_at;
+
+-- name: ListMigrationUploadParts :many
+SELECT part, size_bytes, sha256, storage_key FROM migration_upload_parts
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+ORDER BY part;
+
+-- name: ListMigrationUploadTotals :many
+SELECT migration_id, count(*)::int AS parts, coalesce(sum(size_bytes), 0)::bigint AS bytes FROM migration_upload_parts
+WHERE workspace_id = @workspace_id AND migration_id = ANY(@migration_ids::uuid[])
+GROUP BY migration_id;
+
+-- name: DeleteMigrationUploadParts :exec
+DELETE FROM migration_upload_parts WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: ListEndedMigrationUploads :many
+SELECT DISTINCT m.workspace_id, m.id FROM migrations m
+JOIN migration_upload_parts p ON p.workspace_id = m.workspace_id AND p.migration_id = m.id
+WHERE m.state IN ('completed', 'cancelled', 'removing', 'removed')
+LIMIT 100;
+
+-- name: AddMigrationFolderTotals :exec
+UPDATE migration_folders f SET total = f.total + a.n
+FROM (SELECT unnest(@ids::int[]) AS id, unnest(@adds::int[]) AS n) a
+WHERE f.workspace_id = @workspace_id AND f.migration_id = @migration_id AND f.id = a.id;
+
+-- name: FindFollowedFileMigration :one
+SELECT m.id, max(f.newest_at)::timestamptz AS newest_at
+FROM migrations m
+JOIN migration_folders f ON f.workspace_id = m.workspace_id AND f.migration_id = m.id AND f.selected
+WHERE m.workspace_id = @workspace_id AND m.channel_id = @channel_id AND m.source = 'file' AND m.source_address = @source_address
+  AND m.started_at IS NOT NULL AND m.state NOT IN ('removing', 'removed') AND f.newest_at IS NOT NULL
+GROUP BY m.id, m.created_at
+ORDER BY m.created_at DESC
+LIMIT 1;
+
+-- name: SetMigrationUploadDeleted :exec
+UPDATE migrations SET upload = jsonb_set(upload, '{deleted_at}', to_jsonb(@now::timestamptz))
+WHERE workspace_id = @workspace_id AND id = @id AND upload IS NOT NULL AND NOT upload ? 'deleted_at';
+
+-- name: FindThreadConversationInChannel :one
+SELECT e.conversation_id FROM migration_items i
+JOIN message_emails e ON e.workspace_id = i.workspace_id AND e.channel_id = @channel_id AND e.header_message_id = i.dedupe_key
+WHERE i.workspace_id = @workspace_id AND i.migration_id = @migration_id AND i.thread_key = @thread_key
+  AND i.state = 'duplicate' AND i.reason = 'in_yuva'
+ORDER BY i.received_at DESC
+LIMIT 1;

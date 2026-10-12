@@ -218,7 +218,9 @@ tags:
     description: |
       Moving to Yuva: a team brings the history of the mailbox it uses today into an inbox, then
       switches its mail over. Every mailbox is read over IMAP with an app password (presets for
-      Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX and any other server).
+      Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX and any other server),
+      or from an export file uploaded in parts (Google Takeout, mbox, `.eml` or Maildir in a zip),
+      which needs no access to the account and is the fast way for a very large Gmail mailbox.
       Yuva only reads the source: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
       its connection refuses every command that could delete, move or mark anything.
 
@@ -6060,7 +6062,14 @@ paths:
         A `draft` migration of the mailbox `source_address` with a preset (`GET
         /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
         is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
-        test the connection (`POST .../test`), which moves the migration to `connected`.
+        test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
+        migration (preset `takeout` or `file`) is connected by uploading the export file of that
+        mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+
+        An `imap` migration into a channel that a `file` migration of the same mailbox imported
+        into, without `options.since`, starts with `options.since` at the day of the newest
+        message of that file and names it in `follows_migration_id`: after a Google Takeout
+        import, the mailbox is read only for newer mail, and its cutover follows as usual.
 
         `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
         channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
@@ -6336,6 +6345,146 @@ paths:
           $ref: "#/components/responses/Problem"
         "429":
           $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/upload:
+    get:
+      operationId: getMigrationUpload
+      summary: The export file's upload
+      description: |
+        Which parts of the export file the server has, so an upload that was cut off resumes with
+        the parts that are missing: `parts` lists every stored part with its size and SHA-256.
+        Every part but the last is exactly `part_size` bytes (8 MiB), so part `n` holds the file's
+        bytes from `n × part_size` on. `409 migration_state` for a migration that reads a mailbox.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The upload.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationUpload"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/upload/parts/{part}:
+    post:
+      operationId: uploadMigrationPart
+      summary: Upload a part of the export file
+      description: |
+        One part of the export file of a `file` migration: a `file` field of at most 8 MiB (the
+        file's bytes from `part × 8 MiB` on; every part but the last is exactly 8 MiB) and its
+        `sha256` in hexadecimal. A part whose bytes do not match the SHA-256 is not stored (`422
+        checksum_mismatch`); sending a part again replaces it. Parts may arrive in any order and in
+        parallel. The parts, and so the file, are deleted when the migration completes, is
+        cancelled or deleted.
+
+        In `draft`, until the upload is completed; another file needs a new migration. `413
+        part_too_large` over 8 MiB; `422 hosted_limit` when the part ends beyond the server's limit
+        for one file (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`, 20 GiB by default); `409 migration_state`
+        in other states or for a migration that reads a mailbox.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+        - name: part
+          in: path
+          required: true
+          description: The part's number, from 0.
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 1000000
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/MigrationUploadPartInput"
+      responses:
+        "200":
+          description: The part, stored.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationUploadPart"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "413":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/upload/complete:
+    post:
+      operationId: completeMigrationUpload
+      summary: Finish the export file's upload
+      description: |
+        Checks that parts `0` to `parts - 1` are all there, that every part but the last is 8 MiB
+        and that they add up to `size_bytes` (`422 upload_incomplete` otherwise, naming the
+        missing parts), then reads the file's format: a Google Takeout mbox (its `X-GM-THRID` and
+        `X-Gmail-Labels` headers give Gmail's threads and labels), an mbox (`mboxrd`, or `mboxo`
+        with `mbox_format`), or a zip of `.eml` files, of a Maildir or of uncompressed mbox files,
+        whose folders become labels. A zip is checked before anything is read from it: an entry
+        with `..` or an absolute path, a symbolic link, more than 1,000,000 entries, an entry
+        compressed more than 100:1 (a zip bomb), an entry larger than the server's limit for one
+        file, an encrypted entry or a compressed mbox refuse the file with `422 file_refused` and
+        `reason` (and `entry`, the entry's name); a refused file's parts are deleted. A file that
+        holds no message is refused as `empty`.
+
+        The migration becomes `connected` with the file's folders (`GET .../folders`); scan it
+        next. A Takeout file lists only All Mail until the scan has read its labels. In `draft`;
+        `connected` answers as is. `409 migration_state` otherwise.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationUploadComplete"
+      responses:
+        "200":
+          description: The migration, `connected`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/MigrationFileProblem"
   /v1/migrations/{migrationId}/folders:
     get:
       operationId: listMigrationFolders
@@ -6375,6 +6524,9 @@ paths:
         with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
         labels, storage and time. Nothing is written outside the migration until `start`. A
         second scan reads only what is new and plans again with the current options.
+
+        A `file` migration reads its export file instead, once: a second scan plans again from
+        what the first read. A Takeout file's labels appear as folders as the scan reads them.
 
         `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
         as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
@@ -6441,7 +6593,9 @@ paths:
         is quiet: it keeps its original times, writes no conversation or message events, sends no
         webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
         counts in the `imported_*` usage columns. A message the channel already has, in either
-        direction, is not imported again. When every thread is done the migration is `syncing`.
+        direction, is not imported again, and a thread whose earlier messages it has continues in
+        their conversation. When every thread is done the migration is `syncing`;
+        a `file` migration is `completed` and its export file deleted.
 
         Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
         other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
@@ -9667,6 +9821,12 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
+    MigrationFileProblem:
+      description: The export file was refused or is incomplete; `reason` or `missing_parts` say why.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/MigrationFileProblem"
     BroadcastProblem:
       description: The broadcast was refused; `items` or `recipients` say why.
       content:
@@ -12835,7 +12995,7 @@ components:
       description: |
         Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
         `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-        (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+        (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
       enum: [imap, file, zendesk, helpscout]
       x-enum-varnames: [MigrationSourceImap, MigrationSourceFile, MigrationSourceZendesk, MigrationSourceHelpscout]
     MigrationPresetId:
@@ -12843,9 +13003,11 @@ components:
       description: |
         The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
         and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-        `fastmail`, `gmx`, or `imap` for any other server.
-      enum: [gmail, google_workspace, microsoft, yandex, icloud, zoho, yahoo, fastmail, gmx, imap]
-      x-enum-varnames: [PresetGmail, PresetGoogleWorkspace, PresetMicrosoft, PresetYandex, PresetIcloud, PresetZoho, PresetYahoo, PresetFastmail, PresetGmx, PresetImap]
+        `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+        Google Takeout file, or `file`, any other export file; both read every format the server
+        knows, which `upload.format` names once the upload is complete.
+      enum: [gmail, google_workspace, microsoft, yandex, icloud, zoho, yahoo, fastmail, gmx, imap, takeout, file]
+      x-enum-varnames: [PresetGmail, PresetGoogleWorkspace, PresetMicrosoft, PresetYandex, PresetIcloud, PresetZoho, PresetYahoo, PresetFastmail, PresetGmx, PresetImap, PresetTakeout, PresetFile]
     MigrationState:
       type: string
       description: |
@@ -12859,7 +13021,8 @@ components:
           revoked app password; reconnect to continue.
         - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
           while the team switches its mail over.
-        - `completed`: finished; the credentials are deleted.
+        - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+          migration completes when its copy ends.
         - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
         - `removing`, `removed`: imported history is being, or was, removed.
       enum: [draft, connected, scanning, ready, copying, paused, needs_attention, syncing, completed, cancelled, removing, removed]
@@ -12869,10 +13032,11 @@ components:
       description: |
         What can be done with a migration in its current state: `update` (`PATCH`),
         `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
-        `retry` (failed items), `remove_history`, `delete` and `probe` (a test mail to check the
-        switch). A server lists only the actions it offers.
-      enum: [update, set_credentials, test_connection, scan, start, pause, resume, cancel, finish, retry, remove_history, delete, probe]
-      x-enum-varnames: [MigrationActionUpdate, MigrationActionSetCredentials, MigrationActionTestConnection, MigrationActionScan, MigrationActionStart, MigrationActionPause, MigrationActionResume, MigrationActionCancel, MigrationActionFinish, MigrationActionRetry, MigrationActionRemoveHistory, MigrationActionDelete, MigrationActionProbe]
+        `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
+        switch) and `upload` (parts of the export file, and completing it). A server lists only
+        the actions it offers.
+      enum: [update, set_credentials, test_connection, scan, start, pause, resume, cancel, finish, retry, remove_history, delete, probe, upload]
+      x-enum-varnames: [MigrationActionUpdate, MigrationActionSetCredentials, MigrationActionTestConnection, MigrationActionScan, MigrationActionStart, MigrationActionPause, MigrationActionResume, MigrationActionCancel, MigrationActionFinish, MigrationActionRetry, MigrationActionRemoveHistory, MigrationActionDelete, MigrationActionProbe, MigrationActionUpload]
     MigrationTls:
       type: string
       description: "`tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143)."
@@ -12954,6 +13118,160 @@ components:
           type: string
           pattern: "^[0-9a-fA-F:]{64,95}$"
           description: Trust this certificate (SHA-256, hexadecimal, colons allowed) even if it is not valid for the host.
+    MigrationFileFormat:
+      type: string
+      description: |
+        What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
+        labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
+        uncompressed mbox files, one folder each; `eml_zip`, a zip of `.eml` files whose
+        directories are folders; `maildir_zip`, a zip of a Maildir (`cur` and `new`, Maildir++
+        subfolders), whose folders are folders.
+      enum: [takeout, mbox, mbox_zip, eml_zip, maildir_zip]
+      x-enum-varnames: [FileTakeout, FileMbox, FileMboxZip, FileEmlZip, FileMaildirZip]
+    MigrationMboxFormat:
+      type: string
+      description: |
+        How an mbox escapes lines that start with `From `: `mboxrd` (Google Takeout, most
+        programs) takes one `>` off every `>…>From ` line; `mboxo` only off `>From `. The two read
+        alike except for lines of `>>From ` and more.
+      enum: [mboxrd, mboxo]
+      x-enum-varnames: [Mboxrd, Mboxo]
+    MigrationFile:
+      type: object
+      description: A `file` migration's export file.
+      required: [size_bytes, parts, part_size]
+      properties:
+        filename:
+          type: string
+          maxLength: 255
+        size_bytes:
+          type: integer
+          format: int64
+          description: Bytes uploaded so far; the file's size once complete.
+        parts:
+          type: integer
+          format: int32
+          description: Parts stored.
+        part_size:
+          type: integer
+          format: int64
+          description: The size of every part but the last, 8 MiB.
+        format:
+          $ref: "#/components/schemas/MigrationFileFormat"
+          description: Once the upload is complete.
+        mbox_format:
+          $ref: "#/components/schemas/MigrationMboxFormat"
+          description: For the mbox formats.
+        completed_at:
+          type: string
+          format: date-time
+          description: When the upload was completed and the file accepted.
+        deleted_at:
+          type: string
+          format: date-time
+          description: When the parts were deleted because the migration ended.
+    MigrationUploadPart:
+      type: object
+      required: [part, size_bytes, sha256]
+      properties:
+        part:
+          type: integer
+          format: int32
+        size_bytes:
+          type: integer
+          format: int64
+        sha256:
+          type: string
+          pattern: "^[0-9a-f]{64}$"
+    MigrationUpload:
+      type: object
+      required: [part_size, max_bytes, parts, received_bytes]
+      properties:
+        part_size:
+          type: integer
+          format: int64
+          description: The size of every part but the last, 8 MiB.
+        max_bytes:
+          type: integer
+          format: int64
+          description: The largest file the server takes (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`).
+        parts:
+          type: array
+          description: The parts the server has, by number.
+          items:
+            $ref: "#/components/schemas/MigrationUploadPart"
+        received_bytes:
+          type: integer
+          format: int64
+        completed_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+          description: The parts were deleted when the migration ended; nothing more can be uploaded.
+    MigrationUploadPartInput:
+      type: object
+      required: [file, sha256]
+      properties:
+        file:
+          type: string
+          format: binary
+          description: At most 8 MiB.
+        sha256:
+          type: string
+          description: The part's SHA-256, hexadecimal.
+          pattern: "^[0-9a-fA-F]{64}$"
+    MigrationUploadComplete:
+      type: object
+      required: [parts, size_bytes]
+      properties:
+        parts:
+          type: integer
+          format: int32
+          minimum: 1
+          description: How many parts the file has.
+        size_bytes:
+          type: integer
+          format: int64
+          minimum: 1
+        filename:
+          type: string
+          maxLength: 255
+          description: The file's name, as the person chose it; shown back only.
+        mbox_format:
+          $ref: "#/components/schemas/MigrationMboxFormat"
+          description: "`mboxrd` when absent."
+    MigrationFileRefusal:
+      type: string
+      description: |
+        Why an export file was refused: `unknown_format` (not an mbox or a zip), `empty` (no
+        message in it), `corrupt` (a zip that cannot be read), `path_traversal` (an entry with
+        `..` or an absolute path), `symlink` (an entry that is a symbolic link),
+        `too_many_entries` (over 1,000,000), `zip_bomb` (an entry compressed more than 100:1),
+        `entry_too_large` (an entry larger than `YUVA_MIGRATION_UPLOAD_MAX_BYTES` unpacked),
+        `encrypted` (an entry with a password), `unsupported_compression` (neither stored nor
+        deflated) or `compressed_mbox` (an mbox in a zip must be stored uncompressed: unzip the
+        archive and upload the mbox file itself).
+      enum: [unknown_format, empty, corrupt, path_traversal, symlink, too_many_entries, zip_bomb, entry_too_large, encrypted, unsupported_compression, compressed_mbox]
+      x-enum-varnames: [RefusedUnknownFormat, RefusedEmpty, RefusedCorrupt, RefusedPathTraversal, RefusedSymlink, RefusedTooManyEntries, RefusedZipBomb, RefusedEntryTooLarge, RefusedEncrypted, RefusedUnsupportedCompression, RefusedCompressedMbox]
+    MigrationFileProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            reason:
+              $ref: "#/components/schemas/MigrationFileRefusal"
+              description: "`file_refused` only."
+            entry:
+              type: string
+              description: "`file_refused` only: the zip entry it is about, when one is."
+            missing_parts:
+              type: array
+              description: "`upload_incomplete` only: the first parts that are missing, at most 100."
+              items:
+                type: integer
+                format: int32
     MigrationCounts:
       type: object
       required: [total, imported, duplicate, skipped, failed, bytes]
@@ -13133,6 +13451,16 @@ components:
           $ref: "#/components/schemas/MigrationCounts"
         credentials:
           $ref: "#/components/schemas/MigrationCredentials"
+        upload:
+          $ref: "#/components/schemas/MigrationFile"
+        follows_migration_id:
+          type: string
+          format: uuid
+          description: |
+            An `imap` migration of a mailbox whose export file this workspace imported into the
+            same channel: that `file` migration. `options.since` started at the day of the newest
+            message the file held, so only newer mail is read; mail both have is not imported
+            twice.
         credentials_deleted_at:
           type: string
           format: date-time
@@ -13666,6 +13994,7 @@ components:
         conversations:
           type: integer
           format: int64
+          description: Conversations to create; a thread whose earlier messages the channel has continues in their conversation and is not counted.
         messages:
           type: integer
           format: int64
@@ -19022,9 +19351,9 @@ components:
         `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
         the workspace already runs as many migrations at a time as the server allows;
         `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-        allows.
-      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES]
-      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes]
+        allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES, YUVA_MIGRATION_UPLOAD_MAX_BYTES]
+      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes, LimitMigrationUploadMaxBytes]
     Problem:
       type: object
       description: An RFC 9457 problem document.

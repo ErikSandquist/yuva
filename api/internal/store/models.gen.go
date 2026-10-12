@@ -792,6 +792,8 @@ type Migration struct {
 	QuietSince             *time.Time
 	ProbeSentAt            *time.Time
 	ProbeSyncedAt          *time.Time
+	Upload                 []byte
+	FollowsMigrationID     *uuid.UUID
 }
 
 type MigrationAudit struct {
@@ -902,6 +904,16 @@ type MigrationThread struct {
 	Items          int32
 	Done           int32
 	Plan           []byte
+}
+
+type MigrationUploadPart struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Part        int32
+	SizeBytes   int64
+	Sha256      string
+	StorageKey  string
+	CreatedAt   time.Time
 }
 
 type NotificationEmail struct {

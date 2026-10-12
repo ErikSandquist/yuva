@@ -50,7 +50,8 @@ var (
 	errMigrationGone         = problem(http.StatusNotFound, "not_found", "no such migration")
 	errProviderNotConfigured = problem(http.StatusConflict, "provider_not_configured", "Outlook.com and Microsoft 365 connect with Sign in with Microsoft, which this server does not offer yet")
 	errMigrationNoCreds      = problem(http.StatusConflict, "migration_state", "set the mailbox's credentials before testing the connection")
-	builtMigrationSources    = []string{string(oas.MigrationSourceImap)}
+	errFileNoCredentials     = problem(http.StatusConflict, "migration_state", "an export file migration reads its uploaded file; it has no mailbox to connect to")
+	builtMigrationSources    = []string{string(oas.MigrationSourceImap), string(oas.MigrationSourceFile)}
 	runningMigrationStates   = []string{migrationScanning, migrationCopying, migrationSyncing, migrationRemoving}
 )
 
@@ -87,6 +88,9 @@ type MigrationSettings struct {
 	ProbeFrom string
 	// SyncEvery is how often catch-up sync reads the old mailbox; 0 means two minutes.
 	SyncEvery time.Duration
+	// UploadMaxBytes is the largest export file (YUVA_MIGRATION_UPLOAD_MAX_BYTES); 0 means 20 GiB.
+	// An operator turns file imports off by leaving file out of Sources.
+	UploadMaxBytes int64
 }
 
 func migrationSettings(in MigrationSettings) MigrationSettings {
@@ -110,6 +114,9 @@ func migrationSettings(in MigrationSettings) MigrationSettings {
 	}
 	if in.SyncEvery <= 0 {
 		in.SyncEvery = defaultSyncEvery
+	}
+	if in.UploadMaxBytes <= 0 {
+		in.UploadMaxBytes = defaultUploadMaxBytes
 	}
 	return in
 }
@@ -174,15 +181,21 @@ func migrationCounts(raw []byte) oas.MigrationCounts {
 
 func migrationActions(m store.Migration, hasCreds bool) []oas.MigrationAction {
 	out := []oas.MigrationAction{}
-	switch m.State {
-	case migrationDraft, migrationConnected:
-		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionSetCredentials)
-	case migrationReady:
+	file := fileMigration(m)
+	if file {
+		hasCreds = uploadReady(m)
+	}
+	switch {
+	case m.State == migrationDraft && file:
+		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionUpload)
+	case m.State == migrationConnected && file, m.State == migrationReady:
 		out = append(out, oas.MigrationActionUpdate)
-	case migrationNeedsAttention:
+	case m.State == migrationDraft, m.State == migrationConnected:
+		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionSetCredentials)
+	case m.State == migrationNeedsAttention && !file:
 		out = append(out, oas.MigrationActionSetCredentials)
 	}
-	if hasCreds && testableMigration(m.State) {
+	if hasCreds && testableMigration(m.State) && !file {
 		out = append(out, oas.MigrationActionTestConnection)
 	}
 	switch m.State {
@@ -234,9 +247,11 @@ func testableMigration(state string) bool {
 
 // migrationExtra is what a migration's body shows from other tables.
 type migrationExtra struct {
-	cred       *store.ListMigrationCredentialInfosRow
-	history    store.CountMigrationHistoryRow
-	forwarding string
+	cred        *store.ListMigrationCredentialInfosRow
+	history     store.CountMigrationHistoryRow
+	forwarding  string
+	uploadParts int32
+	uploadBytes int64
 }
 
 func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migration {
@@ -246,7 +261,10 @@ func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migratio
 		InboxId: m.InboxID, ChannelId: m.ChannelID, State: oas.MigrationState(m.State), WaitingUntil: m.WaitingUntil,
 		Options: migrationOptions(m.Options), Counts: migrationCounts(m.Counts), Actions: migrationActions(m, cred != nil),
 		MemberId: m.CreatedByMemberID, ApiKeyId: m.CreatedByApiKeyID, Via: m.CreatedVia, CreatedAt: m.CreatedAt, UpdatedAt: m.UpdatedAt,
-		StartedAt: m.StartedAt, FinishedAt: m.FinishedAt, CredentialsDeletedAt: m.CredentialsDeletedAt,
+		StartedAt: m.StartedAt, FinishedAt: m.FinishedAt, CredentialsDeletedAt: m.CredentialsDeletedAt, FollowsMigrationId: m.FollowsMigrationID,
+	}
+	if fileMigration(m) {
+		out.Upload = fileBody(m, x.uploadParts, x.uploadBytes)
 	}
 	if m.StateReason != "" {
 		out.StateReason = &m.StateReason
@@ -297,11 +315,14 @@ func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migratio
 
 func (s *Server) migrationBodies(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, rows []store.Migration) ([]oas.Migration, error) {
 	ids := make([]uuid.UUID, len(rows))
-	var channels []uuid.UUID
+	var channels, files []uuid.UUID
 	for i, r := range rows {
 		ids[i] = r.ID
 		if r.ChannelID != nil {
 			channels = append(channels, *r.ChannelID)
+		}
+		if fileMigration(r) {
+			files = append(files, r.ID)
 		}
 	}
 	creds, err := q.ListMigrationCredentialInfos(ctx, store.ListMigrationCredentialInfosParams{WorkspaceID: workspaceID, MigrationIds: ids})
@@ -322,6 +343,17 @@ func (s *Server) migrationBodies(ctx context.Context, q *store.Queries, workspac
 		x := byID[h.MigrationID]
 		x.history = h
 		byID[h.MigrationID] = x
+	}
+	if len(files) > 0 {
+		totals, err := q.ListMigrationUploadTotals(ctx, store.ListMigrationUploadTotalsParams{WorkspaceID: workspaceID, MigrationIds: files})
+		if err != nil {
+			return nil, err
+		}
+		for _, t := range totals {
+			x := byID[t.MigrationID]
+			x.uploadParts, x.uploadBytes = t.Parts, t.Bytes
+			byID[t.MigrationID] = x
+		}
 	}
 	var emails map[uuid.UUID]store.EmailChannel
 	if s.ingress.ForwardingDomain != "" && len(channels) > 0 {
@@ -755,6 +787,16 @@ func (s *Server) CreateMigration(ctx context.Context, req oas.CreateMigrationReq
 		if err != nil {
 			return err
 		}
+		var follows *uuid.UUID
+		if source == string(oas.MigrationSourceImap) && (b.Options == nil || !b.Options.Since.IsSpecified()) {
+			var since *time.Time
+			if follows, since, err = followFile(ctx, q, p.workspaceID, channel, address); err != nil {
+				return err
+			}
+			if since != nil {
+				opts.Since = since
+			}
+		}
 		var keyID *uuid.UUID
 		if p.isKey() {
 			keyID = &p.keyID
@@ -766,6 +808,12 @@ func (s *Server) CreateMigration(ctx context.Context, req oas.CreateMigrationReq
 		})
 		if err != nil {
 			return err
+		}
+		if follows != nil {
+			if err := q.SetMigrationFollows(ctx, store.SetMigrationFollowsParams{WorkspaceID: m.WorkspaceID, ID: m.ID, FollowsMigrationID: follows}); err != nil {
+				return err
+			}
+			m.FollowsMigrationID = follows
 		}
 		if _, err := s.migrationAudit(ctx, q, p, m.ID, "created", map[string]any{"source": source, "preset": m.Preset}); err != nil {
 			return err
@@ -839,6 +887,17 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 		if err != nil {
 			return err
 		}
+		follows := cur.FollowsMigrationID
+		if cur.Source == string(oas.MigrationSourceImap) && follows == nil && opts.Since == nil && !sameID(channelID, cur.ChannelID) &&
+			(b.Options == nil || !b.Options.Since.IsSpecified()) {
+			var since *time.Time
+			if follows, since, err = followFile(ctx, q, p.workspaceID, channelID, address); err != nil {
+				return err
+			}
+			if since != nil {
+				opts.Since, readChanged = since, true
+			}
+		}
 		state := cur.State
 		if state == migrationReady && (readChanged || b.Options != nil || b.InboxId.IsSpecified() || b.ChannelId.IsSpecified()) {
 			state = migrationConnected
@@ -849,6 +908,12 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 		})
 		if err != nil {
 			return err
+		}
+		if !sameID(follows, cur.FollowsMigrationID) {
+			if err := q.SetMigrationFollows(ctx, store.SetMigrationFollowsParams{WorkspaceID: m.WorkspaceID, ID: m.ID, FollowsMigrationID: follows}); err != nil {
+				return err
+			}
+			m.FollowsMigrationID = follows
 		}
 		if out, err = s.oneMigration(ctx, q, m); err != nil {
 			return err
@@ -863,6 +928,7 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 
 func (s *Server) DeleteMigration(ctx context.Context, req oas.DeleteMigrationRequestObject) (oas.DeleteMigrationResponseObject, error) {
 	p := principalFrom(ctx)
+	var parts []string
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
 		m, err := visibleMigration(ctx, q, p, req.MigrationId, true)
 		if err != nil {
@@ -870,6 +936,13 @@ func (s *Server) DeleteMigration(ctx context.Context, req oas.DeleteMigrationReq
 		}
 		if slices.Contains(runningMigrationStates, m.State) {
 			return errMigrationState("a migration that is scanning, copying, syncing or removing history cannot be deleted; pause or cancel it first")
+		}
+		rows, err := q.ListMigrationUploadParts(ctx, store.ListMigrationUploadPartsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID})
+		if err != nil {
+			return err
+		}
+		for _, r := range rows {
+			parts = append(parts, r.StorageKey)
 		}
 		if _, err := q.DeleteMigration(ctx, store.DeleteMigrationParams{WorkspaceID: p.workspaceID, ID: m.ID}); err != nil {
 			return err
@@ -880,6 +953,7 @@ func (s *Server) DeleteMigration(ctx context.Context, req oas.DeleteMigrationReq
 	if err != nil {
 		return nil, err
 	}
+	s.deleteObjects(ctx, parts)
 	return oas.DeleteMigration204Response{}, nil
 }
 
@@ -950,6 +1024,9 @@ func (s *Server) SetMigrationCredentials(ctx context.Context, req oas.SetMigrati
 		m, err := visibleMigration(ctx, q, p, req.MigrationId, true)
 		if err != nil {
 			return err
+		}
+		if fileMigration(m) {
+			return errFileNoCredentials
 		}
 		preset, ok := migrate.LookupPreset(m.Preset)
 		if !ok || !preset.Available || !slices.Contains(preset.Auth, migrate.AuthPassword) {
@@ -1037,6 +1114,9 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 		m, err := visibleMigration(ctx, q, p, req.MigrationId, true)
 		if err != nil {
 			return err
+		}
+		if fileMigration(m) {
+			return errFileNoCredentials
 		}
 		if !testableMigration(m.State) {
 			return errMigrationState("the connection can be tested before the copy starts, or while it is paused or needs attention")

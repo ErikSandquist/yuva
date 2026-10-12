@@ -408,7 +408,7 @@ func ingressSettings(cfg config.Config) api.IngressSettings {
 func migrationSettings(cfg config.Config) api.MigrationSettings {
 	out := api.MigrationSettings{
 		Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate, MaxActive: cfg.MigrationMaxActive,
-		MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes,
+		MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes, UploadMaxBytes: cfg.MigrationUploadMaxBytes,
 		SyncMaxDays: cfg.MigrationSyncMaxDays, AuditDays: cfg.MigrationAuditDays,
 	}
 	if a, err := netmail.ParseAddress(cfg.SMTP.From); err == nil && cfg.SMTP.Enabled() {

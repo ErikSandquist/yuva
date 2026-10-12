@@ -159,6 +159,7 @@ type migrationRun struct {
 	preset    migrate.Preset
 	throttle  migrate.Throttle
 	reader    *sourceReader
+	file      *uploadFile
 	host      string
 	secrets   []string
 	lastFlush time.Time
@@ -206,6 +207,10 @@ func (s *Server) RunMigrationSlice(ctx context.Context, a MigrationJobArgs, jobI
 }
 
 func (r *migrationRun) close() {
+	if r.file != nil {
+		r.file.Close()
+		r.file = nil
+	}
 	if r.reader != nil {
 		_ = r.reader.r.Close()
 		r.reader = nil
@@ -621,6 +626,9 @@ const migrationWorkKept = 30 * 24 * time.Hour
 // counts stay on the migration and its folders, and the channel's own duplicate lookup keeps a
 // later migration of the same mailbox from importing anything twice.
 func (s *Server) CleanMigrations(ctx context.Context) error {
+	if err := s.dropEndedUploads(ctx); err != nil {
+		return err
+	}
 	rows, err := s.st.ListFinishedMigrations(ctx, new(s.now().Add(-migrationWorkKept)))
 	if err != nil {
 		return err

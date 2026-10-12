@@ -50,6 +50,8 @@ const (
 	PresetFastmail        = "fastmail"
 	PresetGMX             = "gmx"
 	PresetIMAP            = "imap"
+	PresetTakeout         = "takeout"
+	PresetFile            = "file"
 )
 
 func tls993(hosts ...string) []Server {
@@ -97,11 +99,17 @@ var Presets = []Preset{
 		Username: UsernameAddress, Folders: inboxSentUser, Budget: defaultBudget, Guide: "migrate-gmx", Available: true},
 	{ID: PresetIMAP, Name: "Other IMAP server", Auth: []string{AuthPassword},
 		Username: UsernameAddress, Folders: withArchive, Budget: defaultBudget, Guide: "migrate-imap", Available: true},
+	{ID: PresetTakeout, Source: "file", Name: "Google Takeout", Auth: []string{}, Username: UsernameAddress, Folders: []string{`\All`},
+		Guide: "migrate-files", Available: true},
+	{ID: PresetFile, Source: "file", Name: "Export file", Auth: []string{}, Username: UsernameAddress, Folders: withArchive,
+		Guide: "migrate-files", Available: true},
 }
 
 func init() {
 	for i := range Presets {
-		Presets[i].Source = "imap"
+		if Presets[i].Source == "" {
+			Presets[i].Source = "imap"
+		}
 	}
 }
 

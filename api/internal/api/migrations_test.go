@@ -202,7 +202,7 @@ func TestMigrationAccess(t *testing.T) {
 	for _, p := range presets {
 		byID[p.(map[string]any)["id"].(string)] = p.(map[string]any)
 	}
-	if len(byID) != 10 || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != false || byID["icloud"]["username"] != "local_part" ||
+	if len(byID) != 12 || byID["takeout"]["source"] != "file" || byID["file"]["source"] != "file" || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != false || byID["icloud"]["username"] != "local_part" ||
 		byID["gmail"]["budget"].(map[string]any)["bytes_per_day"] != float64(1500000000) {
 		t.Fatalf("presets: %v", byID)
 	}

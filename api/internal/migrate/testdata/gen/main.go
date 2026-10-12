@@ -1,20 +1,27 @@
 // Command gen writes the mailboxes the IMAP migration is tested against, as Maildir trees for
 // the Dovecot server of the migrate-test compose profile, and expected.json with what a migration
-// of each mailbox must produce. The output is deterministic; nothing is copied from real mail.
-// Everything is world-writable because Dovecot runs as its own user in the container.
+// of each mailbox must produce. It also writes the export files the file migration is tested
+// with into files/: the gmail mailbox as a Google Takeout mbox, and the acme mailbox as a zip of
+// .eml files and as a zip of its Maildir. The output is deterministic; nothing is copied from
+// real mail. Everything is world-writable because Dovecot runs as its own user in the container.
 //
 //	go run ./internal/migrate/testdata/gen -out /path/to/fixtures [-large [-bulk 200000 -bulk-body 10000]]
 package main
 
 import (
+	"archive/zip"
+	"bytes"
 	"encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"hash/fnv"
+	"io/fs"
 	"log"
 	"mime"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -428,6 +435,126 @@ func write(out string, m *mailbox) error {
 	})
 }
 
+func received(msg message) time.Time {
+	if msg.received.IsZero() {
+		return msg.date.Add(30 * time.Second)
+	}
+	return msg.received
+}
+
+// takeoutLabels are the labels Google Takeout writes for the gmail mailbox's folders.
+var takeoutLabels = map[string]string{"INBOX": "Inbox", "[Gmail]/Sent Mail": "Sent", "[Gmail]/Spam": "Spam", "Customers": "Customers"}
+
+var mboxEscape = regexp.MustCompile(`(?m)^(>*From )`)
+
+// takeout writes the mailbox as Google Takeout exports it: one mboxrd file with LF line ends,
+// each message after a From_ line with its receive time and with X-GM-THRID (one id per thread,
+// as the References join it) and X-Gmail-Labels in front of its own header.
+func takeout(m *mailbox, path string) error {
+	var b strings.Builder
+	threads := map[string]string{}
+	for _, msg := range m.messages {
+		root := msg.id
+		if len(msg.references) > 0 {
+			root = msg.references[0]
+		} else if msg.inReplyTo != "" {
+			root = msg.inReplyTo
+		}
+		if threads[root] == "" {
+			h := fnv.New64a()
+			h.Write([]byte(root))
+			threads[root] = fmt.Sprint(h.Sum64() >> 1)
+		}
+		var labels []string
+		for _, f := range msg.folders {
+			if l, ok := takeoutLabels[f]; ok {
+				labels = append(labels, l)
+			}
+		}
+		if msg.seen {
+			labels = append(labels, "Opened")
+		} else {
+			labels = append(labels, "Unread")
+		}
+		raw := "X-GM-THRID: " + threads[root] + "\r\nX-Gmail-Labels: " + strings.Join(labels, ",") + "\r\n" + string(msg.raw())
+		raw = mboxEscape.ReplaceAllString(strings.ReplaceAll(raw, "\r\n", "\n"), ">$1")
+		b.WriteString("From " + threads[root] + "@xxx " + received(msg).Format("Mon Jan 02 15:04:05 -0700 2006") + "\n" + raw + "\n")
+	}
+	return os.WriteFile(path, []byte(b.String()), 0o666)
+}
+
+// emlZip writes the mailbox as a zip of .eml files, a directory per folder, each entry dated
+// when the message was received.
+func emlZip(m *mailbox, path string) error {
+	var buf bytes.Buffer
+	w := zip.NewWriter(&buf)
+	for i, msg := range m.messages {
+		for _, f := range msg.folders {
+			fw, err := w.CreateHeader(&zip.FileHeader{Name: fmt.Sprintf("%s/%03d.eml", f, i), Method: zip.Deflate, Modified: received(msg)})
+			if err != nil {
+				return err
+			}
+			if _, err := fw.Write(msg.raw()); err != nil {
+				return err
+			}
+		}
+	}
+	if err := w.Close(); err != nil {
+		return err
+	}
+	return os.WriteFile(path, buf.Bytes(), 0o666)
+}
+
+// maildirZip zips a mailbox's Maildir as written for Dovecot.
+func maildirZip(out string, m *mailbox, path string) error {
+	home := filepath.Join(out, m.User)
+	var buf bytes.Buffer
+	w := zip.NewWriter(&buf)
+	var names []string
+	err := filepath.WalkDir(filepath.Join(home, "Maildir"), func(p string, d fs.DirEntry, err error) error {
+		if err == nil && !d.IsDir() {
+			names = append(names, p)
+		}
+		return err
+	})
+	if err != nil {
+		return err
+	}
+	sort.Strings(names)
+	for _, p := range names {
+		rel, _ := filepath.Rel(home, p)
+		data, err := os.ReadFile(p)
+		if err != nil {
+			return err
+		}
+		fw, err := w.CreateHeader(&zip.FileHeader{Name: filepath.ToSlash(rel), Method: zip.Deflate})
+		if err != nil {
+			return err
+		}
+		if _, err := fw.Write(data); err != nil {
+			return err
+		}
+	}
+	if err := w.Close(); err != nil {
+		return err
+	}
+	return os.WriteFile(path, buf.Bytes(), 0o666)
+}
+
+func writeFiles(out string, acme, gmail *mailbox) error {
+	dir := filepath.Join(out, "files")
+	if err := os.MkdirAll(dir, 0o777); err != nil {
+		return err
+	}
+	if err := takeout(gmail, filepath.Join(dir, "gmail-takeout.mbox")); err != nil {
+		return err
+	}
+	if err := emlZip(acme, filepath.Join(dir, "acme-eml.zip")); err != nil {
+		return err
+	}
+	return maildirZip(out, acme, filepath.Join(dir, "acme-maildir.zip"))
+}
+
 func contains(s []string, v string) bool {
 	for _, x := range s {
 		if x == v {
@@ -463,6 +590,9 @@ func main() {
 		if err := write(*out, m); err != nil {
 			log.Fatal(err)
 		}
+	}
+	if err := writeFiles(*out, boxes[0], boxes[2]); err != nil {
+		log.Fatal(err)
 	}
 	b, err := json.MarshalIndent(map[string]any{"generated_by": "api/internal/migrate/testdata/gen", "base_time": t0, "mailboxes": boxes}, "", "  ")
 	if err != nil {

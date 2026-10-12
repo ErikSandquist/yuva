@@ -164,8 +164,9 @@ func Direction(team map[string]bool, from string) string {
 	return "in"
 }
 
-// MakePlan joins the scanned messages into threads by Message-ID, In-Reply-To and References,
-// never by subject, and decides what each message becomes.
+// MakePlan joins the scanned messages into threads by the provider's thread id when they have
+// one, else by Message-ID, In-Reply-To and References, never by subject, and decides what each
+// message becomes.
 func MakePlan(in PlanInput) Plan {
 	p := Plan{Items: map[string]ItemPlan{}, Totals: Totals{
 		Contacts: map[string]bool{}, Labels: map[string]int64{}, Skipped: map[string]int64{},
@@ -245,6 +246,10 @@ func MakePlan(in PlanInput) Plan {
 	uf := unionFind{}
 	for _, k := range keys {
 		uf.find(k)
+		if t := primaries[k].Meta.Thread; t != "" {
+			uf.union(k, ThreadNode(t))
+			continue
+		}
 		for _, r := range primaries[k].Meta.Refs {
 			uf.union(k, r)
 		}
@@ -392,12 +397,14 @@ func (p *Plan) planThread(in PlanInput, msgs []*Item, labels map[string][]string
 	}
 	t := ThreadPlan{Key: key, Contact: contact, Subject: BaseSubject(cands[0].Meta.Subject)}
 	var planned []*Item
+	continues := false
 	for _, it := range cands {
 		dir := Direction(in.Team, it.Meta.From.Email)
 		switch {
 		case in.InYuva[it.DedupeKey]:
 			p.Items[it.SourceID] = ItemPlan{State: StateDuplicate, Reason: ReasonInYuva, ThreadKey: key}
 			p.Totals.Skipped["already_in_yuva"]++
+			continues = true
 		case dir == "in" && in.Blocked[it.Meta.From.Email]:
 			p.skip([]*Item{it}, key, ReasonBlocked)
 		default:
@@ -443,7 +450,9 @@ func (p *Plan) planThread(in PlanInput, msgs []*Item, labels map[string][]string
 		t.Status = StatusPending
 	}
 	p.Totals.Contacts[contact.Email] = true
-	p.Totals.Conversations++
+	if !continues {
+		p.Totals.Conversations++
+	}
 	p.Totals.In += int64(t.In)
 	p.Totals.Out += int64(t.Out)
 	for _, l := range t.Labels {

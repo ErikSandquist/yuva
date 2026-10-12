@@ -85,6 +85,8 @@ type Config struct {
 	MigrationMaxBytes int64
 	// MigrationMaxMessageBytes is the largest message imported; larger ones are skipped.
 	MigrationMaxMessageBytes int64
+	// MigrationUploadMaxBytes is the largest export file; 0 turns file imports off.
+	MigrationUploadMaxBytes int64
 	// MigrationSyncMaxDays ends a migration's catch-up sync, and deletes its credentials, after so many days.
 	MigrationSyncMaxDays int
 	// MigrationAuditDays keeps a migration's audit entries so many days after it ended.
@@ -331,6 +333,9 @@ func (c *Config) loadMigrations() error {
 	if c.MigrationMaxMessageBytes, err = strconv.ParseInt(env("YUVA_MIGRATION_MAX_MESSAGE_BYTES", "52428800"), 10, 64); err != nil || c.MigrationMaxMessageBytes < 1 {
 		return errors.New("YUVA_MIGRATION_MAX_MESSAGE_BYTES must be a positive number of bytes")
 	}
+	if c.MigrationUploadMaxBytes, err = strconv.ParseInt(env("YUVA_MIGRATION_UPLOAD_MAX_BYTES", "21474836480"), 10, 64); err != nil || c.MigrationUploadMaxBytes < 0 {
+		return errors.New("YUVA_MIGRATION_UPLOAD_MAX_BYTES must be a number of bytes, 0 for no file imports")
+	}
 	if c.MigrationSyncMaxDays, err = strconv.Atoi(env("YUVA_MIGRATION_SYNC_MAX_DAYS", "30")); err != nil || c.MigrationSyncMaxDays < 1 || c.MigrationSyncMaxDays > 365 {
 		return errors.New("YUVA_MIGRATION_SYNC_MAX_DAYS must be 1 to 365 days")
 	}
@@ -341,15 +346,20 @@ func (c *Config) loadMigrations() error {
 	if c.ForwardingDomain != "" && !forwardingDomainRe.MatchString(c.ForwardingDomain) {
 		return fmt.Errorf("YUVA_FORWARDING_DOMAIN must be a domain name such as forward.example.com, got %q", c.ForwardingDomain)
 	}
-	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); !set {
-		return nil
-	}
-	c.MigrationSources = []string{}
-	for _, s := range lowerList(os.Getenv("YUVA_MIGRATION_SOURCES")) {
-		if !slices.Contains(migrationSources, s) {
-			return fmt.Errorf("YUVA_MIGRATION_SOURCES: %q is not one of imap, file, zendesk, helpscout", s)
+	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); set {
+		c.MigrationSources = []string{}
+		for _, s := range lowerList(os.Getenv("YUVA_MIGRATION_SOURCES")) {
+			if !slices.Contains(migrationSources, s) {
+				return fmt.Errorf("YUVA_MIGRATION_SOURCES: %q is not one of imap, file, zendesk, helpscout", s)
+			}
+			c.MigrationSources = append(c.MigrationSources, s)
 		}
-		c.MigrationSources = append(c.MigrationSources, s)
+	}
+	if c.MigrationUploadMaxBytes == 0 {
+		if c.MigrationSources == nil {
+			c.MigrationSources = slices.Clone(migrationSources)
+		}
+		c.MigrationSources = slices.DeleteFunc(c.MigrationSources, func(s string) bool { return s == "file" })
 	}
 	return nil
 }

@@ -16,6 +16,8 @@ var ErrNotFound = errors.New("storage: object not found")
 type Storage interface {
 	Put(ctx context.Context, key string, r io.Reader, size int64, contentType string) error
 	Open(ctx context.Context, key string) (io.ReadCloser, error)
+	// OpenRange reads length bytes of an object from offset on.
+	OpenRange(ctx context.Context, key string, offset, length int64) (io.ReadCloser, error)
 	Delete(ctx context.Context, key string) error
 }
 
@@ -80,6 +82,24 @@ func (l *Local) Open(_ context.Context, key string) (io.ReadCloser, error) {
 		return nil, ErrNotFound
 	}
 	return f, err
+}
+
+func (l *Local) OpenRange(_ context.Context, key string, offset, length int64) (io.ReadCloser, error) {
+	p, err := l.path(key)
+	if err != nil {
+		return nil, err
+	}
+	f, err := os.Open(p)
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil, ErrNotFound
+	}
+	if err != nil {
+		return nil, err
+	}
+	return struct {
+		io.Reader
+		io.Closer
+	}{io.NewSectionReader(f, offset, length), f}, nil
 }
 
 func (l *Local) Delete(_ context.Context, key string) error {

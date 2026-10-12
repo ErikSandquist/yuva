@@ -48,7 +48,13 @@ type Meta struct {
 	ID      string    `json:"id,omitempty"`
 	Refs    []string  `json:"refs,omitempty"`
 	Parts   []Part    `json:"parts,omitempty"`
+	// Thread is the thread a provider put the message in (Google Takeout's X-GM-THRID); it
+	// threads the message instead of its references.
+	Thread string `json:"thread,omitempty"`
 }
+
+// ThreadNode is the node a provider's thread id joins its messages by; no message id can equal it.
+func ThreadNode(thread string) string { return "x-gm-thrid:" + thread }
 
 // Item is one message of a scanned folder.
 type Item struct {
@@ -93,20 +99,28 @@ func MessageTime(date, received, now time.Time) time.Time {
 // ScanHeader reads one fetched header block. A message without a usable Message-ID gets a key
 // from a hash of its headers, the same for every copy of it.
 func ScanHeader(h imapread.Header, folderID int32, uidValidity uint32, now time.Time) Item {
-	it := Item{SourceID: SourceID(folderID, uidValidity, h.UID), FolderID: folderID, Received: h.InternalDate.UTC(), Size: h.Size}
-	m, err := email.Parse(append(append([]byte{}, h.Header...), "\r\n"...))
+	it := ScanRaw(h.Header, h.Parts, h.InternalDate, h.Size, now)
+	it.SourceID, it.FolderID = SourceID(folderID, uidValidity, h.UID), folderID
+	return it
+}
+
+// ScanRaw reads a message's header block and the leaves of its structure, as a server or a
+// file gives them.
+func ScanRaw(header []byte, parts []imapread.Part, received time.Time, size int64, now time.Time) Item {
+	it := Item{Received: received.UTC(), Size: size}
+	m, err := email.Parse(append(append([]byte{}, header...), "\r\n"...))
 	if err != nil {
 		m = &email.Message{}
 	}
 	it.Meta = Meta{
 		From: address(m.From), To: addresses(m.To), Cc: addresses(m.Cc), Subject: truncate(strings.Join(strings.Fields(m.Subject), " "), 500),
-		Auto: m.Auto, At: MessageTime(m.Date, h.InternalDate, now),
+		Auto: m.Auto, At: MessageTime(m.Date, received, now),
 	}
 	if id := m.MessageID; id != "" && len(id) <= maxIDBytes {
 		it.Meta.ID = id
 		it.DedupeKey = id
 	} else {
-		sum := sha256.Sum256(h.Header)
+		sum := sha256.Sum256(header)
 		it.DedupeKey = "hdr-" + hex.EncodeToString(sum[:20]) + "@yuva.invalid"
 	}
 	for _, r := range append(append([]string{}, m.InReplyTo...), m.References...) {
@@ -114,7 +128,7 @@ func ScanHeader(h imapread.Header, folderID int32, uidValidity uint32, now time.
 			it.Meta.Refs = append(it.Meta.Refs, r)
 		}
 	}
-	for _, p := range h.Parts {
+	for _, p := range parts {
 		if p.Filename == "" && (p.Type == "text/plain" || p.Type == "text/html" || strings.HasPrefix(p.Type, "message/")) {
 			continue
 		}

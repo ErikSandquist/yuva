@@ -72,7 +72,7 @@ func (s *Server) ScanMigration(ctx context.Context, req oas.ScanMigrationRequest
 		default:
 			return cur, errMigrationState("a migration is scanned once it is connected, and again while it is ready")
 		}
-		if err := hasMigrationCredentials(ctx, q, cur); err != nil {
+		if err := migrationConnectedSource(ctx, q, cur); err != nil {
 			return cur, err
 		}
 		if err := s.checkRunningLimit(ctx, q, cur); err != nil {
@@ -109,7 +109,7 @@ func (s *Server) StartMigration(ctx context.Context, req oas.StartMigrationReque
 		if cur.InboxID == nil || cur.ChannelID == nil {
 			return cur, errMigrationState("choose the inbox and the e-mail channel the history goes to first")
 		}
-		if err := hasMigrationCredentials(ctx, q, cur); err != nil {
+		if err := migrationConnectedSource(ctx, q, cur); err != nil {
 			return cur, err
 		}
 		if err := s.checkRunningLimit(ctx, q, cur); err != nil {
@@ -189,7 +189,7 @@ func (s *Server) ResumeMigration(ctx context.Context, req oas.ResumeMigrationReq
 		default:
 			return cur, errMigrationState("only a paused migration, or one that needs attention, can be resumed")
 		}
-		if err := hasMigrationCredentials(ctx, q, cur); err != nil {
+		if err := migrationConnectedSource(ctx, q, cur); err != nil {
 			return cur, err
 		}
 		if next == migrationCopying {
@@ -246,6 +246,17 @@ func (s *Server) CancelMigration(ctx context.Context, req oas.CancelMigrationReq
 	})
 	if err != nil {
 		return nil, err
+	}
+	if out.Source == oas.MigrationSourceFile {
+		ws := principalFrom(ctx).workspaceID
+		s.dropUploadLogged(ctx, ws, out.Id)
+		m, err := s.st.GetMigration(ctx, store.GetMigrationParams{WorkspaceID: ws, ID: out.Id})
+		if err != nil {
+			return nil, err
+		}
+		if out, err = s.oneMigration(ctx, s.st.Queries, m); err != nil {
+			return nil, err
+		}
 	}
 	return oas.CancelMigration200JSONResponse(out), nil
 }

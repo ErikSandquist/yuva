@@ -1636,9 +1636,10 @@ func (e HealthStatus) Valid() bool {
 
 // Defines values for HostedLimit.
 const (
-	LimitMigrationMaxActive HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
-	LimitMigrationMaxBytes  HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
-	LimitMigrationSources   HostedLimit = "YUVA_MIGRATION_SOURCES"
+	LimitMigrationMaxActive      HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
+	LimitMigrationMaxBytes       HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
+	LimitMigrationSources        HostedLimit = "YUVA_MIGRATION_SOURCES"
+	LimitMigrationUploadMaxBytes HostedLimit = "YUVA_MIGRATION_UPLOAD_MAX_BYTES"
 )
 
 // Valid indicates whether the value is a known member of the HostedLimit enum.
@@ -1649,6 +1650,8 @@ func (e HostedLimit) Valid() bool {
 	case LimitMigrationMaxBytes:
 		return true
 	case LimitMigrationSources:
+		return true
+	case LimitMigrationUploadMaxBytes:
 		return true
 	default:
 		return false
@@ -2180,6 +2183,7 @@ const (
 	MigrationActionStart          MigrationAction = "start"
 	MigrationActionTestConnection MigrationAction = "test_connection"
 	MigrationActionUpdate         MigrationAction = "update"
+	MigrationActionUpload         MigrationAction = "upload"
 )
 
 // Valid indicates whether the value is a known member of the MigrationAction enum.
@@ -2210,6 +2214,8 @@ func (e MigrationAction) Valid() bool {
 	case MigrationActionTestConnection:
 		return true
 	case MigrationActionUpdate:
+		return true
+	case MigrationActionUpload:
 		return true
 	default:
 		return false
@@ -2330,6 +2336,78 @@ const (
 func (e MigrationEventType) Valid() bool {
 	switch e {
 	case MigrationUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFileFormat.
+const (
+	FileEmlZip     MigrationFileFormat = "eml_zip"
+	FileMaildirZip MigrationFileFormat = "maildir_zip"
+	FileMbox       MigrationFileFormat = "mbox"
+	FileMboxZip    MigrationFileFormat = "mbox_zip"
+	FileTakeout    MigrationFileFormat = "takeout"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFileFormat enum.
+func (e MigrationFileFormat) Valid() bool {
+	switch e {
+	case FileEmlZip:
+		return true
+	case FileMaildirZip:
+		return true
+	case FileMbox:
+		return true
+	case FileMboxZip:
+		return true
+	case FileTakeout:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFileRefusal.
+const (
+	RefusedCompressedMbox         MigrationFileRefusal = "compressed_mbox"
+	RefusedCorrupt                MigrationFileRefusal = "corrupt"
+	RefusedEmpty                  MigrationFileRefusal = "empty"
+	RefusedEncrypted              MigrationFileRefusal = "encrypted"
+	RefusedEntryTooLarge          MigrationFileRefusal = "entry_too_large"
+	RefusedPathTraversal          MigrationFileRefusal = "path_traversal"
+	RefusedSymlink                MigrationFileRefusal = "symlink"
+	RefusedTooManyEntries         MigrationFileRefusal = "too_many_entries"
+	RefusedUnknownFormat          MigrationFileRefusal = "unknown_format"
+	RefusedUnsupportedCompression MigrationFileRefusal = "unsupported_compression"
+	RefusedZipBomb                MigrationFileRefusal = "zip_bomb"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFileRefusal enum.
+func (e MigrationFileRefusal) Valid() bool {
+	switch e {
+	case RefusedCompressedMbox:
+		return true
+	case RefusedCorrupt:
+		return true
+	case RefusedEmpty:
+		return true
+	case RefusedEncrypted:
+		return true
+	case RefusedEntryTooLarge:
+		return true
+	case RefusedPathTraversal:
+		return true
+	case RefusedSymlink:
+		return true
+	case RefusedTooManyEntries:
+		return true
+	case RefusedUnknownFormat:
+		return true
+	case RefusedUnsupportedCompression:
+		return true
+	case RefusedZipBomb:
 		return true
 	default:
 		return false
@@ -2471,6 +2549,24 @@ func (e MigrationLabelMappingAction) Valid() bool {
 	}
 }
 
+// Defines values for MigrationMboxFormat.
+const (
+	Mboxo  MigrationMboxFormat = "mboxo"
+	Mboxrd MigrationMboxFormat = "mboxrd"
+)
+
+// Valid indicates whether the value is a known member of the MigrationMboxFormat enum.
+func (e MigrationMboxFormat) Valid() bool {
+	switch e {
+	case Mboxo:
+		return true
+	case Mboxrd:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MigrationPresetUsername.
 const (
 	UsernameAddress   MigrationPresetUsername = "address"
@@ -2492,12 +2588,14 @@ func (e MigrationPresetUsername) Valid() bool {
 // Defines values for MigrationPresetId.
 const (
 	PresetFastmail        MigrationPresetId = "fastmail"
+	PresetFile            MigrationPresetId = "file"
 	PresetGmail           MigrationPresetId = "gmail"
 	PresetGmx             MigrationPresetId = "gmx"
 	PresetGoogleWorkspace MigrationPresetId = "google_workspace"
 	PresetIcloud          MigrationPresetId = "icloud"
 	PresetImap            MigrationPresetId = "imap"
 	PresetMicrosoft       MigrationPresetId = "microsoft"
+	PresetTakeout         MigrationPresetId = "takeout"
 	PresetYahoo           MigrationPresetId = "yahoo"
 	PresetYandex          MigrationPresetId = "yandex"
 	PresetZoho            MigrationPresetId = "zoho"
@@ -2507,6 +2605,8 @@ const (
 func (e MigrationPresetId) Valid() bool {
 	switch e {
 	case PresetFastmail:
+		return true
+	case PresetFile:
 		return true
 	case PresetGmail:
 		return true
@@ -2519,6 +2619,8 @@ func (e MigrationPresetId) Valid() bool {
 	case PresetImap:
 		return true
 	case PresetMicrosoft:
+		return true
+	case PresetTakeout:
 		return true
 	case PresetYahoo:
 		return true
@@ -3966,7 +4068,7 @@ type BroadcastProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
@@ -6487,7 +6589,7 @@ type EmailDesignProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -6818,7 +6920,7 @@ type EmailImageProblem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -7265,7 +7367,7 @@ type HealthStatus string
 // `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 // the workspace already runs as many migrations at a time as the server allows;
 // `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-// allows.
+// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 type HostedLimit string
 
 // IdentitySecret defines model for IdentitySecret.
@@ -8352,6 +8454,12 @@ type Migration struct {
 	Estimate   *MigrationEstimate `json:"estimate,omitempty"`
 	FinishedAt *time.Time         `json:"finished_at,omitempty"`
 
+	// FollowsMigrationId An `imap` migration of a mailbox whose export file this workspace imported into the
+	// same channel: that `file` migration. `options.since` started at the day of the newest
+	// message the file held, so only newer mail is read; mail both have is not imported
+	// twice.
+	FollowsMigrationId *uuid.UUID `json:"follows_migration_id,omitempty"`
+
 	// ForwardingAddress The channel's forwarding address, when the server has a forwarding domain; forward the old mailbox there.
 	ForwardingAddress *string `json:"forwarding_address,omitempty"`
 
@@ -8378,7 +8486,9 @@ type Migration struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// ProbeSentAt When the last test message was sent.
@@ -8404,7 +8514,7 @@ type Migration struct {
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 	Source MigrationSource `json:"source"`
 
 	// SourceAddress The mailbox address.
@@ -8421,7 +8531,8 @@ type Migration struct {
 	//   revoked app password; reconnect to continue.
 	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 	//   while the team switches its mail over.
-	// - `completed`: finished; the credentials are deleted.
+	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 	// - `removing`, `removed`: imported history is being, or was, removed.
 	State MigrationState `json:"state"`
@@ -8443,6 +8554,9 @@ type Migration struct {
 	TeamSuggestions *[]MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
 	UpdatedAt       time.Time                  `json:"updated_at"`
 
+	// Upload A `file` migration's export file.
+	Upload *MigrationFile `json:"upload,omitempty"`
+
 	// VerifiedAt When a test message first reached Yuva by the new route.
 	VerifiedAt *time.Time `json:"verified_at,omitempty"`
 
@@ -8461,8 +8575,9 @@ type MigrationVerifiedRoute string
 
 // MigrationAction What can be done with a migration in its current state: `update` (`PATCH`),
 // `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
-// `retry` (failed items), `remove_history`, `delete` and `probe` (a test mail to check the
-// switch). A server lists only the actions it offers.
+// `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
+// switch) and `upload` (parts of the export file, and completing it). A server lists only
+// the actions it offers.
 type MigrationAction string
 
 // MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with Microsoft.
@@ -8504,7 +8619,9 @@ type MigrationCreate struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Source `imap` when absent.
@@ -8580,7 +8697,9 @@ type MigrationDetection struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Server The IMAP server to use; absent when none was found.
@@ -8629,18 +8748,20 @@ type MigrationEstimate struct {
 	AttachmentsSkipped int64 `json:"attachments_skipped"`
 
 	// Bytes Bytes to read from the source.
-	Bytes            int64                    `json:"bytes"`
-	ContactsExisting int64                    `json:"contacts_existing"`
-	ContactsNew      int64                    `json:"contacts_new"`
-	Conversations    int64                    `json:"conversations"`
-	Labels           []MigrationEstimateLabel `json:"labels"`
-	Messages         int64                    `json:"messages"`
-	MessagesIn       int64                    `json:"messages_in"`
-	MessagesOut      int64                    `json:"messages_out"`
-	NewestAt         *time.Time               `json:"newest_at,omitempty"`
-	OldestAt         *time.Time               `json:"oldest_at,omitempty"`
-	ScannedAt        time.Time                `json:"scanned_at"`
-	SecondsMax       int64                    `json:"seconds_max"`
+	Bytes            int64 `json:"bytes"`
+	ContactsExisting int64 `json:"contacts_existing"`
+	ContactsNew      int64 `json:"contacts_new"`
+
+	// Conversations Conversations to create; a thread whose earlier messages the channel has continues in their conversation and is not counted.
+	Conversations int64                    `json:"conversations"`
+	Labels        []MigrationEstimateLabel `json:"labels"`
+	Messages      int64                    `json:"messages"`
+	MessagesIn    int64                    `json:"messages_in"`
+	MessagesOut   int64                    `json:"messages_out"`
+	NewestAt      *time.Time               `json:"newest_at,omitempty"`
+	OldestAt      *time.Time               `json:"oldest_at,omitempty"`
+	ScannedAt     time.Time                `json:"scanned_at"`
+	SecondsMax    int64                    `json:"seconds_max"`
 
 	// SecondsMin How long the copy takes at the provider's pace, at the least.
 	SecondsMin int64 `json:"seconds_min"`
@@ -8684,6 +8805,83 @@ type MigrationEventData struct {
 	// PreviousState Absent when the migration was just created.
 	PreviousState *MigrationState `json:"previous_state,omitempty"`
 }
+
+// MigrationFile A `file` migration's export file.
+type MigrationFile struct {
+	// CompletedAt When the upload was completed and the file accepted.
+	CompletedAt *time.Time `json:"completed_at,omitempty"`
+
+	// DeletedAt When the parts were deleted because the migration ended.
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+	Filename  *string    `json:"filename,omitempty"`
+
+	// Format Once the upload is complete.
+	Format *MigrationFileFormat `json:"format,omitempty"`
+
+	// MboxFormat For the mbox formats.
+	MboxFormat *MigrationMboxFormat `json:"mbox_format,omitempty"`
+
+	// PartSize The size of every part but the last, 8 MiB.
+	PartSize int64 `json:"part_size"`
+
+	// Parts Parts stored.
+	Parts int32 `json:"parts"`
+
+	// SizeBytes Bytes uploaded so far; the file's size once complete.
+	SizeBytes int64 `json:"size_bytes"`
+}
+
+// MigrationFileFormat What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
+// labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
+// uncompressed mbox files, one folder each; `eml_zip`, a zip of `.eml` files whose
+// directories are folders; `maildir_zip`, a zip of a Maildir (`cur` and `new`, Maildir++
+// subfolders), whose folders are folders.
+type MigrationFileFormat string
+
+// MigrationFileProblem defines model for MigrationFileProblem.
+type MigrationFileProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Entry `file_refused` only: the zip entry it is about, when one is.
+	Entry *string `json:"entry,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
+	// MissingParts `upload_incomplete` only: the first parts that are missing, at most 100.
+	MissingParts *[]int32 `json:"missing_parts,omitempty"`
+
+	// Reason `file_refused` only.
+	Reason *MigrationFileRefusal `json:"reason,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// MigrationFileRefusal Why an export file was refused: `unknown_format` (not an mbox or a zip), `empty` (no
+// message in it), `corrupt` (a zip that cannot be read), `path_traversal` (an entry with
+// `..` or an absolute path), `symlink` (an entry that is a symbolic link),
+// `too_many_entries` (over 1,000,000), `zip_bomb` (an entry compressed more than 100:1),
+// `entry_too_large` (an entry larger than `YUVA_MIGRATION_UPLOAD_MAX_BYTES` unpacked),
+// `encrypted` (an entry with a password), `unsupported_compression` (neither stored nor
+// deflated) or `compressed_mbox` (an mbox in a zip must be stored uncompressed: unzip the
+// archive and upload the mbox file itself).
+type MigrationFileRefusal string
 
 // MigrationFinish defines model for MigrationFinish.
 type MigrationFinish struct {
@@ -8811,6 +9009,11 @@ type MigrationLabelMapping struct {
 // MigrationLabelMappingAction defines model for MigrationLabelMapping.Action.
 type MigrationLabelMappingAction string
 
+// MigrationMboxFormat How an mbox escapes lines that start with `From `: `mboxrd` (Google Takeout, most
+// programs) takes one `>` off every `>…>From ` line; `mboxo` only off `>From `. The two read
+// alike except for lines of `>>From ` and more.
+type MigrationMboxFormat string
+
 // MigrationOptions defines model for MigrationOptions.
 type MigrationOptions struct {
 	// CloseAfterDays Threads whose last message is older are imported `closed`; newer ones `open` or `pending`. `0` closes everything.
@@ -8886,7 +9089,9 @@ type MigrationPreset struct {
 
 	// Id The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Id   MigrationPresetId `json:"id"`
 	Name string            `json:"name"`
 
@@ -8895,7 +9100,7 @@ type MigrationPreset struct {
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 	Source MigrationSource `json:"source"`
 
 	// Username What the user name is: the whole `address` or its `local_part`.
@@ -8907,7 +9112,9 @@ type MigrationPresetUsername string
 
 // MigrationPresetId The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 // and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-// `fastmail`, `gmx`, or `imap` for any other server.
+// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+// Google Takeout file, or `file`, any other export file; both read every format the server
+// knows, which `upload.format` names once the upload is complete.
 type MigrationPresetId string
 
 // MigrationPresetList defines model for MigrationPresetList.
@@ -8969,7 +9176,8 @@ type MigrationProgress struct {
 	//   revoked app password; reconnect to continue.
 	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 	//   while the team switches its mail over.
-	// - `completed`: finished; the credentials are deleted.
+	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 	// - `removing`, `removed`: imported history is being, or was, removed.
 	State        MigrationState `json:"state"`
@@ -9037,7 +9245,7 @@ type MigrationSkipped struct {
 
 // MigrationSource Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 // `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
 type MigrationSource string
 
 // MigrationState - `draft`: created; not connected yet.
@@ -9050,7 +9258,8 @@ type MigrationSource string
 //     revoked app password; reconnect to continue.
 //   - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
 //     while the team switches its mail over.
-//   - `completed`: finished; the credentials are deleted.
+//   - `completed`: finished; the credentials, or the export file, are deleted. A `file`
+//     migration completes when its copy ends.
 //   - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 //   - `removing`, `removed`: imported history is being, or was, removed.
 type MigrationState string
@@ -9148,11 +9357,60 @@ type MigrationUpdate struct {
 
 	// Preset The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
-	// `fastmail`, `gmx`, or `imap` for any other server.
+	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
+	// Google Takeout file, or `file`, any other export file; both read every format the server
+	// knows, which `upload.format` names once the upload is complete.
 	Preset *MigrationPresetId `json:"preset,omitempty"`
 
 	// SourceAddress Examples: owner@example.com
 	SourceAddress *Email `json:"source_address,omitempty"`
+}
+
+// MigrationUpload defines model for MigrationUpload.
+type MigrationUpload struct {
+	CompletedAt *time.Time `json:"completed_at,omitempty"`
+
+	// DeletedAt The parts were deleted when the migration ended; nothing more can be uploaded.
+	DeletedAt *time.Time `json:"deleted_at,omitempty"`
+
+	// MaxBytes The largest file the server takes (`YUVA_MIGRATION_UPLOAD_MAX_BYTES`).
+	MaxBytes int64 `json:"max_bytes"`
+
+	// PartSize The size of every part but the last, 8 MiB.
+	PartSize int64 `json:"part_size"`
+
+	// Parts The parts the server has, by number.
+	Parts         []MigrationUploadPart `json:"parts"`
+	ReceivedBytes int64                 `json:"received_bytes"`
+}
+
+// MigrationUploadComplete defines model for MigrationUploadComplete.
+type MigrationUploadComplete struct {
+	// Filename The file's name, as the person chose it; shown back only.
+	Filename *string `json:"filename,omitempty"`
+
+	// MboxFormat `mboxrd` when absent.
+	MboxFormat *MigrationMboxFormat `json:"mbox_format,omitempty"`
+
+	// Parts How many parts the file has.
+	Parts     int32 `json:"parts"`
+	SizeBytes int64 `json:"size_bytes"`
+}
+
+// MigrationUploadPart defines model for MigrationUploadPart.
+type MigrationUploadPart struct {
+	Part      int32  `json:"part"`
+	Sha256    string `json:"sha256"`
+	SizeBytes int64  `json:"size_bytes"`
+}
+
+// MigrationUploadPartInput defines model for MigrationUploadPartInput.
+type MigrationUploadPartInput struct {
+	// File At most 8 MiB.
+	File openapi_types.File `json:"file"`
+
+	// Sha256 The part's SHA-256, hexadecimal.
+	Sha256 string `json:"sha256"`
 }
 
 // NotificationChannels defines model for NotificationChannels.
@@ -9483,7 +9741,7 @@ type Problem struct {
 	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
 	// the workspace already runs as many migrations at a time as the server allows;
 	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
-	// allows.
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
 	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
@@ -12272,6 +12530,27 @@ type TestMigrationConnectionParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetMigrationUploadParams defines parameters for GetMigrationUpload.
+type GetMigrationUploadParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CompleteMigrationUploadParams defines parameters for CompleteMigrationUpload.
+type CompleteMigrationUploadParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UploadMigrationPartParams defines parameters for UploadMigrationPart.
+type UploadMigrationPartParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListOAuthGrantsParams defines parameters for ListOAuthGrants.
 type ListOAuthGrantsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -12906,6 +13185,12 @@ type FinishMigrationJSONRequestBody = MigrationFinish
 
 // RemoveMigrationHistoryJSONRequestBody defines body for RemoveMigrationHistory for application/json ContentType.
 type RemoveMigrationHistoryJSONRequestBody = MigrationRemoveHistory
+
+// CompleteMigrationUploadJSONRequestBody defines body for CompleteMigrationUpload for application/json ContentType.
+type CompleteMigrationUploadJSONRequestBody = MigrationUploadComplete
+
+// UploadMigrationPartMultipartRequestBody defines body for UploadMigrationPart for multipart/form-data ContentType.
+type UploadMigrationPartMultipartRequestBody = MigrationUploadPartInput
 
 // ApproveOAuthRequestJSONRequestBody defines body for ApproveOAuthRequest for application/json ContentType.
 type ApproveOAuthRequestJSONRequestBody = OAuthApproval
@@ -16421,6 +16706,15 @@ type ServerInterface interface {
 	// TestMigrationConnection Test the connection to the mailbox
 	// (POST /v1/migrations/{migrationId}/test)
 	TestMigrationConnection(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params TestMigrationConnectionParams)
+	// GetMigrationUpload The export file's upload
+	// (GET /v1/migrations/{migrationId}/upload)
+	GetMigrationUpload(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params GetMigrationUploadParams)
+	// CompleteMigrationUpload Finish the export file's upload
+	// (POST /v1/migrations/{migrationId}/upload/complete)
+	CompleteMigrationUpload(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params CompleteMigrationUploadParams)
+	// UploadMigrationPart Upload a part of the export file
+	// (POST /v1/migrations/{migrationId}/upload/parts/{part})
+	UploadMigrationPart(w http.ResponseWriter, r *http.Request, migrationId MigrationId, part int32, params UploadMigrationPartParams)
 	// ListOAuthGrants List connected apps
 	// (GET /v1/oauth/grants)
 	ListOAuthGrants(w http.ResponseWriter, r *http.Request, params ListOAuthGrantsParams)
@@ -28830,6 +29124,184 @@ func (siw *ServerInterfaceWrapper) TestMigrationConnection(w http.ResponseWriter
 	handler.ServeHTTP(w, r)
 }
 
+// GetMigrationUpload operation middleware
+func (siw *ServerInterfaceWrapper) GetMigrationUpload(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMigrationUploadParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMigrationUpload(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CompleteMigrationUpload operation middleware
+func (siw *ServerInterfaceWrapper) CompleteMigrationUpload(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CompleteMigrationUploadParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CompleteMigrationUpload(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UploadMigrationPart operation middleware
+func (siw *ServerInterfaceWrapper) UploadMigrationPart(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "part" -------------
+	var part int32
+
+	err = runtime.BindStyledParameterWithOptions("simple", "part", r.PathValue("part"), &part, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "integer", Format: "int32", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "part", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UploadMigrationPartParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UploadMigrationPart(w, r, migrationId, part, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListOAuthGrants operation middleware
 func (siw *ServerInterfaceWrapper) ListOAuthGrants(w http.ResponseWriter, r *http.Request) {
 
@@ -30278,6 +30750,9 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/migrations/{migrationId}", wrapper.UpdateMigration)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/migrations/{migrationId}/credentials", wrapper.SetMigrationCredentials)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/test", wrapper.TestMigrationConnection)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload", wrapper.GetMigrationUpload)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload/parts/{part}", wrapper.UploadMigrationPart)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload/complete", wrapper.CompleteMigrationUpload)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/folders", wrapper.ListMigrationFolders)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/scan", wrapper.ScanMigration)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/preview", wrapper.GetMigrationPreview)
@@ -31979,6 +32454,8 @@ type BroadcastProblemApplicationProblemPlusJSONResponse BroadcastProblem
 type EmailDesignProblemApplicationProblemPlusJSONResponse EmailDesignProblem
 
 type IngressRejectionJSONResponse IngressRejection
+
+type MigrationFileProblemApplicationProblemPlusJSONResponse MigrationFileProblem
 
 type ProblemApplicationProblemPlusJSONResponse Problem
 
@@ -49628,6 +50105,324 @@ func (response TestMigrationConnection429ApplicationProblemPlusJSONResponse) Vis
 	return err
 }
 
+type GetMigrationUploadRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      GetMigrationUploadParams
+}
+
+type GetMigrationUploadResponseObject interface {
+	VisitGetMigrationUploadResponse(w http.ResponseWriter) error
+}
+
+type GetMigrationUpload200JSONResponse MigrationUpload
+
+func (response GetMigrationUpload200JSONResponse) VisitGetMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationUpload401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMigrationUpload401ApplicationProblemPlusJSONResponse) VisitGetMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationUpload403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationUpload403ApplicationProblemPlusJSONResponse) VisitGetMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationUpload404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationUpload404ApplicationProblemPlusJSONResponse) VisitGetMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationUpload409ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationUpload409ApplicationProblemPlusJSONResponse) VisitGetMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUploadRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      CompleteMigrationUploadParams
+	Body        *CompleteMigrationUploadJSONRequestBody
+}
+
+type CompleteMigrationUploadResponseObject interface {
+	VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error
+}
+
+type CompleteMigrationUpload200JSONResponse Migration
+
+func (response CompleteMigrationUpload200JSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CompleteMigrationUpload400ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload401ApplicationProblemPlusJSONResponse Problem
+
+func (response CompleteMigrationUpload401ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload403ApplicationProblemPlusJSONResponse Problem
+
+func (response CompleteMigrationUpload403ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload404ApplicationProblemPlusJSONResponse Problem
+
+func (response CompleteMigrationUpload404ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload409ApplicationProblemPlusJSONResponse Problem
+
+func (response CompleteMigrationUpload409ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CompleteMigrationUpload422ApplicationProblemPlusJSONResponse struct {
+	MigrationFileProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CompleteMigrationUpload422ApplicationProblemPlusJSONResponse) VisitCompleteMigrationUploadResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPartRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Part        int32       `json:"part"`
+	Params      UploadMigrationPartParams
+	Body        *multipart.Reader
+}
+
+type UploadMigrationPartResponseObject interface {
+	VisitUploadMigrationPartResponse(w http.ResponseWriter) error
+}
+
+type UploadMigrationPart200JSONResponse MigrationUploadPart
+
+func (response UploadMigrationPart200JSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UploadMigrationPart400ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart401ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart401ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart403ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart403ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart404ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart404ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart409ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart409ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart413ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart413ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(413)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UploadMigrationPart422ApplicationProblemPlusJSONResponse Problem
+
+func (response UploadMigrationPart422ApplicationProblemPlusJSONResponse) VisitUploadMigrationPartResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListOAuthGrantsRequestObject struct {
 	Params ListOAuthGrantsParams
 }
@@ -51933,6 +52728,15 @@ type StrictServerInterface interface {
 	// TestMigrationConnection Test the connection to the mailbox
 	// (POST /v1/migrations/{migrationId}/test)
 	TestMigrationConnection(ctx context.Context, request TestMigrationConnectionRequestObject) (TestMigrationConnectionResponseObject, error)
+	// GetMigrationUpload The export file's upload
+	// (GET /v1/migrations/{migrationId}/upload)
+	GetMigrationUpload(ctx context.Context, request GetMigrationUploadRequestObject) (GetMigrationUploadResponseObject, error)
+	// CompleteMigrationUpload Finish the export file's upload
+	// (POST /v1/migrations/{migrationId}/upload/complete)
+	CompleteMigrationUpload(ctx context.Context, request CompleteMigrationUploadRequestObject) (CompleteMigrationUploadResponseObject, error)
+	// UploadMigrationPart Upload a part of the export file
+	// (POST /v1/migrations/{migrationId}/upload/parts/{part})
+	UploadMigrationPart(ctx context.Context, request UploadMigrationPartRequestObject) (UploadMigrationPartResponseObject, error)
 	// ListOAuthGrants List connected apps
 	// (GET /v1/oauth/grants)
 	ListOAuthGrants(ctx context.Context, request ListOAuthGrantsRequestObject) (ListOAuthGrantsResponseObject, error)
@@ -58806,6 +59610,102 @@ func (sh *strictHandler) TestMigrationConnection(w http.ResponseWriter, r *http.
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(TestMigrationConnectionResponseObject); ok {
 		if err := validResponse.VisitTestMigrationConnectionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMigrationUpload operation middleware
+func (sh *strictHandler) GetMigrationUpload(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params GetMigrationUploadParams) {
+	var request GetMigrationUploadRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMigrationUpload(ctx, request.(GetMigrationUploadRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMigrationUpload")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMigrationUploadResponseObject); ok {
+		if err := validResponse.VisitGetMigrationUploadResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CompleteMigrationUpload operation middleware
+func (sh *strictHandler) CompleteMigrationUpload(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params CompleteMigrationUploadParams) {
+	var request CompleteMigrationUploadRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	var body CompleteMigrationUploadJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CompleteMigrationUpload(ctx, request.(CompleteMigrationUploadRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CompleteMigrationUpload")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CompleteMigrationUploadResponseObject); ok {
+		if err := validResponse.VisitCompleteMigrationUploadResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UploadMigrationPart operation middleware
+func (sh *strictHandler) UploadMigrationPart(w http.ResponseWriter, r *http.Request, migrationId MigrationId, part int32, params UploadMigrationPartParams) {
+	var request UploadMigrationPartRequestObject
+
+	request.MigrationId = migrationId
+	request.Part = part
+	request.Params = params
+
+	if reader, err := r.MultipartReader(); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode multipart body: %w", err))
+		return
+	} else {
+		request.Body = reader
+	}
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UploadMigrationPart(ctx, request.(UploadMigrationPartRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UploadMigrationPart")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UploadMigrationPartResponseObject); ok {
+		if err := validResponse.VisitUploadMigrationPartResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

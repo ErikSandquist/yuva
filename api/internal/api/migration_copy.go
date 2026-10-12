@@ -38,7 +38,15 @@ func (r *migrationRun) copy(ctx context.Context) (MigrationSlice, error) {
 	if err != nil || !empty {
 		return res, err
 	}
-	return MigrationSlice{Until: r.s.now()}, r.copied(ctx)
+	if err := r.copied(ctx); err != nil {
+		return MigrationSlice{}, err
+	}
+	if r.m.State == migrationCompleted {
+		r.close()
+		r.s.dropUploadLogged(ctx, r.m.WorkspaceID, r.m.ID)
+		return MigrationSlice{Done: true}, nil
+	}
+	return MigrationSlice{Until: r.s.now()}, nil
 }
 
 func (r *migrationRun) targetGone(ctx context.Context) error {
@@ -188,7 +196,7 @@ func (r *migrationRun) monthlyLimit(ctx context.Context) (time.Time, error) {
 }
 
 // copied moves a migration whose every message is done on to syncing: mail the old mailbox
-// receives from now on is new mail.
+// receives from now on is new mail. A file migration has no mailbox to sync and completes.
 func (r *migrationRun) copied(ctx context.Context) error {
 	if err := r.flush(ctx, true); err != nil {
 		return err
@@ -200,6 +208,13 @@ func (r *migrationRun) copied(ctx context.Context) error {
 		}
 		n, err := q.CountPlannedMigrationItems(ctx, store.CountPlannedMigrationItemsParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID})
 		if err != nil || n > 0 {
+			return err
+		}
+		if fileMigration(cur) {
+			m, err := r.s.completeMigration(ctx, q, events, nil, cur, "", "copied")
+			if err == nil {
+				r.m = m
+			}
 			return err
 		}
 		m, err := q.EnterMigrationSync(ctx, store.EnterMigrationSyncParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, Now: r.s.now()})
@@ -246,6 +261,8 @@ func (r *migrationRun) copyItem(ctx context.Context, team migrationTeam, folders
 	switch {
 	case !f.present:
 		return skip(migrate.StateSkipped, migrate.ReasonGone, "gone", "the message is no longer in the mailbox")
+	case f.unreadable:
+		return skip(migrate.StateSkipped, migrate.ReasonUnparseable, "unparseable", "the message cannot be read from the export file")
 	case f.raw == nil:
 		return skip(migrate.StateSkipped, migrate.ReasonTooLarge, "too_large", "the message is larger than the server's limit for one message")
 	}
@@ -327,7 +344,8 @@ func (s *Server) importLabel(ctx context.Context, q *store.Queries, ws uuid.UUID
 // importMigrationMessage stores one message the way ingest stores live mail, with its original
 // time and the imported marker, and writes no event: no webhook, notification or auto-reply
 // follows. Its rows and objects take ids derived from the migration and the message's source, so
-// a retry writes the same ones.
+// a retry writes the same ones. A thread whose earlier messages the channel already has, from an
+// export file or an earlier migration, continues in their conversation.
 func (s *Server) importMigrationMessage(ctx context.Context, m store.Migration, team migrationTeam, it store.NextMigrationItemsRow, meta migrate.Meta, raw []byte) error {
 	ws, channelID := m.WorkspaceID, *m.ChannelID
 	parsed, err := email.Parse(raw)
@@ -428,6 +446,25 @@ func (s *Server) importMigrationMessage(ctx context.Context, m store.Migration, 
 		}
 		convID, newConv := thread.ConversationID, false
 		if convID == nil {
+			existing, err := q.FindThreadConversationInChannel(ctx, store.FindThreadConversationInChannelParams{
+				ChannelID: &channelID, WorkspaceID: ws, MigrationID: m.ID, ThreadKey: it.ThreadKey,
+			})
+			switch {
+			case err == nil:
+				if err := s.labelImported(ctx, q, ws, existing, plan.Labels); err != nil {
+					return err
+				}
+				if err := q.SetMigrationThreadConversation(ctx, store.SetMigrationThreadConversationParams{
+					WorkspaceID: ws, MigrationID: m.ID, ThreadKey: it.ThreadKey, ConversationID: &existing,
+				}); err != nil {
+					return err
+				}
+				convID = &existing
+			case !store.IsNotFound(err):
+				return err
+			}
+		}
+		if convID == nil {
 			contact, blocked, err := s.importContact(ctx, q, m, plan.Contact)
 			if err != nil {
 				return err
@@ -453,14 +490,8 @@ func (s *Server) importMigrationMessage(ctx context.Context, m store.Migration, 
 			if err != nil {
 				return err
 			}
-			for _, l := range plan.Labels {
-				labelID, err := s.importLabel(ctx, q, ws, l)
-				if err != nil {
-					return err
-				}
-				if err := q.AddConversationLabel(ctx, store.AddConversationLabelParams{WorkspaceID: ws, ConversationID: conv.ID, LabelID: labelID}); err != nil {
-					return err
-				}
+			if err := s.labelImported(ctx, q, ws, conv.ID, plan.Labels); err != nil {
+				return err
 			}
 			if err := q.SetMigrationThreadConversation(ctx, store.SetMigrationThreadConversationParams{
 				WorkspaceID: ws, MigrationID: m.ID, ThreadKey: it.ThreadKey, ConversationID: &conv.ID,
@@ -531,6 +562,19 @@ func (s *Server) importMigrationMessage(ctx context.Context, m store.Migration, 
 	}
 	if !keep {
 		s.deleteObjects(ctx, stored)
+	}
+	return nil
+}
+
+func (s *Server) labelImported(ctx context.Context, q *store.Queries, ws, conversation uuid.UUID, labels []string) error {
+	for _, l := range labels {
+		labelID, err := s.importLabel(ctx, q, ws, l)
+		if err != nil {
+			return err
+		}
+		if err := q.AddConversationLabel(ctx, store.AddConversationLabelParams{WorkspaceID: ws, ConversationID: conversation, LabelID: labelID}); err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"net/url"
+	"strings"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -66,6 +67,27 @@ func (s *S3) Open(ctx context.Context, key string) (io.ReadCloser, error) {
 	}
 	if _, err := obj.Stat(); err != nil {
 		obj.Close()
+		if minio.ToErrorResponse(err).Code == minio.NoSuchKey {
+			return nil, ErrNotFound
+		}
+		return nil, err
+	}
+	return obj, nil
+}
+
+func (s *S3) OpenRange(ctx context.Context, key string, offset, length int64) (io.ReadCloser, error) {
+	if err := checkKey(key); err != nil {
+		return nil, err
+	}
+	if length <= 0 {
+		return io.NopCloser(strings.NewReader("")), nil
+	}
+	opts := minio.GetObjectOptions{}
+	if err := opts.SetRange(offset, offset+length-1); err != nil {
+		return nil, err
+	}
+	obj, _, _, err := minio.Core{Client: s.client}.GetObject(ctx, s.bucket, key, opts)
+	if err != nil {
 		if minio.ToErrorResponse(err).Code == minio.NoSuchKey {
 			return nil, ErrNotFound
 		}
