@@ -1412,15 +1412,19 @@ losing a message and without changing anything at the source. Decisions:
   any change to a ready migration's options sends it back for a new dry run. Progress reaches owners
   and admins as `migration.updated` (stored) and `migration.progress` (a signal, at most every two
   seconds); never webhooks.
-- **Cutover.** After the copy, sync runs every two minutes. Mail received before the migration went
-  live is history; mail after it is new mail and takes the live path (events, notifications), without
-  the greeting. Every e-mail channel has a forwarding address `<token>@YUVA_FORWARDING_DOMAIN` that
-  ingress resolves by token; the team forwards the mailbox there (or routes it, or moves the MX). While
-  waiting, Google's forwarding confirmation to that address is shown on the migration instead of
-  opening a conversation. A probe mail with an HMAC header (context `migration-probe:`) is recognised at
-  ingress before the own-sender drop and verifies delivery. Sync stops after verification and a quiet
-  period (24 hours by default) in which it found nothing ingress did not also deliver; the channel
-  dedupe keeps one copy of mail that came both ways.
+- **Cutover.** After the copy, sync runs every two minutes. The migration goes live when the copy ends:
+  mail received before that is history (mail that arrives during the copy is imported quietly); mail
+  after it is new mail and takes the live path (events, notifications), without the greeting. Every
+  e-mail channel has a forwarding address `<token>@YUVA_FORWARDING_DOMAIN` that ingress resolves by
+  token (rotatable); the team forwards the mailbox there (or routes it, or moves the MX). While
+  waiting, Google's forwarding confirmation to that address is shown on the migration (and sent as the
+  `migration.forwarding_confirmation` signal) instead of opening a conversation. A probe mail with an
+  HMAC header (context `migration-probe:`) is recognised at ingress before the own-sender drop and
+  verifies delivery. After verification and a quiet period (24 hours by default) in which sync found
+  nothing ingress did not also deliver, the migration completes on its own; an owner may finish it
+  earlier once delivery is verified, or without verification on purpose (`force`). The channel dedupe
+  keeps one copy of mail that came both ways. "Remove imported history" also deletes the contacts the
+  migration created that are left without a conversation; labels stay.
 - **Credentials.** Sealed under the master key (context `migration:`+workspace+migration) in
   `migration_credentials`, never in job arguments, events, logs or answers; deleted in the transaction
   that completes or cancels the migration, after `YUVA_MIGRATION_SYNC_MAX_DAYS` (30) of sync, and with
