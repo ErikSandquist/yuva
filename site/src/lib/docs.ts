@@ -9,7 +9,7 @@ export type NavItem = { slug: string; title: string; rel: string; children?: Nav
 export type NavGroup = { key: string; title: string; items: NavItem[] }
 
 const groups = [
-  { key: "start", slugs: ["install", "configuration", "operations"] },
+  { key: "start", slugs: ["install", "configuration", "operations", "analytics-dpa"] },
   {
     key: "channels",
     slugs: [
@@ -22,6 +22,7 @@ const groups = [
       "broadcasts",
       "deliverability",
       "analytics",
+      "analytics-privacy",
       "mobile",
     ],
   },

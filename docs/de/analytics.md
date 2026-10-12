@@ -21,6 +21,9 @@ Besuchers ohne Pause von 30 Minuten, innerhalb eines Tages.
 Das Einzige, was das Skript je auf einem Gerät speichert, ist die eigene Entscheidung eines Besuchers
 auszusteigen ([unten](#opt-out-links)).
 
+Was gespeichert wird und wie lange, ob Ihre Website ein Cookie-Banner braucht, und Texte für Ihre
+Datenschutzerklärung stehen unter [Analytics und Datenschutz](analytics-privacy.md).
+
 ## Eine Website hinzufügen
 
 1. Öffnen Sie im Panel **Analytics → Add a website**. Websites hinzufügen können Owner und Admins.
@@ -165,9 +168,9 @@ eigenen Website aus, werden auch diese Besucher gezählt. Zwei Dinge sind zu bea
 
 - Browser senden Events an `/client/v1/analytics/<Schlüssel>` relativ zum Server des Skripts. Mit `data-api`
   (oder `server`) können Sie diesem Server einen Pfadpräfix wie `https://www.example.com/stats` geben.
-- Ihr Yuva-Server sieht den Proxy, nicht den Besucher. Lassen Sie den Proxy die Adresse des Besuchers in
-  einem Header senden und setzen Sie [`YUVA_CLIENT_IP_HEADER`](configuration.md#server) auf dessen Namen (und
-  `YUVA_TRUSTED_PROXIES` auf den Proxy). Sonst sehen alle Besucher wie einer aus und werden als einer gezählt.
+- Ihr Yuva-Server sieht den Proxy, nicht den Besucher. Lassen Sie den Proxy die Adresse des Besuchers im Header
+  `X-Forwarded-For` senden, wie es die Beispiele unten tun. Ohne ihn sieht jeder Besucher wie der Proxy aus: alle
+  werden als einer gezählt, und das Limit von 120 Events pro Minute und Adresse gilt für alle zusammen.
 
 **nginx**, im `server`-Block Ihrer Website:
 
@@ -187,16 +190,35 @@ location /client/v1/analytics/ {
 <script defer data-key="yuva_ak_xxxxxxxx" src="/yuva-analytics.js"></script>
 ```
 
-**Next.js**, in `next.config.js`, unter einem neutralen Pfad:
+**Next.js**, unter einem neutralen Pfad: Ein Rewrite liefert das Skript, ein Route Handler reicht die Events mit der
+Adresse des Besuchers weiter. Nehmen Sie die Adresse, die Ihre Hosting-Plattform setzt (`x-real-ip` oder den ersten
+Eintrag von `x-forwarded-for`), nie eine, die ein Besucher selbst schreiben könnte. In `next.config.js`:
 
 ```js
 module.exports = {
   async rewrites() {
-    return [
-      { source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" },
-      { source: "/stats/client/v1/analytics/:key", destination: "https://support.example.com/client/v1/analytics/:key" },
-    ]
+    return [{ source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" }]
   },
+}
+```
+
+In `app/stats/client/v1/analytics/[key]/route.ts`:
+
+```ts
+export async function POST(request: Request, { params }: { params: Promise<{ key: string }> }) {
+  const { key } = await params
+  const visitor = request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? ""
+  const headers = new Headers({ "Content-Type": "text/plain", "X-Forwarded-For": visitor })
+  for (const name of ["origin", "user-agent", "accept-language", "dnt", "sec-gpc"]) {
+    const value = request.headers.get(name)
+    if (value) headers.set(name, value)
+  }
+  const upstream = await fetch(`https://support.example.com/client/v1/analytics/${key}`, {
+    method: "POST",
+    headers,
+    body: await request.text(),
+  })
+  return new Response(null, { status: upstream.status })
 }
 ```
 

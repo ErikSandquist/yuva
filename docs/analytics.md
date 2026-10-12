@@ -21,6 +21,9 @@ minutes, within one day.
 The only thing the script ever stores on a device is a visitor's own choice to opt out
 ([below](#opt-out-links)).
 
+What is kept and for how long, whether your site needs a cookie banner, and text for your privacy notice are in
+[Analytics and privacy](analytics-privacy.md).
+
 ## Add a website
 
 1. In the panel open **Analytics → Add a website**. Owners and admins can add websites.
@@ -164,9 +167,9 @@ site keeps those visitors counted. Two things to know:
 
 - Browsers send events to `/client/v1/analytics/<key>` relative to the script's server. With `data-api` (or
   `server`) you can give that server a path prefix such as `https://www.example.com/stats`.
-- Your Yuva server sees the proxy, not the visitor. Make the proxy send the visitor's address in a header
-  and set [`YUVA_CLIENT_IP_HEADER`](configuration.md#server) to its name (and `YUVA_TRUSTED_PROXIES` to the
-  proxy). Otherwise all visitors look like one and are counted as one.
+- Your Yuva server sees the proxy, not the visitor. Make the proxy send the visitor's address in the
+  `X-Forwarded-For` header, as the examples below do. Without it every visitor looks like the proxy: they
+  are counted as one, and the limit of 120 events a minute per address applies to all of them together.
 
 **nginx**, in your site's `server` block:
 
@@ -186,16 +189,35 @@ location /client/v1/analytics/ {
 <script defer data-key="yuva_ak_xxxxxxxx" src="/yuva-analytics.js"></script>
 ```
 
-**Next.js**, in `next.config.js`, under a neutral path:
+**Next.js**, under a neutral path: a rewrite serves the script and a route handler passes the events on with the
+visitor's address. Use the address your hosting platform sets (`x-real-ip` or the first `x-forwarded-for`
+entry), never one the visitor could write. In `next.config.js`:
 
 ```js
 module.exports = {
   async rewrites() {
-    return [
-      { source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" },
-      { source: "/stats/client/v1/analytics/:key", destination: "https://support.example.com/client/v1/analytics/:key" },
-    ]
+    return [{ source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" }]
   },
+}
+```
+
+In `app/stats/client/v1/analytics/[key]/route.ts`:
+
+```ts
+export async function POST(request: Request, { params }: { params: Promise<{ key: string }> }) {
+  const { key } = await params
+  const visitor = request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? ""
+  const headers = new Headers({ "Content-Type": "text/plain", "X-Forwarded-For": visitor })
+  for (const name of ["origin", "user-agent", "accept-language", "dnt", "sec-gpc"]) {
+    const value = request.headers.get(name)
+    if (value) headers.set(name, value)
+  }
+  const upstream = await fetch(`https://support.example.com/client/v1/analytics/${key}`, {
+    method: "POST",
+    headers,
+    body: await request.text(),
+  })
+  return new Response(null, { status: upstream.status })
 }
 ```
 

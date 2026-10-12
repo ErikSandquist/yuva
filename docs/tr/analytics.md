@@ -21,6 +21,9 @@ içinde, aralarında 30 dakikadan uzun boşluk olmayan sayfa görüntülemelerid
 Betiğin bir cihaza yazdığı tek şey, ziyaretçinin kendi vazgeçme tercihidir
 ([aşağıda](#vazgeçme-bağlantıları)).
 
+Nelerin ne kadar süre saklandığı, sitenizin çerez bandına ihtiyacı olup olmadığı ve gizlilik bildiriminiz için
+metinler [Analitik ve gizlilik](analytics-privacy.md) sayfasındadır.
+
 ## Web sitesi ekleme
 
 1. Panelde **Analitik → Web sitesi ekle** yolunu açın. Web sitesi ekleyebilenler sahipler ve yöneticilerdir.
@@ -165,10 +168,10 @@ kendi sitenizden sunarsanız bu ziyaretçiler de sayılır. İki şeyi bilin:
 
 - Tarayıcılar olayları betiğin sunucusuna göre `/client/v1/analytics/<anahtar>` adresine gönderir.
   `data-api` (ya da `server`) ile bu sunucuya `https://www.example.com/stats` gibi bir yol öneki verebilirsiniz.
-- Yuva sunucunuz ziyaretçiyi değil, vekil sunucuyu görür. Vekil sunucunun ziyaretçinin adresini bir başlıkta
-  göndermesini sağlayın ve [`YUVA_CLIENT_IP_HEADER`](configuration.md#sunucu) değişkenine o başlığın adını
-  (`YUVA_TRUSTED_PROXIES`'e de vekil sunucuyu) yazın. Yoksa tüm ziyaretçiler tek kişi gibi görünür ve tek
-  kişi olarak sayılır.
+- Yuva sunucunuz ziyaretçiyi değil, vekil sunucuyu görür. Vekil sunucunun ziyaretçinin adresini
+  `X-Forwarded-For` başlığında göndermesini sağlayın; aşağıdaki örnekler bunu yapar. Yoksa her ziyaretçi
+  vekil sunucu gibi görünür: hepsi tek kişi olarak sayılır ve adres başına dakikada 120 olay sınırı hepsine
+  birlikte uygulanır.
 
 **nginx**, sitenizin `server` bloğunda:
 
@@ -188,16 +191,35 @@ location /client/v1/analytics/ {
 <script defer data-key="yuva_ak_xxxxxxxx" src="/yuva-analytics.js"></script>
 ```
 
-**Next.js**, `next.config.js` içinde, sıradan görünen bir yolun altında:
+**Next.js**, sıradan görünen bir yolun altında: bir rewrite betiği sunar, bir route handler olayları ziyaretçinin
+adresiyle iletir. Barındırma platformunuzun yazdığı adresi kullanın (`x-real-ip` ya da `x-forwarded-for`'un ilk
+girdisi), ziyaretçinin yazabileceği bir adresi değil. `next.config.js` içinde:
 
 ```js
 module.exports = {
   async rewrites() {
-    return [
-      { source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" },
-      { source: "/stats/client/v1/analytics/:key", destination: "https://support.example.com/client/v1/analytics/:key" },
-    ]
+    return [{ source: "/stats/yuva-analytics.js", destination: "https://support.example.com/yuva-analytics.js" }]
   },
+}
+```
+
+`app/stats/client/v1/analytics/[key]/route.ts` içinde:
+
+```ts
+export async function POST(request: Request, { params }: { params: Promise<{ key: string }> }) {
+  const { key } = await params
+  const visitor = request.headers.get("x-real-ip") ?? request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? ""
+  const headers = new Headers({ "Content-Type": "text/plain", "X-Forwarded-For": visitor })
+  for (const name of ["origin", "user-agent", "accept-language", "dnt", "sec-gpc"]) {
+    const value = request.headers.get(name)
+    if (value) headers.set(name, value)
+  }
+  const upstream = await fetch(`https://support.example.com/client/v1/analytics/${key}`, {
+    method: "POST",
+    headers,
+    body: await request.text(),
+  })
+  return new Response(null, { status: upstream.status })
 }
 ```
 
