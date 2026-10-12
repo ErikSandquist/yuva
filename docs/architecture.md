@@ -1381,7 +1381,8 @@ losing a message and without changing anything at the source. Decisions:
   and every host not on the source's list. A sign-in must grant exactly the requested scopes. Tests
   fail the build if a write command or method could be sent, and an integration test proves a Dovecot
   mailbox byte-identical after a migration.
-- **Two phases.** A scan reads headers only, joins threads (Takeout and help-desk thread ids, else
+- **Two phases.** A scan reads headers only (the whole message only when it has no Message-ID, to take
+  the same hash the live ingest stores), joins threads (Takeout and help-desk thread ids, else
   `References`/`In-Reply-To` with the live bounds, never by subject) and gives an exact dry run:
   counts per folder, what is skipped and why, contacts, labels, storage and time. The copy then
   imports whole threads newest first. A thread is a conversation of the inbox's e-mail channel whose
@@ -1407,8 +1408,10 @@ losing a message and without changing anything at the source. Decisions:
   mailbox meet without duplicates. Each source has a budget below its published limit (Gmail IMAP
   1,500 MB a day, other servers one connection and 4 MB/s, help desks half their rate limit), kept on
   the migration row; limit answers and `Retry-After` are honoured. Microsoft tokens are refreshed
-  before a connection and resealed. Progress reaches owners and admins as `migration.updated`
-  (stored) and `migration.progress` (a signal, at most every two seconds); never webhooks.
+  before a connection and resealed. Pause stops after the batch in progress (at most 50 messages);
+  any change to a ready migration's options sends it back for a new dry run. Progress reaches owners
+  and admins as `migration.updated` (stored) and `migration.progress` (a signal, at most every two
+  seconds); never webhooks.
 - **Cutover.** After the copy, sync runs every two minutes. Mail received before the migration went
   live is history; mail after it is new mail and takes the live path (events, notifications), without
   the greeting. Every e-mail channel has a forwarding address `<token>@YUVA_FORWARDING_DOMAIN` that
