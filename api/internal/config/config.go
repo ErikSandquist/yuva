@@ -93,6 +93,13 @@ type Config struct {
 	MigrationAuditDays int
 	// ForwardingDomain gives every e-mail channel the address <token>@ForwardingDomain; empty for none.
 	ForwardingDomain string
+	// MicrosoftClientID and MicrosoftClientSecret are the server's own Microsoft Entra app
+	// registration for Sign in with Microsoft (YUVA_MICROSOFT_CLIENT_ID, _CLIENT_SECRET); without
+	// them a team signs in with an app registration of its own. MicrosoftTenant is its authority
+	// (YUVA_MICROSOFT_TENANT): common for a multi-tenant app, else its tenant.
+	MicrosoftClientID     string
+	MicrosoftClientSecret string
+	MicrosoftTenant       string
 }
 
 type VAPID struct {
@@ -315,6 +322,7 @@ func (c *Config) loadBroadcasts() error {
 var migrationSources = []string{"imap", "file", "zendesk", "helpscout"}
 
 var forwardingDomainRe = regexp.MustCompile(`^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$`)
+var microsoftTenantRe = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9.-]{0,252}$`)
 
 func (c *Config) loadMigrations() error {
 	var err error
@@ -345,6 +353,15 @@ func (c *Config) loadMigrations() error {
 	c.ForwardingDomain = strings.TrimSuffix(strings.ToLower(strings.TrimSpace(os.Getenv("YUVA_FORWARDING_DOMAIN"))), ".")
 	if c.ForwardingDomain != "" && !forwardingDomainRe.MatchString(c.ForwardingDomain) {
 		return fmt.Errorf("YUVA_FORWARDING_DOMAIN must be a domain name such as forward.example.com, got %q", c.ForwardingDomain)
+	}
+	c.MicrosoftClientID = strings.TrimSpace(os.Getenv("YUVA_MICROSOFT_CLIENT_ID"))
+	c.MicrosoftClientSecret = os.Getenv("YUVA_MICROSOFT_CLIENT_SECRET")
+	if (c.MicrosoftClientID == "") != (c.MicrosoftClientSecret == "") {
+		return errors.New("set both YUVA_MICROSOFT_CLIENT_ID and YUVA_MICROSOFT_CLIENT_SECRET, or neither")
+	}
+	c.MicrosoftTenant = strings.TrimSpace(env("YUVA_MICROSOFT_TENANT", "common"))
+	if !microsoftTenantRe.MatchString(c.MicrosoftTenant) {
+		return fmt.Errorf("YUVA_MICROSOFT_TENANT must be common, organizations, consumers, a tenant id or a verified domain, got %q", c.MicrosoftTenant)
 	}
 	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); set {
 		c.MigrationSources = []string{}

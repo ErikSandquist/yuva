@@ -48,9 +48,10 @@ const (
 
 var (
 	errMigrationGone         = problem(http.StatusNotFound, "not_found", "no such migration")
-	errProviderNotConfigured = problem(http.StatusConflict, "provider_not_configured", "Outlook.com and Microsoft 365 connect with Sign in with Microsoft, which this server does not offer yet")
+	errProviderNotConfigured = problem(http.StatusConflict, "provider_not_configured", "Outlook.com and Microsoft 365 connect with Sign in with Microsoft, which this server cannot offer: it has no Microsoft app of its own (YUVA_MICROSOFT_CLIENT_ID) and its public URL is not one Microsoft accepts for a team's own app (HTTPS, or http://localhost)")
 	errMigrationNoCreds      = problem(http.StatusConflict, "migration_state", "set the mailbox's credentials before testing the connection")
 	errFileNoCredentials     = problem(http.StatusConflict, "migration_state", "an export file migration reads its uploaded file; it has no mailbox to connect to")
+	errMicrosoftNoPassword   = problem(http.StatusConflict, "migration_state", "Outlook.com and Microsoft 365 accept no passwords: sign in with Microsoft (POST .../sign-in)")
 	builtMigrationSources    = []string{string(oas.MigrationSourceImap), string(oas.MigrationSourceFile), string(oas.MigrationSourceZendesk), string(oas.MigrationSourceHelpscout)}
 	runningMigrationStates   = []string{migrationScanning, migrationCopying, migrationSyncing, migrationRemoving}
 )
@@ -95,6 +96,14 @@ type MigrationSettings struct {
 	HelpdeskDial func(ctx context.Context, network, addr string) (net.Conn, error)
 	// HelpdeskSleep replaces how a help-desk reader waits for its request budget, for tests.
 	HelpdeskSleep func(ctx context.Context, d time.Duration) error
+	// MicrosoftClientID, MicrosoftClientSecret and MicrosoftTenant are the server's own Microsoft
+	// app registration (YUVA_MICROSOFT_*); without them a team signs in with its own.
+	MicrosoftClientID     string
+	MicrosoftClientSecret string
+	MicrosoftTenant       string
+	// MicrosoftDial replaces the dialer Microsoft's token endpoint and IMAP server are reached
+	// with, for tests.
+	MicrosoftDial func(ctx context.Context, network, addr string) (net.Conn, error)
 }
 
 func migrationSettings(in MigrationSettings) MigrationSettings {
@@ -189,7 +198,7 @@ func migrationActions(m store.Migration, hasCreds bool) []oas.MigrationAction {
 	if file {
 		hasCreds = uploadReady(m)
 	}
-	desk := helpdeskMigration(m)
+	desk := helpdeskMigration(m) || microsoftMigration(m)
 	switch {
 	case desk && (m.State == migrationDraft || m.State == migrationConnected):
 		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionSignIn)
@@ -280,8 +289,11 @@ func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migratio
 	if m.StateReason != "" {
 		out.StateReason = &m.StateReason
 	}
-	if r := readSourceState(m.SourceState).SignInResult; r != "" && helpdeskMigration(m) {
-		out.SignInResult = new(oas.MigrationSignInResult(r))
+	if doc := readSourceState(m.SourceState); doc.SignInResult != "" && (helpdeskMigration(m) || microsoftMigration(m)) {
+		out.SignInResult = new(oas.MigrationSignInResult(doc.SignInResult))
+		if doc.AdminConsentURL != "" && doc.SignInResult == string(oas.SignInAdminConsentRequired) {
+			out.AdminConsentUrl = new(doc.AdminConsentURL)
+		}
 	}
 	out.LiveFrom, out.SyncedAt, out.ProbeSentAt, out.ProbeSyncedAt, out.VerifiedAt = m.LiveFrom, m.SyncedAt, m.ProbeSentAt, m.ProbeSyncedAt, m.VerifiedAt
 	if m.VerifiedRoute != nil {
@@ -666,11 +678,15 @@ func (s *Server) ListMigrationPresets(ctx context.Context, req oas.ListMigration
 			continue
 		}
 		body := presetBody(p)
-		if slices.Contains(p.Auth, migrate.AuthOAuth) {
-			body.RedirectUrl, body.Scopes = new(s.signInRedirectURL()), new(slices.Clone(p.Scopes))
+		body.Available = s.presetAvailable(p)
+		if slices.Contains(p.Auth, migrate.AuthOAuth) || slices.Contains(p.Auth, migrate.AuthMicrosoft) {
+			body.RedirectUrl, body.Scopes, body.TeamClient = new(s.signInRedirectURL()), new(slices.Clone(p.Scopes)), new(true)
 			if p.Subdomain {
 				body.Subdomain = new(true)
 			}
+		}
+		if _, ok := s.microsoftServerApp(); ok && p.ID == migrate.PresetMicrosoft {
+			body.TeamClient = new(false)
 		}
 		out.Items = append(out.Items, body)
 	}
@@ -724,7 +740,9 @@ func (s *Server) DetectMigrationSource(ctx context.Context, req oas.DetectMigrat
 	}
 	ctx, cancel := context.WithTimeout(ctx, migrate.TestTimeout)
 	defer cancel()
-	d := migrate.Detector{Resolver: s.migrations.Resolver, HTTP: s.migrations.HTTP, AllowPrivate: s.migrations.AllowPrivate}.Detect(ctx, addr)
+	d := migrate.Detector{
+		Resolver: s.migrations.Resolver, HTTP: s.migrations.HTTP, AllowPrivate: s.migrations.AllowPrivate, MicrosoftAvailable: s.microsoftAvailable(),
+	}.Detect(ctx, addr)
 	out := oas.DetectMigrationSource200JSONResponse{
 		Address: d.Address, Domain: d.Domain, Preset: oas.MigrationPresetId(d.Preset), Name: d.Name, Available: d.Available,
 		Auth: authWays(d.Auth), Guide: d.Guide, Mx: d.MX, FoundBy: oas.MigrationDetectionFoundBy(d.FoundBy),
@@ -796,7 +814,7 @@ func (s *Server) checkMigrationPreset(source, preset string) error {
 	if !ok || p.Source != source {
 		return errValidation("preset must be a preset of source " + source)
 	}
-	if !p.Available {
+	if !s.presetAvailable(p) {
 		return errProviderNotConfigured
 	}
 	return nil
@@ -1079,6 +1097,9 @@ func (s *Server) SetMigrationCredentials(ctx context.Context, req oas.SetMigrati
 		if helpdeskMigration(m) {
 			return errHelpdeskNoPassword
 		}
+		if microsoftMigration(m) {
+			return errMicrosoftNoPassword
+		}
 		preset, ok := migrate.LookupPreset(m.Preset)
 		if !ok || !preset.Available || !slices.Contains(preset.Auth, migrate.AuthPassword) {
 			return errProviderNotConfigured
@@ -1162,9 +1183,11 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 		return s.testHelpdeskConnection(ctx, p, req.MigrationId)
 	}
 	var (
-		auditID int64
-		target  migrate.Target
-		credAt  time.Time
+		auditID   int64
+		target    migrate.Target
+		credAt    time.Time
+		migration store.Migration
+		oauthCred *store.MigrationCredential
 	)
 	err := s.st.InTx(ctx, func(q *store.Queries) error {
 		m, err := visibleMigration(ctx, q, p, req.MigrationId, true)
@@ -1185,20 +1208,25 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 			return err
 		}
 		preset, ok := migrate.LookupPreset(m.Preset)
-		if !ok || cred.Kind != string(oas.CredentialsPassword) {
+		switch {
+		case ok && microsoftMigration(m) && cred.Kind == string(oas.CredentialsOauth):
+			oauthCred, migration = &cred, m
+			target = migrate.Target{Preset: preset, Server: migrate.Server{Host: cred.Host, Port: int(cred.Port), TLS: cred.Tls}, Username: m.SourceAddress}
+		case !ok || cred.Kind != string(oas.CredentialsPassword):
 			return errProviderNotConfigured
-		}
-		plain, err := s.secrets.Open(cred.Sealed, migrationSecretContext(p.workspaceID, m.ID))
-		if err != nil {
-			return err
-		}
-		var sec migrationSecret
-		if err := json.Unmarshal(plain, &sec); err != nil {
-			return err
-		}
-		target = migrate.Target{
-			Preset: preset, Server: migrate.Server{Host: cred.Host, Port: int(cred.Port), TLS: cred.Tls},
-			Username: sec.Username, Password: sec.Password,
+		default:
+			plain, err := s.secrets.Open(cred.Sealed, migrationSecretContext(p.workspaceID, m.ID))
+			if err != nil {
+				return err
+			}
+			var sec migrationSecret
+			if err := json.Unmarshal(plain, &sec); err != nil {
+				return err
+			}
+			target = migrate.Target{
+				Preset: preset, Server: migrate.Server{Host: cred.Host, Port: int(cred.Port), TLS: cred.Tls},
+				Username: sec.Username, Password: sec.Password,
+			}
 		}
 		if cred.CertificateSha256 != nil {
 			target.CertificateSHA256 = *cred.CertificateSha256
@@ -1210,9 +1238,22 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 	if err != nil {
 		return nil, err
 	}
-	res := migrate.Tester{
+	tester := migrate.Tester{
 		Resolver: s.migrations.Resolver, AllowPrivate: s.migrations.AllowPrivate, RootCAs: s.migrations.RootCAs, Timeout: s.migrations.TestTimeout,
-	}.Run(context.WithoutCancel(ctx), target)
+		Dial: s.sourceDial(target.Server.Host),
+	}
+	var res migrate.TestResult
+	if oauthCred != nil {
+		sec, err := s.microsoftCredentials(context.WithoutCancel(ctx), migration, *oauthCred)
+		if err != nil {
+			res = microsoftTestFailure(err, sec)
+		} else {
+			target.Token = sec.Tokens.Access
+			res = tester.Run(context.WithoutCancel(ctx), target)
+		}
+	} else {
+		res = tester.Run(context.WithoutCancel(ctx), target)
+	}
 	target = migrate.Target{}
 	failed := res.Failed()
 	detail := map[string]any{"ok": res.OK}

@@ -40,6 +40,9 @@ jobs:
       YUVA_TEST_DATABASE_URL: postgres://yuva:yuva@localhost:5432/yuva_test?sslmode=disable
       YUVA_TEST_IMAP_URL: imaps://:migrate-test-only@127.0.0.1:59993
       YUVA_TEST_IMAP_FIXTURES: /tmp/yuva-migrate-fixtures
+      YUVA_TEST_XOAUTH2_URL: imaps://:migrate-test-only@127.0.0.1:59994
+      YUVA_TEST_XOAUTH2_CERT: /tmp/yuva-xoauth2/tls.crt
+      YUVA_TEST_XOAUTH2_INTROSPECTION: 127.0.0.1:59980
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v5
@@ -52,12 +55,21 @@ jobs:
           docker run -d --name dovecot -e USER_PASSWORD=migrate-test-only \
             -v "$PWD/deploy/dovecot/migrate-test.conf:/etc/dovecot/dovecot.conf:ro" -v "$YUVA_TEST_IMAP_FIXTURES:/srv/vmail" \
             -p 127.0.0.1:59993:31993 -p 127.0.0.1:59143:31143 dovecot/dovecot:2.4.4
-          for i in $(seq 1 30); do
-            if (exec 3<>/dev/tcp/127.0.0.1/59993) 2>/dev/null; then exit 0; fi
-            sleep 1
+          mkdir -p /tmp/yuva-xoauth2
+          openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:P-256 -nodes -days 2 -subj /CN=outlook.office365.com \
+            -addext subjectAltName=DNS:outlook.office365.com -keyout /tmp/yuva-xoauth2/tls.key -out /tmp/yuva-xoauth2/tls.crt
+          chmod 644 /tmp/yuva-xoauth2/tls.key /tmp/yuva-xoauth2/tls.crt
+          docker run -d --name dovecot-xoauth2 --network host -e USER_PASSWORD=migrate-test-only \
+            -v "$PWD/deploy/dovecot/migrate-test-xoauth2.conf:/etc/dovecot/dovecot.conf:ro" -v "$YUVA_TEST_IMAP_FIXTURES:/srv/vmail" \
+            -v /tmp/yuva-xoauth2/tls.crt:/etc/dovecot/ssl/tls.crt:ro -v /tmp/yuva-xoauth2/tls.key:/etc/dovecot/ssl/tls.key:ro dovecot/dovecot:2.4.4
+          for port in 59993 59994; do
+            for i in $(seq 1 30); do
+              if (exec 3<>/dev/tcp/127.0.0.1/$port) 2>/dev/null; then continue 2; fi
+              sleep 1
+            done
+            docker logs dovecot; docker logs dovecot-xoauth2
+            exit 1
           done
-          docker logs dovecot
-          exit 1
       - name: api
         working-directory: api
         run: go generate ./... && go vet ./... && go test ./... && go build ./...

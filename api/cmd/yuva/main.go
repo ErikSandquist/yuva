@@ -410,6 +410,7 @@ func migrationSettings(cfg config.Config) api.MigrationSettings {
 		Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate, MaxActive: cfg.MigrationMaxActive,
 		MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes, UploadMaxBytes: cfg.MigrationUploadMaxBytes,
 		SyncMaxDays: cfg.MigrationSyncMaxDays, AuditDays: cfg.MigrationAuditDays,
+		MicrosoftClientID: cfg.MicrosoftClientID, MicrosoftClientSecret: cfg.MicrosoftClientSecret, MicrosoftTenant: cfg.MicrosoftTenant,
 	}
 	if a, err := netmail.ParseAddress(cfg.SMTP.From); err == nil && cfg.SMTP.Enabled() {
 		out.ProbeSMTP = &email.SMTPConfig{Host: cfg.SMTP.Host, Port: cfg.SMTP.Port, Username: cfg.SMTP.Username, Password: cfg.SMTP.Password, TLS: cfg.SMTP.TLS}

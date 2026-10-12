@@ -164,7 +164,6 @@ func TestMigrationAccess(t *testing.T) {
 	if h.count("SELECT count(*) FROM migration_audit WHERE workspace_id = $1 AND migration_id = $2 AND action = 'created'", mt.ws, id) != 1 {
 		t.Fatal("no audit row")
 	}
-	mt.owner.expectProblem(http.StatusConflict, "provider_not_configured", "POST", "/v1/migrations", map[string]any{"preset": "microsoft", "source_address": "a@outlook.com"})
 	mt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/migrations", map[string]any{"source": "zendesk", "preset": "imap", "source_address": "a@example.com"})
 	mt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/migrations", map[string]any{"preset": "hotmail", "source_address": "a@example.com"})
 
@@ -202,7 +201,7 @@ func TestMigrationAccess(t *testing.T) {
 	for _, p := range presets {
 		byID[p.(map[string]any)["id"].(string)] = p.(map[string]any)
 	}
-	if len(byID) != 14 || byID["zendesk"]["source"] != "zendesk" || byID["helpscout"]["auth"].([]any)[0] != "oauth" || byID["takeout"]["source"] != "file" || byID["file"]["source"] != "file" || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != false || byID["icloud"]["username"] != "local_part" ||
+	if len(byID) != 14 || byID["zendesk"]["source"] != "zendesk" || byID["helpscout"]["auth"].([]any)[0] != "oauth" || byID["takeout"]["source"] != "file" || byID["file"]["source"] != "file" || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != true || byID["microsoft"]["team_client"] != true || byID["icloud"]["username"] != "local_part" ||
 		byID["gmail"]["budget"].(map[string]any)["bytes_per_day"] != float64(1500000000) {
 		t.Fatalf("presets: %v", byID)
 	}
@@ -211,7 +210,7 @@ func TestMigrationAccess(t *testing.T) {
 		t.Fatalf("detect: %s", det.raw)
 	}
 	det = mt.owner.expect(http.StatusOK, "POST", "/v1/migrations/detect", map[string]any{"address": "someone@hotmail.com"})
-	if det.str("preset") != "microsoft" || det.body["available"] != false || det.str("note") != "microsoft_later" {
+	if det.str("preset") != "microsoft" || det.body["available"] != true || det.body["note"] != nil {
 		t.Fatalf("detect microsoft: %s", det.raw)
 	}
 

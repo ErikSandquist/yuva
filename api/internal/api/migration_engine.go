@@ -311,27 +311,44 @@ func (r *migrationRun) source(ctx context.Context) (*sourceReader, error) {
 	if err != nil {
 		return nil, err
 	}
-	plain, err := s.secrets.Open(cred.Sealed, migrationSecretContext(r.m.WorkspaceID, r.m.ID))
-	if err != nil {
-		return nil, err
+	r.host = cred.Host
+	var login func(ctx context.Context, reader *imapread.Reader) error
+	if microsoftMigration(r.m) && cred.Kind == string(oas.CredentialsOauth) {
+		sec, err := s.microsoftCredentials(ctx, r.m, cred)
+		r.secrets = sec.secrets()
+		if err != nil {
+			return nil, err
+		}
+		login = func(ctx context.Context, reader *imapread.Reader) error {
+			return reader.LoginXOAUTH2(ctx, sec.Account, sec.Tokens.Access)
+		}
+	} else {
+		plain, err := s.secrets.Open(cred.Sealed, migrationSecretContext(r.m.WorkspaceID, r.m.ID))
+		if err != nil {
+			return nil, err
+		}
+		var sec migrationSecret
+		if err := json.Unmarshal(plain, &sec); err != nil {
+			return nil, err
+		}
+		r.secrets = []string{sec.Username, sec.Password}
+		login = func(ctx context.Context, reader *imapread.Reader) error {
+			return reader.Login(ctx, sec.Username, sec.Password)
+		}
 	}
-	var sec migrationSecret
-	if err := json.Unmarshal(plain, &sec); err != nil {
-		return nil, err
-	}
-	r.host, r.secrets = cred.Host, []string{sec.Username, sec.Password}
 	cctx, cancel := context.WithTimeout(ctx, migrationConnectTimeout)
 	defer cancel()
-	ips, err := migrate.Addresses(cctx, s.migrations.Resolver, cred.Host, s.migrations.AllowPrivate)
-	if err != nil {
-		return nil, err
-	}
-	cfg := imapread.Config{
-		Host: cred.Host, Port: int(cred.Port), TLS: imapread.TLSMode(cred.Tls), RootCAs: s.migrations.RootCAs,
-		Dial: func(ctx context.Context, _, _ string) (net.Conn, error) {
+	dial := s.sourceDial(cred.Host)
+	if dial == nil {
+		ips, err := migrate.Addresses(cctx, s.migrations.Resolver, cred.Host, s.migrations.AllowPrivate)
+		if err != nil {
+			return nil, err
+		}
+		dial = func(ctx context.Context, _, _ string) (net.Conn, error) {
 			return migrate.DialAddresses(ctx, ips, int(cred.Port), 10*time.Second)
-		},
+		}
 	}
+	cfg := imapread.Config{Host: cred.Host, Port: int(cred.Port), TLS: imapread.TLSMode(cred.Tls), RootCAs: s.migrations.RootCAs, Dial: dial}
 	if cred.CertificateSha256 != nil {
 		cfg.CertificateSHA256 = *cred.CertificateSha256
 	}
@@ -339,7 +356,7 @@ func (r *migrationRun) source(ctx context.Context) (*sourceReader, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := reader.Login(cctx, sec.Username, sec.Password); err != nil {
+	if err := login(cctx, reader); err != nil {
 		_ = reader.Close()
 		return nil, err
 	}
@@ -372,6 +389,8 @@ func (r *migrationRun) clearWaiting(ctx context.Context) error {
 
 const (
 	reasonReconnect   = "The mailbox no longer accepts the password; reconnect it to continue."
+	reasonSignIn      = "Microsoft no longer accepts Yuva's sign-in to the mailbox (consent withdrawn, password changed or the sign-in expired); sign in with Microsoft again to continue."
+	reasonIMAPOff     = "The mailbox refused Yuva's Microsoft sign-in over IMAP, usually because IMAP was turned off for it; ask an admin to turn IMAP on for the mailbox, then sign in again."
 	reasonRefused     = "Yuva kept a command from the mailbox that could have changed it; nothing was changed. Tell the server's operator."
 	reasonUnreachable = "The mail server has not answered for a while; check it, then resume."
 	reasonDaily       = "Waiting for the provider's daily download limit."
@@ -396,7 +415,14 @@ func (r *migrationRun) trouble(ctx context.Context, err error) (MigrationSlice, 
 		r.s.log.ErrorContext(ctx, "migration source write refused", slog.String("migration_id", r.m.ID.String()), slog.String("command", detail))
 		return MigrationSlice{Done: true}, r.needsAttention(ctx, code, detail, reasonRefused)
 	case migrate.TroubleReconnect:
-		return MigrationSlice{Done: true}, r.needsAttention(ctx, code, detail, reasonReconnect)
+		reason := reasonReconnect
+		switch code {
+		case migrate.CodeTokenRefreshFailed, migrate.CodeScopeTooBroad:
+			reason = reasonSignIn
+		case migrate.CodeXOAUTH2Failed:
+			reason = reasonIMAPOff
+		}
+		return MigrationSlice{Done: true}, r.needsAttention(ctx, code, detail, reason)
 	case migrate.TroubleDaily:
 		until, reason = r.throttle.WindowEnd(now), reasonDaily
 	case migrate.TroubleLimit:

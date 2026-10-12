@@ -21,6 +21,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/migrate"
 	"github.com/productdevbook/yuva/api/internal/migrate/helpdesk"
+	"github.com/productdevbook/yuva/api/internal/migrate/microsoft"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -35,7 +36,7 @@ const (
 
 var (
 	subdomainRe           = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,62}$`)
-	errNotHelpdesk        = errMigrationState("only a Zendesk or Help Scout migration signs in with an OAuth client")
+	errNotHelpdesk        = errMigrationState("only a Zendesk, Help Scout or Microsoft migration signs in")
 	errHelpdeskNoPassword = errMigrationState("a help desk connects with a sign-in (POST .../sign-in), not a password")
 )
 
@@ -63,6 +64,8 @@ type sourceStateDoc struct {
 	Sync         helpdesk.Cursor `json:"sync"`
 	SyncStarted  bool            `json:"sync_started,omitempty"`
 	SignInResult string          `json:"sign_in_result,omitempty"`
+	// AdminConsentURL is Microsoft's page where an admin consents for the organization.
+	AdminConsentURL string `json:"admin_consent_url,omitempty"`
 }
 
 func readSourceState(raw []byte) sourceStateDoc {
@@ -83,22 +86,26 @@ func (s *Server) helpdeskConfig() helpdesk.Config {
 		cfg.Dial = s.migrations.HelpdeskDial
 		return cfg
 	}
-	cfg.Dial = func(ctx context.Context, _, addr string) (net.Conn, error) {
-		host, port, err := net.SplitHostPort(addr)
-		if err != nil {
-			return nil, err
-		}
-		n, err := strconv.Atoi(port)
-		if err != nil {
-			return nil, err
-		}
-		ips, err := migrate.Addresses(ctx, s.migrations.Resolver, host, s.migrations.AllowPrivate)
-		if err != nil {
-			return nil, err
-		}
-		return migrate.DialAddresses(ctx, ips, n, 10*time.Second)
-	}
+	cfg.Dial = s.checkedDial
 	return cfg
+}
+
+// checkedDial connects to a source only after the address checks every migration connection
+// follows.
+func (s *Server) checkedDial(ctx context.Context, _, addr string) (net.Conn, error) {
+	host, port, err := net.SplitHostPort(addr)
+	if err != nil {
+		return nil, err
+	}
+	n, err := strconv.Atoi(port)
+	if err != nil {
+		return nil, err
+	}
+	ips, err := migrate.Addresses(ctx, s.migrations.Resolver, host, s.migrations.AllowPrivate)
+	if err != nil {
+		return nil, err
+	}
+	return migrate.DialAddresses(ctx, ips, n, 10*time.Second)
 }
 
 func (s *Server) helpdeskSource(source, subdomain string, token func() string, budget *helpdesk.Budget) helpdesk.Source {
@@ -150,6 +157,11 @@ func stateHash(v string) string {
 
 func (s *Server) StartMigrationSignIn(ctx context.Context, req oas.StartMigrationSignInRequestObject) (oas.StartMigrationSignInResponseObject, error) {
 	p := principalFrom(ctx)
+	if m, err := visibleMigration(ctx, s.st.Queries, p, req.MigrationId, false); err != nil {
+		return nil, err
+	} else if microsoftMigration(m) {
+		return s.startMicrosoftSignIn(ctx, p, m, req.Body)
+	}
 	b := req.Body
 	clientID, secret := strings.TrimSpace(b.ClientId), ""
 	if b.ClientSecret != nil {
@@ -235,6 +247,14 @@ func (s *Server) serveMigrationSignIn(w http.ResponseWriter, r *http.Request) {
 	state := query.Get("state")
 	ws, mid, ok := readSignInState(state)
 	panel := strings.TrimRight(s.auth.PublicURL, "/")
+	if state == microsoft.AdminConsentState {
+		result := oas.SignInAccessDenied
+		if strings.EqualFold(query.Get("admin_consent"), "true") {
+			result = oas.SignInAdminConsented
+		}
+		http.Redirect(w, r, panel+"/settings/migrations?result="+string(result), http.StatusSeeOther)
+		return
+	}
 	if !ok {
 		http.Redirect(w, r, panel+"/settings/migrations?result="+string(oas.SignInExpired), http.StatusSeeOther)
 		return
@@ -256,10 +276,13 @@ func (s *Server) finishSignIn(ctx context.Context, r *http.Request, ws, mid uuid
 	if row.MemberID != nil && !s.sameMemberSession(ctx, r, ws, *row.MemberID) {
 		return s.signInFailed(ctx, ws, mid, oas.SignInSessionMismatch)
 	}
+	m, err := s.st.GetMigration(ctx, store.GetMigrationParams{WorkspaceID: ws, ID: mid})
+	if err == nil && microsoftMigration(m) {
+		return s.finishMicrosoftSignIn(ctx, row, m, query)
+	}
 	if query.Get("error") != "" || query.Get("code") == "" {
 		return s.signInFailed(ctx, ws, mid, oas.SignInAccessDenied)
 	}
-	m, err := s.st.GetMigration(ctx, store.GetMigrationParams{WorkspaceID: ws, ID: mid})
 	if err != nil || !helpdeskMigration(m) || (m.State != migrationDraft && m.State != migrationConnected && m.State != migrationNeedsAttention) {
 		return oas.SignInExpired
 	}
@@ -404,6 +427,12 @@ func signInFailure(err error) oas.MigrationSignInResult {
 }
 
 func (s *Server) signInFailed(ctx context.Context, ws, mid uuid.UUID, result oas.MigrationSignInResult) oas.MigrationSignInResult {
+	return s.signInEnded(ctx, ws, mid, result, "")
+}
+
+// signInEnded records how a sign-in that stored nothing ended, with Microsoft's admin consent
+// page when only an admin can consent.
+func (s *Server) signInEnded(ctx context.Context, ws, mid uuid.UUID, result oas.MigrationSignInResult, adminConsent string) oas.MigrationSignInResult {
 	err := s.inTx(ctx, ws, func(q *store.Queries, events *eventBatch) error {
 		cur, err := q.LockMigration(ctx, store.LockMigrationParams{WorkspaceID: ws, ID: mid})
 		if store.IsNotFound(err) {
@@ -413,7 +442,7 @@ func (s *Server) signInFailed(ctx context.Context, ws, mid uuid.UUID, result oas
 			return err
 		}
 		doc := readSourceState(cur.SourceState)
-		doc.SignInResult = string(result)
+		doc.SignInResult, doc.AdminConsentURL = string(result), adminConsent
 		if err := q.SetMigrationSourceState(ctx, store.SetMigrationSourceStateParams{WorkspaceID: ws, ID: mid, SourceState: mustJSON(doc)}); err != nil {
 			return err
 		}

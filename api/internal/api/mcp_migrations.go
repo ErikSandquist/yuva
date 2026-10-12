@@ -18,7 +18,7 @@ import (
 var (
 	errNotMigrationManager = problem(http.StatusForbidden, "forbidden", "only owners, admins and API keys without an inbox limit move mailboxes into Yuva")
 	migrationStates        = []any{"draft", "connected", "scanning", "ready", "copying", "paused", "needs_attention", "syncing", "completed", "cancelled", "removing", "removed"}
-	migrationPresets       = []any{"gmail", "google_workspace", "yandex", "icloud", "zoho", "yahoo", "fastmail", "gmx", "imap", "zendesk", "helpscout"}
+	migrationPresets       = []any{"gmail", "google_workspace", "microsoft", "yandex", "icloud", "zoho", "yahoo", "fastmail", "gmx", "imap", "zendesk", "helpscout"}
 )
 
 const readOnlyPromise = "Yuva only reads the mailbox: it opens folders read-only, never deletes, moves, flags or marks anything there, and the old mailbox stays as it is."
@@ -207,7 +207,7 @@ type detectSourceOut struct {
 	Provider  string   `json:"provider" jsonschema:"the preset to create the migration with"`
 	Name      string   `json:"name" jsonschema:"the provider's name"`
 	Available bool     `json:"available" jsonschema:"false when this server cannot connect to the provider yet"`
-	Auth      []string `json:"auth" jsonschema:"how the mailbox connects: password (an app password) or microsoft"`
+	Auth      []string `json:"auth" jsonschema:"how the mailbox connects: password (an app password), microsoft (the person signs in with Microsoft at connect_url) or oauth (a help desk's sign-in)"`
 	Guide     string   `json:"guide" jsonschema:"the provider's guide"`
 	Note      string   `json:"note,omitempty"`
 	FoundBy   string   `json:"found_by"`
@@ -465,7 +465,7 @@ var mcpMigrationTools = []mcpTool{
 			return c.getMigration(ctx, in.MigrationID)
 		}),
 	defineTool("create_migration", "Start moving a mailbox",
-		"Creates a migration of a mailbox into an inbox and returns connect_url, the page where the person enters the app password or signs in. Never ask for a password: give the person connect_url. Nothing is read until they connect. With inbox_id and no channel_id it uses the inbox's e-mail channel for the mailbox address and creates that channel when the inbox has none (channel_created, which needs inboxes:manage); then tell the person channel_setup. Owners, admins and keys only. Maps to POST /v1/migrations, and to POST /v1/inboxes/{id}/channels with kind email when it creates the channel.",
+		"Creates a migration of a mailbox into an inbox and returns connect_url, the page where the person enters the app password or signs in (Outlook.com and Microsoft 365: provider microsoft, where the person signs in with Microsoft; nothing is needed from you). Never ask for a password: give the person connect_url. Nothing is read until they connect. With inbox_id and no channel_id it uses the inbox's e-mail channel for the mailbox address and creates that channel when the inbox has none (channel_created, which needs inboxes:manage); then tell the person channel_setup. Owners, admins and keys only. Maps to POST /v1/migrations, and to POST /v1/inboxes/{id}/channels with kind email when it creates the channel.",
 		additive, map[string][]any{"provider": migrationPresets}, migrationTool("CreateMigration", "DetectMigrationSource"),
 		func(ctx context.Context, c *mcpCall, in createMigrationIn) (mcpMigration, error) {
 			preset := in.Provider
@@ -703,7 +703,7 @@ func (c *mcpCall) moveToYuvaPrompt(args map[string]string) *mcp.GetPromptResult 
 			"5. Call get_migration until state is ready. The first time it is ready with team_suggestions, show those addresses with their counts and ask me which are the team's (aliases or colleagues): mail from them is imported as sent by the team, mail from the others as from customers. If I name any, call update_migration with team_addresses set to them and every team address set before, call scan_migration again and wait for ready. Summarise the estimate: conversations, messages in and out, new and existing contacts, labels, what is skipped and why, storage and time. Call preview_migration and show two or three threads briefly. Ask me to confirm. Only after I confirm, call start_migration.\n"+
 			"6. When I ask, report progress from get_migration (percent, counts, waiting_until). If state is needs_attention, explain reason and how to fix it; when the mailbox must be reconnected, give me connect_url again, then call resume_migration.\n"+
 			"7. When state is syncing, the history is in and new mail is copied every two minutes. Explain how to switch the mail for this provider: forward the mailbox to forwarding_address (keeping a copy), route it there on the admin side, or move the MX. If forwarding_confirmation appears, give me its code and link for the provider's settings. Then call send_migration_probe and check get_migration: verified_at means mail reaches Yuva; probe_synced_at without verified_at after ten minutes means mail still reaches only the old mailbox.\n"+
-			"8. Once verified, the migration finishes on its own at quiet_until; when I want to finish earlier, call finish_migration. Finishing deletes the mailbox's credentials: tell me to remove the app password at the provider too, and that the old mailbox is unchanged and can stay as an archive.",
+			"8. Once verified, the migration finishes on its own at quiet_until; when I want to finish earlier, call finish_migration. Finishing deletes the mailbox's credentials: tell me to remove the app password at the provider too (for Outlook.com and Microsoft 365, to remove the app from the Microsoft account or My Apps), and that the old mailbox is unchanged and can stay as an archive.",
 		"Use remove_migration_history only when I ask to undo an import, with confirm_count equal to removable_conversations after I confirmed that number.")
 }
 

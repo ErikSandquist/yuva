@@ -2662,17 +2662,22 @@ func (e MigrationProgressEventType) Valid() bool {
 
 // Defines values for MigrationSignInResult.
 const (
-	SignInAccessDenied      MigrationSignInResult = "access_denied"
-	SignInAccountMismatch   MigrationSignInResult = "account_mismatch"
-	SignInConnected         MigrationSignInResult = "connected"
-	SignInExpired           MigrationSignInResult = "expired"
-	SignInNotAdmin          MigrationSignInResult = "not_admin"
-	SignInPlanHasNoApi      MigrationSignInResult = "plan_has_no_api"
-	SignInScopeTooBroad     MigrationSignInResult = "scope_too_broad"
-	SignInSessionMismatch   MigrationSignInResult = "session_mismatch"
-	SignInSourceUnreachable MigrationSignInResult = "source_unreachable"
-	SignInSubdomainNotFound MigrationSignInResult = "subdomain_not_found"
-	SignInTokenFailed       MigrationSignInResult = "token_failed"
+	SignInAccessDenied         MigrationSignInResult = "access_denied"
+	SignInAccountMismatch      MigrationSignInResult = "account_mismatch"
+	SignInAdminConsentRequired MigrationSignInResult = "admin_consent_required"
+	SignInAdminConsented       MigrationSignInResult = "admin_consented"
+	SignInConditionalAccess    MigrationSignInResult = "conditional_access"
+	SignInConnected            MigrationSignInResult = "connected"
+	SignInConsentRequired      MigrationSignInResult = "consent_required"
+	SignInExpired              MigrationSignInResult = "expired"
+	SignInNotAdmin             MigrationSignInResult = "not_admin"
+	SignInPlanHasNoApi         MigrationSignInResult = "plan_has_no_api"
+	SignInScopeTooBroad        MigrationSignInResult = "scope_too_broad"
+	SignInSessionMismatch      MigrationSignInResult = "session_mismatch"
+	SignInSourceUnreachable    MigrationSignInResult = "source_unreachable"
+	SignInSubdomainNotFound    MigrationSignInResult = "subdomain_not_found"
+	SignInTokenFailed          MigrationSignInResult = "token_failed"
+	SignInXoauth2Failed        MigrationSignInResult = "xoauth2_failed"
 )
 
 // Valid indicates whether the value is a known member of the MigrationSignInResult enum.
@@ -2682,7 +2687,15 @@ func (e MigrationSignInResult) Valid() bool {
 		return true
 	case SignInAccountMismatch:
 		return true
+	case SignInAdminConsentRequired:
+		return true
+	case SignInAdminConsented:
+		return true
+	case SignInConditionalAccess:
+		return true
 	case SignInConnected:
+		return true
+	case SignInConsentRequired:
 		return true
 	case SignInExpired:
 		return true
@@ -2699,6 +2712,8 @@ func (e MigrationSignInResult) Valid() bool {
 	case SignInSubdomainNotFound:
 		return true
 	case SignInTokenFailed:
+		return true
+	case SignInXoauth2Failed:
 		return true
 	default:
 		return false
@@ -2791,14 +2806,17 @@ const (
 	TestCodeNotAdmin            MigrationTestCode = "not_admin"
 	TestCodeNotImap             MigrationTestCode = "not_imap"
 	TestCodePlanHasNoApi        MigrationTestCode = "plan_has_no_api"
+	TestCodeScopeTooBroad       MigrationTestCode = "scope_too_broad"
 	TestCodeStarttlsUnavailable MigrationTestCode = "starttls_unavailable"
 	TestCodeSubdomainNotFound   MigrationTestCode = "subdomain_not_found"
 	TestCodeThrottled           MigrationTestCode = "throttled"
 	TestCodeTimeout             MigrationTestCode = "timeout"
 	TestCodeTlsFailed           MigrationTestCode = "tls_failed"
+	TestCodeTokenRefreshFailed  MigrationTestCode = "token_refresh_failed"
 	TestCodeTooManyConnections  MigrationTestCode = "too_many_connections"
 	TestCodeUnexpectedAnswer    MigrationTestCode = "unexpected_answer"
 	TestCodeWebLoginRequired    MigrationTestCode = "web_login_required"
+	TestCodeXoauth2Failed       MigrationTestCode = "xoauth2_failed"
 )
 
 // Valid indicates whether the value is a known member of the MigrationTestCode enum.
@@ -2828,6 +2846,8 @@ func (e MigrationTestCode) Valid() bool {
 		return true
 	case TestCodePlanHasNoApi:
 		return true
+	case TestCodeScopeTooBroad:
+		return true
 	case TestCodeStarttlsUnavailable:
 		return true
 	case TestCodeSubdomainNotFound:
@@ -2838,11 +2858,15 @@ func (e MigrationTestCode) Valid() bool {
 		return true
 	case TestCodeTlsFailed:
 		return true
+	case TestCodeTokenRefreshFailed:
+		return true
 	case TestCodeTooManyConnections:
 		return true
 	case TestCodeUnexpectedAnswer:
 		return true
 	case TestCodeWebLoginRequired:
+		return true
+	case TestCodeXoauth2Failed:
 		return true
 	default:
 		return false
@@ -8502,6 +8526,12 @@ type MessageUpdatedEventType string
 type Migration struct {
 	Actions []MigrationAction `json:"actions"`
 
+	// AdminConsentUrl `microsoft`, after `admin_consent_required`: the link an admin of the mailbox's
+	// organization opens to grant consent to the app for everyone in it
+	// (`login.microsoftonline.com/<domain>/v2.0/adminconsent`, asking for
+	// `IMAP.AccessAsUser.All` only); afterwards the person signs in again.
+	AdminConsentUrl *string `json:"admin_consent_url,omitempty"`
+
 	// ApiKeyId The API key that created it.
 	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
 
@@ -8511,7 +8541,10 @@ type Migration struct {
 	CreatedAt time.Time       `json:"created_at"`
 
 	// Credentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
-	// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+	// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+	// sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+	// `scopes` and when the access token expires; the token is refreshed before a connection
+	// when it expires within five minutes.
 	Credentials *MigrationCredentials `json:"credentials,omitempty"`
 
 	// CredentialsDeletedAt When the credentials were deleted because the migration ended.
@@ -8580,7 +8613,7 @@ type Migration struct {
 	// SecondsLeft While copying, how long the rest takes at that rate.
 	SecondsLeft *int64 `json:"seconds_left,omitempty"`
 
-	// SignInResult Help desks: how the last sign-in ended, the same `result` its redirect carried.
+	// SignInResult Help desks and `microsoft`: how the last sign-in ended, the same `result` its redirect carried.
 	SignInResult *MigrationSignInResult `json:"sign_in_result,omitempty"`
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
@@ -8648,12 +8681,14 @@ type MigrationVerifiedRoute string
 // `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
 // `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
 // switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
-// desk's sign-in with the team's OAuth client). A server lists only the actions it offers.
+// desk's sign-in with the team's OAuth client, or Sign in with Microsoft). A server lists
+// only the actions it offers.
 type MigrationAction string
 
 // MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with
-// Microsoft. `oauth`: a help desk's sign-in with an OAuth client the team creates in its own
-// account (`POST /v1/migrations/{migrationId}/sign-in`).
+// Microsoft (`POST /v1/migrations/{migrationId}/sign-in`), whose token is sent with
+// `AUTHENTICATE XOAUTH2`. `oauth`: a help desk's sign-in with an OAuth client the team
+// creates in its own account (`POST /v1/migrations/{migrationId}/sign-in`).
 type MigrationAuth string
 
 // MigrationBudget The pace Yuva keeps with this provider, below its published limits.
@@ -8715,7 +8750,10 @@ type MigrationCreate struct {
 }
 
 // MigrationCredentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
-// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+// sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+// `scopes` and when the access token expires; the token is refreshed before a connection
+// when it expires within five minutes.
 type MigrationCredentials struct {
 	// CertificateSha256 The trusted certificate's SHA-256, when one is pinned.
 	CertificateSha256 *string `json:"certificate_sha256,omitempty"`
@@ -8773,7 +8811,8 @@ type MigrationDetection struct {
 	// Name The provider's name.
 	Name string `json:"name"`
 
-	// Note `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+	// Note `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+	// offer (see the `microsoft` preset's `available`).
 	// `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
 	// computer; export the mail instead. `cloudflare`: the domain forwards mail through
 	// Cloudflare Email Routing; connect the mailbox it ends up in.
@@ -8794,7 +8833,8 @@ type MigrationDetection struct {
 // MigrationDetectionFoundBy `domain`, `mx`, `autoconfig`, `srv` or `guess` (`imap.` or `mail.` of the domain answered); `none` when nothing was found.
 type MigrationDetectionFoundBy string
 
-// MigrationDetectionNote `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+// MigrationDetectionNote `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+// offer (see the `microsoft` preset's `available`).
 // `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
 // computer; export the mail instead. `cloudflare`: the domain forwards mail through
 // Cloudflare Email Routing; connect the mailbox it ends up in.
@@ -8806,7 +8846,10 @@ type MigrationError struct {
 	// `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
 	// `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
 	// again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
-	// a bug).
+	// a bug), and for `microsoft` `token_refresh_failed` (Microsoft refused to refresh the
+	// sign-in) and `xoauth2_failed` (the mailbox refused the token, usually because IMAP was
+	// turned off for it); both stop the migration in `needs_attention` until the person
+	// signs in again.
 	Code      string     `json:"code"`
 	CreatedAt time.Time  `json:"created_at"`
 	Detail    string     `json:"detail"`
@@ -9184,7 +9227,9 @@ type MigrationPreset struct {
 	AppPassword bool            `json:"app_password"`
 	Auth        []MigrationAuth `json:"auth"`
 
-	// Available `false` when this server cannot connect to the provider yet.
+	// Available `false` when this server cannot connect to the provider yet; for `microsoft`, when it
+	// has no Microsoft app of its own and its public URL is not one Microsoft accepts as a
+	// redirect URL (HTTPS, or `http://localhost`).
 	Available bool `json:"available"`
 
 	// Budget The pace Yuva keeps with this provider, below its published limits.
@@ -9206,13 +9251,18 @@ type MigrationPreset struct {
 	Id   MigrationPresetId `json:"id"`
 	Name string            `json:"name"`
 
-	// RedirectUrl `oauth` presets: the redirect URL to enter in the OAuth client the team creates in its
-	// help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps).
+	// RedirectUrl `oauth` and `microsoft` presets: the redirect URL to enter in the OAuth client the team
+	// creates in its help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps)
+	// or, for Microsoft, as the Web redirect URI of the team's own app registration.
 	RedirectUrl *string `json:"redirect_url,omitempty"`
 
-	// Scopes `oauth` presets: the scopes the sign-in asks for and accepts nothing beyond (Zendesk
-	// `read`). Empty for Help Scout, which has no read-only permission: the connection's
-	// refusal of every request but `GET` is what keeps it read-only.
+	// Scopes `oauth` and `microsoft` presets: the scopes the sign-in asks for and accepts nothing
+	// beyond (Zendesk `read`; Microsoft
+	// `https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`). Empty for Help
+	// Scout, which has no read-only permission: the connection's refusal of every request but
+	// `GET` is what keeps it read-only. Microsoft's IMAP permission is not read-only either
+	// (its consent screen says "read and write"); the connection's refusal of every command
+	// that changes anything is what keeps it so.
 	Scopes *[]string `json:"scopes,omitempty"`
 
 	// Servers The IMAP servers it uses, the first by default; empty for `imap`, whose server is typed or detected.
@@ -9225,6 +9275,12 @@ type MigrationPreset struct {
 
 	// Subdomain The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`).
 	Subdomain *bool `json:"subdomain,omitempty"`
+
+	// TeamClient `oauth` and `microsoft` presets: the sign-in takes the client id and secret of an
+	// OAuth client or app registration the team creates itself, with `redirect_url`. Always
+	// `true` for help desks; `false` for `microsoft` when the server has a Microsoft app of
+	// its own (`YUVA_MICROSOFT_CLIENT_ID`), which a team may still replace with its own.
+	TeamClient *bool `json:"team_client,omitempty"`
 
 	// Username What the user name is: the whole `address` or its `local_part`.
 	Username MigrationPresetUsername `json:"username"`
@@ -9358,23 +9414,45 @@ type MigrationSignIn struct {
 	RedirectUrl string `json:"redirect_url"`
 }
 
-// MigrationSignInResult The `result` of the redirect to `/migrations/{migrationId}/connect` after a help-desk
-// sign-in: `connected`; `access_denied` (the person declined); `expired` (unknown, used or
-// older than 10 minutes); `session_mismatch` (it came back in another member's browser);
-// `scope_too_broad` (the token grants more than `read`; nothing was stored); `not_admin`,
-// `plan_has_no_api`, `subdomain_not_found` (as the connection test's codes);
-// `account_mismatch` (a reconnect signed in to another account); `token_failed` (the help
-// desk refused the code: usually a wrong client secret or redirect URL); `source_unreachable`.
+// MigrationSignInResult The `result` of the redirect to `/migrations/{migrationId}/connect` after a sign-in:
+// `connected`; `access_denied` (the person declined); `expired` (unknown, used or older
+// than 10 minutes); `session_mismatch` (it came back in another member's browser);
+// `scope_too_broad` (the token grants other permissions than the requested ones: more than
+// `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
+// stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
+// codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
+// Microsoft sign-in to another account than the mailbox; nothing was stored);
+// `token_failed` (the provider refused the code: usually a wrong client secret or redirect
+// URL); `source_unreachable`.
+//
+// Microsoft only: `consent_required` (Microsoft wants the person to consent again: sign in
+// again and accept); `admin_consent_required` (`AADSTS65001`, `AADSTS90094`, `AADSTS90095`:
+// the organization lets only an admin consent to the app; the migration's
+// `admin_consent_url` is the link to send the admin); `conditional_access` (a Conditional
+// Access policy of the organization blocked the sign-in, `AADSTS53000`–`AADSTS53011`);
+// `xoauth2_failed` (Microsoft signed the mailbox in but the mailbox refused the token over
+// IMAP: usually IMAP is turned off for it, which an admin turns on in the Microsoft 365
+// admin center › Users › Mail › Email apps, or with `Set-CASMailbox -ImapEnabled $true`).
+// `admin_consented` is where an admin lands after granting consent through
+// `admin_consent_url` (`/settings/migrations?result=admin_consented`).
 type MigrationSignInResult string
 
-// MigrationSignInStart defines model for MigrationSignInStart.
+// MigrationSignInStart Help desks need `client_id` and `client_secret`. Microsoft needs them when the preset has
+// `team_client: true`; otherwise they are left out to use the server's own app, or given to
+// use the team's own app registration instead.
 type MigrationSignInStart struct {
-	// ClientId The OAuth client's identifier (Zendesk) or the app's ID (Help Scout).
-	ClientId     string  `json:"client_id"`
+	// ClientId The OAuth client's identifier (Zendesk), the app's ID (Help Scout) or the app
+	// registration's Application (client) ID (Microsoft).
+	ClientId     string  `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
 	// Subdomain Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`.
 	Subdomain *string `json:"subdomain,omitempty"`
+
+	// Tenant Microsoft, with the team's own app registration only: the Directory (tenant) ID or a
+	// verified domain of the tenant that holds a single-tenant app. Without it the authority
+	// follows the mailbox's address.
+	Tenant *string `json:"tenant,omitempty"`
 }
 
 // MigrationSkipped Messages that will not be imported, by reason.
@@ -9462,6 +9540,14 @@ type MigrationTeamSuggestion struct {
 //     may read the incremental export.
 //   - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
 //   - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+//   - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+//     failed, or the server answers "User is authenticated but not connected"): usually IMAP
+//     is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+//     or `Set-CASMailbox -ImapEnabled $true`).
+//   - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+//     password changed, or the sign-in expired after long disuse): sign in again.
+//   - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+//     `IMAP.AccessAsUser.All`; it is not used.
 type MigrationTestCode string
 
 // MigrationTestResult defines model for MigrationTestResult.
@@ -9505,6 +9591,14 @@ type MigrationTestStep struct {
 	//   may read the incremental export.
 	// - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
 	// - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+	// - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+	//   failed, or the server answers "User is authenticated but not connected"): usually IMAP
+	//   is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+	//   or `Set-CASMailbox -ImapEnabled $true`).
+	// - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+	//   password changed, or the sign-in expired after long disuse): sign in again.
+	// - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+	//   `IMAP.AccessAsUser.All`; it is not used.
 	Code *MigrationTestCode `json:"code,omitempty"`
 
 	// Detail The server's answer or the error, without secrets.
@@ -16882,7 +16976,7 @@ type ServerInterface interface {
 	// ScanMigration Read the mailbox's headers for the dry run
 	// (POST /v1/migrations/{migrationId}/scan)
 	ScanMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ScanMigrationParams)
-	// StartMigrationSignIn Connect a help desk with the team's OAuth client
+	// StartMigrationSignIn Connect a help desk or a Microsoft mailbox with a sign-in
 	// (POST /v1/migrations/{migrationId}/sign-in)
 	StartMigrationSignIn(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationSignInParams)
 	// StartMigration Start copying
@@ -53054,7 +53148,7 @@ type StrictServerInterface interface {
 	// ScanMigration Read the mailbox's headers for the dry run
 	// (POST /v1/migrations/{migrationId}/scan)
 	ScanMigration(ctx context.Context, request ScanMigrationRequestObject) (ScanMigrationResponseObject, error)
-	// StartMigrationSignIn Connect a help desk with the team's OAuth client
+	// StartMigrationSignIn Connect a help desk or a Microsoft mailbox with a sign-in
 	// (POST /v1/migrations/{migrationId}/sign-in)
 	StartMigrationSignIn(ctx context.Context, request StartMigrationSignInRequestObject) (StartMigrationSignInResponseObject, error)
 	// StartMigration Start copying
