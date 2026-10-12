@@ -1,0 +1,1032 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-12 16:49+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: tr\n"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "Bu ay {limit} analitik olayın {used} tanesi kullanıldı. Sınırı aşan olaylar ay bitene kadar atılır."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "Değişiklik yeni olaylara uygulanır. Sayılmış günler kendi saat dilimini korur."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "Bir aralık en fazla 400 gün olabilir. Daha kısa bir aralık seçin."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan sayfa görüntülemeleri."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Ekle"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Kural ekle"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Web sitesi ekle"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Ziyaretçilerini, sayfalarını ve kaynaklarını çerezsiz saymak için bir web sitesi ekleyin."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Ekle ve kur"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Sayılmayan adresler"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Bu gelen kutusunun temsilcileri rakamları görebilir."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "Yapay zekâ asistanları"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics"
+msgstr "Analitik"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Analitik mülkleri"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Analitik görünümleri"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "Uygulama sürümü"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Kitle"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Botlar"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Hemen çıkma oranı"
+
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Döküm"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Tarayıcı"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Tarayıcı sürümü"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Tarayıcıda bir kez çağırın. Sunucu tarafında oluşturma sırasında hiçbir şey yapmaz."
+
+#: src/features/analytics/Controls.tsx
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Filtreyi değiştir: {label}"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Kanal"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Çocuklar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Çocuklar için yapılmış bir sitede Çocuklar'ı seçin."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "Şehir"
+
+#: src/features/analytics/Controls.tsx
+msgid "Clear"
+msgstr "Temizle"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Toplama"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "{0} – {1} ile karşılaştır"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Bir yıl öncesiyle karşılaştır"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Başka günlerle karşılaştır"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Başka günlerle karşılaştır…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Karşılaştırılacak günler"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Önceki dönemle karşılaştır"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Karşılaştırılan günler"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Karşılaştırma"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "İzin modu"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "içerir"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "İçerik engelleyiciler başka alan adlarından gelen betikleri sık sık durdurur. Betiği ve uç noktasını kendi sitenizden sunarsanız bu ziyaretçiler de sayılır. Yuva sunucusunun, vekil sunucunuzun ilettiği adrese güvenmesi gerekir; yoksa tüm ziyaretçiler tek kişi gibi görünür."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Ziyaretlerimi yeniden say"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Ziyaretçileri, sayfaları, kaynakları, konumları ve cihazları çerez kullanmadan ve IP adresi saklamadan sayın."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Web sitenizin ziyaretçilerini sayın"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Sayılan"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Şöyle sayılır"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Ülkeler"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Ülke"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Her ziyaretçiyi sormadan sayar: cihaza hiçbir şey yazılmaz ve IP adresi saklanmaz."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Para birimi"
+
+#: src/features/analytics/text.ts
+msgid "Custom events."
+msgstr "Özel olaylar."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Özel aralık"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Özel aralık…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Veriler"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Gün"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Days are counted in this time zone"
+msgstr "Günler bu saat dilimine göre sayılır"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Günler mülkün saat dilimine göredir. Toplamlar bu günler olmadan yeniden hesaplanır."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Toplanmayı bekleyen günler"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "{0} silinsin mi?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Tüm verileri sil"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "{0} için tüm veriler silinsin mi?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Günleri sil"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Mülkü sil"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "{span} tarihlerinin ziyaretleri ve olayları silinsin mi?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Bu günleri sil"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Arka planda siliniyor. Bittiğinde rakamlar güncellenir."
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Masaüstü"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Ayrıntılı kayıtların başladığı gün"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Ayrıntılar"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Cihaz"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Devices"
+msgstr "Cihazlar"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Doğrudan"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Doğrudan / yok"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Her günün farklı ziyaretçileri, aralıktaki günler boyunca toplanır. Başka bir gün geri gelen kişi yeniden sayılır."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Ziyaretlerimi sayma"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "içermez"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Alan adları"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "CSV indir"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Atılan"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-posta"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Giriş sayfası"
+
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Olaylar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Olaylar ancak sayfa yuva.consent'i analytics true olarak çağırdıktan sonra sayılır. Betiği data-consent=\"required\" ile kurun."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "olay sayıldı"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "olay atıldı"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Bütün ziyaretler, olaylar ve toplamlar silinir. Mülk ve anahtarı kalır, sayım sürer."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Hariç tutulan"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Çıkış sayfası"
+
+#: src/features/analytics/Breakdown.tsx
+msgid "Filter by this"
+msgstr "Buna göre filtrele"
+
+#: src/features/analytics/Controls.tsx
+msgid "Filters"
+msgstr "Filtreler"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "Örneğin Fieldnote web sitesi"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "Gelir için, EUR gibi bir ISO kodu."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "Başlangıç"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "Genel"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "olaydan adres çıkarıldı"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Durum"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Alan adı"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "Kurulum yolu"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Inbox"
+msgstr "Gelen kutusu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Kurulum"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "{0} için kurulum"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Dahili"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Geçersiz"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "eşittir"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "eşit değildir"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Anahtar"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Dil"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Dizüstü"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "Son 12 ay"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "Son 28 gün"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "Son 30 gün"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "Son 6 ay"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "Son 7 gün"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "Son 90 gün"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Son olay"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Geçen ay"
+
+#: src/features/analytics/Breakdown.tsx
+msgid "Load more"
+msgstr "Daha fazla yükle"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Konum veritabanı"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Locations"
+msgstr "Konumlar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Yeni anahtar oluştur"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Yeni anahtar oluşturulsun mu?"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "kalıba uyar"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mobil"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Aylık sınır"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Name"
+msgstr "Ad"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "Karşılaştırma yok"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "Son 24 saatte olay yok"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "Henüz olay yok"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "Henüz mülk yok"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Son 30 dakikada kimse yok."
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "Henüz yok"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "Yok, yalnızca sahipler ve yöneticiler"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Bu aralık için gösterilemiyor."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Bu aralıkta sayılan bir şey yok."
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Kapalı"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "Her satıra bir IP adresi ya da aralığı, en fazla 50 tane; örneğin ofisiniz ya da bir izleme hizmeti."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "Her satıra bir yol, en fazla 50 tane. * yolun bir parçası, ** istenen sayıda parça yerine geçer."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "Her satıra bir tane. *.example.com tüm alt alan adlarını kapsar, example.com'un kendisini kapsamaz."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "Her satıra bir tane. Başka alan adlarındaki sayfalar olay gönderemez. *.example.com tüm alt alan adlarını kapsar."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Yalnızca ülke saklanır, bölge ya da şehir asla."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Yalnızca toplamlar gösterilir. Tek tek ziyaretçilerin listesi yoktur."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Yalnızca izinle"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Kod parçası eklenmiş bir sayfanızı açın. Sunucu ilk sayfa görüntülemesini kaydeder kaydetmez burası yeşile döner. Do Not Track ya da Global Privacy Control açık tarayıcılar hiçbir şey göndermez; denemek için başka bir tarayıcı kullanın."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Genel bakışı aç"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "İşletim sistemi"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Vazgeçme bağlantısı"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Organik arama"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "İşletim sistemi sürümü"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Diğer"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Başka siteler"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Overview"
+msgstr "Genel bakış"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Kendi alan adınız"
+
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Sayfa"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Realtime.tsx
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Sayılmayan sayfalar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Bir kalıba uyan sayfalar tek bir yol altında sayılır; böylece bütün sipariş sayfaları tek satırda toplanır. Yoldaki e-posta adresleri her zaman değiştirilir."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Görüntülenen sayfalar."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Sayfalar, kaynaklar, konumlar ve cihazlar; çerezsiz, IP adresi saklamadan ve yasanın izin verdiği yerlerde izin bandı olmadan."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Sayfa görüntüleme"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Sayfa görüntülemelerinin ziyaretlere bölümü."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Pageviews in the last 30 minutes"
+msgstr "Son 30 dakikadaki sayfa görüntülemeleri"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Pageviews per minute"
+msgstr "Dakika başına sayfa görüntüleme"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Ücretli arama"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Ücretli sosyal"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Yol kuralları"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Kalıp"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "günlük"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Günlük"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "saatlik"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "haftalık"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Sitenin nasıl yapıldığını seçip kod parçasını kopyalayın. Anahtar, sohbet anahtarı gibi herkese açıktır: yalnızca mülkün alan adlarında çalışır."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Mülk adı"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Betiği her sayfanın head bölümüne koyun. Tek sayfalı bir uygulama adresi değiştirdiğinde de sayfa görüntülemelerini sayar ve ziyaretçinin cihazına hiçbir şey yazmaz."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Bu bağlantıları gizlilik sayfanıza koyun. Betiğin ziyaretçinin cihazına yazdığı tek şey vazgeçme tercihidir ve yalnızca ziyaretçi isterse yazılır. Do Not Track ya da Global Privacy Control kullanan ziyaretçiler hiç sayılmaz."
+
+#: src/features/analytics/Controls.tsx
+msgid "Range"
+msgstr "Aralık"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Hız sınırları"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Realtime"
+msgstr "Canlı"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Yönlendirme"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Yönlendiren"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "15 saniyede bir yenilenir"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Bölge"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Filtreyi kaldır"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Filtreyi kaldır: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Kuralı kaldır"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; altındaki her yerde useYuvaAnalytics() yöntemleri verir."
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Ekran boyutu"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Kaydırma derinliği"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Sunucu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Sunucu meşgul"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show"
+msgstr "Göster"
+
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "{day} tarihinden itibaren göster"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Gösterilecek günler"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Sosyal"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Kaynak"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+msgid "Sources"
+msgstr "Kaynaklar"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "Mevcut anahtar 24 saat daha çalışır; böylece sayfalarınızı olay kaybetmeden güncelleyebilirsiniz. Bu süre içinde bir anahtar daha oluşturursanız eskisi hemen biter."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "Görüntüleme başına sayfada inilen en derin nokta."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "İlk olay {at} tarihinde geldi."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "Anahtar, sohbet anahtarı gibi herkese açıktır: her sayfada bulunur ve yalnızca mülkün alan adlarında çalışır."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "Anahtar hemen çalışmaz olur, tüm ziyaretler, olaylar ve toplamlar silinir. Bu geri alınamaz."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "Son 30 gün"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "Modül bir istemci eklentisi ve useYuvaAnalytics() composable'ını ekler. NUXT_PUBLIC_YUVA_ANALYTICS_KEY çalışma zamanında anahtarın yerine geçer."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "Ad eşleşmiyor. Tam olarak gösterildiği gibi yazın."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "Önceki anahtar {at} tarihine kadar çalışır. Her sayfayı ve uygulamayı bundan önce güncelleyin."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "Gelen kutularınızın mülkleri, bir sahip ya da yönetici eklediğinde burada görünür."
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "Sunucunun kendi veritabanı"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "Bu filtreler, bu aralık için artık saklanmayan ayrıntılı kayıtlara ihtiyaç duyar."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "Bu filtreler ayrıntılı kayıtlara ihtiyaç duyar; bunlar {day} tarihinden beri saklanıyor. Önceki günler için yalnızca sayfa, kaynak, konum ve cihaz başına toplamlar var."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "Bu geri alınamaz."
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "Bu ay"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "Bu çalışma alanı bu ayki {limit} analitik olay sınırına ulaştı. Yeni olaylar ay bitene kadar atılır."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "Bu yıl"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Bir ziyaretin ilk olayından son olayına kadar geçen ortalama süre. Hemen çıkmalar sıfır sayılır."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Sayfada geçen süre"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Görüntüleme başına sayfanın görünür ve odakta kaldığı süre."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Saat dilimi"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "Bitiş"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Bugün"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Çok geç"
+
+#: src/features/analytics/Overview.tsx
+msgid "Top pages"
+msgstr "En çok ziyaret edilen sayfalar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "İzleme"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Mülkü ve tüm verilerini silmek için adını yazın."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Bilinmiyor"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM kampanyası"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM içeriği"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM ortamı"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM kaynağı"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM terimi"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Ziyaret başına görüntüleme"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Ziyaret süresi"
+
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Ziyaretçiler"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Son 30 dakikadaki ziyaretçiler"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Do Not Track ya da Global Privacy Control kullanan ziyaretçiler hiçbir şey göndermez, bu yüzden burada da sayılmazlar. Atılan bir olaydan sayısı dışında hiçbir şey saklanmaz."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Ziyaretler"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Tek sayfa görüntülemesi olan ve başka hiçbir şey yapılmayan ziyaretler."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, diğer"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "İlk olay bekleniyor"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Canlı izle"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Mülkün gününün başladığı ve bittiği yer."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "data-consent=\"required\" ile betik, izin aracınız ziyaretçinin kabul ettiğini söyleyene kadar hiçbir şey göndermez. Genel ayarlarda Toplama'yı da “Yalnızca izinle” yapın; böylece sunucu izinsiz olayları reddeder."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Çerezsiz, herkes için"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Dün"

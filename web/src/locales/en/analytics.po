@@ -1,0 +1,1032 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-12 16:49+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+#. placeholder {0}: p.visitors_today
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{0, plural, one {visitor today} other {visitors today}}"
+msgstr "{0, plural, one {visitor today} other {visitors today}}"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+msgstr "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
+
+#: src/features/analytics/Settings.tsx
+msgid "A change applies to new events. Days already counted keep their zone."
+msgstr "A change applies to new events. Days already counted keep their zone."
+
+#: src/features/analytics/parts.tsx
+msgid "A range can be at most 400 days long. Pick a shorter one."
+msgstr "A range can be at most 400 days long. Pick a shorter one."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's page views without a gap of 30 minutes, within one day."
+msgstr "A visitor's page views without a gap of 30 minutes, within one day."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add"
+msgstr "Add"
+
+#: src/features/analytics/Settings.tsx
+msgid "Add a rule"
+msgstr "Add a rule"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Add a website"
+msgstr "Add a website"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Add a website to count its visitors, pages and sources, without cookies."
+msgstr "Add a website to count its visitors, pages and sources, without cookies."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Add and install"
+msgstr "Add and install"
+
+#: src/features/analytics/Settings.tsx
+msgid "Addresses not counted"
+msgstr "Addresses not counted"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Agents of this inbox can see the numbers."
+msgstr "Agents of this inbox can see the numbers."
+
+#: src/features/analytics/text.ts
+msgid "AI assistants"
+msgstr "AI assistants"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/NewProperty.tsx
+msgid "Analytics"
+msgstr "Analytics"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "Analytics properties"
+msgstr "Analytics properties"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Analytics views"
+msgstr "Analytics views"
+
+#: src/features/analytics/text.ts
+msgid "App version"
+msgstr "App version"
+
+#: src/features/analytics/Settings.tsx
+msgid "Audience"
+msgstr "Audience"
+
+#: src/features/analytics/Settings.tsx
+msgid "Bots"
+msgstr "Bots"
+
+#: src/features/analytics/text.ts
+msgid "Bounce rate"
+msgstr "Bounce rate"
+
+#: src/features/analytics/Overview.tsx
+msgid "Breakdown"
+msgstr "Breakdown"
+
+#: src/features/analytics/text.ts
+msgid "Browser"
+msgstr "Browser"
+
+#: src/features/analytics/text.ts
+msgid "Browser version"
+msgstr "Browser version"
+
+#: src/features/analytics/Install.tsx
+msgid "Call it once in the browser. During server rendering it does nothing."
+msgstr "Call it once in the browser. During server rendering it does nothing."
+
+#: src/features/analytics/Controls.tsx
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/features/analytics/Controls.tsx
+msgid "Change filter: {label}"
+msgstr "Change filter: {label}"
+
+#: src/features/analytics/text.ts
+msgid "Channel"
+msgstr "Channel"
+
+#: src/features/analytics/Settings.tsx
+msgid "Children"
+msgstr "Children"
+
+#: src/features/analytics/Settings.tsx
+msgid "Choose children for a site made for children."
+msgstr "Choose children for a site made for children."
+
+#: src/features/analytics/text.ts
+msgid "City"
+msgstr "City"
+
+#: src/features/analytics/Controls.tsx
+msgid "Clear"
+msgstr "Clear"
+
+#: src/features/analytics/Settings.tsx
+msgid "Collection"
+msgstr "Collection"
+
+#. placeholder {0}: formatDate(`${c.from}T12:00:00Z`, i18n.locale)
+#. placeholder {1}: formatDate(`${c.to}T12:00:00Z`, i18n.locale)
+#: src/features/analytics/Controls.tsx
+msgid "Compare with {0} – {1}"
+msgstr "Compare with {0} – {1}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with a year earlier"
+msgstr "Compare with a year earlier"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days"
+msgstr "Compare with other days"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with other days…"
+msgstr "Compare with other days…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the days"
+msgstr "Compare with the days"
+
+#: src/features/analytics/Controls.tsx
+msgid "Compare with the period before"
+msgstr "Compare with the period before"
+
+#: src/features/analytics/Overview.tsx
+msgid "Compared days"
+msgstr "Compared days"
+
+#: src/features/analytics/Controls.tsx
+msgid "Comparison"
+msgstr "Comparison"
+
+#: src/features/analytics/Install.tsx
+msgid "Consent mode"
+msgstr "Consent mode"
+
+#: src/features/analytics/text.ts
+msgid "contains"
+msgstr "contains"
+
+#: src/features/analytics/Install.tsx
+msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+msgstr "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+
+#: src/features/analytics/Install.tsx
+msgid "Count my visits again"
+msgstr "Count my visits again"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+msgstr "Count visitors, pages, sources, places and devices without cookies and without storing IP addresses."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Count your website’s visitors"
+msgstr "Count your website’s visitors"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted"
+msgstr "Counted"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counted as"
+msgstr "Counted as"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Countries"
+msgstr "Countries"
+
+#: src/features/analytics/text.ts
+msgid "Country"
+msgstr "Country"
+
+#: src/features/analytics/Settings.tsx
+msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+msgstr "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
+
+#: src/features/analytics/Settings.tsx
+msgid "Currency"
+msgstr "Currency"
+
+#: src/features/analytics/text.ts
+msgid "Custom events."
+msgstr "Custom events."
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range"
+msgstr "Custom range"
+
+#: src/features/analytics/Controls.tsx
+msgid "Custom range…"
+msgstr "Custom range…"
+
+#: src/features/analytics/Settings.tsx
+msgid "Data"
+msgstr "Data"
+
+#: src/features/analytics/Settings.tsx
+msgid "Day"
+msgstr "Day"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Days are counted in this time zone"
+msgstr "Days are counted in this time zone"
+
+#: src/features/analytics/Settings.tsx
+msgid "Days are in the property’s time zone. Their totals are counted again without them."
+msgstr "Days are in the property’s time zone. Their totals are counted again without them."
+
+#: src/features/analytics/Settings.tsx
+msgid "Days waiting to be summed up"
+msgstr "Days waiting to be summed up"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete {0}?"
+msgstr "Delete {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data"
+msgstr "Delete all data"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/Settings.tsx
+msgid "Delete all data of {0}?"
+msgstr "Delete all data of {0}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete days"
+msgstr "Delete days"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the property"
+msgstr "Delete the property"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete the visits and events of {span}?"
+msgstr "Delete the visits and events of {span}?"
+
+#: src/features/analytics/Settings.tsx
+msgid "Delete these days"
+msgstr "Delete these days"
+
+#: src/features/analytics/Settings.tsx
+msgid "Deleting in the background. The numbers update when it is done."
+msgstr "Deleting in the background. The numbers update when it is done."
+
+#: src/features/analytics/text.ts
+msgid "Desktop"
+msgstr "Desktop"
+
+#: src/features/analytics/Settings.tsx
+msgid "Detailed records kept since"
+msgstr "Detailed records kept since"
+
+#: src/features/analytics/Overview.tsx
+msgid "Details"
+msgstr "Details"
+
+#: src/features/analytics/text.ts
+msgid "Device"
+msgstr "Device"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Devices"
+msgstr "Devices"
+
+#: src/features/analytics/text.ts
+msgid "Direct"
+msgstr "Direct"
+
+#: src/features/analytics/text.ts
+msgid "Direct / none"
+msgstr "Direct / none"
+
+#: src/features/analytics/text.ts
+msgid "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+msgstr "Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again."
+
+#: src/features/analytics/Install.tsx
+msgid "Do not count my visits"
+msgstr "Do not count my visits"
+
+#: src/features/analytics/text.ts
+msgid "does not contain"
+msgstr "does not contain"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Domains"
+msgstr "Domains"
+
+#: src/features/analytics/parts.tsx
+msgid "Download CSV"
+msgstr "Download CSV"
+
+#: src/features/analytics/Settings.tsx
+msgid "Dropped"
+msgstr "Dropped"
+
+#: src/features/analytics/text.ts
+msgid "E-mail"
+msgstr "E-mail"
+
+#: src/features/analytics/text.ts
+msgid "Entry page"
+msgstr "Entry page"
+
+#: src/features/analytics/text.ts
+msgid "Events"
+msgstr "Events"
+
+#: src/features/analytics/Settings.tsx
+msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+msgstr "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
+
+#: src/features/analytics/Settings.tsx
+msgid "events counted"
+msgstr "events counted"
+
+#: src/features/analytics/Settings.tsx
+msgid "events dropped"
+msgstr "events dropped"
+
+#: src/features/analytics/Settings.tsx
+msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+msgstr "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
+
+#: src/features/analytics/Settings.tsx
+msgid "Excluded"
+msgstr "Excluded"
+
+#: src/features/analytics/text.ts
+msgid "Exit page"
+msgstr "Exit page"
+
+#: src/features/analytics/Breakdown.tsx
+msgid "Filter by this"
+msgstr "Filter by this"
+
+#: src/features/analytics/Controls.tsx
+msgid "Filters"
+msgstr "Filters"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "For example Fieldnote website"
+msgstr "For example Fieldnote website"
+
+#: src/features/analytics/Settings.tsx
+msgid "For revenue, an ISO code like EUR."
+msgstr "For revenue, an ISO code like EUR."
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Settings.tsx
+msgid "From"
+msgstr "From"
+
+#: src/features/analytics/Settings.tsx
+msgid "General"
+msgstr "General"
+
+#: src/features/analytics/Settings.tsx
+msgid "had an address removed"
+msgstr "had an address removed"
+
+#: src/features/analytics/Settings.tsx
+msgid "Health"
+msgstr "Health"
+
+#: src/features/analytics/text.ts
+msgid "Host"
+msgstr "Host"
+
+#: src/features/analytics/Install.tsx
+msgid "How to install"
+msgstr "How to install"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Inbox"
+msgstr "Inbox"
+
+#: src/features/analytics/Settings.tsx
+msgid "Install"
+msgstr "Install"
+
+#. placeholder {0}: p.name
+#: src/features/analytics/NewProperty.tsx
+msgid "Install on {0}"
+msgstr "Install on {0}"
+
+#: src/features/analytics/text.ts
+msgid "Internal"
+msgstr "Internal"
+
+#: src/features/analytics/Settings.tsx
+msgid "Invalid"
+msgstr "Invalid"
+
+#: src/features/analytics/text.ts
+msgid "is"
+msgstr "is"
+
+#: src/features/analytics/text.ts
+msgid "is not"
+msgstr "is not"
+
+#: src/features/analytics/Settings.tsx
+msgid "Key"
+msgstr "Key"
+
+#: src/features/analytics/text.ts
+msgid "Language"
+msgstr "Language"
+
+#: src/features/analytics/text.ts
+msgid "Laptop"
+msgstr "Laptop"
+
+#: src/features/analytics/text.ts
+msgid "Last 12 months"
+msgstr "Last 12 months"
+
+#: src/features/analytics/text.ts
+msgid "Last 28 days"
+msgstr "Last 28 days"
+
+#: src/features/analytics/text.ts
+msgid "Last 30 days"
+msgstr "Last 30 days"
+
+#: src/features/analytics/text.ts
+msgid "Last 6 months"
+msgstr "Last 6 months"
+
+#: src/features/analytics/text.ts
+msgid "Last 7 days"
+msgstr "Last 7 days"
+
+#: src/features/analytics/text.ts
+msgid "Last 90 days"
+msgstr "Last 90 days"
+
+#: src/features/analytics/Settings.tsx
+msgid "Last event"
+msgstr "Last event"
+
+#: src/features/analytics/text.ts
+msgid "Last month"
+msgstr "Last month"
+
+#: src/features/analytics/Breakdown.tsx
+msgid "Load more"
+msgstr "Load more"
+
+#: src/features/analytics/Settings.tsx
+msgid "Location database"
+msgstr "Location database"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Locations"
+msgstr "Locations"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key"
+msgstr "Make a new key"
+
+#: src/features/analytics/Settings.tsx
+msgid "Make a new key?"
+msgstr "Make a new key?"
+
+#: src/features/analytics/text.ts
+msgid "matches"
+msgstr "matches"
+
+#: src/features/analytics/text.ts
+msgid "Mobile"
+msgstr "Mobile"
+
+#: src/features/analytics/Settings.tsx
+msgid "Monthly limit"
+msgstr "Monthly limit"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Name"
+msgstr "Name"
+
+#: src/features/analytics/Controls.tsx
+msgid "No comparison"
+msgstr "No comparison"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events in the last 24 hours"
+msgstr "No events in the last 24 hours"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No events yet"
+msgstr "No events yet"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "No properties yet"
+msgstr "No properties yet"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Nobody in the last 30 minutes."
+msgstr "Nobody in the last 30 minutes."
+
+#: src/features/analytics/Settings.tsx
+msgid "None yet"
+msgstr "None yet"
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "None, owners and admins only"
+msgstr "None, owners and admins only"
+
+#: src/features/analytics/parts.tsx
+msgid "Not available for this range."
+msgstr "Not available for this range."
+
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Nothing counted in this range."
+msgstr "Nothing counted in this range."
+
+#: src/features/analytics/Settings.tsx
+msgid "Off"
+msgstr "Off"
+
+#: src/features/analytics/Settings.tsx
+msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
+msgstr "One IP address or range per line, up to 50, such as your office or a monitoring service."
+
+#: src/features/analytics/Settings.tsx
+msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+msgstr "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
+
+#: src/features/analytics/Settings.tsx
+msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
+msgstr "One per line. *.example.com covers every subdomain, but not example.com itself."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+msgstr "One per line. Pages on other domains cannot send events. *.example.com covers every subdomain."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only the country is kept, never the region or city."
+msgstr "Only the country is kept, never the region or city."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Only totals are shown. There is no list of individual visitors."
+msgstr "Only totals are shown. There is no list of individual visitors."
+
+#: src/features/analytics/Settings.tsx
+msgid "Only with consent"
+msgstr "Only with consent"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+msgstr "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Open the overview"
+msgstr "Open the overview"
+
+#: src/features/analytics/text.ts
+msgid "Operating system"
+msgstr "Operating system"
+
+#: src/features/analytics/Install.tsx
+msgid "Opt-out link"
+msgstr "Opt-out link"
+
+#: src/features/analytics/text.ts
+msgid "Organic search"
+msgstr "Organic search"
+
+#: src/features/analytics/text.ts
+msgid "OS version"
+msgstr "OS version"
+
+#: src/features/analytics/text.ts
+msgid "Other"
+msgstr "Other"
+
+#: src/features/analytics/Settings.tsx
+msgid "Other sites"
+msgstr "Other sites"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Overview"
+msgstr "Overview"
+
+#: src/features/analytics/Install.tsx
+msgid "Own domain"
+msgstr "Own domain"
+
+#: src/features/analytics/text.ts
+msgid "Page"
+msgstr "Page"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Realtime.tsx
+msgid "Pages"
+msgstr "Pages"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages not counted"
+msgstr "Pages not counted"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+msgstr "Pages that match a pattern are counted under one path, so every order page adds up as one. Addresses in a path are always replaced."
+
+#: src/features/analytics/text.ts
+msgid "Pages viewed."
+msgstr "Pages viewed."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+msgstr "Pages, sources, places and devices, without cookies, without storing IP addresses and without a consent banner where the law allows it."
+
+#: src/features/analytics/text.ts
+msgid "Pageviews"
+msgstr "Pageviews"
+
+#: src/features/analytics/text.ts
+msgid "Pageviews divided by visits."
+msgstr "Pageviews divided by visits."
+
+#: src/features/analytics/Realtime.tsx
+msgid "Pageviews in the last 30 minutes"
+msgstr "Pageviews in the last 30 minutes"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Pageviews per minute"
+msgstr "Pageviews per minute"
+
+#: src/features/analytics/text.ts
+msgid "Paid search"
+msgstr "Paid search"
+
+#: src/features/analytics/text.ts
+msgid "Paid social"
+msgstr "Paid social"
+
+#: src/features/analytics/Settings.tsx
+msgid "Path rules"
+msgstr "Path rules"
+
+#: src/features/analytics/Settings.tsx
+msgid "Pattern"
+msgstr "Pattern"
+
+#: src/features/analytics/Overview.tsx
+msgid "per day"
+msgstr "per day"
+
+#: src/features/analytics/Settings.tsx
+msgid "Per day"
+msgstr "Per day"
+
+#: src/features/analytics/Overview.tsx
+msgid "per hour"
+msgstr "per hour"
+
+#: src/features/analytics/Overview.tsx
+msgid "per week"
+msgstr "per week"
+
+#: src/features/analytics/text.ts
+msgid "Phone"
+msgstr "Phone"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+msgstr "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
+
+#: src/features/analytics/text.ts
+msgid "Platform"
+msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Property name"
+msgstr "Property name"
+
+#: src/features/analytics/Install.tsx
+msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+msgstr "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
+
+#: src/features/analytics/Install.tsx
+msgid "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+msgstr "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
+
+#: src/features/analytics/Controls.tsx
+msgid "Range"
+msgstr "Range"
+
+#: src/features/analytics/Settings.tsx
+msgid "Rate limits"
+msgstr "Rate limits"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Realtime"
+msgstr "Realtime"
+
+#: src/features/analytics/text.ts
+msgid "Referral"
+msgstr "Referral"
+
+#: src/features/analytics/text.ts
+msgid "Referrer"
+msgstr "Referrer"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Refreshes every 15 seconds"
+msgstr "Refreshes every 15 seconds"
+
+#: src/features/analytics/text.ts
+msgid "Region"
+msgstr "Region"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter"
+msgstr "Remove filter"
+
+#: src/features/analytics/Controls.tsx
+msgid "Remove filter: {label}"
+msgstr "Remove filter: {label}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Remove rule"
+msgstr "Remove rule"
+
+#: src/features/analytics/Install.tsx
+msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+msgstr "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+
+#: src/features/analytics/text.ts
+msgid "Screen size"
+msgstr "Screen size"
+
+#: src/features/analytics/text.ts
+msgid "Scroll depth"
+msgstr "Scroll depth"
+
+#: src/features/analytics/text.ts
+msgid "Server"
+msgstr "Server"
+
+#: src/features/analytics/Settings.tsx
+msgid "Server busy"
+msgstr "Server busy"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Settings"
+msgstr "Settings"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show"
+msgstr "Show"
+
+#: src/features/analytics/parts.tsx
+msgid "Show from {day}"
+msgstr "Show from {day}"
+
+#: src/features/analytics/Controls.tsx
+msgid "Show the days"
+msgstr "Show the days"
+
+#: src/features/analytics/text.ts
+msgid "Social"
+msgstr "Social"
+
+#: src/features/analytics/text.ts
+msgid "Source"
+msgstr "Source"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Overview.tsx
+#: src/features/analytics/Realtime.tsx
+msgid "Sources"
+msgstr "Sources"
+
+#: src/features/analytics/text.ts
+msgid "Tablet"
+msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+msgstr "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
+
+#: src/features/analytics/text.ts
+msgid "The deepest point reached on the page, per view."
+msgstr "The deepest point reached on the page, per view."
+
+#: src/features/analytics/NewProperty.tsx
+msgid "The first event arrived at {at}."
+msgstr "The first event arrived at {at}."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+msgstr "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
+
+#: src/features/analytics/Settings.tsx
+msgid "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+msgstr "The key stops working at once, and all visits, events and totals are deleted. This cannot be undone."
+
+#: src/features/analytics/Settings.tsx
+msgid "The last 30 days"
+msgstr "The last 30 days"
+
+#: src/features/analytics/Install.tsx
+msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+msgstr "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
+
+#: src/features/analytics/Settings.tsx
+msgid "The name does not match. Type it exactly as shown."
+msgstr "The name does not match. Type it exactly as shown."
+
+#: src/features/analytics/Settings.tsx
+msgid "The previous key keeps working until {at}. Update every page and app before then."
+msgstr "The previous key keeps working until {at}. Update every page and app before then."
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "The properties of your inboxes show up here once an owner or admin adds them."
+msgstr "The properties of your inboxes show up here once an owner or admin adds them."
+
+#: src/features/analytics/Settings.tsx
+msgid "The server’s own database"
+msgstr "The server’s own database"
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need detailed records that are no longer kept for this range."
+msgstr "These filters need detailed records that are no longer kept for this range."
+
+#: src/features/analytics/parts.tsx
+msgid "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+msgstr "These filters need the detailed records, which are kept since {day}. Earlier days only have totals per page, source, place and device."
+
+#: src/features/analytics/Settings.tsx
+msgid "This cannot be undone."
+msgstr "This cannot be undone."
+
+#: src/features/analytics/text.ts
+msgid "This month"
+msgstr "This month"
+
+#: src/features/analytics/AnalyticsColumn.tsx
+msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+msgstr "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
+
+#: src/features/analytics/text.ts
+msgid "This year"
+msgstr "This year"
+
+#: src/features/analytics/text.ts
+msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
+msgstr "Time from the first to the last event of a visit, on average. Bounces count as zero."
+
+#: src/features/analytics/text.ts
+msgid "Time on page"
+msgstr "Time on page"
+
+#: src/features/analytics/text.ts
+msgid "Time the page was visible and in focus, per view."
+msgstr "Time the page was visible and in focus, per view."
+
+#: src/features/analytics/NewProperty.tsx
+#: src/features/analytics/Settings.tsx
+msgid "Time zone"
+msgstr "Time zone"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Settings.tsx
+msgid "To"
+msgstr "To"
+
+#: src/features/analytics/text.ts
+msgid "Today"
+msgstr "Today"
+
+#: src/features/analytics/Settings.tsx
+msgid "Too late"
+msgstr "Too late"
+
+#: src/features/analytics/Overview.tsx
+msgid "Top pages"
+msgstr "Top pages"
+
+#: src/features/analytics/Settings.tsx
+msgid "Tracking"
+msgstr "Tracking"
+
+#: src/features/analytics/Settings.tsx
+msgid "Type the property’s name to delete it and all its data."
+msgstr "Type the property’s name to delete it and all its data."
+
+#: src/features/analytics/text.ts
+msgid "Unknown"
+msgstr "Unknown"
+
+#: src/features/analytics/text.ts
+msgid "UTM campaign"
+msgstr "UTM campaign"
+
+#: src/features/analytics/text.ts
+msgid "UTM content"
+msgstr "UTM content"
+
+#: src/features/analytics/text.ts
+msgid "UTM medium"
+msgstr "UTM medium"
+
+#: src/features/analytics/text.ts
+msgid "UTM source"
+msgstr "UTM source"
+
+#: src/features/analytics/text.ts
+msgid "UTM term"
+msgstr "UTM term"
+
+#: src/features/analytics/text.ts
+msgid "Views per visit"
+msgstr "Views per visit"
+
+#: src/features/analytics/text.ts
+msgid "Visit duration"
+msgstr "Visit duration"
+
+#: src/features/analytics/text.ts
+msgid "Visitors"
+msgstr "Visitors"
+
+#: src/features/analytics/Realtime.tsx
+msgid "Visitors in the last 30 minutes"
+msgstr "Visitors in the last 30 minutes"
+
+#: src/features/analytics/Settings.tsx
+msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+msgstr "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
+
+#: src/features/analytics/text.ts
+msgid "Visits"
+msgstr "Visits"
+
+#: src/features/analytics/text.ts
+msgid "Visits with one page view and nothing else."
+msgstr "Visits with one page view and nothing else."
+
+#: src/features/analytics/Install.tsx
+msgid "Vue, Astro, other"
+msgstr "Vue, Astro, other"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Waiting for the first event"
+msgstr "Waiting for the first event"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Watch it live"
+msgstr "Watch it live"
+
+#: src/features/analytics/text.ts
+msgid "Web"
+msgstr "Web"
+
+#: src/features/analytics/NewProperty.tsx
+msgid "Where the property’s day starts and ends."
+msgstr "Where the property’s day starts and ends."
+
+#: src/features/analytics/Install.tsx
+msgid "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+msgstr "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
+
+#: src/features/analytics/Settings.tsx
+msgid "Without cookies, for everyone"
+msgstr "Without cookies, for everyone"
+
+#: src/features/analytics/text.ts
+msgid "Yesterday"
+msgstr "Yesterday"

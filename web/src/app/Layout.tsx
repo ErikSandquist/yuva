@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { lazy, Suspense, useCallback, useEffect } from "react"
 import { Outlet, useLocation, useMatch, useNavigate } from "react-router"
 
 import { Rail, TabBar, useSection } from "@/app/Rail"
@@ -14,6 +14,8 @@ import { SettingsColumn } from "@/features/settings/SettingsColumn"
 import { TeamColumn } from "@/features/team/TeamColumn"
 import { useIsPhone } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
+
+const AnalyticsColumn = lazy(() => import("@/features/analytics/AnalyticsColumn"))
 
 function LeftColumn({ keepList }: { keepList: boolean }) {
   const section = useSection()
@@ -35,6 +37,11 @@ function LeftColumn({ keepList }: { keepList: boolean }) {
       {section === "reports" && <ReportsColumn />}
       {section === "docs" && <DocsColumn />}
       {section === "broadcasts" && <BroadcastsColumn />}
+      {section === "analytics" && (
+        <Suspense fallback={<div className="flex-1 bg-background" />}>
+          <AnalyticsColumn />
+        </Suspense>
+      )}
       {section === "settings" && <SettingsColumn />}
     </>
   )

@@ -24,9 +24,10 @@ export type Section =
   | "reports"
   | "docs"
   | "broadcasts"
+  | "analytics"
   | "settings"
 
-const routed = ["mentions", "contacts", "team", "reports", "docs", "broadcasts", "settings"] as const
+const routed = ["mentions", "contacts", "team", "reports", "docs", "broadcasts", "analytics", "settings"] as const
 
 export function sectionOf(pathname: string, view: Section): Section {
   const routedSection = routed.find((s) => pathname === `/${s}` || pathname.startsWith(`/${s}/`))

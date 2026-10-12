@@ -20,6 +20,7 @@ import { hasCommands, runCommand, type CommandName } from "@/features/conversati
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { focusListSearch, setListQuery } from "@/features/inbox/listSearch"
 import { useConversations } from "@/features/inbox/queries"
+import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useSession } from "@/lib/session"
 import { useChannelMap, useInboxes } from "@/lib/workspace"
 import { setTheme } from "@/lib/theme"
@@ -32,6 +33,7 @@ function useItems(open: boolean): Item[] {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { canManage } = useSession()
+  const analytics = useAnalyticsVisible()
   const { openShortcuts } = useShell()
   const inboxList = useInboxes().data
   const channels = useChannelMap()
@@ -94,6 +96,7 @@ function useItems(open: boolean): Item[] {
     go(t`Discussions`, "/docs/discussions")
     go(t`Discussion posts waiting for approval`, "/docs/discussions/queue")
     go(t`Broadcasts`, "/broadcasts", keyLabel(SHORTCUTS.broadcasts))
+    if (analytics) go(t`Analytics`, "/analytics", keyLabel(SHORTCUTS.analytics))
     go(t`Mailing lists`, "/broadcasts/lists")
     go(t`E-mail designs`, "/broadcasts/designs")
     go(t`Settings`, "/settings", [mod, ","])
@@ -107,6 +110,7 @@ function useItems(open: boolean): Item[] {
     for (const i of inboxes) go(t`${i.name} settings`, `/settings/inboxes/${i.id}`)
     if (canManage) {
       go(t`Add an inbox`, "/setup")
+      if (analytics) go(t`Add an analytics property`, "/analytics/new")
       go(t`API keys`, "/settings/api-keys")
       go(t`Webhooks`, "/settings/webhooks")
       go(t`Workspace`, "/settings/workspace")
@@ -128,6 +132,7 @@ function useItems(open: boolean): Item[] {
     openShortcuts,
     setFilter,
     canManage,
+    analytics,
     pathname,
   ])
 }

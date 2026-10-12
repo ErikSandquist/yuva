@@ -9,6 +9,7 @@ import { Toaster } from "@/components/common"
 import { SHORTCUTS, ShortcutSheet } from "@/components/common/ShortcutSheet"
 import { focusListSearch } from "@/features/inbox/listSearch"
 import { useCounts } from "@/features/inbox/queries"
+import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useOpenSetup } from "@/features/setup/setup"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { useRegisterPushOnStart } from "@/lib/push"
@@ -44,6 +45,7 @@ export function AppShell() {
   const { pathname } = useLocation()
   const chats = isChats(pathname)
   const go = useGo()
+  const analytics = useAnalyticsVisible()
   useHotkeys({
     [SHORTCUTS.help]: () => setShortcuts(true),
     [SHORTCUTS.search]: () => {
@@ -63,6 +65,7 @@ export function AppShell() {
     [SHORTCUTS.reports]: () => go("reports"),
     [SHORTCUTS.docs]: () => go("docs"),
     [SHORTCUTS.broadcasts]: () => go("broadcasts"),
+    [SHORTCUTS.analytics]: () => analytics && go("analytics"),
     [SHORTCUTS.assistants]: () => go("assistants"),
     [SHORTCUTS.mentions]: () => go("mentions"),
   })

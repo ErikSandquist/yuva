@@ -20,6 +20,10 @@ export type GrowthDays = 30 | 90
 export type QueueFilters = { inbox_id?: string; site?: string; page?: string }
 
 export const keys = {
+  analytics: (ws: string) => ["ws", ws, "analytics"] as const,
+  analyticsProperties: (ws: string) => ["ws", ws, "analytics", "properties"] as const,
+  analyticsProperty: (ws: string, id: string) => ["ws", ws, "analytics", "property", id] as const,
+  analyticsData: (ws: string, id: string) => ["ws", ws, "analytics", "data", id] as const,
   workspace: (ws: string) => ["ws", ws, "workspace"] as const,
   members: (ws: string) => ["ws", ws, "members"] as const,
   invites: (ws: string) => ["ws", ws, "invites"] as const,

@@ -5,6 +5,7 @@ import {
   BookOpenTextIcon,
   BookUserIcon,
   BotIcon,
+  ChartLineIcon,
   MegaphoneIcon,
   MessagesSquareIcon,
   SettingsIcon,
@@ -16,6 +17,7 @@ import { isChats, sectionOf, type Section } from "@/app/shell"
 import { UserMenu } from "@/app/UserMenu"
 import { mod, SHORTCUTS, keyLabel } from "@/components/common/ShortcutSheet"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { useAnalyticsVisible } from "@/features/analytics/properties"
 import { useConversations, useDrafts, useMentions } from "@/features/inbox/queries"
 import { setRailView, useRailView } from "@/features/inbox/railView"
 import { cn } from "@/lib/utils"
@@ -39,7 +41,8 @@ function useEntries(): Entry[] {
   const unread = useUnreadCount()
   const unseen = Number(useMentions().data?.pages[0]?.unseen ?? 0)
   const drafts = Number(useDrafts({}).data?.pages[0]?.total ?? 0)
-  return [
+  const analytics = useAnalyticsVisible()
+  const entries: Entry[] = [
     {
       key: "conversations",
       label: t`Conversations`,
@@ -61,6 +64,7 @@ function useEntries(): Entry[] {
     { key: "reports", label: t`Reports`, icon: BarChart3Icon, shortcut: SHORTCUTS.reports },
     { key: "docs", label: t`Docs`, icon: BookOpenTextIcon, shortcut: SHORTCUTS.docs },
     { key: "broadcasts", label: t`Broadcasts`, icon: MegaphoneIcon, shortcut: SHORTCUTS.broadcasts },
+    { key: "analytics", label: t`Analytics`, icon: ChartLineIcon, shortcut: SHORTCUTS.analytics },
     {
       key: "assistants",
       label: t`Assistants`,
@@ -70,6 +74,7 @@ function useEntries(): Entry[] {
       badgeLabel: t`Assistants, ${drafts} drafts waiting`,
     },
   ]
+  return analytics ? entries : entries.filter((e) => e.key !== "analytics")
 }
 
 export function useSection() {

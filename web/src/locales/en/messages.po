@@ -1010,6 +1010,10 @@ msgid "Add a website chat in the inbox settings"
 msgstr "Add a website chat in the inbox settings"
 
 #: src/app/Palette.tsx
+msgid "Add an analytics property"
+msgstr "Add an analytics property"
+
+#: src/app/Palette.tsx
 #: src/features/inbox/ChatList.tsx
 #: src/features/settings/notifications/InboxOverrides.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -1317,6 +1321,12 @@ msgstr "An owner or admin turns signing on once the record is published."
 #: src/features/migrations/UploadStep.tsx
 msgid "An upload was cut off: {count} parts, {size}, are already on the server."
 msgstr "An upload was cut off: {count} parts, {size}, are already on the server."
+
+#: src/app/Palette.tsx
+#: src/app/Rail.tsx
+#: src/components/common/ShortcutSheet.tsx
+msgid "Analytics"
+msgstr "Analytics"
 
 #: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
@@ -4919,6 +4929,10 @@ msgid "Manage"
 msgstr "Manage"
 
 #: src/components/common/text.ts
+msgid "Manage analytics properties, their keys and their data"
+msgstr "Manage analytics properties, their keys and their data"
+
+#: src/components/common/text.ts
 msgid "Manage canned replies"
 msgstr "Manage canned replies"
 
@@ -7153,6 +7167,10 @@ msgstr "Ratings per day"
 msgid "Read"
 msgstr "Read"
 
+#: src/components/common/text.ts
+msgid "Read analytics properties and their numbers"
+msgstr "Read analytics properties and their numbers"
+
 #: src/features/migrations/text.ts
 msgid "Read as a Google Takeout file: Gmail's labels and threads come with it."
 msgstr "Read as a Google Takeout file: Gmail's labels and threads come with it."
@@ -7971,6 +7989,10 @@ msgstr "Send a test notification to {name}"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Send an auto-reply"
 msgstr "Send an auto-reply"
+
+#: src/components/common/text.ts
+msgid "Send analytics events from your servers"
+msgstr "Send analytics events from your servers"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/composer/ReplyBox.tsx

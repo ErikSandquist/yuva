@@ -42,6 +42,7 @@ import { TeamHome } from "@/features/team/TeamColumn"
 
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
 const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
+const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
 
 function Loading() {
   return <div className="flex-1 bg-background" data-testid="route-loading" />
@@ -108,6 +109,14 @@ export function AppRoutes() {
             />
           ))}
           <Route path="broadcasts/:broadcastId" element={<BroadcastPage />} />
+          <Route
+            path="analytics/*"
+            element={
+              <Suspense fallback={<Loading />}>
+                <AnalyticsRoutes />
+              </Suspense>
+            }
+          />
           <Route path="settings">
             <Route index element={<SettingsHome />} />
             <Route element={<SettingsPane />}>
