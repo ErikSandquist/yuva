@@ -1067,7 +1067,7 @@ func (r *migrationRun) fetch(ctx context.Context, folders map[int32]store.Migrat
 		if !ok {
 			continue
 		}
-		st, err := rd.Examine(ctx, f.Name)
+		st, err := rd.Open(ctx, f.Name)
 		if err != nil {
 			return nil, read, nil, fromSource(err)
 		}

@@ -231,8 +231,12 @@ func (r *migrationRun) renew(ctx context.Context) (bool, error) {
 }
 
 // sourceReader bounds every read of the mailbox, so a server that stops answering fails the
-// read well before the job's own time runs out.
-type sourceReader struct{ r *imapread.Reader }
+// read well before the job's own time runs out. It remembers the folder it has open.
+type sourceReader struct {
+	r      *imapread.Reader
+	open   string
+	status imapread.Status
+}
 
 const migrationCallTimeout = 40 * time.Second
 
@@ -251,7 +255,21 @@ func (s *sourceReader) Status(ctx context.Context, name string) (imapread.Status
 func (s *sourceReader) Examine(ctx context.Context, name string) (imapread.Status, error) {
 	ctx, cancel := context.WithTimeout(ctx, migrationCallTimeout)
 	defer cancel()
-	return s.r.Examine(ctx, name)
+	s.open = ""
+	st, err := s.r.Examine(ctx, name)
+	if err == nil {
+		s.open, s.status = name, st
+	}
+	return st, err
+}
+
+// Open examines a folder unless it is the one already open: opening a folder makes the server
+// look through all of it again, which for a large maildir takes most of a second.
+func (s *sourceReader) Open(ctx context.Context, name string) (imapread.Status, error) {
+	if s.open == name {
+		return s.status, nil
+	}
+	return s.Examine(ctx, name)
 }
 
 func (s *sourceReader) SearchUIDs(ctx context.Context, since time.Time) ([]uint32, error) {
@@ -317,7 +335,7 @@ func (r *migrationRun) source(ctx context.Context) (*sourceReader, error) {
 		_ = reader.Close()
 		return nil, err
 	}
-	r.reader = &sourceReader{reader}
+	r.reader = &sourceReader{r: reader}
 	return r.reader, nil
 }
 

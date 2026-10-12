@@ -5,7 +5,6 @@ package imapread
 
 import (
 	"bufio"
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"crypto/tls"
@@ -526,11 +525,11 @@ func (r *Reader) FetchRaw(ctx context.Context, uids []uint32, maxBytes int64, ea
 				if it.Literal == nil || it.Literal.Size() > maxBytes {
 					continue
 				}
-				var b bytes.Buffer
-				if _, err := io.Copy(&b, io.LimitReader(it.Literal, maxBytes+1)); err != nil {
+				raw := make([]byte, it.Literal.Size())
+				if _, err := io.ReadFull(it.Literal, raw); err != nil {
 					return r.fail(StepRead, err)
 				}
-				m.Raw = b.Bytes()
+				m.Raw = raw
 			}
 		}
 		if err := each(m); err != nil {
