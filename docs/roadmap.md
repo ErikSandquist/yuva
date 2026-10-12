@@ -179,8 +179,8 @@ workspace or another reader is visible.
 
 ## M13 — Broadcasts and e-mail designs
 
-Status: planned; umbrella issue #25, decisions in `architecture.md` › Broadcasts and e-mail designs
-(M13). Ships in five steps; M13.1 and M13.2 in parallel, then M13.3, then M13.4 and M13.5 in parallel.
+Status: done and deployed on 2026-10-12 (all five steps, #26–#30); umbrella issue #25, decisions in
+`architecture.md` › Broadcasts and e-mail designs (M13).
 
 - **M13.1 Lists and subscribing:** mailing lists with recorded consent and double opt-in,
   `<yuva-subscribe>` (HTML, React, Nuxt, shadcn), unsubscribe and preference pages with one-click, an API
