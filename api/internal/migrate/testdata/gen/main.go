@@ -288,6 +288,7 @@ func (m message) raw() []byte {
 		for j := range data {
 			data[j] = byte(j*7 + i)
 		}
+		copy(data, magic[a.contentType])
 		enc := base64.StdEncoding.EncodeToString(data)
 		for len(enc) > 76 {
 			b.WriteString(enc[:76] + "\r\n")
@@ -297,6 +298,15 @@ func (m message) raw() []byte {
 	}
 	b.WriteString("--" + boundary + "--\r\n")
 	return []byte(b.String())
+}
+
+// magic starts an attachment as a file of its type does, so ingest's content sniffing agrees
+// with the declared type.
+var magic = map[string]string{
+	"image/png":                "\x89PNG\r\n\x1a\n",
+	"application/pdf":          "%PDF-1.4\n",
+	"video/mp4":                "\x00\x00\x00\x18ftypmp42",
+	"application/x-msdownload": "MZ",
 }
 
 func folderDir(root, name string) string {
