@@ -116,6 +116,8 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_MIGRATION_UPLOAD_MAX_BYTES` | `21474836480` (20 GiB) | Bir taşımanın kabul ettiği en büyük [dışa aktarım dosyası](migrate-files.md); daha büyüğü `422 hosted_limit` ile reddedilir. `0` dosya içe aktarımını kapatır. |
 | `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Bir taşımanın kopyadan sonra eski posta kutusunu okumaya devam ettiği gün sayısı; sonra durur ve erişim bilgileri silinir. 1 ile 365 arası. |
 | `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Bir taşımanın etkinliğinin bittikten sonra saklandığı gün sayısı. 1 ile 36500 arası. |
+| `YUVA_MICROSOFT_CLIENT_ID`, `YUVA_MICROSOFT_CLIENT_SECRET` | ayarsız | "Microsoft ile oturum aç" için sunucunun kendi Microsoft Entra uygulaması ([nasıl kaydedilir](migrate-operators.md#microsoft-uygulamasını-kaydetme)). İkisini birlikte ayarlayın ya da hiçbirini. Ayarsızsa ekip, Bağla adımında kendi uygulamasını kaydeder; Outlook.com ve Microsoft 365 yalnızca sunucunun [`YUVA_PUBLIC_URL`](#sunucu) değeri bir HTTPS adresiyse (ya da `localhost` ise) sunulur, çünkü Microsoft yalnızca onu yönlendirme URL'si olarak kabul eder. |
+| `YUVA_MICROSOFT_TENANT` | `common` | Sunucunun Microsoft uygulamasının yetkilisi: her iş, okul ya da kişisel hesabı kabul eden bir uygulama için `common`; bunlarla sınırlı bir uygulama için `organizations`, `consumers`, bir kiracı kimliği ya da doğrulanmış bir alan adı. |
 | `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Taşımanın özel ya da yerel ağdaki e-posta sunucularına da bağlanmasına izin verir (geliştirme, kendi ağınızdaki sunucular). |
 
 ## Bültenler

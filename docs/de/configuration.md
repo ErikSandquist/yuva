@@ -117,6 +117,8 @@ Einstellung nennt.
 | `YUVA_MIGRATION_UPLOAD_MAX_BYTES` | `21474836480` (20 GiB) | Größte [Exportdatei](migrate-files.md), die ein Umzug annimmt; eine größere wird mit `422 hosted_limit` abgelehnt. `0` schaltet Dateiimporte aus. |
 | `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Tage, die ein Umzug nach dem Kopieren das alte Postfach weiterliest; danach stoppt er und seine Zugangsdaten werden gelöscht. 1 bis 365. |
 | `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Tage, die die Aktivität eines Umzugs nach seinem Ende aufbewahrt wird. 1 bis 36500. |
+| `YUVA_MICROSOFT_CLIENT_ID`, `YUVA_MICROSOFT_CLIENT_SECRET` | nicht gesetzt | Die eigene Microsoft-Entra-App des Servers für „Sign in with Microsoft“ ([so registrieren Sie sie](migrate-operators.md#die-microsoft-app-registrieren)). Setzen Sie beide oder keine. Ohne sie registriert ein Team im Schritt Connect eine eigene App, und Outlook.com und Microsoft 365 werden nur angeboten, wenn die [`YUVA_PUBLIC_URL`](#server) des Servers eine HTTPS-Adresse (oder `localhost`) ist, da Microsoft nur sie als Redirect-URL akzeptiert. |
+| `YUVA_MICROSOFT_TENANT` | `common` | Die Autorität der Microsoft-App des Servers: `common` für eine App, die jedes Arbeits-, Schul- oder persönliche Konto akzeptiert; `organizations`, `consumers`, eine Mandanten-ID oder eine verifizierte Domain für eine App, die darauf beschränkt ist. |
 | `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Erlaubt einem Umzug auch die Verbindung zu Mailservern in einem privaten oder lokalen Netz (Entwicklung, Server im eigenen Netz). |
 
 ## Broadcasts

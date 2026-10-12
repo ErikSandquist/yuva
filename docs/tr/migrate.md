@@ -7,12 +7,11 @@ silinmez, ekibiniz bu sırada çalışmaya devam eder.
 Posta kutusunu sahipler ve yöneticiler taşıyabilir: **Ayarlar → Yuva'ya taşı → Yeni taşıma**. Aynı adımlar
 [asistanlar](#claude-code-ya-da-başka-bir-asistanla) ve [API](#arka-uçtan) için de geçerlidir.
 Sağlayıcınızın rehberini seçin: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
-[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
+[Outlook.com](migrate-outlook.md), [Microsoft 365](migrate-microsoft365.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
 [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX ve mail.com](migrate-gmx.md),
 [Zendesk](migrate-zendesk.md), [Help Scout](migrate-helpscout.md),
 [herhangi bir IMAP sunucusu](migrate-imap.md) ya da [bir dışa aktarım dosyası](migrate-files.md) (Google Takeout, mbox, zip içinde .eml veya Maildir). Kendi sunucunuzu mu işletiyorsunuz? [İşletmeciler için Yuva'ya taşıma](migrate-operators.md) sayfasına bakın.
-Bir yardım masasından mı taşıyorsunuz? Zendesk ve Help Scout şifreyle değil, oturum açarak bağlanır.
-Outlook.com ve Microsoft 365 şifre kabul etmez ve henüz taşınamaz.
+Zendesk, Help Scout, Outlook.com ve Microsoft 365 şifreyle değil, oturum açarak bağlanır.
 
 ## Yuva posta kutunuzla neler yapar, neler yapmaz
 
@@ -64,6 +63,7 @@ yoksa özgün adın ve adresin gönderdiği olarak görünür.
    sunucularından bulur; henüz hiçbir şey okunmaz. Ya da sağlayıcıyı kendiniz seçin.
 2. **Bağla.** Kullanıcı adını ve bir uygulama şifresini girin (sağlayıcınızın rehberi alanın yanındadır) ve
    "Bağlantıyı dene"ye basın. Deneme hangi adımın başarısız olduğunu ve nasıl düzeltileceğini gösterir.
+   Zendesk, Help Scout, Outlook.com ve Microsoft 365 bunun yerine oturum açma kullanır.
 3. **Seç.** Klasörleri ve ne kadar geriye gidileceğini seçin. Yuva yalnızca başlıkları tarar; böylece neyin
    aktarılacağını tam olarak söyleyebilir.
 4. **Eşleştir.** Adres için gelen kutusunu ve e-posta kanalını (Yuva bunları oluşturmayı önerir), her ekip

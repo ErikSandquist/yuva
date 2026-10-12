@@ -116,6 +116,8 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Days a migration keeps reading the old mailbox after the copy; then it stops and its credentials are deleted. From 1 to 365. |
 | `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Days a migration's activity is kept after it ended. From 1 to 36500. |
 | `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Also lets a migration connect to mail servers on a private or local network (development, servers of your own network). |
+| `YUVA_MICROSOFT_CLIENT_ID`, `YUVA_MICROSOFT_CLIENT_SECRET` | unset | The server's own Microsoft Entra app for "Sign in with Microsoft" ([how to register it](migrate-operators.md#registering-the-microsoft-app)). Set both or neither. Unset, a team registers an app of its own on the Connect step, and Outlook.com and Microsoft 365 are offered only when the server's [`YUVA_PUBLIC_URL`](#server) is an HTTPS address (or `localhost`), which Microsoft accepts as a redirect URL. |
+| `YUVA_MICROSOFT_TENANT` | `common` | The authority of the server's Microsoft app: `common` for an app that accepts any work, school or personal account; `organizations`, `consumers`, a tenant ID or a verified domain for an app limited to those. |
 
 ## Broadcasts
 

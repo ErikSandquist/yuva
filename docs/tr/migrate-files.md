@@ -113,4 +113,4 @@ Ele alınmaya değer hatalar: `413 part_too_large`, `422 checksum_mismatch` (par
 `422 hosted_limit` (dosya sunucunun sınırını aşıyor), `422 upload_incomplete` (`missing_parts` eksik ilk
 parçaları adlandırır), `422 file_refused` (`reason` ve suçlu bir girdi varsa zip `entry`) ve
 `409 migration_state`. Akışın geri kalanı [Yuva'ya taşı](migrate.md#arka-uçtan) sayfasındadır; tam şekiller
-[API sözleşmesindedir](../openapi/openapi.yaml).
+[API sözleşmesindedir](../../openapi/openapi.yaml).

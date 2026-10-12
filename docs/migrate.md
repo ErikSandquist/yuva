@@ -7,12 +7,11 @@ meanwhile.
 Owners and admins can move a mailbox: **Settings → Move to Yuva → New migration**. The same steps are
 available to [assistants](#from-claude-code-or-another-assistant) and the [API](#from-your-backend).
 Pick your provider's guide: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
-[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
+[Outlook.com](migrate-outlook.md), [Microsoft 365](migrate-microsoft365.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
 [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX and mail.com](migrate-gmx.md),
 [Zendesk](migrate-zendesk.md), [Help Scout](migrate-helpscout.md),
 [any other IMAP server](migrate-imap.md) or [an export file](migrate-files.md) (Google Takeout, mbox, .eml or Maildir in a zip). Running your own server? See [Move to Yuva for operators](migrate-operators.md).
-Moving from a help desk? Zendesk and Help Scout connect with a sign-in instead of a password.
-Outlook.com and Microsoft 365 accept no passwords and cannot be moved yet.
+Zendesk, Help Scout, Outlook.com and Microsoft 365 connect with a sign-in instead of a password.
 
 ## What Yuva does and does not do with your mailbox
 
@@ -63,7 +62,8 @@ map it to or, without one, by its original name and address.
 1. **Source.** Enter the mailbox address. Yuva finds its provider from the address and the domain's
    mail servers; nothing is read yet. Or pick the provider yourself.
 2. **Connect.** Enter the user name and an app password (the guide for your provider is next to the
-   field) and press "Test connection". The test shows which step failed and how to fix it.
+   field) and press "Test connection". The test shows which step failed and how to fix it. Zendesk, Help
+   Scout, Outlook.com and Microsoft 365 use a sign-in instead.
 3. **Choose.** Pick the folders and how far back to go. Yuva scans the headers only, so it can tell
    you exactly what will be imported.
 4. **Map.** Pick the inbox and its e-mail channel for the address (Yuva offers to create them), which

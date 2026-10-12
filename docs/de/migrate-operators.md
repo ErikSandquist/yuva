@@ -29,6 +29,38 @@ bekommt jeder E-Mail-Kanal zusätzlich eine [Weiterleitungsadresse](email.md#wei
 Eine durchgesickerte Weiterleitungsadresse lässt sich durch Rotieren ersetzen; E-Mails an die alte werden
 danach abgelehnt.
 
+## Die Microsoft-App registrieren
+
+Outlook.com- und Microsoft-365-Postfächer verbinden sich mit „Sign in with Microsoft“
+([Outlook.com](migrate-outlook.md), [Microsoft 365](migrate-microsoft365.md)). Hat Ihr Server keine eigene App,
+muss jedes Team eine registrieren; mit einer drücken Teams nur die Schaltfläche. So geben Sie dem Server eine:
+
+1. Registrieren Sie im [Microsoft Entra Admin Center](https://entra.microsoft.com) unter **App registrations →
+   New registration** eine Anwendung. Wählen Sie als unterstützte Kontotypen **Any Entra ID Tenant + Personal
+   Microsoft accounts**, damit Arbeits-, Schul- und persönliche Postfächer alle funktionieren. Microsofts Seite:
+   [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app).
+2. Fügen Sie eine **Web**-Redirect-URI hinzu: Ihre öffentliche URL, gefolgt von `/migrations/sign-in/callback`,
+   zum Beispiel `https://yuva.example.com/migrations/sign-in/callback`.
+3. Fügen Sie unter **Certificates & secrets** ein Client Secret hinzu. Merken Sie sich, wann es abläuft, und
+   ersetzen Sie es vorher: danach schlagen Anmeldungen fehl.
+4. Fügen Sie unter **API permissions** die delegierte Berechtigung **IMAP.AccessAsUser.All** von **Office 365
+   Exchange Online** und **offline_access** von Microsoft Graph hinzu. Yuva fragt genau diese zwei an und lehnt
+   eine Anmeldung ab, die mehr gewährt.
+5. Setzen Sie ID und Secret der App und starten Sie neu:
+
+   ```sh
+   YUVA_MICROSOFT_CLIENT_ID=<Application (client) ID>
+   YUVA_MICROSOFT_CLIENT_SECRET=<Secret-Wert>
+   ```
+
+Die Postfachinhaberin oder der Postfachinhaber meldet sich bei dieser App an und stimmt zu; einer
+Microsoft-365-Organisation, in der nur Admins Apps freigeben dürfen (oder nur Apps verifizierter Herausgeber),
+wird ein Link für ihren Admin gezeigt
+([so geht es](migrate-microsoft365.md#3-wenn-microsoft-einen-admin-verlangt)). Für eine App, die auf eine
+Organisation oder auf persönliche Konten beschränkt ist, setzen Sie zusätzlich `YUVA_MICROSOFT_TENANT`. Beide
+Einstellungen stehen in der [Konfigurationsreferenz](configuration.md#zu-yuva-umziehen); das Secret wird wie die
+Zugangsdaten eines Postfachs unter dem Hauptschlüssel versiegelt.
+
 ## Einstellungen
 
 Alle stehen in der [Konfigurationsreferenz](configuration.md#zu-yuva-umziehen). Was sie begrenzen:

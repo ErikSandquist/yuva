@@ -7,12 +7,10 @@ und Ihr Team arbeitet währenddessen weiter.
 Ein Postfach umziehen können Owner und Admins: **Settings → Move to Yuva → New migration**. Dieselben
 Schritte stehen [Assistenten](#von-claude-code-oder-einem-anderen-assistenten) und der
 [API](#aus-ihrem-backend) offen. Wählen Sie die Anleitung Ihres Anbieters: [Gmail](migrate-gmail.md),
-[Google Workspace](migrate-google-workspace.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md),
+[Google Workspace](migrate-google-workspace.md), [Outlook.com](migrate-outlook.md), [Microsoft 365](migrate-microsoft365.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md),
 [Zoho Mail](migrate-zoho.md), [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md),
 [GMX und mail.com](migrate-gmx.md), [Zendesk](migrate-zendesk.md), [Help Scout](migrate-helpscout.md), [jeder andere IMAP-Server](migrate-imap.md) oder [eine Exportdatei](migrate-files.md) (Google Takeout, mbox, .eml oder Maildir in einer Zip). Betreiben Sie einen
-eigenen Server? Siehe [Zu Yuva umziehen für Betreiber](migrate-operators.md). Ziehen Sie von einem Help Desk um? Zendesk und Help Scout verbinden sich per Anmeldung statt mit einem Passwort.
-Outlook.com und Microsoft 365 akzeptieren keine Passwörter
-und lassen sich noch nicht umziehen.
+eigenen Server? Siehe [Zu Yuva umziehen für Betreiber](migrate-operators.md). Zendesk, Help Scout, Outlook.com und Microsoft 365 verbinden sich per Anmeldung statt mit einem Passwort.
 
 ## Was Yuva mit Ihrem Postfach tut und was nicht
 
@@ -68,7 +66,7 @@ Namen und ihrer Adresse.
    Mailservern der Domain; noch wird nichts gelesen. Oder wählen Sie den Anbieter selbst.
 2. **Connect.** Geben Sie den Benutzernamen und ein App-Passwort ein (die Anleitung Ihres Anbieters steht
    neben dem Feld) und drücken Sie „Test connection“. Der Test zeigt, welcher Schritt scheiterte und wie
-   Sie ihn beheben.
+   Sie ihn beheben. Zendesk, Help Scout, Outlook.com und Microsoft 365 nutzen stattdessen eine Anmeldung.
 3. **Choose.** Wählen Sie die Ordner und wie weit zurück. Yuva scannt nur die Header und kann Ihnen so genau
    sagen, was importiert wird.
 4. **Map.** Wählen Sie den Posteingang und den E-Mail-Kanal für die Adresse (Yuva bietet an, sie anzulegen),

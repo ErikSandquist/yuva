@@ -26,6 +26,37 @@ which a team can forward its old mailbox to.
 A forwarding address that leaks can be replaced by rotating it; mail to the old one is refused from then
 on.
 
+## Registering the Microsoft app
+
+Outlook.com and Microsoft 365 mailboxes connect with "Sign in with Microsoft" ([Outlook.com](migrate-outlook.md),
+[Microsoft 365](migrate-microsoft365.md)). Without an app of its own, your server makes every team register
+one; with one, teams only press the button. To give the server one:
+
+1. In the [Microsoft Entra admin center](https://entra.microsoft.com) register an application under **App
+   registrations → New registration**. As the supported account types choose **Any Entra ID Tenant + Personal
+   Microsoft accounts**, so that work, school and personal mailboxes all work. Microsoft's page:
+   [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app).
+2. Add a **Web** redirect URI: your public URL followed by `/migrations/sign-in/callback`, for example
+   `https://yuva.example.com/migrations/sign-in/callback`.
+3. Add a client secret under **Certificates & secrets**. Note when it expires and replace it before: from
+   then on sign-ins fail.
+4. Under **API permissions** add the delegated permission **IMAP.AccessAsUser.All** of **Office 365
+   Exchange Online** and **offline_access** of Microsoft Graph. Yuva asks for exactly these two and refuses
+   a sign-in that grants more.
+5. Set the app's ID and secret and restart:
+
+   ```sh
+   YUVA_MICROSOFT_CLIENT_ID=<Application (client) ID>
+   YUVA_MICROSOFT_CLIENT_SECRET=<secret value>
+   ```
+
+The mailbox owner signs in to this app and consents; a Microsoft 365 organization that lets only admins approve
+apps (or only apps of verified publishers) is shown a link for its admin
+([how](migrate-microsoft365.md#3-when-microsoft-asks-for-an-admin)). For an app limited to one organization or
+to personal accounts, also set `YUVA_MICROSOFT_TENANT`. Both settings are in the
+[configuration reference](configuration.md#moving-to-yuva); the secret is sealed under the master key like a
+mailbox's credentials.
+
 ## Settings
 
 All are in the [configuration reference](configuration.md#moving-to-yuva). What they limit:

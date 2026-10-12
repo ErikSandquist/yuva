@@ -30,6 +30,8 @@ const groups = [
       "migrate",
       "migrate-gmail",
       "migrate-google-workspace",
+      "migrate-outlook",
+      "migrate-microsoft365",
       "migrate-yandex",
       "migrate-icloud",
       "migrate-zoho",

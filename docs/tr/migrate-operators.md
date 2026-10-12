@@ -28,6 +28,39 @@ her e-posta kanalı ayrıca `<belirteç>@<yönlendirme alan adı>` biçiminde bi
 
 Sızan bir yönlendirme adresi yenilenerek değiştirilebilir; eskisine gelen e-posta o andan sonra reddedilir.
 
+## Microsoft uygulamasını kaydetme
+
+Outlook.com ve Microsoft 365 posta kutuları “Microsoft ile oturum aç” ile bağlanır
+([Outlook.com](migrate-outlook.md), [Microsoft 365](migrate-microsoft365.md)). Sunucunun kendi uygulaması
+yoksa her ekip kendi uygulamasını kaydetmek zorunda kalır; varsa ekipler yalnızca düğmeye basar. Sunucuya bir
+uygulama vermek için:
+
+1. [Microsoft Entra yönetim merkezinde](https://entra.microsoft.com) **App registrations → New registration**
+   altında bir uygulama kaydedin. Desteklenen hesap türleri olarak **Any Entra ID Tenant + Personal Microsoft
+   accounts**'u seçin; böylece iş, okul ve kişisel posta kutularının hepsi çalışır. Microsoft'un sayfası:
+   [Register an application](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app).
+2. Bir **Web** yönlendirme URI'si ekleyin: genel adresiniz ve ardından `/migrations/sign-in/callback`, örneğin
+   `https://yuva.example.com/migrations/sign-in/callback`.
+3. **Certificates & secrets** altında bir client secret ekleyin. Ne zaman bittiğini not edin ve ondan önce
+   yenileyin: sonrasında oturum açmalar başarısız olur.
+4. **API permissions** altında **Office 365 Exchange Online**'ın **IMAP.AccessAsUser.All** delegated iznini ve
+   Microsoft Graph'ın **offline_access** iznini ekleyin. Yuva tam olarak bu ikisini ister ve daha fazlasını
+   veren bir oturum açmayı reddeder.
+5. Uygulamanın kimliğini ve gizli anahtarını ayarlayıp yeniden başlatın:
+
+   ```sh
+   YUVA_MICROSOFT_CLIENT_ID=<Application (client) ID>
+   YUVA_MICROSOFT_CLIENT_SECRET=<gizli anahtar değeri>
+   ```
+
+Posta kutusunun sahibi bu uygulamayla oturum açar ve onay verir; uygulamaları yalnızca yöneticilerin
+onaylayabildiği (ya da yalnızca doğrulanmış yayıncıların uygulamalarına izin verilen) bir Microsoft 365
+kuruluşuna yöneticisi için bir bağlantı gösterilir
+([nasıl](migrate-microsoft365.md#3-microsoft-yönetici-istediğinde)). Tek bir kuruluşla ya da yalnızca kişisel
+hesaplarla sınırlı bir uygulama için ayrıca `YUVA_MICROSOFT_TENANT` ayarlayın. İki ayar da
+[yapılandırma başvurusunda](configuration.md#yuvaya-taşıma) yer alır; gizli anahtar, bir posta kutusunun erişim
+bilgileri gibi ana anahtarla mühürlenir.
+
 ## Ayarlar
 
 Hepsi [yapılandırma başvurusunda](configuration.md#yuvaya-taşıma). Neyi sınırladıkları:

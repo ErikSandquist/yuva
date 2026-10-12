@@ -115,4 +115,4 @@ gespeichert), `422 hosted_limit` (die Datei liegt über der Grenze des Servers),
 (`missing_parts` nennt die ersten fehlenden Teile), `422 file_refused` (`reason` und, wenn einer schuld ist,
 der Zip-`entry`) und `409 migration_state`. Der Rest des Ablaufs steht unter
 [Zu Yuva umziehen](migrate.md#aus-ihrem-backend); die vollständigen Formen stehen im
-[API-Vertrag](../openapi/openapi.yaml).
+[API-Vertrag](../../openapi/openapi.yaml).
