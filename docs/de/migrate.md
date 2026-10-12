@@ -9,7 +9,7 @@ Schritte stehen [Assistenten](#von-claude-code-oder-einem-anderen-assistenten) u
 [API](#aus-ihrem-backend) offen. Wählen Sie die Anleitung Ihres Anbieters: [Gmail](migrate-gmail.md),
 [Google Workspace](migrate-google-workspace.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md),
 [Zoho Mail](migrate-zoho.md), [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md),
-[GMX und mail.com](migrate-gmx.md) oder [jeder andere IMAP-Server](migrate-imap.md). Betreiben Sie einen
+[GMX und mail.com](migrate-gmx.md), [jeder andere IMAP-Server](migrate-imap.md) oder [eine Exportdatei](migrate-files.md) (Google Takeout, mbox, .eml oder Maildir in einer Zip). Betreiben Sie einen
 eigenen Server? Siehe [Zu Yuva umziehen für Betreiber](migrate-operators.md). Outlook.com und Microsoft 365 akzeptieren keine Passwörter
 und lassen sich noch nicht umziehen.
 
@@ -180,6 +180,9 @@ erhalten `403`). Die vollständigen Formen stehen im [API-Vertrag](../../openapi
 | `GET`, `POST /v1/migrations` | Umzüge auflisten; einen starten (`draft`). |
 | `GET`, `PATCH`, `DELETE /v1/migrations/{migrationId}` | Lesen; Postfach, Posteingang, Kanal und Optionen ändern; löschen. |
 | `PUT /v1/migrations/{migrationId}/credentials` | Das Postfach mit Benutzername und Passwort verbinden. |
+| `GET /v1/migrations/{migrationId}/upload` | Die Teile einer [Exportdatei](migrate-files.md), die der Server hat, um einen abgebrochenen Upload fortzusetzen. |
+| `POST /v1/migrations/{migrationId}/upload/parts/{part}` | Ein Teil (höchstens 8 MiB) der Exportdatei mit seinem SHA-256 hochladen. |
+| `POST /v1/migrations/{migrationId}/upload/complete` | Den Upload abschließen; Yuva liest die Datei und der Umzug wird `connected`. |
 | `POST /v1/migrations/{migrationId}/test` | Die Verbindung testen. |
 | `GET /v1/migrations/{migrationId}/folders` | Die Ordner des Postfachs. |
 | `POST /v1/migrations/{migrationId}/scan` | Die Header für den Probelauf lesen. |

@@ -8,8 +8,8 @@ Posta kutusunu sahipler ve yöneticiler taşıyabilir: **Ayarlar → Yuva'ya ta�
 [asistanlar](#claude-code-ya-da-başka-bir-asistanla) ve [API](#arka-uçtan) için de geçerlidir.
 Sağlayıcınızın rehberini seçin: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
 [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
-[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX ve mail.com](migrate-gmx.md) ya da
-[herhangi bir IMAP sunucusu](migrate-imap.md). Kendi sunucunuzu mu işletiyorsunuz? [İşletmeciler için Yuva'ya taşıma](migrate-operators.md) sayfasına bakın.
+[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX ve mail.com](migrate-gmx.md),
+[herhangi bir IMAP sunucusu](migrate-imap.md) ya da [bir dışa aktarım dosyası](migrate-files.md) (Google Takeout, mbox, zip içinde .eml veya Maildir). Kendi sunucunuzu mu işletiyorsunuz? [İşletmeciler için Yuva'ya taşıma](migrate-operators.md) sayfasına bakın.
 Outlook.com ve Microsoft 365 şifre kabul etmez ve henüz taşınamaz.
 
 ## Yuva posta kutunuzla neler yapar, neler yapmaz
@@ -172,6 +172,9 @@ asistan hesaplarına verilmez; onlar `403` alır). Tam şekiller [API sözleşme
 | `GET`, `POST /v1/migrations` | Taşımaları listeler; birini başlatır (`draft`). |
 | `GET`, `PATCH`, `DELETE /v1/migrations/{migrationId}` | Okur; posta kutusunu, gelen kutusunu, kanalı ve seçenekleri değiştirir; siler. |
 | `PUT /v1/migrations/{migrationId}/credentials` | Posta kutusunu kullanıcı adı ve şifreyle bağlar. |
+| `GET /v1/migrations/{migrationId}/upload` | Sunucudaki [dışa aktarım dosyası](migrate-files.md) parçaları; yarıda kalan yüklemeye devam etmek için. |
+| `POST /v1/migrations/{migrationId}/upload/parts/{part}` | Dışa aktarım dosyasının bir parçasını (en çok 8 MiB) SHA-256 değeriyle yükler. |
+| `POST /v1/migrations/{migrationId}/upload/complete` | Yüklemeyi bitirir; Yuva dosyayı okur ve taşıma `connected` olur. |
 | `POST /v1/migrations/{migrationId}/test` | Bağlantıyı dener. |
 | `GET /v1/migrations/{migrationId}/folders` | Posta kutusunun klasörleri. |
 | `POST /v1/migrations/{migrationId}/scan` | Deneme sonucu için başlıkları okur. |

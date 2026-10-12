@@ -50,3 +50,11 @@ Then press "Send a test message" in Yuva to check it ([how it works](migrate.md#
 
 Remove the app password: open [App passwords](https://myaccount.google.com/apppasswords), find "Yuva" and
 click **Remove**. Changing your Google Account password also revokes app passwords.
+
+## Very large mailbox
+
+A mailbox of many gigabytes takes days over IMAP because of Gmail's daily limit. Start with a Google Takeout file
+instead: it uploads as fast as your connection allows ([how](migrate-files.md)). Then connect the mailbox
+over IMAP as above. Yuva reads only the mail newer than the newest message of the Takeout file, never
+imports a message twice, and runs the switch as usual. In the panel, the Connect step offers "Upload a
+Takeout file instead"; start there.

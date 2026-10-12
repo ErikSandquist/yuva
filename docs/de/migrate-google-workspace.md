@@ -55,3 +55,12 @@ Für eine Domain, die nur dem Support dient, können Sie stattdessen ihre MX-Ein
 ## 5. Nach dem Abschluss
 
 Entfernen Sie das App-Passwort unter [App passwords](https://myaccount.google.com/apppasswords).
+
+## Sehr großes Postfach
+
+Ein Postfach von mehreren Gigabyte braucht über IMAP wegen Googles Tageslimit Tage. Beginnen Sie stattdessen mit einer
+Google-Takeout-Datei: Sie wird so schnell hochgeladen, wie Ihre Verbindung es erlaubt
+([so geht es](migrate-files.md)). Verbinden Sie das Postfach danach wie oben über IMAP. Yuva liest nur die
+Post, die neuer ist als die neueste Nachricht der Takeout-Datei, importiert keine Nachricht zweimal und führt
+die Umstellung wie gewohnt aus. Im Panel bietet der Schritt Connect „Upload a Takeout file instead“; beginnen
+Sie dort.

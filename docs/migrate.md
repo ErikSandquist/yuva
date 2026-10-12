@@ -8,8 +8,8 @@ Owners and admins can move a mailbox: **Settings → Move to Yuva → New migrat
 available to [assistants](#from-claude-code-or-another-assistant) and the [API](#from-your-backend).
 Pick your provider's guide: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
 [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
-[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX and mail.com](migrate-gmx.md) or
-[any other IMAP server](migrate-imap.md). Running your own server? See [Move to Yuva for operators](migrate-operators.md).
+[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX and mail.com](migrate-gmx.md),
+[any other IMAP server](migrate-imap.md) or [an export file](migrate-files.md) (Google Takeout, mbox, .eml or Maildir in a zip). Running your own server? See [Move to Yuva for operators](migrate-operators.md).
 Outlook.com and Microsoft 365 accept no passwords and cannot be moved yet.
 
 ## What Yuva does and does not do with your mailbox
@@ -166,6 +166,9 @@ they get `403`). Full shapes are in the [API contract](../openapi/openapi.yaml).
 | `GET`, `POST /v1/migrations` | List migrations; start one (`draft`). |
 | `GET`, `PATCH`, `DELETE /v1/migrations/{migrationId}` | Read; change the mailbox, inbox, channel and options; delete. |
 | `PUT /v1/migrations/{migrationId}/credentials` | Connect the mailbox with a user name and password. |
+| `GET /v1/migrations/{migrationId}/upload` | The parts of an [export file](migrate-files.md) the server has, to resume a cut upload. |
+| `POST /v1/migrations/{migrationId}/upload/parts/{part}` | Upload one part (8 MiB at most) of the export file with its SHA-256. |
+| `POST /v1/migrations/{migrationId}/upload/complete` | Finish the upload; Yuva reads the file and the migration becomes `connected`. |
 | `POST /v1/migrations/{migrationId}/test` | Test the connection. |
 | `GET /v1/migrations/{migrationId}/folders` | The mailbox's folders. |
 | `POST /v1/migrations/{migrationId}/scan` | Read the headers for the dry run. |

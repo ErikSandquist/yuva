@@ -52,3 +52,11 @@ Sonra denemek için Yuva'da "Deneme e-postası gönder"e basın
 
 Uygulama şifresini kaldırın: [Uygulama şifreleri](https://myaccount.google.com/apppasswords)'ni açın,
 "Yuva"yı bulun ve "Kaldır"a tıklayın. Google hesabı şifresini değiştirmek de uygulama şifrelerini iptal eder.
+
+## Çok büyük posta kutusu
+
+Birkaç gigabaytlık bir posta kutusu, Gmail'in günlük sınırı yüzünden IMAP ile günler sürer. Bunun yerine bir Google Takeout
+dosyasıyla başlayın: bağlantınızın izin verdiği hızda yüklenir ([nasıl](migrate-files.md)). Sonra posta
+kutusunu yukarıdaki gibi IMAP ile bağlayın. Yuva yalnızca Takeout dosyasının en yeni mesajından sonraki
+e-postaları okur, hiçbir mesajı iki kez içe aktarmaz ve geçişi her zamanki gibi yürütür. Panelde Bağla
+adımı "Bunun yerine Takeout dosyası yükleyin" seçeneğini sunar; oradan başlayın.

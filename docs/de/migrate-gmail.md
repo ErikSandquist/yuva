@@ -55,3 +55,12 @@ Drücken Sie dann in Yuva „Send a test message“, um es zu prüfen
 Entfernen Sie das App-Passwort: Öffnen Sie [App passwords](https://myaccount.google.com/apppasswords),
 suchen Sie „Yuva“ und klicken Sie auf **Remove**. Auch eine Änderung des Google-Kontopassworts widerruft
 App-Passwörter.
+
+## Sehr großes Postfach
+
+Ein Postfach von mehreren Gigabyte braucht über IMAP wegen Gmails Tageslimit Tage. Beginnen Sie stattdessen mit einer
+Google-Takeout-Datei: Sie wird so schnell hochgeladen, wie Ihre Verbindung es erlaubt
+([so geht es](migrate-files.md)). Verbinden Sie das Postfach danach wie oben über IMAP. Yuva liest nur die
+Post, die neuer ist als die neueste Nachricht der Takeout-Datei, importiert keine Nachricht zweimal und führt
+die Umstellung wie gewohnt aus. Im Panel bietet der Schritt Connect „Upload a Takeout file instead“; beginnen
+Sie dort.

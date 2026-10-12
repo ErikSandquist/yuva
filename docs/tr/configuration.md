@@ -108,11 +108,12 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | Değişken | Varsayılan | Anlamı |
 |---|---|---|
 | `YUVA_FORWARDING_DOMAIN` | ayarsız | `forward.example.com` gibi, e-postalarını kanalların alan adları gibi Yuva'ya yönelttiğiniz bir alan adı ([Gelen e-posta](email.md#gelen-e-posta)). O zaman her e-posta kanalının bu alan adında bir [yönlendirme adresi](email.md#yönlendirme-adresi) `<belirteç>@` olur. Ayarsızsa yönlendirme adresi yoktur ve posta kutusu taşıma e-postaları yalnızca MX ile geçirir. |
-| `YUVA_MIGRATION_SOURCES` | yapılmış olan hepsi | Ekiplerin taşıyabileceği kaynakların virgülle ayrılmış listesi: `imap`, `file`, `zendesk`, `helpscout`. Şimdilik yapılmış tek kaynak IMAP üzerinden posta kutularıdır. Boşsa taşıma kapalıdır. |
+| `YUVA_MIGRATION_SOURCES` | yapılmış olan hepsi | Ekiplerin taşıyabileceği kaynakların virgülle ayrılmış listesi: `imap`, `file`, `zendesk`, `helpscout`. Şimdilik IMAP üzerinden posta kutuları ve dışa aktarım dosyaları yapılmıştır. Boşsa taşıma kapalıdır. |
 | `YUVA_MIGRATION_WORKERS` | `2` | İşlem başına aynı anda kopyalanan taşıma sayısı; `0` bu işlemde hiç çalıştırmaz. |
 | `YUVA_MIGRATION_MAX_ACTIVE` | `0` | Bir çalışma alanının aynı anda taradığı, kopyaladığı ya da eşitlediği en fazla taşıma sayısı; `0` sınırsız. |
 | `YUVA_MIGRATION_MAX_BYTES` | `0` | Bir çalışma alanının ayda aktarabileceği en fazla bayt; `0` sınırsız. |
 | `YUVA_MIGRATION_MAX_MESSAGE_BYTES` | `52428800` (50 MiB) | Aktarılan en büyük mesaj; daha büyükleri atlanır. |
+| `YUVA_MIGRATION_UPLOAD_MAX_BYTES` | `21474836480` (20 GiB) | Bir taşımanın kabul ettiği en büyük [dışa aktarım dosyası](migrate-files.md); daha büyüğü `422 hosted_limit` ile reddedilir. `0` dosya içe aktarımını kapatır. |
 | `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Bir taşımanın kopyadan sonra eski posta kutusunu okumaya devam ettiği gün sayısı; sonra durur ve erişim bilgileri silinir. 1 ile 365 arası. |
 | `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Bir taşımanın etkinliğinin bittikten sonra saklandığı gün sayısı. 1 ile 36500 arası. |
 | `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Taşımanın özel ya da yerel ağdaki e-posta sunucularına da bağlanmasına izin verir (geliştirme, kendi ağınızdaki sunucular). |
