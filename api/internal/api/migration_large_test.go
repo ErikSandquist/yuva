@@ -5,10 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
+	"runtime"
+	"runtime/debug"
 	"strconv"
 	"strings"
-	"net/http"
 	"sync"
 	"testing"
 	"time"
@@ -33,6 +35,17 @@ func peakRSS(t *testing.T) int64 {
 		}
 	}
 	return 0
+}
+
+// resetPeakRSS starts the high-water mark again from the memory in use now, so the peak is the
+// migration's and not that of reading expected.json.
+func resetPeakRSS(t *testing.T) {
+	t.Helper()
+	runtime.GC()
+	debug.FreeOSMemory()
+	if err := os.WriteFile("/proc/self/clear_refs", []byte("5"), 0); err != nil {
+		t.Logf("the peak RSS includes the test's setup: %v", err)
+	}
 }
 
 // TestDovecotLargeMailbox moves the bulk fixture mailbox (gen -large -bulk 200000 -bulk-body
@@ -107,6 +120,8 @@ func TestDovecotLargeMailbox(t *testing.T) {
 		}
 		return time.Since(started)
 	}
+	want.Threads, want.Contacts = nil, make([]string, len(want.Contacts))
+	resetPeakRSS(t)
 	tm.owner.expect(http.StatusOK, "POST", "/v1/migrations/"+id+"/scan", nil)
 	scan := run()
 	m := d.migration(id)
