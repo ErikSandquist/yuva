@@ -7,7 +7,9 @@ silinmez, ekibiniz bu sırada çalışmaya devam eder.
 Posta kutusunu sahipler ve yöneticiler taşıyabilir: **Ayarlar → Yuva'ya taşı → Yeni taşıma**. Aynı adımlar
 [asistanlar](#claude-code-ya-da-başka-bir-asistanla) ve [API](#arka-uçtan) için de geçerlidir.
 Sağlayıcınızın rehberini seçin: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
-[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md) ya da [herhangi bir IMAP sunucusu](migrate-imap.md).
+[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
+[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX ve mail.com](migrate-gmx.md) ya da
+[herhangi bir IMAP sunucusu](migrate-imap.md). Kendi sunucunuzu mu işletiyorsunuz? [İşletmeciler için Yuva'ya taşıma](migrate-operators.md) sayfasına bakın.
 Outlook.com ve Microsoft 365 şifre kabul etmez ve henüz taşınamaz.
 
 ## Yuva posta kutunuzla neler yapar, neler yapmaz

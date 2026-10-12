@@ -7,8 +7,10 @@ und Ihr Team arbeitet währenddessen weiter.
 Ein Postfach umziehen können Owner und Admins: **Settings → Move to Yuva → New migration**. Dieselben
 Schritte stehen [Assistenten](#von-claude-code-oder-einem-anderen-assistenten) und der
 [API](#aus-ihrem-backend) offen. Wählen Sie die Anleitung Ihres Anbieters: [Gmail](migrate-gmail.md),
-[Google Workspace](migrate-google-workspace.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md)
-oder [jeder andere IMAP-Server](migrate-imap.md). Outlook.com und Microsoft 365 akzeptieren keine Passwörter
+[Google Workspace](migrate-google-workspace.md), [Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md),
+[Zoho Mail](migrate-zoho.md), [Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md),
+[GMX und mail.com](migrate-gmx.md) oder [jeder andere IMAP-Server](migrate-imap.md). Betreiben Sie einen
+eigenen Server? Siehe [Zu Yuva umziehen für Betreiber](migrate-operators.md). Outlook.com und Microsoft 365 akzeptieren keine Passwörter
 und lassen sich noch nicht umziehen.
 
 ## Was Yuva mit Ihrem Postfach tut und was nicht

@@ -7,7 +7,9 @@ meanwhile.
 Owners and admins can move a mailbox: **Settings → Move to Yuva → New migration**. The same steps are
 available to [assistants](#from-claude-code-or-another-assistant) and the [API](#from-your-backend).
 Pick your provider's guide: [Gmail](migrate-gmail.md), [Google Workspace](migrate-google-workspace.md),
-[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md) or [any other IMAP server](migrate-imap.md).
+[Yandex](migrate-yandex.md), [iCloud](migrate-icloud.md), [Zoho Mail](migrate-zoho.md),
+[Yahoo Mail](migrate-yahoo.md), [Fastmail](migrate-fastmail.md), [GMX and mail.com](migrate-gmx.md) or
+[any other IMAP server](migrate-imap.md). Running your own server? See [Move to Yuva for operators](migrate-operators.md).
 Outlook.com and Microsoft 365 accept no passwords and cannot be moved yet.
 
 ## What Yuva does and does not do with your mailbox
