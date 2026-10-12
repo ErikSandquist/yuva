@@ -161,7 +161,7 @@ element on an origin the channel does not allow is refused.
 
 ## M12 — Discussions on documentation pages and reader accounts
 
-Status: in progress; plan in issue #24, decisions in `architecture.md` › Discussions (M12).
+Status: done in `v0.0.7`; plan in issue #24, decisions in `architecture.md` › Discussions (M12).
 
 - Public discussions under each documentation page, like GitHub Discussions: threads, replies,
   votes, accepted answers, followers, moderation. They replace page questions and published answers.
