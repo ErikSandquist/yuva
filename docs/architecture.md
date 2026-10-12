@@ -1487,7 +1487,8 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   what support data they join): name, a public key (`yuva_ak_…`, unique on the server, rotatable with
   24 hours' overlap), 1–50 domains (`*.example.com` allowed), platforms (`web`, `ios`, `android`), time
   zone (the property's day), currency, `collection` (`anonymous` or `consent`), `consent_features`
-  (`persistent`, `identify`), `audience` (`general` or `children`), exclusions, path rules, up to 10
+  (`persistent`, `identify`; none by default), `audience` (`general` or `children`; children's
+  properties keep the country only, general ones keep the city), exclusions, path rules, up to 10
   tracked props, `retention_months` (25). Owners and admins manage them; agents read the properties of
   their inboxes.
 - **Default mode: nothing on the device, no IP stored.** The address is shortened (IPv4 /24, IPv6 /48)
@@ -1537,7 +1538,8 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   advertising id); `sdk/go/analytics` for server events. Apps queue offline up to 72 hours.
 - **Support, in aggregate.** A property linked to an inbox gets conversations, page feedback, ratings and
   discussion threads per page and day next to its views (`<yuva-chat>` records the page a conversation
-  starts on); broadcasts add UTM parameters and show the visits of their campaign. Alerts (spike, drop,
+  starts on); broadcasts add UTM parameters by default (a broadcast can turn them off) and show the
+  visits of their campaign. Alerts (spike, drop,
   goal drop, support load, new referrer), insights and weekly or monthly e-mail reports are fixed rules;
   Yuva runs no model.
 - **Panel, API, MCP.** An Analytics rail section per property (overview, realtime, pages, sources,
@@ -1545,11 +1547,15 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   filters, comparisons, segments, annotations, read-only share links (password, expiry, embeddable on
   listed origins), CSV and NDJSON exports. One query operation (`POST
   /v1/analytics/properties/{id}/query`) serves the panel, the API and the MCP tools. Scopes
-  `analytics:read`, `analytics:write`, `analytics:manage`. Analytics writes no stored event per page view;
+  `analytics:read`, `analytics:write`, `analytics:manage`; like `lists:*`, they go to keys created
+  after M15 without named scopes, never to existing keys. Analytics writes no stored event per page view;
   `analytics.alert` is a stored event and webhook type.
-- **Hosting.** `usage_counters.analytics_events`; `YUVA_ANALYTICS_MONTHLY_EVENTS` (per workspace,
-  operator overrides with `yuva workspace analytics-limit`), per-property and per-address ingest limits,
-  4 concurrent queries per workspace; `YUVA_ANALYTICS=off` removes the feature.
+- **Hosting.** `usage_counters.analytics_events`; `YUVA_ANALYTICS_MONTHLY_EVENTS` (per workspace;
+  unset: 1,000,000 with `YUVA_SIGNUP=open`, else no limit; operator overrides with `yuva workspace
+  analytics-limit`), per-property and per-address ingest limits, 4 concurrent queries per workspace;
+  `YUVA_ANALYTICS=off` removes the feature. The script and endpoint keep their names
+  (`/yuva-analytics.js`, `/client/v1/analytics/`); the docs teach serving both from the site's own domain
+  for visitors whose blockers stop them.
 
 ### Storage
 
