@@ -147,7 +147,7 @@ func imapSnapshot(t *testing.T, addr, user, pass string) map[string][]string {
 	out := map[string][]string{}
 	for _, l := range cmd(`LIST "" "*"`) {
 		i := strings.LastIndex(l, `"/" `)
-		if i < 0 {
+		if i < 0 || strings.Contains(l, `\Noselect`) || strings.Contains(l, `\NonExistent`) {
 			continue
 		}
 		name := l[i+4:]
@@ -349,6 +349,21 @@ func (d *dovecotRun) enterCredentials(t *testing.T, id, user string) {
 	}
 }
 
+// connectGmail connects user's mailbox as connect does, then makes it a Google Workspace
+// migration, whose preset only reaches imap.gmail.com, and tests the connection again so the
+// folders are listed as Gmail's.
+func (d *dovecotRun) connectGmail(t *testing.T, user string, team []string) string {
+	t.Helper()
+	id, _ := d.connect(t, user, team, "")
+	if _, err := d.h.st.Pool.Exec(context.Background(), "UPDATE migrations SET preset = 'google_workspace' WHERE workspace_id = $1 AND id = $2", d.tm.ws, id); err != nil {
+		t.Fatal(err)
+	}
+	if res := d.tm.owner.expect(http.StatusOK, "POST", "/v1/migrations/"+id+"/test", nil); res.body["ok"] != true {
+		t.Fatalf("connection test: %s", res.raw)
+	}
+	return id
+}
+
 func (d *dovecotRun) channelAddress(t *testing.T, channel string) string {
 	var addr string
 	if err := d.h.st.Pool.QueryRow(context.Background(), "SELECT address FROM email_channels WHERE channel_id = $1", channel).Scan(&addr); err != nil {
@@ -445,11 +460,20 @@ func checkDryRun(t *testing.T, est map[string]any, want expectedMailbox) {
 func TestDovecotMigrationDryRunsMatchExpected(t *testing.T) {
 	d := newDovecotRun(t)
 	ctx := context.Background()
-	suggestions := map[string][]string{"acme": {"deniz@example.com Deniz Kaya 1", "sales@example.com Acme Sales 1"}, "yerel": nil}
-	for _, user := range []string{"acme", "yerel"} {
+	suggestions := map[string][]string{
+		"acme":  {"deniz@example.com Deniz Kaya 1", "sales@example.com Acme Sales 1"},
+		"yerel": nil,
+		"gmail": {"ece@example.com Ece Tan 2", "billing@example.com Acme Billing 1"},
+	}
+	for _, user := range []string{"acme", "yerel", "gmail"} {
 		want := expectedFixture(t, d.fixtures, user)
 		box := copyMailbox(t, d.fixtures, user)
-		id, _ := d.connect(t, box, want.TeamAddresses, "")
+		var id string
+		if user == "gmail" {
+			id = d.connectGmail(t, box, want.TeamAddresses)
+		} else {
+			id, _ = d.connect(t, box, want.TeamAddresses, "")
+		}
 		folders := d.tm.owner.expect(http.StatusOK, "GET", "/v1/migrations/"+id+"/folders", nil).body["items"].([]any)
 		if len(folders) != len(want.Folders) {
 			t.Fatalf("%s: %d folders listed after the test, want %d", user, len(folders), len(want.Folders))
@@ -727,6 +751,61 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	if n := h.count("SELECT count(*) FROM conversations WHERE workspace_id = $1 AND migration_id = $2 AND status = 'closed'", tm.ws, id); n != 0 {
 		t.Fatalf("closed imported conversations outlived retention: %d", n)
 	}
+}
+
+func TestDovecotGmailMigrationImportsAllMailOnly(t *testing.T) {
+	d := newDovecotRun(t)
+	h, tm := d.h, d.tm
+	ctx := context.Background()
+	want := expectedFixture(t, d.fixtures, "gmail")
+	box := copyMailbox(t, d.fixtures, "gmail")
+	before := imapSnapshot(t, d.addr(), box, d.pass)
+	id := d.connectGmail(t, box, want.TeamAddresses)
+	path := "/v1/migrations/" + id
+	other := newTeam(t, h)
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "GET", path, nil)
+	tm.owner.expect(http.StatusOK, "POST", path+"/scan", nil)
+	if err := d.work(t, ctx); err != nil {
+		t.Fatal(err)
+	}
+	uses := map[string]string{}
+	for _, f := range tm.owner.expect(http.StatusOK, "GET", path+"/folders", nil).body["items"].([]any) {
+		uses[f.(map[string]any)["name"].(string)] = f.(map[string]any)["use"].(string)
+	}
+	if want := map[string]string{"INBOX": "skip", "[Gmail]/All Mail": "import", "[Gmail]/Sent Mail": "labels", "[Gmail]/Spam": "skip", "Customers": "labels"}; !reflect.DeepEqual(uses, want) {
+		t.Fatalf("folder uses %v, want %v", uses, want)
+	}
+	labelOnly := h.count("SELECT count(*) FROM migration_items WHERE workspace_id = $1 AND migration_id = $2 AND reason = 'label_only'", tm.ws, id)
+	if labelOnly != 5 {
+		t.Fatalf("%d label-only copies, want the 4 in Sent Mail and the 1 in Customers", labelOnly)
+	}
+	started := tm.owner.expect(http.StatusOK, "POST", path+"/start", nil)
+	if started.str("state") != "copying" {
+		t.Fatalf("start: %s", started.raw)
+	}
+	if err := d.work(t, ctx); err != nil {
+		t.Fatal(err)
+	}
+	m := d.migration(id)
+	counts := m.body["counts"].(map[string]any)
+	if m.str("state") != "syncing" || num(counts["imported"]) != want.MessagesIn+want.MessagesOut || num(counts["failed"]) != 0 {
+		t.Fatalf("after the copy: %s", m.raw)
+	}
+	if n := h.count("SELECT count(*) FROM conversations WHERE workspace_id = $1 AND migration_id = $2", tm.ws, id); n != want.Conversations {
+		t.Fatalf("%d conversations, want %d", n, want.Conversations)
+	}
+	checkImportedThreads(t, d, id, want)
+	if after := imapSnapshot(t, d.addr(), box, d.pass); !reflect.DeepEqual(before, after) {
+		t.Fatal("the source mailbox changed")
+	}
+	allowed := []string{"CAPABILITY", "NOOP", "LOGOUT", "STARTTLS", "LOGIN", "AUTHENTICATE", "LIST", "STATUS", "EXAMINE", "UNSELECT",
+		"SEARCH", "UID SEARCH", "FETCH", "UID FETCH"}
+	for _, c := range rawlogCommands(t, d.fixtures, box) {
+		if !slices.Contains(allowed, c) {
+			t.Errorf("the mailbox was sent %s", c)
+		}
+	}
+	tm.owner.expect(http.StatusOK, "POST", path+"/cancel", nil)
 }
 
 func checkImportedThreads(t *testing.T, d *dovecotRun, id string, want expectedMailbox) {

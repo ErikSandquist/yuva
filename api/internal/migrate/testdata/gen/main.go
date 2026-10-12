@@ -91,6 +91,7 @@ type mailbox struct {
 
 	messages []message
 	kinds    map[string]string
+	gmail    bool
 }
 
 var t0 = time.Date(2025, 3, 3, 9, 0, 0, 0, time.UTC)
@@ -114,6 +115,9 @@ var (
 	destek   = addr{"Destek", "destek@example.com"}
 	musteri  = addr{"Mert Demir", "mert@example.org"}
 	bulkAddr = addr{"Bulk", "bulk@example.com"}
+	help     = addr{"Acme Help", "help@example.com"}
+	billing  = addr{"Acme Billing", "billing@example.com"}
+	ece      = addr{"Ece Tan", "ece@example.com"}
 )
 
 func acme() *mailbox {
@@ -204,6 +208,35 @@ func yerel() *mailbox {
 		{Subject: "Teşekkürler", Contact: selin.email, In: 1, Out: 1, Authors: []string{selin.email, destek.email}, Labels: []string{}, LastAt: at(211)},
 	}
 	m.Skipped = map[string]int{"spam": 1, "trash": 1, "drafts": 1, "duplicate_copies": 1}
+	return m
+}
+
+// gmail is a Google Workspace mailbox: every message is in All Mail, and INBOX, Sent Mail and the
+// Customers label hold copies of some of them.
+func gmail() *mailbox {
+	const all, sent = "[Gmail]/All Mail", "[Gmail]/Sent Mail"
+	m := &mailbox{User: "gmail", Address: help.email, TeamAddresses: []string{help.email, billing.email, ece.email}, gmail: true,
+		kinds: map[string]string{"INBOX": "inbox", all: "all", sent: "sent", "[Gmail]/Spam": "spam", "Customers": "label"}}
+	m.messages = []message{
+		{folders: []string{all, "INBOX", "Customers"}, from: ayse, to: []addr{help}, subject: "Order 2001 is late", id: "<order-2001-1@example.org>", date: at(400), body: "Where is my order?"},
+		{folders: []string{all, sent}, from: help, to: []addr{ayse}, subject: "Re: Order 2001 is late", id: "<order-2001-2@example.com>", inReplyTo: "<order-2001-1@example.org>",
+			references: []string{"<order-2001-1@example.org>"}, date: at(401), body: "It ships today.", seen: true},
+		{folders: []string{all, sent}, from: billing, to: []addr{bob}, subject: "Your invoice", id: "<gm-invoice-1@example.com>", date: at(410), body: "Invoice attached.", seen: true},
+		{folders: []string{all, "INBOX"}, from: bob, to: []addr{billing}, subject: "Re: Your invoice", id: "<gm-invoice-2@example.net>", inReplyTo: "<gm-invoice-1@example.com>",
+			references: []string{"<gm-invoice-1@example.com>"}, date: at(411), body: "Paid."},
+		{folders: []string{all, sent}, from: ece, to: []addr{carol}, subject: "Setup call", id: "<setup-1@example.com>", date: at(420), body: "Does Tuesday work?", seen: true},
+		{folders: []string{all, sent}, from: ece, to: []addr{carol}, subject: "Re: Setup call", id: "<setup-2@example.com>", inReplyTo: "<setup-1@example.com>",
+			references: []string{"<setup-1@example.com>"}, date: at(421), body: "Or Wednesday.", seen: true},
+		{folders: []string{all}, from: carol, to: []addr{ece}, subject: "Re: Setup call", id: "<setup-3@example.org>", inReplyTo: "<setup-2@example.com>",
+			references: []string{"<setup-1@example.com>", "<setup-2@example.com>"}, date: at(422), body: "Wednesday is fine.", seen: true},
+		{folders: []string{"[Gmail]/Spam"}, from: addr{"", "offer@example.net"}, to: []addr{help}, subject: "Offer", id: "<gm-spam-1@example.net>", date: at(430), body: "Buy."},
+	}
+	m.Threads = []thread{
+		{Subject: "Order 2001 is late", Contact: ayse.email, In: 1, Out: 1, Authors: []string{ayse.email, help.email}, Labels: []string{"Customers"}, LastAt: at(401)},
+		{Subject: "Your invoice", Contact: bob.email, In: 1, Out: 1, Authors: []string{billing.email, bob.email}, Labels: []string{}, LastAt: at(411)},
+		{Subject: "Setup call", Contact: carol.email, In: 1, Out: 2, Authors: []string{ece.email, carol.email}, Labels: []string{}, LastAt: at(422)},
+	}
+	m.Skipped = map[string]int{"spam": 1, "other_folders": 2}
 	return m
 }
 
@@ -361,6 +394,9 @@ func write(out string, m *mailbox) error {
 	m.Folders = nil
 	for name, kind := range m.kinds {
 		read := kind == "inbox" || kind == "sent" || kind == "archive" || kind == "user"
+		if m.gmail {
+			read = kind == "all"
+		}
 		m.Folders = append(m.Folders, folder{Name: name, Kind: kind, Messages: counts[name], Read: read})
 	}
 	sort.Slice(m.Folders, func(a, b int) bool { return m.Folders[a].Name < m.Folders[b].Name })
@@ -419,7 +455,7 @@ func main() {
 	if *out == "" {
 		log.Fatal("-out is required")
 	}
-	boxes := []*mailbox{acme(), yerel()}
+	boxes := []*mailbox{acme(), yerel(), gmail()}
 	if *large {
 		boxes = append(boxes, bulk(*bulkMessages, *bulkBody))
 	}

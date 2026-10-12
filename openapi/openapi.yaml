@@ -13226,8 +13226,9 @@ components:
           type: array
           maxItems: 50
           description: |
-            Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
-            other than the mailbox address, most messages first. They are the team's aliases and
+            Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
+            the All Mail messages that are also in Sent), other than the mailbox address, most
+            messages first. They are the team's aliases and
             colleagues the Map step offers as `options.team_addresses`, whether or not they are
             already team addresses.
           items:
@@ -13531,8 +13532,9 @@ components:
         use:
           type: string
           description: |
-            `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
-            label whose mail comes from All Mail). `skip`: not read.
+            `import`: its messages are imported. `labels`: only read, for the labels and the Sent
+            folder's senders of mail that comes from All Mail (a Gmail label, or the Sent folder while
+            All Mail is read). `skip`: not read.
           enum: [import, labels, skip]
           x-enum-varnames: [FolderUseImport, FolderUseLabels, FolderUseSkip]
         label_action:

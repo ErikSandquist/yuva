@@ -8426,8 +8426,9 @@ type Migration struct {
 	// SyncedAt When catch-up sync last read the old mailbox.
 	SyncedAt *time.Time `json:"synced_at,omitempty"`
 
-	// TeamSuggestions Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
-	// other than the mailbox address, most messages first. They are the team's aliases and
+	// TeamSuggestions Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
+	// the All Mail messages that are also in Sent), other than the mailbox address, most
+	// messages first. They are the team's aliases and
 	// colleagues the Map step offers as `options.team_addresses`, whether or not they are
 	// already team addresses.
 	TeamSuggestions *[]MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
@@ -8715,16 +8716,18 @@ type MigrationFolder struct {
 	SizeBytes int64 `json:"size_bytes"`
 	Skipped   int64 `json:"skipped"`
 
-	// Use `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
-	// label whose mail comes from All Mail). `skip`: not read.
+	// Use `import`: its messages are imported. `labels`: only read, for the labels and the Sent
+	// folder's senders of mail that comes from All Mail (a Gmail label, or the Sent folder while
+	// All Mail is read). `skip`: not read.
 	Use MigrationFolderUse `json:"use"`
 }
 
 // MigrationFolderLabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
 type MigrationFolderLabelAction string
 
-// MigrationFolderUse `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
-// label whose mail comes from All Mail). `skip`: not read.
+// MigrationFolderUse `import`: its messages are imported. `labels`: only read, for the labels and the Sent
+// folder's senders of mail that comes from All Mail (a Gmail label, or the Sent folder while
+// All Mail is read). `skip`: not read.
 type MigrationFolderUse string
 
 // MigrationFolderKind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's

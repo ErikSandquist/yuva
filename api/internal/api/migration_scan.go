@@ -183,13 +183,14 @@ func (s *Server) recordFolders(ctx context.Context, q *store.Queries, m store.Mi
 	return nil
 }
 
-// folderUse is import for a selected folder, labels for a Gmail label read only for the labels
-// of mail that comes from All Mail, else skip.
+// folderUse is import for a selected folder; labels for a Gmail label or the Sent folder while
+// All Mail is read, so mail from All Mail gets its labels and the Sent folder's senders are known;
+// else skip.
 func folderUse(f store.MigrationFolder, folders []store.MigrationFolder) oas.MigrationFolderUse {
 	if f.Selected {
 		return oas.FolderUseImport
 	}
-	if f.Kind != migrate.KindLabel || f.LabelAction == string(oas.FolderLabelNone) {
+	if f.Kind != migrate.KindSent && (f.Kind != migrate.KindLabel || f.LabelAction == string(oas.FolderLabelNone)) {
 		return oas.FolderUseSkip
 	}
 	for _, o := range folders {
