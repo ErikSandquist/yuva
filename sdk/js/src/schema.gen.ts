@@ -633,12 +633,39 @@ export interface paths {
         head?: never;
         /**
          * Update the workspace
-         * @description `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send`: owners
-         *     and admins with a member session (`403 member_session_required` for a key).
+         * @description `retention_days`: owners, or an API key with `workspace:manage`. `bots_may_send` and
+         *     `broadcasts_by_keys`: owners and admins with a member session (`403
+         *     member_session_required` for a key).
          *
          *     Scope: `workspace:manage`.
          */
         patch: operations["updateWorkspace"];
+        trace?: never;
+    };
+    "/v1/workspace/broadcast-approval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask the operator to allow broadcasts
+         * @description On a server that runs with `YUVA_BROADCASTS=approval`, a new workspace sends broadcasts only
+         *     after the server's operator approves it. The request tells the operator the website, what
+         *     the workspace sends and how its subscribers agreed; `broadcasts.status` becomes
+         *     `approval_requested` until the operator answers. `409 invalid_state` unless the status is
+         *     `approval_required`.
+         *
+         *     Owners only, with a member session.
+         */
+        post: operations["requestBroadcastApproval"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/workspaces": {
@@ -1036,6 +1063,102 @@ export interface paths {
          */
         post: operations["rotateChannelPublicKey"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/channels/{channelId}/deliverability-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Check how an e-mail channel's broadcasts authenticate
+         * @description Sends a probe through the channel's broadcast SMTP account (its support account when it
+         *     has none) to the channel's own address, with the headers a broadcast carries, and looks up
+         *     DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+         *     domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+         *     it arrives and never becomes a conversation; the result is read only from the
+         *     `Authentication-Results` of the receiving server the operator trusts
+         *     (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+         *     `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+         *     when it has not within 10 minutes. A new check replaces the previous one.
+         *
+         *     `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+         *     at most 6 checks an hour per channel (`429 rate_limited`).
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        post: operations["checkDeliverability"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/channels/{channelId}/deliverability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the last deliverability check of an e-mail channel
+         * @description The last check and what it found. `404 not_found` when the channel was never checked. The
+         *     broadcast review reads it: a warning when the channel was never checked, the check did not
+         *     finish or found no DMARC record, blocking when it found no passing DKIM signature.
+         *
+         *     Scope: `inboxes:read`.
+         */
+        get: operations["getDeliverability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/channels/{channelId}/dkim-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a DKIM key for an e-mail channel
+         * @description Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+         *     deliverability probes with, once enabled. The private key is stored encrypted under the
+         *     server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+         *     (a provider that limits TXT strings to 255 characters splits it into several strings of
+         *     one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+         *     which looks the record up first. The signature uses `d=` the sending domain,
+         *     relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+         *     `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+         *
+         *     `409 dkim_exists` when the channel has a key (remove it first); `409
+         *     email_channel_required` when the channel is not an e-mail channel.
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        post: operations["createDkimKey"];
+        /**
+         * Remove an e-mail channel's DKIM key
+         * @description Stops signing with it and deletes the key; a channel without a key also answers `204`.
+         *     `409 email_channel_required` when the channel is not an e-mail channel.
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        delete: operations["deleteDkimKey"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2348,7 +2471,8 @@ export interface paths {
          * Delete a mailing list
          * @description Deletes the list with its subscriptions and their consent events. Addresses that had
          *     unsubscribed from it are remembered as opted out first, so they cannot be added back by a
-         *     member or a key.
+         *     member or a key. `409 list_in_use` while a scheduled, preparing, sending or paused
+         *     broadcast sends to it.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2421,12 +2545,14 @@ export interface paths {
          *
          *     Answers `201` for a new subscription and `200` with the existing one when the address is
          *     already `subscribed` or `pending` (a `pending` one with `confirmed: true` becomes
-         *     `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list
-         *     (only the person can come back: send `confirmed: false` to mail them a confirmation),
-         *     `409 opted_out` when it unsubscribed from everything, complained or was erased after
-         *     objecting, `409 suppressed` when mail to it bounced or was reported as spam,
-         *     `400 invalid_email`, `429 confirmation_limit` when the address already got 3 confirmation
-         *     mails today.
+         *     `subscribed`). Refused: `409 unsubscribed` when the address unsubscribed from this list, and
+         *     with `confirmed: true` also when it asked again and waits for its confirmation: only the
+         *     person can come back, by asking on a form or in the app and confirming the mail they get;
+         *     no member or key sends them a confirmation. `409 opted_out` when it unsubscribed from
+         *     everything, complained or was erased after objecting, `409 suppressed` when mail to it
+         *     bounced or was reported as spam, `400 validation_failed` without `consent` or
+         *     `consent.confirmed`, `400 invalid_email`, `429 confirmation_limit` when the address already
+         *     got 3 confirmation mails today.
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2464,8 +2590,8 @@ export interface paths {
         /**
          * Unsubscribe a subscriber
          * @description The only change a member or key can make is `state: unsubscribed`; anything that would
-         *     make a subscription `subscribed` answers `409 confirmation_required` (add the address with
-         *     `consent.confirmed: false` to mail the person a confirmation).
+         *     make a subscription `subscribed` answers `409 confirmation_required` (add an address that
+         *     never unsubscribed with `consent.confirmed: false` to mail the person a confirmation).
          *
          *     Owners, admins and API keys. Scope: `lists:write`.
          */
@@ -2511,9 +2637,792 @@ export interface paths {
          *     `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
          *     `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
          *
+         *     `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+         *     CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+         *     (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+         *     (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+         *     rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+         *     in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+         *     agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+         *     your own records before uploading; only commercial lists need registering.
+         *
          *     Scope: `lists:read`.
          */
         get: operations["exportListConsent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a list's CSV imports
+         * @description Newest first.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["listListImports"];
+        put?: never;
+        /**
+         * Upload a CSV file of subscribers
+         * @description One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+         *     declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+         *     this file agreed to receive {list} from {sender}; I can show how and when"), and
+         *     `consent_source`, where and when the people agreed. Both are required
+         *     (`422 attestation_required`) and are stored on the import and on every consent event it
+         *     writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+         *     the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+         *     list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+         *     optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+         *     headers.
+         *
+         *     The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+         *     BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+         *     found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+         *     that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+         *     or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+         *     `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+         *     limit, 100,000 by default, fails). Start it with `/start`.
+         *
+         *     One import per workspace validates or imports at a time (`409 import_running`). A file
+         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["createListImport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A CSV import
+         * @description Scope: `lists:read`.
+         */
+        get: operations["getListImport"];
+        put?: never;
+        post?: never;
+        /**
+         * Cancel an import
+         * @description Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+         *     Subscriptions it already added stay, with their consent events. A finished import is left
+         *     as it is.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        delete: operations["cancelListImport"];
+        options?: never;
+        head?: never;
+        /**
+         * Change an import's column mapping
+         * @description Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+         *     again (the import goes back to `validating`). Exactly one column must be `email`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        patch: operations["updateListImport"];
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start a validated import
+         * @description Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+         *     email_column_required` when no column is mapped to `email`; `409 import_running` while
+         *     another import of the workspace runs). Rows are added 1,000 per transaction, each address
+         *     checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+         *     `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+         *     of the workspace or are suppressed are never added. Contacts are found by address or
+         *     created with the row's name and locale; mapped attributes only fill keys a contact does
+         *     not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+         *     mail. The upload is deleted when the import ends; refused rows stay downloadable from
+         *     `/errors` for 7 days.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["startListImport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}/errors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download an import's refused rows
+         * @description A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+         *     the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+         *     `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+         *     Cells are quoted and formula-like values defused as in the consent export. Filled while
+         *     the import runs; `404` once it is 7 days past its end.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["getListImportErrors"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the template gallery
+         * @description The starter designs that ship with the server, in gallery order, with the name and
+         *     description in `locale` (English when the template has no text in it).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailTemplates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-templates/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A template with its design
+         * @description The template's design in `locale` (English when the template has no text in it). Its image
+         *     blocks name the template's own files in `asset` instead of `image_id`; `images` gives their
+         *     public URLs for a preview. Create a design from it with `POST /v1/email-designs` and
+         *     `template`, which copies the files into the workspace's images.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailTemplate"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List e-mail designs
+         * @description Most recently saved first, without their documents. Archived designs are left out unless
+         *     `archived=true`, which lists only them. `q` matches the name.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailDesigns"];
+        put?: never;
+        /**
+         * Create an e-mail design
+         * @description From a `document`, from a gallery `template` (its files become the workspace's images,
+         *     reused when the same file is already there), or empty when neither is given. `inbox_id`
+         *     ties the design to an inbox; without it the design is workspace-wide. The answer carries
+         *     the render's `warnings`.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["createEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Render a design
+         * @description Renders a document (saved or not) as the mail would look: HTML, the plain-text part, the
+         *     HTML's size and warnings. `inbox_id` supplies the footer's sender identity and the
+         *     language of its lines, `list_id` the list it names, `contact_id` the merge field values;
+         *     without them sample values are used. `dark: true` renders the dark palette as the page's
+         *     own colours, for previews that cannot switch the colour scheme. Links to the unsubscribe
+         *     and preference pages point at an example token.
+         *
+         *     Warnings: `low_contrast` (text under 4.5:1 against its background, light or dark),
+         *     `html_near_clip` (over 90 KB, close to where Gmail cuts a mail off), `html_clipped` (over
+         *     102 KB), `image_missing` (an image block without an image), `alt_missing` (an image that is
+         *     not decorative has no alt text), `merge_field_without_fallback`, `sender_identity_missing`
+         *     (the inbox has no legal name or postal address). A document over 500 KB of HTML is
+         *     refused (`422 html_too_large`). At most 120 renders a minute per caller
+         *     (`429 rate_limited`).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        post: operations["renderEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An e-mail design
+         * @description The design with its document (upgraded to the newest `schema`) and the render's
+         *     `warnings`.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailDesign"];
+        /**
+         * Save an e-mail design
+         * @description Replaces the name, inbox and document. `base_version` is the `version` the edit started
+         *     from; when the design has moved on since, nothing is saved and the answer is
+         *     `409 version_conflict` with the current design in `design`, and the current version is
+         *     kept as a `conflict` snapshot. Each save increases `version` by one and takes a snapshot
+         *     when the newest is older than 10 minutes or `snapshot` is true. Saving an archived design
+         *     brings it back.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        put: operations["updateEmailDesign"];
+        post?: never;
+        /**
+         * Archive an e-mail design
+         * @description Hides the design from the default list; it keeps its document and versions, and saving it
+         *     again brings it back.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        delete: operations["archiveEmailDesign"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/duplicate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Copy an e-mail design
+         * @description A new design with the same inbox and document, named `name` or "<name> (copy)".
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["duplicateEmailDesign"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a design's snapshots
+         * @description The kept snapshots, newest first, without their documents (at most 50).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailDesignVersions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions/{version}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A snapshot with its document
+         * @description Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getEmailDesignVersion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-designs/{designId}/versions/{version}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restore a snapshot
+         * @description Saves the snapshot's document as the design's newest version (a save like `PUT`, with the
+         *     same `base_version` check) and takes a `restored` snapshot of it.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["restoreEmailDesignVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-images": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List the workspace's e-mail images
+         * @description Newest first.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["listEmailImages"];
+        put?: never;
+        /**
+         * Upload an e-mail image
+         * @description One `file` part of at most 10 MiB. The type is read from the bytes, not the name: PNG,
+         *     JPEG, GIF or WebP; anything else, SVG included, is refused with `415 image_type`. Images
+         *     over 40 megapixels or 8,000 pixels on a side are refused before decoding
+         *     (`422 image_too_large`). The image is decoded and encoded again, which drops EXIF, GPS and
+         *     colour-profile data: wider than 1,200 pixels it is scaled down to 1,200; JPEG is stored
+         *     as JPEG, PNG as PNG, WebP as PNG when it has transparency and JPEG otherwise. A GIF is kept
+         *     as it is (animation included, at most 5 MiB) when it is at most 1,200 pixels wide, and
+         *     refused otherwise (`422 gif_too_wide`). Taller than 4,000 pixels after scaling is refused
+         *     (`422 image_too_large`).
+         *
+         *     The same image uploaded again answers `200` with the existing one. `409 image_quota` when
+         *     the workspace's images would exceed the server's limit.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["uploadEmailImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/email-images/{imageId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete an e-mail image
+         * @description Refused with `409 image_in_use`, naming the designs in `used_by`, while a design that is
+         *     not archived uses the image. An image that went out in a sent broadcast needs
+         *     `force=true` (`409 image_sent` otherwise): mail already delivered then shows a broken
+         *     image. The public URL stops working at once.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        delete: operations["deleteEmailImage"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List broadcasts
+         * @description Newest first, in the inboxes the caller can see. `state` may be repeated.
+         *
+         *     Owners, admins, agents (the broadcasts of their inboxes, read only) and API keys. Scope:
+         *     `broadcasts:read`.
+         */
+        get: operations["listBroadcasts"];
+        put?: never;
+        /**
+         * Create a draft broadcast
+         * @description A draft of an inbox. `channel_id` names the inbox's e-mail channel that sends it: one with
+         *     an SMTP account and an address to send from (`409 email_channel_required`). The audience
+         *     names up to 10 lists of the same inbox, up to 10 attribute conditions and the contact
+         *     languages to keep. Everything can be changed while the broadcast is a draft; the review
+         *     (`GET .../review`) says what is still missing before it can be scheduled.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`. With `YUVA_BROADCASTS=off` every
+         *     broadcast write answers `403 broadcasts_disabled`.
+         */
+        post: operations["createBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A broadcast
+         * @description Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getBroadcast"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a broadcast
+         * @description Deletes a draft or a finished broadcast (`sent`, `cancelled`, `failed`) with its deliveries;
+         *     conversations opened by replies stay and lose the link. `409 broadcast_active` while it is
+         *     scheduled, preparing, sending or paused: cancel it first.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        delete: operations["deleteBroadcast"];
+        options?: never;
+        head?: never;
+        /**
+         * Change a draft
+         * @description Changes the given fields of a draft (`409 not_draft` otherwise). `channel_id: null` and
+         *     `design_id: null` clear them; `audience` replaces the whole audience.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        patch: operations["updateBroadcast"];
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/audience": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Count the audience
+         * @description Who the broadcast would go to if it were sent now: one mail per contact subscribed to one
+         *     of its lists (the address of the first list in the broadcast's order), matching every
+         *     condition and language, and the contacts left out by reason. `missing_merge_fields` counts,
+         *     per merge field without a fallback, the recipients for whom it would be empty. Nothing is
+         *     stored; the audience is taken again when sending starts.
+         *
+         *     Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+         */
+        post: operations["countBroadcastAudience"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Review before sending
+         * @description The checklist scheduling runs. `ready` is true when no item is `blocking`. Items:
+         *     `sender_identity` (the inbox's legal name and postal address), `sender_ready` (the channel
+         *     can send), `approval` (the workspace may send), `design` (a design is chosen and renders),
+         *     `audience_nonempty`, `merge_fields` (no field without a fallback is empty for anyone),
+         *     `html_size` (at most 102 KB, where Gmail clips; a warning above 90 KB), `images_alt`
+         *     (warning), `links` (warning for `http:` links), `subject` (1 to 300 characters; a warning
+         *     above 80), `daily_cap` (warning when the send will take more than one day),
+         *     `test_sent` (warning when no test went out since the last change) and `click_tracking`
+         *     (warning: links point at the server's link domain).
+         *
+         *     Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["reviewBroadcast"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send a test
+         * @description Sends the broadcast as it would go out, with `[Test]` before the subject, to members of the
+         *     workspace only, never to another address: `member_ids` (1 to 5), or the calling member when
+         *     absent (API keys must name members). `contact_id` fills the merge fields with that
+         *     contact's values instead of sample values. Its unsubscribe link names no list and says it
+         *     was a test. At most 20 tests an hour per workspace (`429 test_limit`); `409
+         *     sender_not_ready` when the channel cannot send; `409 design_required` without a design.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:write`.
+         */
+        post: operations["sendBroadcastTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Schedule or send now
+         * @description Runs the review and, when nothing blocks, freezes the design and schedules the broadcast
+         *     for `send_at` (now when absent; at most 90 days ahead). When sending starts, the audience is
+         *     taken once: contacts who subscribe later are not included, and anyone who unsubscribes,
+         *     bounces or complains before their mail goes out is skipped. `confirm_recipients`, when
+         *     given, must equal the current audience count (`409 audience_changed` with `recipients`).
+         *
+         *     Refusals: `409 not_draft`; `409 review_failed` with the blocking `items`;
+         *     `403 broadcasts_disabled` (`YUVA_BROADCASTS=off`), `403 broadcasts_approval_required`
+         *     (the server's operator has not approved the workspace yet),
+         *     `403 broadcasts_suspended`, `403 broadcasts_by_keys_disabled` (API keys and OAuth tokens
+         *     while the workspace's `broadcasts.by_keys` is off).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:send`.
+         */
+        post: operations["scheduleBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/unschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Back to draft
+         * @description A scheduled broadcast that has not started becomes a draft again (`409 already_started`
+         *     otherwise).
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:send`.
+         */
+        post: operations["unscheduleBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause sending
+         * @description A preparing or sending broadcast stops within the batch in progress (at most 50 mails)
+         *     with `pause_reason: member`. `409 invalid_state` otherwise.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:send`.
+         */
+        post: operations["pauseBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume sending
+         * @description A paused broadcast continues where it stopped, whatever paused it; the bounce and
+         *     complaint rates that pause it on their own count again from now. Refused like scheduling
+         *     while the workspace is suspended or keys may not schedule (`403`), and `409 invalid_state`
+         *     when it is not paused.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:send`.
+         */
+        post: operations["resumeBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a broadcast
+         * @description A scheduled, preparing, sending or paused broadcast stops for good within the batch in
+         *     progress; mail not sent yet is skipped (`cancelled`). `409 invalid_state` otherwise.
+         *
+         *     Owners, admins and API keys. Scope: `broadcasts:send`.
+         */
+        post: operations["cancelBroadcast"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/deliveries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a broadcast's deliveries
+         * @description One row per recipient, in the order they were taken. `q` matches the address or the
+         *     contact's name; `replied=true` keeps the recipients who answered.
+         *
+         *     Owners, admins and API keys. Scopes: `broadcasts:read` and `contacts:read`.
+         */
+        get: operations["listBroadcastDeliveries"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/broadcasts/{broadcastId}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A broadcast's report
+         * @description Counts, rates over the mails sent, a timeline (per hour for the first 72 hours after
+         *     sending started, then per day), the links by unique clicks when click tracking was on, and
+         *     the first 50 conversations opened by replies. There is no open tracking. Clicks are
+         *     approximate: a `HEAD` request or three links of one mail opened within two seconds (a
+         *     security scanner) are not counted.
+         *
+         *     Owners, admins, agents of its inbox and API keys. Scope: `broadcasts:read`.
+         */
+        get: operations["getBroadcastReport"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2532,7 +3441,8 @@ export interface paths {
         /**
          * Usage per month
          * @description Counters of the workspace per calendar month (UTC), newest first: conversations and
-         *     messages (including notes, not events) created, and attachment bytes uploaded.
+         *     messages (including notes, not events) created, attachment bytes uploaded and broadcast
+         *     mails sent.
          *
          *     Scope: `workspace:manage`.
          */
@@ -2887,7 +3797,8 @@ export interface paths {
          * @description The events `/v1/realtime` and webhooks carry, in id order, for callers that poll instead of
          *     holding a WebSocket open. Each event is filtered exactly as the caller's realtime stream is:
          *     agents and API keys limited to inboxes see the events of the inboxes they can access, and
-         *     `contact.updated` and `contact.deleted` also need `contacts:read`.
+         *     `contact.updated` and `contact.deleted` also need `contacts:read`, `subscription.created` and
+         *     `subscription.updated` `lists:read`.
          *
          *     Pass the last event id you handled as `after` (`0` starts at the oldest kept event). Keep
          *     `next` and send it as `after` on the next call; `next` is the last event returned, or a
@@ -3231,7 +4142,8 @@ export interface paths {
          *     after it was issued (`400 form_token`); `website` is a honeypot that must stay empty
          *     (a filled one is answered `202` and ignored); `list_ids` must be public lists of the
          *     channel's inbox (`404 list_not_found`); `400 invalid_email`. At most 10 requests per IP
-         *     address and hour and 600 per channel and hour (`429 rate_limited`); confirmation mails are
+         *     address and hour and 600 per channel and hour (`429 rate_limited` with `Retry-After`, the
+         *     seconds until the hour ends); confirmation mails are
          *     capped per address (3 a day, 1 per list in 10 minutes) and per channel (1,000 a day)
          *     without changing the answer.
          *
@@ -3458,8 +4370,9 @@ export interface paths {
          *     with only an address the user typed, it is `pending` and a confirmation mail goes out.
          *     Anonymous visitor sessions answer `403 identity_required` (they use the form);
          *     a contact without an address `409 no_email`; a list that is not a public list of the inbox
-         *     `404`. Already subscribed or pending: the current state, nothing sent. An address that
-         *     bounced or complained stays `pending` and gets nothing.
+         *     `404`. Already subscribed or pending: the current state, nothing sent. A subscription the
+         *     user left before becomes `pending` with a confirmation mail. An address that bounced or
+         *     complained stays `pending` and gets nothing.
          */
         put: operations["subscribeClient"];
         post?: never;
@@ -4307,6 +5220,28 @@ export interface webhooks {
         patch?: never;
         trace?: never;
     };
+    "broadcast.updated": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A broadcast changed state
+         * @description Scheduled, back to draft, preparing, sending (started or resumed), paused (with
+         *     `pause_reason`), sent, cancelled or failed; `previous_state` is the state before. Endpoints
+         *     of an inbox get the broadcasts of that inbox.
+         */
+        post: operations["webhookBroadcastUpdated"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export interface components {
     schemas: {
@@ -4367,6 +5302,7 @@ export interface components {
              *     `drafts:send` sends drafts. Members always may.
              */
             bots_may_send: boolean;
+            broadcasts: components["schemas"]["WorkspaceBroadcasts"];
             /** Format: date-time */
             created_at: string;
         };
@@ -4382,6 +5318,8 @@ export interface components {
             retention_days?: number | null;
             /** @description Owners and admins, with a member session. */
             bots_may_send?: boolean;
+            /** @description Whether API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Owners and admins, with a member session. */
+            broadcasts_by_keys?: boolean;
         };
         WorkspaceDeletion: {
             /** @description The workspace's name, exactly; anything else is refused with `400 confirmation_mismatch`. */
@@ -4551,8 +5489,14 @@ export interface components {
          *     - `lists:read`: mailing lists, subscriptions, growth, consent exports.
          *     - `lists:write`: create, change and delete lists; add, unsubscribe and delete
          *       subscribers; resend confirmations.
-         *     - `broadcasts:read`, `broadcasts:write`, `broadcasts:send`: reserved for broadcasts; keys
-         *       cannot hold them yet.
+         *     - `broadcasts:read`: broadcasts, their audience counts, reviews and reports; e-mail
+         *       designs, their snapshots and renders, images, the template gallery. Deliveries also
+         *       need `contacts:read`.
+         *     - `broadcasts:write`: create, change and delete draft broadcasts and send tests; create,
+         *       save, copy, archive and restore designs; upload and delete images.
+         *     - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
+         *       and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
+         *       without naming its scopes does not hold it.
          *
          *     `lists:*` and `broadcasts:*` are never added to keys made before they existed.
          * @enum {string}
@@ -4973,6 +5917,18 @@ export interface components {
             from_address?: components["schemas"]["Email"];
             smtp?: components["schemas"]["SmtpSettings"];
             auto_reply: components["schemas"]["EmailAutoReply"];
+            /**
+             * @description A separate SMTP account for broadcasts, so complaints about marketing mail never land
+             *     on the support account; absent when broadcasts use `smtp`.
+             */
+            broadcast_smtp?: components["schemas"]["SmtpSettings"];
+            /**
+             * Format: int32
+             * @description Broadcast mails a second through this channel.
+             */
+            broadcast_rate: number;
+            /** @description The channel's Yuva DKIM key; absent without one. */
+            dkim?: components["schemas"]["EmailDkim"];
         };
         EmailChannelInput: {
             /**
@@ -4987,6 +5943,132 @@ export interface components {
             from_address?: components["schemas"]["Email"];
             smtp?: components["schemas"]["SmtpSettingsInput"];
             auto_reply?: components["schemas"]["EmailAutoReplyInput"];
+            /**
+             * @description The broadcast SMTP account. Absent keeps the stored one; its `password` absent keeps
+             *     the stored password. Remove it with `broadcast_smtp_remove`.
+             */
+            broadcast_smtp?: components["schemas"]["SmtpSettingsInput"];
+            /** @description `true` removes the broadcast SMTP account; broadcasts then use `smtp`. */
+            broadcast_smtp_remove?: boolean;
+            /**
+             * Format: int32
+             * @description Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
+             */
+            broadcast_rate?: number;
+            dkim?: components["schemas"]["EmailDkimInput"];
+        };
+        /**
+         * @description A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
+         *     TXT record to publish; they follow the sending domain (`from_address`, else `address`).
+         */
+        EmailDkim: {
+            selector: string;
+            /** @description Mail is signed with the key. */
+            enabled: boolean;
+            /** @example yuva._domainkey.example.com */
+            dns_name: string;
+            /** @example v=DKIM1; k=rsa; p=MIIBIjANBgkqh... */
+            dns_value: string;
+        };
+        /**
+         * @description Absent keeps the stored state. `enabled: true` needs a key (`POST
+         *     /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+         *     same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+         *     until it is enabled again for the new domain.
+         */
+        EmailDkimInput: {
+            enabled: boolean;
+        };
+        DkimKeyCreate: {
+            /** @description The DNS label the key is published under, such as `yuva` or `yuva2026`. */
+            selector: string;
+        };
+        /**
+         * @description `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+         *     `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+         *     server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+         *     receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+         *     minutes; `failed` when it could not be sent (`error`).
+         * @enum {string}
+         */
+        DeliverabilityState: "queued" | "sent" | "received" | "unverifiable" | "timeout" | "failed";
+        /**
+         * @description A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+         *     when it was not reported.
+         * @enum {string}
+         */
+        AuthStatus: "pass" | "fail" | "softfail" | "neutral" | "none" | "policy" | "temperror" | "permerror" | "unknown";
+        DeliverabilitySpf: {
+            status: components["schemas"]["AuthStatus"];
+            /** @description The envelope sender's domain the result is for (`smtp.mailfrom`). */
+            domain?: string;
+            /** @description `domain` shares its organizational domain with `From` (DMARC relaxed alignment). */
+            aligned: boolean;
+            /** @description The SPF record of the sending domain itself; absent when it has none. */
+            record?: string;
+        };
+        DkimSignature: {
+            /** @description `d=` */
+            domain: string;
+            /** @description `s=` */
+            selector?: string;
+            status: components["schemas"]["AuthStatus"];
+            /** @description `domain` shares its organizational domain with `From`. */
+            aligned: boolean;
+            /** @description Its `h=` lists both `List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058). */
+            covers_list_unsubscribe: boolean;
+        };
+        DeliverabilityDkim: {
+            /** @description The result of the signature aligned with `From`, else of the first one reported. */
+            status: components["schemas"]["AuthStatus"];
+            domain?: string;
+            /** @description A signature aligned with `From` passed. */
+            aligned: boolean;
+            /** @description That passing aligned signature covers `List-Unsubscribe` and `List-Unsubscribe-Post`. */
+            covers_list_unsubscribe: boolean;
+            /** @description Every DKIM signature of the probe with the receiving server's result for it. */
+            signatures: components["schemas"]["DkimSignature"][];
+        };
+        /** @enum {string} */
+        DmarcPolicy: "none" | "quarantine" | "reject";
+        DeliverabilityDmarc: {
+            status: components["schemas"]["AuthStatus"];
+            policy?: components["schemas"]["DmarcPolicy"];
+            /** @description The DMARC record that applies to the sending domain; absent when there is none. */
+            record?: string;
+        };
+        DeliverabilityMx: {
+            /** @description The domain of the channel's reply address. */
+            domain: string;
+            /** @description Its MX hosts by preference; empty when it has none. */
+            hosts: string[];
+        };
+        DeliverabilityYuvaDkim: {
+            selector: string;
+            dns_name: string;
+            /** @description DNS answers at `dns_name` with the channel's public key. */
+            published: boolean;
+        };
+        DeliverabilityCheck: {
+            state: components["schemas"]["DeliverabilityState"];
+            /** @description `failed` only: why the probe was not sent, such as the SMTP server's answer. */
+            error?: string;
+            /** @description The sending domain, of `From`. */
+            domain: string;
+            /** @description The probe went to the SMTP server encrypted (STARTTLS or TLS). */
+            tls?: boolean;
+            spf: components["schemas"]["DeliverabilitySpf"];
+            dkim: components["schemas"]["DeliverabilityDkim"];
+            dmarc: components["schemas"]["DeliverabilityDmarc"];
+            mx?: components["schemas"]["DeliverabilityMx"];
+            yuva_dkim?: components["schemas"]["DeliverabilityYuvaDkim"];
+            /** Format: date-time */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description When the probe arrived or failed.
+             */
+            checked_at?: string;
         };
         Channel: {
             /** Format: uuid */
@@ -5163,7 +6245,7 @@ export interface components {
             count: number;
         };
         /** @enum {string} */
-        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated";
+        WebhookEventType: "conversation.created" | "conversation.updated" | "conversation.rated" | "message.created" | "feedback.created" | "contact.updated" | "contact.deleted" | "draft.created" | "draft.updated" | "draft.deleted" | "discussion.created" | "discussion.post_created" | "discussion.answered" | "discussion.updated" | "subscription.created" | "subscription.updated" | "broadcast.updated";
         WebhookEndpoint: {
             /** Format: uuid */
             id: string;
@@ -5420,6 +6502,13 @@ export interface components {
              *     the conversation moves to another inbox. Absent when it started without a channel.
              */
             channel_kind?: components["schemas"]["ChannelKind"];
+            /**
+             * Format: uuid
+             * @description Set when a reply to this broadcast opened the conversation (the recipient's own reply,
+             *     or someone else answering a forwarded copy); absent otherwise or when the broadcast was
+             *     deleted.
+             */
+            broadcast_id?: string;
             /**
              * Format: uuid
              * @description Set when this conversation was opened for a sender who answered in the e-mail thread of
@@ -5818,7 +6907,7 @@ export interface components {
             via?: string;
         };
         /** @enum {string} */
-        EventType: "assigned" | "unassigned" | "status_changed" | "labels_changed" | "moved" | "rated";
+        EventType: "assigned" | "unassigned" | "status_changed" | "labels_changed" | "moved" | "rated" | "broadcast_reply";
         MessageEvent: {
             type: components["schemas"]["EventType"];
             /**
@@ -5847,6 +6936,8 @@ export interface components {
             previous_inbox_id?: string;
             /** @description `rated` only: the contact's rating; the message body is their comment. */
             rating?: components["schemas"]["Rating"];
+            /** @description `broadcast_reply` only: the broadcast the contact answered; the first entry of the conversation. */
+            broadcast?: components["schemas"]["BroadcastRef"];
         };
         Attachment: {
             /**
@@ -6071,6 +7162,11 @@ export interface components {
             messages: number;
             /** Format: int64 */
             attachment_bytes: number;
+            /**
+             * Format: int64
+             * @description Broadcast mails accepted by the SMTP server.
+             */
+            broadcast_recipients: number;
         };
         UsageList: {
             items: components["schemas"]["UsageMonth"][];
@@ -6393,7 +7489,7 @@ export interface components {
             type: "resync_required";
         };
         /** @description An event as `GET /v1/events` returns it, told apart by `type`; the same objects realtime and webhooks carry. */
-        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"];
+        StoredEvent: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"];
         EventPage: {
             events: components["schemas"]["StoredEvent"][];
             /**
@@ -6412,7 +7508,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -6925,6 +8021,497 @@ export interface components {
         WebhookDiscussionPayload: components["schemas"]["WebhookPayloadBase"] & {
             data: components["schemas"]["DiscussionEventData"];
         };
+        /**
+         * @description `draft` → `scheduled` (until `scheduled_at`) → `preparing` (taking the audience) →
+         *     `sending` → `sent`. `paused` stops sending until resumed; `cancelled` ends it for good;
+         *     `failed` when it cannot go on (its channel was removed).
+         * @enum {string}
+         */
+        BroadcastState: "draft" | "scheduled" | "preparing" | "sending" | "paused" | "sent" | "cancelled" | "failed";
+        /**
+         * @description `member`: someone paused it. `bounce_rate`: 5% or more of the mails sent since it started
+         *     or was resumed bounced (after at least 200). `complaint_rate`: 0.3% or more were reported as
+         *     spam (after at least 1,000). `sender_error`: the SMTP server refused the account, its TLS or
+         *     too many mails in a row (`state_detail` has its answer). `workspace_suspended`: the
+         *     workspace was suspended from sending. `operator`: the server's operator paused it.
+         * @enum {string}
+         */
+        BroadcastPauseReason: "member" | "bounce_rate" | "complaint_rate" | "sender_error" | "workspace_suspended" | "operator";
+        /**
+         * @description Compares the contact attribute named by `attribute`: `eq`, `neq`, `contains` (text,
+         *     ignoring case) and `gt`, `lt` (as numbers when both sides are numbers, else as text) with
+         *     `value`; `in` with any of `values`; `exists` and `not_exists` with nothing. A contact
+         *     without the attribute matches only `neq` and `not_exists`.
+         * @enum {string}
+         */
+        BroadcastConditionOp: "eq" | "neq" | "exists" | "not_exists" | "contains" | "gt" | "lt" | "in";
+        BroadcastCondition: {
+            attribute: string;
+            op: components["schemas"]["BroadcastConditionOp"];
+            value?: string;
+            values?: string[];
+        };
+        BroadcastAudience: {
+            /** @description Lists of the broadcast's inbox, in order of preference for a contact on several. */
+            list_ids: string[];
+            /** @description Every condition must match. */
+            conditions: components["schemas"]["BroadcastCondition"][];
+            /** @description Keep only contacts whose language is one of these (`tr` also matches `tr-TR`); empty keeps every language. */
+            locales: components["schemas"]["LanguageTag"][];
+        };
+        BroadcastAudienceInput: {
+            list_ids: string[];
+            conditions?: components["schemas"]["BroadcastCondition"][];
+            locales?: components["schemas"]["LanguageTag"][];
+        };
+        /**
+         * @description Recipients left out: when the audience was taken (`suppressed`, `opted_out`) or later,
+         *     before their mail went out (`unsubscribed`, `suppressed`, `opted_out`, `cancelled`).
+         */
+        BroadcastSkipped: {
+            /** Format: int64 */
+            suppressed: number;
+            /** Format: int64 */
+            opted_out: number;
+            /** Format: int64 */
+            unsubscribed: number;
+            /** Format: int64 */
+            cancelled: number;
+        };
+        /**
+         * @description `recipients` is the audience taken when sending started; `queued` the mails still to go
+         *     out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
+         *     without naming a bad address. `bounced` and `complained` count recipients whose mail
+         *     bounced or who reported it as spam, `unsubscribed` those who left a list through this
+         *     broadcast's links, `replied` those who answered (a conversation), `auto_replied` the
+         *     automatic answers (out of office), `clicked` recipients who opened a link (click tracking
+         *     only).
+         */
+        BroadcastCounts: {
+            /** Format: int64 */
+            recipients: number;
+            /**
+             * Format: int64
+             * @description `preparing` only: recipients taken so far.
+             */
+            prepared?: number;
+            /** Format: int64 */
+            queued: number;
+            /** Format: int64 */
+            sent: number;
+            /** Format: int64 */
+            failed: number;
+            /** Format: int64 */
+            bounced: number;
+            /** Format: int64 */
+            complained: number;
+            /** Format: int64 */
+            unsubscribed: number;
+            /** Format: int64 */
+            replied: number;
+            /** Format: int64 */
+            auto_replied: number;
+            /** Format: int64 */
+            clicked: number;
+            skipped: components["schemas"]["BroadcastSkipped"];
+        };
+        Broadcast: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /**
+             * Format: uuid
+             * @description The inbox's e-mail channel it goes out through; absent until chosen or when removed.
+             */
+            channel_id?: string;
+            /** @description Shown to the team only. */
+            name: string;
+            /** @description May hold merge fields. */
+            subject: string;
+            /** @description The preview text after the subject; the design's own when empty. */
+            preheader: string;
+            /** Format: uuid */
+            design_id?: string;
+            /**
+             * Format: int32
+             * @description The design's version frozen when it was scheduled; later edits to the design do not change it.
+             */
+            design_version?: number;
+            audience: components["schemas"]["BroadcastAudience"];
+            /** @description Links go through `/c/{token}` on the server's link domain and unique clicks are counted. Off by default. */
+            click_tracking: boolean;
+            state: components["schemas"]["BroadcastState"];
+            pause_reason?: components["schemas"]["BroadcastPauseReason"];
+            /** @description Why it paused or failed, in words (an SMTP answer, the rates). */
+            state_detail?: string;
+            /**
+             * Format: date-time
+             * @description When sending starts or started.
+             */
+            scheduled_at?: string;
+            /**
+             * Format: date-time
+             * @description The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
+             */
+            waiting_until?: string;
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /** Format: date-time */
+            last_test_at?: string;
+            counts: components["schemas"]["BroadcastCounts"];
+            /**
+             * Format: uuid
+             * @description The member who created it.
+             */
+            created_by?: string;
+            /**
+             * Format: uuid
+             * @description The member who scheduled it.
+             */
+            scheduled_by?: string;
+            /**
+             * Format: uuid
+             * @description The API key that scheduled it.
+             */
+            scheduled_by_api_key?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        BroadcastRef: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
+        BroadcastCreate: {
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: uuid */
+            channel_id?: string;
+            name: string;
+            subject?: string;
+            preheader?: string;
+            /** Format: uuid */
+            design_id?: string;
+            audience?: components["schemas"]["BroadcastAudienceInput"];
+            click_tracking?: boolean;
+        };
+        BroadcastUpdate: {
+            /** Format: uuid */
+            channel_id?: string | null;
+            name?: string;
+            subject?: string;
+            preheader?: string;
+            /** Format: uuid */
+            design_id?: string | null;
+            audience?: components["schemas"]["BroadcastAudienceInput"];
+            click_tracking?: boolean;
+        };
+        BroadcastPage: {
+            items: components["schemas"]["Broadcast"][];
+            next_cursor?: string;
+        };
+        /**
+         * @description Contacts of the lists who would not get the mail: only `unsubscribed` or only `pending` on
+         *     the lists, `suppressed` (the address bounced or complained), `opted_out` (objected to all
+         *     mail from the workspace), `blocked` contacts, `filtered` (a condition or language does not
+         *     match) and `duplicate` (subscriptions beyond the one mail a contact gets).
+         */
+        BroadcastAudienceExcluded: {
+            /** Format: int64 */
+            unsubscribed: number;
+            /** Format: int64 */
+            pending: number;
+            /** Format: int64 */
+            suppressed: number;
+            /** Format: int64 */
+            opted_out: number;
+            /** Format: int64 */
+            blocked: number;
+            /** Format: int64 */
+            filtered: number;
+            /** Format: int64 */
+            duplicate: number;
+        };
+        BroadcastListCount: {
+            /** Format: uuid */
+            list_id: string;
+            /** Format: int64 */
+            recipients: number;
+        };
+        BroadcastAudienceCount: {
+            /** Format: int64 */
+            recipients: number;
+            excluded: components["schemas"]["BroadcastAudienceExcluded"];
+            /** @description Per merge field without a fallback (`contact.first_name`), the recipients it would be empty for. */
+            missing_merge_fields: {
+                [key: string]: number;
+            };
+            /** @description Recipients by the list their mail goes out under. */
+            by_list: components["schemas"]["BroadcastListCount"][];
+        };
+        /** @enum {string} */
+        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "test_sent" | "click_tracking";
+        /** @enum {string} */
+        BroadcastReviewStatus: "ok" | "warning" | "blocking";
+        BroadcastReviewItem: {
+            key: components["schemas"]["BroadcastReviewKey"];
+            status: components["schemas"]["BroadcastReviewStatus"];
+            /** @description What is wrong or what to know, in English. */
+            detail?: string;
+        };
+        BroadcastReview: {
+            /** @description No item is `blocking`. */
+            ready: boolean;
+            /**
+             * Format: int64
+             * @description The audience count the review used; pass it as `confirm_recipients` to schedule only this audience.
+             */
+            recipients: number;
+            /** Format: int32 */
+            html_bytes?: number;
+            /**
+             * Format: int32
+             * @description How many UTC days sending takes under the workspace's daily limit; absent without a limit.
+             */
+            days?: number;
+            items: components["schemas"]["BroadcastReviewItem"][];
+        };
+        BroadcastProblem: components["schemas"]["Problem"] & {
+            /** @description `review_failed` only: the blocking review items. */
+            items?: components["schemas"]["BroadcastReviewItem"][];
+            /**
+             * Format: int64
+             * @description `audience_changed` only: the audience count now.
+             */
+            recipients?: number;
+        };
+        BroadcastTest: {
+            member_ids?: string[];
+            /** Format: uuid */
+            contact_id?: string;
+        };
+        BroadcastTestResult: {
+            sent_to: components["schemas"]["Email"][];
+        };
+        BroadcastSchedule: {
+            /** Format: date-time */
+            send_at?: string;
+            /** Format: int64 */
+            confirm_recipients?: number;
+        };
+        /**
+         * @description `queued` until sent (temporary SMTP failures are retried after 5 minutes, 30 minutes, 2
+         *     hours and 6 hours), then `sent`, `failed` (refused for good or out of retries), `bounced`,
+         *     `complained`; `skipped` when the recipient left before their mail went out or the broadcast
+         *     was cancelled.
+         * @enum {string}
+         */
+        BroadcastDeliveryState: "queued" | "sent" | "failed" | "bounced" | "complained" | "skipped";
+        /** @enum {string} */
+        BroadcastSkipReason: "suppressed" | "opted_out" | "unsubscribed" | "cancelled";
+        BroadcastDelivery: {
+            /** Format: uuid */
+            id: string;
+            contact: components["schemas"]["SubscriptionContact"];
+            email: components["schemas"]["Email"];
+            /**
+             * Format: uuid
+             * @description The list the mail went out under; absent when the list was deleted.
+             */
+            list_id?: string;
+            state: components["schemas"]["BroadcastDeliveryState"];
+            skip_reason?: components["schemas"]["BroadcastSkipReason"];
+            /** @description The SMTP server's answer when it refused the mail or the last retry failed. */
+            error?: string;
+            /** Format: int32 */
+            attempts: number;
+            /** Format: date-time */
+            sent_at?: string;
+            /** Format: date-time */
+            bounced_at?: string;
+            /** Format: date-time */
+            complained_at?: string;
+            /** Format: date-time */
+            unsubscribed_at?: string;
+            /** Format: date-time */
+            replied_at?: string;
+            /** Format: date-time */
+            auto_replied_at?: string;
+            /** Format: date-time */
+            clicked_at?: string;
+            /**
+             * Format: uuid
+             * @description The conversation the recipient's reply opened.
+             */
+            conversation_id?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        BroadcastDeliveryPage: {
+            items: components["schemas"]["BroadcastDelivery"][];
+            next_cursor?: string;
+        };
+        /** @description Shares of `sent`, from 0 to 1; all 0 before anything was sent. */
+        BroadcastRates: {
+            /** Format: double */
+            bounced: number;
+            /** Format: double */
+            complained: number;
+            /** Format: double */
+            unsubscribed: number;
+            /** Format: double */
+            replied: number;
+            /** Format: double */
+            clicked: number;
+        };
+        BroadcastReportPoint: {
+            /**
+             * Format: date-time
+             * @description The start of the hour or UTC day.
+             */
+            at: string;
+            /** Format: int64 */
+            sent: number;
+            /** Format: int64 */
+            bounced: number;
+            /** Format: int64 */
+            complained: number;
+            /** Format: int64 */
+            unsubscribed: number;
+            /** Format: int64 */
+            replied: number;
+            /** Format: int64 */
+            clicked: number;
+        };
+        BroadcastReportLink: {
+            url: string;
+            /**
+             * Format: int64
+             * @description Recipients who opened it.
+             */
+            clicks: number;
+        };
+        BroadcastReportReply: {
+            /** Format: uuid */
+            conversation_id: string;
+            contact: components["schemas"]["SubscriptionContact"];
+            /** Format: date-time */
+            at: string;
+        };
+        BroadcastReport: {
+            /** Format: uuid */
+            broadcast_id: string;
+            counts: components["schemas"]["BroadcastCounts"];
+            rates: components["schemas"]["BroadcastRates"];
+            /** @description Per hour for the first 72 hours after sending started, then per UTC day; only periods with something in them. */
+            timeline: components["schemas"]["BroadcastReportPoint"][];
+            /** @description Click tracking only, most clicked first. */
+            links?: components["schemas"]["BroadcastReportLink"][];
+            /** @description The first 50 conversations opened by replies. */
+            replies: components["schemas"]["BroadcastReportReply"][];
+        };
+        BroadcastEventData: {
+            broadcast: components["schemas"]["Broadcast"];
+            previous_state?: components["schemas"]["BroadcastState"];
+        };
+        /**
+         * @description `broadcast.updated`: the broadcast changed state. Delivered to callers who hold
+         *     `broadcasts:read` and can see its inbox.
+         */
+        BroadcastEvent: {
+            /** Format: int64 */
+            id: number;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "broadcast.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["BroadcastEventData"];
+        };
+        BroadcastProgress: {
+            /** Format: uuid */
+            id: string;
+            state: components["schemas"]["BroadcastState"];
+            counts: components["schemas"]["BroadcastCounts"];
+            /** Format: date-time */
+            waiting_until?: string;
+        };
+        /**
+         * @description `broadcast.progress`, on `/v1/realtime` only: the counts of a preparing or sending broadcast,
+         *     at most every 5 seconds. Not stored, no id, never replayed; reload the broadcast after a
+         *     reconnect.
+         */
+        BroadcastProgressEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "broadcast.progress";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["BroadcastProgress"];
+        };
+        WebhookBroadcastData: {
+            broadcast: components["schemas"]["Broadcast"];
+            previous_state?: components["schemas"]["BroadcastState"];
+        };
+        WebhookBroadcastPayload: components["schemas"]["WebhookPayloadBase"] & {
+            data: components["schemas"]["WebhookBroadcastData"];
+        };
+        /**
+         * @description The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
+         *     operator approves it, then within a warm-up limit) or `off` (no broadcasts; lists and forms
+         *     still work).
+         * @enum {string}
+         */
+        BroadcastsMode: "on" | "approval" | "off";
+        /**
+         * @description `allowed`; `approval_required` (ask with `POST /v1/workspace/broadcast-approval`);
+         *     `approval_requested` (waiting for the operator); `suspended` (the operator suspended it,
+         *     or 0.3% of its broadcast mail in the last 30 days was reported as spam).
+         * @enum {string}
+         */
+        BroadcastsStatus: "allowed" | "approval_required" | "approval_requested" | "suspended";
+        WorkspaceBroadcasts: {
+            mode: components["schemas"]["BroadcastsMode"];
+            status: components["schemas"]["BroadcastsStatus"];
+            /** @description The operator's or the server's reason for the status. */
+            reason?: string;
+            /** Format: date-time */
+            status_at?: string;
+            /**
+             * Format: int64
+             * @description Recipients the workspace may send to today (UTC), all broadcasts together; absent without a limit.
+             */
+            daily_limit?: number;
+            /** Format: int64 */
+            sent_today: number;
+            /** @description API keys and OAuth tokens with `broadcasts:send` may schedule and resume broadcasts. Off by default. */
+            by_keys: boolean;
+        };
+        BroadcastApprovalRequest: {
+            /** Format: uri */
+            website: string;
+            /** @description Who sends and what the broadcasts are about. */
+            sender_description: string;
+            /** @description How the subscribers agreed to get them. */
+            consent_description: string;
+        };
         MailingListCounts: {
             /** Format: int64 */
             subscribed: number;
@@ -7089,7 +8676,7 @@ export interface components {
             /** Format: uuid */
             subscription_id: string;
             kind: components["schemas"]["ConsentEventKind"];
-            /** @description Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`. */
+            /** @description Who or what caused it, such as `form`, `identity`, `api`, `member`, `import`, `link`, `one_click`, `preferences`, `client`, `complaint`. */
             source: string;
             /** @description The client's IP address, when the person acted. */
             ip?: string;
@@ -7104,7 +8691,12 @@ export interface components {
             api_key_id?: string;
             /** Format: uuid */
             broadcast_id?: string;
-            /** @description More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token. */
+            /**
+             * Format: uuid
+             * @description The CSV import that wrote it; `consent_text` then holds the importer's attestation.
+             */
+            import_id?: string;
+            /** @description More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token, `import_id` and `consent_source` for an import. */
             detail: {
                 [key: string]: unknown;
             };
@@ -7245,6 +8837,207 @@ export interface components {
         };
         WebhookSubscriptionPayload: components["schemas"]["WebhookPayloadBase"] & {
             data: components["schemas"]["WebhookSubscriptionData"];
+        };
+        /**
+         * @description `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+         *     for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+         * @enum {string}
+         */
+        ListImportState: "validating" | "ready" | "importing" | "done" | "failed" | "cancelled";
+        /** @enum {string} */
+        ListImportEncoding: "utf-8" | "utf-16le" | "utf-16be" | "windows-1254" | "windows-1252";
+        /**
+         * @description What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+         *     it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+         *     column.
+         * @enum {string}
+         */
+        ListImportField: "email" | "name" | "first_name" | "last_name" | "locale" | "external_id" | "attribute" | "skip";
+        ListImportColumn: {
+            /**
+             * Format: int32
+             * @description The column's position, from 0.
+             */
+            index: number;
+            /** @description The column's name in the header row. */
+            header: string;
+            field: components["schemas"]["ListImportField"];
+            /** @description The attribute key, with `field` `attribute`. */
+            attribute?: string;
+        };
+        ListImportColumnMapping: {
+            /** Format: int32 */
+            index: number;
+            field: components["schemas"]["ListImportField"];
+            /** @description Required with `field` `attribute`. */
+            attribute?: string;
+        };
+        ListImportMappingUpdate: {
+            /** @description Columns left out are skipped. Exactly one must be `email`. */
+            columns: components["schemas"]["ListImportColumnMapping"][];
+        };
+        /**
+         * @description `valid` is found by the validation: rows that would be added. The rest are refused rows
+         *     by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+         *     importing, `added` and `created_contacts`.
+         */
+        ListImportCounts: {
+            /** Format: int64 */
+            valid: number;
+            /** Format: int64 */
+            existing: number;
+            /** Format: int64 */
+            invalid_email: number;
+            /**
+             * Format: int64
+             * @description The address's domain has no MX, A or AAAA record, or a null MX.
+             */
+            no_mail_domain: number;
+            /**
+             * Format: int64
+             * @description Such as `postmaster@`, `abuse@`, `noreply@`.
+             */
+            role_address: number;
+            /**
+             * Format: int64
+             * @description The address appears earlier in the file.
+             */
+            duplicate: number;
+            /** Format: int64 */
+            suppressed: number;
+            /** Format: int64 */
+            opted_out: number;
+            /**
+             * Format: int64
+             * @description The address unsubscribed from this list.
+             */
+            unsubscribed: number;
+            /** Format: int64 */
+            added: number;
+            /** Format: int64 */
+            created_contacts: number;
+        };
+        ListImport: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            list_id: string;
+            state: components["schemas"]["ListImportState"];
+            filename: string;
+            encoding?: components["schemas"]["ListImportEncoding"];
+            /**
+             * @description The column separator found in the header row.
+             * @enum {string}
+             */
+            delimiter?: "comma" | "semicolon" | "tab";
+            /** @description New addresses become `pending` and get a confirmation mail instead of being subscribed. */
+            reconfirm: boolean;
+            /** @description The statement the importer accepted. */
+            attestation: string;
+            /** @description Where and when the people in the file agreed, as the importer wrote it. */
+            consent_source: string;
+            /**
+             * Format: int32
+             * @description Data rows in the file, empty rows left out; 0 until validated.
+             */
+            rows_total: number;
+            /** Format: int32 */
+            rows_done: number;
+            counts: components["schemas"]["ListImportCounts"];
+            /** @description The file's columns with what each holds; empty until validated. */
+            columns: components["schemas"]["ListImportColumn"][];
+            /** @description The first 20 data rows, cells cut at 200 characters; absent once the import ends. */
+            preview?: string[][];
+            /** @description Why the import failed. */
+            error?: string;
+            /**
+             * Format: uuid
+             * @description The member who uploaded it.
+             */
+            member_id?: string;
+            /**
+             * Format: uuid
+             * @description The key that uploaded it.
+             */
+            api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /**
+             * Format: date-time
+             * @description When the refused rows (`/errors`) are deleted.
+             */
+            errors_until?: string;
+        };
+        ListImportPage: {
+            items: components["schemas"]["ListImport"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        ListImportUpload: {
+            /** Format: binary */
+            file: string;
+            attestation: string;
+            consent_source: string;
+            reconfirm?: boolean;
+            /** @description A `ListImportMappingUpdate` as JSON. */
+            mapping?: string;
+        };
+        ListImportProgress: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            list_id: string;
+            state: components["schemas"]["ListImportState"];
+            /** Format: int32 */
+            rows_total: number;
+            /** Format: int32 */
+            rows_done: number;
+            counts: components["schemas"]["ListImportCounts"];
+        };
+        /**
+         * @description `list_import.progress`, on `/v1/realtime` only: the progress of an importing CSV file, at
+         *     most once a second. Not stored, no id, never replayed. Delivered to callers who hold
+         *     `lists:read` and can see the list's inbox.
+         */
+        ListImportProgressEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "list_import.progress";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ListImportProgress"];
+        };
+        /**
+         * @description `list_import.updated`, on `/v1/realtime` only: an import became `ready`, `importing`,
+         *     `done`, `failed` or `cancelled`. Not stored, no id, never replayed, no webhook; reload the
+         *     import after a reconnect. Delivered to callers who hold `lists:read` and can see the list's
+         *     inbox.
+         */
+        ListImportEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "list_import.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ListImport"];
         };
         ClientMailingList: {
             /** Format: uuid */
@@ -7962,6 +9755,539 @@ export interface components {
              */
             signup: "invite" | "open";
         };
+        /** @example #2563eb */
+        EmailColor: string;
+        /**
+         * @description A fixed font stack; e-mails load no web fonts. `system` is the platform's interface font,
+         *     `humanist` Segoe UI, Helvetica Neue and Arial, `geometric` Avenir, Montserrat and Futura,
+         *     `serif` Georgia and Times New Roman, `mono` the platform's monospace font.
+         * @enum {string}
+         */
+        EmailFont: "system" | "humanist" | "geometric" | "serif" | "mono";
+        /**
+         * @description An absolute `https`, `http`, `mailto` or `tel` URL. Merge fields may appear only in the
+         *     query, where their values are URL-escaped.
+         * @example https://example.com/news?ref=mail
+         */
+        EmailUrl: string;
+        EmailThemeColors: {
+            /** @description Behind the card. */
+            page: components["schemas"]["EmailColor"];
+            /** @description The content's background. */
+            card: components["schemas"]["EmailColor"];
+            text: components["schemas"]["EmailColor"];
+            /** @description Secondary text and the required footer. */
+            muted: components["schemas"]["EmailColor"];
+            /** @description Buttons and highlights. */
+            accent: components["schemas"]["EmailColor"];
+            link: components["schemas"]["EmailColor"];
+            /** @description Dividers and outlines. */
+            border: components["schemas"]["EmailColor"];
+        };
+        /**
+         * @description Colours for readers in dark mode. A missing one is derived from its light colour: the same
+         *     hue, dark backgrounds, text raised to 4.5:1 contrast.
+         */
+        EmailThemeDarkColors: {
+            page?: components["schemas"]["EmailColor"];
+            card?: components["schemas"]["EmailColor"];
+            text?: components["schemas"]["EmailColor"];
+            muted?: components["schemas"]["EmailColor"];
+            accent?: components["schemas"]["EmailColor"];
+            link?: components["schemas"]["EmailColor"];
+            border?: components["schemas"]["EmailColor"];
+        };
+        EmailTheme: {
+            /**
+             * Format: int32
+             * @description The content width in pixels on wide screens; 600 is the usual.
+             */
+            width: number;
+            /**
+             * @description `rtl` lays the mail out right to left; `auto` lets each text follow its own script.
+             * @default auto
+             * @enum {string}
+             */
+            direction: "ltr" | "rtl" | "auto";
+            font: components["schemas"]["EmailFont"];
+            /** @description Headings; the body font when absent. */
+            heading_font?: components["schemas"]["EmailFont"];
+            /**
+             * Format: int32
+             * @description Corner radius of the card, sections, buttons and images in pixels; 0 when absent.
+             */
+            radius?: number;
+            colors: components["schemas"]["EmailThemeColors"];
+            dark?: components["schemas"]["EmailThemeDarkColors"];
+        };
+        /**
+         * @description Mirrored in right-to-left designs.
+         * @enum {string}
+         */
+        EmailAlign: "left" | "center" | "right";
+        /**
+         * @description Hides the block on narrow (`mobile`) or wide (`desktop`) screens where the client supports it.
+         * @default none
+         * @enum {string}
+         */
+        EmailHide: "none" | "mobile" | "desktop";
+        EmailBlockBase: {
+            /** @description Chosen by the client, unique in the document; validation errors and warnings name it. */
+            id: string;
+            /** @description Top, right, bottom and left padding in pixels; the block's default when absent. */
+            padding?: number[];
+            background?: components["schemas"]["EmailColor"];
+            align?: components["schemas"]["EmailAlign"];
+            hide?: components["schemas"]["EmailHide"];
+        };
+        /** @description A group of blocks on its own background. Sections do not nest. */
+        EmailSectionBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "section";
+            blocks: components["schemas"]["EmailSectionChild"][];
+            /** Format: int32 */
+            border_radius?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "section";
+        };
+        EmailColumn: {
+            /**
+             * Format: int32
+             * @description Percent of the row; the widths of a row add up to 100.
+             */
+            width: number;
+            blocks: components["schemas"]["EmailColumnChild"][];
+        };
+        /**
+         * @description Two or three columns side by side that stack on narrow screens (unless `stack` is false).
+         *     Columns do not nest.
+         */
+        EmailColumnsBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "columns";
+            columns: components["schemas"]["EmailColumn"][];
+            /** @default true */
+            stack: boolean;
+            /**
+             * Format: int32
+             * @description Space between columns in pixels; 16 when absent.
+             */
+            gap?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "columns";
+        };
+        EmailHeadingBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "heading";
+            /**
+             * Format: int32
+             * @enum {integer}
+             */
+            level: 1 | 2 | 3;
+            /** @description Inline rich text (`strong`, `em`, `u`, `s`, `a`, `br`, `code`) with merge fields. */
+            text: string;
+            /** @description The theme's text colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "heading";
+        };
+        EmailTextBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "text";
+            /** @description Rich text with merge fields. */
+            html: string;
+            /**
+             * Format: int32
+             * @description Font size in pixels; 16 when absent.
+             */
+            size?: number;
+            /** @description The theme's text colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+        };
+        /**
+         * @description An uploaded image (`image_id`). Gallery templates name their own files in `asset` instead;
+         *     a saved design never does. An image block without either renders as an empty frame with
+         *     the warning `image_missing`.
+         */
+        EmailImageBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "image";
+            /** Format: uuid */
+            image_id?: string;
+            /** @description Templates only; the file in the template's `assets` folder. */
+            asset?: string;
+            /** @description Required unless `decorative`. */
+            alt?: string;
+            /** @description Says nothing to screen readers (`alt=""`). */
+            decorative?: boolean;
+            /**
+             * Format: int32
+             * @description Display width in pixels; the full content width when absent. The image is stored up to twice as wide for sharp screens.
+             */
+            width?: number;
+            link?: components["schemas"]["EmailUrl"];
+            /** @description Draws a light plate behind the image in dark mode, for dark logos on transparency. */
+            plate?: boolean;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "image";
+        };
+        EmailButtonBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "button";
+            /** @description Plain text with merge fields. */
+            label: string;
+            url: components["schemas"]["EmailUrl"];
+            /** @description The theme's accent when absent. */
+            color?: components["schemas"]["EmailColor"];
+            /** @description Used when it reads at 4.5:1 on the button; otherwise white or near-black is chosen. */
+            text_color?: components["schemas"]["EmailColor"];
+            full_width?: boolean;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "button";
+        };
+        EmailDividerBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "divider";
+            /** @description The theme's border colour when absent. */
+            color?: components["schemas"]["EmailColor"];
+            /** Format: int32 */
+            thickness?: number;
+            /**
+             * Format: int32
+             * @description Percent of the content width; 100 when absent.
+             */
+            width?: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "divider";
+        };
+        EmailSpacerBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "spacer";
+            /** Format: int32 */
+            height: number;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "spacer";
+        };
+        /** @enum {string} */
+        EmailSocialNetwork: "website" | "x" | "bluesky" | "mastodon" | "linkedin" | "github" | "youtube" | "instagram" | "facebook" | "tiktok" | "discord" | "threads";
+        EmailSocialItem: {
+            network: components["schemas"]["EmailSocialNetwork"];
+            url: components["schemas"]["EmailUrl"];
+        };
+        /** @description Links to profiles, as icons (served by the server) or as text. */
+        EmailSocialBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "social";
+            items: components["schemas"]["EmailSocialItem"][];
+            /**
+             * @default icons
+             * @enum {string}
+             */
+            style: "icons" | "text";
+            /**
+             * @description Icon colour; `dark` icons turn light in dark mode.
+             * @default dark
+             * @enum {string}
+             */
+            color: "dark" | "light" | "brand";
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "social";
+        };
+        /** @description Extra footer text, shown above the required footer that is always added. */
+        EmailFooterBlock: components["schemas"]["EmailBlockBase"] & {
+            /** @enum {string} */
+            type: "footer";
+            /** @description Rich text with merge fields. */
+            html: string;
+        } & {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "footer";
+        };
+        EmailColumnChild: components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        EmailSectionChild: components["schemas"]["EmailColumnsBlock"] | components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        EmailBlock: components["schemas"]["EmailSectionBlock"] | components["schemas"]["EmailColumnsBlock"] | components["schemas"]["EmailHeadingBlock"] | components["schemas"]["EmailTextBlock"] | components["schemas"]["EmailImageBlock"] | components["schemas"]["EmailButtonBlock"] | components["schemas"]["EmailDividerBlock"] | components["schemas"]["EmailSpacerBlock"] | components["schemas"]["EmailSocialBlock"] | components["schemas"]["EmailFooterBlock"];
+        /**
+         * @description An e-mail design: a theme and up to 200 blocks (counting nested ones) in at most 300 KiB of
+         *     JSON. Nesting is section › columns › blocks at most.
+         */
+        EmailDesignDocument: {
+            /**
+             * Format: int32
+             * @description The document format version.
+             * @constant
+             */
+            schema: 1;
+            theme: components["schemas"]["EmailTheme"];
+            /** @description The preview text inboxes show after the subject; a broadcast's own preheader wins. */
+            preheader?: string;
+            blocks: components["schemas"]["EmailBlock"][];
+        };
+        /**
+         * @description One problem with a document. Error codes: `required`, `invalid`, `too_long`, `too_many`,
+         *     `duplicate_id`, `nesting`, `invalid_rich_text`, `invalid_url`, `unknown_merge_field`,
+         *     `merge_field_in_url`, `foreign_asset`, `asset_not_allowed`, `column_widths`. Warning codes
+         *     are listed under `renderEmailDesign`.
+         */
+        EmailDesignIssue: {
+            /** @description The block; absent for the theme and the preheader. */
+            block_id?: string;
+            /**
+             * @description The field, as a dotted path inside the block or the document.
+             * @example html
+             * @example theme.colors.text
+             * @example columns.1.width
+             */
+            field?: string;
+            /** @example invalid_rich_text */
+            code: string;
+            detail?: string;
+        };
+        EmailDesignProblem: components["schemas"]["Problem"] & {
+            errors?: components["schemas"]["EmailDesignIssue"][];
+            /** @description `version_conflict` only: the design as it is now. */
+            design?: components["schemas"]["EmailDesign"];
+        };
+        EmailDesignSummary: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /**
+             * Format: uuid
+             * @description Absent for workspace-wide designs.
+             */
+            inbox_id?: string;
+            /**
+             * Format: int32
+             * @description Increases by one with every save.
+             */
+            version: number;
+            /** @description The gallery template it was made from. */
+            template_slug?: string;
+            /**
+             * Format: uuid
+             * @description The member; absent for keys and members who left.
+             */
+            created_by?: string;
+            /** Format: uuid */
+            updated_by?: string;
+            /** Format: date-time */
+            archived_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        EmailDesign: components["schemas"]["EmailDesignSummary"] & {
+            document: components["schemas"]["EmailDesignDocument"];
+            /** @description What the render of the document warns about (see `renderEmailDesign`). */
+            warnings: components["schemas"]["EmailDesignIssue"][];
+        };
+        EmailDesignPage: {
+            items: components["schemas"]["EmailDesignSummary"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        EmailDesignTemplateRef: {
+            slug: string;
+            locale?: components["schemas"]["EmailTemplateLocale"];
+        };
+        /** @description At most one of `document` and `template`; with neither the design starts empty. */
+        EmailDesignCreate: {
+            name: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            document?: components["schemas"]["EmailDesignDocument"];
+            template?: components["schemas"]["EmailDesignTemplateRef"];
+        };
+        EmailDesignUpdate: {
+            name: string;
+            /**
+             * Format: uuid
+             * @description Absent makes the design workspace-wide.
+             */
+            inbox_id?: string;
+            document: components["schemas"]["EmailDesignDocument"];
+            /**
+             * Format: int32
+             * @description The `version` this edit started from.
+             */
+            base_version: number;
+            /** @description Keep a snapshot of this save (`manual`) whatever the time since the last one. */
+            snapshot?: boolean;
+        };
+        EmailDesignDuplicate: {
+            name?: string;
+        };
+        EmailDesignRestore: {
+            /** Format: int32 */
+            base_version: number;
+        };
+        /** @enum {string} */
+        EmailDesignVersionReason: "autosave" | "test" | "scheduled" | "restored" | "manual" | "conflict";
+        EmailDesignVersion: {
+            /** Format: int32 */
+            version: number;
+            reason: components["schemas"]["EmailDesignVersionReason"];
+            /** Format: uuid */
+            member_id?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        EmailDesignVersionList: {
+            items: components["schemas"]["EmailDesignVersion"][];
+        };
+        EmailDesignVersionDetail: components["schemas"]["EmailDesignVersion"] & {
+            document: components["schemas"]["EmailDesignDocument"];
+        };
+        EmailDesignRenderRequest: {
+            document: components["schemas"]["EmailDesignDocument"];
+            /** Format: uuid */
+            inbox_id?: string;
+            /** Format: uuid */
+            list_id?: string;
+            /** Format: uuid */
+            contact_id?: string;
+            subject?: string;
+            /** @description Wins over the document's own. */
+            preheader?: string;
+            dark?: boolean;
+        };
+        EmailDesignRender: {
+            html: string;
+            text: string;
+            /**
+             * Format: int64
+             * @description The HTML's size in bytes, as Gmail counts it before clipping.
+             */
+            size_bytes: number;
+            warnings: components["schemas"]["EmailDesignIssue"][];
+        };
+        EmailImage: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Format: uri
+             * @description Public, at `/i/{token}`.
+             */
+            url: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+            /** Format: int64 */
+            size_bytes: number;
+            /** @enum {string} */
+            content_type: "image/png" | "image/jpeg" | "image/gif";
+            filename: string;
+            /**
+             * Format: date-time
+             * @description When a sent broadcast first used it.
+             */
+            sent_at?: string;
+            /** Format: date-time */
+            created_at: string;
+        };
+        EmailImagePage: {
+            items: components["schemas"]["EmailImage"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        EmailImageUpload: {
+            /** Format: binary */
+            file: string;
+        };
+        EmailImageUsage: {
+            designs: {
+                /** Format: uuid */
+                id: string;
+                name: string;
+            }[];
+        };
+        EmailImageProblem: components["schemas"]["Problem"] & {
+            used_by?: components["schemas"]["EmailImageUsage"];
+        };
+        /** @enum {string} */
+        EmailTemplateLocale: "en" | "tr" | "de";
+        EmailTemplate: {
+            /** @example newsletter */
+            slug: string;
+            /** @example newsletter */
+            category: string;
+            name: string;
+            description: string;
+            /** @description The languages the template has its own text in. */
+            locales: components["schemas"]["EmailTemplateLocale"][];
+            /**
+             * Format: uri
+             * @description A WebP screenshot, 600 pixels wide at twice the density.
+             */
+            preview_url: string;
+            /**
+             * Format: uri
+             * @description The rendered HTML with sample values.
+             */
+            preview_html_url: string;
+            /** Format: date */
+            added: string;
+        };
+        EmailTemplateList: {
+            items: components["schemas"]["EmailTemplate"][];
+        };
+        EmailTemplateImage: {
+            asset: string;
+            /** Format: uri */
+            url: string;
+            /** Format: int32 */
+            width: number;
+            /** Format: int32 */
+            height: number;
+        };
+        EmailTemplateDetail: components["schemas"]["EmailTemplate"] & {
+            locale: components["schemas"]["EmailTemplateLocale"];
+            document: components["schemas"]["EmailDesignDocument"];
+            images: components["schemas"]["EmailTemplateImage"][];
+        };
         /** @description An RFC 9457 problem document. */
         Problem: {
             /** @description A URI that identifies the problem type. */
@@ -7990,6 +10316,24 @@ export interface components {
             };
             content: {
                 "application/problem+json": components["schemas"]["Problem"];
+            };
+        };
+        /** @description The broadcast was refused; `items` or `recipients` say why. */
+        BroadcastProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["BroadcastProblem"];
+            };
+        };
+        /** @description The design was refused; `errors` names each problem. */
+        EmailDesignProblem: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/problem+json": components["schemas"]["EmailDesignProblem"];
             };
         };
         /** @description The message is refused; `reason` is shown to the sender. */
@@ -8048,9 +10392,19 @@ export interface components {
         /** @description The chat channel's public key. */
         ChannelKey: string;
         ListId: string;
+        ImportId: string;
+        DesignId: string;
+        BroadcastId: string;
+        DesignVersion: number;
+        ImageId: string;
+        TemplateSlug: string;
+        /** @description The language of the template's text; English by default. */
+        TemplateLocale: components["schemas"]["EmailTemplateLocale"];
         SubscriptionId: string;
         /** @description `csv` (the default) or `json`. */
         ConsentFormat: "csv" | "json";
+        /** @description `csv` (the default), `json`, or `iys` for İYS's consent fields. */
+        ListConsentFormat: "csv" | "json" | "iys";
         DiscussionId: string;
         DiscussionPostId: string;
         /**
@@ -8955,6 +11309,39 @@ export interface operations {
             403: components["responses"]["Problem"];
         };
     };
+    requestBroadcastApproval: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BroadcastApprovalRequest"];
+            };
+        };
+        responses: {
+            /** @description The request is with the operator. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Workspace"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
     createWorkspace: {
         parameters: {
             query?: never;
@@ -9738,6 +12125,129 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    checkDeliverability: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The check, `queued`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliverabilityCheck"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getDeliverability: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The last check. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliverabilityCheck"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createDkimKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DkimKeyCreate"];
+            };
+        };
+        responses: {
+            /** @description The key's selector and the DNS record to publish. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDkim"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    deleteDkimKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
     listContacts: {
         parameters: {
             query?: {
@@ -10247,6 +12757,8 @@ export interface operations {
                  *     ignored).
                  */
                 page?: string;
+                /** @description Only conversations opened by replies to this broadcast. */
+                broadcast_id?: string;
                 /**
                  * @description `true` lists only the conversations the calling member pinned, `false` only the others;
                  *     without it, both. Member sessions only (`400 validation_failed` for API keys).
@@ -11923,6 +14435,7 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     updateMailingList: {
@@ -12197,8 +14710,8 @@ export interface operations {
     exportListConsent: {
         parameters: {
             query?: {
-                /** @description `csv` (the default) or `json`. */
-                format?: components["parameters"]["ConsentFormat"];
+                /** @description `csv` (the default), `json`, or `iys` for İYS's consent fields. */
+                format?: components["parameters"]["ListConsentFormat"];
                 since?: string;
             };
             header?: {
@@ -12224,6 +14737,1208 @@ export interface operations {
                 };
             };
             400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listListImports: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of imports. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImportPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["ListImportUpload"];
+            };
+        };
+        responses: {
+            /** @description The import, `validating`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The import. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    cancelListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListImportMappingUpdate"];
+            };
+        };
+        responses: {
+            /** @description The import, `validating`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    startListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The import, `importing`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getListImportErrors: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The refused rows. */
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listEmailTemplates: {
+        parameters: {
+            query?: {
+                /** @description The language of the template's text; English by default. */
+                locale?: components["parameters"]["TemplateLocale"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The templates. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailTemplateList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    getEmailTemplate: {
+        parameters: {
+            query?: {
+                /** @description The language of the template's text; English by default. */
+                locale?: components["parameters"]["TemplateLocale"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                slug: components["parameters"]["TemplateSlug"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The template. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailTemplateDetail"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listEmailDesigns: {
+        parameters: {
+            query?: {
+                /** @description Only the designs of this inbox. */
+                inbox_id?: string;
+                q?: string;
+                archived?: boolean;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of designs. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignCreate"];
+            };
+        };
+        responses: {
+            /** @description The design. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    renderEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignRenderRequest"];
+            };
+        };
+        responses: {
+            /** @description The rendered mail. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignRender"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignUpdate"];
+            };
+        };
+        responses: {
+            /** @description The saved design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["EmailDesignProblem"];
+            413: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    archiveEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Archived. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    duplicateEmailDesign: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignDuplicate"];
+            };
+        };
+        responses: {
+            /** @description The copy. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listEmailDesignVersions: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The snapshots. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignVersionList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getEmailDesignVersion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+                version: components["parameters"]["DesignVersion"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The snapshot. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesignVersionDetail"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    restoreEmailDesignVersion: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                designId: components["parameters"]["DesignId"];
+                version: components["parameters"]["DesignVersion"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailDesignRestore"];
+            };
+        };
+        responses: {
+            /** @description The design. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDesign"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["EmailDesignProblem"];
+            422: components["responses"]["EmailDesignProblem"];
+        };
+    };
+    listEmailImages: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of images. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImagePage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+        };
+    };
+    uploadEmailImage: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["EmailImageUpload"];
+            };
+        };
+        responses: {
+            /** @description The same image was already uploaded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImage"];
+                };
+            };
+            /** @description The image. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailImage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    deleteEmailImage: {
+        parameters: {
+            query?: {
+                force?: boolean;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                imageId: components["parameters"]["ImageId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description The image is in use or was sent. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["EmailImageProblem"];
+                };
+            };
+        };
+    };
+    listBroadcasts: {
+        parameters: {
+            query?: {
+                inbox_id?: string;
+                state?: components["schemas"]["BroadcastState"][];
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of broadcasts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BroadcastCreate"];
+            };
+        };
+        responses: {
+            /** @description The draft. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The broadcast. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    updateBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BroadcastUpdate"];
+            };
+        };
+        responses: {
+            /** @description The draft. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    countBroadcastAudience: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The counts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastAudienceCount"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    reviewBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The checklist. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastReview"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    sendBroadcastTest: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["BroadcastTest"];
+            };
+        };
+        responses: {
+            /** @description The tests are queued. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastTestResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    scheduleBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["BroadcastSchedule"];
+            };
+        };
+        responses: {
+            /** @description The scheduled broadcast. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["BroadcastProblem"];
+        };
+    };
+    unscheduleBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The draft. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    pauseBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The paused broadcast. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    resumeBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The broadcast. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    cancelBroadcast: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The cancelled broadcast. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Broadcast"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    listBroadcastDeliveries: {
+        parameters: {
+            query?: {
+                state?: components["schemas"]["BroadcastDeliveryState"];
+                q?: string;
+                replied?: boolean;
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of deliveries. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastDeliveryPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getBroadcastReport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                broadcastId: components["parameters"]["BroadcastId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The report. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BroadcastReport"];
+                };
+            };
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
@@ -14622,6 +18337,39 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["WebhookSubscriptionPayload"];
+            };
+        };
+        responses: {
+            /** @description Any 2xx answer counts as delivered. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    webhookBroadcastUpdated: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description The delivery's id, the same on every retry; use it to ignore duplicates. */
+                "webhook-id": components["parameters"]["WebhookIdHeader"];
+                /** @description Unix seconds of this attempt. Refuse values far from your clock. */
+                "webhook-timestamp": components["parameters"]["WebhookTimestampHeader"];
+                /**
+                 * @description Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+                 *     `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+                 *     `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+                 */
+                "webhook-signature": components["parameters"]["WebhookSignatureHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WebhookBroadcastPayload"];
             };
         };
         responses: {
