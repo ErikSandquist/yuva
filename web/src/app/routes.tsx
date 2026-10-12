@@ -17,6 +17,7 @@ import { QueuePane } from "@/features/docs/discussions/QueuePane"
 import { ThreadPane } from "@/features/docs/discussions/ThreadPane"
 import { ChatsPage } from "@/features/inbox/ChatsPage"
 import { MigrationsPage } from "@/features/migrations/MigrationsPage"
+import { MigrationPage, NewMigrationPage } from "@/features/migrations/Wizard"
 import { ConsentPage } from "@/features/oauth/ConsentPage"
 import { ApiKeysPage } from "@/features/settings/api-keys/ApiKeysPage"
 import { AppearancePage } from "@/features/settings/appearance/AppearancePage"
@@ -60,6 +61,9 @@ export function AppRoutes() {
         <Route path="setup/:inboxId/add/:kind" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId" element={<SetupPage />} />
         <Route path="setup/:inboxId/:channelId/wait" element={<SetupPage wait />} />
+        <Route path="migrations/new" element={<NewMigrationPage />} />
+        <Route path="migrations/:migrationId" element={<MigrationPage />} />
+        <Route path="migrations/:migrationId/:step" element={<MigrationPage />} />
         <Route
           path="broadcasts/designs/:designId"
           element={

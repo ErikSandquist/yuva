@@ -141,6 +141,10 @@ msgstr "{clientName} is connected"
 msgid "{closed, plural, one {# closed} other {# closed}}"
 msgstr "{closed, plural, one {# closed} other {# closed}}"
 
+#: src/features/migrations/Wizard.tsx
+msgid "{conversations} conversations, {messages} messages"
+msgstr "{conversations} conversations, {messages} messages"
+
 #: src/features/contact/MergePreview.tsx
 msgid "{count, plural, =0 {No conversations} one {# conversation} other {# conversations}}"
 msgstr "{count, plural, =0 {No conversations} one {# conversation} other {# conversations}}"
@@ -164,6 +168,14 @@ msgstr "{count} events"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "{count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "{count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "{count} messages"
+msgstr "{count} messages"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "{count} messages · {size}"
+msgstr "{count} messages · {size}"
 
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "{count} settings"
@@ -249,6 +261,10 @@ msgstr "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 #: src/features/migrations/MigrationsPage.tsx
 msgid "{imported} imported · {skipped} skipped · {failed} failed"
 msgstr "{imported} imported · {skipped} skipped · {failed} failed"
+
+#: src/features/migrations/MapStep.tsx
+msgid "{inboxName} has no e-mail channel for {address} yet. History is stored in that channel, so replies after the switch go out from the same address."
+msgstr "{inboxName} has no e-mail channel for {address} yet. History is stored in that channel, so replies after the switch go out from the same address."
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
@@ -366,9 +382,17 @@ msgstr "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in
 msgid "{provider} did not accept the user name or password. Check both, or create a new app password."
 msgstr "{provider} did not accept the user name or password. Check both, or create a new app password."
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "{provider} lets other apps in with an app password, a separate password just for Yuva."
+msgstr "{provider} lets other apps in with an app password, a separate password just for Yuva."
+
 #: src/features/migrations/text.ts
 msgid "{provider} limits this account for now. Wait a while, then test again."
 msgstr "{provider} limits this account for now. Wait a while, then test again."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "{provider} stopped accepting Yuva's sign-in. Enter a new app password; the migration continues where it stopped."
+msgstr "{provider} stopped accepting Yuva's sign-in. Enter a new app password; the migration continues where it stopped."
 
 #: src/features/migrations/text.ts
 msgid "{provider} wants an app password, not your account's password. Create one with the steps above."
@@ -498,6 +522,18 @@ msgstr "1 imported conversation that nobody wrote in since is deleted with its m
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "1 setting"
 msgstr "1 setting"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "12 months"
+msgstr "12 months"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "24 months"
+msgstr "24 months"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "3 months"
+msgstr "3 months"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -684,6 +720,10 @@ msgstr "A teammate"
 msgid "A test mail is on its way to {address}. The result shows here when it arrives, usually within a minute and at most 10 minutes."
 msgstr "A test mail is on its way to {address}. The result shows here when it arrives, usually within a minute and at most 10 minutes."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "A thread is taken whole when its last message is in the range."
+msgstr "A thread is taken whole when its last message is in the range."
+
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted."
@@ -719,6 +759,7 @@ msgstr "Acme Support"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/contact/ContactDetails.tsx
+#: src/features/migrations/MapStep.tsx
 msgid "Add"
 msgstr "Add"
 
@@ -982,6 +1023,10 @@ msgstr "An API key"
 msgid "An API key or assistant"
 msgstr "An API key or assistant"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "An app password could be used to change mail; Yuva's connection refuses every command that changes anything. Yuva deletes this password when the migration ends; you can also revoke it in {provider} afterwards."
+msgstr "An app password could be used to change mail; Yuva's connection refuses every command that changes anything. Yuva deletes this password when the migration ends; you can also revoke it in {provider} afterwards."
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
 msgstr "An archived list keeps its subscribers and records, but forms and the preference page stop offering it."
@@ -1026,6 +1071,10 @@ msgstr "anonymous users allowed"
 msgid "anonymous visitors allowed"
 msgstr "anonymous visitors allowed"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
+msgstr "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
+
 #: src/components/common/text.ts
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -1043,6 +1092,10 @@ msgstr "Another import of this workspace is running. Imports run one at a time; 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
 msgstr "another inbox"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Another team address"
+msgstr "Another team address"
 
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "Answer (optional)"
@@ -1105,6 +1158,10 @@ msgstr "App"
 #: src/features/settings/channels/app/AppInstall.tsx
 msgid "App builds with the old key can no longer start sessions until you ship one with the new key. People already signed in keep their session."
 msgstr "App builds with the old key can no longer start sessions until you ship one with the new key. People already signed in keep their session."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "App password"
+msgstr "App password"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Appear online only in business hours"
@@ -1275,6 +1332,10 @@ msgstr "Attributes"
 msgid "Audience"
 msgstr "Audience"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Auto-replies, newsletters and delivery reports nobody answered."
+msgstr "Auto-replies, newsletters and delivery reports nobody answered."
+
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Auto-reply"
@@ -1321,9 +1382,18 @@ msgstr "Back to draft"
 msgid "Back to the list"
 msgstr "Back to the list"
 
+#: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/Wizard.tsx
+msgid "Back to the migrations"
+msgstr "Back to the migrations"
+
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Back to waiting"
 msgstr "Back to waiting"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Before you connect"
+msgstr "Before you connect"
 
 #: src/features/settings/labels/LabelDialog.tsx
 msgid "Billing"
@@ -1573,6 +1643,10 @@ msgstr "Change, delete and merge contacts"
 msgid "Change, move and bulk-update conversations"
 msgstr "Change, move and bulk-update conversations"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Changes made to {provider}: none"
+msgstr "Changes made to {provider}: none"
+
 #: src/features/contact/ContactDetails.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Channel"
@@ -1614,6 +1688,10 @@ msgstr "Checked {when}"
 msgid "Checked and waiting for an owner or admin to start it."
 msgstr "Checked and waiting for an owner or admin to start it."
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Checking"
+msgstr "Checking"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Checking every address…"
 msgstr "Checking every address…"
@@ -1621,6 +1699,10 @@ msgstr "Checking every address…"
 #: src/features/broadcasts/Import.tsx
 msgid "Checking the file"
 msgstr "Checking the file"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Choose"
+msgstr "Choose"
 
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
@@ -1637,6 +1719,10 @@ msgstr "Choose one from the list, or move with ↑ ↓ and open it with Enter."
 #: src/components/common/ShortcutSheet.tsx
 msgid "Choose the selected block’s image"
 msgstr "Choose the selected block’s image"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Chosen in the Map step"
+msgstr "Chosen in the Map step"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "claude.ai and Claude Desktop"
@@ -1680,6 +1766,7 @@ msgstr "clicked a link, roughly"
 #: src/components/ui/dialog.tsx
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/migrations/Wizard.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -1699,6 +1786,18 @@ msgstr "Close a panel or leave a field"
 #: src/features/inbox/ChatList.tsx
 msgid "Close all"
 msgstr "Close all"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Close conversations older than {daysShown} days"
+msgstr "Close conversations older than {daysShown} days"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Close everything"
+msgstr "Close everything"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Close older conversations"
+msgstr "Close older conversations"
 
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -1758,6 +1857,10 @@ msgstr "Column {n}"
 #: src/features/broadcasts/Import.tsx
 msgid "Columns"
 msgstr "Columns"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Coming later"
+msgstr "Coming later"
 
 #: src/features/broadcasts/Import.tsx
 msgid "commas"
@@ -1822,8 +1925,13 @@ msgstr "confirmed their address in the last {days} days"
 #: src/features/account/ConnectPage.tsx
 #: src/features/inbox/SidePanels.tsx
 #: src/features/migrations/text.ts
+#: src/features/migrations/Wizard.tsx
 msgid "Connect"
 msgstr "Connect"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Connect {address}"
+msgstr "Connect {address}"
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Connect {clientName} to Yuva?"
@@ -1864,6 +1972,18 @@ msgstr "Connected {created}"
 msgid "Connected apps"
 msgstr "Connected apps"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Connected to {address} · {folders} folders · {messages} messages"
+msgstr "Connected to {address} · {folders} folders · {messages} messages"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Connected to {host}"
+msgstr "Connected to {host}"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Connected to {storedHost}. Enter the password again only to change it."
+msgstr "Connected to {storedHost}. Enter the password again only to change it."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Connected under another name? All connections are in <0>Connected apps</0>."
 msgstr "Connected under another name? All connections are in <0>Connected apps</0>."
@@ -1871,6 +1991,10 @@ msgstr "Connected under another name? All connections are in <0>Connected apps</
 #: src/features/setup/WaitStep.tsx
 msgid "Connecting…"
 msgstr "Connecting…"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Connection"
+msgstr "Connection"
 
 #: src/app/ConnectionBanner.tsx
 msgid "Connection lost. Reconnecting…"
@@ -1933,7 +2057,11 @@ msgid "Content"
 msgstr "Content"
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/MapStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/SourceStep.tsx
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
@@ -1983,6 +2111,7 @@ msgstr "Copied"
 
 #: src/components/common/CopyButton.tsx
 #: src/features/conversation/messages/MessageActions.tsx
+#: src/features/migrations/Wizard.tsx
 msgid "Copy"
 msgstr "Copy"
 
@@ -2045,6 +2174,10 @@ msgstr "Could not reach the server. Check your connection and try again."
 msgid "Count clicks"
 msgstr "Count clicks"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Create"
+msgstr "Create"
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Create a key when your SMTP provider cannot sign with your domain or leaves the unsubscribe headers unsigned. Only the DNS record is shown; the private key never leaves the server."
 msgstr "Create a key when your SMTP provider cannot sign with your domain or leaves the unsubscribe headers unsigned. Only the DNS record is shown; the private key never leaves the server."
@@ -2065,6 +2198,10 @@ msgstr "Create key"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Create list"
 msgstr "Create list"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Create the e-mail channel"
+msgstr "Create the e-mail channel"
 
 #: src/app/UserMenu.tsx
 #: src/features/auth/CreateWorkspace.tsx
@@ -2337,6 +2474,7 @@ msgstr "Desktop notifications are blocked for this site in the browser's setting
 
 #: src/features/contact/ContactPage.tsx
 #: src/features/contact/ContactSheet.tsx
+#: src/features/migrations/ConnectStep.tsx
 msgid "Details"
 msgstr "Details"
 
@@ -2478,6 +2616,7 @@ msgstr "Does it work with server-side rendering?"
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/Wizard.tsx
 #: src/features/setup/SetupLayout.tsx
 msgid "Done"
 msgstr "Done"
@@ -2553,6 +2692,10 @@ msgstr "Drafts, never imported"
 msgid "Drop files to attach them to your reply"
 msgstr "Drop files to attach them to your reply"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Dry run"
+msgstr "Dry run"
+
 #: src/components/common/ShortcutSheet.tsx
 msgid "Duplicate the selected block"
 msgstr "Duplicate the selected block"
@@ -2561,6 +2704,7 @@ msgstr "Duplicate the selected block"
 #: src/components/common/text.ts
 #: src/features/account/AccountPage.tsx
 #: src/features/auth/AuthLayout.tsx
+#: src/features/migrations/MapStep.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/notifications/EventsSection.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -2615,6 +2759,10 @@ msgstr "E-mail, live chat and in-app messages"
 #: src/features/settings/notifications/EventsSection.tsx
 msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
+msgstr "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
@@ -2690,6 +2838,7 @@ msgstr "Emoji"
 msgid "Empty in the first rows"
 msgstr "Empty in the first rows"
 
+#: src/features/migrations/ConnectStep.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Encryption"
@@ -2719,6 +2868,10 @@ msgstr "Enter a valid e-mail address."
 msgid "Enter an http or https URL without a user name or password."
 msgstr "Enter an http or https URL without a user name or password."
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
+msgstr "Enter the address of the mailbox you answer from today. Yuva finds its provider; nothing is read until you connect it."
+
 #: src/features/auth/SignInPage.tsx
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
@@ -2739,6 +2892,10 @@ msgstr "Every attempt has failed since {failingSince}. After 24 hours of failure
 #: src/features/auth/AuthLayout.tsx
 msgid "Every customer conversation, in one place."
 msgstr "Every customer conversation, in one place."
+
+#: src/features/migrations/MapStep.tsx
+msgid "Every imported conversation is closed."
+msgstr "Every imported conversation is closed."
 
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Every inbox"
@@ -2768,6 +2925,10 @@ msgstr "Every request to this endpoint, newest first. The newest 100 are kept."
 msgid "Every site"
 msgstr "Every site"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Every step passed."
+msgstr "Every step passed."
+
 #: src/features/inbox/SourceFilter.tsx
 msgid "Every type"
 msgstr "Every type"
@@ -2791,6 +2952,8 @@ msgstr "Everyone's posts are published at once, except those of authors you mark
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/Wizard.tsx
 msgid "Everything"
 msgstr "Everything"
 
@@ -2840,6 +3003,7 @@ msgstr "External ids"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
+#: src/features/migrations/ConnectStep.tsx
 msgid "Failed"
 msgstr "Failed"
 
@@ -2905,6 +3069,10 @@ msgstr "Filter by type, site and broadcast"
 msgid "Find the IMAP server of your mail in your provider's help or your mail app's account settings: a host, port 993 with TLS or 143 with STARTTLS."
 msgstr "Find the IMAP server of your mail in your provider's help or your mail app's account settings: a host, port 993 with TLS or 143 with STARTTLS."
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Find the provider"
+msgstr "Find the provider"
+
 #: src/features/migrations/text.ts
 msgid "Find the server"
 msgstr "Find the server"
@@ -2957,6 +3125,10 @@ msgstr "Fix it"
 msgid "Fix the address or the channel's SMTP settings, then send the reply again."
 msgstr "Fix the address or the channel's SMTP settings, then send the reply again."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Folders"
+msgstr "Folders"
+
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
 msgstr "Follow the system appearance"
@@ -2989,6 +3161,7 @@ msgstr "For every inbox in this workspace, unless an inbox below says otherwise.
 msgid "For example Acme"
 msgstr "For example Acme"
 
+#: src/features/migrations/MapStep.tsx
 #: src/features/setup/NameStep.tsx
 msgid "For example Fieldnote"
 msgstr "For example Fieldnote"
@@ -3041,6 +3214,18 @@ msgstr "Forward to a teammate"
 msgid "Forwarded to {label} as a note"
 msgstr "Forwarded to {label} as a note"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Found from the domain's IMAP record."
+msgstr "Found from the domain's IMAP record."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Found from the domain's mail servers."
+msgstr "Found from the domain's mail servers."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Found in the domain's mail settings file."
+msgstr "Found in the domain's mail settings file."
+
 #: src/components/common/text.ts
 msgid "Friday"
 msgstr "Friday"
@@ -3072,6 +3257,10 @@ msgstr "From your site or app"
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Full API"
 msgstr "Full API"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Full guide"
+msgstr "Full guide"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Full guide, with Starlight, VitePress, Docusaurus and the options"
@@ -3234,6 +3423,10 @@ msgstr "How did they agree?"
 msgid "How did your subscribers agree?"
 msgstr "How did your subscribers agree?"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "How far back"
+msgstr "How far back"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "How HTML e-mails open. You can still switch each message."
@@ -3282,6 +3475,10 @@ msgstr "Idea"
 msgid "Identity secret"
 msgstr "Identity secret"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
+msgstr "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
 msgstr "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
@@ -3293,6 +3490,10 @@ msgstr "Image descriptions"
 #: src/features/migrations/text.ts
 msgid "IMAP is off for this mailbox. Turn it on in {provider}'s settings, then test again."
 msgstr "IMAP is off for this mailbox. Turn it on in {provider}'s settings, then test again."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "IMAP server"
+msgstr "IMAP server"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/Import.tsx
@@ -3401,6 +3602,7 @@ msgstr "In-app"
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/inbox/InboxPicker.tsx
+#: src/features/migrations/MapStep.tsx
 #: src/features/migrations/text.ts
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Inbox"
@@ -3590,6 +3792,14 @@ msgstr "Just wrote"
 msgid "Keep"
 msgstr "Keep"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Keep original messages"
+msgstr "Keep original messages"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Keep the name only"
+msgstr "Keep the name only"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
 msgstr "Kept with every subscription from this file, as the record of their consent."
@@ -3629,9 +3839,18 @@ msgstr "Known only from the receiving server’s results of the test mail."
 msgid "Label"
 msgstr "Label"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Label for {name}"
+msgstr "Label for {name}"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Label only: its mail comes from All mail, and its conversations get the label."
+msgstr "Label only: its mail comes from All mail, and its conversations get the label."
+
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/migrations/MapStep.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Labels"
@@ -3863,6 +4082,10 @@ msgstr "Look in older messages"
 msgid "Looking at {where}"
 msgstr "Looking at {where}"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Looking up the provider…"
+msgstr "Looking up the provider…"
+
 #: src/components/common/text.ts
 msgid "Low"
 msgstr "Low"
@@ -3875,9 +4098,17 @@ msgstr "Lowercase letters, digits and dashes, not at the start or end."
 msgid "Lowercase letters, digits and dashes."
 msgstr "Lowercase letters, digits and dashes."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
+msgstr "Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too."
+
 #: src/components/common/text.ts
 msgid "Mail from Yuva"
 msgstr "Mail from Yuva"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
+msgstr "Mail goes into the e-mail channel “{channelName}”, which receives {address}."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Mail size"
@@ -3894,6 +4125,10 @@ msgstr "Mail to this address bounced or was reported as spam, so it cannot be ad
 #: src/features/setup/ChannelStep.tsx
 msgid "Mail to your support address, answered from it"
 msgstr "Mail to your support address, answered from it"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Mailbox address"
+msgstr "Mailbox address"
 
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -3934,6 +4169,10 @@ msgstr "Manage webhooks"
 #: src/features/settings/webhooks/parts.tsx
 msgid "manual"
 msgstr "manual"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Map"
+msgstr "Map"
 
 #: src/features/account/AccountPage.tsx
 msgid "Mark all as read"
@@ -4091,6 +4330,10 @@ msgstr "Messages"
 msgid "Messages copied"
 msgstr "Messages copied"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Migration steps"
+msgstr "Migration steps"
+
 #: src/features/inbox/ChatList.tsx
 msgid "Mine"
 msgstr "Mine"
@@ -4225,6 +4468,10 @@ msgstr "Name it Yuva, paste the server URL and leave authentication on signing i
 msgid "Name it Yuva. Under <0>Connection</0> choose <1>Public endpoint</1> and paste the server URL; choose OAuth for authentication."
 msgstr "Name it Yuva. Under <0>Connection</0> choose <1>Public endpoint</1> and paste the server URL; choose OAuth for authentication."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Name of the new inbox"
+msgstr "Name of the new inbox"
+
 #: src/features/contact/ContactsColumn.tsx
 msgid "Name, e-mail or id"
 msgstr "Name, e-mail or id"
@@ -4344,6 +4591,10 @@ msgstr "New identity secret"
 msgid "new in the last {days} days"
 msgstr "new in the last {days} days"
 
+#: src/features/migrations/MapStep.tsx
+msgid "New inbox…"
+msgstr "New inbox…"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "New key"
 msgstr "New key"
@@ -4352,6 +4603,10 @@ msgstr "New key"
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "New label"
 msgstr "New label"
+
+#: src/features/migrations/MapStep.tsx
+msgid "New label “{folder}”"
+msgstr "New label “{folder}”"
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "New list"
@@ -4402,6 +4657,10 @@ msgstr "Newer match"
 msgid "Newer match (⇧Enter)"
 msgstr "Newer match (⇧Enter)"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Newer ones stay open when the customer wrote last, pending when your team did."
+msgstr "Newer ones stay open when the customer wrote last, pending when your team did."
+
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Newest"
 msgstr "Newest"
@@ -4421,6 +4680,10 @@ msgstr "Next attempt"
 #: src/features/settings/webhooks/parts.tsx
 msgid "next attempt {when}"
 msgstr "next attempt {when}"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Next, choose where they go."
+msgstr "Next, choose where they go."
 
 #: src/features/setup/previews.tsx
 msgid "No"
@@ -4575,6 +4838,10 @@ msgstr "No hidden discussions."
 msgid "No imports yet."
 msgstr "No imports yet."
 
+#: src/features/migrations/MapStep.tsx
+msgid "No label"
+msgstr "No label"
+
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "No labels yet"
 msgstr "No labels yet"
@@ -4587,6 +4854,10 @@ msgstr "No labels yet. Add them in settings."
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No locked discussions."
 msgstr "No locked discussions."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
+msgstr "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "No mailing lists yet"
@@ -4771,6 +5042,10 @@ msgstr "Not an origin: {notOrigins}. Use scheme and host only, such as https://w
 msgid "Not confirmed yet"
 msgstr "Not confirmed yet"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Not connected yet"
+msgstr "Not connected yet"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Not connected yet. This page updates when you finish signing in."
 msgstr "Not connected yet. This page updates when you finish signing in."
@@ -4796,6 +5071,14 @@ msgstr "Not on any mailing list."
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Not ready"
 msgstr "Not ready"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Not right? Pick your provider"
+msgstr "Not right? Pick your provider"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Not run"
+msgstr "Not run"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Not shown"
@@ -5040,6 +5323,10 @@ msgstr "Only contacts whose language is one of these."
 msgid "Only DNS could be checked, not how receiving servers judge the mail."
 msgstr "Only DNS could be checked, not how receiving servers judge the mail."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
+msgstr "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
+
 #: src/features/conversation/Feedback.tsx
 msgid "Only in the app"
 msgstr "Only in the app"
@@ -5241,6 +5528,10 @@ msgstr "Options"
 msgid "or"
 msgstr "or"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Or pick your provider"
+msgstr "Or pick your provider"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Or put this in <0>~/.cursor/mcp.json</0> for every project, or in <1>.cursor/mcp.json</1> for one:"
 msgstr "Or put this in <0>~/.cursor/mcp.json</0> for every project, or in <1>.cursor/mcp.json</1> for one:"
@@ -5273,6 +5564,10 @@ msgstr "Other MCP client"
 #: src/features/migrations/text.ts
 msgid "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version."
 msgstr "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in comes in a later version."
+
+#: src/components/common/text.ts
+msgid "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
+msgstr "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Outside them the inbox counts as closed"
@@ -5329,6 +5624,10 @@ msgstr "Pages that embed the old key can no longer start chats until you update 
 msgid "Panel language"
 msgstr "Panel language"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Passed"
+msgstr "Passed"
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Passkey name"
 msgstr "Passkey name"
@@ -5337,6 +5636,7 @@ msgstr "Passkey name"
 msgid "Passkeys"
 msgstr "Passkeys"
 
+#: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Password"
 msgstr "Password"
@@ -5496,6 +5796,10 @@ msgstr "Pick a TLS mode."
 msgid "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 msgstr "Pick an e-mail channel of this inbox that has an SMTP account. It sends the confirmation and welcome mails."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Pick an inbox"
+msgstr "Pick an inbox"
+
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Pick at least one event."
 msgstr "Pick at least one event."
@@ -5525,6 +5829,14 @@ msgstr "Pick the column that holds the e-mail addresses."
 #: src/features/broadcasts/Import.tsx
 msgid "Pick the file to import."
 msgstr "Pick the file to import."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be imported; nothing is imported yet."
+msgstr "Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be imported; nothing is imported yet."
+
+#: src/features/migrations/MapStep.tsx
+msgid "Pick the inbox for {address}, who on your team wrote what, and how folders become labels. Changing these after the scan plans the import again in a moment."
+msgstr "Pick the inbox for {address}, who on your team wrote what, and how folders become labels. Changing these after the scan plans the import again in a moment."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -5576,6 +5888,7 @@ msgstr "Platforms"
 msgid "Play the sound"
 msgstr "Play the sound"
 
+#: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Port"
 msgstr "Port"
@@ -5653,6 +5966,10 @@ msgstr "Production backend"
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profile"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
+msgstr "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
@@ -5840,9 +6157,17 @@ msgstr "Recent activity"
 msgid "Recipients"
 msgstr "Recipients"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Recognised by the address."
+msgstr "Recognised by the address."
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Reconnect"
 msgstr "Reconnect"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Reconnect {address}"
+msgstr "Reconnect {address}"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Redeliver"
@@ -5902,6 +6227,10 @@ msgstr "Remove {name}"
 #: src/features/settings/members/MemberList.tsx
 msgid "Remove {name} from the workspace?"
 msgstr "Remove {name} from the workspace?"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Remove {sender}"
+msgstr "Remove {sender}"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Remove condition {n}"
@@ -6128,6 +6457,7 @@ msgstr "Returns you to"
 
 #: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/Wizard.tsx
 msgid "Review"
 msgstr "Review"
 
@@ -6211,6 +6541,10 @@ msgstr "Run a check"
 msgid "Run your app with the SDK and send a message. The conversation appears here the moment it starts."
 msgstr "Run your app with the SDK and send a message. The conversation appears here the moment it starts."
 
+#: src/features/migrations/MapStep.tsx
+msgid "sales@example.com"
+msgstr "sales@example.com"
+
 #: src/features/contact/ContactSheet.tsx
 msgid "Satisfaction"
 msgstr "Satisfaction"
@@ -6271,9 +6605,26 @@ msgstr "Saving…"
 msgid "Say hello from your site"
 msgstr "Say hello from your site"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Scan"
+msgstr "Scan"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Scan again"
+msgstr "Scan again"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Scan finished: {conversations} conversations, {messages} messages"
+msgstr "Scan finished: {conversations} conversations, {messages} messages"
+
+#: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/text.ts
 msgid "Scanning"
 msgstr "Scanning"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Scanning the headers…"
+msgstr "Scanning the headers…"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Schedule"
@@ -6630,9 +6981,17 @@ msgstr "Sent today: {sent} of {limit} allowed. The day starts at 00:00 UTC."
 msgid "Sent today: {sent}. There is no daily limit."
 msgstr "Sent today: {sent}. There is no daily limit."
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Server"
+msgstr "Server"
+
 #: src/features/migrations/text.ts
 msgid "Server answers"
 msgstr "Server answers"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Server settings"
+msgstr "Server settings"
 
 #: src/features/settings/channels/app/AppInstall.tsx
 #: src/features/settings/connected-apps/AssistantPage.tsx
@@ -6666,6 +7025,10 @@ msgstr "Setup guide"
 #: src/features/setup/SetupLayout.tsx
 msgid "Setup steps"
 msgstr "Setup steps"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "SHA-256 fingerprint of the certificate the server sent"
+msgstr "SHA-256 fingerprint of the certificate the server sent"
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Shortcut"
@@ -6801,6 +7164,10 @@ msgstr "Sign in to Yuva"
 msgid "Sign in with a passkey"
 msgstr "Sign in with a passkey"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Sign in with the mailbox's user name and password."
+msgstr "Sign in with the mailbox's user name and password."
+
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Sign in with your device's fingerprint, face or screen lock instead of a code."
 msgstr "Sign in with your device's fingerprint, face or screen lock instead of a code."
@@ -6853,9 +7220,17 @@ msgstr "Signing"
 msgid "Signing secret"
 msgstr "Signing secret"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Since"
+msgstr "Since"
+
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Since {since}"
 msgstr "Since {since}"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Since…"
+msgstr "Since…"
 
 #: src/features/docs/DocsColumn.tsx
 #: src/features/inbox/SourceFilter.tsx
@@ -6878,6 +7253,10 @@ msgstr "Site name"
 #: src/features/broadcasts/Import.tsx
 msgid "Skip this column"
 msgstr "Skip this column"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Skip threads that contain only automatic mail"
+msgstr "Skip threads that contain only automatic mail"
 
 #: src/components/common/text.ts
 msgid "Skipped"
@@ -6963,6 +7342,10 @@ msgstr "Sort conversations by topic. Each label also gets its own view in the si
 msgid "Sort conversations your way"
 msgstr "Sort conversations your way"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Source"
+msgstr "Source"
+
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Spam"
@@ -6975,6 +7358,10 @@ msgstr "Spam report"
 #: src/features/migrations/text.ts
 msgid "Spam, never imported"
 msgstr "Spam, never imported"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Spam, trash and drafts are never read."
+msgstr "Spam, trash and drafts are never read."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "SPF fails for {spfDomain}. Add your SMTP provider to its SPF record, and keep it to one valid record."
@@ -7036,6 +7423,11 @@ msgstr "Starts a public thread with the text below. The conversation stays priva
 msgid "STARTTLS (port 587)"
 msgstr "STARTTLS (port 587)"
 
+#: src/features/migrations/Wizard.tsx
+msgid "State"
+msgstr "State"
+
+#: src/features/migrations/MapStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Status"
 msgstr "Status"
@@ -7149,6 +7541,10 @@ msgstr "Support address"
 msgid "Support e-mail"
 msgstr "Support e-mail"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "support@example.com"
+msgstr "support@example.com"
+
 #: src/features/setup/previews.tsx
 msgid "support@your-company.com"
 msgstr "support@your-company.com"
@@ -7156,6 +7552,10 @@ msgstr "support@your-company.com"
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Suspended"
 msgstr "Suspended"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Switch"
+msgstr "Switch"
 
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied."
@@ -7195,6 +7595,14 @@ msgstr "Taking the recipients: {prepared} so far"
 msgid "Team"
 msgstr "Team"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Team addresses"
+msgstr "Team addresses"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Team member for {sender}"
+msgstr "Team member for {sender}"
+
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Team note"
 msgstr "Team note"
@@ -7223,6 +7631,14 @@ msgstr "teammate@company.com"
 msgid "Test"
 msgstr "Test"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Test again"
+msgstr "Test again"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Test connection"
+msgstr "Test connection"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Test mail"
 msgstr "Test mail"
@@ -7230,6 +7646,10 @@ msgstr "Test mail"
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Test sent. It should arrive in a few seconds."
 msgstr "Test sent. It should arrive in a few seconds."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Testing the connection…"
+msgstr "Testing the connection…"
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "Tests go only to members of the workspace, at most five at a time, with [Test] before the subject."
@@ -7500,6 +7920,18 @@ msgstr "The mailbox has too many connections open. Close a mail app or wait a fe
 msgid "The mailbox lists no folders."
 msgstr "The mailbox lists no folders."
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "The migration continues where it stopped."
+msgstr "The migration continues where it stopped."
+
+#: src/components/common/text.ts
+msgid "The migration moved on in the meantime. Look at its state and try again."
+msgstr "The migration moved on in the meantime. Look at its state and try again."
+
+#: src/components/common/text.ts
+msgid "The number of conversations changed since you looked. Check it and confirm again."
+msgstr "The number of conversations changed since you looked. Check it and confirm again."
+
 #: src/components/common/text.ts
 msgid "The number of recipients changed since you looked. Check the new count and confirm again."
 msgstr "The number of recipients changed since you looked. Check the new count and confirm again."
@@ -7568,6 +8000,10 @@ msgstr "The review found something that blocks sending. Fix the red items first.
 msgid "The rows left out are no longer kept."
 msgstr "The rows left out are no longer kept."
 
+#: src/features/migrations/MapStep.tsx
+msgid "The scan is running. You can change these when it is done."
+msgstr "The scan is running. You can change these when it is done."
+
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 msgid "The SDKs bring ready-made screens, or a client for your own."
@@ -7584,6 +8020,10 @@ msgstr "The sending channel has no SMTP account or address to send from yet. Set
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The sending domain has no DMARC record."
 msgstr "The sending domain has no DMARC record."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "The server {host} answered."
+msgstr "The server {host} answered."
 
 #: src/features/migrations/text.ts
 msgid "The server answered, but not as an IMAP server. Check the host and port."
@@ -7652,6 +8092,10 @@ msgstr "The test ran out of its 20 seconds. The server may be slow; try again."
 #: src/features/broadcasts/TestSend.tsx
 msgid "The test still goes only to the members you picked, never to the contact."
 msgstr "The test still goes only to the members you picked, never to the contact."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "The test stopped at a step."
+msgstr "The test stopped at a step."
 
 #: src/features/migrations/text.ts
 msgid "The user name is your iCloud address without @icloud.com."
@@ -7862,6 +8306,10 @@ msgstr "This list is archived."
 msgid "This list is private, so forms do not offer it. Make it public in the settings to use a form."
 msgstr "This list is private, so forms do not offer it. Make it public in the settings to use a form."
 
+#: src/features/migrations/SourceStep.tsx
+msgid "This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be moved here."
+msgstr "This mailbox connects with “Sign in with Microsoft”, which comes in a later version. Until then it cannot be moved here."
+
 #: src/features/team/MemberPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "This member is not in the workspace any more."
@@ -7898,6 +8346,10 @@ msgstr "This server sends broadcasts for a workspace once its operator approves 
 msgid "This server sends broadcasts for a workspace once its operator approves it. Tell them about your mail to ask. Until then you can build lists, designs and drafts and send tests."
 msgstr "This server sends broadcasts for a workspace once its operator approves it. Tell them about your mail to ask. Until then you can build lists, designs and drafts and send tests."
 
+#: src/components/common/text.ts
+msgid "This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator."
+msgstr "This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator."
+
 #: src/features/account/ConnectPage.tsx
 msgid "This site cannot connect"
 msgstr "This site cannot connect"
@@ -7933,6 +8385,10 @@ msgstr "This workspace may send broadcasts once the server's operator approves i
 #: src/components/common/text.ts
 msgid "This workspace sent as many tests as allowed this hour. Try again later."
 msgstr "This workspace sent as many tests as allowed this hour. Try again later."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Threads whose last message is on or after"
+msgstr "Threads whose last message is on or after"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "through its own broadcast account"
@@ -8025,6 +8481,10 @@ msgstr "tr, en-GB"
 #: src/features/migrations/text.ts
 msgid "Trash, never imported"
 msgstr "Trash, never imported"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Trust this certificate for this server. Do this only if it is your own server and the fingerprint matches."
+msgstr "Trust this certificate for this server. Do this only if it is your own server and the fingerprint matches."
 
 #: src/app/Gate.tsx
 #: src/features/account/AccountLayout.tsx
@@ -8279,6 +8739,10 @@ msgstr "Use a port from 1 to 65535."
 msgid "Use a separate account for broadcasts"
 msgstr "Use a separate account for broadcasts"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Use an app password"
+msgstr "Use an app password"
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "Use another account"
 msgstr "Use another account"
@@ -8320,6 +8784,10 @@ msgstr "Use the suggested reply"
 msgid "Use the support address you already have. Mail sent to it will arrive here."
 msgstr "Use the support address you already have. Mail sent to it will arrive here."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Use the usual choice"
+msgstr "Use the usual choice"
+
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Use this reply"
 msgstr "Use this reply"
@@ -8331,6 +8799,10 @@ msgstr "Use your GMX password, or an app password if two-factor sign-in is on."
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Used in addresses and the widget"
 msgstr "Used in addresses and the widget"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "User name"
+msgstr "User name"
 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Username"
@@ -8526,6 +8998,10 @@ msgstr "What is new in October"
 msgid "What should customers see?"
 msgstr "What should customers see?"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "What should Yuva bring?"
+msgstr "What should Yuva bring?"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "What the customer sees"
@@ -8613,6 +9089,14 @@ msgstr "Where customers write from"
 #: src/features/setup/ChannelStep.tsx
 msgid "Where do {name} customers write from?"
 msgstr "Where do {name} customers write from?"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Where does it go?"
+msgstr "Where does it go?"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "Where is your mail now?"
+msgstr "Where is your mail now?"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Which address do customers write to?"
@@ -8951,6 +9435,10 @@ msgstr "Your browser opens the consent page on <0>{host}</0>. Sign in with a cod
 msgid "Your company or your own name"
 msgstr "Your company or your own name"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Your domain forwards its mail through Cloudflare Email Routing, so there is no mailbox to read here. Enter the address of the mailbox where that mail ends up."
+msgstr "Your domain forwards its mail through Cloudflare Email Routing, so there is no mailbox to read here. Enter the address of the mailbox where that mail ends up."
+
 #: src/features/conversation/Collision.tsx
 msgid "Your draft is still here; send it as well or clear it."
 msgstr "Your draft is still here; send it as well or clear it."
@@ -8962,6 +9450,18 @@ msgstr "Your first conversation is here"
 #: src/features/migrations/text.ts
 msgid "Your folder"
 msgstr "Your folder"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Your folders and labels become Yuva labels on the conversations they hold."
+msgstr "Your folders and labels become Yuva labels on the conversations they hold."
+
+#: src/features/migrations/Wizard.tsx
+msgid "Your mail provider"
+msgstr "Your mail provider"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Your mailbox"
+msgstr "Your mailbox"
 
 #: src/features/account/ConnectPage.tsx
 #: src/features/auth/CreateWorkspace.tsx
@@ -9006,6 +9506,10 @@ msgstr "Your role in this workspace cannot give any of the access this app asks 
 msgid "Your session has ended. Sign in again."
 msgstr "Your session has ended. Sign in again."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Your team"
+msgstr "Your team"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Your time zone, {zone}. That is {utc} UTC."
 msgstr "Your time zone, {zone}. That is {utc} UTC."
@@ -9031,6 +9535,10 @@ msgstr "Yuva DKIM"
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva does not run a mail server: your domain's mail is passed to it."
 
+#: src/features/migrations/Wizard.tsx
+msgid "Yuva inbox"
+msgstr "Yuva inbox"
+
 #: src/app/Gate.tsx
 msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
 msgstr "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."
@@ -9038,6 +9546,14 @@ msgstr "Yuva on this server is invite only. Ask an owner or admin of your team's
 #: src/features/auth/SignInPage.tsx
 msgid "Yuva on this server is invite only. Ask your team for an invitation."
 msgstr "Yuva on this server is invite only. Ask your team for an invitation."
+
+#: src/features/migrations/Wizard.tsx
+msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
+msgstr "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
+msgstr "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

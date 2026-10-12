@@ -308,6 +308,14 @@ export function useErrorText() {
       return t`The DNS record is not visible yet. Publish it, wait a few minutes and try again.`
     if (err.code === "attachment_type_mismatch")
       return t`A file's content does not match its type. Check the file and try again.`
+    if (err.code === "migration_state")
+      return t`The migration moved on in the meantime. Look at its state and try again.`
+    if (err.code === "hosted_limit")
+      return t`This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator.`
+    if (err.code === "provider_not_configured")
+      return t`Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet.`
+    if (err.code === "confirm_count_mismatch")
+      return t`The number of conversations changed since you looked. Check it and confirm again.`
     switch (err.status) {
       case 400:
         return t`Some of the values are not valid.`
