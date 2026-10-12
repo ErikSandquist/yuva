@@ -9421,7 +9421,8 @@ type MigrationSignIn struct {
 // `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
 // stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
 // codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
-// Microsoft sign-in to another account than the mailbox; nothing was stored);
+// Microsoft sign-in by an account whose token Exchange did not let open the mailbox;
+// nothing was stored);
 // `token_failed` (the provider refused the code: usually a wrong client secret or redirect
 // URL); `source_unreachable`.
 //

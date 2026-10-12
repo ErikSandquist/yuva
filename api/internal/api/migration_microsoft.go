@@ -201,8 +201,10 @@ func microsoftSignInState(state string) bool {
 }
 
 // finishMicrosoftSignIn takes Microsoft's redirect back: it exchanges the code, refuses other
-// scopes and another account than the mailbox, signs in to the mailbox over IMAP with the token,
-// and only then stores the tokens.
+// scopes, signs in to the mailbox over IMAP with the token, and only then stores the tokens. The
+// token's account may differ from the mailbox (a Microsoft 365 UPN is often not the SMTP address,
+// and a delegate with full access opens another's mailbox): Exchange accepting the token for the
+// mailbox decides, and its refusal of a token that names another account is account_mismatch.
 func (s *Server) finishMicrosoftSignIn(ctx context.Context, row store.MigrationSignIn, m store.Migration, query url.Values) oas.MigrationSignInResult {
 	ws, mid := m.WorkspaceID, m.ID
 	if !microsoftSignInState(m.State) {
@@ -243,8 +245,13 @@ func (s *Server) finishMicrosoftSignIn(ctx context.Context, row store.MigrationS
 		return s.signInFailed(ctx, ws, mid, oas.SignInScopeTooBroad)
 	}
 	accounts := microsoft.Accounts(tokens.Access)
-	if len(accounts) > 0 && !slices.Contains(accounts, strings.ToLower(m.SourceAddress)) {
-		return s.signInFailed(ctx, ws, mid, oas.SignInAccountMismatch)
+	named := slices.Contains(accounts, strings.ToLower(m.SourceAddress))
+	account := ""
+	switch {
+	case named:
+		account = strings.ToLower(m.SourceAddress)
+	case len(accounts) > 0:
+		account = accounts[0]
 	}
 	preset, _ := migrate.LookupPreset(migrate.PresetMicrosoft)
 	res := s.microsoftTester().Run(ctx, migrate.Target{
@@ -255,7 +262,7 @@ func (s *Server) finishMicrosoftSignIn(ctx context.Context, row store.MigrationS
 		s.log.InfoContext(ctx, "migration sign-in mailbox", slog.String("migration_id", mid.String()), slog.String("step", failed.Step),
 			slog.String("code", failed.Code), slog.String("detail", migrate.Scrub(failed.Detail, secret.secrets()...)))
 		switch {
-		case failed.Code == migrate.CodeXOAUTH2Failed && len(accounts) > 0:
+		case failed.Code == migrate.CodeXOAUTH2Failed && named:
 			return s.signInFailed(ctx, ws, mid, oas.SignInXoauth2Failed)
 		case failed.Code == migrate.CodeXOAUTH2Failed:
 			return s.signInFailed(ctx, ws, mid, oas.SignInAccountMismatch)
@@ -295,7 +302,7 @@ func (s *Server) finishMicrosoftSignIn(ctx context.Context, row store.MigrationS
 		}
 		if _, err := q.AddMigrationAudit(ctx, store.AddMigrationAuditParams{
 			WorkspaceID: ws, MigrationID: mid, Action: "signed_in", MemberID: row.MemberID, ApiKeyID: row.ApiKeyID,
-			Detail: mustJSON(map[string]any{"host": sv.Host, "scopes": tokens.Scopes, "tenant": sec.Tenant}), Now: s.now(),
+			Detail: mustJSON(signedInDetail(sv.Host, tokens.Scopes, sec.Tenant, account)), Now: s.now(),
 		}); err != nil {
 			return err
 		}
@@ -316,6 +323,14 @@ func (s *Server) finishMicrosoftSignIn(ctx context.Context, row store.MigrationS
 		return s.signInFailed(ctx, ws, mid, result)
 	}
 	return result
+}
+
+func signedInDetail(host string, scopes []string, tenant, account string) map[string]any {
+	d := map[string]any{"host": host, "scopes": scopes, "tenant": tenant}
+	if account != "" {
+		d["account"] = account
+	}
+	return d
 }
 
 // microsoftRefused records Microsoft's refusal of a sign-in, with the admin consent page of the

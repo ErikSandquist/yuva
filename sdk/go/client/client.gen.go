@@ -9419,7 +9419,8 @@ type MigrationSignIn struct {
 // `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
 // stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
 // codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
-// Microsoft sign-in to another account than the mailbox; nothing was stored);
+// Microsoft sign-in by an account whose token Exchange did not let open the mailbox;
+// nothing was stored);
 // `token_failed` (the provider refused the code: usually a wrong client secret or redirect
 // URL); `source_unreachable`.
 //
@@ -20375,12 +20376,14 @@ type ClientInterface interface {
 	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 	// every other command). The callback refuses, storing nothing, a token whose granted scopes
-	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-	// name it, from the mailbox refusing the token), then signs in to
-	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-	// tokens encrypted; they are refreshed before a connection when they expire within five
-	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// differ from the requested set (`scope_too_broad`), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+	// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+	// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+	// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+	// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+	// stores the tokens encrypted; they are refreshed before a connection when they expire
+	// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 	// account) when the migration is done.
 	//
@@ -20429,12 +20432,14 @@ type ClientInterface interface {
 	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 	// every other command). The callback refuses, storing nothing, a token whose granted scopes
-	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-	// name it, from the mailbox refusing the token), then signs in to
-	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-	// tokens encrypted; they are refreshed before a connection when they expire within five
-	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// differ from the requested set (`scope_too_broad`), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+	// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+	// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+	// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+	// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+	// stores the tokens encrypted; they are refreshed before a connection when they expire
+	// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 	// account) when the migration is done.
 	//
@@ -28076,12 +28081,14 @@ func (c *Client) ScanMigration(ctx context.Context, migrationId MigrationId, par
 // write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 // Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 // every other command). The callback refuses, storing nothing, a token whose granted scopes
-// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-// name it, from the mailbox refusing the token), then signs in to
-// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-// tokens encrypted; they are refreshed before a connection when they expire within five
-// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// differ from the requested set (`scope_too_broad`), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+// stores the tokens encrypted; they are refreshed before a connection when they expire
+// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 // account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 // account) when the migration is done.
 //
@@ -28140,12 +28147,14 @@ func (c *Client) StartMigrationSignInWithBody(ctx context.Context, migrationId M
 // write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 // Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 // every other command). The callback refuses, storing nothing, a token whose granted scopes
-// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-// name it, from the mailbox refusing the token), then signs in to
-// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-// tokens encrypted; they are refreshed before a connection when they expire within five
-// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// differ from the requested set (`scope_too_broad`), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+// stores the tokens encrypted; they are refreshed before a connection when they expire
+// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 // account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 // account) when the migration is done.
 //
@@ -48749,12 +48758,14 @@ type ClientWithResponsesInterface interface {
 	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 	// every other command). The callback refuses, storing nothing, a token whose granted scopes
-	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-	// name it, from the mailbox refusing the token), then signs in to
-	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-	// tokens encrypted; they are refreshed before a connection when they expire within five
-	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// differ from the requested set (`scope_too_broad`), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+	// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+	// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+	// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+	// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+	// stores the tokens encrypted; they are refreshed before a connection when they expire
+	// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 	// account) when the migration is done.
 	//
@@ -48803,12 +48814,14 @@ type ClientWithResponsesInterface interface {
 	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 	// every other command). The callback refuses, storing nothing, a token whose granted scopes
-	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-	// name it, from the mailbox refusing the token), then signs in to
-	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-	// tokens encrypted; they are refreshed before a connection when they expire within five
-	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// differ from the requested set (`scope_too_broad`), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+	// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+	// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+	// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+	// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+	// stores the tokens encrypted; they are refreshed before a connection when they expire
+	// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 	// account) when the migration is done.
 	//
@@ -72599,12 +72612,14 @@ func (c *ClientWithResponses) ScanMigrationWithResponse(ctx context.Context, mig
 // write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 // Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 // every other command). The callback refuses, storing nothing, a token whose granted scopes
-// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-// name it, from the mailbox refusing the token), then signs in to
-// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-// tokens encrypted; they are refreshed before a connection when they expire within five
-// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// differ from the requested set (`scope_too_broad`), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+// stores the tokens encrypted; they are refreshed before a connection when they expire
+// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 // account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 // account) when the migration is done.
 //
@@ -72659,12 +72674,14 @@ func (c *ClientWithResponses) StartMigrationSignInWithBodyWithResponse(ctx conte
 // write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
 // Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
 // every other command). The callback refuses, storing nothing, a token whose granted scopes
-// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
-// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
-// name it, from the mailbox refusing the token), then signs in to
-// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
-// tokens encrypted; they are refreshed before a connection when they expire within five
-// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// differ from the requested set (`scope_too_broad`), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2` as the mailbox. A token whose
+// account is another than the mailbox, or is not named (a Microsoft 365 UPN often differs
+// from the SMTP address; a delegate may have full access), is accepted when Exchange opens
+// the mailbox with it and refused as `account_mismatch` when Exchange does not; the
+// mailbox's own account refused there is `xoauth2_failed`. It then lists the folders and
+// stores the tokens encrypted; they are refreshed before a connection when they expire
+// within five minutes. Tokens are not revoked at Microsoft: the person removes the app from their
 // account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
 // account) when the migration is done.
 //

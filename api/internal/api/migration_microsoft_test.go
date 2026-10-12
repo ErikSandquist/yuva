@@ -1,8 +1,17 @@
 package api_test
 
 import (
+	"bufio"
 	"context"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/tls"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/base64"
 	"errors"
+	"math/big"
 	"net"
 	"net/http"
 	"net/netip"
@@ -184,8 +193,8 @@ func TestMicrosoftSignInWithTheTeamsApp(t *testing.T) {
 		t.Fatalf("a token that can also send mail: %s, %d stored", result, r.stored(t, id))
 	}
 	result, _ = r.signIn(t, owner, id, app, microsofttest.SignIn{Account: "ceo@contoso.example"})
-	if result != "account_mismatch" || r.stored(t, id) != 0 {
-		t.Fatalf("another account: %s, %d stored", result, r.stored(t, id))
+	if result != "source_unreachable" || r.stored(t, id) != 0 {
+		t.Fatalf("another account and no IMAP server to ask: %s, %d stored", result, r.stored(t, id))
 	}
 	result, _ = r.signIn(t, owner, id, app, microsofttest.SignIn{Account: "help@contoso.example", Scope: imapScope + " offline_access"})
 	if result != "source_unreachable" || r.stored(t, id) != 0 {
@@ -287,5 +296,158 @@ func TestMicrosoftCreateMigrationOverMCP(t *testing.T) {
 	}
 	if created["provider"] != "microsoft" || created["state"] != "draft" || !strings.Contains(created["connect_url"].(string), "/migrations/"+created["id"].(string)) {
 		t.Fatalf("create_migration: %v", created)
+	}
+}
+
+// newOutlookIMAP imitates outlook.office365.com:993 as far as the sign-in goes: AUTHENTICATE
+// XOAUTH2 succeeds when opens accepts the token for the user and is otherwise refused as Exchange
+// Online refuses it, then one folder is listed.
+func newOutlookIMAP(t *testing.T, opens func(user, token string) bool) (*x509.Certificate, func(ctx context.Context) (net.Conn, error)) {
+	t.Helper()
+	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tmpl := &x509.Certificate{
+		SerialNumber: big.NewInt(1), Subject: pkix.Name{CommonName: "outlook.office365.com"}, DNSNames: []string{"outlook.office365.com"},
+		NotBefore: time.Now().Add(-time.Hour), NotAfter: time.Now().Add(time.Hour), KeyUsage: x509.KeyUsageDigitalSignature,
+		ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth}, IsCA: true, BasicConstraintsValid: true,
+	}
+	der, err := x509.CreateCertificate(rand.Reader, tmpl, tmpl, &key.PublicKey, key)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cert, err := x509.ParseCertificate(der)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ln, err := tls.Listen("tcp", "127.0.0.1:0", &tls.Config{Certificates: []tls.Certificate{{Certificate: [][]byte{der}, PrivateKey: key}}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { ln.Close() })
+	go func() {
+		for {
+			conn, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			go serveOutlookIMAP(conn, opens)
+		}
+	}()
+	return cert, func(ctx context.Context) (net.Conn, error) {
+		var d net.Dialer
+		return d.DialContext(ctx, "tcp", ln.Addr().String())
+	}
+}
+
+func serveOutlookIMAP(conn net.Conn, opens func(user, token string) bool) {
+	defer conn.Close()
+	_ = conn.SetDeadline(time.Now().Add(10 * time.Second))
+	br := bufio.NewReader(conn)
+	say := func(lines ...string) { _, _ = conn.Write([]byte(strings.Join(lines, "\r\n") + "\r\n")) }
+	say("* OK The Microsoft Exchange IMAP4 service is ready.")
+	for {
+		line, err := br.ReadString('\n')
+		if err != nil {
+			return
+		}
+		fields := strings.Fields(strings.TrimSpace(line))
+		if len(fields) < 2 {
+			continue
+		}
+		tag, cmd := fields[0], strings.ToUpper(fields[1])
+		switch cmd {
+		case "CAPABILITY":
+			say("* CAPABILITY IMAP4 IMAP4rev1 AUTH=PLAIN AUTH=XOAUTH2 SASL-IR UIDPLUS ID UNSELECT CHILDREN IDLE NAMESPACE LITERAL+", tag+" OK CAPABILITY completed.")
+		case "AUTHENTICATE":
+			var user, token string
+			if len(fields) == 4 && strings.EqualFold(fields[2], "XOAUTH2") {
+				raw, _ := base64.StdEncoding.DecodeString(fields[3])
+				for _, kv := range strings.Split(string(raw), "\x01") {
+					if v, ok := strings.CutPrefix(kv, "user="); ok {
+						user = v
+					}
+					if v, ok := strings.CutPrefix(kv, "auth=Bearer "); ok {
+						token = v
+					}
+				}
+			}
+			if user != "" && opens(user, token) {
+				say(tag + " OK AUTHENTICATE completed.")
+			} else {
+				say(tag + " NO AUTHENTICATE failed.")
+			}
+		case "LIST":
+			say(`* LIST (\HasNoChildren) "/" INBOX`, `* LIST (\HasNoChildren \Sent) "/" "Sent Items"`, tag+" OK LIST completed.")
+		case "EXAMINE":
+			say("* 2 EXISTS", "* OK [UIDVALIDITY 7] ok", "* OK [UIDNEXT 3] ok", tag+" OK [READ-ONLY] EXAMINE completed.")
+		case "STATUS":
+			say("* STATUS "+fields[2]+" (MESSAGES 2 UIDNEXT 3 UIDVALIDITY 7)", tag+" OK STATUS completed.")
+		case "LOGOUT":
+			say("* BYE Microsoft Exchange Server IMAP4 server signing off.", tag+" OK LOGOUT completed.")
+			return
+		default:
+			say(tag + " BAD Command Error. 12")
+		}
+	}
+}
+
+// TestMicrosoftSignInOpensTheMailbox: a token that names another account than the mailbox (a
+// Microsoft 365 UPN on onmicrosoft.com, a delegate) is accepted when Exchange opens the mailbox
+// with it and refused as account_mismatch, storing nothing, when Exchange does not.
+func TestMicrosoftSignInOpensTheMailbox(t *testing.T) {
+	var r *msRun
+	cert, dial := newOutlookIMAP(t, func(user, token string) bool { return r.ms.Opens(user, token) })
+	r = newMSRun(t, "", func(s *api.MigrationSettings) {
+		s.MicrosoftClientID, s.MicrosoftClientSecret, s.MicrosoftTenant = "server-app", "server-secret", "common"
+		s.RootCAs = s.RootCAs.Clone()
+		s.RootCAs.AddCert(cert)
+	}, dial)
+	r.ms.Register("server-app", "server-secret")
+	owner := r.tm.owner
+	id := owner.expect(http.StatusCreated, "POST", "/v1/migrations", map[string]any{"preset": "microsoft", "source_address": "help@contoso.example"}).str("id")
+	path := "/v1/migrations/" + id
+	audited := func(account string) int {
+		return r.h.count("SELECT count(*) FROM migration_audit WHERE workspace_id = $1 AND migration_id = $2 AND action = 'signed_in' AND detail->>'account' = $3",
+			r.tm.ws, id, account)
+	}
+
+	for _, c := range []struct {
+		name string
+		in   microsofttest.SignIn
+		want string
+	}{
+		{"another account that cannot open the mailbox", microsofttest.SignIn{Account: "ceo@contoso.example"}, "account_mismatch"},
+		{"a personal account that cannot open the mailbox", microsofttest.SignIn{Account: "someone@outlook.com", Personal: true}, "account_mismatch"},
+		{"the mailbox's own account that Exchange refuses", microsofttest.SignIn{Account: "help@contoso.example", Mailbox: "other@contoso.example"}, "xoauth2_failed"},
+	} {
+		if result, _ := r.signIn(t, owner, id, map[string]any{}, c.in); result != c.want || r.stored(t, id) != 0 {
+			t.Fatalf("%s: %s, %d stored", c.name, result, r.stored(t, id))
+		}
+		if m := owner.expect(http.StatusOK, "GET", path, nil); m.str("state") != "draft" || m.str("sign_in_result") != c.want {
+			t.Fatalf("%s: %s", c.name, m.raw)
+		}
+	}
+
+	if result, _ := r.signIn(t, owner, id, map[string]any{}, microsofttest.SignIn{Account: "admin@contoso.onmicrosoft.com", Mailbox: "help@contoso.example"}); result != "connected" || r.stored(t, id) != 1 {
+		t.Fatalf("an onmicrosoft.com UPN that opens the mailbox: %s, %d stored", result, r.stored(t, id))
+	}
+	if m := owner.expect(http.StatusOK, "GET", path, nil); m.str("state") != "connected" || m.body["credentials"].(map[string]any)["kind"] != "oauth" {
+		t.Fatalf("after the sign-in: %s", m.raw)
+	}
+	if audited("admin@contoso.onmicrosoft.com") != 1 {
+		t.Fatal("the signed-in account is not audited")
+	}
+	if result, _ := r.signIn(t, owner, id, map[string]any{}, microsofttest.SignIn{Account: "help@contoso.example"}); result != "connected" || audited("help@contoso.example") != 1 {
+		t.Fatalf("the mailbox's own account: %s", result)
+	}
+	if n := r.h.count("SELECT count(*) FROM migration_audit WHERE workspace_id = $1 AND migration_id = $2 AND action = 'sign_in_failed'", r.tm.ws, id); n != 3 {
+		t.Fatalf("%d failed sign-ins audited", n)
+	}
+	for _, v := range r.ms.Issued() {
+		if n := r.h.count("SELECT count(*) FROM migration_audit WHERE workspace_id = $1 AND detail::text LIKE '%' || $2 || '%'", r.tm.ws, v); n != 0 {
+			t.Fatal("a token is in the audit")
+		}
 	}
 }

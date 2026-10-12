@@ -41,7 +41,8 @@ func xoauth2Target(t *testing.T) (addr, pass string, cert []byte, introspection,
 
 // TestDovecotMicrosoftXOAUTH2 moves a mailbox through Sign in with Microsoft, against the fake
 // identity platform and a Dovecot that takes its tokens over AUTHENTICATE XOAUTH2: a sign-in to
-// another account is refused, the copy outlives the access token and refreshes it, a refresh
+// another account is refused when the mailbox refuses its token and accepted when the mailbox
+// takes it (an onmicrosoft.com UPN), the copy outlives the access token and refreshes it, a refresh
 // Microsoft refuses stops the migration until the person signs in again, and the mailbox ends as
 // it began.
 func TestDovecotMicrosoftXOAUTH2(t *testing.T) {
@@ -91,8 +92,12 @@ func TestDovecotMicrosoftXOAUTH2(t *testing.T) {
 	if result, _ := r.signIn(t, owner, id, map[string]any{}, microsofttest.SignIn{Account: "someone-else@example.com", Personal: true}); result != "account_mismatch" || r.stored(t, id) != 0 {
 		t.Fatalf("a personal account signed in as someone else: %s, %d stored", result, r.stored(t, id))
 	}
-	if result, _ := r.signIn(t, owner, id, map[string]any{}, microsofttest.SignIn{Account: address}); result != "connected" {
-		t.Fatalf("sign-in: %s %s", result, logs.String())
+	upn := box + "@example.onmicrosoft.com"
+	if result, _ := r.signIn(t, owner, id, map[string]any{}, microsofttest.SignIn{Account: upn, Mailbox: address}); result != "connected" {
+		t.Fatalf("sign-in with a UPN other than the address: %s %s", result, logs.String())
+	}
+	if n := h.count("SELECT count(*) FROM migration_audit WHERE workspace_id = $1 AND migration_id = $2 AND action = 'signed_in' AND detail->>'account' = $3", r.tm.ws, id, upn); n != 1 {
+		t.Fatal("the account that signed in is not audited")
 	}
 	m := d.migration(id)
 	cred := m.body["credentials"].(map[string]any)

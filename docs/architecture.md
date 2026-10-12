@@ -1455,7 +1455,10 @@ losing a message and without changing anything at the source. Decisions:
   the workspace. Tokens are not revoked at the provider (that would take a method other than `GET`);
   the completion screen and the guides say where to remove the OAuth client, the app or the app
   password. Sign-in uses PKCE, refuses a grant whose scopes
-  differ from the requested set and, for Microsoft, a sign-in to another address than the mailbox.
+  differ from the requested set and, for Microsoft, a sign-in whose account cannot open the mailbox:
+  when the token's claims name another address or none (a Microsoft 365 UPN is often not the SMTP
+  address), the mailbox decides by accepting the token in `AUTHENTICATE XOAUTH2` with its address as
+  the user, and only its refusal is `account_mismatch`; the audit row names the account that signed in.
   Assistants never handle a password: MCP tools return a panel link where the person connects.
 - **Who.** Owners, admins, and keys without an inbox limit or owner/admin tokens with
   `migrations:manage`. Every action is in `migration_audit` (actor, client), kept

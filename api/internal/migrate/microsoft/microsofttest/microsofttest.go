@@ -33,6 +33,10 @@ import (
 // Microsoft sends back instead.
 type SignIn struct {
 	Account string
+	// Mailbox is the address the token opens over IMAP when it is not Account, as when a
+	// Microsoft 365 UPN differs from the mailbox's SMTP address or the account has full access to
+	// another mailbox.
+	Mailbox string
 	// Personal gives an opaque access token that names no account, as Microsoft does for
 	// Outlook.com; otherwise the token is a JWT with the account as upn.
 	Personal bool
@@ -61,6 +65,7 @@ type grant struct {
 
 type token struct {
 	account  string
+	mailbox  string
 	expires  time.Time
 	refresh  bool
 	scope    string
@@ -259,7 +264,10 @@ func random(prefix string) string {
 	return prefix + "-" + hex.EncodeToString(b)
 }
 
-func (s *Server) issue(account, scope, client string, personal bool) (string, string) {
+func (s *Server) issue(account, mailbox, scope, client string, personal bool) (string, string) {
+	if mailbox == "" {
+		mailbox = account
+	}
 	exp := s.now().Add(s.Lifetime)
 	var access string
 	if personal {
@@ -273,8 +281,8 @@ func (s *Server) issue(account, scope, client string, personal bool) (string, st
 		access = head + "." + base64.RawURLEncoding.EncodeToString(body) + "." + base64.RawURLEncoding.EncodeToString([]byte(random("sig")))
 	}
 	refresh := random("refresh")
-	s.tokens[access] = &token{account: account, expires: exp, scope: scope, client: client, personal: personal}
-	s.tokens[refresh] = &token{account: account, expires: s.now().Add(90 * 24 * time.Hour), refresh: true, scope: scope, client: client, personal: personal}
+	s.tokens[access] = &token{account: account, mailbox: mailbox, expires: exp, scope: scope, client: client, personal: personal}
+	s.tokens[refresh] = &token{account: account, mailbox: mailbox, expires: s.now().Add(90 * 24 * time.Hour), refresh: true, scope: scope, client: client, personal: personal}
 	return access, refresh
 }
 
@@ -320,7 +328,7 @@ func (s *Server) serve(w http.ResponseWriter, r *http.Request) {
 		if scope == "" {
 			scope = "https://outlook.office.com/IMAP.AccessAsUser.All"
 		}
-		access, refresh := s.issue(g.sign.Account, scope, g.client, g.sign.Personal)
+		access, refresh := s.issue(g.sign.Account, g.sign.Mailbox, scope, g.client, g.sign.Personal)
 		tokenAnswer(w, access, refresh, scope, s.Lifetime)
 	case "refresh_token":
 		tk, ok := s.tokens[f.Get("refresh_token")]
@@ -329,7 +337,7 @@ func (s *Server) serve(w http.ResponseWriter, r *http.Request) {
 				"AADSTS70000: The user or administrator has revoked the grant, or the refresh token has expired.", 70000)
 			return
 		}
-		access, refresh := s.issue(tk.account, tk.scope, tk.client, tk.personal)
+		access, refresh := s.issue(tk.account, tk.mailbox, tk.scope, tk.client, tk.personal)
 		s.refreshes++
 		tokenAnswer(w, access, refresh, tk.scope, s.Lifetime)
 	default:
@@ -358,7 +366,16 @@ func tokenError(w http.ResponseWriter, status int, code, desc string, aadsts int
 	_ = json.NewEncoder(w).Encode(body)
 }
 
-// introspect answers whether a token is active and whose it is, as RFC 7662 does; the token comes
+// Opens says whether an access token is active and opens mailbox, as Exchange decides when an
+// IMAP client signs in to mailbox with it.
+func (s *Server) Opens(mailbox, access string) bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	tk, ok := s.tokens[access]
+	return ok && !tk.refresh && s.now().Before(tk.expires) && strings.EqualFold(tk.mailbox, mailbox)
+}
+
+// introspect answers whether a token is active and whose mailbox it opens, as RFC 7662 does; the token comes
 // as the form's token, a bearer header or the path's last segment, whichever the server sends.
 func (s *Server) introspect(w http.ResponseWriter, r *http.Request) {
 	body, _ := io.ReadAll(io.LimitReader(r.Body, 64<<10))
@@ -380,5 +397,5 @@ func (s *Server) introspect(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]any{"active": false})
 		return
 	}
-	_ = json.NewEncoder(w).Encode(map[string]any{"active": true, "username": tk.account, "scope": tk.scope})
+	_ = json.NewEncoder(w).Encode(map[string]any{"active": true, "username": tk.mailbox, "scope": tk.scope})
 }
