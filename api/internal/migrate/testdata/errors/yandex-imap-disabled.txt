@@ -1,0 +1,4 @@
+code: imap_disabled
+host: imap.yandex.com
+source: Yandex Mail answer when IMAP or app passwords are off (quoted in the migration plan, section 6.2)
+answer: NO [AUTHENTICATIONFAILED] LOGIN Invalid credentials or IMAP is disabled

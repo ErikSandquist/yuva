@@ -7,6 +7,7 @@ import (
 	"net/netip"
 	"net/url"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -70,6 +71,11 @@ type Config struct {
 	BroadcastDailyRecipients int64
 	// MailLinkURL is the base of /m/, /s/, /c/ and /i/ links in mail; PublicURL when unset.
 	MailLinkURL string
+
+	// MigrationSources are the sources teams may move from (YUVA_MIGRATION_SOURCES); nil for every
+	// source the server has.
+	MigrationSources      []string
+	MigrationAllowPrivate bool
 }
 
 type VAPID struct {
@@ -251,6 +257,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadVAPID(); err != nil {
 		return c, err
 	}
+	if err := c.loadMigrations(); err != nil {
+		return c, err
+	}
 	if err := c.loadBroadcasts(); err != nil {
 		return c, err
 	}
@@ -282,6 +291,26 @@ func (c *Config) loadBroadcasts() error {
 	u, err := url.Parse(c.MailLinkURL)
 	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" || (u.Path != "" && u.Path != "/") {
 		return fmt.Errorf("YUVA_MAIL_LINK_URL must be an absolute http(s) URL without a path, got %q", c.MailLinkURL)
+	}
+	return nil
+}
+
+var migrationSources = []string{"imap", "file", "zendesk", "helpscout"}
+
+func (c *Config) loadMigrations() error {
+	var err error
+	if c.MigrationAllowPrivate, err = boolEnv("YUVA_MIGRATION_ALLOW_PRIVATE", false); err != nil {
+		return err
+	}
+	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); !set {
+		return nil
+	}
+	c.MigrationSources = []string{}
+	for _, s := range lowerList(os.Getenv("YUVA_MIGRATION_SOURCES")) {
+		if !slices.Contains(migrationSources, s) {
+			return fmt.Errorf("YUVA_MIGRATION_SOURCES: %q is not one of imap, file, zendesk, helpscout", s)
+		}
+		c.MigrationSources = append(c.MigrationSources, s)
 	}
 	return nil
 }

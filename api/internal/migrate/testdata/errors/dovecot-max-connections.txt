@@ -1,0 +1,4 @@
+code: too_many_connections
+host: imap.example.com
+source: Dovecot answer past mail_max_userip_connections
+answer: BYE Maximum number of connections from user+IP exceeded (mail_max_userip_connections=10)

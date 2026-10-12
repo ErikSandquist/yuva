@@ -70,6 +70,7 @@ type Server struct {
 	imagesMax  int64
 	broadcasts BroadcastSettings
 	imports    ImportSettings
+	migrations MigrationSettings
 
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
@@ -117,6 +118,7 @@ type Deps struct {
 	EmailImagesMaxBytes int64
 	Broadcasts          BroadcastSettings
 	Imports             ImportSettings
+	Migrations          MigrationSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -220,7 +222,7 @@ func New(d Deps) *Server {
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
 		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
-		broadcasts: d.Broadcasts, imports: importSettings(d.Imports),
+		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations),
 	}
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()

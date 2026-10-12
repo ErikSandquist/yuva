@@ -1,0 +1,4 @@
+code: throttled
+host: imap.example.com
+source: RFC 5530 response code LIMIT
+answer: NO [LIMIT] Too many commands, slow down

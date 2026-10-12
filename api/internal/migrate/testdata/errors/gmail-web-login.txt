@@ -1,0 +1,4 @@
+code: web_login_required
+host: imap.gmail.com
+source: Gmail IMAP answer when Google wants a browser sign-in first (quoted in the migration plan, section 6.2)
+answer: NO [ALERT] Please log in via your web browser: https://support.google.com/mail/accounts/answer/78754 (Failure)

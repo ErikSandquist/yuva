@@ -356,6 +356,13 @@ func messageBody(m messageRow, atts []store.Attachment) oas.Message {
 	for _, a := range atts {
 		out.Attachments = append(out.Attachments, attachmentBody(a))
 	}
+	out.ImportedAt = m.ImportedAt
+	if len(m.ImportedAuthor) > 0 {
+		var a oas.ImportedAuthor
+		if json.Unmarshal(m.ImportedAuthor, &a) == nil {
+			out.ImportedAuthor = &a
+		}
+	}
 	if m.DeliveryState != nil && m.DeliveryUpdatedAt != nil {
 		out.Delivery = &oas.MessageDelivery{
 			Channel: oas.MessageDeliveryChannelEmail, State: oas.MessageDeliveryState(*m.DeliveryState),

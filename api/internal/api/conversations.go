@@ -159,15 +159,24 @@ func (s *Server) listItems(ctx context.Context, p principal, rows []store.Conver
 			unread[id] = true
 		}
 	}
+	bodies := make([]oas.Conversation, len(rows))
+	refs := make([]*oas.Conversation, len(rows))
+	for i, r := range rows {
+		bodies[i] = conversationBody(r, labels[r.ID])
+		refs[i] = &bodies[i]
+	}
+	if err := fillImportSources(ctx, s.st.Queries, p.workspaceID, refs...); err != nil {
+		return nil, err
+	}
 	out := make([]oas.ConversationListItem, len(rows))
 	for i, r := range rows {
-		c := conversationBody(r, labels[r.ID])
+		c := bodies[i]
 		out[i] = oas.ConversationListItem{
 			Id: c.Id, InboxId: c.InboxId, ContactId: c.ContactId, ChannelId: c.ChannelId, ChannelKind: c.ChannelKind, Kind: c.Kind, Feedback: c.Feedback, Page: c.Page, Subject: c.Subject,
 			Status: c.Status, SnoozeUntil: c.SnoozeUntil, Priority: c.Priority, Spam: c.Spam, AssigneeId: c.AssigneeId, Labels: c.Labels,
 			LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt, CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt,
 			RelatedConversationId: c.RelatedConversationId, ClosedAt: c.ClosedAt, Rating: c.Rating, LastReadByContactAt: c.LastReadByContactAt, BroadcastId: c.BroadcastId,
-			Contact: contacts[r.ContactID], LastMessage: previews[r.ID], Unread: unread[r.ID], PinnedAt: pinned[r.ID],
+			Imported: c.Imported, Contact: contacts[r.ContactID], LastMessage: previews[r.ID], Unread: unread[r.ID], PinnedAt: pinned[r.ID],
 		}
 	}
 	return out, nil
@@ -182,8 +191,44 @@ func conversationBody(c store.Conversation, labels []uuid.UUID) oas.Conversation
 		Kind: oas.ConversationKind(c.Kind), Feedback: conversationFeedback(c), Page: conversationPage(c), Status: oas.ConversationStatus(c.Status), SnoozeUntil: c.SnoozeUntil, Priority: oas.Priority(c.Priority), Spam: c.Spam,
 		AssigneeId: c.AssigneeID, Labels: labels, LastMessageAt: c.LastMessageAt, LastActivityAt: c.LastActivityAt,
 		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, RelatedConversationId: c.RelatedConversationID, BroadcastId: c.BroadcastID,
-		ClosedAt: c.ClosedAt, Rating: conversationRating(c), LastReadByContactAt: c.LastReadByContactAt,
+		ClosedAt: c.ClosedAt, Rating: conversationRating(c), LastReadByContactAt: c.LastReadByContactAt, Imported: conversationImport(c),
 	}
+}
+
+func conversationImport(c store.Conversation) *oas.ConversationImport {
+	if c.ImportedAt == nil {
+		return nil
+	}
+	return &oas.ConversationImport{At: *c.ImportedAt, MigrationId: c.MigrationID}
+}
+
+// fillImportSources names the migration each imported conversation came from.
+func fillImportSources(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, convs ...*oas.Conversation) error {
+	var ids []uuid.UUID
+	for _, c := range convs {
+		if c.Imported != nil && c.Imported.MigrationId != nil && !slices.Contains(ids, *c.Imported.MigrationId) {
+			ids = append(ids, *c.Imported.MigrationId)
+		}
+	}
+	if len(ids) == 0 {
+		return nil
+	}
+	rows, err := q.ListMigrationSources(ctx, store.ListMigrationSourcesParams{WorkspaceID: workspaceID, Ids: ids})
+	if err != nil {
+		return err
+	}
+	for _, c := range convs {
+		if c.Imported == nil || c.Imported.MigrationId == nil {
+			continue
+		}
+		for _, r := range rows {
+			if r.ID == *c.Imported.MigrationId {
+				c.Imported.Source = new(oas.MigrationSource(r.Source))
+				c.Imported.Preset = new(oas.MigrationPresetId(r.Preset))
+			}
+		}
+	}
+	return nil
 }
 
 func conversationLabels(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, ids []uuid.UUID) (map[uuid.UUID][]uuid.UUID, error) {
@@ -203,7 +248,8 @@ func oneConversation(ctx context.Context, q *store.Queries, c store.Conversation
 	if err != nil {
 		return oas.Conversation{}, err
 	}
-	return conversationBody(c, labels[c.ID]), nil
+	out := conversationBody(c, labels[c.ID])
+	return out, fillImportSources(ctx, q, c.WorkspaceID, &out)
 }
 
 func labelSet(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, in []uuid.UUID) ([]uuid.UUID, error) {
@@ -686,6 +732,9 @@ func (s *Server) changeConversation(ctx context.Context, q *store.Queries, event
 		return out, err
 	}
 	out = conversationBody(updated, want)
+	if err := fillImportSources(ctx, q, p.workspaceID, &out); err != nil {
+		return out, err
+	}
 	s.scheduleRatingRequest(events, cur, updated, now)
 	if conversationChanged(cur, updated) || len(added) > 0 || len(removed) > 0 {
 		events.conversation(realtime.ConversationUpdated, updated, out)

@@ -241,6 +241,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
 		Imports:             api.ImportSettings{MaxRows: cfg.ImportMaxRows},
+		Migrations:          api.MigrationSettings{Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate},
 		Broadcasts: api.BroadcastSettings{
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},
@@ -250,6 +251,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	}
 	if cfg.WebhookAllowPrivate {
 		log.Warn("YUVA_WEBHOOK_ALLOW_PRIVATE is set; webhooks may reach private and loopback addresses")
+	}
+	if cfg.MigrationAllowPrivate {
+		log.Warn("YUVA_MIGRATION_ALLOW_PRIVATE is set; migrations may connect to mail servers on private and loopback addresses")
 	}
 	if cfg.IngressSecret == "" {
 		log.Warn("YUVA_INGRESS_SECRET is not set; /ingress/email refuses all mail")

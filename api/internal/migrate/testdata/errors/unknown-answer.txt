@@ -1,0 +1,4 @@
+code: unexpected_answer
+host: imap.example.com
+source: an answer no rule knows, with a base64 argument echoed back
+answer: BAD Unknown command dXNlcj1zb21ldXNlckBleGFtcGxlLmNvbQFhdXRoPUJlYXJlcg== received

@@ -1,0 +1,4 @@
+code: basic_auth_disabled
+host: outlook.office365.com
+source: Exchange Online answer to AUTHENTICATE PLAIN since basic authentication was turned off
+answer: NO AUTHENTICATE failed.

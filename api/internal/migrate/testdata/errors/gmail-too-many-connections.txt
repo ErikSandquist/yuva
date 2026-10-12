@@ -1,0 +1,4 @@
+code: too_many_connections
+host: imap.gmail.com
+source: Gmail IMAP answer when the account has too many IMAP sessions open
+answer: NO [ALERT] Too many simultaneous connections. (Failure)

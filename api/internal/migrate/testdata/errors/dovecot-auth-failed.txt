@@ -1,0 +1,4 @@
+code: auth_failed
+host: imap.example.com
+source: Dovecot 2.4.4 (the migrate-test compose profile) answer to a wrong password
+answer: NO [AUTHENTICATIONFAILED] Authentication failed.

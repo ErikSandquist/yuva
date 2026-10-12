@@ -69,7 +69,7 @@ tags:
       Workspace API keys for host backends, scripts and bots. A key holds scopes (`ApiKeyScope`),
       may be limited to some inboxes and may expire; these are fixed when the key is made. A key
       limited to inboxes sees what an agent with access to exactly those inboxes sees and cannot
-      hold `inboxes:manage`, `webhooks:manage` or `workspace:manage`; an inbox that is deleted
+      hold `inboxes:manage`, `webhooks:manage`, `workspace:manage` or `migrations:manage`; an inbox that is deleted
       drops out of the limit, and a key whose every inbox is gone sees nothing. Keys made before
       scopes existed hold every scope.
 
@@ -214,6 +214,18 @@ tags:
       `YUVA_BROADCAST_DAILY_RECIPIENTS` and the operator's per-workspace limit cap the recipients
       of a workspace per UTC day; a send that reaches the cap continues the next day
       (`waiting_until`).
+  - name: migrations
+    description: |
+      Moving to Yuva: a team brings the history of the mailbox it uses today into an inbox, then
+      switches its mail over. Every mailbox is read over IMAP with an app password (presets for
+      Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX and any other server).
+      Yuva only reads the source: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
+      its connection refuses every command that could delete, move or mark anything.
+
+      Owners, admins and API keys without an inbox limit manage migrations; agents get `403`.
+      Keys and OAuth tokens need `migrations:manage`, which agents' tokens are never offered.
+      Credentials are encrypted under the server's master key, never returned or logged, and
+      deleted when the migration ends. Every action is recorded with who did it.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -5974,6 +5986,325 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/migrations:
+    get:
+      operationId: listMigrations
+      summary: List migrations
+      description: |
+        Newest first. `state` may be repeated.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - name: state
+          in: query
+          style: form
+          explode: true
+          schema:
+            type: array
+            maxItems: 12
+            items:
+              $ref: "#/components/schemas/MigrationState"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of migrations.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+    post:
+      operationId: createMigration
+      summary: Start moving a mailbox to Yuva
+      description: |
+        A `draft` migration of the mailbox `source_address` with a preset (`GET
+        /v1/migrations/presets`; `POST /v1/migrations/detect` picks one from the address). Nothing
+        is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
+        test the connection (`POST .../test`), which moves the migration to `connected`.
+
+        `inbox_id` and `channel_id` name where the history goes: an inbox and one of its e-mail
+        channels whose address is the mailbox address (`400 validation_failed` otherwise). Both can
+        be set later; a channel names its inbox.
+
+        A source this server does not offer answers `422 hosted_limit` (the operator's
+        `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
+        "Sign in with Microsoft" is set up on the server.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationCreate"
+      responses:
+        "201":
+          description: The migration, `draft`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/presets:
+    get:
+      operationId: listMigrationPresets
+      summary: Mail providers Yuva can move from
+      description: |
+        The presets this server offers, with their IMAP servers, how they sign in, the folders
+        read by default and the pace Yuva keeps so the team's own mail clients are not slowed.
+        `available: false` marks a provider whose way to connect this server does not offer yet.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      responses:
+        "200":
+          description: The presets.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationPresetList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/detect:
+    post:
+      operationId: detectMigrationSource
+      summary: Find the provider of a mailbox
+      description: |
+        Picks the preset for an address: by the domain for consumer mail services, else by the
+        domain's MX records (5 seconds), else from the domain's own autoconfig file
+        (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
+        record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
+        connections follow the same address rules as the connection test. Outlook.com and
+        Microsoft 365 are recognised and answered with `available: false` until their sign-in is
+        offered; Proton and Cloudflare Email Routing get a `note`.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationDetect"
+      responses:
+        "200":
+          description: What was found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationDetection"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}:
+    get:
+      operationId: getMigration
+      summary: A migration
+      description: |
+        State, options, counts, the actions allowed now and, while credentials are stored, their
+        kind and server (never the password).
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+    patch:
+      operationId: updateMigration
+      summary: Change a migration
+      description: |
+        Target inbox and channel, and the options: folders, date range, automatic mail, the status
+        rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
+        `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
+        to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
+        `connected`.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationUpdate"
+      responses:
+        "200":
+          description: The migration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+    delete:
+      operationId: deleteMigration
+      summary: Delete a migration
+      description: |
+        Deletes the migration with its credentials, folders and progress. Not while it scans,
+        copies, syncs or removes history (`409 migration_state`). Imported history stays; its
+        conversations keep `imported.at` but no longer name the migration. The activity record of
+        the migration is kept.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "204":
+          description: Deleted.
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/credentials:
+    put:
+      operationId: setMigrationCredentials
+      summary: Connect the mailbox with a password
+      description: |
+        The user name and the app password (or password) of the mailbox, and for `imap` the
+        server; presets take their own server, and a preset with several servers (Zoho's data
+        centres, GMX) takes `host` from its list. The credentials are encrypted at once, replace
+        any stored before, are never returned or logged, and are deleted when the migration
+        completes, is cancelled or deleted. `certificate_sha256` trusts a server whose certificate
+        is not valid for its name (a self-hosted server with its own certificate): the SHA-256 of
+        the certificate the connection test reported, checked on every connection.
+
+        In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
+        test passes. In `needs_attention` it reconnects the same account on the same server
+        (`409 migration_state` otherwise).
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationCredentialsInput"
+      responses:
+        "204":
+          description: Stored.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/test:
+    post:
+      operationId: testMigrationConnection
+      summary: Test the connection to the mailbox
+      description: |
+        Runs the steps the copy will, within 20 seconds, and stops at the first that fails:
+        resolve the server and check its address, connect, TLS, greeting, sign in, list the
+        folders and open the inbox read-only. Each step answers `ok` and, when it failed, a `code`
+        with the server's answer in `detail` (passwords, tokens and base64 arguments removed). A
+        passing test moves a `draft` migration to `connected` and reports the folders and
+        messages it saw.
+
+        The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
+        refuses to send any command that could change the mailbox.
+
+        Limited to 10 tests per migration and 30 per workspace an hour, and after three failed
+        sign-ins in a row to none for 15 minutes (`429 rate_limited` with `Retry-After`). Without
+        credentials, or while the migration runs or has ended, `409 migration_state`.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The steps.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationTestResult"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
   /v1/usage:
     get:
       operationId: getUsage
@@ -8756,6 +9087,13 @@ components:
       schema:
         type: string
         format: uuid
+    MigrationId:
+      name: migrationId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     ImportId:
       name: importId
       in: path
@@ -9280,8 +9618,11 @@ components:
         - `broadcasts:send`: schedule, unschedule, pause, resume and cancel broadcasts. Scheduling
           and resuming also need the workspace's `broadcasts.by_keys`. Never implied: a key made
           without naming its scopes does not hold it.
+        - `migrations:manage`: detect, create, change, connect, test and delete migrations into
+          Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
+          to inboxes.
 
-        `lists:*` and `broadcasts:*` are never added to keys made before they existed.
+        `lists:*`, `broadcasts:*` and `migrations:manage` are never added to keys made before they existed.
       enum:
         - conversations:read
         - conversations:write
@@ -9302,6 +9643,7 @@ components:
         - broadcasts:read
         - broadcasts:write
         - broadcasts:send
+        - migrations:manage
     BotAvatarUrl:
       type: string
       format: uri
@@ -10960,6 +11302,12 @@ components:
             Set when a reply to this broadcast opened the conversation (the recipient's own reply,
             or someone else answering a forwarded copy); absent otherwise or when the broadcast was
             deleted.
+        imported:
+          $ref: "#/components/schemas/ConversationImport"
+          description: |
+            Set on history moved into Yuva from another mailbox: such conversations keep their
+            original times, were never unread and wrote no events, notifications or webhooks when
+            they were imported. Absent otherwise.
         related_conversation_id:
           type: string
           format: uuid
@@ -11646,6 +11994,15 @@ components:
           items:
             type: string
             format: uuid
+        imported_at:
+          type: string
+          format: date-time
+          description: |
+            When the message was moved into Yuva from another mailbox; `created_at` keeps its
+            original time. Absent for messages written or received in Yuva.
+        imported_author:
+          $ref: "#/components/schemas/ImportedAuthor"
+          description: An imported outgoing message whose sender is not mapped to a member; absent otherwise.
         created_at:
           type: string
           format: date-time
@@ -11951,7 +12308,7 @@ components:
             $ref: "#/components/schemas/CannedReply"
     UsageMonth:
       type: object
-      required: [month, conversations, messages, attachment_bytes, broadcast_recipients]
+      required: [month, conversations, messages, attachment_bytes, broadcast_recipients, imported_conversations, imported_messages, imported_bytes]
       properties:
         month:
           type: string
@@ -11970,6 +12327,18 @@ components:
           type: integer
           format: int64
           description: Broadcast mails accepted by the SMTP server.
+        imported_conversations:
+          type: integer
+          format: int64
+          description: Conversations moved into Yuva from another mailbox; not in `conversations`.
+        imported_messages:
+          type: integer
+          format: int64
+          description: Messages moved into Yuva; not in `messages`.
+        imported_bytes:
+          type: integer
+          format: int64
+          description: Bytes read from mailboxes moved into Yuva.
     UsageList:
       type: object
       required: [items]
@@ -11978,6 +12347,616 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/UsageMonth"
+    MigrationSource:
+      type: string
+      description: |
+        Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
+        `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
+        (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap`.
+      enum: [imap, file, zendesk, helpscout]
+      x-enum-varnames: [MigrationSourceImap, MigrationSourceFile, MigrationSourceZendesk, MigrationSourceHelpscout]
+    MigrationPresetId:
+      type: string
+      description: |
+        The provider of an `imap` mailbox: `gmail`, `google_workspace`, `microsoft` (Outlook.com
+        and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
+        `fastmail`, `gmx`, or `imap` for any other server.
+      enum: [gmail, google_workspace, microsoft, yandex, icloud, zoho, yahoo, fastmail, gmx, imap]
+      x-enum-varnames: [PresetGmail, PresetGoogleWorkspace, PresetMicrosoft, PresetYandex, PresetIcloud, PresetZoho, PresetYahoo, PresetFastmail, PresetGmx, PresetImap]
+    MigrationState:
+      type: string
+      description: |
+        - `draft`: created; not connected yet.
+        - `connected`: the connection test passed; choose what to read.
+        - `scanning`: reading message headers for the dry run.
+        - `ready`: the dry run is ready; nothing is imported yet.
+        - `copying`: importing history, newest threads first.
+        - `paused`: stopped by a member; resumes where it was.
+        - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
+          revoked app password; reconnect to continue.
+        - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
+          while the team switches its mail over.
+        - `completed`: finished; the credentials are deleted.
+        - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
+        - `removing`, `removed`: imported history is being, or was, removed.
+      enum: [draft, connected, scanning, ready, copying, paused, needs_attention, syncing, completed, cancelled, removing, removed]
+      x-enum-varnames: [MigrationDraft, MigrationConnected, MigrationScanning, MigrationReady, MigrationCopying, MigrationPaused, MigrationNeedsAttention, MigrationSyncing, MigrationCompleted, MigrationCancelled, MigrationRemoving, MigrationRemoved]
+    MigrationAction:
+      type: string
+      description: |
+        What can be done with a migration in its current state: `update` (`PATCH`),
+        `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
+        `retry` (failed items), `remove_history`, `delete` and `probe` (a test mail to check the
+        switch). A server lists only the actions it offers.
+      enum: [update, set_credentials, test_connection, scan, start, pause, resume, cancel, finish, retry, remove_history, delete, probe]
+      x-enum-varnames: [MigrationActionUpdate, MigrationActionSetCredentials, MigrationActionTestConnection, MigrationActionScan, MigrationActionStart, MigrationActionPause, MigrationActionResume, MigrationActionCancel, MigrationActionFinish, MigrationActionRetry, MigrationActionRemoveHistory, MigrationActionDelete, MigrationActionProbe]
+    MigrationTls:
+      type: string
+      description: "`tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143)."
+      enum: [tls, starttls]
+      x-enum-varnames: [ImapTls, ImapStarttls]
+    MigrationServer:
+      type: object
+      required: [host, port, tls]
+      properties:
+        host:
+          type: string
+          minLength: 1
+          maxLength: 253
+        port:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 65535
+        tls:
+          $ref: "#/components/schemas/MigrationTls"
+    MigrationAuth:
+      type: string
+      description: "`password`: a user name with an app password or password. `microsoft`: Sign in with Microsoft."
+      enum: [password, microsoft]
+      x-enum-varnames: [MigrationAuthPassword, MigrationAuthMicrosoft]
+    MigrationCredentials:
+      type: object
+      description: The stored credentials, without the secret.
+      required: [kind, server, updated_at]
+      properties:
+        kind:
+          type: string
+          enum: [password, oauth]
+          x-enum-varnames: [CredentialsPassword, CredentialsOauth]
+        server:
+          $ref: "#/components/schemas/MigrationServer"
+        certificate_sha256:
+          type: string
+          pattern: "^[0-9a-f]{64}$"
+          description: The trusted certificate's SHA-256, when one is pinned.
+        scopes:
+          type: array
+          description: "`oauth` only: the scopes granted."
+          items:
+            type: string
+        expires_at:
+          type: string
+          format: date-time
+          description: "`oauth` only: when the access token expires."
+        updated_at:
+          type: string
+          format: date-time
+    MigrationCredentialsInput:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 320
+          description: Usually the mailbox address; iCloud takes the part before `@`.
+        password:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          writeOnly: true
+        host:
+          type: string
+          minLength: 1
+          maxLength: 253
+        port:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 65535
+        tls:
+          $ref: "#/components/schemas/MigrationTls"
+        certificate_sha256:
+          type: string
+          pattern: "^[0-9a-fA-F:]{64,95}$"
+          description: Trust this certificate (SHA-256, hexadecimal, colons allowed) even if it is not valid for the host.
+    MigrationCounts:
+      type: object
+      required: [total, imported, duplicate, skipped, failed, bytes]
+      properties:
+        total:
+          type: integer
+          format: int64
+          description: Messages planned.
+        imported:
+          type: integer
+          format: int64
+        duplicate:
+          type: integer
+          format: int64
+          description: Already in Yuva, or a second copy of the same message.
+        skipped:
+          type: integer
+          format: int64
+        failed:
+          type: integer
+          format: int64
+        bytes:
+          type: integer
+          format: int64
+          description: Bytes read from the source.
+    MigrationPerson:
+      type: object
+      description: A team address and the member its mail is imported as; without `member_id`, its own name and address are kept.
+      required: [address]
+      properties:
+        address:
+          $ref: "#/components/schemas/Email"
+        member_id:
+          type: string
+          format: uuid
+    MigrationLabelMapping:
+      type: object
+      description: |
+        What a folder or Gmail label becomes: `create` a label of the same name, an `existing`
+        label (`label_id`), or `none`.
+      required: [folder, action]
+      properties:
+        folder:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        action:
+          type: string
+          enum: [create, existing, none]
+          x-enum-varnames: [MigrationLabelCreate, MigrationLabelExisting, MigrationLabelNone]
+        label_id:
+          type: string
+          format: uuid
+    MigrationOptions:
+      type: object
+      required: [skip_automatic, close_after_days, keep_originals, team_addresses, people, labels, quiet_period_hours]
+      properties:
+        folders:
+          type: array
+          description: The folders to read, by name; absent for the preset's default (inbox, sent, archive and user folders; Gmail's All Mail).
+          items:
+            type: string
+        since:
+          type: string
+          format: date-time
+          description: Only threads whose last message is newer; absent for everything.
+        skip_automatic:
+          type: boolean
+          description: Skip threads of only automatic mail (auto-replies, newsletters, delivery reports).
+        close_after_days:
+          type: integer
+          format: int32
+          description: Threads whose last message is older are imported `closed`; newer ones `open` or `pending`. `0` closes everything.
+        keep_originals:
+          type: boolean
+          description: Keep each message's original source, as for mail that arrives live.
+        team_addresses:
+          type: array
+          description: Addresses besides the mailbox's whose mail counts as sent by the team.
+          items:
+            $ref: "#/components/schemas/Email"
+        people:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationPerson"
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationLabelMapping"
+        quiet_period_hours:
+          type: integer
+          format: int32
+          description: How long sync runs after delivery is verified without finding mail that did not also arrive at Yuva.
+    MigrationOptionsInput:
+      type: object
+      description: The options to change; others keep their value.
+      properties:
+        folders:
+          type: [array, "null"]
+          maxItems: 1000
+          description: "`null` for the preset's default."
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1000
+        since:
+          type: [string, "null"]
+          format: date-time
+        skip_automatic:
+          type: boolean
+        close_after_days:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 3650
+        keep_originals:
+          type: boolean
+        team_addresses:
+          type: array
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/Email"
+        people:
+          type: array
+          maxItems: 200
+          items:
+            $ref: "#/components/schemas/MigrationPerson"
+        labels:
+          type: array
+          maxItems: 1000
+          items:
+            $ref: "#/components/schemas/MigrationLabelMapping"
+        quiet_period_hours:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 336
+    Migration:
+      type: object
+      required: [id, source, preset, source_address, state, options, counts, actions, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        source:
+          $ref: "#/components/schemas/MigrationSource"
+        preset:
+          $ref: "#/components/schemas/MigrationPresetId"
+        source_address:
+          type: string
+          description: The mailbox address.
+        inbox_id:
+          type: string
+          format: uuid
+          description: The inbox the history goes to; absent until chosen or when deleted.
+        channel_id:
+          type: string
+          format: uuid
+          description: The inbox's e-mail channel whose address is the mailbox address; absent until chosen or when deleted.
+        state:
+          $ref: "#/components/schemas/MigrationState"
+        state_reason:
+          type: string
+          description: Why it needs attention, or what it waits for.
+        waiting_until:
+          type: string
+          format: date-time
+          description: While `copying` or `syncing` waits for a provider's limit, when it continues.
+        options:
+          $ref: "#/components/schemas/MigrationOptions"
+        counts:
+          $ref: "#/components/schemas/MigrationCounts"
+        credentials:
+          $ref: "#/components/schemas/MigrationCredentials"
+        credentials_deleted_at:
+          type: string
+          format: date-time
+          description: When the credentials were deleted because the migration ended.
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationAction"
+        member_id:
+          type: string
+          format: uuid
+          description: The member who created it; absent for API keys or when the member left.
+        api_key_id:
+          type: string
+          format: uuid
+          description: The API key that created it.
+        via:
+          type: string
+          description: The OAuth client it was created through.
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+    MigrationCreate:
+      type: object
+      required: [preset, source_address]
+      properties:
+        source:
+          $ref: "#/components/schemas/MigrationSource"
+          description: "`imap` when absent."
+        preset:
+          $ref: "#/components/schemas/MigrationPresetId"
+        source_address:
+          $ref: "#/components/schemas/Email"
+        inbox_id:
+          type: string
+          format: uuid
+        channel_id:
+          type: string
+          format: uuid
+        options:
+          $ref: "#/components/schemas/MigrationOptionsInput"
+    MigrationUpdate:
+      type: object
+      minProperties: 1
+      properties:
+        preset:
+          $ref: "#/components/schemas/MigrationPresetId"
+        source_address:
+          $ref: "#/components/schemas/Email"
+        inbox_id:
+          type: [string, "null"]
+          format: uuid
+        channel_id:
+          type: [string, "null"]
+          format: uuid
+        options:
+          $ref: "#/components/schemas/MigrationOptionsInput"
+    MigrationPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Migration"
+        next_cursor:
+          type: string
+    MigrationBudget:
+      type: object
+      description: The pace Yuva keeps with this provider, below its published limits.
+      required: [connections]
+      properties:
+        connections:
+          type: integer
+          format: int32
+        bytes_per_day:
+          type: integer
+          format: int64
+        bytes_per_second:
+          type: integer
+          format: int64
+    MigrationPreset:
+      type: object
+      required: [id, source, name, servers, auth, app_password, username, folders, budget, guide, available]
+      properties:
+        id:
+          $ref: "#/components/schemas/MigrationPresetId"
+        source:
+          $ref: "#/components/schemas/MigrationSource"
+        name:
+          type: string
+        servers:
+          type: array
+          description: The IMAP servers it uses, the first by default; empty for `imap`, whose server is typed or detected.
+          items:
+            $ref: "#/components/schemas/MigrationServer"
+        auth:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationAuth"
+        app_password:
+          type: boolean
+          description: The provider wants an app password rather than the account's password.
+        username:
+          type: string
+          description: "What the user name is: the whole `address` or its `local_part`."
+          enum: [address, local_part]
+          x-enum-varnames: [UsernameAddress, UsernameLocalPart]
+        folders:
+          type: array
+          description: |
+            Folders read by default, by special use (`\All`, `\Sent`, `\Archive`) or name
+            (`INBOX`), and `user` for the user's own folders.
+          items:
+            type: string
+        budget:
+          $ref: "#/components/schemas/MigrationBudget"
+        guide:
+          type: string
+          description: The slug of the provider's guide in the documentation.
+        available:
+          type: boolean
+          description: "`false` when this server cannot connect to the provider yet."
+    MigrationPresetList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationPreset"
+    MigrationDetect:
+      type: object
+      required: [address]
+      properties:
+        address:
+          $ref: "#/components/schemas/Email"
+    MigrationDetection:
+      type: object
+      required: [address, domain, preset, name, available, auth, guide, mx, found_by]
+      properties:
+        address:
+          type: string
+        domain:
+          type: string
+        preset:
+          $ref: "#/components/schemas/MigrationPresetId"
+        name:
+          type: string
+          description: The provider's name.
+        available:
+          type: boolean
+          description: "`false` when this server cannot connect to the provider yet."
+        note:
+          type: string
+          description: |
+            `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+            `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
+            computer; export the mail instead. `cloudflare`: the domain forwards mail through
+            Cloudflare Email Routing; connect the mailbox it ends up in.
+          enum: [microsoft_later, proton, cloudflare]
+          x-enum-varnames: [DetectNoteMicrosoftLater, DetectNoteProton, DetectNoteCloudflare]
+        server:
+          $ref: "#/components/schemas/MigrationServer"
+          description: The IMAP server to use; absent when none was found.
+        auth:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationAuth"
+        guide:
+          type: string
+        mx:
+          type: array
+          description: The domain's MX hosts, by preference.
+          items:
+            type: string
+        found_by:
+          type: string
+          description: "`domain`, `mx`, `autoconfig`, `srv` or `guess` (`imap.` or `mail.` of the domain answered); `none` when nothing was found."
+          enum: [domain, mx, autoconfig, srv, guess, none]
+          x-enum-varnames: [FoundByDomain, FoundByMx, FoundByAutoconfig, FoundBySrv, FoundByGuess, FoundByNone]
+    MigrationTestCode:
+      type: string
+      description: |
+        - `dns_failed`: the server's name does not resolve.
+        - `address_not_allowed`: the server is on a private or local network.
+        - `connect_failed`: nothing answers on the port.
+        - `tls_failed`: the certificate is not valid for the server; `certificate_sha256` says
+          which one it sent, which can be trusted for a self-hosted server.
+        - `not_imap`: the server does not speak IMAP.
+        - `starttls_unavailable`: the server offers no `STARTTLS`.
+        - `auth_failed`: wrong user name or password.
+        - `app_password_required`: the provider wants an app password.
+        - `imap_disabled`: IMAP is switched off for the mailbox.
+        - `basic_auth_disabled`: the provider accepts no passwords (Microsoft).
+        - `web_login_required`: the provider wants a sign-in in the browser first.
+        - `too_many_connections`: the mailbox has too many connections open.
+        - `throttled`: the provider limits this account for now.
+        - `no_folders`: the mailbox lists no folders.
+        - `examine_failed`: the inbox could not be opened read-only.
+        - `timeout`: the test ran out of its 20 seconds.
+        - `unexpected_answer`: anything else; `detail` has the server's answer.
+      enum: [dns_failed, address_not_allowed, connect_failed, tls_failed, not_imap, starttls_unavailable, auth_failed, app_password_required, imap_disabled, basic_auth_disabled, web_login_required, too_many_connections, throttled, no_folders, examine_failed, timeout, unexpected_answer]
+      x-enum-varnames: [TestCodeDnsFailed, TestCodeAddressNotAllowed, TestCodeConnectFailed, TestCodeTlsFailed, TestCodeNotImap, TestCodeStarttlsUnavailable, TestCodeAuthFailed, TestCodeAppPasswordRequired, TestCodeImapDisabled, TestCodeBasicAuthDisabled, TestCodeWebLoginRequired, TestCodeTooManyConnections, TestCodeThrottled, TestCodeNoFolders, TestCodeExamineFailed, TestCodeTimeout, TestCodeUnexpectedAnswer]
+    MigrationTestStep:
+      type: object
+      required: [step, ok]
+      properties:
+        step:
+          type: string
+          enum: [resolve, connect, tls, greeting, sign_in, folders]
+          x-enum-varnames: [TestStepResolve, TestStepConnect, TestStepTls, TestStepGreeting, TestStepSignIn, TestStepFolders]
+        ok:
+          type: boolean
+        code:
+          $ref: "#/components/schemas/MigrationTestCode"
+        detail:
+          type: string
+          description: The server's answer or the error, without secrets.
+    MigrationTestResult:
+      type: object
+      required: [ok, steps, migration]
+      properties:
+        ok:
+          type: boolean
+        steps:
+          type: array
+          description: The steps run, in order; the last failed when `ok` is `false`.
+          items:
+            $ref: "#/components/schemas/MigrationTestStep"
+        folders:
+          type: integer
+          format: int32
+          description: Folders the mailbox lists.
+        messages:
+          type: integer
+          format: int64
+          description: Messages in the folders read by default.
+        certificate_sha256:
+          type: string
+          pattern: "^[0-9a-f]{64}$"
+          description: "`tls_failed`: the SHA-256 of the certificate the server sent."
+        migration:
+          $ref: "#/components/schemas/Migration"
+    MigrationEventData:
+      type: object
+      required: [migration]
+      properties:
+        migration:
+          $ref: "#/components/schemas/Migration"
+        previous_state:
+          $ref: "#/components/schemas/MigrationState"
+          description: Absent when the migration was just created.
+    MigrationEvent:
+      type: object
+      description: |
+        `migration.updated`: a migration was created or changed state. Delivered to owners, admins
+        and API keys or tokens holding `migrations:manage`; never a webhook.
+      required: [id, type, workspace_id, created_at, data]
+      properties:
+        id:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum: [migration.updated]
+          x-enum-varnames: [MigrationUpdated]
+        workspace_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/MigrationEventData"
+    ConversationImport:
+      type: object
+      description: Where an imported conversation came from.
+      required: [at]
+      properties:
+        migration_id:
+          type: string
+          format: uuid
+          description: Absent once the migration was deleted.
+        source:
+          $ref: "#/components/schemas/MigrationSource"
+          description: Absent once the migration was deleted.
+        preset:
+          $ref: "#/components/schemas/MigrationPresetId"
+          description: Absent once the migration was deleted.
+        at:
+          type: string
+          format: date-time
+          description: When it was imported.
+    ImportedAuthor:
+      type: object
+      description: An imported message's sender from the team who is not mapped to a member.
+      required: [name, address]
+      properties:
+        name:
+          type: string
+        address:
+          type: string
     ConversationEvent:
       type: object
       description: A conversation was created, or its status, snooze, assignee, priority, labels or subject changed.
@@ -12406,6 +13385,7 @@ components:
         - $ref: "#/components/schemas/DiscussionEvent"
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
+        - $ref: "#/components/schemas/MigrationEvent"
       discriminator:
         propertyName: type
         mapping:
@@ -12433,6 +13413,7 @@ components:
           subscription.created: "#/components/schemas/SubscriptionEvent"
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
+          migration.updated: "#/components/schemas/MigrationEvent"
     EventPage:
       type: object
       required: [events, next, has_more]
@@ -12476,6 +13457,7 @@ components:
         - $ref: "#/components/schemas/DiscussionEvent"
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
+        - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
@@ -12512,6 +13494,7 @@ components:
           subscription.created: "#/components/schemas/SubscriptionEvent"
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
+          migration.updated: "#/components/schemas/MigrationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"
