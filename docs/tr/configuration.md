@@ -42,6 +42,7 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_COOKIE_SECURE` | `YUVA_PUBLIC_URL` `https` ise `true` | Oturum çerezini `Secure` olarak işaretler. |
 | `YUVA_MCP` | `on` | `off`, MCP uç noktası `/mcp`'yi kapatır (`404` döner). OAuth açık kalır. |
 | `YUVA_PANEL` | `on` | `off`, panelin ve OAuth onay sayfasının sunulmasını durdurur; API anahtarları çalışmaya devam eder. |
+| `YUVA_PANEL_ANALYTICS_KEY` | boş | Bu sunucuda, alan adı panelinki olan bir [Analitik](analytics.md) web sitesinin herkese açık anahtarı (`yuva_ak_…`). Panel kendi ekranlarını orada sayar; kayıt kimlikleri `:id` olarak gider (`/conversations/:id`), hiçbir konuşma ya da kişi kimliği gönderilmez. |
 | `YUVA_WIDGET` | `on` | `off`, `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` ve `/yuva-analytics.js` dosyalarının sunulmasını durdurur; `/client/v1` kalır. |
 
 ## Giriş ve geçiş anahtarları

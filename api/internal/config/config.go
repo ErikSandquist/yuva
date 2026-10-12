@@ -66,6 +66,8 @@ type Config struct {
 	Panel  bool
 	Widget bool
 
+	PanelAnalyticsKey string
+
 	// Broadcasts is on, approval or off (YUVA_BROADCASTS).
 	Broadcasts               string
 	BroadcastWorkers         int
@@ -271,6 +273,9 @@ func Load(version string) (Config, error) {
 	if c.Panel, err = switchEnv("YUVA_PANEL", true); err != nil {
 		return c, err
 	}
+	if c.PanelAnalyticsKey = env("YUVA_PANEL_ANALYTICS_KEY", ""); c.PanelAnalyticsKey != "" && !analyticsKeyRe.MatchString(c.PanelAnalyticsKey) {
+		return c, errors.New("YUVA_PANEL_ANALYTICS_KEY must be the public key of an analytics property (yuva_ak_...)")
+	}
 	if c.Widget, err = switchEnv("YUVA_WIDGET", true); err != nil {
 		return c, err
 	}
@@ -403,6 +408,7 @@ var migrationSources = []string{"imap", "file", "zendesk", "helpscout"}
 
 var forwardingDomainRe = regexp.MustCompile(`^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$`)
 var microsoftTenantRe = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9.-]{0,252}$`)
+var analyticsKeyRe = regexp.MustCompile(`^yuva_ak_[A-Za-z0-9_-]{1,64}$`)
 
 func (c *Config) loadMigrations() error {
 	var err error

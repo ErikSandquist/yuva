@@ -43,6 +43,7 @@ und `t`/`f`.
 | `YUVA_COOKIE_SECURE` | `true`, wenn `YUVA_PUBLIC_URL` `https` ist | Markiert das Sitzungs-Cookie als `Secure`. |
 | `YUVA_MCP` | `on` | `off` schaltet den MCP-Endpunkt `/mcp` ab (er antwortet mit `404`). OAuth bleibt an. |
 | `YUVA_PANEL` | `on` | `off` liefert das Panel und die OAuth-Zustimmung nicht mehr aus; API-Schlüssel funktionieren weiter. |
+| `YUVA_PANEL_ANALYTICS_KEY` | nicht gesetzt | Der öffentliche Schlüssel (`yuva_ak_…`) einer Website in [Analytics](analytics.md) auf diesem Server, deren Domain die des Panels ist. Das Panel zählt dann dort seine eigenen Ansichten, mit `:id` statt Datensatz-IDs (`/conversations/:id`); keine Konversations- oder Kontakt-ID wird gesendet. |
 | `YUVA_WIDGET` | `on` | `off` liefert `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` und `/yuva-analytics.js` nicht mehr aus; `/client/v1` bleibt. |
 
 ## Anmeldung und Passkeys

@@ -42,6 +42,7 @@ An empty variable means unset and takes the default, except for `YUVA_METRICS_AD
 | `YUVA_COOKIE_SECURE` | `true` when `YUVA_PUBLIC_URL` is `https` | Marks the session cookie `Secure`. |
 | `YUVA_MCP` | `on` | `off` turns off the MCP endpoint `/mcp` (it answers `404`). OAuth stays on. |
 | `YUVA_PANEL` | `on` | `off` stops serving the panel and OAuth consent; API keys keep working. |
+| `YUVA_PANEL_ANALYTICS_KEY` | unset | The public key (`yuva_ak_…`) of a website in [Analytics](analytics.md) on this server whose domain is the panel's. The panel then counts its own screens there, with record IDs replaced by `:id` (`/conversations/:id`), so no conversation or contact ID is sent. |
 | `YUVA_WIDGET` | `on` | `off` stops serving `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` and `/yuva-analytics.js`; `/client/v1` stays. |
 
 ## Sign-in and passkeys

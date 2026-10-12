@@ -1498,6 +1498,10 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   local day in `analytics_salts`, deleted 2 hours after the day ends (`YUVA_ANALYTICS_SALT_GRACE`) and
   never derived from a persistent secret. So visitors are counted per day; a visitor over a range is the
   sum of daily visitors. A visit is a visitor's events without a 30-minute gap within the day.
+  Processes agree on a new visit through `analytics_visit_claims`: the first claim wins for 5 minutes
+  (`ClaimWindow`, at most the visit gap); claims commit without waiting for the disk sync (a crash at
+  worst splits a visit) and are deleted with the expired salts. A visit's description (source, place,
+  device) is the one its first event carries, even when another process wrote the visit first.
 - **Law.** Built to meet the CNIL audience-measurement exemption (purpose, no cross-checking, one
   publisher, shortened IP, no tracker), PECR Schedule A1 (statistics with information and an
   objection), the KVKK cookie guide's Criterion B for first-party analytics, CCPA (no sale or sharing),
@@ -1566,6 +1570,11 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   `YUVA_ANALYTICS=off` removes the feature. The script and endpoint keep their names
   (`/yuva-analytics.js`, `/client/v1/analytics/`); the docs teach serving both from the site's own domain
   for visitors whose blockers stop them.
+- **Counting the panel.** `YUVA_PANEL_ANALYTICS_KEY` (unset by default) names a web property on the same
+  server; the server puts the script, in manual mode, ahead of the panel's own scripts in the panel's
+  page, and the panel sends one page view per screen with every UUID path segment replaced by `:id`, so
+  no record id of any workspace leaves the browser. A load balancer's sticky cookie must skip the
+  script and `/client/v1/analytics/`, or the promise of nothing on the device breaks.
 
 ### Storage
 

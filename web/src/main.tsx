@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router"
 
 import "./index.css"
 import { AppRoutes } from "@/app/routes"
+import { PageViews } from "@/components/common/PageViews"
 import { ServiceWorkerBridge } from "@/components/common/ServiceWorkerBridge"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { activate, i18n, initialLocale } from "@/i18n"
@@ -36,6 +37,7 @@ createRoot(document.getElementById("root")!).render(
         <TooltipProvider delay={300}>
           <BrowserRouter>
             <ServiceWorkerBridge />
+            <PageViews />
             <AppRoutes />
           </BrowserRouter>
         </TooltipProvider>

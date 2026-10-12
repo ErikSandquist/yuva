@@ -1,10 +1,13 @@
 package ui
 
 import (
+	"bytes"
 	"embed"
+	"html"
 	"io/fs"
 	"net/http"
 	"path"
+	"slices"
 	"strings"
 )
 
@@ -21,10 +24,13 @@ const csp = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inl
 	"frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; " +
 	"form-action 'self'; frame-ancestors 'none'"
 
-func Handler() http.Handler {
+func Handler(analyticsKey string) http.Handler {
 	index, err := fs.ReadFile(dist, "index.html")
 	if err != nil {
 		panic("ui: dist/index.html is missing: " + err.Error())
+	}
+	if analyticsKey != "" {
+		index = withAnalytics(index, analyticsKey)
 	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		h := w.Header()
@@ -58,4 +64,17 @@ func Handler() http.Handler {
 			_, _ = w.Write(index)
 		}
 	})
+}
+
+// Ahead of the panel's scripts: deferred scripts run in document order and the panel reports its first screen at start.
+func withAnalytics(index []byte, key string) []byte {
+	at := bytes.Index(index, []byte("<script"))
+	if at < 0 {
+		at = bytes.Index(index, []byte("</head>"))
+	}
+	if at < 0 {
+		return index
+	}
+	tag := `<script defer data-manual data-key="` + html.EscapeString(key) + `" src="/yuva-analytics.js"></script>` + "\n    "
+	return slices.Concat(index[:at], []byte(tag), index[at:])
 }

@@ -252,6 +252,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		OperatorEmails:   cfg.OperatorEmails,
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
+		PanelAnalyticsKey:   cfg.PanelAnalyticsKey,
 		Imports:             api.ImportSettings{MaxRows: cfg.ImportMaxRows},
 		Migrations:          migrationSettings(cfg),
 		Broadcasts: api.BroadcastSettings{

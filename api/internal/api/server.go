@@ -76,6 +76,7 @@ type Server struct {
 	mcp        http.Handler
 	mcpSchemas *mcp.SchemaCache
 	noPanel    bool
+	panelKey   string
 	noWidget   bool
 	operator   []string
 }
@@ -111,6 +112,9 @@ type Deps struct {
 	DisableMCP bool
 	// DisablePanel stops serving the panel (YUVA_PANEL=off); /oauth/authorize then has no consent page.
 	DisablePanel bool
+	// PanelAnalyticsKey is the analytics property the panel counts its own screens in
+	// (YUVA_PANEL_ANALYTICS_KEY); empty is off.
+	PanelAnalyticsKey string
 	// DisableWidget stops serving the widget scripts (YUVA_WIDGET=off).
 	DisableWidget bool
 	// OperatorEmails get a digest of new sign-ups and workspaces (YUVA_OPERATOR_EMAIL); empty is off.
@@ -226,7 +230,7 @@ func New(d Deps) *Server {
 		secrets: d.Secrets, objects: d.Storage, attach: d.Attachments, sanitize: htmlPolicy(), original: originalHTMLPolicy(),
 		hub: d.Hub, jobs: jobs, ingress: d.Ingress, ingestQ: make(chan struct{}, ingestSlots), sender: sender, smtpPriv: d.SMTPAllowPrivate, snsCerts: newCertCache(fetch), fetch: fetch,
 		chat: chat, limits: newRateLimiter(), webhooks: d.Webhooks, hooks: hooks, push: pusher,
-		noPanel: d.DisablePanel, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
+		noPanel: d.DisablePanel, panelKey: d.PanelAnalyticsKey, noWidget: d.DisableWidget, operator: d.OperatorEmails, imagesMax: d.EmailImagesMaxBytes,
 		broadcasts: d.Broadcasts, imports: importSettings(d.Imports), migrations: migrationSettings(d.Migrations),
 	}
 	if !d.DisableMCP {
@@ -361,7 +365,7 @@ func (s *Server) Handler() http.Handler {
 	}
 	var panel http.Handler
 	if !s.noPanel {
-		panel = ui.Handler()
+		panel = ui.Handler(s.panelKey)
 	}
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if panel == nil || isAPIPath(r.URL.Path) {
