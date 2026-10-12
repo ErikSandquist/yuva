@@ -1416,7 +1416,8 @@ losing a message and without changing anything at the source. Decisions:
   mail received before that is history (mail that arrives during the copy is imported quietly); mail
   after it is new mail and takes the live path (events, notifications), without the greeting. Every
   e-mail channel has a forwarding address `<token>@YUVA_FORWARDING_DOMAIN` that ingress resolves by
-  token (rotatable); the team forwards the mailbox there (or routes it, or moves the MX). While
+  token (rotatable); the forwarding domain may also carry ordinary channel addresses, so a local part
+  that is no channel's token falls through to the exact, `local+tag` and catch-all lookup. The team forwards the mailbox there (or routes it, or moves the MX). While
   waiting, Google's forwarding confirmation to that address is shown on the migration (and sent as the
   `migration.forwarding_confirmation` signal) instead of opening a conversation. A probe mail with an
   HMAC header (context `migration-probe:`) is recognised at ingress before the own-sender drop and

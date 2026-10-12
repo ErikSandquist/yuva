@@ -136,17 +136,19 @@ func (s *Server) serveIngressEmail(w http.ResponseWriter, r *http.Request) {
 // findEmailChannel returns the channel for the envelope recipient and the recipient address itself,
 // normalized: on the forwarding domain the channel whose token is the local part, else the exact
 // address, then local@ for local+tag@, then the domain's catch-all channel. forwarded reports a
-// recipient on the forwarding domain.
+// recipient that matched a forwarding token.
 func (s *Server) findEmailChannel(ctx context.Context, to string) (ch store.FindEmailChannelByAddressRow, addr string, forwarded bool, err error) {
 	addr = strings.ToLower(strings.Trim(strings.TrimSpace(to), "<>"))
 	local, domain, ok := strings.Cut(addr, "@")
 	if ok && s.ingress.ForwardingDomain != "" && domain == s.ingress.ForwardingDomain {
 		token, _, _ := strings.Cut(local, "+")
 		row, err := s.st.FindEmailChannelByForwardToken(ctx, token)
-		if store.IsNotFound(err) {
-			return ch, addr, true, errIngestUnknown
+		if err == nil {
+			return store.FindEmailChannelByAddressRow(row), addr, true, nil
 		}
-		return store.FindEmailChannelByAddressRow(row), addr, true, err
+		if !store.IsNotFound(err) {
+			return ch, addr, false, err
+		}
 	}
 	ch, err = s.st.FindEmailChannelByAddress(ctx, addr)
 	if store.IsNotFound(err) {

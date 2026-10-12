@@ -73,6 +73,54 @@ func TestForwardingAddress(t *testing.T) {
 	pt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/channels/"+pc.str("id")+"/forwarding-address/rotate", nil)
 }
 
+func TestForwardingDomainCarriesAddresses(t *testing.T) {
+	fwd := unique("fwd") + ".example"
+	h := newHarnessWith(t, func(d *api.Deps) { d.Ingress.ForwardingDomain = fwd })
+	tm := newTeam(t, h)
+	create := func(address string) response {
+		return tm.owner.expect(http.StatusCreated, "POST", "/v1/inboxes/"+tm.inbox+"/channels", map[string]any{
+			"kind": "email", "name": address, "email": map[string]any{"address": address},
+		})
+	}
+	channelOf := func(to string) string {
+		t.Helper()
+		raw := mailText(unique("m")+"@example.org", "Lea Berg <lea@example.org>", to, "Hello", time.Now(), "", "Hello.")
+		r := h.ingest(to, []byte(raw), nil)
+		if r.status != http.StatusAccepted || r.str("status") != "stored" {
+			t.Fatalf("mail to %s: %d %v", to, r.status, r.body)
+		}
+		return tm.owner.expect(http.StatusOK, "GET", "/v1/conversations/"+r.str("conversation_id"), nil).str("channel_id")
+	}
+	unknown := func(to string) {
+		t.Helper()
+		raw := mailText(unique("m")+"@example.org", "Lea Berg <lea@example.org>", to, "Hello", time.Now(), "", "Hello.")
+		if r := h.ingest(to, []byte(raw), nil); r.status != http.StatusNotFound {
+			t.Fatalf("mail to %s: %d %v", to, r.status, r.body)
+		}
+	}
+
+	external := create(unique("help") + "@example.com")
+	if got := channelOf(external.str("forwarding_address")); got != external.str("id") {
+		t.Fatal("a forwarding token did not reach its channel")
+	}
+	unknown("zzzzzzzzzzzzzzzz@" + fwd)
+	real := create("hello@" + fwd)
+	if got := channelOf("hello@" + fwd); got != real.str("id") {
+		t.Fatal("a channel address on the forwarding domain did not reach its channel")
+	}
+	if got := channelOf("hello+tag@" + fwd); got != real.str("id") {
+		t.Fatal("a tagged channel address on the forwarding domain did not reach its channel")
+	}
+	unknown("zzzzzzzzzzzzzzzz@" + fwd)
+	catchAll := create("*@" + fwd)
+	if got := channelOf("zzzzzzzzzzzzzzzz@" + fwd); got != catchAll.str("id") {
+		t.Fatal("an unknown local part on the forwarding domain did not reach the catch-all channel")
+	}
+	if got := channelOf(external.str("forwarding_address")); got != external.str("id") {
+		t.Fatal("a forwarding token lost to the catch-all channel")
+	}
+}
+
 func TestMCPMigrationTools(t *testing.T) {
 	h := newHarness(t)
 	tm := newTeam(t, h)
