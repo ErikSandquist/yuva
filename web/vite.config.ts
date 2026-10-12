@@ -19,6 +19,7 @@ const proxy = Object.fromEntries(
     "/email-templates/",
     "/yuva.js",
     "/yuva-chat.js",
+    "/migrations/sign-in/callback",
   ].map((path) => [path, { target: server, ws: true }])
 )
 
