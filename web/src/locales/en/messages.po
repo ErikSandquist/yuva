@@ -1196,6 +1196,10 @@ msgstr "anonymous users allowed"
 msgid "anonymous visitors allowed"
 msgstr "anonymous visitors allowed"
 
+#: src/features/settings/channels/email/ForwardingAddressField.tsx
+msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
+msgstr "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
+
 #: src/features/migrations/MapStep.tsx
 msgid "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
 msgstr "Another channel already receives mail at {address}, in this workspace or another. Use that channel's inbox, or remove the address there first."
@@ -3445,6 +3449,7 @@ msgid "Forwarding"
 msgstr "Forwarding"
 
 #: src/features/migrations/SwitchStep.tsx
+#: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Forwarding address"
 msgstr "Forwarding address"
 
@@ -3543,6 +3548,10 @@ msgstr "Get the snippet"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Get the snippets"
 msgstr "Get the snippets"
+
+#: src/features/settings/channels/email/ForwardingAddressField.tsx
+msgid "Give the channel a new forwarding address?"
+msgstr "Give the channel a new forwarding address?"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
@@ -4466,6 +4475,10 @@ msgstr "Mail still reaches {provider} but is not sent to Yuva yet."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Mail them a confirmation"
+
+#: src/features/settings/channels/email/ForwardingAddressField.tsx
+msgid "Mail to {value} is refused from then on. Change the forwarding at the provider to the new address right away, or forwarded mail no longer reaches Yuva."
+msgstr "Mail to {value} is refused from then on. Change the forwarding at the provider to the new address right away, or forwarded mail no longer reaches Yuva."
 
 #: src/components/common/text.ts
 msgid "Mail to this address bounced or was reported as spam, so it cannot be added."
@@ -6965,6 +6978,7 @@ msgstr "Role addresses such as postmaster@ or noreply@"
 msgid "Role of {name}"
 msgstr "Role of {name}"
 
+#: src/features/settings/channels/email/ForwardingAddressField.tsx
 #: src/features/settings/channels/PublicKeyField.tsx
 #: src/features/settings/inboxes/InboxSecurity.tsx
 #: src/features/settings/webhooks/WebhookPage.tsx
