@@ -67,6 +67,28 @@ Kullanıcı bildirime dokunduğunda `Yuva.handleNotification(...)` konuşma id's
 let id = Yuva.handleNotification(response.notification.request.content.userInfo)
 ```
 
+## 5. Bülten abonelikleri
+
+Oturum açmış kullanıcılar uygulamanızda [e-posta listesi](lists.md) aboneliklerini yönetebilir.
+Oturum kimliklendirilmiş olmalı (kimlik belirteci); anonim oturum `identity_required` alır. Diğer
+hatalar: `no_email` (kullanıcının e-posta adresi yok) ve `not_found` (bilinmeyen liste).
+
+`subscribe`, `subscribed` döndürür; onay e-postası gönderildiyse (çift onay) `pending` döndürür.
+`consentText`, kişinin kabul ettiği metindir, örneğin anahtarın yanındaki yazı; onay kaydıyla birlikte
+saklanır.
+
+```swift
+let lists = try await yuva.subscriptions()
+let state = try await yuva.subscribe(listId: list.id, consentText: "Ürün haberlerini gönderin")
+try await yuva.unsubscribe(listId: list.id)
+```
+
+```kotlin
+val lists = yuva.subscriptions()
+val state = yuva.subscribe(list.id, "Ürün haberlerini gönderin")
+yuva.unsubscribe(list.id)
+```
+
 ## Başvuru
 
 ### Görünümler
@@ -92,6 +114,7 @@ Gelen kutusu değerlendirme istiyorsa kapalı konuşmalarda bir değerlendirme k
 | `sendFeedback(YuvaFeedback(...))` | Geri bildirim. |
 | `rate(conversationId, rating, comment)` | `canRate` true olduğunda. |
 | `events()` | Canlı güncellemeler (`AsyncStream` / `SharedFlow`). |
+| `subscriptions()`, `subscribe(listId, consentText)`, `unsubscribe(listId)` | Oturum açmış kullanıcının bülten abonelikleri. |
 
 SDK olmadan kendi backend'inizden geri bildirim: `feedback:write` yetkisi olan bir API anahtarıyla
 `POST /v1/feedback`.

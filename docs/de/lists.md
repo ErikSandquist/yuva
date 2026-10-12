@@ -68,6 +68,8 @@ Sendet Ihre Website eine Content Security Policy, erlauben Sie Ihren Yuva-Server
 [Identitäts-Token](identity.md): Es zeigt dann je Liste einen Schalter statt des E-Mail-Felds und
 meldet sofort an, wenn die Adresse des Nutzers verifiziert ist.
 
+Für Abo-Schalter in der App siehe [Mobile SDKs](mobile.md#5-newsletter-abonnements).
+
 ## 4. Was Abonnenten sehen
 
 1. Sie füllen das Formular aus. Die Antwort ist immer dieselbe, ob die Adresse neu, schon angemeldet,

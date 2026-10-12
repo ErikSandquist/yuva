@@ -65,6 +65,8 @@ If your site sends a Content Security Policy, allow your Yuva server in `script-
 `setIdentityToken`: it then shows a switch per list instead of the e-mail field, and subscribes at
 once when the user's address is verified.
 
+For in-app subscribe toggles, see [Mobile SDKs](mobile.md#5-newsletter-subscriptions).
+
 ## 4. What subscribers see
 
 1. They fill in the form. The answer is always the same, whether the address is new, already

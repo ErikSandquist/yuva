@@ -68,6 +68,28 @@ Sie sie als `openConversationId` an `YuvaConversationsView`.
 let id = Yuva.handleNotification(response.notification.request.content.userInfo)
 ```
 
+## 5. Newsletter-Abonnements
+
+Angemeldete Nutzer können in Ihrer App Abonnements von [Mailinglisten](lists.md) verwalten. Die
+Sitzung muss identifiziert sein (Identitäts-Token); anonyme Sitzungen erhalten `identity_required`.
+Weitere Fehler: `no_email` (der Nutzer hat keine E-Mail-Adresse) und `not_found` (unbekannte Liste).
+
+`subscribe` gibt `subscribed` zurück, oder `pending`, wenn eine Bestätigungs-E-Mail gesendet wurde
+(Double-Opt-in). `consentText` ist der Text, dem die Person zugestimmt hat, etwa die Beschriftung
+neben Ihrem Schalter; er wird mit dem Einwilligungseintrag gespeichert.
+
+```swift
+let lists = try await yuva.subscriptions()
+let state = try await yuva.subscribe(listId: list.id, consentText: "Produktneuigkeiten senden")
+try await yuva.unsubscribe(listId: list.id)
+```
+
+```kotlin
+val lists = yuva.subscriptions()
+val state = yuva.subscribe(list.id, "Produktneuigkeiten senden")
+yuva.unsubscribe(list.id)
+```
+
 ## Referenz
 
 ### Views
@@ -93,6 +115,7 @@ Geschlossene Unterhaltungen zeigen eine Bewertungskarte, wenn der Posteingang um
 | `sendFeedback(YuvaFeedback(...))` | Feedback. |
 | `rate(conversationId, rating, comment)` | Wenn `canRate` true ist. |
 | `events()` | Live-Updates (`AsyncStream` / `SharedFlow`). |
+| `subscriptions()`, `subscribe(listId, consentText)`, `unsubscribe(listId)` | Newsletter-Abonnements des angemeldeten Nutzers. |
 
 Feedback aus Ihrem eigenen Backend, ohne SDK: `POST /v1/feedback` mit einem API-Schlüssel, der
 `feedback:write` hat.

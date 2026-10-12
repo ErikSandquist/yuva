@@ -66,6 +66,28 @@ When the user taps it, `Yuva.handleNotification(...)` returns the conversation i
 let id = Yuva.handleNotification(response.notification.request.content.userInfo)
 ```
 
+## 5. Newsletter subscriptions
+
+Signed-in users can manage [mailing list](lists.md) subscriptions in your app. The session must be
+identified (an identity token); anonymous sessions get `identity_required`. Other errors:
+`no_email` (the user has no e-mail address) and `not_found` (unknown list).
+
+`subscribe` returns `subscribed`, or `pending` when a confirmation e-mail was sent (double opt-in).
+`consentText` is the label the person agreed to, for example the text next to your switch; it is
+stored with the consent record.
+
+```swift
+let lists = try await yuva.subscriptions()
+let state = try await yuva.subscribe(listId: list.id, consentText: "Send me product news")
+try await yuva.unsubscribe(listId: list.id)
+```
+
+```kotlin
+val lists = yuva.subscriptions()
+val state = yuva.subscribe(list.id, "Send me product news")
+yuva.unsubscribe(list.id)
+```
+
 ## Reference
 
 ### Views
@@ -91,6 +113,7 @@ Closed conversations show a rating card when the inbox asks for ratings.
 | `sendFeedback(YuvaFeedback(...))` | Feedback. |
 | `rate(conversationId, rating, comment)` | When `canRate` is true. |
 | `events()` | Live updates (`AsyncStream` / `SharedFlow`). |
+| `subscriptions()`, `subscribe(listId, consentText)`, `unsubscribe(listId)` | Newsletter subscriptions of the signed-in user. |
 
 Feedback from your own backend, without the SDK: `POST /v1/feedback` with an API key holding
 `feedback:write`.

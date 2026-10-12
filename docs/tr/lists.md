@@ -66,6 +66,8 @@ izin verin. Oturum açmış kullanıcılar için öğeye `setIdentityToken` ile 
 verin: e-posta alanı yerine her liste için bir anahtar gösterir ve kullanıcının adresi doğrulanmışsa
 hemen abone eder.
 
+Uygulama içi abonelik anahtarları için [Mobil SDK'lar](mobile.md#5-bülten-abonelikleri) sayfasına bakın.
+
 ## 4. Aboneler ne görür
 
 1. Formu doldururlar. Adres yeni, abone, abonelikten çıkmış ya da bilinmiyor olsun yanıt hep aynıdır;
