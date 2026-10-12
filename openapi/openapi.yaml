@@ -247,6 +247,11 @@ tags:
       `analytics:manage`, agents' tokens are never offered it, and no `analytics:*` scope is added
       to keys made before they existed. `YUVA_ANALYTICS=off` removes the feature: these endpoints
       and the collection endpoint answer `404`.
+
+      Numbers come from one query operation (`queryAnalytics`), the last 30 minutes from
+      `getAnalyticsRealtime`, and how collection is doing (accepted and dropped events, the GeoIP
+      database) from `getAnalyticsHealth`. Locations come from the shortened address; children's
+      properties keep only the country.
   - name: realtime
     description: Live workspace events over WebSocket, and the same events as a feed to poll.
   - name: client
@@ -7796,6 +7801,149 @@ paths:
       responses:
         "202":
           description: The data is being deleted.
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/query:
+    post:
+      operationId: queryAnalytics
+      summary: Query a property's numbers
+      description: |
+        One query serves the panel, the API and the MCP tools: metrics over a range of the
+        property's days, broken down by up to two dimensions (one of them may be a time grain) and
+        narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+        (one column per dimension and metric) instead.
+
+        A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+        day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+        until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+        Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+        with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+        combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+        starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+        `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+        added up as `(other)`.
+
+        Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+        two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+        answers that include today for 30 seconds.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - name: format
+          in: query
+          description: "`json` (the default) or `csv`."
+          schema:
+            type: string
+            enum: [json, csv]
+            x-enum-varnames: [AnalyticsFormatJSON, AnalyticsFormatCSV]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyticsQuery"
+      responses:
+        "200":
+          description: The numbers.
+          headers:
+            Content-Disposition:
+              description: With `format=csv`, an attachment file name.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsResult"
+            text/csv:
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "422":
+          description: |
+            `needs_raw_window`: the query needs raw rows for days that are no longer kept;
+            `raw_window_from` is the first day it can serve. `range_too_large`: the range is longer
+            than 400 days.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRangeProblem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/realtime:
+    get:
+      operationId: getAnalyticsRealtime
+      summary: The last 30 minutes
+      description: |
+        Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+        countries. Cached for ten seconds.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+      responses:
+        "200":
+          description: The last 30 minutes.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsRealtime"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/analytics/properties/{propertyId}/health:
+    get:
+      operationId: getAnalyticsHealth
+      summary: How a property's collection is doing
+      description: |
+        Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+        payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+        the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+        a dropped request is stored but its count. When `geoip.attribution` is present, show it
+        with a link to `geoip.attribution_url` wherever locations are shown.
+
+        Scope: `analytics:read`.
+      tags: [analytics]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/AnalyticsPropertyId"
+        - name: days
+          in: query
+          description: How many days back, today included.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 90
+            default: 30
+      responses:
+        "200":
+          description: The property's collection health.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsHealth"
         "400":
           $ref: "#/components/responses/Problem"
         "401":
@@ -19085,6 +19233,432 @@ components:
           format: date
         all:
           type: boolean
+    AnalyticsMetric:
+      type: string
+      description: |
+        `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+        `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+        `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+        focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+        page view that reported it), `events` (custom events).
+      enum: [visitors, visits, pageviews, views_per_visit, bounce_rate, visit_duration, time_on_page, scroll_depth, events]
+      x-enum-varnames: [AnalyticsMetricVisitors, AnalyticsMetricVisits, AnalyticsMetricPageviews, AnalyticsMetricViewsPerVisit,
+        AnalyticsMetricBounceRate, AnalyticsMetricVisitDuration, AnalyticsMetricTimeOnPage, AnalyticsMetricScrollDepth, AnalyticsMetricEvents]
+    AnalyticsFilterDimension:
+      type: string
+      description: |
+        A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+        `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+        `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+        `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+        (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+        `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+        code. Unknown values are empty strings.
+      enum: [page, entry_page, exit_page, hostname, channel, source, referrer, utm_source, utm_medium, utm_campaign, utm_term,
+        utm_content, country, region, city, device, browser, browser_version, os, os_version, screen_size, language, platform, app_version]
+      x-enum-varnames: [AnalyticsDimPage, AnalyticsDimEntryPage, AnalyticsDimExitPage, AnalyticsDimHostname, AnalyticsDimChannel,
+        AnalyticsDimSource, AnalyticsDimReferrer, AnalyticsDimUtmSource, AnalyticsDimUtmMedium, AnalyticsDimUtmCampaign, AnalyticsDimUtmTerm,
+        AnalyticsDimUtmContent, AnalyticsDimCountry, AnalyticsDimRegion, AnalyticsDimCity, AnalyticsDimDevice, AnalyticsDimBrowser,
+        AnalyticsDimBrowserVersion, AnalyticsDimOs, AnalyticsDimOsVersion, AnalyticsDimScreenSize, AnalyticsDimLanguage, AnalyticsDimPlatform,
+        AnalyticsDimAppVersion]
+    AnalyticsDimension:
+      type: string
+      description: |
+        A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
+        of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
+        `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
+        values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
+        range is present.
+      enum: [time:hour, time:day, time:week, time:month, page, entry_page, exit_page, hostname, channel, source, referrer, utm_source,
+        utm_medium, utm_campaign, utm_term, utm_content, country, region, city, device, browser, browser_version, os, os_version,
+        screen_size, language, platform, app_version]
+      x-enum-varnames: [AnalyticsByHour, AnalyticsByDay, AnalyticsByWeek, AnalyticsByMonth, AnalyticsByPage, AnalyticsByEntryPage,
+        AnalyticsByExitPage, AnalyticsByHostname, AnalyticsByChannel, AnalyticsBySource, AnalyticsByReferrer, AnalyticsByUtmSource,
+        AnalyticsByUtmMedium, AnalyticsByUtmCampaign, AnalyticsByUtmTerm, AnalyticsByUtmContent, AnalyticsByCountry, AnalyticsByRegion,
+        AnalyticsByCity, AnalyticsByDevice, AnalyticsByBrowser, AnalyticsByBrowserVersion, AnalyticsByOs, AnalyticsByOsVersion,
+        AnalyticsByScreenSize, AnalyticsByLanguage, AnalyticsByPlatform, AnalyticsByAppVersion]
+    AnalyticsFilter:
+      type: object
+      description: |
+        `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
+        does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
+        them, elsewhere `*` is any text. Several values are alternatives. A `page` filter keeps the
+        visits that viewed a matching page and, in a page breakdown, only matching pages.
+      required: [dimension, op, values]
+      properties:
+        dimension:
+          $ref: "#/components/schemas/AnalyticsFilterDimension"
+        op:
+          type: string
+          enum: [is, is_not, contains, not_contains, matches]
+          x-enum-varnames: [AnalyticsFilterIs, AnalyticsFilterIsNot, AnalyticsFilterContains, AnalyticsFilterNotContains, AnalyticsFilterMatches]
+        values:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 2000
+    AnalyticsRange:
+      type: object
+      description: |
+        Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+        `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+        `year` are the current calendar month and year to date; `last_month` the one before), or
+        `from` and `to` (inclusive, at most 400 days apart).
+      properties:
+        period:
+          type: string
+          enum: [today, yesterday, 7d, 28d, 30d, 90d, 6mo, 12mo, month, last_month, year]
+          x-enum-varnames: [AnalyticsToday, AnalyticsYesterday, AnalyticsLast7Days, AnalyticsLast28Days, AnalyticsLast30Days,
+            AnalyticsLast90Days, AnalyticsLast6Months, AnalyticsLast12Months, AnalyticsThisMonth, AnalyticsLastMonth, AnalyticsThisYear]
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+    AnalyticsCompare:
+      type: object
+      description: |
+        `previous` is the range of the same length just before, `year` the same days a year
+        earlier, `range` the days `from` to `to`.
+      required: [with]
+      properties:
+        with:
+          type: string
+          enum: [previous, year, range]
+          x-enum-varnames: [AnalyticsComparePrevious, AnalyticsCompareYear, AnalyticsCompareRange]
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+    AnalyticsOrder:
+      type: object
+      required: [metric]
+      properties:
+        metric:
+          $ref: "#/components/schemas/AnalyticsMetric"
+        dir:
+          type: string
+          enum: [asc, desc]
+          default: desc
+          x-enum-varnames: [AnalyticsAsc, AnalyticsDesc]
+    AnalyticsQuery:
+      type: object
+      required: [metrics, range]
+      properties:
+        metrics:
+          type: array
+          minItems: 1
+          maxItems: 9
+          items:
+            $ref: "#/components/schemas/AnalyticsMetric"
+        dimensions:
+          type: array
+          maxItems: 2
+          items:
+            $ref: "#/components/schemas/AnalyticsDimension"
+        filters:
+          type: array
+          maxItems: 10
+          items:
+            $ref: "#/components/schemas/AnalyticsFilter"
+        range:
+          $ref: "#/components/schemas/AnalyticsRange"
+        compare:
+          $ref: "#/components/schemas/AnalyticsCompare"
+        order_by:
+          type: array
+          description: Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
+          maxItems: 3
+          items:
+            $ref: "#/components/schemas/AnalyticsOrder"
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+          description: Rows per page; time series are never cut.
+        cursor:
+          type: string
+          description: "`next_cursor` of the previous page."
+    AnalyticsMetrics:
+      type: object
+      description: The metrics the query asked for.
+      properties:
+        visitors:
+          type: number
+          format: double
+        visits:
+          type: number
+          format: double
+        pageviews:
+          type: number
+          format: double
+        views_per_visit:
+          type: number
+          format: double
+        bounce_rate:
+          type: number
+          format: double
+        visit_duration:
+          type: number
+          format: double
+        time_on_page:
+          type: number
+          format: double
+        scroll_depth:
+          type: number
+          format: double
+        events:
+          type: number
+          format: double
+    AnalyticsRow:
+      type: object
+      required: [dimensions, metrics]
+      properties:
+        dimensions:
+          type: array
+          description: One value per dimension of the query, in its order.
+          items:
+            type: string
+        country:
+          type: string
+          description: With a `region` or `city` dimension, the place's country.
+        region:
+          type: string
+          description: With a `city` dimension, the city's region.
+        metrics:
+          $ref: "#/components/schemas/AnalyticsMetrics"
+    AnalyticsComparison:
+      type: object
+      required: [from, to, totals, rows]
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        totals:
+          $ref: "#/components/schemas/AnalyticsMetrics"
+        rows:
+          type: array
+          description: The comparison range's rows with the same dimension values as `rows` (time buckets by position).
+          items:
+            $ref: "#/components/schemas/AnalyticsRow"
+    AnalyticsResultMeta:
+      type: object
+      required: [from, to, timezone, served_from, raw_window_from]
+      properties:
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        timezone:
+          type: string
+        served_from:
+          type: string
+          enum: [rollups, raw, mixed]
+          x-enum-varnames: [AnalyticsServedRollups, AnalyticsServedRaw, AnalyticsServedMixed]
+        raw_window_from:
+          type: string
+          format: date
+          description: The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
+    AnalyticsResult:
+      type: object
+      required: [rows, totals, meta]
+      properties:
+        rows:
+          type: array
+          description: Empty when the query has no dimensions.
+          items:
+            $ref: "#/components/schemas/AnalyticsRow"
+        totals:
+          $ref: "#/components/schemas/AnalyticsMetrics"
+        comparison:
+          $ref: "#/components/schemas/AnalyticsComparison"
+        meta:
+          $ref: "#/components/schemas/AnalyticsResultMeta"
+        next_cursor:
+          type: string
+          description: Present when there are more rows.
+    AnalyticsRangeProblem:
+      allOf:
+        - $ref: "#/components/schemas/Problem"
+        - type: object
+          properties:
+            raw_window_from:
+              type: string
+              format: date
+    AnalyticsTopValue:
+      type: object
+      required: [value, visitors]
+      properties:
+        value:
+          type: string
+        visitors:
+          type: integer
+          format: int64
+    AnalyticsMinute:
+      type: object
+      required: [at, visitors, pageviews]
+      properties:
+        at:
+          type: string
+          format: date-time
+        visitors:
+          type: integer
+          format: int64
+        pageviews:
+          type: integer
+          format: int64
+    AnalyticsRealtime:
+      type: object
+      required: [visitors, pageviews, minutes, pages, sources, countries]
+      properties:
+        visitors:
+          type: integer
+          format: int64
+          description: Distinct visitors with an event in the last 30 minutes.
+        pageviews:
+          type: integer
+          format: int64
+        minutes:
+          type: array
+          description: The last 30 minutes, oldest first, every minute present.
+          items:
+            $ref: "#/components/schemas/AnalyticsMinute"
+        pages:
+          type: array
+          description: The ten paths with the most visitors.
+          items:
+            $ref: "#/components/schemas/AnalyticsTopValue"
+        sources:
+          type: array
+          description: The ten sources with the most visitors (empty is direct).
+          items:
+            $ref: "#/components/schemas/AnalyticsTopValue"
+        countries:
+          type: array
+          items:
+            $ref: "#/components/schemas/AnalyticsTopValue"
+    AnalyticsDropCounts:
+      type: object
+      required: [bot, rate, origin, invalid, late, over_limit, buffer, excluded]
+      properties:
+        bot:
+          type: integer
+          format: int64
+          description: Crawlers, headless browsers, scripts without browser headers, referrer spam and visitors over the day's volume limits.
+        rate:
+          type: integer
+          format: int64
+          description: Over the per-address or per-property rate limit.
+        origin:
+          type: integer
+          format: int64
+          description: From an origin or page host that is not one of the property's domains.
+        invalid:
+          type: integer
+          format: int64
+        late:
+          type: integer
+          format: int64
+        over_limit:
+          type: integer
+          format: int64
+          description: Over the workspace's monthly cap.
+        buffer:
+          type: integer
+          format: int64
+          description: The server's buffer was full.
+        excluded:
+          type: integer
+          format: int64
+          description: From an excluded address or path.
+    AnalyticsHealthDay:
+      type: object
+      required: [day, accepted, scrubbed, dropped]
+      properties:
+        day:
+          type: string
+          format: date
+        accepted:
+          type: integer
+          format: int64
+        scrubbed:
+          type: integer
+          format: int64
+          description: Accepted events that had an e-mail-shaped part removed.
+        dropped:
+          $ref: "#/components/schemas/AnalyticsDropCounts"
+    AnalyticsIngestCounts:
+      type: object
+      description: The asked days added up.
+      required: [accepted, scrubbed, dropped]
+      properties:
+        accepted:
+          type: integer
+          format: int64
+        scrubbed:
+          type: integer
+          format: int64
+        dropped:
+          $ref: "#/components/schemas/AnalyticsDropCounts"
+    AnalyticsGeoIP:
+      type: object
+      required: [source]
+      properties:
+        source:
+          type: string
+          description: "`dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any)."
+          enum: [dbip, file, "off"]
+          x-enum-varnames: [AnalyticsGeoIPDBIP, AnalyticsGeoIPFile, AnalyticsGeoIPOff]
+        built_at:
+          type: string
+          format: date-time
+          description: When the database in use was built; absent when none is loaded on the process that answered.
+        attribution:
+          type: string
+          description: The credit the database's license asks for, such as "IP Geolocation by DB-IP".
+        attribution_url:
+          type: string
+          format: uri
+        error:
+          type: string
+          description: Why no database is loaded, or why the last update failed.
+    AnalyticsHealth:
+      type: object
+      required: [raw_window_from, pending_rollup_days, geoip, days, totals]
+      properties:
+        first_event_at:
+          type: string
+          format: date-time
+        last_event_at:
+          type: string
+          format: date-time
+        raw_window_from:
+          type: string
+          format: date
+        pending_rollup_days:
+          type: integer
+          format: int64
+          description: Days with raw rows that are not rolled up yet or changed since.
+        geoip:
+          $ref: "#/components/schemas/AnalyticsGeoIP"
+        days:
+          type: array
+          description: The asked days, newest first, every day present.
+          items:
+            $ref: "#/components/schemas/AnalyticsHealthDay"
+        totals:
+          $ref: "#/components/schemas/AnalyticsIngestCounts"
     AnalyticsConsent:
       type: object
       properties:

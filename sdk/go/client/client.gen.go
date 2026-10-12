@@ -57,6 +57,27 @@ func (e AnalyticsCollection) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsCompareWith.
+const (
+	AnalyticsComparePrevious AnalyticsCompareWith = "previous"
+	AnalyticsCompareRange    AnalyticsCompareWith = "range"
+	AnalyticsCompareYear     AnalyticsCompareWith = "year"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsCompareWith enum.
+func (e AnalyticsCompareWith) Valid() bool {
+	switch e {
+	case AnalyticsComparePrevious:
+		return true
+	case AnalyticsCompareRange:
+		return true
+	case AnalyticsCompareYear:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsConsentA.
 const (
 	N0 AnalyticsConsentA = 0
@@ -93,6 +114,102 @@ func (e AnalyticsConsentFeature) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsDimension.
+const (
+	AnalyticsByAppVersion     AnalyticsDimension = "app_version"
+	AnalyticsByBrowser        AnalyticsDimension = "browser"
+	AnalyticsByBrowserVersion AnalyticsDimension = "browser_version"
+	AnalyticsByChannel        AnalyticsDimension = "channel"
+	AnalyticsByCity           AnalyticsDimension = "city"
+	AnalyticsByCountry        AnalyticsDimension = "country"
+	AnalyticsByDay            AnalyticsDimension = "time:day"
+	AnalyticsByDevice         AnalyticsDimension = "device"
+	AnalyticsByEntryPage      AnalyticsDimension = "entry_page"
+	AnalyticsByExitPage       AnalyticsDimension = "exit_page"
+	AnalyticsByHostname       AnalyticsDimension = "hostname"
+	AnalyticsByHour           AnalyticsDimension = "time:hour"
+	AnalyticsByLanguage       AnalyticsDimension = "language"
+	AnalyticsByMonth          AnalyticsDimension = "time:month"
+	AnalyticsByOs             AnalyticsDimension = "os"
+	AnalyticsByOsVersion      AnalyticsDimension = "os_version"
+	AnalyticsByPage           AnalyticsDimension = "page"
+	AnalyticsByPlatform       AnalyticsDimension = "platform"
+	AnalyticsByReferrer       AnalyticsDimension = "referrer"
+	AnalyticsByRegion         AnalyticsDimension = "region"
+	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
+	AnalyticsBySource         AnalyticsDimension = "source"
+	AnalyticsByUtmCampaign    AnalyticsDimension = "utm_campaign"
+	AnalyticsByUtmContent     AnalyticsDimension = "utm_content"
+	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
+	AnalyticsByUtmSource      AnalyticsDimension = "utm_source"
+	AnalyticsByUtmTerm        AnalyticsDimension = "utm_term"
+	AnalyticsByWeek           AnalyticsDimension = "time:week"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsDimension enum.
+func (e AnalyticsDimension) Valid() bool {
+	switch e {
+	case AnalyticsByAppVersion:
+		return true
+	case AnalyticsByBrowser:
+		return true
+	case AnalyticsByBrowserVersion:
+		return true
+	case AnalyticsByChannel:
+		return true
+	case AnalyticsByCity:
+		return true
+	case AnalyticsByCountry:
+		return true
+	case AnalyticsByDay:
+		return true
+	case AnalyticsByDevice:
+		return true
+	case AnalyticsByEntryPage:
+		return true
+	case AnalyticsByExitPage:
+		return true
+	case AnalyticsByHostname:
+		return true
+	case AnalyticsByHour:
+		return true
+	case AnalyticsByLanguage:
+		return true
+	case AnalyticsByMonth:
+		return true
+	case AnalyticsByOs:
+		return true
+	case AnalyticsByOsVersion:
+		return true
+	case AnalyticsByPage:
+		return true
+	case AnalyticsByPlatform:
+		return true
+	case AnalyticsByReferrer:
+		return true
+	case AnalyticsByRegion:
+		return true
+	case AnalyticsByScreenSize:
+		return true
+	case AnalyticsBySource:
+		return true
+	case AnalyticsByUtmCampaign:
+		return true
+	case AnalyticsByUtmContent:
+		return true
+	case AnalyticsByUtmMedium:
+		return true
+	case AnalyticsByUtmSource:
+		return true
+	case AnalyticsByUtmTerm:
+		return true
+	case AnalyticsByWeek:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsEventN.
 const (
 	Engagement AnalyticsEventN = "engagement"
@@ -105,6 +222,195 @@ func (e AnalyticsEventN) Valid() bool {
 	case Engagement:
 		return true
 	case Pageview:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsFilterOp.
+const (
+	AnalyticsFilterContains    AnalyticsFilterOp = "contains"
+	AnalyticsFilterIs          AnalyticsFilterOp = "is"
+	AnalyticsFilterIsNot       AnalyticsFilterOp = "is_not"
+	AnalyticsFilterMatches     AnalyticsFilterOp = "matches"
+	AnalyticsFilterNotContains AnalyticsFilterOp = "not_contains"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsFilterOp enum.
+func (e AnalyticsFilterOp) Valid() bool {
+	switch e {
+	case AnalyticsFilterContains:
+		return true
+	case AnalyticsFilterIs:
+		return true
+	case AnalyticsFilterIsNot:
+		return true
+	case AnalyticsFilterMatches:
+		return true
+	case AnalyticsFilterNotContains:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsFilterDimension.
+const (
+	AnalyticsDimAppVersion     AnalyticsFilterDimension = "app_version"
+	AnalyticsDimBrowser        AnalyticsFilterDimension = "browser"
+	AnalyticsDimBrowserVersion AnalyticsFilterDimension = "browser_version"
+	AnalyticsDimChannel        AnalyticsFilterDimension = "channel"
+	AnalyticsDimCity           AnalyticsFilterDimension = "city"
+	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
+	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
+	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
+	AnalyticsDimExitPage       AnalyticsFilterDimension = "exit_page"
+	AnalyticsDimHostname       AnalyticsFilterDimension = "hostname"
+	AnalyticsDimLanguage       AnalyticsFilterDimension = "language"
+	AnalyticsDimOs             AnalyticsFilterDimension = "os"
+	AnalyticsDimOsVersion      AnalyticsFilterDimension = "os_version"
+	AnalyticsDimPage           AnalyticsFilterDimension = "page"
+	AnalyticsDimPlatform       AnalyticsFilterDimension = "platform"
+	AnalyticsDimReferrer       AnalyticsFilterDimension = "referrer"
+	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
+	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
+	AnalyticsDimSource         AnalyticsFilterDimension = "source"
+	AnalyticsDimUtmCampaign    AnalyticsFilterDimension = "utm_campaign"
+	AnalyticsDimUtmContent     AnalyticsFilterDimension = "utm_content"
+	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
+	AnalyticsDimUtmSource      AnalyticsFilterDimension = "utm_source"
+	AnalyticsDimUtmTerm        AnalyticsFilterDimension = "utm_term"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsFilterDimension enum.
+func (e AnalyticsFilterDimension) Valid() bool {
+	switch e {
+	case AnalyticsDimAppVersion:
+		return true
+	case AnalyticsDimBrowser:
+		return true
+	case AnalyticsDimBrowserVersion:
+		return true
+	case AnalyticsDimChannel:
+		return true
+	case AnalyticsDimCity:
+		return true
+	case AnalyticsDimCountry:
+		return true
+	case AnalyticsDimDevice:
+		return true
+	case AnalyticsDimEntryPage:
+		return true
+	case AnalyticsDimExitPage:
+		return true
+	case AnalyticsDimHostname:
+		return true
+	case AnalyticsDimLanguage:
+		return true
+	case AnalyticsDimOs:
+		return true
+	case AnalyticsDimOsVersion:
+		return true
+	case AnalyticsDimPage:
+		return true
+	case AnalyticsDimPlatform:
+		return true
+	case AnalyticsDimReferrer:
+		return true
+	case AnalyticsDimRegion:
+		return true
+	case AnalyticsDimScreenSize:
+		return true
+	case AnalyticsDimSource:
+		return true
+	case AnalyticsDimUtmCampaign:
+		return true
+	case AnalyticsDimUtmContent:
+		return true
+	case AnalyticsDimUtmMedium:
+		return true
+	case AnalyticsDimUtmSource:
+		return true
+	case AnalyticsDimUtmTerm:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsGeoIPSource.
+const (
+	AnalyticsGeoIPDBIP AnalyticsGeoIPSource = "dbip"
+	AnalyticsGeoIPFile AnalyticsGeoIPSource = "file"
+	AnalyticsGeoIPOff  AnalyticsGeoIPSource = "off"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsGeoIPSource enum.
+func (e AnalyticsGeoIPSource) Valid() bool {
+	switch e {
+	case AnalyticsGeoIPDBIP:
+		return true
+	case AnalyticsGeoIPFile:
+		return true
+	case AnalyticsGeoIPOff:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsMetric.
+const (
+	AnalyticsMetricBounceRate    AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricEvents        AnalyticsMetric = "events"
+	AnalyticsMetricPageviews     AnalyticsMetric = "pageviews"
+	AnalyticsMetricScrollDepth   AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricTimeOnPage    AnalyticsMetric = "time_on_page"
+	AnalyticsMetricViewsPerVisit AnalyticsMetric = "views_per_visit"
+	AnalyticsMetricVisitDuration AnalyticsMetric = "visit_duration"
+	AnalyticsMetricVisitors      AnalyticsMetric = "visitors"
+	AnalyticsMetricVisits        AnalyticsMetric = "visits"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsMetric enum.
+func (e AnalyticsMetric) Valid() bool {
+	switch e {
+	case AnalyticsMetricBounceRate:
+		return true
+	case AnalyticsMetricEvents:
+		return true
+	case AnalyticsMetricPageviews:
+		return true
+	case AnalyticsMetricScrollDepth:
+		return true
+	case AnalyticsMetricTimeOnPage:
+		return true
+	case AnalyticsMetricViewsPerVisit:
+		return true
+	case AnalyticsMetricVisitDuration:
+		return true
+	case AnalyticsMetricVisitors:
+		return true
+	case AnalyticsMetricVisits:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsOrderDir.
+const (
+	AnalyticsAsc  AnalyticsOrderDir = "asc"
+	AnalyticsDesc AnalyticsOrderDir = "desc"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsOrderDir enum.
+func (e AnalyticsOrderDir) Valid() bool {
+	switch e {
+	case AnalyticsAsc:
+		return true
+	case AnalyticsDesc:
 		return true
 	default:
 		return false
@@ -126,6 +432,72 @@ func (e AnalyticsPlatform) Valid() bool {
 	case AnalyticsPlatformIos:
 		return true
 	case AnalyticsPlatformWeb:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsRangePeriod.
+const (
+	AnalyticsLast12Months AnalyticsRangePeriod = "12mo"
+	AnalyticsLast28Days   AnalyticsRangePeriod = "28d"
+	AnalyticsLast30Days   AnalyticsRangePeriod = "30d"
+	AnalyticsLast6Months  AnalyticsRangePeriod = "6mo"
+	AnalyticsLast7Days    AnalyticsRangePeriod = "7d"
+	AnalyticsLast90Days   AnalyticsRangePeriod = "90d"
+	AnalyticsLastMonth    AnalyticsRangePeriod = "last_month"
+	AnalyticsThisMonth    AnalyticsRangePeriod = "month"
+	AnalyticsThisYear     AnalyticsRangePeriod = "year"
+	AnalyticsToday        AnalyticsRangePeriod = "today"
+	AnalyticsYesterday    AnalyticsRangePeriod = "yesterday"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRangePeriod enum.
+func (e AnalyticsRangePeriod) Valid() bool {
+	switch e {
+	case AnalyticsLast12Months:
+		return true
+	case AnalyticsLast28Days:
+		return true
+	case AnalyticsLast30Days:
+		return true
+	case AnalyticsLast6Months:
+		return true
+	case AnalyticsLast7Days:
+		return true
+	case AnalyticsLast90Days:
+		return true
+	case AnalyticsLastMonth:
+		return true
+	case AnalyticsThisMonth:
+		return true
+	case AnalyticsThisYear:
+		return true
+	case AnalyticsToday:
+		return true
+	case AnalyticsYesterday:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsResultMetaServedFrom.
+const (
+	AnalyticsServedMixed   AnalyticsResultMetaServedFrom = "mixed"
+	AnalyticsServedRaw     AnalyticsResultMetaServedFrom = "raw"
+	AnalyticsServedRollups AnalyticsResultMetaServedFrom = "rollups"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsResultMetaServedFrom enum.
+func (e AnalyticsResultMetaServedFrom) Valid() bool {
+	switch e {
+	case AnalyticsServedMixed:
+		return true
+	case AnalyticsServedRaw:
+		return true
+	case AnalyticsServedRollups:
 		return true
 	default:
 		return false
@@ -3702,6 +4074,24 @@ func (e ListClientMessagesParamsOrder) Valid() bool {
 	}
 }
 
+// Defines values for QueryAnalyticsParamsFormat.
+const (
+	AnalyticsFormatCSV  QueryAnalyticsParamsFormat = "csv"
+	AnalyticsFormatJSON QueryAnalyticsParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the QueryAnalyticsParamsFormat enum.
+func (e QueryAnalyticsParamsFormat) Valid() bool {
+	switch e {
+	case AnalyticsFormatCSV:
+		return true
+	case AnalyticsFormatJSON:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -3832,6 +4222,29 @@ type AnalyticsBatch struct {
 // script sends after `yuva.consent({analytics: true})`.
 type AnalyticsCollection string
 
+// AnalyticsCompare `previous` is the range of the same length just before, `year` the same days a year
+// earlier, `range` the days `from` to `to`.
+type AnalyticsCompare struct {
+	From *openapi_types.Date  `json:"from,omitempty"`
+	To   *openapi_types.Date  `json:"to,omitempty"`
+	With AnalyticsCompareWith `json:"with"`
+}
+
+// AnalyticsCompareWith defines model for AnalyticsCompare.With.
+type AnalyticsCompareWith string
+
+// AnalyticsComparison defines model for AnalyticsComparison.
+type AnalyticsComparison struct {
+	From openapi_types.Date `json:"from"`
+
+	// Rows The comparison range's rows with the same dimension values as `rows` (time buckets by position).
+	Rows []AnalyticsRow     `json:"rows"`
+	To   openapi_types.Date `json:"to"`
+
+	// Totals The metrics the query asked for.
+	Totals AnalyticsMetrics `json:"totals"`
+}
+
 // AnalyticsConsent defines model for AnalyticsConsent.
 type AnalyticsConsent struct {
 	// A `1` when the visitor agreed to analytics.
@@ -3852,12 +4265,42 @@ type AnalyticsDataDeletion struct {
 	To   *openapi_types.Date `json:"to,omitempty"`
 }
 
+// AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
+// of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
+// `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
+// values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
+// range is present.
+type AnalyticsDimension string
+
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
 // `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
 // `localhost`, `127.0.0.1` and `[::1]` count only when listed.
 //
 // Examples: www.example.com, *.example.com
 type AnalyticsDomain = string
+
+// AnalyticsDropCounts defines model for AnalyticsDropCounts.
+type AnalyticsDropCounts struct {
+	// Bot Crawlers, headless browsers, scripts without browser headers, referrer spam and visitors over the day's volume limits.
+	Bot int64 `json:"bot"`
+
+	// Buffer The server's buffer was full.
+	Buffer int64 `json:"buffer"`
+
+	// Excluded From an excluded address or path.
+	Excluded int64 `json:"excluded"`
+	Invalid  int64 `json:"invalid"`
+	Late     int64 `json:"late"`
+
+	// Origin From an origin or page host that is not one of the property's domains.
+	Origin int64 `json:"origin"`
+
+	// OverLimit Over the workspace's monthly cap.
+	OverLimit int64 `json:"over_limit"`
+
+	// Rate Over the per-address or per-property rate limit.
+	Rate int64 `json:"rate"`
+}
 
 // AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
 // older servers.
@@ -3901,6 +4344,129 @@ type AnalyticsEventBatch struct {
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
 type AnalyticsExcludedAddress = string
+
+// AnalyticsFilter `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
+// does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
+// them, elsewhere `*` is any text. Several values are alternatives. A `page` filter keeps the
+// visits that viewed a matching page and, in a page breakdown, only matching pages.
+type AnalyticsFilter struct {
+	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+	// code. Unknown values are empty strings.
+	Dimension AnalyticsFilterDimension `json:"dimension"`
+	Op        AnalyticsFilterOp        `json:"op"`
+	Values    []string                 `json:"values"`
+}
+
+// AnalyticsFilterOp defines model for AnalyticsFilter.Op.
+type AnalyticsFilterOp string
+
+// AnalyticsFilterDimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+// code. Unknown values are empty strings.
+type AnalyticsFilterDimension string
+
+// AnalyticsGeoIP defines model for AnalyticsGeoIP.
+type AnalyticsGeoIP struct {
+	// Attribution The credit the database's license asks for, such as "IP Geolocation by DB-IP".
+	Attribution    *string `json:"attribution,omitempty"`
+	AttributionUrl *string `json:"attribution_url,omitempty"`
+
+	// BuiltAt When the database in use was built; absent when none is loaded on the process that answered.
+	BuiltAt *time.Time `json:"built_at,omitempty"`
+
+	// Error Why no database is loaded, or why the last update failed.
+	Error *string `json:"error,omitempty"`
+
+	// Source `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
+	Source AnalyticsGeoIPSource `json:"source"`
+}
+
+// AnalyticsGeoIPSource `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
+type AnalyticsGeoIPSource string
+
+// AnalyticsHealth defines model for AnalyticsHealth.
+type AnalyticsHealth struct {
+	// Days The asked days, newest first, every day present.
+	Days         []AnalyticsHealthDay `json:"days"`
+	FirstEventAt *time.Time           `json:"first_event_at,omitempty"`
+	Geoip        AnalyticsGeoIP       `json:"geoip"`
+	LastEventAt  *time.Time           `json:"last_event_at,omitempty"`
+
+	// PendingRollupDays Days with raw rows that are not rolled up yet or changed since.
+	PendingRollupDays int64              `json:"pending_rollup_days"`
+	RawWindowFrom     openapi_types.Date `json:"raw_window_from"`
+
+	// Totals The asked days added up.
+	Totals AnalyticsIngestCounts `json:"totals"`
+}
+
+// AnalyticsHealthDay defines model for AnalyticsHealthDay.
+type AnalyticsHealthDay struct {
+	Accepted int64               `json:"accepted"`
+	Day      openapi_types.Date  `json:"day"`
+	Dropped  AnalyticsDropCounts `json:"dropped"`
+
+	// Scrubbed Accepted events that had an e-mail-shaped part removed.
+	Scrubbed int64 `json:"scrubbed"`
+}
+
+// AnalyticsIngestCounts The asked days added up.
+type AnalyticsIngestCounts struct {
+	Accepted int64               `json:"accepted"`
+	Dropped  AnalyticsDropCounts `json:"dropped"`
+	Scrubbed int64               `json:"scrubbed"`
+}
+
+// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+// page view that reported it), `events` (custom events).
+type AnalyticsMetric string
+
+// AnalyticsMetrics The metrics the query asked for.
+type AnalyticsMetrics struct {
+	BounceRate    *float64 `json:"bounce_rate,omitempty"`
+	Events        *float64 `json:"events,omitempty"`
+	Pageviews     *float64 `json:"pageviews,omitempty"`
+	ScrollDepth   *float64 `json:"scroll_depth,omitempty"`
+	TimeOnPage    *float64 `json:"time_on_page,omitempty"`
+	ViewsPerVisit *float64 `json:"views_per_visit,omitempty"`
+	VisitDuration *float64 `json:"visit_duration,omitempty"`
+	Visitors      *float64 `json:"visitors,omitempty"`
+	Visits        *float64 `json:"visits,omitempty"`
+}
+
+// AnalyticsMinute defines model for AnalyticsMinute.
+type AnalyticsMinute struct {
+	At        time.Time `json:"at"`
+	Pageviews int64     `json:"pageviews"`
+	Visitors  int64     `json:"visitors"`
+}
+
+// AnalyticsOrder defines model for AnalyticsOrder.
+type AnalyticsOrder struct {
+	Dir *AnalyticsOrderDir `json:"dir,omitempty"`
+
+	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+	// page view that reported it), `events` (custom events).
+	Metric AnalyticsMetric `json:"metric"`
+}
+
+// AnalyticsOrderDir defines model for AnalyticsOrder.Dir.
+type AnalyticsOrderDir string
 
 // AnalyticsPathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
 //
@@ -4040,6 +4606,139 @@ type AnalyticsPropertyUpdate struct {
 	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
 	Timezone        *string                  `json:"timezone,omitempty"`
 	TrackedProps    *[]AnalyticsTrackedProp  `json:"tracked_props,omitempty"`
+}
+
+// AnalyticsQuery defines model for AnalyticsQuery.
+type AnalyticsQuery struct {
+	// Compare `previous` is the range of the same length just before, `year` the same days a year
+	// earlier, `range` the days `from` to `to`.
+	Compare *AnalyticsCompare `json:"compare,omitempty"`
+
+	// Cursor `next_cursor` of the previous page.
+	Cursor     *string               `json:"cursor,omitempty"`
+	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
+	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
+
+	// Limit Rows per page; time series are never cut.
+	Limit   *int              `json:"limit,omitempty"`
+	Metrics []AnalyticsMetric `json:"metrics"`
+
+	// OrderBy Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
+	OrderBy *[]AnalyticsOrder `json:"order_by,omitempty"`
+
+	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+	// `year` are the current calendar month and year to date; `last_month` the one before), or
+	// `from` and `to` (inclusive, at most 400 days apart).
+	Range AnalyticsRange `json:"range"`
+}
+
+// AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+// `year` are the current calendar month and year to date; `last_month` the one before), or
+// `from` and `to` (inclusive, at most 400 days apart).
+type AnalyticsRange struct {
+	From   *openapi_types.Date   `json:"from,omitempty"`
+	Period *AnalyticsRangePeriod `json:"period,omitempty"`
+	To     *openapi_types.Date   `json:"to,omitempty"`
+}
+
+// AnalyticsRangePeriod defines model for AnalyticsRange.Period.
+type AnalyticsRangePeriod string
+
+// AnalyticsRangeProblem defines model for AnalyticsRangeProblem.
+type AnalyticsRangeProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	Limit         *HostedLimit        `json:"limit,omitempty"`
+	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// AnalyticsRealtime defines model for AnalyticsRealtime.
+type AnalyticsRealtime struct {
+	Countries []AnalyticsTopValue `json:"countries"`
+
+	// Minutes The last 30 minutes, oldest first, every minute present.
+	Minutes []AnalyticsMinute `json:"minutes"`
+
+	// Pages The ten paths with the most visitors.
+	Pages     []AnalyticsTopValue `json:"pages"`
+	Pageviews int64               `json:"pageviews"`
+
+	// Sources The ten sources with the most visitors (empty is direct).
+	Sources []AnalyticsTopValue `json:"sources"`
+
+	// Visitors Distinct visitors with an event in the last 30 minutes.
+	Visitors int64 `json:"visitors"`
+}
+
+// AnalyticsResult defines model for AnalyticsResult.
+type AnalyticsResult struct {
+	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
+	Meta       AnalyticsResultMeta  `json:"meta"`
+
+	// NextCursor Present when there are more rows.
+	NextCursor *string `json:"next_cursor,omitempty"`
+
+	// Rows Empty when the query has no dimensions.
+	Rows []AnalyticsRow `json:"rows"`
+
+	// Totals The metrics the query asked for.
+	Totals AnalyticsMetrics `json:"totals"`
+}
+
+// AnalyticsResultMeta defines model for AnalyticsResultMeta.
+type AnalyticsResultMeta struct {
+	From openapi_types.Date `json:"from"`
+
+	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
+	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`
+	ServedFrom    AnalyticsResultMetaServedFrom `json:"served_from"`
+	Timezone      string                        `json:"timezone"`
+	To            openapi_types.Date            `json:"to"`
+}
+
+// AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
+type AnalyticsResultMetaServedFrom string
+
+// AnalyticsRow defines model for AnalyticsRow.
+type AnalyticsRow struct {
+	// Country With a `region` or `city` dimension, the place's country.
+	Country *string `json:"country,omitempty"`
+
+	// Dimensions One value per dimension of the query, in its order.
+	Dimensions []string `json:"dimensions"`
+
+	// Metrics The metrics the query asked for.
+	Metrics AnalyticsMetrics `json:"metrics"`
+
+	// Region With a `city` dimension, the city's region.
+	Region *string `json:"region,omitempty"`
+}
+
+// AnalyticsTopValue defines model for AnalyticsTopValue.
+type AnalyticsTopValue struct {
+	Value    string `json:"value"`
+	Visitors int64  `json:"visitors"`
 }
 
 // AnalyticsTrackedProp defines model for AnalyticsTrackedProp.
@@ -11718,6 +12417,33 @@ type DeleteAnalyticsDataParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetAnalyticsHealthParams defines parameters for GetAnalyticsHealth.
+type GetAnalyticsHealthParams struct {
+	// Days How many days back, today included.
+	Days *int `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryAnalyticsParams defines parameters for QueryAnalytics.
+type QueryAnalyticsParams struct {
+	// Format `json` (the default) or `csv`.
+	Format *QueryAnalyticsParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryAnalyticsParamsFormat defines parameters for QueryAnalytics.
+type QueryAnalyticsParamsFormat string
+
+// GetAnalyticsRealtimeParams defines parameters for GetAnalyticsRealtime.
+type GetAnalyticsRealtimeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // RotateAnalyticsKeyParams defines parameters for RotateAnalyticsKey.
 type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -13705,6 +14431,9 @@ type UpdateAnalyticsPropertyJSONRequestBody = AnalyticsPropertyUpdate
 
 // DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
 type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
+
+// QueryAnalyticsJSONRequestBody defines body for QueryAnalytics for application/json ContentType.
+type QueryAnalyticsJSONRequestBody = AnalyticsQuery
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -17917,6 +18646,85 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsHealth How a property's collection is doing
+	//
+	// Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+	// payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+	// the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+	// a dropped request is stored but its count. When `geoip.attribution` is present, show it
+	// with a link to `geoip.attribution_url` wherever locations are shown.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/health (the `GetAnalyticsHealth` operationId).
+	GetAnalyticsHealth(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsHealthParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QueryAnalyticsWithBody Query a property's numbers
+	//
+	// One query serves the panel, the API and the MCP tools: metrics over a range of the
+	// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+	// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+	// (one column per dimension and metric) instead.
+	//
+	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+	// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+	// added up as `(other)`.
+	//
+	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+	// answers that include today for 30 seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+	QueryAnalyticsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// QueryAnalytics Query a property's numbers
+	//
+	// One query serves the panel, the API and the MCP tools: metrics over a range of the
+	// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+	// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+	// (one column per dimension and metric) instead.
+	//
+	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+	// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+	// added up as `(other)`.
+	//
+	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+	// answers that include today for 30 seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+	QueryAnalytics(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, body QueryAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsRealtime The last 30 minutes
+	//
+	// Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+	// countries. Cached for ten seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
+	GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RotateAnalyticsKey Give an analytics property a new public key
 	//
@@ -23488,6 +24296,125 @@ func (c *Client) DeleteAnalyticsDataWithBody(ctx context.Context, propertyId Ana
 // Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 func (c *Client) DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteAnalyticsDataRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsHealth How a property's collection is doing
+//
+// Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+// payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+// the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+// a dropped request is stored but its count. When `geoip.attribution` is present, show it
+// with a link to `geoip.attribution_url` wherever locations are shown.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/health (the `GetAnalyticsHealth` operationId).
+func (c *Client) GetAnalyticsHealth(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsHealthParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsHealthRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QueryAnalyticsWithBody Query a property's numbers
+//
+// One query serves the panel, the API and the MCP tools: metrics over a range of the
+// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+// (one column per dimension and metric) instead.
+//
+// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+// added up as `(other)`.
+//
+// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+// answers that include today for 30 seconds.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+func (c *Client) QueryAnalyticsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQueryAnalyticsRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// QueryAnalytics Query a property's numbers
+//
+// One query serves the panel, the API and the MCP tools: metrics over a range of the
+// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+// (one column per dimension and metric) instead.
+//
+// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+// added up as `(other)`.
+//
+// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+// answers that include today for 30 seconds.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+func (c *Client) QueryAnalytics(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, body QueryAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewQueryAnalyticsRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsRealtime The last 30 minutes
+//
+// Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+// countries. Cached for ten seconds.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
+func (c *Client) GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsRealtimeRequest(c.Server, propertyId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -32545,6 +33472,220 @@ func NewDeleteAnalyticsDataRequestWithBody(server string, propertyId AnalyticsPr
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetAnalyticsHealthRequest constructs an http.Request for the GetAnalyticsHealth method
+func NewGetAnalyticsHealthRequest(server string, propertyId AnalyticsPropertyId, params *GetAnalyticsHealthParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/health", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Days != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "days", *params.Days, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewQueryAnalyticsRequest calls the generic QueryAnalytics builder with application/json body
+func NewQueryAnalyticsRequest(server string, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, body QueryAnalyticsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewQueryAnalyticsRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewQueryAnalyticsRequestWithBody constructs an http.Request for the QueryAnalytics method, with any body, and a specified content type
+func NewQueryAnalyticsRequestWithBody(server string, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/query", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Format != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "format", *params.Format, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetAnalyticsRealtimeRequest constructs an http.Request for the GetAnalyticsRealtime method
+func NewGetAnalyticsRealtimeRequest(server string, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/realtime", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
 		}
 
 	}
@@ -47100,6 +48241,89 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsDataWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteAnalyticsDataResponse, error)
 
+	// GetAnalyticsHealthWithResponse How a property's collection is doing
+	//
+	// Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+	// payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+	// the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+	// a dropped request is stored but its count. When `geoip.attribution` is present, show it
+	// with a link to `geoip.attribution_url` wherever locations are shown.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/health (the `GetAnalyticsHealth` operationId).
+	GetAnalyticsHealthWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsHealthParams, reqEditors ...RequestEditorFn) (*GetAnalyticsHealthResponse, error)
+
+	// QueryAnalyticsWithBodyWithResponse Query a property's numbers
+	//
+	// One query serves the panel, the API and the MCP tools: metrics over a range of the
+	// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+	// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+	// (one column per dimension and metric) instead.
+	//
+	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+	// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+	// added up as `(other)`.
+	//
+	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+	// answers that include today for 30 seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+	QueryAnalyticsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QueryAnalyticsResponse, error)
+
+	// QueryAnalyticsWithResponse Query a property's numbers
+	//
+	// One query serves the panel, the API and the MCP tools: metrics over a range of the
+	// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+	// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+	// (one column per dimension and metric) instead.
+	//
+	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+	// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+	// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+	// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+	// added up as `(other)`.
+	//
+	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+	// answers that include today for 30 seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+	QueryAnalyticsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, body QueryAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*QueryAnalyticsResponse, error)
+
+	// GetAnalyticsRealtimeWithResponse The last 30 minutes
+	//
+	// Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+	// countries. Cached for ten seconds.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
+	GetAnalyticsRealtimeWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRealtimeResponse, error)
+
 	// RotateAnalyticsKeyWithResponse Give an analytics property a new public key
 	//
 	// The property gets a new `public_key`. The old one keeps working for 24 hours
@@ -54407,6 +55631,234 @@ func (r DeleteAnalyticsDataResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DeleteAnalyticsDataResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAnalyticsHealthResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsHealth
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsHealthResponse) GetJSON200() *AnalyticsHealth {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetAnalyticsHealthResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsHealthResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsHealthResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsHealthResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsHealthResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsHealthResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsHealthResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsHealthResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+// QueryAnalyticsResponse200Headers the declared response headers of an HTTP 200 response for QueryAnalytics
+type QueryAnalyticsResponse200Headers struct {
+	ContentDisposition *string
+}
+
+type QueryAnalyticsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *AnalyticsRangeProblem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+	// Headers200 the parsed response headers for an HTTP 200 response
+	Headers200 *QueryAnalyticsResponse200Headers
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r QueryAnalyticsResponse) GetJSON200() *AnalyticsResult {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON422() *AnalyticsRangeProblem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r QueryAnalyticsResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r QueryAnalyticsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r QueryAnalyticsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r QueryAnalyticsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r QueryAnalyticsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAnalyticsRealtimeResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsRealtime
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsRealtimeResponse) GetJSON200() *AnalyticsRealtime {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsRealtimeResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsRealtimeResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsRealtimeResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r GetAnalyticsRealtimeResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsRealtimeResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsRealtimeResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsRealtimeResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsRealtimeResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -70295,6 +71747,113 @@ func (c *ClientWithResponses) DeleteAnalyticsDataWithResponse(ctx context.Contex
 	return ParseDeleteAnalyticsDataResponse(rsp)
 }
 
+// GetAnalyticsHealthWithResponse How a property's collection is doing
+//
+// Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+// payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+// the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+// a dropped request is stored but its count. When `geoip.attribution` is present, show it
+// with a link to `geoip.attribution_url` wherever locations are shown.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/health (the `GetAnalyticsHealth` operationId).
+func (c *ClientWithResponses) GetAnalyticsHealthWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsHealthParams, reqEditors ...RequestEditorFn) (*GetAnalyticsHealthResponse, error) {
+	rsp, err := c.GetAnalyticsHealth(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsHealthResponse(rsp)
+}
+
+// QueryAnalyticsWithBodyWithResponse Query a property's numbers
+//
+// One query serves the panel, the API and the MCP tools: metrics over a range of the
+// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+// (one column per dimension and metric) instead.
+//
+// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+// added up as `(other)`.
+//
+// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+// answers that include today for 30 seconds.
+//
+// Scope: `analytics:read`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+func (c *ClientWithResponses) QueryAnalyticsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*QueryAnalyticsResponse, error) {
+	rsp, err := c.QueryAnalyticsWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQueryAnalyticsResponse(rsp)
+}
+
+// QueryAnalyticsWithResponse Query a property's numbers
+//
+// One query serves the panel, the API and the MCP tools: metrics over a range of the
+// property's days, broken down by up to two dimensions (one of them may be a time grain) and
+// narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+// (one column per dimension and metric) instead.
+//
+// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+// combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+// starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+// `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+// added up as `(other)`.
+//
+// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+// answers that include today for 30 seconds.
+//
+// Scope: `analytics:read`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/query (the `QueryAnalytics` operationId).
+func (c *ClientWithResponses) QueryAnalyticsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *QueryAnalyticsParams, body QueryAnalyticsJSONRequestBody, reqEditors ...RequestEditorFn) (*QueryAnalyticsResponse, error) {
+	rsp, err := c.QueryAnalytics(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseQueryAnalyticsResponse(rsp)
+}
+
+// GetAnalyticsRealtimeWithResponse The last 30 minutes
+//
+// Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+// countries. Cached for ten seconds.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
+func (c *ClientWithResponses) GetAnalyticsRealtimeWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRealtimeResponse, error) {
+	rsp, err := c.GetAnalyticsRealtime(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsRealtimeResponse(rsp)
+}
+
 // RotateAnalyticsKeyWithResponse Give an analytics property a new public key
 //
 // The property gets a new `public_key`. The old one keeps working for 24 hours
@@ -78627,6 +80186,198 @@ func ParseDeleteAnalyticsDataResponse(rsp *http.Response) (*DeleteAnalyticsDataR
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAnalyticsHealthResponse parses an HTTP response from a GetAnalyticsHealthWithResponse call
+func ParseGetAnalyticsHealthResponse(rsp *http.Response) (*GetAnalyticsHealthResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsHealthResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsHealth
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseQueryAnalyticsResponse parses an HTTP response from a QueryAnalyticsWithResponse call
+func ParseQueryAnalyticsResponse(rsp *http.Response) (*QueryAnalyticsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &QueryAnalyticsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest AnalyticsRangeProblem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
+
+	case rsp.StatusCode == 200:
+		// Content-type (text/csv) unsupported
+
+	}
+
+	switch {
+	case rsp.StatusCode == 200:
+		var headers QueryAnalyticsResponse200Headers
+		if values := rsp.Header.Values("Content-Disposition"); len(values) > 0 {
+			var value string
+			if err := runtime.BindStyledParameterWithOptions("simple", "Content-Disposition", values[0], &value, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			}
+			headers.ContentDisposition = &value
+		}
+		response.Headers200 = &headers
+	}
+
+	return response, nil
+}
+
+// ParseGetAnalyticsRealtimeResponse parses an HTTP response from a GetAnalyticsRealtimeWithResponse call
+func ParseGetAnalyticsRealtimeResponse(rsp *http.Response) (*GetAnalyticsRealtimeResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsRealtimeResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsRealtime
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 
