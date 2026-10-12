@@ -8470,9 +8470,13 @@ type MigrationCounts struct {
 	Duplicate int64 `json:"duplicate"`
 	Failed    int64 `json:"failed"`
 	Imported  int64 `json:"imported"`
-	Skipped   int64 `json:"skipped"`
 
-	// Total Messages planned.
+	// Skipped Not imported: automatic or internal mail, outside the date range, from a blocked contact,
+	// too large, or gone from the mailbox.
+	Skipped int64 `json:"skipped"`
+
+	// Total Messages read from the chosen folders: those to import and those the dry run already set
+	// aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed.
 	Total int64 `json:"total"`
 }
 

@@ -2166,7 +2166,8 @@ func (q *Queries) LockMigrationThread(ctx context.Context, arg LockMigrationThre
 
 const markMigrationItemsInCopy = `-- name: MarkMigrationItemsInCopy :execrows
 UPDATE migration_items SET in_copy = true
-WHERE workspace_id = $1 AND migration_id = $2 AND state = 'planned'
+WHERE workspace_id = $1 AND migration_id = $2
+  AND (state IN ('planned', 'duplicate') OR (state = 'skipped' AND reason NOT IN ('unselected', 'label_only', 'unplanned')))
 `
 
 type MarkMigrationItemsInCopyParams struct {

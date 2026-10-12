@@ -124,11 +124,11 @@ func (s *Server) StartMigration(ctx context.Context, req oas.StartMigrationReque
 				return cur, errHostedLimit(oas.LimitMigrationMaxBytes, "this workspace imported as much as the server allows this month (YUVA_MIGRATION_MAX_BYTES)")
 			}
 		}
-		n, err := q.MarkMigrationItemsInCopy(ctx, store.MarkMigrationItemsInCopyParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID})
-		if err != nil {
+		if _, err := q.MarkMigrationItemsInCopy(ctx, store.MarkMigrationItemsInCopyParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID}); err != nil {
 			return cur, err
 		}
-		if err := q.SetMigrationCounts(ctx, store.SetMigrationCountsParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, Counts: mustJSON(oas.MigrationCounts{Total: n})}); err != nil {
+		counts, _, err := s.refreshMigrationCounts(ctx, q, cur)
+		if err != nil {
 			return cur, err
 		}
 		if err := q.SetMigrationCheckpoint(ctx, store.SetMigrationCheckpointParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, Checkpoint: []byte("{}")}); err != nil {
@@ -141,7 +141,7 @@ func (s *Server) StartMigration(ctx context.Context, req oas.StartMigrationReque
 		if err != nil {
 			return m, err
 		}
-		if _, err := s.migrationAudit(ctx, q, p, m.ID, "started", map[string]any{"messages": n}); err != nil {
+		if _, err := s.migrationAudit(ctx, q, p, m.ID, "started", map[string]any{"messages": counts.Total}); err != nil {
 			return m, err
 		}
 		events.job(migrationJob(m, 0), migrationJobOpts())

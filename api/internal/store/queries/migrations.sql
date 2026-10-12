@@ -206,7 +206,8 @@ SELECT @workspace_id, @migration_id, unnest(@thread_keys::text[]), unnest(@last_
 
 -- name: MarkMigrationItemsInCopy :execrows
 UPDATE migration_items SET in_copy = true
-WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state = 'planned';
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+  AND (state IN ('planned', 'duplicate') OR (state = 'skipped' AND reason NOT IN ('unselected', 'label_only', 'unplanned')));
 
 -- name: ListContactEmailsIn :many
 SELECT ce.email, c.blocked FROM contact_emails ce

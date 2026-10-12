@@ -12954,7 +12954,9 @@ components:
         total:
           type: integer
           format: int64
-          description: Messages planned.
+          description: |
+            Messages read from the chosen folders: those to import and those the dry run already set
+            aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed.
         imported:
           type: integer
           format: int64
@@ -12965,6 +12967,9 @@ components:
         skipped:
           type: integer
           format: int64
+          description: |
+            Not imported: automatic or internal mail, outside the date range, from a blocked contact,
+            too large, or gone from the mailbox.
         failed:
           type: integer
           format: int64

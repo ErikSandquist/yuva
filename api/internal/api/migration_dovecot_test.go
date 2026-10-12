@@ -544,8 +544,15 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	deliveries := func() int { return h.count("SELECT count(*) FROM webhook_deliveries WHERE workspace_id = $1", tm.ws) }
 	jobsBefore, mailBefore, deliveriesBefore := sideJobs(), mailSent(), deliveries()
 
+	duplicates := want.Skipped["duplicate_copies"]
+	skipped := want.Skipped["automatic"] + want.Skipped["internal"] + want.Skipped["outside_range"] + want.Skipped["blocked"] + want.Skipped["too_large"]
+	if duplicates == 0 || skipped == 0 {
+		t.Fatalf("the fixture has no duplicate or skipped message: %v", want.Skipped)
+	}
 	started := tm.owner.expect(http.StatusOK, "POST", path+"/start", nil)
-	if started.str("state") != "copying" || num(started.body["counts"].(map[string]any)["total"]) != want.MessagesIn+want.MessagesOut {
+	sc := started.body["counts"].(map[string]any)
+	if started.str("state") != "copying" || num(sc["total"]) != want.MessagesIn+want.MessagesOut+duplicates+skipped ||
+		num(sc["duplicate"]) != duplicates || num(sc["skipped"]) != skipped {
 		t.Fatalf("start: %s", started.raw)
 	}
 	tm.owner.expect(http.StatusOK, "POST", path+"/start", nil)
@@ -575,8 +582,17 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	}
 	m := d.migration(id)
 	counts := m.body["counts"].(map[string]any)
-	if m.str("state") != "syncing" || num(counts["imported"]) != want.MessagesIn+want.MessagesOut || num(counts["failed"]) != 0 || num(counts["duplicate"]) != 0 {
+	if m.str("state") != "syncing" || num(counts["imported"]) != want.MessagesIn+want.MessagesOut || num(counts["failed"]) != 0 ||
+		num(counts["duplicate"]) != duplicates || num(counts["skipped"]) != skipped || num(counts["total"]) != want.MessagesIn+want.MessagesOut+duplicates+skipped {
 		t.Fatalf("after the copy: %s", m.raw)
+	}
+	var folderDuplicates, folderSkipped int
+	for _, f := range tm.owner.expect(http.StatusOK, "GET", path+"/folders", nil).body["items"].([]any) {
+		folderDuplicates += num(f.(map[string]any)["duplicate"])
+		folderSkipped += num(f.(map[string]any)["skipped"])
+	}
+	if folderDuplicates != duplicates || folderSkipped != skipped {
+		t.Fatalf("folders count %d duplicate and %d skipped, want %d and %d", folderDuplicates, folderSkipped, duplicates, skipped)
 	}
 
 	if n := h.count("SELECT count(*) FROM (SELECT header_message_id FROM message_emails WHERE workspace_id = $1 GROUP BY header_message_id HAVING count(*) > 1) d", tm.ws); n != 0 {
@@ -588,7 +604,7 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	checkImportedThreads(t, d, id, want)
 	checkNoOrphans(t, d)
 
-	if n := h.count("SELECT count(*) FROM events WHERE workspace_id = $1 AND id > $2 AND type <> 'migration.updated'", tm.ws, lastEvent); n != 0 {
+	if n := h.count("SELECT count(*) FROM events WHERE workspace_id = $1 AND id > $2 AND type NOT IN ('migration.updated', 'inbox.updated')", tm.ws, lastEvent); n != 0 {
 		t.Fatalf("the import wrote %d events", n)
 	}
 	if n := sideJobs(); n != jobsBefore || mailSent() != mailBefore || deliveries() != deliveriesBefore || len(rcv.take()) != 0 {
@@ -622,8 +638,12 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	if err := d.work(t, ctx); err != nil {
 		t.Fatal(err)
 	}
-	if s := d.migration(again).str("state"); s != "syncing" || h.count("SELECT count(*) FROM messages WHERE workspace_id = $1", tm.ws) != messagesBefore {
+	second := d.migration(again)
+	if s := second.str("state"); s != "syncing" || h.count("SELECT count(*) FROM messages WHERE workspace_id = $1", tm.ws) != messagesBefore {
 		t.Fatalf("the second run added messages (%s)", s)
+	}
+	if c := second.body["counts"].(map[string]any); num(c["imported"]) != 0 || num(c["duplicate"]) != want.MessagesIn+want.MessagesOut+duplicates || num(c["skipped"]) != skipped {
+		t.Fatalf("second run counts: %v", c)
 	}
 
 	cancelled := tm.owner.expect(http.StatusOK, "POST", path+"/cancel", nil)

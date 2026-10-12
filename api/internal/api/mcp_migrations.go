@@ -32,10 +32,10 @@ type migrationIn struct {
 }
 
 type mcpMigrationCounts struct {
-	Total     int64 `json:"total" jsonschema:"messages planned"`
+	Total     int64 `json:"total" jsonschema:"messages read from the chosen folders; each ends imported, duplicate, skipped or failed"`
 	Imported  int64 `json:"imported"`
 	Duplicate int64 `json:"duplicate" jsonschema:"already in Yuva, or a second copy"`
-	Skipped   int64 `json:"skipped"`
+	Skipped   int64 `json:"skipped" jsonschema:"automatic or internal mail, outside the date range, blocked, too large or gone"`
 	Failed    int64 `json:"failed"`
 	Bytes     int64 `json:"bytes" jsonschema:"bytes read from the mailbox"`
 }
