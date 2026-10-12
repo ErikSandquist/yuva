@@ -206,8 +206,8 @@ another workspace sees none of it.
 
 ## M14 — Move to Yuva
 
-Status: planned; umbrella issue #35, decisions in `architecture.md` › Moving to Yuva (M14). Ships in four
-steps, in this order.
+Status: done and deployed on 2026-10-12 (all four steps, #31–#34); umbrella issue #35, decisions in
+`architecture.md` › Moving to Yuva (M14).
 
 - **M14.1 IMAP with presets:** every mailbox over IMAP with app passwords (Gmail, Google Workspace,
   Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX, any server), detection from the address and MX, a
