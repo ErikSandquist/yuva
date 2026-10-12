@@ -5491,6 +5491,10 @@ msgid "Not shown"
 msgstr "Not shown"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+msgid "Not signing"
+msgstr "Not signing"
+
+#: src/features/settings/channels/email/Deliverability.tsx
 msgid "Not signing yet"
 msgstr "Not signing yet"
 
@@ -8778,6 +8782,10 @@ msgstr "This channel has no SMTP account, so it cannot send broadcasts or a test
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "This channel has no Yuva DKIM key."
 msgstr "This channel has no Yuva DKIM key."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel’s broadcasts go through Amazon SES, which signs your mail with your domain through Easy DKIM. Yuva DKIM is for other relays; set up Easy DKIM for your domain in SES instead."
+msgstr "This channel’s broadcasts go through Amazon SES, which signs your mail with your domain through Easy DKIM. Yuva DKIM is for other relays; set up Easy DKIM for your domain in SES instead."
 
 #: src/components/common/text.ts
 msgid "This conflicts with something that already exists."

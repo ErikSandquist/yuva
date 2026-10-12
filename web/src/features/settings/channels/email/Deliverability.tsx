@@ -368,6 +368,8 @@ export function DkimSection({ channel }: { channel: Channel }) {
   const [confirm, confirmDialog] = useConfirm()
   const validSelector = SELECTOR.test(selector)
   const missing = toggle.error instanceof ApiError && toggle.error.code === "dkim_dns_missing"
+  const relay =
+    !!dkim?.unsupported_reason || (toggle.error instanceof ApiError && toggle.error.code === "dkim_relay_unsupported")
   return (
     <Section
       title={<Trans>Yuva DKIM</Trans>}
@@ -435,7 +437,11 @@ export function DkimSection({ channel }: { channel: Channel }) {
               <span className="min-w-0 flex-1 text-body font-medium">
                 <Trans>Selector</Trans> <code className="font-mono">{dkim.selector}</code>
               </span>
-              {dkim.enabled ? (
+              {relay ? (
+                <StatusTag tone="warning" data-testid="dkim-state">
+                  <Trans>Not signing</Trans>
+                </StatusTag>
+              ) : dkim.enabled ? (
                 <StatusTag tone="success" data-testid="dkim-state">
                   <Trans>Signing</Trans>
                 </StatusTag>
@@ -474,10 +480,21 @@ export function DkimSection({ channel }: { channel: Channel }) {
                 </p>
               </Notice>
             )}
-            {!missing && <ErrorLine error={toggle.error ?? remove.error} />}
+            {relay && (
+              <Notice tone="warning" icon={TriangleAlertIcon} role="status" data-testid="dkim-relay-unsupported">
+                <p>
+                  <Trans>
+                    This channel’s broadcasts go through Amazon SES, which signs your mail with your domain through Easy
+                    DKIM. Yuva DKIM is for other relays; set up Easy DKIM for your domain in SES instead.
+                  </Trans>
+                </p>
+              </Notice>
+            )}
+            {!missing && !relay && <ErrorLine error={toggle.error ?? remove.error} />}
+            {relay && <ErrorLine error={remove.error} />}
             {canManage && (
               <div className="flex flex-wrap items-center gap-2 border-t pt-4">
-                {dkim.enabled ? (
+                {relay ? null : dkim.enabled ? (
                   <Button
                     variant="outline"
                     size="sm"
@@ -522,7 +539,7 @@ export function DkimSection({ channel }: { channel: Channel }) {
                 </Button>
               </div>
             )}
-            {!dkim.enabled && !canManage && (
+            {!dkim.enabled && !relay && !canManage && (
               <p className="text-small text-faint">{t`An owner or admin turns signing on once the record is published.`}</p>
             )}
           </>

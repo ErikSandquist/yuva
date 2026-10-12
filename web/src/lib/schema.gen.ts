@@ -6539,11 +6539,18 @@ export interface components {
             dns_name: string;
             /** @example v=DKIM1; k=rsa; p=MIIBIjANBgkqh... */
             dns_value: string;
+            /**
+             * @description Why Yuva does not sign the channel's mail even when `enabled`: its broadcasts go through
+             *     Amazon SES, which rewrites `From`, `To`, `Reply-To` and `Date` after any signature added
+             *     before it and signs with the verified domain itself. Absent when Yuva signs.
+             */
+            unsupported_reason?: string;
         };
         /**
          * @description Absent keeps the stored state. `enabled: true` needs a key (`POST
          *     /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
-         *     same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+         *     same public key (`409 dkim_dns_missing`), and an account other than Amazon SES sending the
+         *     broadcasts (`409 dkim_relay_unsupported`). Changing the sending domain turns signing off
          *     until it is enabled again for the new domain.
          */
         EmailDkimInput: {
@@ -8072,8 +8079,9 @@ export interface components {
              */
             removable_conversations?: number;
             /**
-             * @description Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
-             *     other than the mailbox address, most messages first. They are the team's aliases and
+             * @description Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
+             *     the All Mail messages that are also in Sent), other than the mailbox address, most
+             *     messages first. They are the team's aliases and
              *     colleagues the Map step offers as `options.team_addresses`, whether or not they are
              *     already team addresses.
              */
@@ -8272,8 +8280,9 @@ export interface components {
             /** @description Its messages are read (`options.folders`, else the preset's default). */
             selected: boolean;
             /**
-             * @description `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
-             *     label whose mail comes from All Mail). `skip`: not read.
+             * @description `import`: its messages are imported. `labels`: only read, for the labels and the Sent
+             *     folder's senders of mail that comes from All Mail (a Gmail label, or the Sent folder while
+             *     All Mail is read). `skip`: not read.
              * @enum {string}
              */
             use: "import" | "labels" | "skip";

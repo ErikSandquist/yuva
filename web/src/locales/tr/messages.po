@@ -5491,6 +5491,10 @@ msgid "Not shown"
 msgstr "Gösterilmez"
 
 #: src/features/settings/channels/email/Deliverability.tsx
+msgid "Not signing"
+msgstr "İmzalamıyor"
+
+#: src/features/settings/channels/email/Deliverability.tsx
 msgid "Not signing yet"
 msgstr "Henüz imzalamıyor"
 
@@ -8778,6 +8782,10 @@ msgstr "Bu kanalın SMTP hesabı yok, bu yüzden bülten ya da deneme e-postası
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "This channel has no Yuva DKIM key."
 msgstr "Bu kanalın Yuva DKIM anahtarı yok."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel’s broadcasts go through Amazon SES, which signs your mail with your domain through Easy DKIM. Yuva DKIM is for other relays; set up Easy DKIM for your domain in SES instead."
+msgstr "Bu kanalın toplu gönderimleri Amazon SES üzerinden gider; SES postanızı Easy DKIM ile kendi alan adınızla imzalar. Yuva DKIM başka aktarıcılar içindir; bunun yerine SES’te alan adınız için Easy DKIM’i kurun."
 
 #: src/components/common/text.ts
 msgid "This conflicts with something that already exists."
