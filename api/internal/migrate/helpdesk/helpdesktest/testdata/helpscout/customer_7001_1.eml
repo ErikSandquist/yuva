@@ -1,0 +1,19 @@
+Return-Path: <zeynep@example.org>
+Message-ID: <order-4411@example.org>
+Date: Fri, 05 Sep 2026 07:00:00 +0000
+From: Zeynep Demir <zeynep@example.org>
+To: support@hs.example.com
+Subject: Order missing
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="b1"
+
+--b1
+Content-Type: text/plain; charset=utf-8
+
+My order 4411 did not arrive.
+--b1
+Content-Type: text/plain; name="receipt.txt"
+Content-Disposition: attachment; filename="receipt.txt"
+
+Order 4411, 2 items.
+--b1--

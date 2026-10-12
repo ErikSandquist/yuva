@@ -1,0 +1,9 @@
+{"tickets": [
+  {"id": 1001, "subject": "Cannot sign in", "raw_subject": "Cannot sign in", "status": "open", "brand_id": 360001,
+   "requester_id": 101, "assignee_id": 9002, "tags": ["login", "vip"], "via": {"channel": "email"},
+   "created_at": "2026-09-01T08:00:00Z", "updated_at": "2026-09-02T10:00:00Z"},
+  {"id": 1002, "subject": "Invoice copy", "raw_subject": "Invoice copy", "status": "solved", "brand_id": 360002,
+   "requester_id": 102, "assignee_id": 9001, "tags": ["billing"], "via": {"channel": "web"},
+   "created_at": "2026-08-10T09:00:00Z", "updated_at": "2026-08-11T09:30:00Z"}
+], "after_url": "https://acme.zendesk.com/api/v2/incremental/tickets/cursor.json?cursor=zd-c1", "after_cursor": "zd-c1",
+ "before_url": null, "before_cursor": null, "end_of_stream": false}

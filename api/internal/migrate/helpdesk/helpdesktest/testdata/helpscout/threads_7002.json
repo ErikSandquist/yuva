@@ -1,0 +1,21 @@
+{"_embedded": {"threads": [
+  {"id": 5, "type": "chat", "status": "closed", "state": "published", "body": "<p>How much is the team plan?</p>",
+   "source": {"type": "chat", "via": "customer"},
+   "customer": {"id": 802, "first": "Kerem", "last": "Aslan", "email": "kerem@example.net"},
+   "createdBy": {"id": 802, "type": "customer", "first": "Kerem", "last": "Aslan", "email": "kerem@example.net"},
+   "createdAt": "2026-08-20T10:00:00Z", "_embedded": {"attachments": []}},
+  {"id": 6, "type": "message", "status": "closed", "state": "published", "body": "<p>Here is our price list.</p>",
+   "source": {"type": "web", "via": "user"},
+   "createdBy": {"id": 501, "type": "user", "first": "Lale", "last": "Ak", "email": "lale@hs.example.com"},
+   "createdAt": "2026-08-20T11:00:00Z",
+   "_embedded": {"attachments": [
+     {"id": 9901, "filename": "prices.txt", "mimeType": "text/plain", "size": 20, "width": 0, "height": 0, "state": "valid",
+      "_links": {"data": {"href": "https://api.helpscout.net/v2/conversations/7002/attachments/9901/data"},
+                 "download": {"href": "https://api.helpscout.net/v2/conversations/7002/attachments/9901/download"}}}
+   ]}},
+  {"id": 8, "type": "message", "status": "closed", "state": "draft", "body": "<p>Draft never sent.</p>",
+   "source": {"type": "web", "via": "user"},
+   "createdBy": {"id": 501, "type": "user", "first": "Lale", "last": "Ak", "email": "lale@hs.example.com"},
+   "createdAt": "2026-08-20T11:10:00Z", "_embedded": {"attachments": []}}
+]}, "_links": {"self": {"href": "https://api.helpscout.net/v2/conversations/7002/threads"}},
+ "page": {"size": 25, "totalElements": 3, "totalPages": 1, "number": 1}}

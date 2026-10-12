@@ -1,0 +1,8 @@
+{"users": [
+  {"id": 101, "name": "Ayşe Yılmaz", "email": "ayse@example.org", "role": "end-user", "phone": "+90 555 000 0101", "external_id": "crm-101"},
+  {"id": 102, "name": "Bob Stone", "email": "bob@example.net", "role": "end-user", "phone": null, "external_id": null},
+  {"id": 103, "name": "Carol Reed", "email": "carol@example.net", "role": "end-user", "phone": null, "external_id": null},
+  {"id": 104, "name": "Phone Caller", "email": null, "role": "end-user", "phone": "+49 30 000 0104", "external_id": null},
+  {"id": 9001, "name": "Deniz Kaya", "email": "deniz@acme.example.com", "role": "admin"},
+  {"id": 9002, "name": "Ece Tan", "email": "ece@acme.example.com", "role": "agent"}
+]}

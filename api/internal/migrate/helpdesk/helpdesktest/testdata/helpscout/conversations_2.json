@@ -1,0 +1,10 @@
+{"_embedded": {"conversations": [
+  {"id": 7003, "number": 303, "threads": 1, "type": "email", "folderId": 1, "status": "spam", "state": "published",
+   "subject": "Cheap watches", "preview": "Buy now", "mailboxId": 11, "assignee": null,
+   "createdBy": {"id": 803, "type": "customer", "email": "spam@example.com"},
+   "createdAt": "2026-09-10T10:00:00Z", "closedBy": 0, "closedAt": null, "userUpdatedAt": "2026-09-10T10:00:00Z",
+   "source": {"type": "email", "via": "customer"}, "tags": [], "cc": [], "bcc": [],
+   "primaryCustomer": {"id": 803, "type": "customer", "first": "", "last": "", "email": "spam@example.com"},
+   "customFields": [], "_embedded": {"threads": []}}
+]}, "_links": {"self": {"href": "https://api.helpscout.net/v2/conversations?page=2"}},
+ "page": {"size": 25, "totalElements": 3, "totalPages": 2, "number": 2}}

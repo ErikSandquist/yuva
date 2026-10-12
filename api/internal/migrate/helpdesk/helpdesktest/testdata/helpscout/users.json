@@ -1,0 +1,4 @@
+{"_embedded": {"users": [
+  {"id": 501, "firstName": "Lale", "lastName": "Ak", "email": "lale@hs.example.com", "role": "owner", "type": "user"},
+  {"id": 502, "firstName": "Mert", "lastName": "Can", "email": "mert@hs.example.com", "role": "user", "type": "user"}
+]}, "_links": {"self": {"href": "https://api.helpscout.net/v2/users"}}, "page": {"size": 50, "totalElements": 2, "totalPages": 1, "number": 1}}

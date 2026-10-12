@@ -1,0 +1,2 @@
+{"id": 802, "firstName": "Kerem", "lastName": "Aslan", "gender": "unknown", "createdAt": "2026-08-20T10:00:00Z",
+ "_embedded": {"emails": [{"id": 3, "value": "kerem@example.net", "type": "work"}], "phones": []}}

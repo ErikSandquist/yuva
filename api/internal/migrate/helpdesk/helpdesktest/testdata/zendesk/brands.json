@@ -1,0 +1,4 @@
+{"brands": [
+  {"id": 360001, "name": "Acme", "subdomain": "acme", "brand_url": "https://acme.zendesk.com", "default": true, "active": true},
+  {"id": 360002, "name": "Acme Billing", "subdomain": "acme-billing", "brand_url": "https://acme-billing.zendesk.com", "default": false, "active": true}
+], "next_page": null, "previous_page": null, "count": 2}

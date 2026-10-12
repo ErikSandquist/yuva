@@ -1,0 +1,15 @@
+{"comments": [
+  {"id": 70005, "type": "Comment", "author_id": 102, "public": true, "created_at": "2026-08-10T09:00:00Z",
+   "body": "Please send me a copy of invoice 2026-17.", "plain_body": "Please send me a copy of invoice 2026-17.",
+   "html_body": "<div class=\"zd-comment\"><p>Please send me a copy of invoice 2026-17.</p></div>",
+   "attachments": [
+     {"id": 80003, "file_name": "order.txt", "content_type": "text/plain", "size": 9, "inline": false,
+      "content_url": "https://p12.zdusercontent.com/attachment/80003/order.txt"}
+   ], "via": {"channel": "web"}},
+  {"id": 70006, "type": "Comment", "author_id": 9001, "public": true, "created_at": "2026-08-11T09:30:00Z",
+   "body": "Here it is.", "plain_body": "Here it is.", "html_body": "<div class=\"zd-comment\"><p>Here it is.</p></div>",
+   "attachments": [], "via": {"channel": "web"}}
+], "users": [
+  {"id": 102, "name": "Bob Stone", "email": "bob@example.net", "role": "end-user"},
+  {"id": 9001, "name": "Deniz Kaya", "email": "deniz@acme.example.com", "role": "admin"}
+], "meta": {"has_more": false, "after_cursor": null, "before_cursor": null}, "links": {"next": null, "prev": null}}

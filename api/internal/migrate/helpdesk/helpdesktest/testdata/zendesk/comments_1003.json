@@ -1,0 +1,7 @@
+{"comments": [
+  {"id": 70007, "type": "VoiceComment", "author_id": 104, "public": true, "created_at": "2026-09-20T12:00:00Z",
+   "body": "Call: wants an export to CSV.", "plain_body": "Call: wants an export to CSV.",
+   "html_body": "<p>Call: wants an export to CSV.</p>", "attachments": [], "via": {"channel": "voice"}}
+], "users": [
+  {"id": 104, "name": "Phone Caller", "email": null, "role": "end-user"}
+], "meta": {"has_more": true, "after_cursor": "p2", "before_cursor": null}, "links": {"next": "https://acme.zendesk.com/api/v2/tickets/1003/comments.json?page%5Bafter%5D=p2", "prev": null}}

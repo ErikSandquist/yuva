@@ -1,0 +1,4 @@
+{"recipient_addresses": [
+  {"id": 501, "brand_id": 360001, "email": "support@acme.example.com", "default": true, "forwarding_status": "verified"},
+  {"id": 502, "brand_id": 360002, "email": "billing@acme.example.com", "default": false, "forwarding_status": "verified"}
+], "meta": {"has_more": false, "after_cursor": null, "before_cursor": null}, "links": {"next": null, "prev": null}}

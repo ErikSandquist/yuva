@@ -1,0 +1,13 @@
+The fixtures in this directory were written for Yuva and contain no copied material and no data
+from a real account. They imitate what Zendesk's Support API and Help Scout's Mailbox API 2.0
+answer, shaped after the providers' public API documentation (developer.zendesk.com and
+developer.helpscout.com: response fields, cursor and page pagination, the rate-limit headers the
+mock server adds), with example.com, example.org and example.net addresses and invented names,
+ids and content.
+
+- zendesk/: users/me, brands, recipient addresses, agents, end users for users/show_many, two
+  pages of the incremental ticket export (cursor based) and the comments of each ticket with
+  their side-loaded users. Attachments point at the account's host, at *.zdusercontent.com and
+  at a host outside Zendesk.
+- helpscout/: users/me, mailboxes, users, two pages of conversations, each conversation's threads,
+  one e-mail thread's original source (customer_7001_1.eml), customers.

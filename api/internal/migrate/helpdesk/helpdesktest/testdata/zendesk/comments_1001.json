@@ -1,0 +1,24 @@
+{"comments": [
+  {"id": 70001, "type": "Comment", "author_id": 101, "public": true, "created_at": "2026-09-01T08:00:00Z",
+   "body": "I cannot sign in since yesterday.", "plain_body": "I cannot sign in since yesterday.",
+   "html_body": "<div class=\"zd-comment\"><p>I cannot sign in since yesterday.</p></div>",
+   "attachments": [
+     {"id": 80001, "file_name": "screenshot.png", "content_type": "image/png", "size": 68, "inline": false,
+      "content_url": "https://acme.zendesk.com/attachments/token/tok-80001/?name=screenshot.png"},
+     {"id": 80002, "file_name": "log.txt", "content_type": "text/plain", "size": 14, "inline": false,
+      "content_url": "https://files.example.org/uploads/log.txt"}
+   ], "via": {"channel": "email"}},
+  {"id": 70002, "type": "Comment", "author_id": 9002, "public": false, "created_at": "2026-09-01T09:00:00Z",
+   "body": "Checked the logs: the account is locked.", "plain_body": "Checked the logs: the account is locked.",
+   "html_body": "<div class=\"zd-comment\"><p>Checked the logs: the account is locked.</p></div>", "attachments": [], "via": {"channel": "web"}},
+  {"id": 70003, "type": "Comment", "author_id": 9002, "public": true, "created_at": "2026-09-01T09:05:00Z",
+   "body": "Your account is unlocked now.", "plain_body": "Your account is unlocked now.",
+   "html_body": "<div class=\"zd-comment\"><p>Your account is unlocked now.</p></div>", "attachments": [], "via": {"channel": "web"}},
+  {"id": 70004, "type": "Comment", "author_id": 103, "public": true, "created_at": "2026-09-02T10:00:00Z",
+   "body": "Same problem on my account.", "plain_body": "Same problem on my account.",
+   "html_body": "<div class=\"zd-comment\"><p>Same problem on my account.</p></div>", "attachments": [], "via": {"channel": "email"}}
+], "users": [
+  {"id": 101, "name": "Ayşe Yılmaz", "email": "ayse@example.org", "role": "end-user"},
+  {"id": 103, "name": "Carol Reed", "email": "carol@example.net", "role": "end-user"},
+  {"id": 9002, "name": "Ece Tan", "email": "ece@acme.example.com", "role": "agent"}
+], "meta": {"has_more": false, "after_cursor": "x", "before_cursor": null}, "links": {"next": null, "prev": null}}

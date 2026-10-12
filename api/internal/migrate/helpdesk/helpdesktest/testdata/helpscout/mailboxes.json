@@ -1,0 +1,4 @@
+{"_embedded": {"mailboxes": [
+  {"id": 11, "name": "Support", "slug": "a1b2c3", "email": "support@hs.example.com", "createdAt": "2025-01-01T00:00:00Z", "updatedAt": "2026-01-01T00:00:00Z"},
+  {"id": 12, "name": "Sales", "slug": "d4e5f6", "email": "sales@hs.example.com", "createdAt": "2025-01-01T00:00:00Z", "updatedAt": "2026-01-01T00:00:00Z"}
+]}, "_links": {"self": {"href": "https://api.helpscout.net/v2/mailboxes"}}, "page": {"size": 50, "totalElements": 2, "totalPages": 1, "number": 1}}

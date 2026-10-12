@@ -1,0 +1,4 @@
+{"users": [
+  {"id": 9001, "name": "Deniz Kaya", "email": "deniz@acme.example.com", "role": "admin", "active": true},
+  {"id": 9002, "name": "Ece Tan", "email": "ece@acme.example.com", "role": "agent", "active": true}
+], "meta": {"has_more": false, "after_cursor": null, "before_cursor": null}, "links": {"next": null, "prev": null}}

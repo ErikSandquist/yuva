@@ -1,0 +1,21 @@
+{"_embedded": {"threads": [
+  {"id": 1, "type": "customer", "status": "active", "state": "published", "action": {"type": "default", "text": "", "associatedEntities": {}},
+   "body": "<div>My order 4411 did not arrive.</div>", "source": {"type": "email", "via": "customer"},
+   "customer": {"id": 801, "first": "Zeynep", "last": "Demir", "email": "zeynep@example.org"},
+   "createdBy": {"id": 801, "type": "customer", "first": "Zeynep", "last": "Demir", "email": "zeynep@example.org"},
+   "assignedTo": null, "to": ["support@hs.example.com"], "cc": [], "bcc": [], "createdAt": "2026-09-05T07:00:00Z",
+   "_embedded": {"attachments": []}},
+  {"id": 2, "type": "note", "status": "active", "state": "published", "body": "<p>Carrier says it is in Ankara.</p>",
+   "source": {"type": "web", "via": "user"},
+   "createdBy": {"id": 502, "type": "user", "first": "Mert", "last": "Can", "email": "mert@hs.example.com"},
+   "createdAt": "2026-09-05T08:00:00Z", "_embedded": {"attachments": []}},
+  {"id": 3, "type": "message", "status": "active", "state": "published", "body": "<p>It arrives tomorrow; sorry for the wait.</p>",
+   "source": {"type": "email", "via": "user"},
+   "createdBy": {"id": 502, "type": "user", "first": "Mert", "last": "Can", "email": "mert@hs.example.com"},
+   "to": ["zeynep@example.org"], "createdAt": "2026-09-05T09:00:00Z", "_embedded": {"attachments": []}},
+  {"id": 4, "type": "lineitem", "status": "active", "state": "published", "action": {"type": "changed-ticket-assignee", "text": "Assigned to Mert"},
+   "source": {"type": "web", "via": "user"},
+   "createdBy": {"id": 501, "type": "user", "first": "Lale", "last": "Ak", "email": "lale@hs.example.com"},
+   "createdAt": "2026-09-05T07:30:00Z", "_embedded": {"attachments": []}}
+]}, "_links": {"self": {"href": "https://api.helpscout.net/v2/conversations/7001/threads"}},
+ "page": {"size": 25, "totalElements": 4, "totalPages": 1, "number": 1}}
