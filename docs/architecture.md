@@ -403,12 +403,23 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   `off` unless given), `update_chat_channel` (`GetChannel`, then `UpdateChannel` with the current
   chat settings and the added and removed origins, anonymous, discussions and greeting changed) and
   `get_install_snippet` (`GetChannel`; the code for `html`, `react`, `nextjs`, `nuxt`, `vue`,
-  `astro`, `shadcn` and the `docs-` variants, filled with `YUVA_PUBLIC_URL` and the public key, an
-  `npm install "useyuva@>=<server version>"` line where needed, where it goes and the guide on
+  `astro`, `shadcn`, the `docs-` variants and the `subscribe-` variants for `html`, `react`, `nuxt` and
+  `shadcn` with `list_ids` (public lists of the channel's inbox), filled with `YUVA_PUBLIC_URL` and
+  the public key, an `npm install "useyuva@>=<server version>"` line where needed, where it goes and the guide on
   GitHub). The templates live in the server (`mcp_setup.go`) with the panel's wording. The three
   writes are listed to owners, admins and keys with `inboxes:manage`. Calling a tool that is not
   listed answers `insufficient_scope` naming the scope to reconnect with, or the role or
   `bots_may_send` reason.
+- Broadcast tools: `list_mailing_lists`, `list_broadcasts`, `get_broadcast` (with the review and the
+  audience for a draft) and `get_broadcast_report` are listed by scope (`lists:read`,
+  `broadcasts:read`); `list_email_templates`, `create_design`, `update_design` (with `base_version`),
+  `preview_design` (the HTML as an embedded resource), `create_broadcast_draft` and
+  `send_test_broadcast` to owners, admins and keys with `broadcasts:write`. A test through an OAuth
+  token goes to the caller only; keys name members. `schedule_broadcast` is listed only to principals
+  with `broadcasts:send` while the workspace allows `broadcasts_by_keys`, and needs `send_at` and
+  `confirm_recipients` equal to the audience count it was shown; the approval gate applies. Reply
+  contacts in reports are customer content. Resource `yuva://broadcast/{id}`; prompts
+  `draft_newsletter` (never schedules) and `broadcast_report`.
 - Migration tools (`detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`,
   `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`,
   `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`,
@@ -1306,7 +1317,10 @@ Decisions:
 - **Law.** Consent records and their export serve GDPR Art. 7 and 15 and KVKK; objections are kept after
   erasure; the welcome receipt and the footer follow Türkiye's Regulation on Commercial Communication
   (Art. 7–10); links never expire (CAN-SPAM 30 days, CASL 60). Senders in Türkiye register their consents
-  in İYS themselves; Yuva exports them in İYS's fields.
+  in İYS themselves; a list's consent export with `format=iys` gives İYS's consent fields (`recipient`,
+  `type` `EPOSTA`, `source` `HS_WEB` for forms and the preference page and `HS_EORTAM` otherwise,
+  `status` `ONAY` or `RET`, `consentDate` in Türkiye's time, `recipientType` `BIREYSEL`), leaving
+  pending subscriptions out.
 - **Template gallery.** Six starters ship in `templates/email/` (MIT, listed in `LICENSING.md`; each a
   design JSON per language, assets and generated previews): newsletter, product update, announcement,
   welcome, event, digest. The panel shows them when creating a design; the website shows them at
