@@ -9,6 +9,7 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/google/jsonschema-go/jsonschema"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/oapi-codegen/nullable"
 
@@ -18,6 +19,7 @@ import (
 
 type mcpTool struct {
 	name   string
+	input  *jsonschema.Schema
 	ops    []string
 	scopes []oas.ApiKeyScope
 	allow  func(p principal) bool
@@ -92,7 +94,7 @@ func defineTool[In, Out any](name, title, description string, ann mcp.ToolAnnota
 		Name: name, Title: title, Description: description + customerContentRule, Annotations: &ann,
 		InputSchema: mcpSchema[In](enums), OutputSchema: mcpSchema[Out](nil),
 	}
-	t.name = name
+	t.name, t.input = name, tool.InputSchema.(*jsonschema.Schema)
 	t.add = func(srv *mcp.Server, c *mcpCall) {
 		mcp.AddTool(srv, tool, func(ctx context.Context, _ *mcp.CallToolRequest, in In) (*mcp.CallToolResult, Out, error) {
 			out, err := run(c.as(ctx), c, in)
@@ -691,4 +693,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, slices.Concat(mcpSetupTools, mcpBroadcastTools)...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools, mcpMigrationTools)...)

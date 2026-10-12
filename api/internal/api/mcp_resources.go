@@ -24,6 +24,7 @@ const (
 	mcpConvPrefix      = mcpURIPrefix + "conversation/"
 	mcpContactPrefix   = mcpURIPrefix + "contact/"
 	mcpBroadcastPrefix = mcpURIPrefix + "broadcast/"
+	mcpMigrationPrefix = mcpURIPrefix + "migration/"
 	mcpRecheckInterval = 30 * time.Second
 	mcpJSON            = "application/json"
 )
@@ -50,6 +51,12 @@ func addMCPResources(srv *mcp.Server, c *mcpCall) {
 		srv.AddResourceTemplate(&mcp.ResourceTemplate{
 			Name: "contact", Title: "Contact", URITemplate: mcpContactPrefix + "{id}", MIMEType: mcpJSON,
 			Description: "A contact, as get_contact returns it." + customerContentRule,
+		}, c.readResource)
+	}
+	if toolsListed(c.p, "get_migration") {
+		srv.AddResourceTemplate(&mcp.ResourceTemplate{
+			Name: "migration", Title: "Migration", URITemplate: mcpMigrationPrefix + "{id}", MIMEType: mcpJSON,
+			Description: "A migration of a mailbox into Yuva with its progress, dry run, folders and switch, as get_migration returns it; updated on every change of state.",
 		}, c.readResource)
 	}
 	if mayReadBroadcastResource(c.p) {
@@ -89,7 +96,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix, mcpMigrationPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -136,6 +143,12 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, errInsufficientScope(oas.BroadcastsRead)
 		}
 		return c.getBroadcast(ctx, id)
+	case mcpMigrationPrefix:
+		t, _ := mcpToolNamed("get_migration")
+		if err := t.refusal(c.p); err != nil {
+			return nil, err
+		}
+		return c.getMigration(ctx, id)
 	default:
 		if err := keyMayCall(c.p, "GetContact"); err != nil {
 			return nil, err
@@ -272,6 +285,16 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 		}
 		if json.Unmarshal(e.Data, &b) == nil {
 			uris = append(uris, mcpBroadcastPrefix+b.Broadcast.ID.String())
+		}
+	}
+	if e.Type == eventMigrationUpdated {
+		var mu struct {
+			Migration struct {
+				ID uuid.UUID `json:"id"`
+			} `json:"migration"`
+		}
+		if json.Unmarshal(e.Data, &mu) == nil {
+			uris = append(uris, mcpMigrationPrefix+mu.Migration.ID.String())
 		}
 	}
 	if e.Type == realtime.ContactUpdated || e.Type == realtime.ContactDeleted {

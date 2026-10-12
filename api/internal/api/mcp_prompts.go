@@ -47,6 +47,7 @@ func addMCPPrompts(srv *mcp.Server, c *mcpCall) {
 		})
 	}
 	addBroadcastPrompts(srv, c)
+	addMigrationPrompt(srv, c)
 	if keyMayCall(c.p, "ListConversations") != nil {
 		return
 	}
