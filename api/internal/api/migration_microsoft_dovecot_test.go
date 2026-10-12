@@ -20,7 +20,7 @@ import (
 // xoauth2Target reads YUVA_TEST_XOAUTH2_URL (imaps://:password@127.0.0.1:59994, the migrate-test
 // Dovecot that signs in XOAUTH2 tokens by asking the fake identity platform), its certificate
 // for outlook.office365.com (YUVA_TEST_XOAUTH2_CERT), the address that Dovecot asks about tokens
-// (YUVA_TEST_XOAUTH2_INTROSPECTION, 127.0.0.1:59980) and YUVA_TEST_IMAP_FIXTURES, which it serves.
+// (YUVA_TEST_XOAUTH2_INTROSPECTION, 127.0.0.1:29980) and YUVA_TEST_IMAP_FIXTURES, which it serves.
 func xoauth2Target(t *testing.T) (addr, pass string, cert []byte, introspection, fixtures string) {
 	t.Helper()
 	raw, certFile := os.Getenv("YUVA_TEST_XOAUTH2_URL"), os.Getenv("YUVA_TEST_XOAUTH2_CERT")

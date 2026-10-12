@@ -42,7 +42,7 @@ jobs:
       YUVA_TEST_IMAP_FIXTURES: /tmp/yuva-migrate-fixtures
       YUVA_TEST_XOAUTH2_URL: imaps://:migrate-test-only@127.0.0.1:59994
       YUVA_TEST_XOAUTH2_CERT: /tmp/yuva-xoauth2/tls.crt
-      YUVA_TEST_XOAUTH2_INTROSPECTION: 127.0.0.1:59980
+      YUVA_TEST_XOAUTH2_INTROSPECTION: 127.0.0.1:29980
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-go@v5

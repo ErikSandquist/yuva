@@ -75,11 +75,11 @@ services:
       - "127.0.0.1:59143:31143"
 
   # The same mailboxes over AUTHENTICATE XOAUTH2, for the Sign in with Microsoft tests: Dovecot asks
-  # the test's fake Microsoft identity platform at 127.0.0.1:59980 about each token, so it shares
+  # the test's fake Microsoft identity platform at 127.0.0.1:29980 about each token, so it shares
   # the host's network and listens on 127.0.0.1:59994. Make its certificate for
   # outlook.office365.com in the directory named by YUVA_XOAUTH2_TLS (as the api job in
   # .github/workflows/ci.yml does), then set YUVA_TEST_XOAUTH2_URL=imaps://:migrate-test-only@127.0.0.1:59994,
-  # YUVA_TEST_XOAUTH2_CERT=<dir>/tls.crt and YUVA_TEST_XOAUTH2_INTROSPECTION=127.0.0.1:59980.
+  # YUVA_TEST_XOAUTH2_CERT=<dir>/tls.crt and YUVA_TEST_XOAUTH2_INTROSPECTION=127.0.0.1:29980.
   dovecot-xoauth2:
     image: dovecot/dovecot:2.4.4
     profiles: [migrate-test]
