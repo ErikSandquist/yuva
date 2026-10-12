@@ -361,9 +361,9 @@ func (s *Server) FinishMigration(ctx context.Context, req oas.FinishMigrationReq
 			if err := q.ClearMigrationLease(ctx, store.ClearMigrationLeaseParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID}); err != nil {
 				return err
 			}
-			by := "member"
+			by := "request"
 			if force && cur.VerifiedAt == nil {
-				by = "member_unverified"
+				by = "request_unverified"
 			}
 			if m, err = s.completeMigration(ctx, q, events, &p, cur, "", by); err != nil {
 				return err
