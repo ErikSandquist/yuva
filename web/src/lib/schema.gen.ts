@@ -2637,6 +2637,15 @@ export interface paths {
          *     `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
          *     `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
          *
+         *     `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+         *     CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+         *     (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+         *     (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+         *     rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+         *     in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+         *     agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+         *     your own records before uploading; only commercial lists need registering.
+         *
          *     Scope: `lists:read`.
          */
         get: operations["exportListConsent"];
@@ -10394,6 +10403,8 @@ export interface components {
         SubscriptionId: string;
         /** @description `csv` (the default) or `json`. */
         ConsentFormat: "csv" | "json";
+        /** @description `csv` (the default), `json`, or `iys` for İYS's consent fields. */
+        ListConsentFormat: "csv" | "json" | "iys";
         DiscussionId: string;
         DiscussionPostId: string;
         /**
@@ -14699,8 +14710,8 @@ export interface operations {
     exportListConsent: {
         parameters: {
             query?: {
-                /** @description `csv` (the default) or `json`. */
-                format?: components["parameters"]["ConsentFormat"];
+                /** @description `csv` (the default), `json`, or `iys` for İYS's consent fields. */
+                format?: components["parameters"]["ListConsentFormat"];
                 since?: string;
             };
             header?: {

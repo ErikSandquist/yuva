@@ -6,14 +6,16 @@ import { ErrorLine } from "@/components/common/ErrorLine"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-export type ExportFormat = "csv" | "json"
+export type ExportFormat = "csv" | "json" | "iys"
 
-export function ExportButtons({
+export function ExportButtons<F extends ExportFormat = "csv" | "json">({
   run,
   className,
   testId,
+  formats = ["csv", "json"] as readonly ExportFormat[] as readonly F[],
 }: {
-  run: (format: ExportFormat) => Promise<void>
+  run: (format: F) => Promise<void>
+  formats?: readonly F[]
   className?: string
   testId?: string
 }) {
@@ -21,7 +23,7 @@ export function ExportButtons({
   return (
     <div className={cn("flex flex-col gap-2", className)}>
       <div className="flex flex-wrap gap-2">
-        {(["csv", "json"] as const).map((f) => (
+        {formats.map((f) => (
           <Button
             key={f}
             type="button"
@@ -32,7 +34,13 @@ export function ExportButtons({
             data-testid={testId && `${testId}-${f}`}
           >
             <DownloadIcon />
-            {f === "csv" ? <Trans>Download CSV</Trans> : <Trans>Download JSON</Trans>}
+            {f === "csv" ? (
+              <Trans>Download CSV</Trans>
+            ) : f === "json" ? (
+              <Trans>Download JSON</Trans>
+            ) : (
+              <Trans>Download for İYS</Trans>
+            )}
           </Button>
         ))}
       </div>

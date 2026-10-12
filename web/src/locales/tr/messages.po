@@ -2382,6 +2382,10 @@ msgid "Download CSV"
 msgstr "CSV indir"
 
 #: src/components/common/ExportButtons.tsx
+msgid "Download for İYS"
+msgstr "İYS için indir"
+
+#: src/components/common/ExportButtons.tsx
 msgid "Download JSON"
 msgstr "JSON indir"
 
@@ -7092,6 +7096,10 @@ msgstr "Gelen kutusu sonradan değiştirilemez."
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks."
 msgstr "Gelen kutusunun henüz resmi adı ya da posta adresi yok. Yasanın istediği gibi her bülten bunlarla biter."
+
+#: src/features/broadcasts/ListSettings.tsx
+msgid "The İYS file has one row per subscriber in İYS's columns, ONAY for subscribed and RET for unsubscribed, for Turkish senders to upload to İYS themselves. Pending subscriptions are left out."
+msgstr "İYS dosyası, İYS'nin sütunlarıyla abone başına bir satır içerir: abone olanlar için ONAY, ayrılanlar için RET. İzinleri İYS'ye kendiniz yüklemeniz içindir. Onay bekleyen abonelikler dosyaya alınmaz."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "The key sees only these inboxes and cannot manage inboxes, webhooks or the workspace."
