@@ -8,3 +8,6 @@ The fixtures in this directory were written for Yuva and contain no copied mater
   documents, with placeholder addresses and ids filled in by the tests.
 - arf_abuse.eml: an abuse report in the Abuse Reporting Format (RFC 5965), written after the format
   the RFC describes, with example addresses and invented ids.
+- forwarding/gmail_confirmation.eml: a Gmail forwarding confirmation written after the format Gmail
+  sends to a forwarding address (subject with the code, the code and the vf- link in the text),
+  with example addresses, an invented code and an invented link token.
