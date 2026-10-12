@@ -623,7 +623,7 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusAccepted)
 		return
 	}
-	addr, err := netip.ParseAddr(s.clientIP(r))
+	addr, err := netip.ParseAddr(s.visitorIP(r))
 	if err != nil {
 		drop(analytics.ReasonInvalid, len(keep))
 		w.WriteHeader(http.StatusAccepted)
@@ -731,6 +731,50 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		a.buffer.Count(prop.WorkspaceID, prop.ID, day, analytics.ReasonScrubbed, int64(scrubbed))
 	}
 	w.WriteHeader(http.StatusAccepted)
+}
+
+var sharedAddressSpace = netip.MustParsePrefix("100.64.0.0/10")
+
+// visitorIP is the connecting address, or the visitor's address in front of it when the connecting
+// address is the site's own proxy for the script and collect endpoint (X-Forwarded-For). Hosted
+// customers cannot configure trusted proxies; a forged entry only moves the sender's own events.
+func (s *Server) visitorIP(r *http.Request) string {
+	conn := s.clientIP(r)
+	c, err := netip.ParseAddr(conn)
+	if err != nil {
+		return conn
+	}
+	c = c.Unmap()
+	var hops []string
+	for _, v := range r.Header.Values("X-Forwarded-For") {
+		for h := range strings.SplitSeq(v, ",") {
+			if h = strings.TrimSpace(h); h != "" {
+				hops = append(hops, h)
+			}
+		}
+	}
+	if len(hops) == 0 {
+		return conn
+	}
+	pick := hops[0]
+	for i := len(hops) - 1; i >= 0; i-- {
+		if a, err := netip.ParseAddr(hops[i]); err == nil && a.Unmap() == c {
+			if i == 0 {
+				return conn
+			}
+			pick = hops[i-1]
+			break
+		}
+	}
+	a, err := netip.ParseAddr(pick)
+	if err != nil {
+		return conn
+	}
+	a = a.Unmap()
+	if a.Zone() != "" || !a.IsGlobalUnicast() || a.IsPrivate() || sharedAddressSpace.Contains(a) {
+		return conn
+	}
+	return a.String()
 }
 
 // visitInfo describes a new visit: its source and channel, its location from the shortened address
