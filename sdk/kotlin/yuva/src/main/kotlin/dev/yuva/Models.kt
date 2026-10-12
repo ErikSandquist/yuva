@@ -195,6 +195,27 @@ data class YuvaConversationStarted(val conversation: YuvaConversation, val messa
 @Serializable
 data class YuvaReadState(val conversationId: String, val lastReadMessageId: String? = null, val unread: Boolean)
 
+@Serializable
+enum class YuvaSubscriptionState(val value: String) {
+    @SerialName("pending") PENDING("pending"),
+    @SerialName("subscribed") SUBSCRIBED("subscribed"),
+    @SerialName("unsubscribed") UNSUBSCRIBED("unsubscribed"),
+}
+
+@Serializable
+data class YuvaMailingList(
+    val id: String,
+    val name: String,
+    val description: String = "",
+    val doubleOptIn: Boolean = false,
+)
+
+@Serializable
+data class YuvaSubscription(val list: YuvaMailingList, val state: YuvaSubscriptionState? = null)
+
+@Serializable
+internal data class SubscriptionStatus(val state: YuvaSubscriptionState)
+
 class YuvaUpload(val filename: String, val contentType: String, val data: ByteArray)
 
 sealed interface YuvaEvent {

@@ -20,36 +20,57 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
 
-private class MemoryStore(private var value: StoredSession = StoredSession()) : SessionStorage {
+internal class MemoryStore(private var value: StoredSession = StoredSession()) : SessionStorage {
     @Synchronized override fun load() = value
     @Synchronized override fun save(stored: StoredSession) { value = stored }
     @Synchronized override fun clear() { value = StoredSession() }
 }
 
-private data class Recorded(val method: String, val path: String, val bearer: String?, val identityToken: String?)
+internal data class Recorded(
+    val method: String,
+    val path: String,
+    val bearer: String?,
+    val identityToken: String?,
+    val consentText: String? = null,
+)
 
-private class FakeServer : Interceptor {
+internal class FakeServer : Interceptor {
     val requests = mutableListOf<Recorded>()
     @Volatile var offline = false
     private var issued = 0
+    private val identifiedTokens = mutableSetOf<String>()
 
     @Synchronized override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val text = request.body?.let { Buffer().also(it::writeTo).readUtf8() }.orEmpty()
-        val identity = runCatching {
-            YuvaClient.json.parseToJsonElement(text).jsonObject["identity_token"]?.jsonPrimitive?.contentOrNull
-        }.getOrNull()
+        val fields = runCatching { YuvaClient.json.parseToJsonElement(text).jsonObject }.getOrNull()
+        val identity = fields?.get("identity_token")?.jsonPrimitive?.contentOrNull
         requests += Recorded(
             request.method,
             request.url.encodedPath,
             request.header("Authorization")?.removePrefix("Bearer "),
             identity,
+            fields?.get("consent_text")?.jsonPrimitive?.contentOrNull,
         )
         if (offline) throw IOException("offline")
-        val (code, body) = when (request.method to request.url.encodedPath) {
-            "DELETE" to "/client/v1/session" -> 204 to ""
-            "POST" to "/client/v1/session" -> 201 to session("t${++issued}", identity != null)
-            "GET" to "/client/v1/session" -> 200 to session(null, false)
+        val path = request.url.encodedPath
+        val subscription = path.startsWith("/client/v1/subscriptions/")
+        val (code, body) = when {
+            request.method == "DELETE" && path == "/client/v1/session" -> 204 to ""
+            request.method == "POST" && path == "/client/v1/session" -> {
+                val token = "t${++issued}"
+                if (identity != null) identifiedTokens += token
+                201 to session(token, identity != null)
+            }
+            request.method == "GET" && path == "/client/v1/session" -> 200 to session(null, false)
+            request.method == "GET" && path == "/client/v1/subscriptions" -> 200 to SUBSCRIPTIONS
+            request.method == "PUT" && subscription ->
+                if (request.header("Authorization")?.removePrefix("Bearer ") in identifiedTokens) {
+                    200 to """{"state":"${if (path.endsWith("/double")) "pending" else "subscribed"}"}"""
+                } else {
+                    403 to """{"status":403,"code":"identity_required","detail":"only signed-in users"}"""
+                }
+            request.method == "DELETE" && subscription -> 204 to ""
             else -> 404 to ""
         }
         return Response.Builder()
@@ -70,9 +91,13 @@ private class FakeServer : Interceptor {
     }
 }
 
-private const val IDENTITY_TOKEN = "e30.eyJzdWIiOiJ1MSJ9.sig"
+private const val SUBSCRIPTIONS = """{"items":[""" +
+    """{"list":{"id":"news","name":"News","description":"Monthly","double_opt_in":false},"state":"subscribed"},""" +
+    """{"list":{"id":"double","name":"Beta","description":"","double_opt_in":true}}]}"""
 
-private fun client(
+internal const val IDENTITY_TOKEN = "e30.eyJzdWIiOiJ1MSJ9.sig"
+
+internal fun client(
     server: FakeServer,
     store: MemoryStore,
     maxAttachmentSize: Long = YuvaConfiguration.DEFAULT_MAX_ATTACHMENT_SIZE,

@@ -194,6 +194,20 @@ class YuvaClient internal constructor(
     suspend fun setContactEmail(email: String): YuvaContact =
         request("PUT", "client/v1/contact/email", body = Body(mapOf("email" to email)))
 
+    suspend fun subscriptions(): List<YuvaSubscription> =
+        request<YuvaPage<YuvaSubscription>>("GET", "client/v1/subscriptions").items
+
+    suspend fun subscribe(listId: String, consentText: String): YuvaSubscriptionState =
+        request<SubscriptionStatus>(
+            "PUT",
+            "client/v1/subscriptions/$listId",
+            body = Body(mapOf("consent_text" to consentText)),
+        ).state
+
+    suspend fun unsubscribe(listId: String) {
+        requestRaw("DELETE", "client/v1/subscriptions/$listId")
+    }
+
     suspend fun attachment(id: String): ByteArray = requestRaw("GET", "client/v1/attachments/$id")
 
     suspend fun sendFeedback(
