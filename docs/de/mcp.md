@@ -119,7 +119,8 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (Inhaber und Admins) | `inboxes:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
-| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
+| `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
 | `schedule_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
 
 Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `draft_pending`.

@@ -412,10 +412,10 @@ re-checks its token every 30 seconds and ends when the token stops working. The 
   `bots_may_send` reason.
 - Broadcast tools: `list_mailing_lists`, `list_broadcasts`, `get_broadcast` (with the review and the
   audience for a draft) and `get_broadcast_report` are listed by scope (`lists:read`,
-  `broadcasts:read`); `list_email_templates`, `create_design`, `update_design` (with `base_version`),
-  `preview_design` (the HTML as an embedded resource), `create_broadcast_draft` and
-  `send_test_broadcast` to owners, admins and keys with `broadcasts:write`. A test through an OAuth
-  token goes to the caller only; keys name members. `schedule_broadcast` is listed only to principals
+  `broadcasts:read`); `list_email_templates` and `preview_design` (the HTML as an embedded resource)
+  with `broadcasts:read`, and `create_design`, `update_design` (with `base_version`),
+  `create_broadcast_draft` and `send_test_broadcast` with `broadcasts:write`, are listed only to
+  owners, admins and keys. A test through an OAuth token goes to the caller only; keys name members. `schedule_broadcast` is listed only to principals
   with `broadcasts:send` while the workspace allows `broadcasts_by_keys`, and needs `send_at` and
   `confirm_recipients` equal to the audience count it was shown; the approval gate applies. Reply
   contacts in reports are customer content. Resource `yuva://broadcast/{id}`; prompts

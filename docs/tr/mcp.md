@@ -117,7 +117,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
-| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
+| `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
 | `schedule_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
 
 Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` döner.

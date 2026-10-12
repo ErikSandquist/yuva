@@ -116,7 +116,8 @@ answers `insufficient_scope` with the scope to grant.
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
-| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
+| `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
+| `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
 | `schedule_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
 
 With your draft open in a conversation, `send_reply` there answers `draft_pending`.
