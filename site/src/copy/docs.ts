@@ -28,6 +28,7 @@ export function docsCopy(i18n: I18n) {
     groups: {
       start: i18n._(msg`Get started`),
       channels: i18n._(msg`Channels`),
+      migrate: i18n._(msg`Move to Yuva`),
       integrate: i18n._(msg`Integrate`),
       project: i18n._(msg`Project`),
       more: i18n._(msg`More`),

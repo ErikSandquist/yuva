@@ -98,6 +98,22 @@ Ham mesajı `YUVA_INGRESS_SECRET` ile imzalayarak `/ingress/email` adresine POST
 değerini MTA'nızın `Authentication-Results` başlığına yazdığı authserv-id olarak atayın; yoksa DMARC
 kullanılmaz.
 
+## Yönlendirme adresi
+
+Sunucuda bir [yönlendirme alan adı](configuration.md#yuvaya-taşıma) varsa her e-posta kanalı ikinci bir
+adresten de e-posta alır: `<belirteç>@<yönlendirme alan adı>`. Bir posta kutusunu oraya yönlendirin; örneğin
+[Yuva'ya taşırken](migrate.md) başka bir sağlayıcıdan. Bir posta kutusunu kendi adresine yönlendirmek
+döngü yaratırdı; bu adres bu yüzden vardır. Ona gönderilen e-posta, kanalın kendi adresine gelen gibi işlenir.
+
+Adresi **Ayarlar → gelen kutusu → Müşteriler nereden yazıyor → E-posta** altında, bir kopyalama düğmesiyle
+bulursunuz. "Yenile" kanala yeni bir adres verir (`POST /v1/channels/{channelId}/forwarding-address/rotate`,
+`inboxes:manage`): eski adrese gelen e-posta o andan sonra reddedilir; bu yüzden sağlayıcıdaki yönlendirmeyi
+hemen değiştirin.
+
+İşletmeci yönlendirme alan adının e-postalarını Yuva'ya bir kez yöneltir; kanalların kendi alan adlarıyla
+aynı yoldan ([Gelen e-posta](#gelen-e-posta) altındaki üç yol). Yönlendirme alan adı yoksa kanalların
+yönlendirme adresi de yoktur.
+
 ## Giden SMTP
 
 Her e-posta kanalı kendi SMTP hesabıyla gönderir (SES, Postmark, kendi relay'iniz). Bunu kanal

@@ -64,6 +64,7 @@ products land in one shared inbox. You host it yourself: one Docker image and Po
 | | [Mailing lists](docs/lists.md) | | |
 | | [E-mail designs](docs/designs.md) | | |
 | | [Sending broadcasts](docs/broadcasts.md) | | |
+| | [Move to Yuva](docs/migrate.md) | | |
 
 How it is built: [architecture](docs/architecture.md). What changed: [changelog](CHANGELOG.md).
 

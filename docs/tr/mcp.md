@@ -95,6 +95,14 @@ Bir örnek:
 
 Asistan yalnızca sayıyı onayladıktan sonra zamanlar; göstermezse sayıyı sorun.
 
+## Bir posta kutusunu asistanla taşıyın
+
+`migrations:manage` yetkisiyle `move_to_yuva` prompt'unu posta kutusunun adresiyle çalıştırın. Asistan
+sağlayıcıyı bulur, taşımayı oluşturur ve uygulama şifresini girmeniz için size bir Yuva sayfası verir;
+sohbette asla şifre istemez. Kopyalamayı yalnızca deneme sonucunu onayladıktan sonra başlatır, sonra
+e-postaların nasıl yönlendirileceğini anlatır ve taşımayı bitirir. Adımlar [Yuva'ya taşı](migrate.md)
+sayfasındadır.
+
 ## Başvuru
 
 ### Araçlar
@@ -120,15 +128,18 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
 | `schedule_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
+| `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (sahipler ve yöneticiler) | `migrations:manage` |
 
 Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` döner.
+
+Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini girdiğiniz bir Yuva sayfası (`connect_url`) döndürür. `remove_migration_history` yıkıcı olarak işaretlidir ve `confirm_count` ister; bu, onayladığınız konuşma sayısıdır.
 
 ### Kaynaklar ve prompt'lar
 
 | Tür | Öğeler |
 |---|---|
-| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; abonelikler değişiklikleri izler. |
-| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
+| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile); abonelikler değişiklikleri izler. |
+| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile). |
 
 ### Güvenlik ve sınırlar
 

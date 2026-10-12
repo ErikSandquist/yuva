@@ -100,6 +100,24 @@ Standardtypen: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_SES_TOPIC_ARNS` | nicht gesetzt | SNS-Topic-ARNs, deren SES-Bounces und -Beschwerden `/ingress/ses` annimmt. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Eingehende E-Mails, die ein Absender pro Stunde an einen Workspace senden darf; weitere werden abgelehnt (`429`). |
 
+## Zu Yuva umziehen
+
+Für das [Umziehen eines Postfachs zu Yuva](migrate.md). Die Einstellungen, die einen Workspace begrenzen,
+gelten für gehostete Server; eine Anfrage über einer Grenze wird mit `422 hosted_limit` abgelehnt, das die
+Einstellung nennt.
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_FORWARDING_DOMAIN` | nicht gesetzt | Ein Domainname wie `forward.example.com`, dessen E-Mails Sie wie die Domains der Kanäle auf Yuva ausrichten (siehe [Eingehende E-Mails](email.md#eingehende-e-mails)). Dann hat jeder E-Mail-Kanal eine [Weiterleitungsadresse](email.md#weiterleitungsadresse) `<Token>@` dieser Domain. Nicht gesetzt, gibt es keine Weiterleitungsadressen, und der Umzug eines Postfachs stellt E-Mails nur per MX um. |
+| `YUVA_MIGRATION_SOURCES` | alle gebauten | Kommagetrennte Quellen, von denen Teams umziehen dürfen: `imap`, `file`, `zendesk`, `helpscout`. Bisher gebaut sind nur Postfächer über IMAP. Leer schaltet den Umzug aus. |
+| `YUVA_MIGRATION_WORKERS` | `2` | Umzüge, die pro Prozess gleichzeitig kopiert werden; `0` führt in diesem Prozess keine aus. |
+| `YUVA_MIGRATION_MAX_ACTIVE` | `0` | Höchstzahl der Umzüge eines Workspace, die gleichzeitig scannen, kopieren oder synchronisieren; `0` heißt unbegrenzt. |
+| `YUVA_MIGRATION_MAX_BYTES` | `0` | Höchstzahl Bytes, die ein Workspace pro Monat importieren darf; `0` heißt unbegrenzt. |
+| `YUVA_MIGRATION_MAX_MESSAGE_BYTES` | `52428800` (50 MiB) | Größte importierte Nachricht; größere werden übersprungen. |
+| `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Tage, die ein Umzug nach dem Kopieren das alte Postfach weiterliest; danach stoppt er und seine Zugangsdaten werden gelöscht. 1 bis 365. |
+| `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Tage, die die Aktivität eines Umzugs nach seinem Ende aufbewahrt wird. 1 bis 36500. |
+| `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Erlaubt einem Umzug auch die Verbindung zu Mailservern in einem privaten oder lokalen Netz (Entwicklung, Server im eigenen Netz). |
+
 ## Broadcasts
 
 [Broadcasts versenden](broadcasts.md). Listen und ihre Formulare funktionieren unabhängig davon, was hier steht.

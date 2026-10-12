@@ -110,6 +110,7 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `canned_replies:write` | Hazır yanıtlar |
 | `webhooks:manage` | Webhook'lar, teslimatları ve denemeleri |
 | `workspace:manage` | Çalışma alanı ayarları ve kullanım |
+| `migrations:manage` | [Bir posta kutusunu Yuva'ya taşıma](migrate.md): tespit, oluşturma, bağlama, tarama, başlatma, bitirme, aktarılan geçmişi kaldırma. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

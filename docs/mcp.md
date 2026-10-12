@@ -94,6 +94,13 @@ An example:
 
 The assistant schedules only after you confirm the count, so ask for the number if it does not show it.
 
+## Move a mailbox from an assistant
+
+With the scope `migrations:manage`, run the `move_to_yuva` prompt with the mailbox address. The assistant
+detects the provider, creates the migration and gives you a Yuva page to enter the app password; it never
+asks for one in the chat. It starts the copy only after you confirm the dry run, then explains how to
+forward the mail and finishes the migration. The steps are in [Move to Yuva](migrate.md).
+
 ## Reference
 
 ### Tools
@@ -119,15 +126,18 @@ answers `insufficient_scope` with the scope to grant.
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
 | `schedule_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
+| `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (owners and admins) | `migrations:manage` |
 
 With your draft open in a conversation, `send_reply` there answers `draft_pending`.
+
+No migration tool takes a password: `create_migration` returns a Yuva page (`connect_url`) where you enter the app password. `remove_migration_history` is marked destructive and needs `confirm_count`, the number of conversations you confirmed.
 
 ### Resources and prompts
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; subscriptions follow changes. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`); subscriptions follow changes. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`). |
 
 ### Safety and limits
 

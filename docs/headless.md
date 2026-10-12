@@ -107,6 +107,7 @@ A call without the needed scope answers `403 insufficient_scope`.
 | `canned_replies:write` | Canned replies |
 | `webhooks:manage` | Webhooks, their deliveries and attempts |
 | `workspace:manage` | Workspace settings and usage |
+| `migrations:manage` | [Moving a mailbox to Yuva](migrate.md): detect, create, connect, scan, start, finish, remove imported history. Never given to agents or to keys limited to inboxes. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Keys

@@ -98,6 +98,22 @@ Format steht in [edge/README.md](../../edge/README.md#ingress-contract). Setzen 
 `YUVA_INGRESS_AUTHSERV_ID` auf die Authserv-ID, die Ihr MTA in `Authentication-Results` schreibt,
 sonst wird DMARC nicht genutzt.
 
+## Weiterleitungsadresse
+
+Hat der Server eine [Weiterleitungsdomain](configuration.md#zu-yuva-umziehen), empfängt jeder E-Mail-Kanal
+E-Mails zusätzlich unter einer zweiten Adresse, `<Token>@<Weiterleitungsdomain>`. Leiten Sie ein Postfach
+dorthin weiter, zum Beispiel von einem anderen Anbieter, wenn Sie [zu Yuva umziehen](migrate.md). Ein Postfach
+an die eigene Adresse weiterzuleiten würde eine Schleife bilden; deshalb gibt es diese Adresse. E-Mails an sie
+werden wie E-Mails an die eigene Adresse des Kanals behandelt.
+
+Sie finden sie unter **Settings → den Posteingang → Channels → E-mail**, mit einer Kopieren-Taste. „Rotate“
+gibt dem Kanal eine neue (`POST /v1/channels/{channelId}/forwarding-address/rotate`, `inboxes:manage`):
+E-Mails an die alte Adresse werden danach abgelehnt, ändern Sie also die Weiterleitung beim Anbieter sofort.
+
+Der Betreiber richtet die E-Mails der Weiterleitungsdomain einmal auf Yuva aus, auf demselben Weg wie die
+Domains der Kanäle (die drei Wege unter [Eingehende E-Mails](#eingehende-e-mails)). Ohne Weiterleitungsdomain
+haben Kanäle keine Weiterleitungsadresse.
+
 ## Ausgehendes SMTP
 
 Jeder E-Mail-Kanal sendet über sein eigenes SMTP-Konto (SES, Postmark, Ihr eigenes Relay). Sie

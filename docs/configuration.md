@@ -99,6 +99,23 @@ Default types: `image/png,image/jpeg,image/gif,image/webp,image/heic,application
 | `YUVA_SES_TOPIC_ARNS` | unset | SNS topic ARNs whose SES bounces and complaints `/ingress/ses` accepts. |
 | `YUVA_EMAIL_SENDER_HOURLY_CAP` | `500` | Inbound e-mails one sender may send to a workspace per hour; more are refused (`429`). |
 
+## Moving to Yuva
+
+For [moving a mailbox to Yuva](migrate.md). The settings that limit a workspace apply to hosted servers;
+a request over one is refused with `422 hosted_limit` naming it.
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_FORWARDING_DOMAIN` | unset | A domain name such as `forward.example.com` whose mail you point at Yuva like the channels' domains (see [Inbound](email.md#inbound)). Every e-mail channel then has a [forwarding address](email.md#forwarding-address) `<token>@` this domain. Unset, there are no forwarding addresses and moving a mailbox switches mail by MX only. |
+| `YUVA_MIGRATION_SOURCES` | all built | Comma-separated sources teams may move from: `imap`, `file`, `zendesk`, `helpscout`. Mailboxes over IMAP are the only source built so far. Empty turns moving off. |
+| `YUVA_MIGRATION_WORKERS` | `2` | Migrations copied at once per process; `0` runs none in this process. |
+| `YUVA_MIGRATION_MAX_ACTIVE` | `0` | Most migrations of one workspace that scan, copy or sync at once; `0` is no limit. |
+| `YUVA_MIGRATION_MAX_BYTES` | `0` | Most bytes one workspace imports in a month; `0` is no limit. |
+| `YUVA_MIGRATION_MAX_MESSAGE_BYTES` | `52428800` (50 MiB) | Largest message imported; larger ones are skipped. |
+| `YUVA_MIGRATION_SYNC_MAX_DAYS` | `30` | Days a migration keeps reading the old mailbox after the copy; then it stops and its credentials are deleted. From 1 to 365. |
+| `YUVA_MIGRATION_AUDIT_DAYS` | `365` | Days a migration's activity is kept after it ended. From 1 to 36500. |
+| `YUVA_MIGRATION_ALLOW_PRIVATE` | `false` | Also lets a migration connect to mail servers on a private or local network (development, servers of your own network). |
+
 ## Broadcasts
 
 [Sending broadcasts](broadcasts.md). Lists and their forms work whatever these say.

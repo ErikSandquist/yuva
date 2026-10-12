@@ -93,6 +93,21 @@ Post the raw message to `/ingress/email`, signed with `YUVA_INGRESS_SECRET`. The
 [edge/README.md](../edge/README.md#ingress-contract). Set `YUVA_INGRESS_AUTHSERV_ID` to the
 authserv-id your MTA writes into `Authentication-Results`, or DMARC is not used.
 
+## Forwarding address
+
+When the server has a [forwarding domain](configuration.md#moving-to-yuva), every e-mail channel also
+receives mail at a second address, `<token>@<forwarding domain>`. Forward a mailbox there, for example
+from another provider while you [move to Yuva](migrate.md); forwarding a mailbox to its own address would
+loop, which is why this address exists. Mail sent to it is handled like mail to the channel's own address.
+
+You find it under **Settings → the inbox → Channels → E-mail**, with a copy button. "Rotate" gives the
+channel a new one (`POST /v1/channels/{channelId}/forwarding-address/rotate`, `inboxes:manage`): mail to
+the old address is refused from then on, so change the forwarding at the provider right away.
+
+The operator points the forwarding domain's mail at Yuva once, the same way as the channels' own
+domains (the three ways under [Inbound](#inbound)). Without a forwarding domain channels have no
+forwarding address.
+
 ## Outbound SMTP
 
 Each e-mail channel sends through its own SMTP account (SES, Postmark, your own relay). Set it in

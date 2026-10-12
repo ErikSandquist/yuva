@@ -112,6 +112,7 @@ Ein Aufruf ohne den nötigen Scope antwortet mit `403 insufficient_scope`.
 | `canned_replies:write` | Textbausteine |
 | `webhooks:manage` | Webhooks, ihre Zustellungen und Versuche |
 | `workspace:manage` | Workspace-Einstellungen und Nutzung |
+| `migrations:manage` | [Ein Postfach zu Yuva umziehen](migrate.md): erkennen, anlegen, verbinden, scannen, starten, abschließen, importierten Verlauf entfernen. Nie für Agents oder auf Posteingänge beschränkte Keys. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Schlüssel

@@ -789,6 +789,10 @@ msgid "More posts"
 msgstr "Diğer yazılar"
 
 #: src/copy/docs.ts
+msgid "Move to Yuva"
+msgstr "Yuva'ya taşı"
+
+#: src/copy/docs.ts
 msgid "Name"
 msgstr "Ad"
 

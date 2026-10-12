@@ -24,6 +24,10 @@ const groups = [
       "mobile",
     ],
   },
+  {
+    key: "migrate",
+    slugs: ["migrate", "migrate-gmail", "migrate-google-workspace", "migrate-yandex", "migrate-icloud", "migrate-imap"],
+  },
   { key: "integrate", slugs: ["identity", "webhooks", "headless", "mcp", "api"] },
   { key: "project", slugs: ["architecture", "roadmap"] },
 ] as const

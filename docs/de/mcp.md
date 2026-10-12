@@ -97,6 +97,14 @@ Ein Beispiel:
 
 Der Assistent plant erst, nachdem Sie die Zahl bestätigt haben; fragen Sie danach, wenn er sie nicht zeigt.
 
+## Ein Postfach von einem Assistenten umziehen lassen
+
+Starten Sie mit dem Scope `migrations:manage` den Prompt `move_to_yuva` mit der Postfachadresse. Der Assistent
+erkennt den Anbieter, legt den Umzug an und gibt Ihnen eine Yuva-Seite, auf der Sie das App-Passwort
+eingeben; im Chat fragt er nie danach. Er startet das Kopieren erst, wenn Sie den Probelauf bestätigt haben,
+erklärt dann, wie die E-Mails weitergeleitet werden, und schließt den Umzug ab. Die Schritte stehen unter
+[Zu Yuva umziehen](migrate.md).
+
 ## Referenz
 
 ### Tools
@@ -122,15 +130,18 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
 | `create_design`, `update_design`, `create_broadcast_draft`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
 | `schedule_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
+| `detect_mail_source`, `list_migrations`, `get_migration`, `create_migration`, `update_migration`, `test_migration_connection`, `scan_migration`, `preview_migration`, `start_migration`, `pause_migration`, `resume_migration`, `cancel_migration`, `finish_migration`, `retry_migration_items`, `list_migration_errors`, `send_migration_probe`, `remove_migration_history` (Owner und Admins) | `migrations:manage` |
 
 Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `draft_pending`.
+
+Kein Umzugs-Tool nimmt ein Passwort entgegen: `create_migration` liefert eine Yuva-Seite (`connect_url`), auf der Sie das App-Passwort eingeben. `remove_migration_history` ist als destruktiv markiert und braucht `confirm_count`, die Zahl der Unterhaltungen, die Sie bestätigt haben.
 
 ### Ressourcen und Prompts
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; Abonnements folgen Änderungen. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`); Abonnements folgen Änderungen. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`). |
 
 ### Sicherheit und Grenzen
 
