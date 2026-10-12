@@ -3,7 +3,7 @@
 // of each mailbox must produce. The output is deterministic; nothing is copied from real mail.
 // Everything is world-writable because Dovecot runs as its own user in the container.
 //
-//	go run ./internal/migrate/testdata/gen -out /path/to/fixtures [-large]
+//	go run ./internal/migrate/testdata/gen -out /path/to/fixtures [-large [-bulk 200000 -bulk-body 10000]]
 package main
 
 import (
@@ -207,13 +207,17 @@ func yerel() *mailbox {
 	return m
 }
 
-func bulk() *mailbox {
+// bulk is a mailbox of n one-message threads with bodies of about body bytes, plus a message over
+// the size limit and one with an attachment over it.
+func bulk(n, body int) *mailbox {
 	m := &mailbox{User: "bulk", Address: bulkAddr.email, TeamAddresses: []string{bulkAddr.email}, kinds: map[string]string{"INBOX": "inbox"}}
-	for i := range 10000 {
-		from := addr{"", fmt.Sprintf("customer%05d@example.org", i)}
+	filler := strings.Repeat("The quick brown fox jumps over the lazy dog. ", body/45+1)[:max(body, 0)]
+	for i := range n {
+		from := addr{"", fmt.Sprintf("customer%06d@example.org", i)}
+		date := at(300).Add(time.Duration(i) * 30 * time.Second)
 		m.messages = append(m.messages, message{folders: []string{"INBOX"}, from: from, to: []addr{bulkAddr}, subject: fmt.Sprintf("Question %d", i),
-			id: fmt.Sprintf("<bulk-%05d@example.org>", i), date: at(300 + i/10), body: fmt.Sprintf("Question number %d.", i)})
-		m.Threads = append(m.Threads, thread{Subject: fmt.Sprintf("Question %d", i), Contact: from.email, In: 1, Authors: []string{from.email}, Labels: []string{}, LastAt: at(300 + i/10)})
+			id: fmt.Sprintf("<bulk-%06d@example.org>", i), date: date, body: fmt.Sprintf("Question number %d.\r\n%s", i, filler)})
+		m.Threads = append(m.Threads, thread{Subject: fmt.Sprintf("Question %d", i), Contact: from.email, In: 1, Authors: []string{from.email}, Labels: []string{}, LastAt: date})
 	}
 	m.messages = append(m.messages,
 		message{folders: []string{"INBOX"}, from: bob, to: []addr{bulkAddr}, subject: "Huge video", id: "<huge-1@example.net>", date: at(2000), body: "60 MiB.",
@@ -409,13 +413,15 @@ func keys(m map[string]bool) []string {
 func main() {
 	out := flag.String("out", "", "directory to write the mailboxes and expected.json into")
 	large := flag.Bool("large", false, "also write the bulk mailbox: 10,000 messages, a 60 MiB message and a 26 MiB attachment")
+	bulkMessages := flag.Int("bulk", 10000, "with -large, the bulk mailbox's number of one-message threads")
+	bulkBody := flag.Int("bulk-body", 0, "with -large, about how many bytes of text each bulk message carries besides its first line")
 	flag.Parse()
 	if *out == "" {
 		log.Fatal("-out is required")
 	}
 	boxes := []*mailbox{acme(), yerel()}
 	if *large {
-		boxes = append(boxes, bulk())
+		boxes = append(boxes, bulk(*bulkMessages, *bulkBody))
 	}
 	for _, m := range boxes {
 		if err := write(*out, m); err != nil {
