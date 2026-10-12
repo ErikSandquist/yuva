@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ConsentExplainer } from "@/features/broadcasts/BroadcastsColumn"
 import { FormSnippets } from "@/features/broadcasts/FormSnippets"
 import { Growth } from "@/features/broadcasts/Growth"
+import { ListImports } from "@/features/broadcasts/Import"
 import { ListExport, ListSettings } from "@/features/broadcasts/ListSettings"
 import { listLink, useList } from "@/features/broadcasts/queries"
 import { Subscribers } from "@/features/broadcasts/Subscribers"
@@ -15,7 +16,7 @@ import type { MailingList } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-const TABS = ["subscribers", "growth", "form", "settings", "export"] as const
+const TABS = ["subscribers", "import", "growth", "form", "settings", "export"] as const
 type Tab = (typeof TABS)[number]
 
 export function ListsHome() {
@@ -56,6 +57,7 @@ export function ListPage() {
   const tab: Tab = TABS.includes(raw as Tab) ? (raw as Tab) : "subscribers"
   const names: Record<Tab, string> = {
     subscribers: t`Subscribers`,
+    import: t`Import`,
     growth: t`Growth`,
     form: t`Form`,
     settings: t`Settings`,
@@ -130,6 +132,7 @@ export function ListPage() {
         />
       </div>
       {tab === "subscribers" && <Subscribers list={l} />}
+      {tab === "import" && <ListImports list={l} />}
       {tab === "growth" && <Growth list={l} />}
       {tab === "form" && <FormSnippets list={l} />}
       {tab === "settings" && <ListSettings key={l.updated_at} list={l} />}

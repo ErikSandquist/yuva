@@ -117,6 +117,10 @@ msgstr "{actor} konuşmayı yeniden açtı"
 msgid "{actor} set the status to {status}"
 msgstr "{actor} durumu {status} olarak değiştirdi"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{added} added · {out} left out"
+msgstr "{added} eklendi · {out} dışarıda kaldı"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}, gönderen: {by}"
@@ -170,6 +174,10 @@ msgstr "{days, plural, one {Görebildiğiniz gelen kutularında son bir gün.} o
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
 msgstr "{days, plural, one {# gündür bekliyor} other {# gündür bekliyor}}"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{done} of {total} rows"
+msgstr "{done} / {total} satır"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
 msgstr "{down} yararlı değil"
@@ -194,6 +202,18 @@ msgstr "{first} konuşmayı değerlendirdi 👍"
 msgid "{first} rated the conversation 👎"
 msgstr "{first} konuşmayı değerlendirdi 👎"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
+msgstr "{from} alan adının bir SPF kaydı var. Geçip geçmediği, deneme e-postası okununca anlaşılır."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has no DMARC record. Publish one at _dmarc.{from}, at least v=DMARC1; p=none."
+msgstr "{from} alan adının DMARC kaydı yok. _dmarc.{from} adına en azından v=DMARC1; p=none içeren bir kayıt ekleyin."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has no SPF record. Publish one that includes your SMTP provider."
+msgstr "{from} alan adının SPF kaydı yok. SMTP sağlayıcınızı içeren bir kayıt ekleyin."
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{good} good"
 msgstr "{good} iyi"
@@ -213,6 +233,10 @@ msgstr "{hours, plural, one {# saattir bekliyor} other {# saattir bekliyor}}"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, one {# dakikadır bekliyor} other {# dakikadır bekliyor}}"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
+msgstr "{mxDomain} alan adının MX kaydı yok, bu yüzden bültenlere gelen yanıtlar ulaşamaz. E-posta hizmetinizin MX kayıtlarını ekleyin."
 
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
@@ -285,6 +309,10 @@ msgstr "Haber verilecek: {names}"
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# açık} other {# açık}}"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{out, plural, one {# row is left out} other {# rows are left out}}"
+msgstr "{out, plural, one {# satır dışarıda kalıyor} other {# satır dışarıda kalıyor}}"
+
 #: src/features/reports/ReportsColumn.tsx
 msgid "{pct} satisfied"
 msgstr "{pct} memnun"
@@ -328,6 +356,14 @@ msgstr "{replies, plural, one {# yanıt} other {# yanıt}}"
 msgid "{replies} replies"
 msgstr "{replies} yanıt"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
+msgstr "{rows} satır; {encoding} olarak okundu, sütunlar {delimiter} ile ayrılmış."
+
+#: src/features/broadcasts/Import.tsx
+msgid "{rows} rows."
+msgstr "{rows} satır."
+
 #: src/app/TeamMenu.tsx
 msgid "{satisfied} satisfied"
 msgstr "{satisfied} memnun"
@@ -344,6 +380,10 @@ msgstr "{all} alıcıdan {sent} tamamlandı"
 msgid "{share} helpful"
 msgstr "{share} yararlı"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{size} · pick another file"
+msgstr "{size} · başka bir dosya seçin"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
@@ -356,6 +396,10 @@ msgstr "{threads} açık tartışma"
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} yararlı"
+
+#: src/features/broadcasts/Import.tsx
+msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
+msgstr "{valid, plural, one {# adresi içe aktar} other {# adresi içe aktar}}"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -438,6 +482,10 @@ msgstr "Tek satır HTML ile sitenizde bir sohbet balonu"
 #: src/features/setup/AddChannelStep.tsx
 msgid "A chat channel named after the site is created for it, open to anonymous readers, with moderated discussions: you approve a reader's first post. Add your dev server's address and change the discussions later in the inbox settings."
 msgstr "Site için onun adını taşıyan, anonim okuyuculara açık ve tartışmaları denetimli bir sohbet kanalı oluşturulur: bir okuyucunun ilk gönderisini siz onaylarsınız. Geliştirme sunucunuzun adresini ekleyip tartışma ayarını sonra gelen kutusu ayarlarından değiştirebilirsiniz."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
+msgstr "Denetim, bülten hesabı üzerinden kanalın kendi adresine bir deneme e-postası gönderir, alan sunucunun onu nasıl değerlendirdiğini okur, ardından alan adının DNS kayıtlarına bakar. Saatte en fazla altı denetim yapılabilir."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -584,6 +632,10 @@ msgstr "Bir abonelik değişti"
 msgid "A teammate"
 msgstr "Bir ekip arkadaşı"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "A test mail is on its way to {address}. The result shows here when it arrives, usually within a minute and at most 10 minutes."
+msgstr "{address} adresine bir deneme e-postası yolda. Sonuç, e-posta ulaşınca burada görünür; bu genellikle bir dakika, en fazla 10 dakika sürer."
+
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresiz gönderilmez."
@@ -717,6 +769,7 @@ msgstr "Yuva'yı uygulamanıza ekleyin"
 msgid "Add Yuva to your documentation"
 msgstr "Yuva'yı dokümantasyonunuza ekleyin"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Added"
 msgstr "Eklendi"
@@ -782,6 +835,10 @@ msgstr "Sekme arka plandayken beni uyar"
 msgid "All"
 msgstr "Tümü"
 
+#: src/features/broadcasts/Import.tsx
+msgid "All imports"
+msgstr "Tüm içe aktarmalar"
+
 #: src/app/Palette.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/settings/webhooks/WebhookDialog.tsx
@@ -837,6 +894,18 @@ msgstr "İzinli"
 msgid "Allowed origins"
 msgstr "İzin verilen kaynaklar"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Already earlier in the file"
+msgstr "Dosyada daha önce geçiyor"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Already on the list"
+msgstr "Zaten listede"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Already on the list, left as they are"
+msgstr "Zaten listede, olduğu gibi bırakılır"
+
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Also for sign-in and notification e-mails"
 msgstr "Giriş ve bildirim e-postaları da bu dilde gelir"
@@ -889,6 +958,10 @@ msgstr "Davet, kişi o adrese gönderilen kodla giriş yaptığında kabul edili
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "Bir sahip ya da yönetici, Botlar gönderebilir ayarıyla asistanların kendi başına göndermesine izin verebilir."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "An owner or admin turns signing on once the record is published."
+msgstr "Kayıt yayımlanınca imzalamayı bir sahip ya da yönetici açar."
+
 #: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
 msgstr "Anonim"
@@ -910,6 +983,10 @@ msgstr "Bu adrese gelen postayı zaten başka bir kanal alıyor."
 #: src/app/TeamMenu.tsx
 msgid "another conversation"
 msgstr "başka bir konuşma"
+
+#: src/components/common/text.ts
+msgid "Another import of this workspace is running. Imports run one at a time; try again when it ends."
+msgstr "Bu çalışma alanında başka bir içe aktarma sürüyor. İçe aktarmalar sırayla çalışır; o bitince yeniden deneyin."
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
@@ -1025,6 +1102,10 @@ msgstr "{name} olarak, {when} tarihinden beri"
 msgid "As above ({current})"
 msgstr "Yukarıdaki gibi ({current})"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Ask everyone to confirm again"
+msgstr "Herkesten yeniden onay iste"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "Ask for a confirmation"
 msgstr "Onay iste"
@@ -1109,6 +1190,22 @@ msgstr "Deneme kaydı"
 msgid "Attempts"
 msgstr "Denemeler"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute"
+msgstr "Özellik"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute key for {header}"
+msgstr "{header} için özellik anahtarı"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute key, such as plan"
+msgstr "Özellik anahtarı, örneğin plan"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute keys use letters, digits, dots, dashes and underscores, at most 64."
+msgstr "Özellik anahtarında harf, rakam, nokta, tire ve alt çizgi kullanılır; en fazla 64 karakter."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Attribute of condition {n}"
 msgstr "{n}. koşulun özelliği"
@@ -1142,6 +1239,10 @@ msgstr "Müsait"
 msgid "available now"
 msgstr "şu an müsait"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Available until {until}"
+msgstr "{until} tarihine kadar indirilebilir"
+
 #: src/app/TeamMenu.tsx
 #: src/app/UserMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
@@ -1153,6 +1254,10 @@ msgstr "Uzakta"
 #: src/features/setup/SetupLayout.tsx
 msgid "Back"
 msgstr "Geri"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Back to columns"
+msgstr "Sütunlara dön"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -1230,10 +1335,19 @@ msgstr "Geri döndü"
 msgid "Bounced or reported as spam"
 msgstr "Geri döndü ya da spam bildirildi"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Bounced or reported as spam before"
+msgstr "Daha önce geri döndü ya da spam olarak bildirildi"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Bring subscribers who already agreed elsewhere. Each address is checked first and nothing is added until you start: invalid addresses, domains that take no mail, role addresses, duplicates and anyone who left or objected are left out."
+msgstr "Başka bir yerde zaten onay vermiş aboneleri getirin. Her adres önce denetlenir ve siz başlatana kadar hiçbir şey eklenmez: geçersiz adresler, e-posta almayan alan adları, rol adresleri, tekrarlar ve ayrılmış ya da itiraz etmiş herkes dışarıda bırakılır."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Broadcast"
 msgstr "Bülten"
 
+#: src/features/settings/channels/email/ChannelSendingPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Broadcast sending"
 msgstr "Bülten gönderimi"
@@ -1296,6 +1410,7 @@ msgstr "Her abone için ayrı bülten planlayabilir miyim?"
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/account/ConnectPage.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1314,6 +1429,10 @@ msgstr "“{name}” iptal edilsin mi?"
 msgid "Cancel broadcast"
 msgstr "Bülteni iptal et"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Cancel import"
+msgstr "İçe aktarmayı iptal et"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Cancel the broadcast"
@@ -1323,9 +1442,18 @@ msgstr "Bülteni iptal et"
 msgid "Cancel the broadcast before deleting it."
 msgstr "Silmeden önce bülteni iptal edin."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Cancel this import?"
+msgstr "Bu içe aktarma iptal edilsin mi?"
+
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Cancelled"
 msgstr "İptal edildi"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Cancelled. What was added before stays."
+msgstr "İptal edildi. Daha önce eklenenler kalır."
 
 #: src/app/Palette.tsx
 #: src/features/conversation/composer/CannedMenu.tsx
@@ -1384,9 +1512,41 @@ msgstr "Kanal eklendi"
 msgid "Channel removed"
 msgstr "Kanal kaldırıldı"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Check again"
+msgstr "Yeniden denetle"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Check again with these columns"
+msgstr "Bu sütunlarla yeniden denetle"
+
+#: src/features/settings/channels/email/EmailFields.tsx
+msgid "Check deliverability and set up DKIM"
+msgstr "Teslim edilebilirliği denetle ve DKIM kur"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Check DNS and start signing"
+msgstr "DNS'i denetle ve imzalamaya başla"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "E-postanızı kontrol edin"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Checked {when}"
+msgstr "Denetlendi: {when}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checked and waiting for an owner or admin to start it."
+msgstr "Denetlendi; bir sahip ya da yöneticinin başlatması bekleniyor."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checking every address…"
+msgstr "Her adres denetleniyor…"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checking the file"
+msgstr "Dosya denetleniyor"
 
 #: src/app/Gate.tsx
 msgid "Choose a workspace"
@@ -1513,6 +1673,18 @@ msgstr "Renk"
 msgid "Colours, fonts and width"
 msgstr "Renkler, yazı tipleri ve genişlik"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Column {n}"
+msgstr "{n}. sütun"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Columns"
+msgstr "Sütunlar"
+
+#: src/features/broadcasts/Import.tsx
+msgid "commas"
+msgstr "virgül"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Comparison of condition {n}"
 msgstr "{n}. koşulun karşılaştırması"
@@ -1526,9 +1698,17 @@ msgstr "Tamam"
 msgid "Conditions"
 msgstr "Koşullar"
 
+#: src/components/common/text.ts
+msgid "Confirm that everyone in the file agreed, and write where and when they did."
+msgstr "Dosyadaki herkesin onay verdiğini doğrulayın ve bunu nerede, ne zaman verdiklerini yazın."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Confirm the consent to add them."
 msgstr "Eklemek için izni onaylayın."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Confirm the consent to import the file."
+msgstr "Dosyayı içe aktarmak için onayı doğrulayın."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
@@ -1668,6 +1848,7 @@ msgstr "içerir"
 msgid "Content"
 msgstr "İçerik"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
@@ -1763,11 +1944,16 @@ msgstr "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
 msgid "Count clicks"
 msgstr "Tıklamaları say"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Create a key when your SMTP provider cannot sign with your domain or leaves the unsubscribe headers unsigned. Only the DNS record is shown; the private key never leaves the server."
+msgstr "SMTP sağlayıcınız alan adınızla imzalayamıyorsa ya da abonelikten çıkma başlıklarını imzasız bırakıyorsa bir anahtar oluşturun. Yalnızca DNS kaydı gösterilir; özel anahtar sunucudan hiç çıkmaz."
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
 msgstr "Taslak oluştur"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
 msgid "Create key"
 msgstr "Anahtar oluştur"
 
@@ -1799,6 +1985,10 @@ msgstr "Oluşturulma: {created}"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Created {created} by {by}"
 msgstr "Oluşturulma: {created}, oluşturan: {by}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "CSV file"
+msgstr "CSV dosyası"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Custom domain still shows as unverified"
@@ -1894,6 +2084,10 @@ msgstr "Taslağı sil"
 msgid "Delete inbox"
 msgstr "Gelen kutusunu sil"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Delete key"
+msgstr "Anahtarı sil"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Listeyi sil"
@@ -1918,6 +2112,10 @@ msgstr "Seçili bloğu sil"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Delete this canned reply?"
 msgstr "Bu hazır yanıt silinsin mi?"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Delete this DKIM key?"
+msgstr "Bu DKIM anahtarı silinsin mi?"
 
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note"
@@ -1974,6 +2172,20 @@ msgstr "Listeyi, aboneliklerini ve izin kayıtlarını siler. İleride gösterme
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
 msgstr "{name} silindiğinde gelen kutuları, kanalları, konuşmaları, kişileri, dosyaları, etiketleri, webhook'ları ve API anahtarları herkes için hemen silinir. Üyelerin hesapları kalır. Bu geri alınamaz."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Deliverability"
+msgstr "Teslim edilebilirlik"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Deliverability and DKIM"
+msgstr "Teslim edilebilirlik ve DKIM"
+
+#. placeholder {0}: ch.name
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Deliverability and DKIM of {0}"
+msgstr "{0} için teslim edilebilirlik ve DKIM"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Deliveries"
@@ -2081,13 +2293,41 @@ msgstr "Başlattığınız ya da yanıt yazdığınız tartışmalar"
 msgid "Display name"
 msgstr "Görünen ad"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "DKIM does not pass for the sending domain."
+msgstr "DKIM, gönderen alan adı için geçmiyor."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain} and signs the unsubscribe headers."
+msgstr "DKIM {dkimDomain} için geçiyor ve abonelikten çıkma başlıklarını imzalıyor."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain}, but the signature does not cover the unsubscribe headers, which Gmail and Yahoo ask for. Turn on Yuva DKIM below, or ask your provider."
+msgstr "DKIM {dkimDomain} için geçiyor, ancak imza Gmail ve Yahoo'nun istediği abonelikten çıkma başlıklarını kapsamıyor. Aşağıdan Yuva DKIM'i açın ya da sağlayıcınıza sorun."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain}, not for the sending domain {from}. Set up DKIM for {from} with your provider, or turn on Yuva DKIM below."
+msgstr "DKIM gönderen alan adı {from} için değil, {dkimDomain} için geçiyor. Sağlayıcınızda {from} için DKIM kurun ya da aşağıdan Yuva DKIM'i açın."
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "DMARC failed"
 msgstr "DMARC başarısız"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
+msgstr "DMARC başarısız: {from} için ne SPF ne de DKIM geçiyor. Yukarıdaki satırları düzeltin."
+
 #: src/features/setup/InstallStep.tsx
 msgid "DNS checklist"
 msgstr "DNS kontrol listesi"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
+msgstr "DNS, {name} adında henüz anahtarla yanıt vermiyor. Aşağıdaki kaydı ekleyin, sonra yeniden denetleyin."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
+msgstr "DNS, yukarıdaki adda henüz bu anahtarla yanıt vermiyor. Kaydı ekleyin, birkaç dakika bekleyin (bazı sağlayıcılarda daha uzun sürer) ve yeniden deneyin."
 
 #: src/features/conversation/Collision.tsx
 msgid "Do not both write."
@@ -2124,6 +2364,7 @@ msgstr "Belgeler"
 msgid "Does it work with server-side rendering?"
 msgstr "Sunucu tarafında oluşturmayla çalışıyor mu?"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
@@ -2147,6 +2388,10 @@ msgstr "JSON indir"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Download the original e-mail (.eml)"
 msgstr "Özgün e-postayı indir (.eml)"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Download the rows left out"
+msgstr "Dışarıda kalan satırları indir"
 
 #: src/components/common/text.ts
 msgid "Draft"
@@ -2202,6 +2447,7 @@ msgstr "E-posta"
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
 msgid "E-mail address"
@@ -2317,9 +2563,17 @@ msgstr "Yerleştirme kodu"
 msgid "Emoji"
 msgstr "Emoji"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Empty in the first rows"
+msgstr "İlk satırlarda boş"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Encryption"
 msgstr "Şifreleme"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Ended {finished}"
+msgstr "Bitti: {finished}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
@@ -2398,6 +2652,10 @@ msgstr "Tüm türler"
 msgid "Everyone has been answered."
 msgstr "Herkes yanıtlandı."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Everyone in this file agreed to receive {listName} from {inboxName}, and I can show how and when if asked."
+msgstr "Bu dosyadaki herkes {inboxName} tarafından gönderilen {listName} e-postalarını almayı kabul etti; istenirse bunun nasıl ve ne zaman olduğunu gösterebilirim."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
 msgstr "Listelerdeki herkes. Koşullar yalnızca özellikleri hepsine uyan kişileri tutar."
@@ -2448,11 +2706,16 @@ msgstr "son geçerlilik: {expires}"
 msgid "Export"
 msgstr "Dışa aktar"
 
+#: src/features/broadcasts/Import.tsx
+msgid "External id"
+msgstr "Dış kimlik"
+
 #: src/features/contact/MergePreview.tsx
 msgid "External ids"
 msgstr "Harici kimlikler"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Failed"
 msgstr "Başarısız"
 
@@ -2489,6 +2752,10 @@ msgstr "Bir dokümantasyon sayfasından gönderilen geri bildirim"
 msgid "Feedback sent from the app"
 msgstr "Uygulamadan gönderilen geri bildirim"
 
+#: src/features/broadcasts/Import.tsx
+msgid "File and consent"
+msgstr "Dosya ve onay"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
 msgstr "Denemeyi bir kişinin bilgileriyle doldur"
@@ -2518,6 +2785,10 @@ msgstr "Bitti"
 msgid "First message"
 msgstr "İlk mesaj"
 
+#: src/features/broadcasts/Import.tsx
+msgid "First name"
+msgstr "Ad"
+
 #: src/features/reports/ReportPages.tsx
 msgid "first replies"
 msgstr "ilk yanıt"
@@ -2529,6 +2800,10 @@ msgstr "ilk yanıt"
 #: src/app/TeamMenu.tsx
 msgid "first reply in {first}"
 msgstr "ilk yanıt {first}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "First rows of the file"
+msgstr "Dosyanın ilk satırları"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
@@ -2661,6 +2936,10 @@ msgstr "Starlight, VitePress, Docusaurus ve tüm seçeneklerle ayrıntılı rehb
 #: src/features/setup/InstallStep.tsx
 msgid "Full guide, with the screens and push notifications"
 msgstr "Ekranlar ve anlık bildirimlerle tam rehber"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Full name"
+msgstr "Ad soyad"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
@@ -2851,13 +3130,55 @@ msgstr "Fikir"
 msgid "Identity secret"
 msgstr "Kimlik anahtarı"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
+msgstr "DNS sağlayıcınız bir TXT metnini 255 karakterle sınırlıyorsa değeri tek bir kaydın birkaç metnine bölün."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Görsel açıklamaları"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListPage.tsx
 msgid "Import"
 msgstr "İçe aktarma"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import a CSV file"
+msgstr "CSV dosyası içe aktar"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import another file"
+msgstr "Başka bir dosya içe aktar"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import finished"
+msgstr "İçe aktarma bitti"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import from a CSV file"
+msgstr "CSV dosyasından içe aktar"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import steps"
+msgstr "İçe aktarma adımları"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Importing"
+msgstr "İçe aktarılıyor"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Importing…"
+msgstr "İçe aktarılıyor…"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Imports"
+msgstr "İçe aktarmalar"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Imports run one at a time in the workspace. Try again when the other one ends."
+msgstr "Çalışma alanında içe aktarmalar sırayla çalışır. Diğeri bitince yeniden deneyin."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
@@ -3048,6 +3369,10 @@ msgstr "Yuva'ya ulaştığı anda burada görünür."
 msgid "It stays a draft until you send or schedule it. Replies come to the inbox you pick."
 msgstr "Gönderene ya da zamanlayana kadar taslak kalır. Yanıtlar seçtiğiniz gelen kutusuna gelir."
 
+#: src/features/broadcasts/Import.tsx
+msgid "It stops within a moment. Subscribers it already added stay on the list."
+msgstr "Birkaç saniye içinde durur. Şimdiye kadar eklenen aboneler listede kalır."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Sizin adınıza, <0>{email}</0> olarak, yalnızca aşağıda izin verdiğiniz kadarıyla çalışacak."
@@ -3080,6 +3405,10 @@ msgstr "Az önce yazdı"
 msgid "Keep"
 msgstr "Koru"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Kept with every subscription from this file, as the record of their consent."
+msgstr "Bu dosyadan gelen her aboneliğin yanında, onay kaydı olarak saklanır."
+
 #: src/app/Palette.tsx
 #: src/app/UserMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -3107,6 +3436,10 @@ msgstr "Tür"
 msgid "Known"
 msgstr "Tanınan"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Known only from the receiving server’s results of the test mail."
+msgstr "Yalnızca alan sunucunun deneme e-postası için verdiği sonuçlardan anlaşılır."
+
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
@@ -3121,6 +3454,7 @@ msgstr "Etiketler (L)"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
@@ -3140,6 +3474,10 @@ msgstr "Diller"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
 msgstr "Son deneme"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Last name"
+msgstr "Soyad"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Last push failed: {failed}"
@@ -3195,6 +3533,7 @@ msgid "Leave the text, then the block"
 msgstr "Önce metinden, sonra bloktan çık"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
+#: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "Dışarıda kalanlar"
 
@@ -3281,6 +3620,7 @@ msgstr "Görselleri yükle"
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3337,6 +3677,10 @@ msgstr "Bakıyor · {where}"
 #: src/components/common/text.ts
 msgid "Low"
 msgstr "Düşük"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Lowercase letters, digits and dashes, not at the start or end."
+msgstr "Küçük harf, rakam ve tire; tire başta ya da sonda olamaz."
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Lowercase letters, digits and dashes."
@@ -3651,6 +3995,7 @@ msgstr "Profilim"
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -3698,6 +4043,10 @@ msgstr "Sunucu yöneticisinin onayı gerekiyor"
 msgid "Never"
 msgstr "Hiçbir zaman"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Never checked. Run a check before the first broadcast; the review warns until you do."
+msgstr "Hiç denetlenmedi. İlk bültenden önce bir denetim yapın; yapana kadar gözden geçirme uyarır."
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "never used"
@@ -3706,6 +4055,10 @@ msgstr "hiç kullanılmadı"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "Yeni"
+
+#: src/features/broadcasts/Import.tsx
+msgid "New addresses that get a confirmation mail"
+msgstr "Onay e-postası alacak yeni adresler"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "New API key"
@@ -3725,6 +4078,10 @@ msgstr "Yeni bülten ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Yeni hazır yanıt"
+
+#: src/features/broadcasts/Import.tsx
+msgid "New contacts created"
+msgstr "Oluşturulan yeni kişiler"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactPage.tsx
@@ -3811,6 +4168,10 @@ msgstr "<0>{title}</0> tartışmasında yeni yanıt"
 msgid "New signing secret"
 msgstr "Yeni imzalama anahtarı"
 
+#: src/features/broadcasts/Import.tsx
+msgid "New subscribers added"
+msgstr "Eklenecek yeni aboneler"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match"
 msgstr "Sonraki eşleşme"
@@ -3826,6 +4187,10 @@ msgstr "En yeni"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Newest first. Finished deliveries are kept for 7 days."
 msgstr "En yenisi başta. Tamamlanan gönderimler 7 gün saklanır."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
+msgstr "Mağazamızın ödeme sayfasındaki bülten kutucuğu, 2023–2026"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Next attempt"
@@ -3944,6 +4309,10 @@ msgstr "Bu sitelerin sayfalarının altında tartışma olmaz."
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "Henüz tartışma yok. Okuyucular tartışmaları dokümantasyon sayfalarınızın altında başlatır."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
+msgstr "Hiçbir DKIM imzası geçmedi, bu yüzden bülten gönderilemez. SMTP sağlayıcınızda DKIM kurun ya da aşağıdan Yuva DKIM'i açın."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "Bekleyen taslak yok. Bir asistanın, botun ya da ekip arkadaşının yazdığı yanıt taslakları, biri gönderene ya da silene kadar burada görünür."
@@ -3975,6 +4344,10 @@ msgstr "Bu sayfadan geri bildirim yok."
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "Gizli tartışma yok."
+
+#: src/features/broadcasts/Import.tsx
+msgid "No imports yet."
+msgstr "Henüz içe aktarma yok."
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "No labels yet"
@@ -4084,6 +4457,14 @@ msgstr "Bu kutuyu gören başka ekip arkadaşı yok"
 msgid "No test went out since the last change."
 msgstr "Son değişiklikten beri deneme gönderilmedi."
 
+#: src/features/broadcasts/Import.tsx
+msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
+msgstr "Hoş geldin e-postası gönderilmez. Her yeni adres onay bekler ve e-postadaki bağlantıya tıklayınca katılır."
+
+#: src/features/broadcasts/Import.tsx
+msgid "No welcome or confirmation mail is sent. Every subscription keeps the consent you declared and the import it came from."
+msgstr "Hoş geldin ya da onay e-postası gönderilmez. Her abonelik, beyan ettiğiniz onayı ve geldiği içe aktarmayı saklar."
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Bu gelen kutusunu henüz başka kimse göremiyor."
@@ -4095,6 +4476,10 @@ msgstr "Bugün henüz kimse yanıt vermedi ya da konuşma kapatmadı."
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody is on the list of recipients yet."
 msgstr "Alıcı listesinde henüz kimse yok."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Nobody is subscribed yet: each new address gets the list’s confirmation mail, spread over days by the daily sending limit, and joins only after clicking it."
+msgstr "Henüz kimse abone olmaz: her yeni adres, günlük gönderim sınırına göre günlere yayılarak listenin onay e-postasını alır ve ancak bağlantıya tıklayınca katılır."
 
 #: src/features/broadcasts/Growth.tsx
 msgid "Nobody joined or left in this window."
@@ -4143,6 +4528,10 @@ msgstr "Gizli değildir, web sayfalarınızın bir parçasıdır. Eski yerleşti
 msgid "Not a secret: it ships inside your app. Native apps send no origin, so the key is not tied to one."
 msgstr "Gizli değildir: uygulamanızın içinde dağıtılır. Yerel uygulamalar köken (origin) göndermediği için anahtar bir kökene bağlı değildir."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Not a valid e-mail address"
+msgstr "Geçerli bir e-posta adresi değil"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
@@ -4182,6 +4571,10 @@ msgstr "Hazır değil"
 msgid "Not shown"
 msgstr "Gösterilmez"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Not signing yet"
+msgstr "Henüz imzalamıyor"
+
 #: src/features/conversation/ChatView.tsx
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Not spam"
@@ -4215,9 +4608,17 @@ msgstr "Güncellemeden sonra notlar eşitlenmiyor"
 msgid "Nothing"
 msgstr "Hiçbiri"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Nothing from the file is added, and the uploaded file is deleted."
+msgstr "Dosyadan hiçbir şey eklenmez ve yüklenen dosya silinir."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Henüz bir şey olmadı."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
+msgstr "Henüz hiçbir şey eklenmiyor. Dosya okunuyor, her alan adının e-posta alıp almadığına bakılıyor, tekrarlar ve e-posta gönderilemeyecek adresler bulunuyor."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is assigned to you."
@@ -4400,6 +4801,10 @@ msgstr "Yalnızca bu listeyi almayı kabul etmiş kişileri ekleyin. Buraya gird
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
 msgstr "Yalnızca dili bunlardan biri olan kişiler."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Only DNS could be checked, not how receiving servers judge the mail."
+msgstr "Yalnızca DNS denetlenebildi; alan sunucuların e-postayı nasıl değerlendirdiği bilinmiyor."
 
 #: src/features/conversation/Feedback.tsx
 msgid "Only in the app"
@@ -4782,6 +5187,14 @@ msgstr "Bir kişi seçin"
 msgid "Pick a conversation"
 msgstr "Bir konuşma seçin"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Pick a CSV file, or drop it here"
+msgstr "Bir CSV dosyası seçin ya da buraya bırakın"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Pick a CSV file. Save a spreadsheet as CSV first."
+msgstr "Bir CSV dosyası seçin. Tabloyu önce CSV olarak kaydedin."
+
 #: src/components/common/text.ts
 msgid "Pick a design first."
 msgstr "Önce bir tasarım seçin."
@@ -4834,6 +5247,15 @@ msgstr "En az bir yetki seçin."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "En az birini seçin."
+
+#: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
+msgid "Pick the column that holds the e-mail addresses."
+msgstr "E-posta adreslerinin bulunduğu sütunu seçin."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Pick the file to import."
+msgstr "İçe aktarılacak dosyayı seçin."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -4969,6 +5391,10 @@ msgstr "Genel anahtar"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Dokümantasyon sayfalarınızın altındaki herkese açık tartışmalar, her durumda."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Publish this TXT record in your domain’s DNS:"
+msgstr "Alan adınızın DNS'ine bu TXT kaydını ekleyin:"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
 msgstr "Hemen yayımlanır ve takipçilere gönderilir."
@@ -5091,6 +5517,10 @@ msgstr "Okuma"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Ready"
 msgstr "Hazır"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Ready to import"
+msgstr "İçe aktarmaya hazır"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Ready to send"
@@ -5259,6 +5689,10 @@ msgstr "Yanıtlar kendi SMTP hesabınızdan gider. Yalnızca posta almak için s
 msgid "Replies the assistant writes are drafts: you or a teammate review them in the conversation and send them. It shows as you, via the assistant."
 msgstr "Asistanın yazdığı yanıtlar taslaktır: siz ya da bir ekip arkadaşınız konuşmada gözden geçirip gönderirsiniz. Yanıt, asistan aracılığıyla sizin adınıza görünür."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Replies to {mxDomain} are received by {hosts}."
+msgstr "{mxDomain} adresine gelen yanıtları {hosts} alıyor."
+
 #: src/features/inbox/SourceFilter.tsx
 msgid "Replies to a broadcast"
 msgstr "Bülten yanıtları"
@@ -5376,6 +5810,7 @@ msgstr "{host} adresine yönlendiriliyorsunuz…"
 msgid "Returns you to"
 msgstr "Dönüş adresi"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Review"
 msgstr "Gözden geçir"
@@ -5417,6 +5852,10 @@ msgstr "Abone olur olmaz kişilere bunu doğrulayan, abonelikten çıkma bağlan
 msgid "Role"
 msgstr "Rol"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Role addresses such as postmaster@ or noreply@"
+msgstr "postmaster@ ya da noreply@ gibi rol adresleri"
+
 #: src/features/settings/members/MemberList.tsx
 msgid "Role of {name}"
 msgstr "{name} adlı üyenin rolü"
@@ -5447,6 +5886,10 @@ msgstr "İmzalama anahtarı yenilensin mi?"
 #: src/features/setup/InstallStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Postalarınızı Yuva'ya yönlendirin"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Run a check"
+msgstr "Denetim yap"
 
 #: src/features/setup/WaitStep.tsx
 msgid "Run your app with the SDK and send a message. The conversation appears here the moment it starts."
@@ -5633,6 +6076,14 @@ msgstr "Nerede olduğunu, üzerindeki açık konuşmaları ve bugün neler yapt�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Önceki ya da sonraki bloğu seç"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Selector"
+msgstr "Seçici"
+
+#: src/features/broadcasts/Import.tsx
+msgid "semicolons"
+msgstr "noktalı virgül"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -6060,6 +6511,10 @@ msgstr "Sitenizde veya uygulamanızda oturum açmış kullanıcı"
 msgid "signed-in users only"
 msgstr "yalnızca oturum açmış kullanıcılar"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Signing"
+msgstr "İmzalıyor"
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Signing secret"
 msgstr "İmzalama anahtarı"
@@ -6085,6 +6540,10 @@ msgstr "Site oluşturucu"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
 msgstr "Site adı"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Skip this column"
+msgstr "Bu sütunu atla"
 
 #: src/components/common/text.ts
 msgid "Skipped"
@@ -6179,6 +6638,18 @@ msgstr "Spam"
 msgid "Spam report"
 msgstr "Spam bildirimi"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF fails for {spfDomain}. Add your SMTP provider to its SPF record, and keep it to one valid record."
+msgstr "SPF {spfDomain} için başarısız. SMTP sağlayıcınızı SPF kaydına ekleyin ve tek, geçerli bir kayıt bırakın."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF passes for {spfDomain}, not for the sending domain {from}, so DMARC relies on DKIM alone. Many providers let you set a custom return-path on your domain."
+msgstr "SPF gönderen alan adı {from} için değil, {spfDomain} için geçiyor; bu yüzden DMARC yalnızca DKIM'e dayanıyor. Birçok sağlayıcı kendi alan adınızda özel bir dönüş adresi (return-path) tanımlamanıza izin verir."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF passes for {spfDomain}."
+msgstr "SPF {spfDomain} için geçiyor."
+
 #: src/features/setup/previews.tsx
 msgid "Start a discussion"
 msgstr "Tartışma başlat"
@@ -6223,6 +6694,10 @@ msgstr "Durum"
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 msgstr "Sağlayıcınızın gönderim hızının altında kalın. Destek yanıtları bir bülten yüzünden hiç yavaşlamaz."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Step {step} of {count}"
+msgstr "Adım {step} / {count}"
+
 #: src/features/setup/SetupLayout.tsx
 msgid "Step {step} of {STEP_COUNT}"
 msgstr "Adım {step} / {STEP_COUNT}"
@@ -6238,6 +6713,10 @@ msgstr "Adımlar"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Stop overriding {name}"
 msgstr "{name} için özel ayarı kaldır"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Stop signing"
+msgstr "İmzalamayı durdur"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Stop taking new subscribers."
@@ -6277,6 +6756,10 @@ msgstr "şu an abone"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Subscribers"
 msgstr "Aboneler"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Subscribers added"
+msgstr "Eklenen aboneler"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -6336,6 +6819,10 @@ msgstr "Sistem"
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "System follows your device"
 msgstr "Sistem, cihazının ayarını izler"
+
+#: src/features/broadcasts/Import.tsx
+msgid "tabs"
+msgstr "sekme"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
@@ -6406,6 +6893,10 @@ msgstr "Yazdığınız için teşekkürler"
 msgid "Thanks for writing. We usually answer within a day."
 msgstr "Yazdığınız için teşekkürler. Genellikle bir gün içinde yanıt veririz."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "That was the sixth check this hour. You can check again at {retry}."
+msgstr "Bu saatteki altıncı denetimdi. {retry} itibarıyla yeniden denetleyebilirsiniz."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "Adres geri döndü ya da şikâyet etti"
@@ -6426,6 +6917,10 @@ msgstr "Bülten iptal edildi"
 msgid "The browser has to allow desktop notifications first; until then only the sound plays."
 msgstr "Önce tarayıcının masaüstü bildirimlerine izin vermesi gerekiyor; o zamana kadar yalnızca ses çalar."
 
+#: src/components/common/text.ts
+msgid "The channel already has a DKIM key. Delete it before creating another."
+msgstr "Kanalın zaten bir DKIM anahtarı var. Yenisini oluşturmadan önce onu silin."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The channel cannot send yet. It needs an SMTP account and an address to send from."
 msgstr "Kanal henüz gönderemiyor. Bir SMTP hesabına ve gönderen adresine ihtiyacı var."
@@ -6433,6 +6928,10 @@ msgstr "Kanal henüz gönderemiyor. Bir SMTP hesabına ve gönderen adresine iht
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The channel name when empty."
 msgstr "Boşsa kanal adı kullanılır."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The channel’s deliverability was never checked. Run the check before the first broadcast."
+msgstr "Kanalın teslim edilebilirliği hiç denetlenmedi. İlk bültenden önce denetimi yapın."
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "The chat appears in the corner of every page that has the snippet."
@@ -6454,6 +6953,10 @@ msgstr "Sohbet, kimin çevrimiçi olduğunu ve yazdığını gösterir"
 msgid "The code is wrong or has expired."
 msgstr "Kod yanlış ya da süresi dolmuş."
 
+#: src/features/broadcasts/Import.tsx
+msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
+msgstr "Sütunlar başlık satırından tahmin edildi. Biri e-posta adresi olmalı; diğerlerini kişi alanı ya da özellik olarak adlandırın veya atlayın. Özellikler yalnızca kişide henüz olmayan anahtarları doldurur."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "Onay e-postası yolda."
@@ -6470,6 +6973,10 @@ msgstr "Kişi silindi"
 msgid "The customer does not see this"
 msgstr "Müşteri görmez"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The deliverability check has not finished yet."
+msgstr "Teslim edilebilirlik denetimi henüz bitmedi."
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "The design is frozen when you schedule the broadcast. Changing the design later does not change mail that is already scheduled or sent."
 msgstr "Bülteni zamanladığınızda tasarım sabitlenir. Tasarımı sonradan değiştirmek, zamanlanmış ya da gönderilmiş e-postayı değiştirmez."
@@ -6478,6 +6985,14 @@ msgstr "Bülteni zamanladığınızda tasarım sabitlenir. Tasarımı sonradan d
 msgid "The design’s own"
 msgstr "Tasarımınki"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The DKIM signature does not cover the unsubscribe headers."
+msgstr "DKIM imzası abonelikten çıkma başlıklarını kapsamıyor."
+
+#: src/components/common/text.ts
+msgid "The DNS record is not visible yet. Publish it, wait a few minutes and try again."
+msgstr "DNS kaydı henüz görünmüyor. Kaydı ekleyin, birkaç dakika bekleyin ve yeniden deneyin."
+
 #: src/features/account/ConnectPage.tsx
 msgid "The documentation channel of {host} no longer exists."
 msgstr "{host} sitesinin dokümantasyon kanalı artık yok."
@@ -6485,6 +7000,10 @@ msgstr "{host} sitesinin dokümantasyon kanalı artık yok."
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "The documentation page to put it under, on a site of this inbox."
 msgstr "Tartışmanın altına ekleneceği, bu gelen kutusunun sitelerinden birindeki dokümantasyon sayfası."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The domain takes no mail"
+msgstr "Alan adı e-posta almıyor"
 
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
@@ -6505,6 +7024,14 @@ msgstr "Uç nokta kapalı. Yeniden göndermek için önce açın."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "Onay kutusunun ya da imzanın yanında gördükleri metnin aynısı."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The file is larger than {max}. Split it into smaller files."
+msgstr "Dosya {max} boyutundan büyük. Daha küçük dosyalara bölün."
+
+#: src/components/common/text.ts
+msgid "The file is larger than 20 MB. Split it into smaller files."
+msgstr "Dosya 20 MB'tan büyük. Daha küçük dosyalara bölün."
 
 #: src/components/common/text.ts
 msgid "The file is too large."
@@ -6542,6 +7069,14 @@ msgstr "Tüm API: bir üye uygulaması gibi MCP, REST API ve canlı güncellemel
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "Saatler günden güne farklı; burada değiştirirsen seçili her gün için aynı saatler kaydedilir."
 
+#: src/features/broadcasts/Import.tsx
+msgid "The import failed, and nothing was added from the file."
+msgstr "İçe aktarma başarısız oldu; dosyadan hiçbir şey eklenmedi."
+
+#: src/components/common/text.ts
+msgid "The import is no longer waiting to start. Look at its state."
+msgstr "İçe aktarma artık başlatılmayı beklemiyor. Durumuna bakın."
+
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "The inbox cannot be changed later."
 msgstr "Gelen kutusu sonradan değiştirilemez."
@@ -6561,6 +7096,22 @@ msgstr "Anahtar bu günün sonunda çalışmayı bırakır."
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "Tür daha sonra değiştirilemez."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
+msgstr "Son denetim deneme e-postasını gönderemedi. Kanalın SMTP ayarlarına bakın."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
+msgstr "Son denetim geçen bir DKIM imzası bulamadı. SMTP sağlayıcınızda DKIM kurun ya da kanal için Yuva DKIM'i açın."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check’s test mail did not come back within 10 minutes. Check again."
+msgstr "Son denetimin deneme e-postası 10 dakika içinde geri gelmedi. Yeniden denetleyin."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last deliverability check found something to fix."
+msgstr "Son teslim edilebilirlik denetimi düzeltilecek bir şey buldu."
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
@@ -6610,17 +7161,41 @@ msgstr "Parola şifreli saklanır ve bir daha gösterilmez."
 msgid "The password is too long."
 msgstr "Parola çok uzun."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is none: receivers only report. Move to quarantine once all your mail passes."
+msgstr "İlke none: alıcılar yalnızca rapor verir. Tüm e-postalarınız geçince quarantine ilkesine geçin."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is quarantine: mail that fails goes to spam."
+msgstr "İlke quarantine: başarısız olan e-postalar spama gider."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is reject: mail that fails is refused."
+msgstr "İlke reject: başarısız olan e-postalar reddedilir."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Önceki anahtar {rotatedUntil} tarihine kadar imzalamaya devam eder."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The receiving server did not confirm SPF. Check that the record includes your SMTP provider."
+msgstr "Alan sunucu SPF'yi doğrulamadı. Kaydın SMTP sağlayıcınızı içerdiğini denetleyin."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The recipients are taken when sending starts: people who subscribe later do not get it, and anyone who unsubscribes before their mail goes out is skipped. You can pause or cancel while it sends."
 msgstr "Alıcılar gönderim başladığında belirlenir: sonradan abone olanlar almaz, e-postası gitmeden ayrılan atlanır. Gönderim sürerken duraklatabilir ya da iptal edebilirsiniz."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The record at {name} is published."
+msgstr "{name} adındaki kayıt yayımlanmış."
+
 #: src/components/common/text.ts
 msgid "The review found something that blocks sending. Fix the red items first."
 msgstr "Kontrol, gönderimi engelleyen bir şey buldu. Önce kırmızı maddeleri düzeltin."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The rows left out are no longer kept."
+msgstr "Dışarıda kalan satırlar artık saklanmıyor."
 
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
@@ -6634,6 +7209,10 @@ msgstr "Gönderenin alan adı bu postayı onaylamadı. Sahte olabilir."
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "Gönderen kanalın henüz SMTP hesabı ya da gönderen adresi yok. Gelen kutusu ayarlarından kurun."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The sending domain has no DMARC record."
+msgstr "Gönderen alan adının DMARC kaydı yok."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The server’s operator has not answered the request yet."
@@ -6666,6 +7245,18 @@ msgstr "Bugün ekip"
 #: src/features/team/TeamColumn.tsx
 msgid "The team today:"
 msgstr "Ekip bugün:"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail arrived without results from a receiving server this Yuva trusts, so SPF, DKIM and DMARC could not be read and only DNS was checked. Ask the server’s operator to set the trusted receiving server."
+msgstr "Deneme e-postası, bu Yuva'nın güvendiği bir alan sunucunun sonuçları olmadan ulaştı; bu yüzden SPF, DKIM ve DMARC okunamadı, yalnızca DNS denetlendi. Sunucunun yöneticisinden güvenilen alan sunucuyu tanımlamasını isteyin."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail could not be sent through the channel’s broadcast account. Check its SMTP settings."
+msgstr "Deneme e-postası kanalın bülten hesabı üzerinden gönderilemedi. SMTP ayarlarını denetleyin."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail did not come back within 10 minutes, so only DNS was checked. Make sure mail to {address} reaches Yuva (its forwarding or MX), then check again."
+msgstr "Deneme e-postası 10 dakika içinde geri gelmedi, bu yüzden yalnızca DNS denetlendi. {address} adresine gelen e-postanın Yuva'ya ulaştığından (yönlendirme ya da MX) emin olun, sonra yeniden denetleyin."
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "The test still goes only to the members you picked, never to the contact."
@@ -6760,6 +7351,14 @@ msgstr "Bu tarayıcı masaüstü bildirimi gösteremiyor, bu yüzden yalnızca s
 msgid "This browser does not support passkeys."
 msgstr "Bu tarayıcı geçiş anahtarlarını desteklemiyor."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel has no SMTP account, so it cannot send broadcasts or a test mail."
+msgstr "Bu kanalın SMTP hesabı yok, bu yüzden bülten ya da deneme e-postası gönderemez."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel has no Yuva DKIM key."
+msgstr "Bu kanalın Yuva DKIM anahtarı yok."
+
 #: src/components/common/text.ts
 msgid "This conflicts with something that already exists."
 msgstr "Bu, var olan bir kayıtla çakışıyor."
@@ -6818,6 +7417,10 @@ msgstr "Bu gelen kutusunun e-posta kanalı yok. Bülten göndermek için SMTP he
 msgid "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 msgstr "Bu gelen kutusunun henüz e-posta listesi yok. Bülten yalnızca bir listeye abone olan kişilere gider."
 
+#: src/components/common/text.ts
+msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
+msgstr "Bu bir CSV dosyası değil. Tabloyu CSV olarak kaydedip onu yükleyin."
+
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "This is not a JSON object."
 msgstr "Bu bir JSON nesnesi değil."
@@ -6848,6 +7451,7 @@ msgid "This list has no e-mail channel that can send, so forms send no confirmat
 msgstr "Bu listenin gönderebilen bir e-posta kanalı yok; bu yüzden formlar onay e-postası göndermez, formdan gelen yeni aboneler beklemede kalır ve kimseye hoş geldin e-postası gitmez."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/broadcasts/Import.tsx
 msgid "This list has no e-mail channel that can send, so it cannot mail a confirmation yet."
 msgstr "Bu listenin gönderebilen bir e-posta kanalı yok, bu yüzden henüz onay e-postası gönderemez."
 
@@ -7200,6 +7804,14 @@ msgstr "Ayrıldı"
 msgid "Unsubscribed before it went out"
 msgstr "Gönderilmeden önce ayrıldı"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Unsubscribed from everything or asked to be forgotten"
+msgstr "Her şeyden ayrıldı ya da silinmeyi istedi"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Unsubscribed from this list"
+msgstr "Bu listeden ayrıldı"
+
 #: src/features/broadcasts/Growth.tsx
 msgid "unsubscribed in the last {days} days"
 msgstr "son {days} günde abonelikten çıkan"
@@ -7216,9 +7828,21 @@ msgstr "Bağlantıya tıklayana kadar onay beklerler ve başka e-posta almazlar.
 msgid "Unverified sender"
 msgstr "Doğrulanmamış gönderen"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
+msgstr "En fazla {max} ve 100.000 satır, bir başlık satırıyla. Türkçe ya da Batı dilleri kodlamasındaki Excel dosyaları ve virgül, noktalı virgül ya da sekmeyle ayrılmış sütunlar olduğu gibi okunur."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Güncelleniyor"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Upload and check"
+msgstr "Yükle ve denetle"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Uploading…"
+msgstr "Yükleniyor…"
 
 #: src/components/common/text.ts
 msgid "Urgent"
@@ -7313,6 +7937,10 @@ msgstr "Genellikle şirketinizin ya da ekibinizin adı; sonra değiştirebilirsi
 msgid "value"
 msgstr "değer"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Value"
+msgstr "Değer"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "{n}. koşulun değeri"
@@ -7374,6 +8002,7 @@ msgid "waiting for confirmation"
 msgstr "onay bekliyor"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Waiting for confirmation"
 msgstr "Onay bekliyor"
 
@@ -7461,9 +8090,17 @@ msgstr "Çarşamba"
 msgid "Welcome receipt"
 msgstr "Hoş geldin e-postası"
 
+#: src/features/broadcasts/Import.tsx
+msgid "What {header} holds"
+msgstr "{header} sütununda ne var"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "Neyi kabul ettiler?"
+
+#: src/features/broadcasts/Import.tsx
+msgid "What each column holds"
+msgstr "Her sütunda ne var"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "What is new in October"
@@ -7476,6 +8113,10 @@ msgstr "Müşteriler hangi adı görsün?"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "Müşterinin gördüğü"
+
+#: src/features/broadcasts/Import.tsx
+msgid "What the import will do"
+msgstr "İçe aktarma ne yapacak"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "What they agreed to"
@@ -7545,6 +8186,10 @@ msgstr "Sana ne zaman haber verelim"
 msgid "When your provider sends from another address. Replies still come to the support address."
 msgstr "Sağlayıcınız başka bir adresten gönderiyorsa. Yanıtlar yine destek adresine gelir."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Where and when did these people agree?"
+msgstr "Bu kişiler nerede ve ne zaman onay verdi?"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Where customers write from"
 msgstr "Müşteriler nereden yazıyor"
@@ -7600,6 +8245,14 @@ msgstr "Kim gönderiyor, ne hakkında?"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Who should take it?"
 msgstr "Kime verelim?"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Windows-1252 (Western Excel)"
+msgstr "Windows-1252 (Batı dilleri Excel)"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Windows-1254 (Turkish Excel)"
+msgstr "Windows-1254 (Türkçe Excel)"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "With {name}"
@@ -7736,6 +8389,10 @@ msgstr "Başka bir adresten {0} adresine yazın. Posta geldiği anda konuşma bu
 msgid "Write to {first}…"
 msgstr "{first} için yaz…"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Write where and when they agreed."
+msgstr "Nerede ve ne zaman onay verdiklerini yazın."
+
 #: src/features/setup/previews.tsx
 msgid "Yes"
 msgstr "Evet"
@@ -7785,6 +8442,10 @@ msgstr "Bu pencereyi kapatıp {host} sitesine dönebilirsiniz."
 #: src/features/oauth/ConsentPage.tsx
 msgid "You can disconnect it at any time in Settings, under Connected apps."
 msgstr "Bağlantıyı istediğiniz zaman Ayarlar'da, Bağlı uygulamalar altında kaldırabilirsiniz."
+
+#: src/features/broadcasts/Import.tsx
+msgid "You can leave this page; the import goes on."
+msgstr "Bu sayfadan çıkabilirsiniz; içe aktarma sürer."
 
 #: src/features/setup/WaitStep.tsx
 msgid "You can leave this page: the conversation will wait for you in your conversation list."
@@ -7938,6 +8599,10 @@ msgstr "Yuva hesabınız"
 msgid "Yuva {version}"
 msgstr "Yuva {version}"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva DKIM"
+msgstr "Yuva DKIM"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva kendi posta sunucusunu çalıştırmaz: alan adınıza gelen postalar ona iletilir."
@@ -7953,6 +8618,14 @@ msgstr "Bu sunucudaki Yuva'ya yalnızca davetle girilebilir. Ekibinizden davet i
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva seçtiğiniz her olay için JSON gövdeli, imzalı bir POST isteği gönderir."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
+msgstr "Yuva bu kanalın bültenlerini, deneme, onay ve hoş geldin e-postalarını abonelikten çıkma başlıklarını da kapsayacak şekilde kendi anahtarıyla imzalar. Sağlayıcınızın imzası yanında kalır; destek yanıtları değişmez."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
+msgstr "Yuva bu anahtarla imzalamayı hemen bırakır. Ardından DNS kaydını kaldırın; yeni bir anahtar yeni bir kayıt ister."
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."

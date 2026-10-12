@@ -288,6 +288,17 @@ export function useErrorText() {
     if (err.code === "invalid_state") return t`The broadcast changed in the meantime. Look at its state and try again.`
     if (err.code === "audience_too_large") return t`A broadcast can go to at most 1,000,000 recipients.`
     if (err.code === "limit_reached") return t`This workspace has as many broadcasts as allowed. Delete old ones first.`
+    if (err.code === "attestation_required")
+      return t`Confirm that everyone in the file agreed, and write where and when they did.`
+    if (err.code === "not_csv") return t`This is not a CSV file. Save the spreadsheet as CSV and upload that.`
+    if (err.code === "file_too_large") return t`The file is larger than 20 MB. Split it into smaller files.`
+    if (err.code === "import_running")
+      return t`Another import of this workspace is running. Imports run one at a time; try again when it ends.`
+    if (err.code === "not_ready") return t`The import is no longer waiting to start. Look at its state.`
+    if (err.code === "email_column_required") return t`Pick the column that holds the e-mail addresses.`
+    if (err.code === "dkim_exists") return t`The channel already has a DKIM key. Delete it before creating another.`
+    if (err.code === "dkim_dns_missing")
+      return t`The DNS record is not visible yet. Publish it, wait a few minutes and try again.`
     if (err.code === "attachment_type_mismatch")
       return t`A file's content does not match its type. Check the file and try again.`
     switch (err.status) {

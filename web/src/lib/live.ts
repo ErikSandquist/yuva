@@ -10,6 +10,8 @@ import type {
   ConversationRead,
   DraftItem,
   Inbox,
+  ListImport,
+  ListImportProgress,
   Member,
   Message,
   RealtimeMessage,
@@ -351,6 +353,45 @@ function applyProgress(qc: QueryClient, ws: string, p: BroadcastProgress) {
   void qc.invalidateQueries({ queryKey: keys.broadcastReport(ws, p.id) })
 }
 
+type ImportPages = InfiniteData<{ items: ListImport[]; next_cursor?: string }, string | undefined>
+
+function patchImport(qc: QueryClient, ws: string, listId: string, id: string, patch: (i: ListImport) => ListImport) {
+  qc.setQueryData<ListImport>(keys.listImport(ws, listId, id), (old) => (old ? patch(old) : old))
+  const pages = qc.getQueryData<ImportPages>(keys.listImports(ws, listId))
+  if (!pages) return
+  if (!pages.pages.some((p) => p.items.some((x) => x.id === id))) {
+    void qc.invalidateQueries({ queryKey: keys.listImports(ws, listId) })
+    return
+  }
+  qc.setQueryData<ImportPages>(keys.listImports(ws, listId), {
+    ...pages,
+    pages: pages.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === id ? patch(x) : x)) })),
+  })
+}
+
+function setImport(qc: QueryClient, ws: string, i: ListImport) {
+  const current = qc.getQueryData<ListImport>(keys.listImport(ws, i.list_id, i.id))
+  if (current && current.updated_at > i.updated_at) return
+  qc.setQueryData(keys.listImport(ws, i.list_id, i.id), i)
+  patchImport(qc, ws, i.list_id, i.id, () => i)
+  if (i.state === "done" || i.state === "cancelled" || i.state === "failed") {
+    void qc.invalidateQueries({ queryKey: keys.list(ws, i.list_id) })
+    void qc.invalidateQueries({ queryKey: ["ws", ws, "lists", "subscriptions", i.list_id] })
+    void qc.invalidateQueries({ queryKey: ["ws", ws, "lists", "growth", i.list_id] })
+    refreshLists(qc, ws)
+  }
+}
+
+function applyImportProgress(qc: QueryClient, ws: string, p: ListImportProgress) {
+  patchImport(qc, ws, p.list_id, p.id, (i) => ({
+    ...i,
+    state: p.state,
+    rows_total: p.rows_total,
+    rows_done: p.rows_done,
+    counts: p.counts,
+  }))
+}
+
 function byName(a: Inbox, b: Inbox) {
   return a.name.localeCompare(b.name) || (a.id < b.id ? -1 : 1)
 }
@@ -522,6 +563,12 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       return
     case "broadcast.progress":
       applyProgress(qc, ctx.ws, event.data)
+      return
+    case "list_import.updated":
+      setImport(qc, ctx.ws, event.data)
+      return
+    case "list_import.progress":
+      applyImportProgress(qc, ctx.ws, event.data)
       return
     case "discussion.created":
     case "discussion.post_created":

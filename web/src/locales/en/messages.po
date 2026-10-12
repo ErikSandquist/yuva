@@ -117,6 +117,10 @@ msgstr "{actor} reopened the conversation"
 msgid "{actor} set the status to {status}"
 msgstr "{actor} set the status to {status}"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{added} added · {out} left out"
+msgstr "{added} added · {out} left out"
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}, sent by {by}"
@@ -170,6 +174,10 @@ msgstr "{days, plural, one {The last day, over the inboxes you can see.} other {
 msgid "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
 msgstr "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{done} of {total} rows"
+msgstr "{done} of {total} rows"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
 msgstr "{down} not helpful"
@@ -194,6 +202,18 @@ msgstr "{first} rated the conversation 👍"
 msgid "{first} rated the conversation 👎"
 msgstr "{first} rated the conversation 👎"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has an SPF record. Whether it passes is known once the test mail is read."
+msgstr "{from} has an SPF record. Whether it passes is known once the test mail is read."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has no DMARC record. Publish one at _dmarc.{from}, at least v=DMARC1; p=none."
+msgstr "{from} has no DMARC record. Publish one at _dmarc.{from}, at least v=DMARC1; p=none."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{from} has no SPF record. Publish one that includes your SMTP provider."
+msgstr "{from} has no SPF record. Publish one that includes your SMTP provider."
+
 #: src/features/contact/ContactDetails.tsx
 msgid "{good} good"
 msgstr "{good} good"
@@ -213,6 +233,10 @@ msgstr "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
 msgstr "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
+msgstr "{mxDomain} has no MX record, so replies to broadcasts cannot arrive. Publish the MX records of your mail service."
 
 #: src/features/conversation/History.tsx
 msgid "{n, plural, one {# other conversation} other {# other conversations}}"
@@ -285,6 +309,10 @@ msgstr "{names} will be notified"
 msgid "{open, plural, one {# open} other {# open}}"
 msgstr "{open, plural, one {# open} other {# open}}"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{out, plural, one {# row is left out} other {# rows are left out}}"
+msgstr "{out, plural, one {# row is left out} other {# rows are left out}}"
+
 #: src/features/reports/ReportsColumn.tsx
 msgid "{pct} satisfied"
 msgstr "{pct} satisfied"
@@ -328,6 +356,14 @@ msgstr "{replies, plural, one {# reply} other {# replies}}"
 msgid "{replies} replies"
 msgstr "{replies} replies"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
+msgstr "{rows} rows, read as {encoding}, separated by {delimiter}."
+
+#: src/features/broadcasts/Import.tsx
+msgid "{rows} rows."
+msgstr "{rows} rows."
+
 #: src/app/TeamMenu.tsx
 msgid "{satisfied} satisfied"
 msgstr "{satisfied} satisfied"
@@ -344,6 +380,10 @@ msgstr "{sent} of {all} done"
 msgid "{share} helpful"
 msgstr "{share} helpful"
 
+#: src/features/broadcasts/Import.tsx
+msgid "{size} · pick another file"
+msgstr "{size} · pick another file"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 msgid "{subscribed} subscribed"
@@ -356,6 +396,10 @@ msgstr "{threads} open discussions"
 #: src/features/docs/DocsColumn.tsx
 msgid "{up} helpful"
 msgstr "{up} helpful"
+
+#: src/features/broadcasts/Import.tsx
+msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
+msgstr "{valid, plural, one {Import # address} other {Import # addresses}}"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -438,6 +482,10 @@ msgstr "A chat bubble on your site, from one line of HTML"
 #: src/features/setup/AddChannelStep.tsx
 msgid "A chat channel named after the site is created for it, open to anonymous readers, with moderated discussions: you approve a reader's first post. Add your dev server's address and change the discussions later in the inbox settings."
 msgstr "A chat channel named after the site is created for it, open to anonymous readers, with moderated discussions: you approve a reader's first post. Add your dev server's address and change the discussions later in the inbox settings."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
+msgstr "A check sends a test mail through the broadcast account to the channel’s own address and reads how the receiving server judged it, then looks up the domain’s DNS. Up to six checks an hour."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A client that cannot sign in can send an API key as <0>Authorization: Bearer</0>; an owner or admin makes one."
@@ -584,6 +632,10 @@ msgstr "A subscription changed"
 msgid "A teammate"
 msgstr "A teammate"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "A test mail is on its way to {address}. The result shows here when it arrives, usually within a minute and at most 10 minutes."
+msgstr "A test mail is on its way to {address}. The result shows here when it arrives, usually within a minute and at most 10 minutes."
+
 #: src/features/settings/channels/email/form.ts
 msgid "A username needs TLS or STARTTLS: the password is never sent unencrypted."
 msgstr "A username needs TLS or STARTTLS: the password is never sent unencrypted."
@@ -717,6 +769,7 @@ msgstr "Add Yuva to your app"
 msgid "Add Yuva to your documentation"
 msgstr "Add Yuva to your documentation"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Added"
 msgstr "Added"
@@ -782,6 +835,10 @@ msgstr "Alert me while the tab is in the background"
 msgid "All"
 msgstr "All"
 
+#: src/features/broadcasts/Import.tsx
+msgid "All imports"
+msgstr "All imports"
+
 #: src/app/Palette.tsx
 #: src/features/inbox/InboxPicker.tsx
 #: src/features/settings/webhooks/WebhookDialog.tsx
@@ -837,6 +894,18 @@ msgstr "Allowed"
 msgid "Allowed origins"
 msgstr "Allowed origins"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Already earlier in the file"
+msgstr "Already earlier in the file"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Already on the list"
+msgstr "Already on the list"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Already on the list, left as they are"
+msgstr "Already on the list, left as they are"
+
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Also for sign-in and notification e-mails"
 msgstr "Also for sign-in and notification e-mails"
@@ -889,6 +958,10 @@ msgstr "An invite is accepted when the person signs in with a code sent to that 
 msgid "An owner or admin can let assistants send on their own with Bots may send."
 msgstr "An owner or admin can let assistants send on their own with Bots may send."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "An owner or admin turns signing on once the record is published."
+msgstr "An owner or admin turns signing on once the record is published."
+
 #: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
 msgstr "Anonymous"
@@ -910,6 +983,10 @@ msgstr "Another channel already receives mail at this address."
 #: src/app/TeamMenu.tsx
 msgid "another conversation"
 msgstr "another conversation"
+
+#: src/components/common/text.ts
+msgid "Another import of this workspace is running. Imports run one at a time; try again when it ends."
+msgstr "Another import of this workspace is running. Imports run one at a time; try again when it ends."
 
 #: src/features/conversation/messages/EventLine.tsx
 msgid "another inbox"
@@ -1025,6 +1102,10 @@ msgstr "As {name}, since {when}"
 msgid "As above ({current})"
 msgstr "As above ({current})"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Ask everyone to confirm again"
+msgstr "Ask everyone to confirm again"
+
 #: src/features/broadcasts/ListForm.tsx
 msgid "Ask for a confirmation"
 msgstr "Ask for a confirmation"
@@ -1109,6 +1190,22 @@ msgstr "Attempt log"
 msgid "Attempts"
 msgstr "Attempts"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute"
+msgstr "Attribute"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute key for {header}"
+msgstr "Attribute key for {header}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute key, such as plan"
+msgstr "Attribute key, such as plan"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Attribute keys use letters, digits, dots, dashes and underscores, at most 64."
+msgstr "Attribute keys use letters, digits, dots, dashes and underscores, at most 64."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Attribute of condition {n}"
 msgstr "Attribute of condition {n}"
@@ -1142,6 +1239,10 @@ msgstr "Available"
 msgid "available now"
 msgstr "available now"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Available until {until}"
+msgstr "Available until {until}"
+
 #: src/app/TeamMenu.tsx
 #: src/app/UserMenu.tsx
 #: src/features/conversation/HeaderActions.tsx
@@ -1153,6 +1254,10 @@ msgstr "Away"
 #: src/features/setup/SetupLayout.tsx
 msgid "Back"
 msgstr "Back"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Back to columns"
+msgstr "Back to columns"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
@@ -1230,10 +1335,19 @@ msgstr "Bounced"
 msgid "Bounced or reported as spam"
 msgstr "Bounced or reported as spam"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Bounced or reported as spam before"
+msgstr "Bounced or reported as spam before"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Bring subscribers who already agreed elsewhere. Each address is checked first and nothing is added until you start: invalid addresses, domains that take no mail, role addresses, duplicates and anyone who left or objected are left out."
+msgstr "Bring subscribers who already agreed elsewhere. Each address is checked first and nothing is added until you start: invalid addresses, domains that take no mail, role addresses, duplicates and anyone who left or objected are left out."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Broadcast"
 msgstr "Broadcast"
 
+#: src/features/settings/channels/email/ChannelSendingPage.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Broadcast sending"
 msgstr "Broadcast sending"
@@ -1296,6 +1410,7 @@ msgstr "Can I schedule a newsletter for each subscriber?"
 #: src/components/common/ConfirmDialog.tsx
 #: src/components/common/TypeToConfirmDialog.tsx
 #: src/features/account/ConnectPage.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/broadcasts/ReviewPanel.tsx
 #: src/features/contact/ContactDetails.tsx
@@ -1314,6 +1429,10 @@ msgstr "Cancel “{name}”?"
 msgid "Cancel broadcast"
 msgstr "Cancel broadcast"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Cancel import"
+msgstr "Cancel import"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Cancel the broadcast"
@@ -1323,9 +1442,18 @@ msgstr "Cancel the broadcast"
 msgid "Cancel the broadcast before deleting it."
 msgstr "Cancel the broadcast before deleting it."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Cancel this import?"
+msgstr "Cancel this import?"
+
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Cancelled"
 msgstr "Cancelled"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Cancelled. What was added before stays."
+msgstr "Cancelled. What was added before stays."
 
 #: src/app/Palette.tsx
 #: src/features/conversation/composer/CannedMenu.tsx
@@ -1384,9 +1512,41 @@ msgstr "Channel added"
 msgid "Channel removed"
 msgstr "Channel removed"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Check again"
+msgstr "Check again"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Check again with these columns"
+msgstr "Check again with these columns"
+
+#: src/features/settings/channels/email/EmailFields.tsx
+msgid "Check deliverability and set up DKIM"
+msgstr "Check deliverability and set up DKIM"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Check DNS and start signing"
+msgstr "Check DNS and start signing"
+
 #: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
 msgstr "Check your e-mail"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Checked {when}"
+msgstr "Checked {when}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checked and waiting for an owner or admin to start it."
+msgstr "Checked and waiting for an owner or admin to start it."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checking every address…"
+msgstr "Checking every address…"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Checking the file"
+msgstr "Checking the file"
 
 #: src/app/Gate.tsx
 msgid "Choose a workspace"
@@ -1513,6 +1673,18 @@ msgstr "Colour"
 msgid "Colours, fonts and width"
 msgstr "Colours, fonts and width"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Column {n}"
+msgstr "Column {n}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Columns"
+msgstr "Columns"
+
+#: src/features/broadcasts/Import.tsx
+msgid "commas"
+msgstr "commas"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Comparison of condition {n}"
 msgstr "Comparison of condition {n}"
@@ -1526,9 +1698,17 @@ msgstr "Complete"
 msgid "Conditions"
 msgstr "Conditions"
 
+#: src/components/common/text.ts
+msgid "Confirm that everyone in the file agreed, and write where and when they did."
+msgstr "Confirm that everyone in the file agreed, and write where and when they did."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Confirm the consent to add them."
 msgstr "Confirm the consent to add them."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Confirm the consent to import the file."
+msgstr "Confirm the consent to import the file."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Confirm the warning and select <0>Create as a plugin</0>. ChatGPT registers itself with this server."
@@ -1668,6 +1848,7 @@ msgstr "contains"
 msgid "Content"
 msgstr "Content"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
@@ -1763,11 +1944,16 @@ msgstr "Could not reach the server. Check your connection and try again."
 msgid "Count clicks"
 msgstr "Count clicks"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Create a key when your SMTP provider cannot sign with your domain or leaves the unsubscribe headers unsigned. Only the DNS record is shown; the private key never leaves the server."
+msgstr "Create a key when your SMTP provider cannot sign with your domain or leaves the unsubscribe headers unsigned. Only the DNS record is shown; the private key never leaves the server."
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
 msgstr "Create draft"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
 msgid "Create key"
 msgstr "Create key"
 
@@ -1799,6 +1985,10 @@ msgstr "Created {created}"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "Created {created} by {by}"
 msgstr "Created {created} by {by}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "CSV file"
+msgstr "CSV file"
 
 #: src/features/auth/AuthLayout.tsx
 msgid "Custom domain still shows as unverified"
@@ -1894,6 +2084,10 @@ msgstr "Delete draft"
 msgid "Delete inbox"
 msgstr "Delete inbox"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Delete key"
+msgstr "Delete key"
+
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Delete list"
 msgstr "Delete list"
@@ -1918,6 +2112,10 @@ msgstr "Delete the selected block"
 #: src/features/settings/canned/CannedRepliesPage.tsx
 msgid "Delete this canned reply?"
 msgstr "Delete this canned reply?"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Delete this DKIM key?"
+msgstr "Delete this DKIM key?"
 
 #: src/features/contact/ContactNotes.tsx
 msgid "Delete this note"
@@ -1974,6 +2172,20 @@ msgstr "Deletes the list, its subscriptions and their consent records. Download 
 #: src/features/settings/workspace/DeleteWorkspace.tsx
 msgid "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
 msgstr "Deleting {name} removes its inboxes, channels, conversations, contacts, files, labels, webhooks and API keys for everyone, at once. Members keep their accounts. This cannot be undone."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Deliverability"
+msgstr "Deliverability"
+
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Deliverability and DKIM"
+msgstr "Deliverability and DKIM"
+
+#. placeholder {0}: ch.name
+#: src/features/settings/inboxes/InboxPage.tsx
+msgid "Deliverability and DKIM of {0}"
+msgstr "Deliverability and DKIM of {0}"
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Deliveries"
@@ -2081,13 +2293,41 @@ msgstr "Discussions you started or replied to"
 msgid "Display name"
 msgstr "Display name"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "DKIM does not pass for the sending domain."
+msgstr "DKIM does not pass for the sending domain."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain} and signs the unsubscribe headers."
+msgstr "DKIM passes for {dkimDomain} and signs the unsubscribe headers."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain}, but the signature does not cover the unsubscribe headers, which Gmail and Yahoo ask for. Turn on Yuva DKIM below, or ask your provider."
+msgstr "DKIM passes for {dkimDomain}, but the signature does not cover the unsubscribe headers, which Gmail and Yahoo ask for. Turn on Yuva DKIM below, or ask your provider."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DKIM passes for {dkimDomain}, not for the sending domain {from}. Set up DKIM for {from} with your provider, or turn on Yuva DKIM below."
+msgstr "DKIM passes for {dkimDomain}, not for the sending domain {from}. Set up DKIM for {from} with your provider, or turn on Yuva DKIM below."
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "DMARC failed"
 msgstr "DMARC failed"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
+msgstr "DMARC fails: neither SPF nor DKIM passes for {from}. Fix the lines above."
+
 #: src/features/setup/InstallStep.tsx
 msgid "DNS checklist"
 msgstr "DNS checklist"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
+msgstr "DNS does not answer with the key at {name} yet. Publish the record below, then check again."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
+msgstr "DNS does not answer with this key at the name above yet. Publish the record, wait a few minutes (some providers take longer) and try again."
 
 #: src/features/conversation/Collision.tsx
 msgid "Do not both write."
@@ -2124,6 +2364,7 @@ msgstr "Documents"
 msgid "Does it work with server-side rendering?"
 msgstr "Does it work with server-side rendering?"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/conversation/ConversationStatus.tsx
 #: src/features/inbox/ChatList.tsx
@@ -2147,6 +2388,10 @@ msgstr "Download JSON"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Download the original e-mail (.eml)"
 msgstr "Download the original e-mail (.eml)"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Download the rows left out"
+msgstr "Download the rows left out"
 
 #: src/components/common/text.ts
 msgid "Draft"
@@ -2202,6 +2447,7 @@ msgstr "E-mail"
 
 #: src/features/auth/SignInForm.tsx
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/members/Invites.tsx
 msgid "E-mail address"
@@ -2317,9 +2563,17 @@ msgstr "Embed snippet"
 msgid "Emoji"
 msgstr "Emoji"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Empty in the first rows"
+msgstr "Empty in the first rows"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Encryption"
 msgstr "Encryption"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Ended {finished}"
+msgstr "Ended {finished}"
 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Endpoints"
@@ -2398,6 +2652,10 @@ msgstr "Every type"
 msgid "Everyone has been answered."
 msgstr "Everyone has been answered."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Everyone in this file agreed to receive {listName} from {inboxName}, and I can show how and when if asked."
+msgstr "Everyone in this file agreed to receive {listName} from {inboxName}, and I can show how and when if asked."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
 msgstr "Everyone on the lists. Conditions keep only contacts whose attributes match, all of them."
@@ -2448,11 +2706,16 @@ msgstr "expires {expires}"
 msgid "Export"
 msgstr "Export"
 
+#: src/features/broadcasts/Import.tsx
+msgid "External id"
+msgstr "External id"
+
 #: src/features/contact/MergePreview.tsx
 msgid "External ids"
 msgstr "External ids"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Failed"
 msgstr "Failed"
 
@@ -2489,6 +2752,10 @@ msgstr "Feedback sent from a documentation page"
 msgid "Feedback sent from the app"
 msgstr "Feedback sent from the app"
 
+#: src/features/broadcasts/Import.tsx
+msgid "File and consent"
+msgstr "File and consent"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Fill the test with a contact’s values"
 msgstr "Fill the test with a contact’s values"
@@ -2518,6 +2785,10 @@ msgstr "Finished"
 msgid "First message"
 msgstr "First message"
 
+#: src/features/broadcasts/Import.tsx
+msgid "First name"
+msgstr "First name"
+
 #: src/features/reports/ReportPages.tsx
 msgid "first replies"
 msgstr "first replies"
@@ -2529,6 +2800,10 @@ msgstr "first reply"
 #: src/app/TeamMenu.tsx
 msgid "first reply in {first}"
 msgstr "first reply in {first}"
+
+#: src/features/broadcasts/Import.tsx
+msgid "First rows of the file"
+msgstr "First rows of the file"
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Fix it"
@@ -2661,6 +2936,10 @@ msgstr "Full guide, with Starlight, VitePress, Docusaurus and the options"
 #: src/features/setup/InstallStep.tsx
 msgid "Full guide, with the screens and push notifications"
 msgstr "Full guide, with the screens and push notifications"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Full name"
+msgstr "Full name"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Fumadocs / React"
@@ -2851,13 +3130,55 @@ msgstr "Idea"
 msgid "Identity secret"
 msgstr "Identity secret"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
+msgstr "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
 msgstr "Image descriptions"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
+#: src/features/broadcasts/ListPage.tsx
 msgid "Import"
 msgstr "Import"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import a CSV file"
+msgstr "Import a CSV file"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import another file"
+msgstr "Import another file"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import finished"
+msgstr "Import finished"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import from a CSV file"
+msgstr "Import from a CSV file"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Import steps"
+msgstr "Import steps"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Importing"
+msgstr "Importing"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Importing…"
+msgstr "Importing…"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Imports"
+msgstr "Imports"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Imports run one at a time in the workspace. Try again when the other one ends."
+msgstr "Imports run one at a time in the workspace. Try again when the other one ends."
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "In 1 hour"
@@ -3048,6 +3369,10 @@ msgstr "It shows up here as soon as it reaches Yuva."
 msgid "It stays a draft until you send or schedule it. Replies come to the inbox you pick."
 msgstr "It stays a draft until you send or schedule it. Replies come to the inbox you pick."
 
+#: src/features/broadcasts/Import.tsx
+msgid "It stops within a moment. Subscribers it already added stay on the list."
+msgstr "It stops within a moment. Subscribers it already added stay on the list."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "It will act as you, <0>{email}</0>, with only the access you allow below."
@@ -3080,6 +3405,10 @@ msgstr "Just wrote"
 msgid "Keep"
 msgstr "Keep"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Kept with every subscription from this file, as the record of their consent."
+msgstr "Kept with every subscription from this file, as the record of their consent."
+
 #: src/app/Palette.tsx
 #: src/app/UserMenu.tsx
 #: src/components/common/ShortcutSheet.tsx
@@ -3107,6 +3436,10 @@ msgstr "Kind"
 msgid "Known"
 msgstr "Known"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Known only from the receiving server’s results of the test mail."
+msgstr "Known only from the receiving server’s results of the test mail."
+
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
@@ -3121,6 +3454,7 @@ msgstr "Labels (L)"
 
 #: src/app/UserMenu.tsx
 #: src/components/common/LanguageMenu.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/contact/ContactDetails.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/members/Invites.tsx
@@ -3140,6 +3474,10 @@ msgstr "Languages"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
 msgstr "Last attempt"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Last name"
+msgstr "Last name"
 
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Last push failed: {failed}"
@@ -3195,6 +3533,7 @@ msgid "Leave the text, then the block"
 msgstr "Leave the text, then the block"
 
 #: src/features/broadcasts/AudienceBuilder.tsx
+#: src/features/broadcasts/Import.tsx
 msgid "Left out"
 msgstr "Left out"
 
@@ -3281,6 +3620,7 @@ msgstr "Load images"
 #: src/features/account/AccountPage.tsx
 #: src/features/broadcasts/BroadcastList.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
+#: src/features/broadcasts/Import.tsx
 #: src/features/broadcasts/Report.tsx
 #: src/features/broadcasts/Subscribers.tsx
 #: src/features/contact/ContactNotes.tsx
@@ -3337,6 +3677,10 @@ msgstr "Looking at {where}"
 #: src/components/common/text.ts
 msgid "Low"
 msgstr "Low"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Lowercase letters, digits and dashes, not at the start or end."
+msgstr "Lowercase letters, digits and dashes, not at the start or end."
 
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "Lowercase letters, digits and dashes."
@@ -3651,6 +3995,7 @@ msgstr "My profile"
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/ChannelDialog.tsx
+#: src/features/settings/channels/email/Deliverability.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
 #: src/features/settings/labels/LabelDialog.tsx
 #: src/features/settings/profile/ProfileForm.tsx
@@ -3698,6 +4043,10 @@ msgstr "Needs the operator’s approval"
 msgid "Never"
 msgstr "Never"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Never checked. Run a check before the first broadcast; the review warns until you do."
+msgstr "Never checked. Run a check before the first broadcast; the review warns until you do."
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "never used"
@@ -3706,6 +4055,10 @@ msgstr "never used"
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
 msgstr "New"
+
+#: src/features/broadcasts/Import.tsx
+msgid "New addresses that get a confirmation mail"
+msgstr "New addresses that get a confirmation mail"
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "New API key"
@@ -3725,6 +4078,10 @@ msgstr "New broadcast ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "New canned reply"
+
+#: src/features/broadcasts/Import.tsx
+msgid "New contacts created"
+msgstr "New contacts created"
 
 #: src/features/contact/ContactDetails.tsx
 #: src/features/contact/ContactPage.tsx
@@ -3811,6 +4168,10 @@ msgstr "New reply in <0>{title}</0>"
 msgid "New signing secret"
 msgstr "New signing secret"
 
+#: src/features/broadcasts/Import.tsx
+msgid "New subscribers added"
+msgstr "New subscribers added"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match"
 msgstr "Newer match"
@@ -3826,6 +4187,10 @@ msgstr "Newest"
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Newest first. Finished deliveries are kept for 7 days."
 msgstr "Newest first. Finished deliveries are kept for 7 days."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
+msgstr "Newsletter checkbox on the checkout page of our shop, 2023 to 2026"
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Next attempt"
@@ -3944,6 +4309,10 @@ msgstr "No discussions under the pages of these sites."
 msgid "No discussions yet. Readers start them under your documentation pages."
 msgstr "No discussions yet. Readers start them under your documentation pages."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
+msgstr "No DKIM signature passed, so broadcasts cannot be sent. Set up DKIM with your SMTP provider, or turn on Yuva DKIM below."
+
 #: src/features/inbox/SidePanels.tsx
 msgid "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
 msgstr "No drafts are waiting. Replies an assistant, a bot or a teammate drafts show up here until someone sends or discards them."
@@ -3975,6 +4344,10 @@ msgstr "No feedback from this page."
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "No hidden discussions."
 msgstr "No hidden discussions."
+
+#: src/features/broadcasts/Import.tsx
+msgid "No imports yet."
+msgstr "No imports yet."
 
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "No labels yet"
@@ -4084,6 +4457,14 @@ msgstr "No teammate can see this inbox"
 msgid "No test went out since the last change."
 msgstr "No test went out since the last change."
 
+#: src/features/broadcasts/Import.tsx
+msgid "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
+msgstr "No welcome mail is sent. Each new address waits for confirmation and joins after clicking the link in the mail."
+
+#: src/features/broadcasts/Import.tsx
+msgid "No welcome or confirmation mail is sent. Every subscription keeps the consent you declared and the import it came from."
+msgstr "No welcome or confirmation mail is sent. Every subscription keeps the consent you declared and the import it came from."
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "Nobody else can see this inbox yet."
 msgstr "Nobody else can see this inbox yet."
@@ -4095,6 +4476,10 @@ msgstr "Nobody has replied or closed anything yet today."
 #: src/features/broadcasts/Report.tsx
 msgid "Nobody is on the list of recipients yet."
 msgstr "Nobody is on the list of recipients yet."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Nobody is subscribed yet: each new address gets the list’s confirmation mail, spread over days by the daily sending limit, and joins only after clicking it."
+msgstr "Nobody is subscribed yet: each new address gets the list’s confirmation mail, spread over days by the daily sending limit, and joins only after clicking it."
 
 #: src/features/broadcasts/Growth.tsx
 msgid "Nobody joined or left in this window."
@@ -4143,6 +4528,10 @@ msgstr "Not a secret: it is part of your web pages. Rotate it to stop old embeds
 msgid "Not a secret: it ships inside your app. Native apps send no origin, so the key is not tied to one."
 msgstr "Not a secret: it ships inside your app. Native apps send no origin, so the key is not tied to one."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Not a valid e-mail address"
+msgstr "Not a valid e-mail address"
+
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Not an origin: {notOrigins}. Use scheme and host only, such as https://www.example.com."
@@ -4182,6 +4571,10 @@ msgstr "Not ready"
 msgid "Not shown"
 msgstr "Not shown"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Not signing yet"
+msgstr "Not signing yet"
+
 #: src/features/conversation/ChatView.tsx
 #: src/features/conversation/ConversationMenu.tsx
 msgid "Not spam"
@@ -4215,9 +4608,17 @@ msgstr "Notes stopped syncing after the update"
 msgid "Nothing"
 msgstr "Nothing"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Nothing from the file is added, and the uploaded file is deleted."
+msgstr "Nothing from the file is added, and the uploaded file is deleted."
+
 #: src/features/broadcasts/Report.tsx
 msgid "Nothing has happened yet."
 msgstr "Nothing has happened yet."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
+msgstr "Nothing is added yet. The file is read, each domain is asked whether it takes mail, and duplicates and addresses that may not get mail are found."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is assigned to you."
@@ -4400,6 +4801,10 @@ msgstr "Only add people who agreed to get this list. What you enter here is kept
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Only contacts whose language is one of these."
 msgstr "Only contacts whose language is one of these."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "Only DNS could be checked, not how receiving servers judge the mail."
+msgstr "Only DNS could be checked, not how receiving servers judge the mail."
 
 #: src/features/conversation/Feedback.tsx
 msgid "Only in the app"
@@ -4782,6 +5187,14 @@ msgstr "Pick a contact"
 msgid "Pick a conversation"
 msgstr "Pick a conversation"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Pick a CSV file, or drop it here"
+msgstr "Pick a CSV file, or drop it here"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Pick a CSV file. Save a spreadsheet as CSV first."
+msgstr "Pick a CSV file. Save a spreadsheet as CSV first."
+
 #: src/components/common/text.ts
 msgid "Pick a design first."
 msgstr "Pick a design first."
@@ -4834,6 +5247,15 @@ msgstr "Pick at least one scope."
 #: src/features/oauth/ConsentPage.tsx
 msgid "Pick at least one."
 msgstr "Pick at least one."
+
+#: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
+msgid "Pick the column that holds the e-mail addresses."
+msgstr "Pick the column that holds the e-mail addresses."
+
+#: src/features/broadcasts/Import.tsx
+msgid "Pick the file to import."
+msgstr "Pick the file to import."
 
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
@@ -4969,6 +5391,10 @@ msgstr "Public key"
 msgid "Public threads under your documentation pages, in every state."
 msgstr "Public threads under your documentation pages, in every state."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Publish this TXT record in your domain’s DNS:"
+msgstr "Publish this TXT record in your domain’s DNS:"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "Published at once and sent to the followers."
 msgstr "Published at once and sent to the followers."
@@ -5091,6 +5517,10 @@ msgstr "Reading"
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Ready"
 msgstr "Ready"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Ready to import"
+msgstr "Ready to import"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "Ready to send"
@@ -5259,6 +5689,10 @@ msgstr "Replies go out through your own SMTP account. Leave the host empty to on
 msgid "Replies the assistant writes are drafts: you or a teammate review them in the conversation and send them. It shows as you, via the assistant."
 msgstr "Replies the assistant writes are drafts: you or a teammate review them in the conversation and send them. It shows as you, via the assistant."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Replies to {mxDomain} are received by {hosts}."
+msgstr "Replies to {mxDomain} are received by {hosts}."
+
 #: src/features/inbox/SourceFilter.tsx
 msgid "Replies to a broadcast"
 msgstr "Replies to a broadcast"
@@ -5376,6 +5810,7 @@ msgstr "Returning you to {host}…"
 msgid "Returns you to"
 msgstr "Returns you to"
 
+#: src/features/broadcasts/Import.tsx
 #: src/features/inbox/ChatList.tsx
 msgid "Review"
 msgstr "Review"
@@ -5417,6 +5852,10 @@ msgstr "Right after subscribing, people get a short mail that confirms it, with 
 msgid "Role"
 msgstr "Role"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Role addresses such as postmaster@ or noreply@"
+msgstr "Role addresses such as postmaster@ or noreply@"
+
 #: src/features/settings/members/MemberList.tsx
 msgid "Role of {name}"
 msgstr "Role of {name}"
@@ -5447,6 +5886,10 @@ msgstr "Rotate the signing secret?"
 #: src/features/setup/InstallStep.tsx
 msgid "Route your mail to Yuva"
 msgstr "Route your mail to Yuva"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Run a check"
+msgstr "Run a check"
 
 #: src/features/setup/WaitStep.tsx
 msgid "Run your app with the SDK and send a message. The conversation appears here the moment it starts."
@@ -5633,6 +6076,14 @@ msgstr "See where they are, what they hold open and what they did today."
 #: src/components/common/ShortcutSheet.tsx
 msgid "Select the previous or next block"
 msgstr "Select the previous or next block"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Selector"
+msgstr "Selector"
+
+#: src/features/broadcasts/Import.tsx
+msgid "semicolons"
+msgstr "semicolons"
 
 #: src/features/conversation/composer/ReplyBox.tsx
 #: src/features/conversation/messages/Thread.tsx
@@ -6060,6 +6511,10 @@ msgstr "Signed-in user on your site or app"
 msgid "signed-in users only"
 msgstr "signed-in users only"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Signing"
+msgstr "Signing"
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Signing secret"
 msgstr "Signing secret"
@@ -6085,6 +6540,10 @@ msgstr "Site generator"
 #: src/features/setup/AddChannelStep.tsx
 msgid "Site name"
 msgstr "Site name"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Skip this column"
+msgstr "Skip this column"
 
 #: src/components/common/text.ts
 msgid "Skipped"
@@ -6179,6 +6638,18 @@ msgstr "Spam"
 msgid "Spam report"
 msgstr "Spam report"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF fails for {spfDomain}. Add your SMTP provider to its SPF record, and keep it to one valid record."
+msgstr "SPF fails for {spfDomain}. Add your SMTP provider to its SPF record, and keep it to one valid record."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF passes for {spfDomain}, not for the sending domain {from}, so DMARC relies on DKIM alone. Many providers let you set a custom return-path on your domain."
+msgstr "SPF passes for {spfDomain}, not for the sending domain {from}, so DMARC relies on DKIM alone. Many providers let you set a custom return-path on your domain."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "SPF passes for {spfDomain}."
+msgstr "SPF passes for {spfDomain}."
+
 #: src/features/setup/previews.tsx
 msgid "Start a discussion"
 msgstr "Start a discussion"
@@ -6223,6 +6694,10 @@ msgstr "Status"
 msgid "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 msgstr "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Step {step} of {count}"
+msgstr "Step {step} of {count}"
+
 #: src/features/setup/SetupLayout.tsx
 msgid "Step {step} of {STEP_COUNT}"
 msgstr "Step {step} of {STEP_COUNT}"
@@ -6238,6 +6713,10 @@ msgstr "Steps"
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Stop overriding {name}"
 msgstr "Stop overriding {name}"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Stop signing"
+msgstr "Stop signing"
 
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Stop taking new subscribers."
@@ -6277,6 +6756,10 @@ msgstr "subscribed now"
 #: src/features/broadcasts/Subscribers.tsx
 msgid "Subscribers"
 msgstr "Subscribers"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Subscribers added"
+msgstr "Subscribers added"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "Subscription deleted"
@@ -6336,6 +6819,10 @@ msgstr "System"
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "System follows your device"
 msgstr "System follows your device"
+
+#: src/features/broadcasts/Import.tsx
+msgid "tabs"
+msgstr "tabs"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
@@ -6406,6 +6893,10 @@ msgstr "Thanks for writing"
 msgid "Thanks for writing. We usually answer within a day."
 msgstr "Thanks for writing. We usually answer within a day."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "That was the sixth check this hour. You can check again at {retry}."
+msgstr "That was the sixth check this hour. You can check again at {retry}."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "The address bounced or complained"
@@ -6426,6 +6917,10 @@ msgstr "The broadcast was cancelled"
 msgid "The browser has to allow desktop notifications first; until then only the sound plays."
 msgstr "The browser has to allow desktop notifications first; until then only the sound plays."
 
+#: src/components/common/text.ts
+msgid "The channel already has a DKIM key. Delete it before creating another."
+msgstr "The channel already has a DKIM key. Delete it before creating another."
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The channel cannot send yet. It needs an SMTP account and an address to send from."
 msgstr "The channel cannot send yet. It needs an SMTP account and an address to send from."
@@ -6433,6 +6928,10 @@ msgstr "The channel cannot send yet. It needs an SMTP account and an address to 
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "The channel name when empty."
 msgstr "The channel name when empty."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The channel’s deliverability was never checked. Run the check before the first broadcast."
+msgstr "The channel’s deliverability was never checked. Run the check before the first broadcast."
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "The chat appears in the corner of every page that has the snippet."
@@ -6454,6 +6953,10 @@ msgstr "The chat shows who is available and typing"
 msgid "The code is wrong or has expired."
 msgstr "The code is wrong or has expired."
 
+#: src/features/broadcasts/Import.tsx
+msgid "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
+msgstr "The columns are guessed from the header row. One must be the e-mail address; name the others as contact fields or attributes, or skip them. Attributes only fill keys a contact does not have yet."
+
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "The confirmation mail is on its way."
 msgstr "The confirmation mail is on its way."
@@ -6470,6 +6973,10 @@ msgstr "The contact was deleted"
 msgid "The customer does not see this"
 msgstr "The customer does not see this"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The deliverability check has not finished yet."
+msgstr "The deliverability check has not finished yet."
+
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "The design is frozen when you schedule the broadcast. Changing the design later does not change mail that is already scheduled or sent."
 msgstr "The design is frozen when you schedule the broadcast. Changing the design later does not change mail that is already scheduled or sent."
@@ -6478,6 +6985,14 @@ msgstr "The design is frozen when you schedule the broadcast. Changing the desig
 msgid "The design’s own"
 msgstr "The design’s own"
 
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The DKIM signature does not cover the unsubscribe headers."
+msgstr "The DKIM signature does not cover the unsubscribe headers."
+
+#: src/components/common/text.ts
+msgid "The DNS record is not visible yet. Publish it, wait a few minutes and try again."
+msgstr "The DNS record is not visible yet. Publish it, wait a few minutes and try again."
+
 #: src/features/account/ConnectPage.tsx
 msgid "The documentation channel of {host} no longer exists."
 msgstr "The documentation channel of {host} no longer exists."
@@ -6485,6 +7000,10 @@ msgstr "The documentation channel of {host} no longer exists."
 #: src/features/docs/discussions/FromConversation.tsx
 msgid "The documentation page to put it under, on a site of this inbox."
 msgstr "The documentation page to put it under, on a site of this inbox."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The domain takes no mail"
+msgstr "The domain takes no mail"
 
 #: src/components/common/text.ts
 msgid "The e-mail channel is a catch-all without a From address, so it has no address to send this conversation from. Set one in the inbox settings."
@@ -6505,6 +7024,14 @@ msgstr "The endpoint is disabled. Enable it to send deliveries again."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "The exact words they saw next to the checkbox or signature."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The file is larger than {max}. Split it into smaller files."
+msgstr "The file is larger than {max}. Split it into smaller files."
+
+#: src/components/common/text.ts
+msgid "The file is larger than 20 MB. Split it into smaller files."
+msgstr "The file is larger than 20 MB. Split it into smaller files."
 
 #: src/components/common/text.ts
 msgid "The file is too large."
@@ -6542,6 +7069,14 @@ msgstr "The full API: MCP, the REST API and live updates, like a member app."
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
 msgstr "The hours differ by day; changing them here sets the same hours for every chosen day."
 
+#: src/features/broadcasts/Import.tsx
+msgid "The import failed, and nothing was added from the file."
+msgstr "The import failed, and nothing was added from the file."
+
+#: src/components/common/text.ts
+msgid "The import is no longer waiting to start. Look at its state."
+msgstr "The import is no longer waiting to start. Look at its state."
+
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "The inbox cannot be changed later."
 msgstr "The inbox cannot be changed later."
@@ -6561,6 +7096,22 @@ msgstr "The key stops working at the end of this day."
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "The kind cannot be changed later."
 msgstr "The kind cannot be changed later."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check could not send its test mail. Look at the channel’s SMTP settings."
+msgstr "The last check could not send its test mail. Look at the channel’s SMTP settings."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
+msgstr "The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last check’s test mail did not come back within 10 minutes. Check again."
+msgstr "The last check’s test mail did not come back within 10 minutes. Check again."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The last deliverability check found something to fix."
+msgstr "The last deliverability check found something to fix."
 
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "The law asks every marketing mail to say who sends it and how to reach them (CAN-SPAM, CASL, Türkiye's Regulation on Commercial Communication). Yuva puts this in the footer of every broadcast from this inbox, so fill it in before the first one."
@@ -6610,17 +7161,41 @@ msgstr "The password is stored encrypted and never shown again."
 msgid "The password is too long."
 msgstr "The password is too long."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is none: receivers only report. Move to quarantine once all your mail passes."
+msgstr "The policy is none: receivers only report. Move to quarantine once all your mail passes."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is quarantine: mail that fails goes to spam."
+msgstr "The policy is quarantine: mail that fails goes to spam."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The policy is reject: mail that fails is refused."
+msgstr "The policy is reject: mail that fails is refused."
+
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "The previous secret also signs until {rotatedUntil}."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The receiving server did not confirm SPF. Check that the record includes your SMTP provider."
+msgstr "The receiving server did not confirm SPF. Check that the record includes your SMTP provider."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The recipients are taken when sending starts: people who subscribe later do not get it, and anyone who unsubscribes before their mail goes out is skipped. You can pause or cancel while it sends."
 msgstr "The recipients are taken when sending starts: people who subscribe later do not get it, and anyone who unsubscribes before their mail goes out is skipped. You can pause or cancel while it sends."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The record at {name} is published."
+msgstr "The record at {name} is published."
+
 #: src/components/common/text.ts
 msgid "The review found something that blocks sending. Fix the red items first."
 msgstr "The review found something that blocks sending. Fix the red items first."
+
+#: src/features/broadcasts/Import.tsx
+msgid "The rows left out are no longer kept."
+msgstr "The rows left out are no longer kept."
 
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
@@ -6634,6 +7209,10 @@ msgstr "The sender's domain did not authorize this mail. It may be forged."
 #: src/components/common/text.ts
 msgid "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
 msgstr "The sending channel has no SMTP account or address to send from yet. Set it up in the inbox settings."
+
+#: src/features/broadcasts/ReviewPanel.tsx
+msgid "The sending domain has no DMARC record."
+msgstr "The sending domain has no DMARC record."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The server’s operator has not answered the request yet."
@@ -6666,6 +7245,18 @@ msgstr "The team today"
 #: src/features/team/TeamColumn.tsx
 msgid "The team today:"
 msgstr "The team today:"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail arrived without results from a receiving server this Yuva trusts, so SPF, DKIM and DMARC could not be read and only DNS was checked. Ask the server’s operator to set the trusted receiving server."
+msgstr "The test mail arrived without results from a receiving server this Yuva trusts, so SPF, DKIM and DMARC could not be read and only DNS was checked. Ask the server’s operator to set the trusted receiving server."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail could not be sent through the channel’s broadcast account. Check its SMTP settings."
+msgstr "The test mail could not be sent through the channel’s broadcast account. Check its SMTP settings."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "The test mail did not come back within 10 minutes, so only DNS was checked. Make sure mail to {address} reaches Yuva (its forwarding or MX), then check again."
+msgstr "The test mail did not come back within 10 minutes, so only DNS was checked. Make sure mail to {address} reaches Yuva (its forwarding or MX), then check again."
 
 #: src/features/broadcasts/TestSend.tsx
 msgid "The test still goes only to the members you picked, never to the contact."
@@ -6760,6 +7351,14 @@ msgstr "This browser cannot show desktop notifications, so only the sound plays.
 msgid "This browser does not support passkeys."
 msgstr "This browser does not support passkeys."
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel has no SMTP account, so it cannot send broadcasts or a test mail."
+msgstr "This channel has no SMTP account, so it cannot send broadcasts or a test mail."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "This channel has no Yuva DKIM key."
+msgstr "This channel has no Yuva DKIM key."
+
 #: src/components/common/text.ts
 msgid "This conflicts with something that already exists."
 msgstr "This conflicts with something that already exists."
@@ -6818,6 +7417,10 @@ msgstr "This inbox has no e-mail channel. Add one with an SMTP account to send b
 msgid "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 msgstr "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 
+#: src/components/common/text.ts
+msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
+msgstr "This is not a CSV file. Save the spreadsheet as CSV and upload that."
+
 #: src/features/settings/channels/ChannelDialog.tsx
 msgid "This is not a JSON object."
 msgstr "This is not a JSON object."
@@ -6848,6 +7451,7 @@ msgid "This list has no e-mail channel that can send, so forms send no confirmat
 msgstr "This list has no e-mail channel that can send, so forms send no confirmation, new form subscribers keep waiting and nobody gets a welcome mail."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
+#: src/features/broadcasts/Import.tsx
 msgid "This list has no e-mail channel that can send, so it cannot mail a confirmation yet."
 msgstr "This list has no e-mail channel that can send, so it cannot mail a confirmation yet."
 
@@ -7200,6 +7804,14 @@ msgstr "Unsubscribed"
 msgid "Unsubscribed before it went out"
 msgstr "Unsubscribed before it went out"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Unsubscribed from everything or asked to be forgotten"
+msgstr "Unsubscribed from everything or asked to be forgotten"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Unsubscribed from this list"
+msgstr "Unsubscribed from this list"
+
 #: src/features/broadcasts/Growth.tsx
 msgid "unsubscribed in the last {days} days"
 msgstr "unsubscribed in the last {days} days"
@@ -7216,9 +7828,21 @@ msgstr "Until they click the link they stay waiting for confirmation and get no 
 msgid "Unverified sender"
 msgstr "Unverified sender"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
+msgstr "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish or Western encodings and columns separated by commas, semicolons or tabs are read as they are."
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Updating"
 msgstr "Updating"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Upload and check"
+msgstr "Upload and check"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Uploading…"
+msgstr "Uploading…"
 
 #: src/components/common/text.ts
 msgid "Urgent"
@@ -7313,6 +7937,10 @@ msgstr "Usually your company or team; you can change it later"
 msgid "value"
 msgstr "value"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Value"
+msgstr "Value"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "Value of condition {n}"
 msgstr "Value of condition {n}"
@@ -7374,6 +8002,7 @@ msgid "waiting for confirmation"
 msgstr "waiting for confirmation"
 
 #: src/components/common/text.ts
+#: src/features/broadcasts/Import.tsx
 msgid "Waiting for confirmation"
 msgstr "Waiting for confirmation"
 
@@ -7461,9 +8090,17 @@ msgstr "Wednesday"
 msgid "Welcome receipt"
 msgstr "Welcome receipt"
 
+#: src/features/broadcasts/Import.tsx
+msgid "What {header} holds"
+msgstr "What {header} holds"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "What did they agree to?"
+
+#: src/features/broadcasts/Import.tsx
+msgid "What each column holds"
+msgstr "What each column holds"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "What is new in October"
@@ -7476,6 +8113,10 @@ msgstr "What should customers see?"
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "What the customer sees"
 msgstr "What the customer sees"
+
+#: src/features/broadcasts/Import.tsx
+msgid "What the import will do"
+msgstr "What the import will do"
 
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "What they agreed to"
@@ -7545,6 +8186,10 @@ msgstr "When we let you know"
 msgid "When your provider sends from another address. Replies still come to the support address."
 msgstr "When your provider sends from another address. Replies still come to the support address."
 
+#: src/features/broadcasts/Import.tsx
+msgid "Where and when did these people agree?"
+msgstr "Where and when did these people agree?"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Where customers write from"
 msgstr "Where customers write from"
@@ -7600,6 +8245,14 @@ msgstr "Who sends, and what about?"
 #: src/features/conversation/HeaderActions.tsx
 msgid "Who should take it?"
 msgstr "Who should take it?"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Windows-1252 (Western Excel)"
+msgstr "Windows-1252 (Western Excel)"
+
+#: src/features/broadcasts/Import.tsx
+msgid "Windows-1254 (Turkish Excel)"
+msgstr "Windows-1254 (Turkish Excel)"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "With {name}"
@@ -7736,6 +8389,10 @@ msgstr "Write to {0} from any other address. The conversation appears here the m
 msgid "Write to {first}…"
 msgstr "Write to {first}…"
 
+#: src/features/broadcasts/Import.tsx
+msgid "Write where and when they agreed."
+msgstr "Write where and when they agreed."
+
 #: src/features/setup/previews.tsx
 msgid "Yes"
 msgstr "Yes"
@@ -7785,6 +8442,10 @@ msgstr "You can close this window and go back to {host}."
 #: src/features/oauth/ConsentPage.tsx
 msgid "You can disconnect it at any time in Settings, under Connected apps."
 msgstr "You can disconnect it at any time in Settings, under Connected apps."
+
+#: src/features/broadcasts/Import.tsx
+msgid "You can leave this page; the import goes on."
+msgstr "You can leave this page; the import goes on."
 
 #: src/features/setup/WaitStep.tsx
 msgid "You can leave this page: the conversation will wait for you in your conversation list."
@@ -7938,6 +8599,10 @@ msgstr "Your Yuva account"
 msgid "Yuva {version}"
 msgstr "Yuva {version}"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva DKIM"
+msgstr "Yuva DKIM"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva does not run a mail server: your domain's mail is passed to it."
@@ -7953,6 +8618,14 @@ msgstr "Yuva on this server is invite only. Ask your team for an invitation."
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva sends a signed POST request with a JSON body for every event you pick."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
+msgstr "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
+msgstr "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."

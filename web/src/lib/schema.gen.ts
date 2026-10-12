@@ -1068,6 +1068,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/channels/{channelId}/deliverability-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Check how an e-mail channel's broadcasts authenticate
+         * @description Sends a probe through the channel's broadcast SMTP account (its support account when it
+         *     has none) to the channel's own address, with the headers a broadcast carries, and looks up
+         *     DNS: the SPF record and DMARC record of the sending domain, the MX of the reply address's
+         *     domain and, when the channel has a Yuva DKIM key, its record. The probe is recognised when
+         *     it arrives and never becomes a conversation; the result is read only from the
+         *     `Authentication-Results` of the receiving server the operator trusts
+         *     (`YUVA_INGRESS_AUTHSERV_ID`) and from the DKIM signature aligned with `From`. Read it with
+         *     `GET /v1/channels/{id}/deliverability`; it is `sent` until the probe arrives and `timeout`
+         *     when it has not within 10 minutes. A new check replaces the previous one.
+         *
+         *     `409 email_channel_required` when the channel is not an e-mail channel or cannot send;
+         *     at most 6 checks an hour per channel (`429 rate_limited`).
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        post: operations["checkDeliverability"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/channels/{channelId}/deliverability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the last deliverability check of an e-mail channel
+         * @description The last check and what it found. `404 not_found` when the channel was never checked. The
+         *     broadcast review reads it: a warning when the channel was never checked, the check did not
+         *     finish or found no DMARC record, blocking when it found no passing DKIM signature.
+         *
+         *     Scope: `inboxes:read`.
+         */
+        get: operations["getDeliverability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/channels/{channelId}/dkim-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a DKIM key for an e-mail channel
+         * @description Creates an RSA 2048 key that Yuva signs the channel's broadcasts, tests, list mails and
+         *     deliverability probes with, once enabled. The private key is stored encrypted under the
+         *     server's master key and never returned. Publish `dns_value` as a TXT record at `dns_name`
+         *     (a provider that limits TXT strings to 255 characters splits it into several strings of
+         *     one record), then enable it with `PATCH /v1/channels/{id}` and `email.dkim.enabled`,
+         *     which looks the record up first. The signature uses `d=` the sending domain,
+         *     relaxed/relaxed canonicalization and `rsa-sha256`, and covers `List-Unsubscribe` and
+         *     `List-Unsubscribe-Post`; the provider's own signature stays next to it.
+         *
+         *     `409 dkim_exists` when the channel has a key (remove it first); `409
+         *     email_channel_required` when the channel is not an e-mail channel.
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        post: operations["createDkimKey"];
+        /**
+         * Remove an e-mail channel's DKIM key
+         * @description Stops signing with it and deletes the key; a channel without a key also answers `204`.
+         *     `409 email_channel_required` when the channel is not an e-mail channel.
+         *
+         *     Owners, admins and API keys. Scope: `inboxes:manage`.
+         */
+        delete: operations["deleteDkimKey"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/contacts": {
         parameters: {
             query?: never;
@@ -2544,6 +2640,146 @@ export interface paths {
          *     Scope: `lists:read`.
          */
         get: operations["exportListConsent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a list's CSV imports
+         * @description Newest first.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["listListImports"];
+        put?: never;
+        /**
+         * Upload a CSV file of subscribers
+         * @description One `file` part (a CSV file of at most 20 MiB with a header row) plus the importer's
+         *     declaration of consent: `attestation`, the statement they accepted (such as "Everyone in
+         *     this file agreed to receive {list} from {sender}; I can show how and when"), and
+         *     `consent_source`, where and when the people agreed. Both are required
+         *     (`422 attestation_required`) and are stored on the import and on every consent event it
+         *     writes. `reconfirm=true` subscribes nobody: every new address becomes `pending` and gets
+         *     the list's confirmation mail, spread over days by the workspace's daily sending limit; the
+         *     list then needs a usable e-mail channel (`409 email_channel_required`). `mapping` is an
+         *     optional JSON `ListImportMappingUpdate`; without it the columns are guessed from the
+         *     headers.
+         *
+         *     The import starts `validating`: the file is read (UTF-8 with or without BOM, UTF-16 with
+         *     BOM, else Windows-1254 when it holds Turkish letters, else Windows-1252; `,`, `;` or tab
+         *     found from the header row; quotes per RFC 4180), each address checked (syntax, a domain
+         *     that takes mail, role addresses such as `postmaster@`, duplicates, suppressed, opted out
+         *     or unsubscribed from the list) and nothing is written yet. It then becomes `ready` with
+         *     `counts`, `columns` and `preview`, or `failed` with `error` (a file over the server's row
+         *     limit, 100,000 by default, fails). Start it with `/start`.
+         *
+         *     One import per workspace validates or imports at a time (`409 import_running`). A file
+         *     that is not text answers `415 not_csv`, one over 20 MiB `413 file_too_large`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["createListImport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A CSV import
+         * @description Scope: `lists:read`.
+         */
+        get: operations["getListImport"];
+        put?: never;
+        post?: never;
+        /**
+         * Cancel an import
+         * @description Stops a `validating`, `ready` or `importing` import and deletes the uploaded file.
+         *     Subscriptions it already added stay, with their consent events. A finished import is left
+         *     as it is.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        delete: operations["cancelListImport"];
+        options?: never;
+        head?: never;
+        /**
+         * Change an import's column mapping
+         * @description Only while `ready` (`409 not_ready`): sets what each column holds and validates the file
+         *     again (the import goes back to `validating`). Exactly one column must be `email`.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        patch: operations["updateListImport"];
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start a validated import
+         * @description Moves a `ready` import to `importing` (`409 not_ready` otherwise; `422
+         *     email_column_required` when no column is mapped to `email`; `409 import_running` while
+         *     another import of the workspace runs). Rows are added 1,000 per transaction, each address
+         *     checked again; `rows_done` and `counts` grow as it goes and `list_import.progress` reaches
+         *     `/v1/realtime` at most once a second. Addresses that unsubscribed from the list, opted out
+         *     of the workspace or are suppressed are never added. Contacts are found by address or
+         *     created with the row's name and locale; mapped attributes only fill keys a contact does
+         *     not have yet. Imports send no `subscription.*` events or webhooks per row and no welcome
+         *     mail. The upload is deleted when the import ends; refused rows stay downloadable from
+         *     `/errors` for 7 days.
+         *
+         *     Owners, admins and API keys. Scope: `lists:write`.
+         */
+        post: operations["startListImport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lists/{listId}/imports/{importId}/errors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download an import's refused rows
+         * @description A CSV file with one row per refused row of the file: `row` (the line the row starts on,
+         *     the header being line 1), `email` as written in the file and `reason`: `invalid_email`,
+         *     `no_mail_domain`, `role_address`, `duplicate`, `suppressed`, `opted_out` or `unsubscribed`.
+         *     Cells are quoted and formula-like values defused as in the consent export. Filled while
+         *     the import runs; `404` once it is 7 days past its end.
+         *
+         *     Scope: `lists:read`.
+         */
+        get: operations["getListImportErrors"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5682,6 +5918,8 @@ export interface components {
              * @description Broadcast mails a second through this channel.
              */
             broadcast_rate: number;
+            /** @description The channel's Yuva DKIM key; absent without one. */
+            dkim?: components["schemas"]["EmailDkim"];
         };
         EmailChannelInput: {
             /**
@@ -5708,6 +5946,120 @@ export interface components {
              * @description Broadcast mails a second; absent keeps the stored pace (5 for a new channel).
              */
             broadcast_rate?: number;
+            dkim?: components["schemas"]["EmailDkimInput"];
+        };
+        /**
+         * @description A DKIM key Yuva signs the channel's broadcast mail with. `dns_name` and `dns_value` are the
+         *     TXT record to publish; they follow the sending domain (`from_address`, else `address`).
+         */
+        EmailDkim: {
+            selector: string;
+            /** @description Mail is signed with the key. */
+            enabled: boolean;
+            /** @example yuva._domainkey.example.com */
+            dns_name: string;
+            /** @example v=DKIM1; k=rsa; p=MIIBIjANBgkqh... */
+            dns_value: string;
+        };
+        /**
+         * @description Absent keeps the stored state. `enabled: true` needs a key (`POST
+         *     /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
+         *     same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+         *     until it is enabled again for the new domain.
+         */
+        EmailDkimInput: {
+            enabled: boolean;
+        };
+        DkimKeyCreate: {
+            /** @description The DNS label the key is published under, such as `yuva` or `yuva2026`. */
+            selector: string;
+        };
+        /**
+         * @description `queued` until the probe is sent; `sent` until it arrives; `received` when the trusted
+         *     `Authentication-Results` were read; `unverifiable` when it arrived without them (the
+         *     server sets no `YUVA_INGRESS_AUTHSERV_ID`, or the mail did not come through that
+         *     receiving server), so only DNS is known; `timeout` when it did not arrive within 10
+         *     minutes; `failed` when it could not be sent (`error`).
+         * @enum {string}
+         */
+        DeliverabilityState: "queued" | "sent" | "received" | "unverifiable" | "timeout" | "failed";
+        /**
+         * @description A result as the receiving server reported it (RFC 8601); `unknown` until it is read or
+         *     when it was not reported.
+         * @enum {string}
+         */
+        AuthStatus: "pass" | "fail" | "softfail" | "neutral" | "none" | "policy" | "temperror" | "permerror" | "unknown";
+        DeliverabilitySpf: {
+            status: components["schemas"]["AuthStatus"];
+            /** @description The envelope sender's domain the result is for (`smtp.mailfrom`). */
+            domain?: string;
+            /** @description `domain` shares its organizational domain with `From` (DMARC relaxed alignment). */
+            aligned: boolean;
+            /** @description The SPF record of the sending domain itself; absent when it has none. */
+            record?: string;
+        };
+        DkimSignature: {
+            /** @description `d=` */
+            domain: string;
+            /** @description `s=` */
+            selector?: string;
+            status: components["schemas"]["AuthStatus"];
+            /** @description `domain` shares its organizational domain with `From`. */
+            aligned: boolean;
+            /** @description Its `h=` lists both `List-Unsubscribe` and `List-Unsubscribe-Post` (RFC 8058). */
+            covers_list_unsubscribe: boolean;
+        };
+        DeliverabilityDkim: {
+            /** @description The result of the signature aligned with `From`, else of the first one reported. */
+            status: components["schemas"]["AuthStatus"];
+            domain?: string;
+            /** @description A signature aligned with `From` passed. */
+            aligned: boolean;
+            /** @description That passing aligned signature covers `List-Unsubscribe` and `List-Unsubscribe-Post`. */
+            covers_list_unsubscribe: boolean;
+            /** @description Every DKIM signature of the probe with the receiving server's result for it. */
+            signatures: components["schemas"]["DkimSignature"][];
+        };
+        /** @enum {string} */
+        DmarcPolicy: "none" | "quarantine" | "reject";
+        DeliverabilityDmarc: {
+            status: components["schemas"]["AuthStatus"];
+            policy?: components["schemas"]["DmarcPolicy"];
+            /** @description The DMARC record that applies to the sending domain; absent when there is none. */
+            record?: string;
+        };
+        DeliverabilityMx: {
+            /** @description The domain of the channel's reply address. */
+            domain: string;
+            /** @description Its MX hosts by preference; empty when it has none. */
+            hosts: string[];
+        };
+        DeliverabilityYuvaDkim: {
+            selector: string;
+            dns_name: string;
+            /** @description DNS answers at `dns_name` with the channel's public key. */
+            published: boolean;
+        };
+        DeliverabilityCheck: {
+            state: components["schemas"]["DeliverabilityState"];
+            /** @description `failed` only: why the probe was not sent, such as the SMTP server's answer. */
+            error?: string;
+            /** @description The sending domain, of `From`. */
+            domain: string;
+            /** @description The probe went to the SMTP server encrypted (STARTTLS or TLS). */
+            tls?: boolean;
+            spf: components["schemas"]["DeliverabilitySpf"];
+            dkim: components["schemas"]["DeliverabilityDkim"];
+            dmarc: components["schemas"]["DeliverabilityDmarc"];
+            mx?: components["schemas"]["DeliverabilityMx"];
+            yuva_dkim?: components["schemas"]["DeliverabilityYuvaDkim"];
+            /** Format: date-time */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description When the probe arrived or failed.
+             */
+            checked_at?: string;
         };
         Channel: {
             /** Format: uuid */
@@ -7147,7 +7499,7 @@ export interface components {
             id: number;
         };
         /** @description One server message on `/v1/realtime`, told apart by `type`. */
-        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        RealtimeMessage: components["schemas"]["ConversationEvent"] | components["schemas"]["ConversationMovedEvent"] | components["schemas"]["MessageCreatedEvent"] | components["schemas"]["MessageUpdatedEvent"] | components["schemas"]["DraftEvent"] | components["schemas"]["ContactUpdatedEvent"] | components["schemas"]["ContactDeletedEvent"] | components["schemas"]["InboxCreatedEvent"] | components["schemas"]["InboxUpdatedEvent"] | components["schemas"]["InboxDeletedEvent"] | components["schemas"]["InboxAccessChangedEvent"] | components["schemas"]["ConversationReadEvent"] | components["schemas"]["ContactReadEvent"] | components["schemas"]["ConversationPinEvent"] | components["schemas"]["DiscussionEvent"] | components["schemas"]["SubscriptionEvent"] | components["schemas"]["BroadcastEvent"] | components["schemas"]["BroadcastProgressEvent"] | components["schemas"]["ListImportEvent"] | components["schemas"]["ListImportProgressEvent"] | components["schemas"]["TypingEvent"] | components["schemas"]["MemberPresenceEvent"] | components["schemas"]["ContactPresenceEvent"] | components["schemas"]["ViewingEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
          * @description `auto`: available in `live` inboxes while connected to `/v1/realtime` within business
          *     hours. `away`: never shown as available.
@@ -7894,7 +8246,7 @@ export interface components {
             by_list: components["schemas"]["BroadcastListCount"][];
         };
         /** @enum {string} */
-        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "daily_cap" | "test_sent" | "click_tracking";
+        BroadcastReviewKey: "sender_identity" | "sender_ready" | "approval" | "design" | "audience_nonempty" | "merge_fields" | "html_size" | "images_alt" | "links" | "subject" | "deliverability" | "daily_cap" | "test_sent" | "click_tracking";
         /** @enum {string} */
         BroadcastReviewStatus: "ok" | "warning" | "blocking";
         BroadcastReviewItem: {
@@ -8315,7 +8667,7 @@ export interface components {
             /** Format: uuid */
             subscription_id: string;
             kind: components["schemas"]["ConsentEventKind"];
-            /** @description Who or what caused it, such as `form`, `identity`, `api`, `member`, `link`, `one_click`, `preferences`, `client`, `complaint`. */
+            /** @description Who or what caused it, such as `form`, `identity`, `api`, `member`, `import`, `link`, `one_click`, `preferences`, `client`, `complaint`. */
             source: string;
             /** @description The client's IP address, when the person acted. */
             ip?: string;
@@ -8330,7 +8682,12 @@ export interface components {
             api_key_id?: string;
             /** Format: uuid */
             broadcast_id?: string;
-            /** @description More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token. */
+            /**
+             * Format: uuid
+             * @description The CSV import that wrote it; `consent_text` then holds the importer's attestation.
+             */
+            import_id?: string;
+            /** @description More proof: `obtained_at` and `reference` declared by an API caller, `oauth_client` for a token, `import_id` and `consent_source` for an import. */
             detail: {
                 [key: string]: unknown;
             };
@@ -8471,6 +8828,207 @@ export interface components {
         };
         WebhookSubscriptionPayload: components["schemas"]["WebhookPayloadBase"] & {
             data: components["schemas"]["WebhookSubscriptionData"];
+        };
+        /**
+         * @description `validating` (the file is read and checked, nothing written), `ready` (checked; waiting
+         *     for `/start`), `importing`, `done`, `failed` (see `error`), `cancelled`.
+         * @enum {string}
+         */
+        ListImportState: "validating" | "ready" | "importing" | "done" | "failed" | "cancelled";
+        /** @enum {string} */
+        ListImportEncoding: "utf-8" | "utf-16le" | "utf-16be" | "windows-1254" | "windows-1252";
+        /**
+         * @description What a column holds. `name` is the full name; `first_name` and `last_name` are joined into
+         *     it. `attribute` fills the contact attribute named by `attribute`; `skip` ignores the
+         *     column.
+         * @enum {string}
+         */
+        ListImportField: "email" | "name" | "first_name" | "last_name" | "locale" | "external_id" | "attribute" | "skip";
+        ListImportColumn: {
+            /**
+             * Format: int32
+             * @description The column's position, from 0.
+             */
+            index: number;
+            /** @description The column's name in the header row. */
+            header: string;
+            field: components["schemas"]["ListImportField"];
+            /** @description The attribute key, with `field` `attribute`. */
+            attribute?: string;
+        };
+        ListImportColumnMapping: {
+            /** Format: int32 */
+            index: number;
+            field: components["schemas"]["ListImportField"];
+            /** @description Required with `field` `attribute`. */
+            attribute?: string;
+        };
+        ListImportMappingUpdate: {
+            /** @description Columns left out are skipped. Exactly one must be `email`. */
+            columns: components["schemas"]["ListImportColumnMapping"][];
+        };
+        /**
+         * @description `valid` is found by the validation: rows that would be added. The rest are refused rows
+         *     by reason, `existing` (already `subscribed` or `pending` on the list) and, while and after
+         *     importing, `added` and `created_contacts`.
+         */
+        ListImportCounts: {
+            /** Format: int64 */
+            valid: number;
+            /** Format: int64 */
+            existing: number;
+            /** Format: int64 */
+            invalid_email: number;
+            /**
+             * Format: int64
+             * @description The address's domain has no MX, A or AAAA record, or a null MX.
+             */
+            no_mail_domain: number;
+            /**
+             * Format: int64
+             * @description Such as `postmaster@`, `abuse@`, `noreply@`.
+             */
+            role_address: number;
+            /**
+             * Format: int64
+             * @description The address appears earlier in the file.
+             */
+            duplicate: number;
+            /** Format: int64 */
+            suppressed: number;
+            /** Format: int64 */
+            opted_out: number;
+            /**
+             * Format: int64
+             * @description The address unsubscribed from this list.
+             */
+            unsubscribed: number;
+            /** Format: int64 */
+            added: number;
+            /** Format: int64 */
+            created_contacts: number;
+        };
+        ListImport: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            list_id: string;
+            state: components["schemas"]["ListImportState"];
+            filename: string;
+            encoding?: components["schemas"]["ListImportEncoding"];
+            /**
+             * @description The column separator found in the header row.
+             * @enum {string}
+             */
+            delimiter?: "comma" | "semicolon" | "tab";
+            /** @description New addresses become `pending` and get a confirmation mail instead of being subscribed. */
+            reconfirm: boolean;
+            /** @description The statement the importer accepted. */
+            attestation: string;
+            /** @description Where and when the people in the file agreed, as the importer wrote it. */
+            consent_source: string;
+            /**
+             * Format: int32
+             * @description Data rows in the file, empty rows left out; 0 until validated.
+             */
+            rows_total: number;
+            /** Format: int32 */
+            rows_done: number;
+            counts: components["schemas"]["ListImportCounts"];
+            /** @description The file's columns with what each holds; empty until validated. */
+            columns: components["schemas"]["ListImportColumn"][];
+            /** @description The first 20 data rows, cells cut at 200 characters; absent once the import ends. */
+            preview?: string[][];
+            /** @description Why the import failed. */
+            error?: string;
+            /**
+             * Format: uuid
+             * @description The member who uploaded it.
+             */
+            member_id?: string;
+            /**
+             * Format: uuid
+             * @description The key that uploaded it.
+             */
+            api_key_id?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at?: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /**
+             * Format: date-time
+             * @description When the refused rows (`/errors`) are deleted.
+             */
+            errors_until?: string;
+        };
+        ListImportPage: {
+            items: components["schemas"]["ListImport"][];
+            /** @description Absent on the last page. */
+            next_cursor?: string;
+        };
+        ListImportUpload: {
+            /** Format: binary */
+            file: string;
+            attestation: string;
+            consent_source: string;
+            reconfirm?: boolean;
+            /** @description A `ListImportMappingUpdate` as JSON. */
+            mapping?: string;
+        };
+        ListImportProgress: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            list_id: string;
+            state: components["schemas"]["ListImportState"];
+            /** Format: int32 */
+            rows_total: number;
+            /** Format: int32 */
+            rows_done: number;
+            counts: components["schemas"]["ListImportCounts"];
+        };
+        /**
+         * @description `list_import.progress`, on `/v1/realtime` only: the progress of an importing CSV file, at
+         *     most once a second. Not stored, no id, never replayed. Delivered to callers who hold
+         *     `lists:read` and can see the list's inbox.
+         */
+        ListImportProgressEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "list_import.progress";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ListImportProgress"];
+        };
+        /**
+         * @description `list_import.updated`, on `/v1/realtime` only: an import became `ready`, `importing`,
+         *     `done`, `failed` or `cancelled`. Not stored, no id, never replayed, no webhook; reload the
+         *     import after a reconnect. Delivered to callers who hold `lists:read` and can see the list's
+         *     inbox.
+         */
+        ListImportEvent: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "list_import.updated";
+            /** Format: uuid */
+            workspace_id: string;
+            /** Format: uuid */
+            inbox_id: string;
+            /** Format: date-time */
+            created_at: string;
+            data: components["schemas"]["ListImport"];
         };
         ClientMailingList: {
             /** Format: uuid */
@@ -9825,6 +10383,7 @@ export interface components {
         /** @description The chat channel's public key. */
         ChannelKey: string;
         ListId: string;
+        ImportId: string;
         DesignId: string;
         BroadcastId: string;
         DesignVersion: number;
@@ -11553,6 +12112,129 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+        };
+    };
+    checkDeliverability: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The check, `queued`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliverabilityCheck"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getDeliverability: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The last check. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeliverabilityCheck"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createDkimKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DkimKeyCreate"];
+            };
+        };
+        responses: {
+            /** @description The key's selector and the DNS record to publish. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailDkim"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    deleteDkimKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                channelId: components["parameters"]["ChannelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     listContacts: {
@@ -14044,6 +14726,229 @@ export interface operations {
                 };
             };
             400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listListImports: {
+        parameters: {
+            query?: {
+                /** @description The `next_cursor` of the previous page. */
+                cursor?: components["parameters"]["Cursor"];
+                /** @description Page size, 1 to 100; 25 by default. */
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description A page of imports. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImportPage"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["ListImportUpload"];
+            };
+        };
+        responses: {
+            /** @description The import, `validating`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            415: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The import. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    cancelListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListImportMappingUpdate"];
+            };
+        };
+        responses: {
+            /** @description The import, `validating`. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    startListImport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The import, `importing`. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ListImport"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            422: components["responses"]["Problem"];
+        };
+    };
+    getListImportErrors: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                listId: components["parameters"]["ListId"];
+                importId: components["parameters"]["ImportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The refused rows. */
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                };
+            };
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];

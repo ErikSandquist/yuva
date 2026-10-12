@@ -121,6 +121,10 @@ export function useRealtime(ws: string, memberId: string) {
           if (msg.data.member_id !== memberId) applyViewing(msg.data)
           return
         }
+        if (msg.type === "list_import.progress" || msg.type === "list_import.updated") {
+          applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
+          return
+        }
         if (msg.type === "broadcast.progress") {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data })
           return

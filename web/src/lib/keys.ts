@@ -29,6 +29,7 @@ export const keys = {
   inboxMembers: (ws: string, inbox: string) => ["ws", ws, "inbox-members", inbox] as const,
   channels: (ws: string, inbox: string) => ["ws", ws, "channels", inbox] as const,
   channel: (ws: string, id: string) => ["ws", ws, "channel", id] as const,
+  deliverability: (ws: string, channel: string) => ["ws", ws, "deliverability", channel] as const,
   labels: (ws: string) => ["ws", ws, "labels"] as const,
   cannedReplies: (ws: string) => ["ws", ws, "canned-replies"] as const,
   contact: (ws: string, id: string) => ["ws", ws, "contact", id] as const,
@@ -76,6 +77,8 @@ export const keys = {
   subscriptions: (ws: string, list: string, state: SubscriptionState | "", q: string) =>
     ["ws", ws, "lists", "subscriptions", list, state, q] as const,
   subscription: (ws: string, list: string, id: string) => ["ws", ws, "lists", "subscription", list, id] as const,
+  listImports: (ws: string, list: string) => ["ws", ws, "lists", "imports", list] as const,
+  listImport: (ws: string, list: string, id: string) => ["ws", ws, "lists", "import", list, id] as const,
   contactSubscriptions: (ws: string, contact: string) => ["ws", ws, "lists", "contact", contact] as const,
   broadcasts: (ws: string) => ["ws", ws, "broadcasts"] as const,
   broadcastPages: (ws: string, inbox: string, group: string) =>
