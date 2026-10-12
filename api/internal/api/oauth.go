@@ -123,7 +123,7 @@ func (s *Server) resolveOAuthAccess(ctx context.Context, token string, kind acce
 	}
 	return principal{
 		grantID: a.GrantID, workspaceID: a.WorkspaceID, memberID: a.MemberID, role: a.Role, scopes: a.Scopes,
-		via: a.ClientName, mcpOnly: mcpOnly, botsMaySend: a.BotsMaySend,
+		via: a.ClientName, mcpOnly: mcpOnly, botsMaySend: a.BotsMaySend, broadcastsByKeys: a.BroadcastsByKeys,
 	}, nil
 }
 

@@ -23,6 +23,7 @@ const (
 	mcpInboxPrefix     = mcpURIPrefix + "inbox/"
 	mcpConvPrefix      = mcpURIPrefix + "conversation/"
 	mcpContactPrefix   = mcpURIPrefix + "contact/"
+	mcpBroadcastPrefix = mcpURIPrefix + "broadcast/"
 	mcpRecheckInterval = 30 * time.Second
 	mcpJSON            = "application/json"
 )
@@ -51,6 +52,21 @@ func addMCPResources(srv *mcp.Server, c *mcpCall) {
 			Description: "A contact, as get_contact returns it." + customerContentRule,
 		}, c.readResource)
 	}
+	if mayReadBroadcastResource(c.p) {
+		srv.AddResourceTemplate(&mcp.ResourceTemplate{
+			Name: "broadcast", Title: "Broadcast", URITemplate: mcpBroadcastPrefix + "{id}", MIMEType: mcpJSON,
+			Description: "A broadcast with its state and counts and, for a draft, its review and audience, as get_broadcast returns it." + customerContentRule,
+		}, c.readResource)
+	}
+}
+
+func mayReadBroadcastResource(p principal) bool {
+	for _, op := range []string{"GetBroadcast", "ReviewBroadcast", "CountBroadcastAudience"} {
+		if keyMayCall(p, op) != nil {
+			return false
+		}
+	}
+	return true
 }
 
 func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
@@ -73,7 +89,7 @@ func (c *mcpCall) inboxResources(ctx context.Context) []*mcp.Resource {
 }
 
 func parseResourceURI(uri string) (string, uuid.UUID, bool) {
-	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix} {
+	for _, prefix := range []string{mcpInboxPrefix, mcpConvPrefix, mcpContactPrefix, mcpBroadcastPrefix} {
 		if rest, ok := strings.CutPrefix(uri, prefix); ok {
 			id, err := uuid.Parse(rest)
 			return prefix, id, err == nil
@@ -115,6 +131,11 @@ func (c *mcpCall) resource(ctx context.Context, uri string) (any, error) {
 			return nil, err
 		}
 		return c.conversation(ctx, id, "", 0)
+	case mcpBroadcastPrefix:
+		if !mayReadBroadcastResource(c.p) {
+			return nil, errInsufficientScope(oas.BroadcastsRead)
+		}
+		return c.getBroadcast(ctx, id)
 	default:
 		if err := keyMayCall(c.p, "GetContact"); err != nil {
 			return nil, err
@@ -241,6 +262,16 @@ func (w *mcpWatcher) matching(e realtime.Event) []string {
 		switch e.Type {
 		case realtime.InboxUpdated, realtime.InboxDeleted, realtime.ConversationCreated, realtime.ConversationUpdated, realtime.ConversationMoved:
 			uris = append(uris, mcpInboxPrefix+e.InboxID.String())
+		}
+	}
+	if e.Type == eventBroadcastUpdated {
+		var b struct {
+			Broadcast struct {
+				ID uuid.UUID `json:"id"`
+			} `json:"broadcast"`
+		}
+		if json.Unmarshal(e.Data, &b) == nil {
+			uris = append(uris, mcpBroadcastPrefix+b.Broadcast.ID.String())
 		}
 	}
 	if e.Type == realtime.ContactUpdated || e.Type == realtime.ContactDeleted {

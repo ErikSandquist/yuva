@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"net/http"
 	"slices"
@@ -21,6 +22,7 @@ type mcpTool struct {
 	scopes []oas.ApiKeyScope
 	allow  func(p principal) bool
 	denied *apiError
+	gate   func(p principal) error
 	add    func(srv *mcp.Server, c *mcpCall)
 }
 
@@ -44,6 +46,9 @@ func (t mcpTool) refusal(p principal) error {
 			return t.denied
 		}
 		return errForbidden
+	}
+	if t.gate != nil {
+		return t.gate(p)
 	}
 	return nil
 }
@@ -94,6 +99,13 @@ func defineTool[In, Out any](name, title, description string, ann mcp.ToolAnnota
 			if err != nil {
 				var zero Out
 				return nil, zero, c.toolError(ctx, err)
+			}
+			if ec, ok := any(out).(mcpExtraContent); ok {
+				b, err := json.Marshal(out)
+				if err != nil {
+					return nil, out, err
+				}
+				return &mcp.CallToolResult{Content: append([]mcp.Content{&mcp.TextContent{Text: string(b)}}, ec.extraContent()...)}, out, nil
 			}
 			return nil, out, nil
 		})
@@ -223,15 +235,17 @@ type lookupContactIn struct {
 }
 
 type mcpMailingList struct {
-	ID          uuid.UUID `json:"id"`
-	InboxID     uuid.UUID `json:"inbox_id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	Public      bool      `json:"public"`
-	DoubleOptIn bool      `json:"double_opt_in"`
-	SenderReady bool      `json:"sender_ready"`
-	Subscribed  int64     `json:"subscribed"`
-	Pending     int64     `json:"pending"`
+	ID          uuid.UUID  `json:"id"`
+	InboxID     uuid.UUID  `json:"inbox_id"`
+	ChannelID   *uuid.UUID `json:"channel_id,omitempty" jsonschema:"the e-mail channel that sends the list's confirmations; broadcasts to the list usually go out through it"`
+	Name        string     `json:"name"`
+	Description string     `json:"description"`
+	Public      bool       `json:"public" jsonschema:"offered on subscribe forms and the preference page"`
+	Commercial  bool       `json:"commercial" jsonschema:"marketing content rather than service announcements"`
+	DoubleOptIn bool       `json:"double_opt_in"`
+	SenderReady bool       `json:"sender_ready"`
+	Subscribed  int64      `json:"subscribed"`
+	Pending     int64      `json:"pending"`
 }
 
 type mailingListsIn struct {
@@ -500,7 +514,8 @@ var mcpTools = append([]mcpTool{
 			out := mcpPage[mcpMailingList]{Items: []mcpMailingList{}}
 			for _, l := range res.(oas.ListMailingLists200JSONResponse).Items {
 				out.Items = append(out.Items, mcpMailingList{
-					ID: l.Id, InboxID: l.InboxId, Name: l.Name, Description: l.Description, Public: l.Public, DoubleOptIn: l.DoubleOptIn,
+					ID: l.Id, InboxID: l.InboxId, ChannelID: l.ChannelId, Name: l.Name, Description: l.Description, Public: l.Public,
+					Commercial: l.Commercial, DoubleOptIn: l.DoubleOptIn,
 					SenderReady: l.SenderReady, Subscribed: l.Counts.Subscribed, Pending: l.Counts.Pending,
 				})
 			}
@@ -676,4 +691,4 @@ var mcpTools = append([]mcpTool{
 			}
 			return contactOut(oas.Contact(res.(oas.MergeContact200JSONResponse))), nil
 		}),
-}, mcpSetupTools...)
+}, slices.Concat(mcpSetupTools, mcpBroadcastTools)...)

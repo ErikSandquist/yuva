@@ -1,0 +1,651 @@
+package api
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
+	"uuid"
+
+	"github.com/modelcontextprotocol/go-sdk/mcp"
+
+	"github.com/productdevbook/yuva/api/internal/oas"
+)
+
+var (
+	errNotBroadcastManager = problem(http.StatusForbidden, "forbidden", "only owners and admins work on designs and broadcasts")
+	templateLocales        = []any{"en", "tr", "de"}
+	broadcastStates        = []any{"draft", "scheduled", "preparing", "sending", "paused", "sent", "cancelled", "failed"}
+	conditionOps           = []any{"eq", "neq", "contains", "in", "exists", "not_exists", "gt", "lt"}
+)
+
+type mcpExtraContent interface {
+	extraContent() []mcp.Content
+}
+
+func mayManageBroadcasts(p principal) bool { return requireManagerOrKey(p) == nil }
+
+func maySchedule(p principal) error {
+	if !mayManageBroadcasts(p) {
+		return errNotBroadcastManager
+	}
+	if p.scoped() && !p.broadcastsByKeys {
+		return errBroadcastsByKeys
+	}
+	return nil
+}
+
+type mcpEmailTemplate struct {
+	Slug        string   `json:"slug" jsonschema:"pass as template to create_design"`
+	Category    string   `json:"category"`
+	Name        string   `json:"name"`
+	Description string   `json:"description"`
+	Locales     []string `json:"locales" jsonschema:"the languages the template's text exists in"`
+	PreviewURL  string   `json:"preview_url" jsonschema:"a picture of the template"`
+}
+
+type listTemplatesIn struct {
+	Locale string `json:"locale,omitempty" jsonschema:"the language of names and descriptions; en when empty"`
+}
+
+type mcpDesign struct {
+	ID           uuid.UUID        `json:"id"`
+	Name         string           `json:"name"`
+	InboxID      *uuid.UUID       `json:"inbox_id,omitempty" jsonschema:"the inbox the design belongs to; absent for a design every inbox may use"`
+	Version      int32            `json:"version" jsonschema:"pass as base_version to update_design"`
+	TemplateSlug string           `json:"template_slug,omitempty"`
+	Document     map[string]any   `json:"document" jsonschema:"the design: schema 1, a theme and blocks; written by the workspace's members"`
+	Warnings     []mcpDesignIssue `json:"warnings" jsonschema:"what to fix before sending, such as missing alt text"`
+	UpdatedAt    time.Time        `json:"updated_at"`
+	PanelURL     string           `json:"panel_url,omitempty" jsonschema:"where a member opens it in Yuva"`
+}
+
+type mcpDesignIssue struct {
+	Code    string `json:"code"`
+	BlockID string `json:"block_id,omitempty"`
+	Field   string `json:"field,omitempty"`
+	Detail  string `json:"detail,omitempty"`
+}
+
+func designIssuesOut(is []oas.EmailDesignIssue) []mcpDesignIssue {
+	out := []mcpDesignIssue{}
+	for _, i := range is {
+		out = append(out, mcpDesignIssue{Code: i.Code, BlockID: deref(i.BlockId), Field: deref(i.Field), Detail: deref(i.Detail)})
+	}
+	return out
+}
+
+func documentMap(d oas.EmailDesignDocument) (map[string]any, error) {
+	b, err := json.Marshal(d)
+	if err != nil {
+		return nil, err
+	}
+	out := map[string]any{}
+	return out, json.Unmarshal(b, &out)
+}
+
+func documentIn(m map[string]any) (oas.EmailDesignDocument, error) {
+	var out oas.EmailDesignDocument
+	b, err := json.Marshal(m)
+	if err != nil {
+		return out, err
+	}
+	if err := json.Unmarshal(b, &out); err != nil {
+		return out, errValidation("document is not a design document: " + err.Error())
+	}
+	return out, nil
+}
+
+func (c *mcpCall) designOut(d oas.EmailDesign) (mcpDesign, error) {
+	doc, err := documentMap(d.Document)
+	if err != nil {
+		return mcpDesign{}, err
+	}
+	out := mcpDesign{
+		ID: d.Id, Name: d.Name, InboxID: d.InboxId, Version: d.Version, TemplateSlug: deref(d.TemplateSlug), Document: doc,
+		Warnings: designIssuesOut(d.Warnings), UpdatedAt: d.UpdatedAt,
+	}
+	if !c.s.noPanel {
+		out.PanelURL = c.s.auth.PublicURL + "/broadcasts/designs/" + d.Id.String()
+	}
+	return out, nil
+}
+
+type createDesignIn struct {
+	Name     string         `json:"name" jsonschema:"shown to members, such as October newsletter"`
+	InboxID  *uuid.UUID     `json:"inbox_id,omitempty" jsonschema:"the inbox it belongs to; the design is shared by every inbox when absent"`
+	Template string         `json:"template,omitempty" jsonschema:"a template slug from list_email_templates to start from"`
+	Locale   string         `json:"locale,omitempty" jsonschema:"the language of the template's text"`
+	Document map[string]any `json:"document,omitempty" jsonschema:"a whole design document instead of a template; a blank design when neither is given"`
+}
+
+type updateDesignIn struct {
+	DesignID    uuid.UUID      `json:"design_id"`
+	BaseVersion int32          `json:"base_version" jsonschema:"the version create_design or update_design returned last"`
+	Document    map[string]any `json:"document" jsonschema:"the whole changed document: start from the document returned last, keep block ids, the theme and the footer, change texts, links and images, add or remove blocks. Text blocks hold a small HTML subset (p, a, strong, em, ul, ol, li, br); there is no raw HTML block and no remote image. Merge fields need a fallback, such as {{ contact.first_name | \"there\" }}"`
+	Name        string         `json:"name,omitempty" jsonschema:"a new name; unchanged when empty"`
+}
+
+type previewDesignIn struct {
+	DesignID  uuid.UUID  `json:"design_id"`
+	ListID    *uuid.UUID `json:"list_id,omitempty" jsonschema:"render the footer and unsubscribe links of this list"`
+	InboxID   *uuid.UUID `json:"inbox_id,omitempty" jsonschema:"render the footer of this inbox; the list's inbox when list_id is given"`
+	Subject   string     `json:"subject,omitempty"`
+	Preheader string     `json:"preheader,omitempty"`
+	Dark      bool       `json:"dark,omitempty" jsonschema:"true renders as a mail app in dark mode shows it"`
+}
+
+type previewDesignOut struct {
+	DesignID  uuid.UUID        `json:"design_id"`
+	Text      string           `json:"text" jsonschema:"the plain-text part of the mail, with merge fields filled for a sample contact"`
+	SizeBytes int64            `json:"size_bytes" jsonschema:"the HTML's size; Gmail cuts mail off above 102 KB"`
+	Warnings  []mcpDesignIssue `json:"warnings"`
+	HTMLURI   string           `json:"html_uri" jsonschema:"the HTML comes as an embedded text/html resource with this URI"`
+	html      string
+}
+
+func (o previewDesignOut) extraContent() []mcp.Content {
+	return []mcp.Content{&mcp.EmbeddedResource{Resource: &mcp.ResourceContents{URI: o.HTMLURI, MIMEType: "text/html", Text: o.html}}}
+}
+
+type mcpBroadcastCondition struct {
+	Attribute string   `json:"attribute" jsonschema:"a contact attribute"`
+	Op        string   `json:"op"`
+	Value     string   `json:"value,omitempty"`
+	Values    []string `json:"values,omitempty" jsonschema:"for op in"`
+}
+
+type mcpBroadcastCounts struct {
+	Recipients          int64 `json:"recipients"`
+	Queued              int64 `json:"queued"`
+	Sent                int64 `json:"sent"`
+	Failed              int64 `json:"failed"`
+	Bounced             int64 `json:"bounced"`
+	Complained          int64 `json:"complained"`
+	Unsubscribed        int64 `json:"unsubscribed"`
+	Replied             int64 `json:"replied"`
+	AutoReplied         int64 `json:"auto_replied"`
+	Clicked             int64 `json:"clicked" jsonschema:"unique clicks, only with click tracking"`
+	SkippedSuppressed   int64 `json:"skipped_suppressed"`
+	SkippedOptedOut     int64 `json:"skipped_opted_out"`
+	SkippedUnsubscribed int64 `json:"skipped_unsubscribed"`
+	SkippedCancelled    int64 `json:"skipped_cancelled"`
+}
+
+func broadcastCountsOut(c oas.BroadcastCounts) mcpBroadcastCounts {
+	return mcpBroadcastCounts{
+		Recipients: c.Recipients, Queued: c.Queued, Sent: c.Sent, Failed: c.Failed, Bounced: c.Bounced, Complained: c.Complained,
+		Unsubscribed: c.Unsubscribed, Replied: c.Replied, AutoReplied: c.AutoReplied, Clicked: c.Clicked,
+		SkippedSuppressed: c.Skipped.Suppressed, SkippedOptedOut: c.Skipped.OptedOut, SkippedUnsubscribed: c.Skipped.Unsubscribed,
+		SkippedCancelled: c.Skipped.Cancelled,
+	}
+}
+
+type mcpBroadcast struct {
+	ID            uuid.UUID               `json:"id"`
+	InboxID       uuid.UUID               `json:"inbox_id"`
+	ChannelID     *uuid.UUID              `json:"channel_id,omitempty" jsonschema:"the e-mail channel it goes out through"`
+	Name          string                  `json:"name"`
+	Subject       string                  `json:"subject"`
+	Preheader     string                  `json:"preheader"`
+	DesignID      *uuid.UUID              `json:"design_id,omitempty"`
+	ListIDs       []uuid.UUID             `json:"list_ids"`
+	Conditions    []mcpBroadcastCondition `json:"conditions" jsonschema:"contact attribute conditions every recipient meets"`
+	Locales       []string                `json:"locales" jsonschema:"only contacts with these languages; everyone when empty"`
+	ClickTracking bool                    `json:"click_tracking"`
+	State         string                  `json:"state"`
+	StateDetail   string                  `json:"state_detail,omitempty" jsonschema:"why it paused or failed, such as the mail server's answer"`
+	PauseReason   string                  `json:"pause_reason,omitempty"`
+	ScheduledAt   *time.Time              `json:"scheduled_at,omitempty"`
+	StartedAt     *time.Time              `json:"started_at,omitempty"`
+	FinishedAt    *time.Time              `json:"finished_at,omitempty"`
+	LastTestAt    *time.Time              `json:"last_test_at,omitempty"`
+	Counts        mcpBroadcastCounts      `json:"counts"`
+	CreatedAt     time.Time               `json:"created_at"`
+	UpdatedAt     time.Time               `json:"updated_at"`
+	PanelURL      string                  `json:"panel_url,omitempty" jsonschema:"where a member reviews it in Yuva"`
+}
+
+func (c *mcpCall) broadcastOut(b oas.Broadcast) mcpBroadcast {
+	out := mcpBroadcast{
+		ID: b.Id, InboxID: b.InboxId, ChannelID: b.ChannelId, Name: b.Name, Subject: b.Subject, Preheader: b.Preheader,
+		DesignID: b.DesignId, ListIDs: b.Audience.ListIds, Conditions: []mcpBroadcastCondition{}, Locales: []string{},
+		ClickTracking: b.ClickTracking, State: string(b.State), StateDetail: deref(b.StateDetail), ScheduledAt: b.ScheduledAt,
+		StartedAt: b.StartedAt, FinishedAt: b.FinishedAt, LastTestAt: b.LastTestAt, Counts: broadcastCountsOut(b.Counts),
+		CreatedAt: b.CreatedAt, UpdatedAt: b.UpdatedAt,
+	}
+	if out.ListIDs == nil {
+		out.ListIDs = []uuid.UUID{}
+	}
+	for _, cd := range b.Audience.Conditions {
+		mc := mcpBroadcastCondition{Attribute: cd.Attribute, Op: string(cd.Op), Value: deref(cd.Value)}
+		if cd.Values != nil {
+			mc.Values = *cd.Values
+		}
+		out.Conditions = append(out.Conditions, mc)
+	}
+	for _, l := range b.Audience.Locales {
+		out.Locales = append(out.Locales, string(l))
+	}
+	if b.PauseReason != nil {
+		out.PauseReason = string(*b.PauseReason)
+	}
+	if !c.s.noPanel {
+		out.PanelURL = c.s.auth.PublicURL + "/broadcasts/" + b.Id.String()
+	}
+	return out
+}
+
+type listBroadcastsIn struct {
+	InboxID *uuid.UUID `json:"inbox_id,omitempty"`
+	States  []string   `json:"states,omitempty" jsonschema:"only broadcasts in these states"`
+	Cursor  string     `json:"cursor,omitempty"`
+	Limit   int32      `json:"limit,omitempty" jsonschema:"1 to 100, default 25"`
+}
+
+type broadcastIn struct {
+	BroadcastID uuid.UUID `json:"broadcast_id"`
+}
+
+type mcpReviewItem struct {
+	Key    string `json:"key"`
+	Status string `json:"status" jsonschema:"ok, warning or blocking; a blocking item stops scheduling"`
+	Detail string `json:"detail,omitempty"`
+}
+
+type mcpReview struct {
+	Ready      bool            `json:"ready" jsonschema:"true when nothing blocks scheduling"`
+	Recipients int64           `json:"recipients" jsonschema:"who would get it now; schedule_broadcast needs this number as confirm_recipients"`
+	HTMLBytes  int32           `json:"html_bytes,omitempty"`
+	Days       int32           `json:"days,omitempty" jsonschema:"how many days sending takes under the workspace's daily limit"`
+	Items      []mcpReviewItem `json:"items"`
+}
+
+type mcpListCount struct {
+	ListID     uuid.UUID `json:"list_id"`
+	Recipients int64     `json:"recipients"`
+}
+
+type mcpAudience struct {
+	ByList             []mcpListCount   `json:"by_list"`
+	Excluded           map[string]int64 `json:"excluded" jsonschema:"people on the lists left out, by reason"`
+	MissingMergeFields map[string]int64 `json:"missing_merge_fields" jsonschema:"merge fields without fallback that would be empty, with how many recipients"`
+}
+
+type getBroadcastOut struct {
+	Broadcast mcpBroadcast `json:"broadcast"`
+	Review    *mcpReview   `json:"review,omitempty" jsonschema:"the checks scheduling runs, for a draft"`
+	Audience  *mcpAudience `json:"audience,omitempty" jsonschema:"who the draft would reach"`
+}
+
+func (c *mcpCall) getBroadcast(ctx context.Context, id uuid.UUID) (getBroadcastOut, error) {
+	res, err := c.s.GetBroadcast(ctx, oas.GetBroadcastRequestObject{BroadcastId: id})
+	if err != nil {
+		return getBroadcastOut{}, err
+	}
+	b := oas.Broadcast(res.(oas.GetBroadcast200JSONResponse))
+	out := getBroadcastOut{Broadcast: c.broadcastOut(b)}
+	if b.State != oas.BroadcastStateDraft {
+		return out, nil
+	}
+	rres, err := c.s.ReviewBroadcast(ctx, oas.ReviewBroadcastRequestObject{BroadcastId: id})
+	if err != nil {
+		return out, err
+	}
+	r := oas.BroadcastReview(rres.(oas.ReviewBroadcast200JSONResponse))
+	rv := &mcpReview{Ready: r.Ready, Recipients: r.Recipients, Items: []mcpReviewItem{}}
+	if r.HtmlBytes != nil {
+		rv.HTMLBytes = *r.HtmlBytes
+	}
+	if r.Days != nil {
+		rv.Days = *r.Days
+	}
+	for _, it := range r.Items {
+		rv.Items = append(rv.Items, mcpReviewItem{Key: string(it.Key), Status: string(it.Status), Detail: deref(it.Detail)})
+	}
+	out.Review = rv
+	ares, err := c.s.CountBroadcastAudience(ctx, oas.CountBroadcastAudienceRequestObject{BroadcastId: id})
+	if err != nil {
+		return out, err
+	}
+	a := oas.BroadcastAudienceCount(ares.(oas.CountBroadcastAudience200JSONResponse))
+	ex := a.Excluded
+	au := &mcpAudience{ByList: []mcpListCount{}, MissingMergeFields: map[string]int64{}, Excluded: map[string]int64{
+		"blocked": ex.Blocked, "duplicate": ex.Duplicate, "filtered": ex.Filtered, "opted_out": ex.OptedOut, "pending": ex.Pending,
+		"suppressed": ex.Suppressed, "unsubscribed": ex.Unsubscribed,
+	}}
+	for _, l := range a.ByList {
+		au.ByList = append(au.ByList, mcpListCount{ListID: l.ListId, Recipients: l.Recipients})
+	}
+	for k, v := range a.MissingMergeFields {
+		au.MissingMergeFields[k] = v
+	}
+	out.Audience = au
+	return out, nil
+}
+
+type createBroadcastIn struct {
+	InboxID       uuid.UUID               `json:"inbox_id"`
+	ChannelID     *uuid.UUID              `json:"channel_id,omitempty" jsonschema:"the inbox's e-mail channel to send through; list_mailing_lists shows each list's"`
+	Name          string                  `json:"name" jsonschema:"shown to members"`
+	Subject       string                  `json:"subject" jsonschema:"the mail's subject; merge fields need a fallback"`
+	Preheader     string                  `json:"preheader,omitempty" jsonschema:"the line inboxes show after the subject"`
+	DesignID      *uuid.UUID              `json:"design_id,omitempty"`
+	ListIDs       []uuid.UUID             `json:"list_ids" jsonschema:"1 to 10 lists of the inbox"`
+	Locales       []string                `json:"locales,omitempty" jsonschema:"only contacts with these languages, BCP 47 tags"`
+	Conditions    []mcpBroadcastCondition `json:"conditions,omitempty" jsonschema:"contact attribute conditions every recipient must meet"`
+	ClickTracking bool                    `json:"click_tracking,omitempty" jsonschema:"count unique clicks on links; links then point at this server"`
+}
+
+type sendTestIn struct {
+	BroadcastID uuid.UUID   `json:"broadcast_id"`
+	MemberIDs   []uuid.UUID `json:"member_ids,omitempty" jsonschema:"with an API key only: 1 to 5 members to send it to; a signed-in assistant sends it to you"`
+}
+
+type sendTestOut struct {
+	SentTo []string `json:"sent_to" jsonschema:"the members' addresses the test goes to"`
+}
+
+type scheduleBroadcastIn struct {
+	BroadcastID       uuid.UUID `json:"broadcast_id"`
+	SendAt            time.Time `json:"send_at" jsonschema:"when sending starts, at most 90 days ahead; a time in the past sends now"`
+	ConfirmRecipients int64     `json:"confirm_recipients" jsonschema:"the recipient count get_broadcast showed and the person you work for confirmed"`
+}
+
+type mcpReportPoint struct {
+	At           time.Time `json:"at"`
+	Sent         int64     `json:"sent"`
+	Bounced      int64     `json:"bounced"`
+	Complained   int64     `json:"complained"`
+	Unsubscribed int64     `json:"unsubscribed"`
+	Replied      int64     `json:"replied"`
+	Clicked      int64     `json:"clicked"`
+}
+
+type mcpReportLink struct {
+	URL    string `json:"url"`
+	Clicks int64  `json:"clicks"`
+}
+
+type mcpReplyContent struct {
+	ContactName string `json:"contact_name"`
+}
+
+type mcpReportReply struct {
+	ConversationID  uuid.UUID       `json:"conversation_id" jsonschema:"read the reply with get_conversation"`
+	ContactID       uuid.UUID       `json:"contact_id"`
+	At              time.Time       `json:"at"`
+	CustomerContent mcpReplyContent `json:"customer_content"`
+}
+
+type mcpReport struct {
+	BroadcastID uuid.UUID          `json:"broadcast_id"`
+	Counts      mcpBroadcastCounts `json:"counts"`
+	Rates       map[string]float64 `json:"rates" jsonschema:"shares of sent mail, 0 to 1"`
+	Timeline    []mcpReportPoint   `json:"timeline" jsonschema:"hourly for the first 72 hours, then daily"`
+	Links       []mcpReportLink    `json:"links,omitempty" jsonschema:"clicks per link, with click tracking"`
+	Replies     []mcpReportReply   `json:"replies" jsonschema:"conversations opened by replies"`
+}
+
+func scheduleProblem(err error) error {
+	var e *apiError
+	if !errors.As(err, &e) {
+		return err
+	}
+	switch e.Code {
+	case "audience_changed":
+		if n, ok := e.Extra["recipients"].(int64); ok {
+			return problem(e.Status, e.Code, "the audience is now "+strconv.FormatInt(n, 10)+" recipients, not the number given; show the new number to the person you work for and schedule only after they confirm it")
+		}
+	case "review_failed":
+		if items, ok := e.Extra["items"].([]oas.BroadcastReviewItem); ok {
+			var parts []string
+			for _, it := range items {
+				parts = append(parts, string(it.Key)+": "+deref(it.Detail))
+			}
+			return problem(e.Status, e.Code, "the review blocks scheduling: "+strings.Join(parts, "; "))
+		}
+	}
+	return err
+}
+
+var mcpBroadcastTools = []mcpTool{
+	defineTool("list_email_templates", "List e-mail templates",
+		"Lists the starter designs (newsletter, product update, announcement, welcome, event, digest) with the languages each exists in. Start a design from one with create_design. Owners, admins and keys only. Maps to GET /v1/email-templates.",
+		readOnly, map[string][]any{"locale": templateLocales},
+		mcpTool{ops: []string{"ListEmailTemplates"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in listTemplatesIn) (mcpPage[mcpEmailTemplate], error) {
+			res, err := c.s.ListEmailTemplates(ctx, oas.ListEmailTemplatesRequestObject{Params: oas.ListEmailTemplatesParams{Locale: optString[oas.TemplateLocale](in.Locale)}})
+			if err != nil {
+				return mcpPage[mcpEmailTemplate]{}, err
+			}
+			out := mcpPage[mcpEmailTemplate]{Items: []mcpEmailTemplate{}}
+			for _, t := range res.(oas.ListEmailTemplates200JSONResponse).Items {
+				locales := make([]string, len(t.Locales))
+				for i, l := range t.Locales {
+					locales[i] = string(l)
+				}
+				out.Items = append(out.Items, mcpEmailTemplate{Slug: t.Slug, Category: t.Category, Name: t.Name, Description: t.Description, Locales: locales, PreviewURL: t.PreviewUrl})
+			}
+			return out, nil
+		}),
+	defineTool("create_design", "Create an e-mail design",
+		"Creates an e-mail design from a template in a language, from a whole document, or blank, and returns it with its document and version. Owners, admins and keys only. Maps to POST /v1/email-designs.",
+		additive, map[string][]any{"locale": templateLocales},
+		mcpTool{ops: []string{"CreateEmailDesign"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in createDesignIn) (mcpDesign, error) {
+			body := oas.EmailDesignCreate{Name: in.Name, InboxId: in.InboxID}
+			if in.Template != "" {
+				body.Template = &oas.EmailDesignTemplateRef{Slug: in.Template, Locale: optString[oas.EmailTemplateLocale](in.Locale)}
+			}
+			if in.Document != nil {
+				doc, err := documentIn(in.Document)
+				if err != nil {
+					return mcpDesign{}, err
+				}
+				body.Document = &doc
+			}
+			res, err := c.s.CreateEmailDesign(ctx, oas.CreateEmailDesignRequestObject{Body: &body})
+			if err != nil {
+				return mcpDesign{}, err
+			}
+			return c.designOut(oas.EmailDesign(res.(oas.CreateEmailDesign201JSONResponse)))
+		}),
+	defineTool("update_design", "Change an e-mail design",
+		"Saves a new version of a design: the whole changed document, based on the version you changed. If someone saved it since, nothing is saved and the answer says so; ask the person you work for before overwriting their change. Owners, admins and keys only. Maps to PUT /v1/email-designs/{id}.",
+		idempotent, nil,
+		mcpTool{ops: []string{"GetEmailDesign", "UpdateEmailDesign"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in updateDesignIn) (mcpDesign, error) {
+			res, err := c.s.GetEmailDesign(ctx, oas.GetEmailDesignRequestObject{DesignId: in.DesignID})
+			if err != nil {
+				return mcpDesign{}, err
+			}
+			cur := oas.EmailDesign(res.(oas.GetEmailDesign200JSONResponse))
+			doc, err := documentIn(in.Document)
+			if err != nil {
+				return mcpDesign{}, err
+			}
+			name := cur.Name
+			if strings.TrimSpace(in.Name) != "" {
+				name = in.Name
+			}
+			ures, err := c.s.UpdateEmailDesign(ctx, oas.UpdateEmailDesignRequestObject{DesignId: in.DesignID, Body: &oas.EmailDesignUpdate{
+				BaseVersion: in.BaseVersion, Document: doc, Name: name, InboxId: cur.InboxId,
+			}})
+			if err != nil {
+				return mcpDesign{}, err
+			}
+			return c.designOut(oas.EmailDesign(ures.(oas.UpdateEmailDesign200JSONResponse)))
+		}),
+	defineTool("preview_design", "Preview an e-mail design",
+		"Renders a design as the mail goes out: the text part, the HTML size and warnings, and the HTML as an embedded text/html resource. Merge fields show a sample contact. Owners, admins and keys only. Maps to POST /v1/email-designs/render with the design's document.",
+		readOnly, nil,
+		mcpTool{ops: []string{"GetEmailDesign", "RenderEmailDesign"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in previewDesignIn) (previewDesignOut, error) {
+			res, err := c.s.GetEmailDesign(ctx, oas.GetEmailDesignRequestObject{DesignId: in.DesignID})
+			if err != nil {
+				return previewDesignOut{}, err
+			}
+			d := oas.EmailDesign(res.(oas.GetEmailDesign200JSONResponse))
+			body := oas.EmailDesignRenderRequest{Document: d.Document, ListId: in.ListID, InboxId: in.InboxID, Dark: &in.Dark}
+			if in.InboxID == nil && in.ListID == nil {
+				body.InboxId = d.InboxId
+			}
+			if in.Subject != "" {
+				body.Subject = &in.Subject
+			}
+			if in.Preheader != "" {
+				body.Preheader = &in.Preheader
+			}
+			rres, err := c.s.RenderEmailDesign(ctx, oas.RenderEmailDesignRequestObject{Body: &body})
+			if err != nil {
+				return previewDesignOut{}, err
+			}
+			r := oas.EmailDesignRender(rres.(oas.RenderEmailDesign200JSONResponse))
+			return previewDesignOut{
+				DesignID: d.Id, Text: r.Text, SizeBytes: r.SizeBytes, Warnings: designIssuesOut(r.Warnings),
+				HTMLURI: mcpURIPrefix + "design/" + d.Id.String() + "/preview.html", html: r.Html,
+			}, nil
+		}),
+	defineTool("list_broadcasts", "List broadcasts",
+		"Lists the broadcasts of the inboxes you can see, newest first, with their state and counts. Maps to GET /v1/broadcasts.",
+		readOnly, map[string][]any{"states": broadcastStates}, mcpTool{ops: []string{"ListBroadcasts"}},
+		func(ctx context.Context, c *mcpCall, in listBroadcastsIn) (mcpPage[mcpBroadcast], error) {
+			params := oas.ListBroadcastsParams{InboxId: in.InboxID, Cursor: optString[string](in.Cursor), Limit: optLimit(in.Limit)}
+			if len(in.States) > 0 {
+				states := make([]oas.BroadcastState, len(in.States))
+				for i, st := range in.States {
+					states[i] = oas.BroadcastState(st)
+				}
+				params.State = &states
+			}
+			res, err := c.s.ListBroadcasts(ctx, oas.ListBroadcastsRequestObject{Params: params})
+			if err != nil {
+				return mcpPage[mcpBroadcast]{}, err
+			}
+			page := res.(oas.ListBroadcasts200JSONResponse)
+			out := mcpPage[mcpBroadcast]{Items: []mcpBroadcast{}}
+			for _, b := range page.Items {
+				out.Items = append(out.Items, c.broadcastOut(b))
+			}
+			if page.NextCursor != nil {
+				out.NextCursor = *page.NextCursor
+			}
+			return out, nil
+		}),
+	defineTool("get_broadcast", "Get a broadcast",
+		"Returns a broadcast with its state and counts and, for a draft, the review scheduling runs (what blocks it) and the audience: how many people would get it now, by list, and who is left out. Maps to GET /v1/broadcasts/{id}, its review and POST /v1/broadcasts/{id}/audience.",
+		readOnly, nil, mcpTool{ops: []string{"GetBroadcast", "ReviewBroadcast", "CountBroadcastAudience"}},
+		func(ctx context.Context, c *mcpCall, in broadcastIn) (getBroadcastOut, error) {
+			return c.getBroadcast(ctx, in.BroadcastID)
+		}),
+	defineTool("create_broadcast_draft", "Create a draft broadcast",
+		"Creates a draft broadcast for an inbox: the e-mail channel, the lists, the design, subject and preheader. Nothing is sent; check it with get_broadcast. Owners, admins and keys only. Maps to POST /v1/broadcasts.",
+		additive, map[string][]any{"conditions.op": conditionOps},
+		mcpTool{ops: []string{"CreateBroadcast"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in createBroadcastIn) (mcpBroadcast, error) {
+			aud := oas.BroadcastAudienceInput{ListIds: in.ListIDs}
+			if aud.ListIds == nil {
+				aud.ListIds = []uuid.UUID{}
+			}
+			if len(in.Locales) > 0 {
+				locales := make([]oas.LanguageTag, len(in.Locales))
+				for i, l := range in.Locales {
+					locales[i] = oas.LanguageTag(l)
+				}
+				aud.Locales = &locales
+			}
+			if len(in.Conditions) > 0 {
+				conds := make([]oas.BroadcastCondition, len(in.Conditions))
+				for i, cd := range in.Conditions {
+					conds[i] = oas.BroadcastCondition{Attribute: cd.Attribute, Op: oas.BroadcastConditionOp(cd.Op), Value: optString[string](cd.Value)}
+					if cd.Values != nil {
+						conds[i].Values = &cd.Values
+					}
+				}
+				aud.Conditions = &conds
+			}
+			body := oas.BroadcastCreate{
+				InboxId: in.InboxID, ChannelId: in.ChannelID, Name: in.Name, Subject: &in.Subject, DesignId: in.DesignID,
+				Audience: &aud, ClickTracking: &in.ClickTracking,
+			}
+			if in.Preheader != "" {
+				body.Preheader = &in.Preheader
+			}
+			res, err := c.s.CreateBroadcast(ctx, oas.CreateBroadcastRequestObject{Body: &body})
+			if err != nil {
+				return mcpBroadcast{}, err
+			}
+			return c.broadcastOut(oas.Broadcast(res.(oas.CreateBroadcast201JSONResponse))), nil
+		}),
+	defineTool("send_test_broadcast", "Send a test of a broadcast",
+		"Sends a test of a draft to you (with an API key, to the members named), never to subscribers; at most 20 tests an hour per workspace. Owners, admins and keys only. Maps to POST /v1/broadcasts/{id}/test.",
+		delivering, nil,
+		mcpTool{ops: []string{"SendBroadcastTest"}, allow: mayManageBroadcasts, denied: errNotBroadcastManager},
+		func(ctx context.Context, c *mcpCall, in sendTestIn) (sendTestOut, error) {
+			body := oas.BroadcastTest{}
+			if len(in.MemberIDs) > 0 {
+				if !c.p.isKey() {
+					return sendTestOut{}, errValidation("a test from a connected assistant goes to you; leave member_ids out")
+				}
+				body.MemberIds = &in.MemberIDs
+			}
+			res, err := c.s.SendBroadcastTest(ctx, oas.SendBroadcastTestRequestObject{BroadcastId: in.BroadcastID, Body: &body})
+			if err != nil {
+				return sendTestOut{}, err
+			}
+			out := sendTestOut{SentTo: []string{}}
+			for _, e := range res.(oas.SendBroadcastTest202JSONResponse).SentTo {
+				out.SentTo = append(out.SentTo, string(e))
+			}
+			return out, nil
+		}),
+	defineTool("schedule_broadcast", "Schedule a broadcast",
+		"Schedules a draft to go out to its audience at send_at. confirm_recipients must be the recipient count that get_broadcast showed and the person you work for confirmed; if the audience changed since, nothing is scheduled. The review must pass. Listed only while the workspace lets API keys and assistants schedule broadcasts. Maps to POST /v1/broadcasts/{id}/schedule.",
+		delivering, nil,
+		mcpTool{ops: []string{"ScheduleBroadcast"}, gate: maySchedule},
+		func(ctx context.Context, c *mcpCall, in scheduleBroadcastIn) (mcpBroadcast, error) {
+			res, err := c.s.ScheduleBroadcast(ctx, oas.ScheduleBroadcastRequestObject{BroadcastId: in.BroadcastID, Body: &oas.BroadcastSchedule{
+				SendAt: &in.SendAt, ConfirmRecipients: &in.ConfirmRecipients,
+			}})
+			if err != nil {
+				return mcpBroadcast{}, scheduleProblem(err)
+			}
+			return c.broadcastOut(oas.Broadcast(res.(oas.ScheduleBroadcast200JSONResponse))), nil
+		}),
+	defineTool("get_broadcast_report", "Get a broadcast's report",
+		"Reports a broadcast: counts, rates of sent mail, a timeline, clicks per link with click tracking, and the conversations replies opened. Maps to GET /v1/broadcasts/{id}/report.",
+		readOnly, nil, mcpTool{ops: []string{"GetBroadcastReport"}},
+		func(ctx context.Context, c *mcpCall, in broadcastIn) (mcpReport, error) {
+			res, err := c.s.GetBroadcastReport(ctx, oas.GetBroadcastReportRequestObject{BroadcastId: in.BroadcastID})
+			if err != nil {
+				return mcpReport{}, err
+			}
+			r := oas.BroadcastReport(res.(oas.GetBroadcastReport200JSONResponse))
+			out := mcpReport{
+				BroadcastID: r.BroadcastId, Counts: broadcastCountsOut(r.Counts), Timeline: []mcpReportPoint{}, Replies: []mcpReportReply{},
+				Rates: map[string]float64{
+					"bounced": r.Rates.Bounced, "complained": r.Rates.Complained, "unsubscribed": r.Rates.Unsubscribed,
+					"replied": r.Rates.Replied, "clicked": r.Rates.Clicked,
+				},
+			}
+			for _, pt := range r.Timeline {
+				out.Timeline = append(out.Timeline, mcpReportPoint{At: pt.At, Sent: pt.Sent, Bounced: pt.Bounced, Complained: pt.Complained,
+					Unsubscribed: pt.Unsubscribed, Replied: pt.Replied, Clicked: pt.Clicked})
+			}
+			if r.Links != nil {
+				for _, l := range *r.Links {
+					out.Links = append(out.Links, mcpReportLink{URL: l.Url, Clicks: l.Clicks})
+				}
+			}
+			for _, rp := range r.Replies {
+				out.Replies = append(out.Replies, mcpReportReply{
+					ConversationID: rp.ConversationId, ContactID: rp.Contact.Id, At: rp.At, CustomerContent: mcpReplyContent{ContactName: rp.Contact.Name},
+				})
+			}
+			return out, nil
+		}),
+}

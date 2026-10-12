@@ -86,7 +86,7 @@ DELETE FROM oauth_codes WHERE workspace_id = $1 AND grant_id = $2;
 
 -- name: GetOAuthAccess :one
 SELECT t.expires_at, g.workspace_id, g.id AS grant_id, g.scopes, g.resource, m.id AS member_id, m.role,
-       cl.name AS client_name, w.bots_may_send
+       cl.name AS client_name, w.bots_may_send, w.broadcasts_by_keys
 FROM oauth_tokens t
 JOIN oauth_grants g ON g.workspace_id = t.workspace_id AND g.id = t.grant_id
 JOIN members m ON m.workspace_id = g.workspace_id AND m.id = g.member_id

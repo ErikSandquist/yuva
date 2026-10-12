@@ -141,26 +141,27 @@ func (q *Queries) GetAPIKeyByID(ctx context.Context, id uuid.UUID) (ApiKey, erro
 }
 
 const getActiveAPIKeyByHash = `-- name: GetActiveAPIKeyByHash :one
-SELECT k.id, k.workspace_id, k.name, k.prefix, k.secret_hash, k.created_by, k.created_at, k.last_used_at, k.revoked_at, k.scopes, k.inbox_limited, k.expires_at, k.bot_name, k.bot_avatar_url, w.bots_may_send FROM api_keys k JOIN workspaces w ON w.id = k.workspace_id
+SELECT k.id, k.workspace_id, k.name, k.prefix, k.secret_hash, k.created_by, k.created_at, k.last_used_at, k.revoked_at, k.scopes, k.inbox_limited, k.expires_at, k.bot_name, k.bot_avatar_url, w.bots_may_send, w.broadcasts_by_keys FROM api_keys k JOIN workspaces w ON w.id = k.workspace_id
 WHERE k.secret_hash = $1 AND k.revoked_at IS NULL AND w.deleted_at IS NULL
 `
 
 type GetActiveAPIKeyByHashRow struct {
-	ID           uuid.UUID
-	WorkspaceID  uuid.UUID
-	Name         string
-	Prefix       string
-	SecretHash   []byte
-	CreatedBy    *uuid.UUID
-	CreatedAt    time.Time
-	LastUsedAt   *time.Time
-	RevokedAt    *time.Time
-	Scopes       []string
-	InboxLimited bool
-	ExpiresAt    *time.Time
-	BotName      *string
-	BotAvatarUrl *string
-	BotsMaySend  bool
+	ID               uuid.UUID
+	WorkspaceID      uuid.UUID
+	Name             string
+	Prefix           string
+	SecretHash       []byte
+	CreatedBy        *uuid.UUID
+	CreatedAt        time.Time
+	LastUsedAt       *time.Time
+	RevokedAt        *time.Time
+	Scopes           []string
+	InboxLimited     bool
+	ExpiresAt        *time.Time
+	BotName          *string
+	BotAvatarUrl     *string
+	BotsMaySend      bool
+	BroadcastsByKeys bool
 }
 
 func (q *Queries) GetActiveAPIKeyByHash(ctx context.Context, secretHash []byte) (GetActiveAPIKeyByHashRow, error) {
@@ -182,6 +183,7 @@ func (q *Queries) GetActiveAPIKeyByHash(ctx context.Context, secretHash []byte) 
 		&i.BotName,
 		&i.BotAvatarUrl,
 		&i.BotsMaySend,
+		&i.BroadcastsByKeys,
 	)
 	return i, err
 }

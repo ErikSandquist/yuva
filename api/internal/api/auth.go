@@ -141,18 +141,19 @@ var operationAccess = map[string]access{
 }
 
 type principal struct {
-	personID    uuid.UUID
-	sessionID   uuid.UUID
-	keyID       uuid.UUID
-	workspaceID uuid.UUID
-	memberID    uuid.UUID
-	role        string
-	scopes      []string
-	limited     bool
-	botsMaySend bool
-	grantID     uuid.UUID
-	via         string
-	mcpOnly     bool
+	personID         uuid.UUID
+	sessionID        uuid.UUID
+	keyID            uuid.UUID
+	workspaceID      uuid.UUID
+	memberID         uuid.UUID
+	role             string
+	scopes           []string
+	limited          bool
+	botsMaySend      bool
+	broadcastsByKeys bool
+	grantID          uuid.UUID
+	via              string
+	mcpOnly          bool
 }
 
 func (p principal) isKey() bool { return p.keyID != uuid.Nil() }
@@ -379,6 +380,7 @@ func (s *Server) resolveBearer(ctx context.Context, token string, kind access, s
 	}
 	return principal{
 		keyID: key.ID, workspaceID: key.WorkspaceID, scopes: key.Scopes, limited: key.InboxLimited, botsMaySend: key.BotsMaySend,
+		broadcastsByKeys: key.BroadcastsByKeys,
 	}, nil
 }
 

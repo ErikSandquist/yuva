@@ -285,7 +285,7 @@ func (q *Queries) DeleteUnusedOAuthClients(ctx context.Context, before time.Time
 
 const getOAuthAccess = `-- name: GetOAuthAccess :one
 SELECT t.expires_at, g.workspace_id, g.id AS grant_id, g.scopes, g.resource, m.id AS member_id, m.role,
-       cl.name AS client_name, w.bots_may_send
+       cl.name AS client_name, w.bots_may_send, w.broadcasts_by_keys
 FROM oauth_tokens t
 JOIN oauth_grants g ON g.workspace_id = t.workspace_id AND g.id = t.grant_id
 JOIN members m ON m.workspace_id = g.workspace_id AND m.id = g.member_id
@@ -295,15 +295,16 @@ WHERE t.token_hash = $1 AND t.kind = 'access' AND g.revoked_at IS NULL AND w.del
 `
 
 type GetOAuthAccessRow struct {
-	ExpiresAt   time.Time
-	WorkspaceID uuid.UUID
-	GrantID     uuid.UUID
-	Scopes      []string
-	Resource    string
-	MemberID    uuid.UUID
-	Role        string
-	ClientName  string
-	BotsMaySend bool
+	ExpiresAt        time.Time
+	WorkspaceID      uuid.UUID
+	GrantID          uuid.UUID
+	Scopes           []string
+	Resource         string
+	MemberID         uuid.UUID
+	Role             string
+	ClientName       string
+	BotsMaySend      bool
+	BroadcastsByKeys bool
 }
 
 func (q *Queries) GetOAuthAccess(ctx context.Context, tokenHash []byte) (GetOAuthAccessRow, error) {
@@ -319,6 +320,7 @@ func (q *Queries) GetOAuthAccess(ctx context.Context, tokenHash []byte) (GetOAut
 		&i.Role,
 		&i.ClientName,
 		&i.BotsMaySend,
+		&i.BroadcastsByKeys,
 	)
 	return i, err
 }
