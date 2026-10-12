@@ -785,6 +785,9 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 		if err != nil {
 			return err
 		}
+		if b.Preset == nil && b.SourceAddress == nil && !b.InboxId.IsSpecified() && !b.ChannelId.IsSpecified() && b.Options == nil {
+			return errValidation("name at least one change: preset, source_address, inbox_id, channel_id or options")
+		}
 		if cur.State != migrationDraft && cur.State != migrationConnected && cur.State != migrationReady {
 			return errMigrationState("a migration can be changed only while draft, connected or ready")
 		}

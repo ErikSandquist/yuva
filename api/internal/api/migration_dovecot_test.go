@@ -500,6 +500,9 @@ func TestDovecotMigrationCopiesQuietlyAndResumes(t *testing.T) {
 	path := "/v1/migrations/" + id
 	tm.agent.expectProblem(http.StatusForbidden, "forbidden", "POST", path+"/scan", nil)
 	other := newTeam(t, h)
+	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", path, map[string]any{})
+	other.owner.expectProblem(http.StatusNotFound, "not_found", "PATCH", path, map[string]any{})
+	tm.agent.expectProblem(http.StatusForbidden, "forbidden", "PATCH", path, map[string]any{})
 	for _, c := range []string{"scan", "start", "pause", "resume", "cancel", "retry"} {
 		other.owner.expectProblem(http.StatusNotFound, "not_found", "POST", path+"/"+c, nil)
 		tm.agent.expectProblem(http.StatusForbidden, "forbidden", "POST", path+"/"+c, nil)
