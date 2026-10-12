@@ -93,6 +93,9 @@ export const keys = {
   migration: (ws: string, id: string) => ["ws", ws, "migrations", "one", id] as const,
   migrationFolders: (ws: string, id: string) => ["ws", ws, "migrations", "folders", id] as const,
   migrationPresets: (ws: string) => ["ws", ws, "migrations", "presets"] as const,
+  migrationPreview: (ws: string, id: string, scannedAt: string) =>
+    ["ws", ws, "migrations", "preview", id, scannedAt] as const,
+  migrationErrors: (ws: string, id: string) => ["ws", ws, "migrations", "errors", id] as const,
   broadcastDeliveries: (ws: string, id: string, state: BroadcastDeliveryState | "", q: string, replied: boolean) =>
     ["ws", ws, "broadcasts", "deliveries", id, state, q, replied] as const,
 }

@@ -191,3 +191,21 @@ export function useGuides() {
     },
   } satisfies Record<MigrationPresetId, Guide>
 }
+
+export function useItemErrorText() {
+  const { t } = useLingui()
+  const texts: Record<string, string> = {
+    too_large: t`Larger than this server's limit for one message`,
+    unparseable: t`The message could not be read`,
+    gone: t`No longer in the mailbox`,
+    failed: t`Failed five times`,
+    blocked: t`From a blocked contact`,
+    auth_failed: t`The mailbox refused the sign-in`,
+    source_unreachable: t`The mail server could not be reached`,
+    throttled: t`The provider asked to slow down`,
+    folder_changed: t`The folder was recreated and read again`,
+    hosted_limit: t`This server's limit was reached`,
+    source_write_refused: t`Yuva held back a command that would have changed the mailbox`,
+  }
+  return (code: string) => texts[code]
+}

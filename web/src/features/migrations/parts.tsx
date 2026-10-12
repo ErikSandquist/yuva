@@ -1,13 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useEffect, useRef, useState } from "react"
 
-import { ProgressBar } from "@/components/common"
+import { ProgressBar, useConfirm } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
-import { percentOf } from "@/features/migrations/queries"
+import { percentOf, useFinishMigration, useMigrationStep, useRemoveHistory } from "@/features/migrations/queries"
 import { stateTones, useMigrationText } from "@/features/migrations/text"
 import { StatusTag } from "@/features/settings/ui"
-import type { Migration } from "@/lib/api"
+import type { Migration, MigrationSkipped } from "@/lib/api"
 
 export function isWaiting(m: Migration) {
   return !!m.waiting_until && (m.state === "copying" || m.state === "syncing" || m.state === "scanning")
@@ -74,5 +74,93 @@ export function useStateAnnouncement(items: Migration[]) {
     <p className="sr-only" role="status" aria-live="polite">
       {message}
     </p>
+  )
+}
+
+export function useMigrationConfirms(m: Migration) {
+  const { t } = useLingui()
+  const num = useNumber()
+  const [confirm, dialog] = useConfirm()
+  const cancel = useMigrationStep(m.id, "cancel")
+  const finish = useFinishMigration(m.id)
+  const remove = useRemoveHistory(m.id)
+  const removable = m.removable_conversations ?? 0
+  const count = num(removable)
+  const address = m.source_address
+  return {
+    dialog,
+    error: cancel.error ?? finish.error ?? remove.error,
+    pending: cancel.isPending || finish.isPending || remove.isPending,
+    finish: () =>
+      confirm({
+        title: t`Finish the migration?`,
+        description: m.verified_at
+          ? t`Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied.`
+          : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted.`,
+        confirm: m.verified_at ? t`Finish` : t`Finish anyway`,
+        run: () => finish.mutate(!m.verified_at),
+      }),
+    cancel: () =>
+      confirm({
+        title: t`Cancel moving ${address}?`,
+        description: t`It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox.`,
+        confirm: t`Cancel the migration`,
+        run: () => cancel.mutate(),
+      }),
+    removeHistory: () =>
+      confirm({
+        title: t`Remove imported history?`,
+        description:
+          removable === 1
+            ? t`1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`
+            : t`${count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`,
+        confirm: t`Remove history`,
+        run: () => remove.mutate(removable),
+      }),
+  }
+}
+
+export function Figure({ value, label, detail }: { value: string; label: React.ReactNode; detail?: React.ReactNode }) {
+  return (
+    <div className="flex min-w-0 flex-col gap-0.5 rounded-xl border px-3.5 py-3">
+      <span className="text-page tabular-nums">{value}</span>
+      <span className="text-small text-muted-foreground">{label}</span>
+      {detail && <span className="text-caption text-faint">{detail}</span>}
+    </div>
+  )
+}
+
+export function SkippedList({ skipped }: { skipped: MigrationSkipped }) {
+  const { t } = useLingui()
+  const num = useNumber()
+  const reasons: [keyof MigrationSkipped, string][] = [
+    ["already_in_yuva", t`Already in Yuva`],
+    ["duplicate_copies", t`Further copies of the same message`],
+    ["outside_range", t`Older than the chosen range`],
+    ["automatic", t`Threads of only automatic mail`],
+    ["internal", t`Threads of only your team's mail`],
+    ["spam", t`Spam`],
+    ["trash", t`Trash`],
+    ["drafts", t`Drafts`],
+    ["other_folders", t`Folders not chosen or never read`],
+    ["blocked", t`From blocked contacts`],
+    ["too_large", t`Larger than this server's limit`],
+  ]
+  const rows = reasons.filter(([k]) => skipped[k] > 0)
+  if (rows.length === 0)
+    return (
+      <p className="text-small text-faint">
+        <Trans>Nothing is left out.</Trans>
+      </p>
+    )
+  return (
+    <ul className="flex flex-col divide-y rounded-xl border" data-testid="migration-skipped">
+      {rows.map(([k, label]) => (
+        <li key={k} className="flex items-baseline justify-between gap-3 px-3.5 py-2 text-body">
+          <span className="min-w-0">{label}</span>
+          <span className="shrink-0 text-faint tabular-nums">{num(skipped[k])}</span>
+        </li>
+      ))}
+    </ul>
   )
 }

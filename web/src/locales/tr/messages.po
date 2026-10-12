@@ -11,14 +11,30 @@ msgstr ""
 msgid "“Was this page helpful?”, feedback and discussions on your docs"
 msgstr "Dokümanlarınızda “Bu sayfa yararlı oldu mu?”, geri bildirim ve tartışmalar"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "(no subject)"
+msgstr "(konu yok)"
+
 #: src/features/settings/members/MemberList.tsx
 msgid "(you)"
 msgstr "(siz)"
 
+#. placeholder {0}: msg.attachments
+#: src/features/migrations/ReviewStep.tsx
+msgid "{0, plural, one {# attachment} other {# attachments}}"
+msgstr "{0, plural, one {# ek} other {# ek}}"
+
+#. placeholder {0}: l.conversations
 #. placeholder {0}: load.get(m.id) ?? 0
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# conversation} other {# conversations}}"
 msgstr "{0, plural, one {# konuşmada} other {# konuşmada}}"
+
+#. placeholder {0}: f.failed
+#: src/features/migrations/CopyStep.tsx
+msgid "{0, plural, one {# failed} other {# failed}}"
+msgstr "{0, plural, one {# başarısız} other {# başarısız}}"
 
 #. placeholder {0}: c.activity.open_conversations
 #: src/features/contact/ContactsColumn.tsx
@@ -121,6 +137,18 @@ msgstr "{actor} durumu {status} olarak değiştirdi"
 msgid "{added} added · {out} left out"
 msgstr "{added} eklendi · {out} dışarıda kaldı"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "{address} is in Yuva"
+msgstr "{address} artık Yuva'da"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "{attachments} files, {attachmentSize}"
+msgstr "{attachments} dosya, {attachmentSize}"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "{attachmentsLeft} attachments are over this server's size limit or of a type it does not keep; they stay in the original message."
+msgstr "{attachmentsLeft} ek bu sunucunun boyut sınırını aşıyor ya da saklamadığı bir türde; bunlar özgün iletide kalır."
+
 #: src/features/conversation/messages/Thread.tsx
 msgid "{author}, sent by {by}"
 msgstr "{author}, gönderen: {by}"
@@ -165,7 +193,7 @@ msgstr "{count, plural, one {# alıcıya gönder} other {# alıcıya gönder}}"
 msgid "{count} events"
 msgstr "{count} olay"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "{count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "O zamandan beri kimsenin yazmadığı {count} aktarılmış konuşma, mesajları ve dosyalarıyla silinir. Ekibinizin yazdığı konuşmalar kalır. {address} içinde hiçbir şey değişmez."
 
@@ -180,6 +208,10 @@ msgstr "{count} mesaj · {size}"
 #: src/features/settings/channels/ChannelSummary.tsx
 msgid "{count} settings"
 msgstr "{count} ayar"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "{created, plural, one {# new} other {# new}}"
+msgstr "{created, plural, one {# yeni} other {# yeni}}"
 
 #: src/features/broadcasts/Growth.tsx
 #: src/features/docs/DocsColumn.tsx
@@ -198,9 +230,17 @@ msgstr "{days, plural, one {# gündür bekliyor} other {# gündür bekliyor}}"
 msgid "{done} of {total} rows"
 msgstr "{done} / {total} satır"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "{doneText} of {total}"
+msgstr "{doneText} / {total}"
+
 #: src/features/docs/DocsColumn.tsx
 msgid "{down} not helpful"
 msgstr "{down} yararlı değil"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "{existing} already in Yuva"
+msgstr "{existing} zaten Yuva'da"
 
 #: src/features/docs/DocsColumn.tsx
 msgid "{feedback} open feedback"
@@ -238,6 +278,10 @@ msgstr "{from} alan adının SPF kaydı yok. SMTP sağlayıcınızı içeren bir
 msgid "{good} good"
 msgstr "{good} iyi"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "{hidden, plural, one {# earlier message} other {# earlier messages}}"
+msgstr "{hidden, plural, one {# önceki mesaj} other {# önceki mesaj}}"
+
 #: src/features/migrations/text.ts
 msgid "{host} does not resolve. Check the server's name."
 msgstr "{host} çözümlenemiyor. Sunucunun adını kontrol edin."
@@ -258,13 +302,25 @@ msgstr "{host}, tartışmaları için Yuva'yı kullanıyor. E-posta adresinizle 
 msgid "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 msgstr "{hours, plural, one {# saattir bekliyor} other {# saattir bekliyor}}"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
+msgstr "{imported} aktarıldı · {already} zaten Yuva'da · {skipped} atlandı · {failed} başarısız"
+
 #: src/features/migrations/MigrationsPage.tsx
 msgid "{imported} imported · {skipped} skipped · {failed} failed"
 msgstr "{imported} aktarıldı · {skipped} atlandı · {failed} başarısız"
 
+#: src/features/migrations/Wizard.tsx
+msgid "{imported} messages"
+msgstr "{imported} mesaj"
+
 #: src/features/migrations/MapStep.tsx
 msgid "{inboxName} has no e-mail channel for {address} yet. History is stored in that channel, so replies after the switch go out from the same address."
 msgstr "{inboxName} gelen kutusunda henüz {address} için bir e-posta kanalı yok. Geçmiş bu kanalda saklanır; böylece geçişten sonraki yanıtlar da aynı adresten gider."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "{incoming} received, {outgoing} sent"
+msgstr "{incoming} gelen, {outgoing} giden"
 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{minutes, plural, one {Waiting for # minute} other {Waiting for # minutes}}"
@@ -302,6 +358,10 @@ msgstr "{name} yanıtlayabilir"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "{name} connects from its vendor's cloud, so it needs this server at a public https address. The panel is open at {url}, which it probably cannot reach."
 msgstr "{name} kendi sağlayıcısının bulutundan bağlanır; bu yüzden sunucunun herkese açık bir https adresinde olması gerekir. Panel şu an {url} adresinde açık, oraya büyük olasılıkla ulaşamaz."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "{name} copied"
+msgstr "{name} kopyalandı"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "{name} docs"
@@ -374,6 +434,10 @@ msgstr "{people, plural, one {# aboneliği ve izin kaydı silinir.} other {# abo
 msgid "{percent}%, {done} of {total} messages"
 msgstr "%{percent}, {total} mesajın {done} tanesi"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "{percent}%, {doneText} of {total}"
+msgstr "%{percent}, {doneText} / {total}"
+
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
 msgstr "{provider}, IMAP üzerinden şifre kabul etmiyor. Bu posta kutusu “Microsoft ile oturum aç” gerektiriyor; bu seçenek daha sonra gelecek."
@@ -381,6 +445,10 @@ msgstr "{provider}, IMAP üzerinden şifre kabul etmiyor. Bu posta kutusu “Mic
 #: src/features/migrations/text.ts
 msgid "{provider} did not accept the user name or password. Check both, or create a new app password."
 msgstr "{provider} kullanıcı adını ya da şifreyi kabul etmedi. İkisini de kontrol edin ya da yeni bir uygulama şifresi oluşturun."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "{provider} keeps its copy, so the old mailbox stays complete."
+msgstr "{provider} kendi kopyasını tutar; eski posta kutusu eksiksiz kalır."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "{provider} lets other apps in with an app password, a separate password just for Yuva."
@@ -402,6 +470,14 @@ msgstr "{provider}, hesap şifrenizi değil bir uygulama şifresi istiyor. Yukar
 msgid "{provider} wants you to sign in once in the browser. Sign in to your mail on the web, then test again."
 msgstr "{provider}, bir kez tarayıcıdan oturum açmanızı istiyor. E-postanıza web üzerinden girin, sonra yeniden deneyin."
 
+#: src/features/migrations/CopyStep.tsx
+msgid "{rate} a minute"
+msgstr "dakikada {rate}"
+
+#: src/features/migrations/CopyStep.tsx
+msgid "{rate} a minute · about {left} left"
+msgstr "dakikada {rate} · yaklaşık {left} kaldı"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
 msgid "{rate} mails a second"
@@ -414,6 +490,10 @@ msgstr "{recipients} alıcı"
 #: src/features/broadcasts/Report.tsx
 msgid "{recipients} recipients · {failed} refused by the mail server · {left} skipped · {auto} automatic replies, only counted"
 msgstr "{recipients} alıcı · {failed} tanesini e-posta sunucusu reddetti · {left} atlandı · {auto} otomatik yanıt, yalnızca sayıldı"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "{removable, plural, one {# imported conversation nobody wrote in since can be removed.} other {# imported conversations nobody wrote in since can be removed.}}"
+msgstr "{removable, plural, one {O zamandan beri kimsenin yazmadığı # aktarılmış konuşma kaldırılabilir.} other {O zamandan beri kimsenin yazmadığı # aktarılmış konuşma kaldırılabilir.}}"
 
 #: src/app/TeamMenu.tsx
 msgid "{replies, plural, one {# reply} other {# replies}}"
@@ -515,7 +595,7 @@ msgstr "1 deneme"
 msgid "1 event"
 msgstr "1 olay"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "O zamandan beri kimsenin yazmadığı 1 aktarılmış konuşma, mesajları ve dosyalarıyla silinir. Ekibinizin yazdığı konuşmalar kalır. {address} içinde hiçbir şey değişmez."
 
@@ -523,9 +603,17 @@ msgstr "O zamandan beri kimsenin yazmadığı 1 aktarılmış konuşma, mesajlar
 msgid "1 setting"
 msgstr "1 ayar"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "1. Send the mail to Yuva"
+msgstr "1. E-postaları Yuva'ya gönderin"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "12 months"
 msgstr "12 ay"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "2. Check that it arrives"
+msgstr "2. Ulaştığını kontrol edin"
 
 #: src/features/migrations/ChooseStep.tsx
 msgid "24 months"
@@ -534,6 +622,10 @@ msgstr "24 ay"
 #: src/features/migrations/ChooseStep.tsx
 msgid "3 months"
 msgstr "3 ay"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "3. Finish"
+msgstr "3. Bitirin"
 
 #: src/features/broadcasts/BroadcastList.tsx
 msgid "A <0>design</0> is how the mail looks."
@@ -614,6 +706,10 @@ msgstr "claude.ai ve Claude Desktop için özel bir bağlayıcı. Sizin adınız
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "A custom MCP server in ChatGPT on the web. It acts as you, with the access you allow."
 msgstr "Web'deki ChatGPT'de özel bir MCP sunucusu. Sizin adınıza, yalnızca izin verdiğiniz erişimle çalışır."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "A day ahead, lower the TTL of the MX records, so the change spreads quickly."
+msgstr "Bir gün önceden MX kayıtlarının TTL değerini düşürün; değişiklik böylece hızla yayılır."
 
 #: src/features/broadcasts/DesignPicker.tsx
 msgid "A design of another inbox or archived"
@@ -732,6 +828,14 @@ msgstr "Kullanıcı adı TLS ya da STARTTLS ister: parola hiçbir zaman şifresi
 msgid "A workspace holds your team, inboxes and conversations. You are its owner and can invite others later."
 msgstr "Çalışma alanı ekibinizi, gelen kutularınızı ve konuşmalarınızı bir arada tutar. Sahibi sizsiniz; başkalarını sonra davet edebilirsiniz."
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "About {from}"
+msgstr "Yaklaşık {from}"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "About {from} to {to}"
+msgstr "Yaklaşık {from}–{to}"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "about done by {end}"
 msgstr "tahminen {end} itibarıyla biter"
@@ -744,6 +848,10 @@ msgstr "Kabul edilen yanıt"
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Access"
 msgstr "Erişim"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Access to the mailbox"
+msgstr "Posta kutusuna erişim"
 
 #: src/features/account/AccountPage.tsx
 msgid "Account"
@@ -782,6 +890,10 @@ msgstr "Geçiş anahtarı ekle"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Add a remote server with the Streamable HTTP transport and the server URL. Many clients take a configuration like this:"
 msgstr "Streamable HTTP aktarımıyla ve sunucu adresiyle uzak bir sunucu ekleyin. Birçok istemci şuna benzer bir yapılandırma kabul eder:"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Add a rule for {address} that also delivers its mail to the address below, keeping delivery to the mailbox."
+msgstr "{address} için, posta kutusuna teslimi sürdürürken e-postaları aşağıdaki adrese de teslim eden bir kural ekleyin."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Add a subscriber to {listName}"
@@ -893,6 +1005,10 @@ msgstr "Adres ya da ad"
 msgid "Admin"
 msgstr "Yönetici"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Admin routing"
+msgstr "Yönetici yönlendirmesi"
+
 #: src/components/common/text.ts
 msgid "Agent"
 msgstr "Temsilci"
@@ -990,6 +1106,11 @@ msgstr "İzin verilen kaynaklar"
 #: src/features/broadcasts/Import.tsx
 msgid "Already earlier in the file"
 msgstr "Dosyada daha önce geçiyor"
+
+#: src/features/migrations/DoneStep.tsx
+#: src/features/migrations/parts.tsx
+msgid "Already in Yuva"
+msgstr "Zaten Yuva'da"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Already on the list"
@@ -1204,6 +1325,14 @@ msgstr "Arşivlendi"
 msgid "Arrived"
 msgstr "Geldi"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Arrived at {address} directly, {verifiedAt}."
+msgstr "Doğrudan {address} adresine ulaştı, {verifiedAt}."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Arrived through forwarding, {verifiedAt}."
+msgstr "Yönlendirme ile ulaştı, {verifiedAt}."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "As {name}, since {when}"
 msgstr "{name} olarak, {when} tarihinden beri"
@@ -1231,6 +1360,10 @@ msgstr "Çevrimdışıyken e-posta adresi iste"
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Ask for approval"
 msgstr "Onay iste"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Ask the admin of your mail server to forward {address} to the address below on the server, keeping delivery to the mailbox."
+msgstr "E-posta sunucunuzun yöneticisinden {address} adresini, posta kutusuna teslimi sürdürerek sunucuda aşağıdaki adrese yönlendirmesini isteyin."
 
 #: src/components/common/text.ts
 msgid "Asked to subscribe"
@@ -1291,6 +1424,10 @@ msgstr "Her tartışma için birkaç dakikada en fazla bir e-posta, yeni yanıtl
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Attach files"
 msgstr "Dosya ekle"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Attachments"
+msgstr "Ekler"
 
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Attempt log"
@@ -1564,11 +1701,13 @@ msgstr "Bülteni iptal et"
 msgid "Cancel import"
 msgstr "İçe aktarmayı iptal et"
 
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/SwitchStep.tsx
 msgid "Cancel migration"
 msgstr "Taşımayı iptal et"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Cancel moving {address}?"
 msgstr "{address} taşınması iptal edilsin mi?"
 
@@ -1581,7 +1720,7 @@ msgstr "Bülteni iptal et"
 msgid "Cancel the broadcast before deleting it."
 msgstr "Silmeden önce bülteni iptal edin."
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Cancel the migration"
 msgstr "Taşımayı iptal et"
 
@@ -1631,6 +1770,10 @@ msgstr "Bilgi: {cc}"
 msgid "Change address"
 msgstr "Adresi değiştir"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Change the choice"
+msgstr "Seçimi değiştir"
+
 #: src/components/common/text.ts
 msgid "Change the workspace and read usage"
 msgstr "Çalışma alanını değiştirme ve kullanımı görme"
@@ -1668,6 +1811,10 @@ msgstr "Yeniden denetle"
 msgid "Check again with these columns"
 msgstr "Bu sütunlarla yeniden denetle"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Check before anything is copied"
+msgstr "Kopyalamadan önce kontrol edin"
+
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "Check deliverability and set up DKIM"
 msgstr "Teslim edilebilirliği denetle ve DKIM kur"
@@ -1675,6 +1822,18 @@ msgstr "Teslim edilebilirliği denetle ve DKIM kur"
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Check DNS and start signing"
 msgstr "DNS'i denetle ve imzalamaya başla"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Check that forwarding is turned on and, for Gmail, confirmed with the code."
+msgstr "Yönlendirmenin açık olduğunu ve Gmail'de kodla onaylandığını kontrol edin."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Check that no filter or admin rule blocks forwarding to other domains."
+msgstr "Hiçbir filtrenin ya da yönetici kuralının başka alan adlarına yönlendirmeyi engellemediğini kontrol edin."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Check that the forwarding address is exactly the one above."
+msgstr "Yönlendirme adresinin tam olarak yukarıdaki adres olduğunu kontrol edin."
 
 #: src/features/auth/SignInForm.tsx
 msgid "Check your e-mail"
@@ -1703,6 +1862,14 @@ msgstr "Dosya denetleniyor"
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
 msgstr "Seç"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Choose “Add a forwarding address” and paste the address below."
+msgstr "“Yönlendirme adresi ekle”yi seçip aşağıdaki adresi yapıştırın."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Choose “Forward a copy of incoming mail to” the address, keep Gmail's copy in the inbox, and save."
+msgstr "“Gelen postaların bir kopyasını şuraya yönlendir” seçeneğiyle bu adresi seçin, Gmail'in kopyasını gelen kutusunda tutun ve kaydedin."
 
 #: src/features/migrations/text.ts
 msgid "Choose “Generate app password”, name it “Yuva” and create it."
@@ -2092,12 +2259,22 @@ msgstr "konuşma"
 #: src/features/contact/MergePreview.tsx
 #: src/features/docs/DocsPages.tsx
 #: src/features/inbox/ChatList.tsx
+#: src/features/migrations/DoneStep.tsx
+#: src/features/migrations/ReviewStep.tsx
 msgid "Conversations"
 msgstr "Konuşmalar"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
+msgstr "Aktarımdan sonra kimsenin yazmadığı konuşmalar silindi. {address} içinde hiçbir şey değişmedi."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Conversations that started on it keep their messages."
 msgstr "Bu kanalda başlayan konuşmaların mesajları korunur."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Conversations your team wrote in stay. Nothing changes in {address}."
+msgstr "Ekibinizin yazdığı konuşmalar kalır. {address} içinde hiçbir şey değişmez."
 
 #: src/app/Rail.tsx
 msgid "Conversations, {unread} unread"
@@ -2151,6 +2328,10 @@ msgstr "Aşağıdaki satırları kopyalayın. Bu sunucunun adresi ve kanalın ge
 #: src/features/migrations/text.ts
 msgid "Copying"
 msgstr "Kopyalanıyor"
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Copying {address}"
+msgstr "{address} kopyalanıyor"
 
 #: src/features/migrations/parts.tsx
 msgid "Copying {percent}%"
@@ -2228,6 +2409,14 @@ msgstr "Oluşturulma: {created}"
 msgid "Created {created} by {by}"
 msgstr "Oluşturulma: {created}, oluşturan: {by}"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Credentials deleted {deletedAt}. Yuva can no longer read {address}."
+msgstr "Erişim bilgileri silindi ({deletedAt}). Yuva artık {address} adresini okuyamaz."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Credentials deleted. Yuva can no longer read {address}."
+msgstr "Erişim bilgileri silindi. Yuva artık {address} adresini okuyamaz."
+
 #: src/features/broadcasts/Import.tsx
 msgid "CSV file"
 msgstr "CSV dosyası"
@@ -2276,6 +2465,10 @@ msgstr "Veri saklama"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Data retention and deleting the workspace"
 msgstr "Veri saklama ve çalışma alanını silme"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Dates"
+msgstr "Tarihler"
 
 #: src/features/broadcasts/Growth.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -2677,6 +2870,7 @@ msgid "Draft:"
 msgstr "Taslak:"
 
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/migrations/parts.tsx
 msgid "Drafts"
 msgstr "Taslaklar"
 
@@ -3007,6 +3201,10 @@ msgstr "Harici kimlikler"
 msgid "Failed"
 msgstr "Başarısız"
 
+#: src/features/migrations/text.ts
+msgid "Failed five times"
+msgstr "Beş kez başarısız oldu"
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "Failing"
 msgstr "Başarısız oluyor"
@@ -3078,16 +3276,25 @@ msgid "Find the server"
 msgstr "Sunucuyu bul"
 
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Finish"
 msgstr "Bitir"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Finish anyway"
 msgstr "Yine de bitir"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/SwitchStep.tsx
+msgid "Finish now"
+msgstr "Şimdi bitir"
+
+#: src/features/migrations/parts.tsx
 msgid "Finish the migration?"
 msgstr "Taşıma bitirilsin mi?"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Finish without checking"
+msgstr "Kontrol etmeden bitir"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Finished"
@@ -3126,8 +3333,13 @@ msgid "Fix the address or the channel's SMTP settings, then send the reply again
 msgstr "Adresi ya da kanalın SMTP ayarlarını düzeltin, sonra yanıtı yeniden gönderin."
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/CopyStep.tsx
 msgid "Folders"
 msgstr "Klasörler"
+
+#: src/features/migrations/parts.tsx
+msgid "Folders not chosen or never read"
+msgstr "Seçilmeyen ya da hiç okunmayan klasörler"
 
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
@@ -3136,6 +3348,11 @@ msgstr "Sistem temasını izle"
 #: src/features/account/AccountPage.tsx
 msgid "Following"
 msgstr "Takip edilenler"
+
+#. placeholder {0}: c.from
+#: src/features/migrations/SwitchStep.tsx
+msgid "For {0}, received {when}. Enter it in Gmail's forwarding settings, or open the link."
+msgstr "{0} için, {when} geldi. Gmail'in yönlendirme ayarlarına girin ya da bağlantıyı açın."
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
@@ -3198,6 +3415,10 @@ msgstr "Form"
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
 msgstr "Formlar bu gelen kutusunun bir web sitesi sohbeti kanalı üzerinden çalışır; kanal, formun kullanılabileceği siteleri belirler. Bu gelen kutusunda henüz böyle bir kanal yok."
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Forward all incoming mail to the address below and keep a copy in the mailbox."
+msgstr "Gelen tüm e-postaları aşağıdaki adrese yönlendirin ve posta kutusunda bir kopyasını tutun."
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Forward as a note mentioning"
 msgstr "Not olarak ilet ve etiketle:"
@@ -3213,6 +3434,14 @@ msgstr "Bir ekip arkadaşına ilet"
 #: src/features/conversation/ChatView.tsx
 msgid "Forwarded to {label} as a note"
 msgstr "{label} kişisine not olarak iletildi"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Forwarding"
+msgstr "Yönlendirme"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Forwarding address"
+msgstr "Yönlendirme adresi"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Found from the domain's IMAP record."
@@ -3238,6 +3467,10 @@ msgstr "Kimden"
 msgid "From (optional)"
 msgstr "Başlangıç (isteğe bağlı)"
 
+#: src/features/migrations/text.ts
+msgid "From a blocked contact"
+msgstr "Engellenmiş bir kişiden"
+
 #: src/features/docs/discussions/ThreadPane.tsx
 msgid "From a conversation"
 msgstr "Bir konuşmadan"
@@ -3245,6 +3478,10 @@ msgstr "Bir konuşmadan"
 #: src/features/settings/channels/email/EmailFields.tsx
 msgid "From address (optional)"
 msgstr "Gönderen adresi (isteğe bağlı)"
+
+#: src/features/migrations/parts.tsx
+msgid "From blocked contacts"
+msgstr "Engellenmiş kişilerden"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "From the terminal"
@@ -3278,6 +3515,10 @@ msgstr "Ad soyad"
 msgid "Fumadocs / React"
 msgstr "Fumadocs / React"
 
+#: src/features/migrations/parts.tsx
+msgid "Further copies of the same message"
+msgstr "Aynı mesajın diğer kopyaları"
+
 #: src/features/migrations/text.ts
 msgid "Generate a password named “Yuva” and paste it below."
 msgstr "Adı “Yuva” olan bir şifre oluşturup aşağıya yapıştırın."
@@ -3298,6 +3539,10 @@ msgstr "Kodu göster"
 msgid "Get the snippets"
 msgstr "Kodları al"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
+msgstr "Gmail yalnızca spam olmayan yeni e-postaları yönlendirir. Bir Workspace yöneticisi yönlendirmeyi kapattıysa yönetici yönlendirmesini kullanın."
+
 #: src/app/Palette.tsx
 msgid "Go to"
 msgstr "Git"
@@ -3313,6 +3558,14 @@ msgstr "Listelere git"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Goes out through {via}"
 msgstr "{via} üzerinden gider"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link."
+msgstr "Google bu adrese bir onay kodu gönderir. Kod bu sayfada görünür: Gmail'e girin ya da bağlantısını açın."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Google sent a confirmation code"
+msgstr "Google bir onay kodu gönderdi"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -3411,6 +3664,14 @@ msgstr "Yüksek"
 msgid "Highest share of “helpful” first, among pages with at least 5 ratings"
 msgstr "En az 5 değerlendirmesi olan sayfalar arasında “yararlı” oranı en yüksek olanlar önce"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "History arrives quietly, newest first: no notifications, no auto-replies, nothing unread. Your team can work meanwhile."
+msgstr "Geçmiş sessizce ve en yeniden başlayarak gelir: bildirim yok, otomatik yanıt yok, okunmamış bir şey yok. Ekibiniz bu sırada çalışmaya devam edebilir."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to Yuva."
+msgstr "Geçmiş aktarıldı. Siz e-postaları Yuva'ya yönlendirirken hiçbir şey kaybolmasın diye Yuva {address} adresini iki dakikada bir okumaya devam eder."
+
 #: src/features/migrations/text.ts
 msgid "History removed"
 msgstr "Geçmiş kaldırıldı"
@@ -3431,6 +3692,10 @@ msgstr "Ne kadar geriye"
 msgid "How HTML e-mails open. You can still switch each message."
 msgstr "HTML e-postaların nasıl açılacağı. Her iletiyi yine de ayrı ayrı değiştirebilirsiniz."
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "How the newest conversations will look"
+msgstr "En yeni konuşmalar nasıl görünecek"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "How they agreed, or your own record (optional)"
 msgstr "Nasıl izin verdikleri ya da kendi kaydınız (isteğe bağlı)"
@@ -3442,6 +3707,10 @@ msgstr "Nasıl ayrıldı:"
 #: src/features/docs/DocsColumn.tsx
 msgid "How to add them"
 msgstr "Nasıl eklenir"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "How to send the mail"
+msgstr "E-postaları gönderme yolu"
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "I confirm that this person agreed to get e-mails from this list as described above, and that we can show how and when if asked."
@@ -3475,9 +3744,25 @@ msgstr "Fikir"
 msgid "Identity secret"
 msgstr "Kimlik anahtarı"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "If {provider} mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
+msgstr "{provider} bu adrese bir onay e-postası gönderirse bu gelen kutusuna bir konuşma olarak gelir; onu orada açın."
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
 msgstr "Sizi buraya bir asistan gönderdiyse artık ona dönebilirsiniz; ya da neyin getirileceğini kendiniz seçin."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "If it is not finished by {syncUntil}, sync stops on its own and the credentials are deleted."
+msgstr "{syncUntil} tarihine kadar bitirilmezse eşitleme kendiliğinden durur ve erişim bilgileri silinir."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at})."
+msgstr "Yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma {when} kendiliğinden biter ({at})."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "If you made a password just for Yuva, remove it in {provider}."
+msgstr "Yalnızca Yuva için bir şifre oluşturduysanız {provider} içinden kaldırın."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
@@ -3521,6 +3806,14 @@ msgstr "CSV dosyasından içe aktar"
 msgid "Import steps"
 msgstr "İçe aktarma adımları"
 
+#: src/features/migrations/Wizard.tsx
+msgid "Imported"
+msgstr "Aktarıldı"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Imported history removed"
+msgstr "Aktarılan geçmiş kaldırıldı"
+
 #: src/features/broadcasts/Import.tsx
 msgid "Importing"
 msgstr "İçe aktarılıyor"
@@ -3561,9 +3854,17 @@ msgstr "Cursor'ın MCP ayarlarında istendiğinde <0>yuva</0> için oturum açı
 msgid "In Fastmail, open Settings › Privacy & Security › Manage app passwords."
 msgstr "Fastmail'de Ayarlar › Gizlilik ve Güvenlik › Uygulama şifrelerini yönet'i açın."
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "In Gmail, open Settings › See all settings › Forwarding and POP/IMAP."
+msgstr "Gmail'de Ayarlar › Tüm ayarları göster › Yönlendirme ve POP/IMAP'i açın."
+
 #: src/features/migrations/text.ts
 msgid "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
 msgstr "GMX'te E-posta ayarları › POP3 & IMAP bölümünü açıp IMAP erişimine izin verin."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
+msgstr "Microsoft 365'te bu, posta kutusu yönlendirmesi ya da bir posta akışı kuralıdır; bir yöneticinin önce dışa yönlendirmeye izin vermesi gerekebilir."
 
 #: src/features/conversation/Feedback.tsx
 msgid "In the app and by e-mail"
@@ -3572,6 +3873,10 @@ msgstr "Uygulamada ve e-postayla"
 #: src/features/settings/inboxes/SenderIdentity.tsx
 msgid "In the footer"
 msgstr "Altbilgide"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "In the Google Admin console, open Apps › Google Workspace › Gmail › Routing."
+msgstr "Google Yönetici Konsolu'nda Uygulamalar › Google Workspace › Gmail › Yönlendirme'yi açın."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "In the inbox"
@@ -3748,7 +4053,7 @@ msgstr "Yuva'ya ulaştığı anda burada görünür."
 msgid "It stays a draft until you send or schedule it. Replies come to the inbox you pick."
 msgstr "Gönderene ya da zamanlayana kadar taslak kalır. Yanıtlar seçtiğiniz gelen kutusuna gelir."
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox."
 msgstr "Kalıcı olarak durur. Aktarılanlar kalır, posta kutusunun erişim bilgileri silinir. Posta kutusunda hiçbir şey değişmez."
 
@@ -3795,6 +4100,10 @@ msgstr "Koru"
 #: src/features/migrations/MapStep.tsx
 msgid "Keep original messages"
 msgstr "Özgün mesajları sakla"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Keep the forwarding, routing or MX as it is: that is how mail reaches Yuva now."
+msgstr "Yönlendirmeyi ya da MX kayıtlarını olduğu gibi bırakın: e-postalar artık Yuva'ya bu yolla ulaşıyor."
 
 #: src/features/migrations/MapStep.tsx
 msgid "Keep the name only"
@@ -3850,7 +4159,9 @@ msgstr "Yalnızca etiket: e-postaları Tüm postalar'dan gelir, konuşmaları bu
 #: src/app/Palette.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/conversation/ConversationMenu.tsx
+#: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/MapStep.tsx
+#: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/labels/LabelsPage.tsx
 #: src/features/settings/SettingsColumn.tsx
 msgid "Labels"
@@ -3879,6 +4190,14 @@ msgstr "Tutulacak dil"
 msgid "Languages"
 msgstr "Diller"
 
+#: src/features/migrations/parts.tsx
+msgid "Larger than this server's limit"
+msgstr "Bu sunucunun sınırından büyük"
+
+#: src/features/migrations/text.ts
+msgid "Larger than this server's limit for one message"
+msgstr "Bu sunucunun tek mesaj sınırından büyük"
+
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Last attempt"
 msgstr "Son deneme"
@@ -3890,6 +4209,10 @@ msgstr "Soyad"
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Last push failed: {failed}"
 msgstr "Son bildirim gönderilemedi: {failed}"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Last read {when}"
+msgstr "Son okuma {when}"
 
 #: src/features/contact/Presence.tsx
 msgid "Last seen {seen}"
@@ -4114,6 +4437,10 @@ msgstr "E-postalar, {address} adresini alan “{channelName}” e-posta kanalın
 msgid "Mail size"
 msgstr "E-posta boyutu"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Mail still reaches {provider} but is not sent to Yuva yet."
+msgstr "E-postalar hâlâ {provider} hesabına ulaşıyor ama henüz Yuva'ya gönderilmiyor."
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
 msgstr "Onay e-postası gönder"
@@ -4323,12 +4650,21 @@ msgid "Message type"
 msgstr "Mesaj türü"
 
 #: src/features/conversation/messages/Thread.tsx
+#: src/features/migrations/ReviewStep.tsx
 msgid "Messages"
 msgstr "Mesajlar"
 
 #: src/features/migrations/parts.tsx
 msgid "Messages copied"
 msgstr "Kopyalanan mesajlar"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Messages imported"
+msgstr "Aktarılan mesajlar"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Migration cancelled"
+msgstr "Taşıma iptal edildi"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Migration steps"
@@ -4434,6 +4770,10 @@ msgstr "{from} gelen kutusundan taşındı"
 msgid "Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you forward the mailbox here and nothing is lost in between."
 msgstr "Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX ya da herhangi bir IMAP sunucusundan mı geliyorsunuz? Ekibiniz çalışmaya devam ederken Yuva posta kutusunun geçmişini sessizce, en yenilerden başlayarak bir gelen kutusuna kopyalar. Sonra posta kutusunu buraya yönlendirirsiniz; aradaki hiçbir e-posta kaybolmaz."
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "MX change"
+msgstr "MX değişikliği"
+
 #: src/features/account/AccountPage.tsx
 msgid "My discussions"
 msgstr "Tartışmalarım"
@@ -4492,6 +4832,7 @@ msgstr "Bültenler için gerekli"
 msgid "Needs a sender"
 msgstr "Gönderen gerekli"
 
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/text.ts
 msgid "Needs attention"
 msgstr "İlgilenmeniz gerekiyor"
@@ -4516,6 +4857,10 @@ msgstr "Hiç aktarılmaz"
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "never used"
 msgstr "hiç kullanılmadı"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "new"
+msgstr "yeni"
 
 #: src/features/broadcasts/Growth.tsx
 msgid "New"
@@ -4543,6 +4888,11 @@ msgstr "Yeni bülten ({newKey})"
 #: src/features/settings/canned/CannedReplyDialog.tsx
 msgid "New canned reply"
 msgstr "Yeni hazır yanıt"
+
+#: src/features/migrations/DoneStep.tsx
+#: src/features/migrations/ReviewStep.tsx
+msgid "New contacts"
+msgstr "Yeni kişiler"
 
 #: src/features/broadcasts/Import.tsx
 msgid "New contacts created"
@@ -4664,6 +5014,10 @@ msgstr "Daha yeni olanlar, son yazan müşteriyse açık, ekibinizse beklemede k
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Newest"
 msgstr "En yeni"
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Newest conversations first. You can close this page; members can work meanwhile."
+msgstr "Önce en yeni konuşmalar. Bu sayfayı kapatabilirsiniz; üyeler bu sırada çalışabilir."
 
 #: src/features/settings/webhooks/Deliveries.tsx
 msgid "Newest first. Finished deliveries are kept for 7 days."
@@ -4855,6 +5209,10 @@ msgstr "Henüz etiket yok. Ayarlardan ekleyebilirsiniz."
 msgid "No locked discussions."
 msgstr "Kilitli tartışma yok."
 
+#: src/features/migrations/text.ts
+msgid "No longer in the mailbox"
+msgstr "Artık posta kutusunda değil"
+
 #: src/features/migrations/SourceStep.tsx
 msgid "No mail server was found for {domain}. Pick your provider below, or “Other IMAP server” and enter the server on the next step."
 msgstr "{domain} için bir e-posta sunucusu bulunamadı. Aşağıdan sağlayıcınızı seçin ya da “Diğer IMAP sunucusu”nu seçip sunucuyu sonraki adımda girin."
@@ -4950,7 +5308,7 @@ msgstr "Henüz abone yok. Abonelik formunu sitenize koyun ya da zaten izin vermi
 msgid "No teammate can see this inbox"
 msgstr "Bu kutuyu gören başka ekip arkadaşı yok"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted."
 msgstr "Henüz hiçbir deneme e-postası yeni yoldan Yuva'ya ulaşmadı. Şimdi bitirirseniz yalnızca eski posta kutusuna gitmeye devam eden e-postalar kopyalanmaz. Erişim bilgileri silinir."
 
@@ -5064,6 +5422,11 @@ msgstr "yararlı değil"
 msgid "Not helpful"
 msgstr "Yararlı değil"
 
+#: src/features/migrations/DoneStep.tsx
+#: src/features/migrations/ReviewStep.tsx
+msgid "Not imported"
+msgstr "Aktarılmayacaklar"
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Not on any mailing list."
 msgstr "Hiçbir e-posta listesinde değil."
@@ -5144,6 +5507,14 @@ msgstr "Size atanmış bir şey yok."
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is done yet."
 msgstr "Henüz biten bir şey yok."
+
+#: src/features/migrations/parts.tsx
+msgid "Nothing is left out."
+msgstr "Dışarıda kalan bir şey yok."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
+msgstr "Hiçbir şey kaybolmaz: posta kutusu yeniden bağlanınca kopyalama kaldığı yerden devam eder."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
@@ -5230,6 +5601,10 @@ msgstr "Önceki eşleşme"
 msgid "Older match (Enter)"
 msgstr "Önceki eşleşme (Enter)"
 
+#: src/features/migrations/parts.tsx
+msgid "Older than the chosen range"
+msgstr "Seçilen aralıktan eski"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "On"
@@ -5258,6 +5633,10 @@ msgstr "Team ve Enterprise planlarında bir sahip bunu <0>Organization settings 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "Web'de"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only the old mailbox in that time, the migration finishes on its own. You can also finish it yourself."
+msgstr "Deneme e-postası ulaştıktan sonra Yuva {hours} saat bekler. Bu sürede yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma kendiliğinden biter. Dilerseniz kendiniz de bitirebilirsiniz."
 
 #: src/features/broadcasts/ListForm.tsx
 msgid "One e-mail a month about what is new."
@@ -5323,6 +5702,10 @@ msgstr "Yalnızca dili bunlardan biri olan kişiler."
 msgid "Only DNS could be checked, not how receiving servers judge the mail."
 msgstr "Yalnızca DNS denetlenebildi; alan sunucuların e-postayı nasıl değerlendirdiği bilinmiyor."
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Only for a domain or subdomain used for support alone: its MX records decide where all of its mail goes."
+msgstr "Yalnızca destek için kullanılan bir alan adı ya da alt alan adı için: MX kayıtları tüm e-postalarının nereye gideceğini belirler."
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Yalnızca başlıklar okunur: hiçbir mesaj açılmaz ya da işaretlenmez. Bu sayfayı kapatabilirsiniz; tarama sürer ve bittiğinde Ayarlar'daki listede görünür."
@@ -5383,6 +5766,10 @@ msgstr "Açık"
 msgid "Open {0}"
 msgstr "{0} dosyasını aç"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Open {provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail."
+msgstr "{provider} e-posta ayarlarını açın ve yönlendirmeyi ya da gelen tüm e-postaları yönlendiren bir filtreyi bulun."
+
 #: src/features/setup/InstallStep.tsx
 msgid "Open a page of your docs"
 msgstr "Dokümanlarınızdan bir sayfa açın"
@@ -5432,6 +5819,10 @@ msgstr "açık tartışma"
 msgid "open feedback"
 msgstr "açık geri bildirim"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Open Google's confirmation page"
+msgstr "Google'ın onay sayfasını aç"
+
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
@@ -5469,6 +5860,10 @@ msgstr "Tasarımı aç"
 #: src/components/common/ShortcutSheet.tsx
 msgid "Open the discussion"
 msgstr "Tartışmayı aç"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Open the inbox"
+msgstr "Gelen kutusunu aç"
 
 #: src/features/broadcasts/Composer.tsx
 #: src/features/broadcasts/ListForm.tsx
@@ -5654,6 +6049,7 @@ msgid "Paste this before the closing body tag of your pages"
 msgstr "Bunu sayfalarınızda kapanış body etiketinden önce yapıştırın"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Pause"
 msgstr "Duraklat"
@@ -5690,6 +6086,10 @@ msgstr "Kendiliğinden duraklatıldı: gönderilen e-postaların %5'i ya da daha
 #: src/components/common/text.ts
 msgid "Paused on its own: the SMTP server refused the account, its encryption or too many mails in a row. Check the channel's broadcast account, then resume."
 msgstr "Kendiliğinden duraklatıldı: SMTP sunucusu hesabı, şifrelemesini ya da arka arkaya çok sayıda e-postayı reddetti. Kanalın bülten hesabını kontrol edip sürdürün."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Paused. Nothing is read from {address} until you resume."
+msgstr "Duraklatıldı. Siz devam ettirene kadar {address} adresinden hiçbir şey okunmaz."
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
@@ -5875,6 +6275,10 @@ msgstr "Sabitlenenler"
 msgid "Pinned to the top of your list"
 msgstr "Listenizin en üstüne sabitlendi"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Planning the import with your choices…"
+msgstr "Aktarım seçimlerinize göre planlanıyor…"
+
 #: src/features/setup/InstallStep.tsx
 msgid "Platform"
 msgstr "Platform"
@@ -5887,6 +6291,10 @@ msgstr "Platformlar"
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Play the sound"
 msgstr "Sesi çal"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile."
+msgstr "MX kayıtlarını e-posta rehberinde anlatıldığı gibi Yuva'ya yöneltin. Bu sırada hâlâ eski sunucuya ulaşan e-postaları eşitleme yakalar."
 
 #: src/features/migrations/ConnectStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
@@ -5966,6 +6374,10 @@ msgstr "Canlı sunucu"
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Profile"
 msgstr "Profil"
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Progress"
+msgstr "İlerleme"
 
 #: src/features/migrations/SourceStep.tsx
 msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
@@ -6088,6 +6500,7 @@ msgid "Read the folders"
 msgstr "Klasörleri oku"
 
 #: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/SwitchStep.tsx
 #: src/features/migrations/text.ts
 msgid "Read the guide"
 msgstr "Rehberi okuyun"
@@ -6134,6 +6547,10 @@ msgstr "İçe aktarmaya hazır"
 msgid "Ready to send"
 msgstr "Göndermeye hazır"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Received {when}. Enter it in Gmail's forwarding settings, or open the link."
+msgstr "{when} geldi. Gmail'in yönlendirme ayarlarına girin ya da bağlantıyı açın."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Receives only"
 msgstr "Sadece alır"
@@ -6161,6 +6578,7 @@ msgstr "Alıcılar"
 msgid "Recognised by the address."
 msgstr "Adresten tanındı."
 
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Reconnect"
 msgstr "Yeniden bağlan"
@@ -6236,17 +6654,22 @@ msgstr "{sender} adresini kaldır"
 msgid "Remove condition {n}"
 msgstr "{n}. koşulu kaldır"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Remove history"
 msgstr "Geçmişi kaldır"
 
+#: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Remove imported history"
 msgstr "Aktarılan geçmişi kaldır"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/parts.tsx
 msgid "Remove imported history?"
 msgstr "Aktarılan geçmiş kaldırılsın mı?"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Remove the app password you made for Yuva in {provider}; it is not needed any more."
+msgstr "Yuva için oluşturduğunuz uygulama şifresini {provider} içinden kaldırın; artık gerekmiyor."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Remove this channel?"
@@ -6268,9 +6691,21 @@ msgstr "Bu geçiş anahtarı kaldırılsın mı?"
 msgid "Removes you from every workspace. Messages you wrote stay, shown as from a deleted member."
 msgstr "Seni tüm çalışma alanlarından çıkarır. Yazdığın mesajlar kalır, silinmiş bir üyeden gelmiş görünür."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Removing"
+msgstr "Kaldırılıyor"
+
 #: src/features/migrations/text.ts
 msgid "Removing history"
 msgstr "Geçmiş kaldırılıyor"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Removing imported history"
+msgstr "Aktarılan geçmiş kaldırılıyor"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Removing imported history…"
+msgstr "Aktarılan geçmiş kaldırılıyor…"
 
 #: src/features/conversation/HeaderActions.tsx
 msgid "Reopen"
@@ -6435,10 +6870,12 @@ msgid "Restore"
 msgstr "Geri al"
 
 #: src/features/broadcasts/BroadcastPage.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Resume"
 msgstr "Sürdür"
 
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Retry failed items"
 msgstr "Başarısız olanları yeniden dene"
@@ -6606,6 +7043,7 @@ msgid "Say hello from your site"
 msgstr "Sitenizden merhaba deyin"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/ReviewStep.tsx
 msgid "Scan"
 msgstr "Tara"
 
@@ -6618,6 +7056,7 @@ msgid "Scan finished: {conversations} conversations, {messages} messages"
 msgstr "Tarama bitti: {conversations} konuşma, {messages} mesaj"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/ReviewStep.tsx
 #: src/features/migrations/text.ts
 msgid "Scanning"
 msgstr "Taranıyor"
@@ -6790,6 +7229,10 @@ msgstr "Deneme gönder ({key})"
 msgid "Send a test e-mail"
 msgstr "Deneme e-postası gönderin"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Send a test message"
+msgstr "Deneme e-postası gönder"
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Send a test notification"
 msgstr "Deneme bildirimi gönder"
@@ -6806,6 +7249,10 @@ msgstr "Otomatik yanıt gönder"
 #: src/features/conversation/composer/ReplyBox.tsx
 msgid "Send and close"
 msgstr "Gönder ve bitir"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Send another test message"
+msgstr "Bir deneme e-postası daha gönder"
 
 #: src/components/common/text.ts
 msgid "Send drafts"
@@ -6953,6 +7400,10 @@ msgctxt "delivery state"
 msgid "Sent"
 msgstr "Gönderildi"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Sent {sentAt}. Waiting for it to arrive…"
+msgstr "Gönderildi: {sentAt}. Ulaşması bekleniyor…"
+
 #: src/lib/alerts.ts
 msgid "Sent an attachment"
 msgstr "Bir dosya gönderdi"
@@ -7051,6 +7502,7 @@ msgid "Show as sent"
 msgstr "Gönderildiği gibi göster"
 
 #: src/features/inbox/SidePanels.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 msgid "Show more"
 msgstr "Daha fazla göster"
@@ -7262,6 +7714,14 @@ msgstr "Yalnızca otomatik e-posta içeren yazışmaları atla"
 msgid "Skipped"
 msgstr "Atlandı"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "Skipped and failed ({count})"
+msgstr "Atlananlar ve başarısızlar ({count})"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Skipped or failed"
+msgstr "Atlanan ya da başarısız"
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Slug"
 msgstr "Kısa ad"
@@ -7348,6 +7808,7 @@ msgstr "Kaynak"
 
 #: src/features/docs/discussions/QueuePane.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
+#: src/features/migrations/parts.tsx
 msgid "Spam"
 msgstr "Spam"
 
@@ -7386,6 +7847,10 @@ msgstr "Tartışma başlat"
 #: src/features/contact/ContactDetails.tsx
 msgid "Start conversation"
 msgstr "Konuşmayı başlat"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Start migration"
+msgstr "Taşımayı başlat"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Start the server. VS Code asks to sign in to Yuva and opens your browser."
@@ -7460,6 +7925,10 @@ msgstr "İmzalamayı durdur"
 #: src/features/broadcasts/ListSettings.tsx
 msgid "Stop taking new subscribers."
 msgstr "Yeni abone almayı durdurun."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Storage"
+msgstr "Depolama"
 
 #: src/features/contact/MergePreview.tsx
 msgid "Struck-out values are not taken: this contact keeps its own value for those keys."
@@ -7557,7 +8026,11 @@ msgstr "Askıya alındı"
 msgid "Switch"
 msgstr "Geçiş"
 
-#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/SwitchStep.tsx
+msgid "Switch your mail to Yuva"
+msgstr "E-postalarınızı Yuva'ya yönlendirin"
+
+#: src/features/migrations/parts.tsx
 msgid "Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied."
 msgstr "Eşitleme durur ve posta kutusunun erişim bilgileri silinir. Bundan sonra yalnızca eski posta kutusuna ulaşan e-postalar kopyalanmaz."
 
@@ -7828,6 +8301,10 @@ msgstr "Kimin müsait olduğunu gösteren bir gelen kutusunda bir konuşmanın i
 msgid "The first thing the chat says"
 msgstr "Sohbetin ilk söylediği"
 
+#: src/features/migrations/text.ts
+msgid "The folder was recreated and read again"
+msgstr "Klasör yeniden oluşturuldu ve baştan okundu"
+
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "The form shows an unticked consent box and stores the exact words the person agreed to. It works only on the sites the chat channel allows; the channel key is public."
 msgstr "Form işaretlenmemiş bir izin kutusu gösterir ve kişinin kabul ettiği metni olduğu gibi saklar. Yalnızca sohbet kanalının izin verdiği sitelerde çalışır; kanal anahtarı gizli değildir."
@@ -7839,6 +8316,10 @@ msgstr "Form şu adreslerde çalışır:"
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
 msgstr "Tüm API: bir üye uygulaması gibi MCP, REST API ve canlı güncellemeler."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The history is copied and its mail now reaches Yuva."
+msgstr "Geçmiş kopyalandı ve e-postalar artık Yuva'ya ulaşıyor."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "The hours differ by day; changing them here sets the same hours for every chosen day."
@@ -7913,12 +8394,24 @@ msgid "The mail is {size}. Gmail cuts mail off above 102 KB, so make it shorter.
 msgstr "E-posta {size}. Gmail 102 KB'tan büyük e-postaları keser; kısaltın."
 
 #: src/features/migrations/text.ts
+msgid "The mail server could not be reached"
+msgstr "E-posta sunucusuna ulaşılamadı"
+
+#: src/features/migrations/text.ts
 msgid "The mailbox has too many connections open. Close a mail app or wait a few minutes, then test again."
 msgstr "Posta kutusunda açık çok fazla bağlantı var. Bir e-posta uygulamasını kapatın ya da birkaç dakika bekleyip yeniden deneyin."
 
 #: src/features/migrations/text.ts
 msgid "The mailbox lists no folders."
 msgstr "Posta kutusu hiç klasör listelemiyor."
+
+#: src/features/migrations/text.ts
+msgid "The mailbox refused the sign-in"
+msgstr "Posta kutusu oturum açmayı reddetti"
+
+#: src/features/migrations/text.ts
+msgid "The message could not be read"
+msgstr "Mesaj okunamadı"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "The migration continues where it stopped."
@@ -7939,6 +8432,18 @@ msgstr "Siz bakarken alıcı sayısı değişti. Yeni sayıyı kontrol edip yeni
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "The number of recipients changed while you looked. It is {recipients} now. Confirm again to send to them."
 msgstr "Siz bakarken alıcı sayısı değişti; şimdi {recipients}. Onlara göndermek için yeniden onaylayın."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The old mailbox is untouched; keep it as an archive if you like."
+msgstr "Eski posta kutusuna dokunulmadı; dilerseniz arşiv olarak saklayın."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "The old mailbox keeps its copy."
+msgstr "Eski posta kutusu kendi kopyasını tutar."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "The old mailbox stops receiving mail for that domain."
+msgstr "Eski posta kutusu o alan adına gelen e-postaları artık almaz."
 
 #: src/components/common/text.ts
 msgid "The other inbox has no e-mail channel, so this e-mail conversation cannot move there. Add an e-mail channel to it first."
@@ -7979,6 +8484,14 @@ msgstr "İlke reject: başarısız olan e-postalar reddedilir."
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "The previous secret also signs until {rotatedUntil}."
 msgstr "Önceki anahtar {rotatedUntil} tarihine kadar imzalamaya devam eder."
+
+#: src/features/migrations/text.ts
+msgid "The provider asked to slow down"
+msgstr "Sağlayıcı yavaşlamayı istedi"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "The quiet period is over; the migration finishes at the next sync."
+msgstr "Sessiz dönem bitti; taşıma bir sonraki eşitlemede biter."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "The receiving server did not confirm SPF. Check that the record includes your SMTP provider."
@@ -8269,6 +8782,10 @@ msgstr "Bu bir JSON nesnesi değil."
 msgid "This is not a valid e-mail address."
 msgstr "Bu geçerli bir e-posta adresi değil."
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "This is the dry run for {address}. Nothing is imported until you start."
+msgstr "Bu, {address} için deneme çalıştırması. Siz başlatana kadar hiçbir şey aktarılmaz."
+
 #: src/features/setup/InstallStep.tsx
 msgid "This is the live chat, as it looks on your site. You can try it here."
 msgstr "Bu, sitenizde göründüğü hâliyle canlı sohbet. Burada deneyebilirsiniz."
@@ -8330,6 +8847,10 @@ msgstr "Bu isteğin süresi doldu ya da zaten kullanıldı. Bağlanmayı uygulam
 msgid "This request has ended"
 msgstr "Bu istek artık geçerli değil"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "This server has no forwarding address, so the mail reaches Yuva through an MX change."
+msgstr "Bu sunucuda yönlendirme adresi yok; e-postalar Yuva'ya bir MX değişikliğiyle ulaşır."
+
 #: src/features/settings/notifications/PushSection.tsx
 msgid "This server is not set up to send push notifications."
 msgstr "Bu sunucu anlık bildirim gönderecek şekilde ayarlanmamış."
@@ -8349,6 +8870,10 @@ msgstr "Bu sunucu, bir çalışma alanı için bülteni ancak yöneticisi onayla
 #: src/components/common/text.ts
 msgid "This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator."
 msgstr "Bu sunucunun taşıma sınırına ulaşıldı. Süren bir taşımanın bitmesini bekleyin ya da sunucu yöneticisine sorun."
+
+#: src/features/migrations/text.ts
+msgid "This server's limit was reached"
+msgstr "Bu sunucunun sınırına ulaşıldı"
 
 #: src/features/account/ConnectPage.tsx
 msgid "This site cannot connect"
@@ -8386,6 +8911,14 @@ msgstr "Bu çalışma alanı, sunucu yöneticisi onayladıktan sonra bülten gö
 msgid "This workspace sent as many tests as allowed this hour. Try again later."
 msgstr "Bu çalışma alanı bu saat için izin verilen sayıda deneme gönderdi. Daha sonra yeniden deneyin."
 
+#: src/features/migrations/parts.tsx
+msgid "Threads of only automatic mail"
+msgstr "Yalnızca otomatik e-postalardan oluşan yazışmalar"
+
+#: src/features/migrations/parts.tsx
+msgid "Threads of only your team's mail"
+msgstr "Yalnızca ekibinizin e-postalarından oluşan yazışmalar"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Threads whose last message is on or after"
 msgstr "Son mesajı şu tarihte ya da sonrasında olan yazışmalar"
@@ -8406,6 +8939,7 @@ msgstr "destek hesabından"
 msgid "Thursday"
 msgstr "Perşembe"
 
+#: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Time"
 msgstr "Zaman"
@@ -8477,6 +9011,10 @@ msgstr "Bugün ağınızdan çok fazla çalışma alanı oluşturuldu. Yarın ye
 #: src/features/broadcasts/AudienceBuilder.tsx
 msgid "tr, en-GB"
 msgstr "tr, en-GB"
+
+#: src/features/migrations/parts.tsx
+msgid "Trash"
+msgstr "Çöp kutusu"
 
 #: src/features/migrations/text.ts
 msgid "Trash, never imported"
@@ -8868,6 +9406,10 @@ msgstr "Ziyaretçiler sitenizin her sayfasından yazar; siz buradan anında yan�
 msgid "Waiting"
 msgstr "Bekleyen"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "Waiting for {provider}'s limit; continues at {waiting}."
+msgstr "Bekliyor: {provider} sınırı, {waiting} itibarıyla devam edecek."
+
 #: src/features/docs/DocsPages.tsx
 msgid "waiting for approval"
 msgstr "onay bekliyor"
@@ -8889,6 +9431,10 @@ msgstr "onay bekliyor"
 #: src/features/broadcasts/Import.tsx
 msgid "Waiting for confirmation"
 msgstr "Onay bekliyor"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Waiting for Google's confirmation code…"
+msgstr "Google'ın onay kodu bekleniyor…"
 
 #: src/features/setup/previews.tsx
 msgid "Waiting for it to arrive"
@@ -8982,6 +9528,10 @@ msgstr "Hoş geldin e-postası"
 msgid "What {header} holds"
 msgstr "{header} sütununda ne var"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "What comes over"
+msgstr "Neler aktarılacak"
+
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "What did they agree to?"
 msgstr "Neyi kabul ettiler?"
@@ -8989,6 +9539,10 @@ msgstr "Neyi kabul ettiler?"
 #: src/features/broadcasts/Import.tsx
 msgid "What each column holds"
 msgstr "Her sütunda ne var"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "What happened"
+msgstr "Neler oldu"
 
 #: src/features/broadcasts/Composer.tsx
 msgid "What is new in October"
@@ -9013,6 +9567,10 @@ msgstr "İçe aktarma ne yapacak"
 #: src/features/broadcasts/SubscriberSheet.tsx
 msgid "What they agreed to"
 msgstr "Kabul ettiği metin"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "What was imported stays. Nothing changed in {address}."
+msgstr "Aktarılanlar kalır. {address} içinde hiçbir şey değişmedi."
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "What went out"
@@ -9535,9 +10093,17 @@ msgstr "Yuva DKIM"
 msgid "Yuva does not run a mail server: your domain's mail is passed to it."
 msgstr "Yuva kendi posta sunucusunu çalıştırmaz: alan adınıza gelen postalar ona iletilir."
 
+#: src/features/migrations/text.ts
+msgid "Yuva held back a command that would have changed the mailbox"
+msgstr "Yuva, posta kutusunu değiştirecek bir komutu engelledi"
+
 #: src/features/migrations/Wizard.tsx
 msgid "Yuva inbox"
 msgstr "Yuva gelen kutusu"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Yuva mails {address} a short test message. When it reaches Yuva by the new route, the switch works."
+msgstr "Yuva, {address} adresine kısa bir deneme e-postası gönderir. Yeni yoldan Yuva'ya ulaşırsa geçiş çalışıyor demektir."
 
 #: src/app/Gate.tsx
 msgid "Yuva on this server is invite only. Ask an owner or admin of your team's workspace for an invitation."

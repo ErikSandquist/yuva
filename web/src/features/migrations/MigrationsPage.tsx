@@ -14,15 +14,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
-import { MigrationBar, MigrationStateTag, useStateAnnouncement, WaitingLine } from "@/features/migrations/parts"
 import {
-  useDeleteMigration,
-  useFinishMigration,
-  useMigrations,
-  useMigrationStep,
-  usePresets,
-  useRemoveHistory,
-} from "@/features/migrations/queries"
+  MigrationBar,
+  MigrationStateTag,
+  useMigrationConfirms,
+  useStateAnnouncement,
+  WaitingLine,
+} from "@/features/migrations/parts"
+import { useDeleteMigration, useMigrations, useMigrationStep, usePresets } from "@/features/migrations/queries"
 import { guideUrl } from "@/features/migrations/text"
 import { Card, PageHeader, RowIcon, Rows, Section } from "@/features/settings/ui"
 import type { Migration } from "@/lib/api"
@@ -179,21 +178,16 @@ function MigrationRow({ m }: { m: Migration }) {
 
 function useRowActions(m: Migration) {
   const { t } = useLingui()
-  const num = useNumber()
   const [confirm, dialog] = useConfirm()
+  const ask = useMigrationConfirms(m)
   const pause = useMigrationStep(m.id, "pause")
   const resume = useMigrationStep(m.id, "resume")
   const retry = useMigrationStep(m.id, "retry")
-  const cancel = useMigrationStep(m.id, "cancel")
-  const finish = useFinishMigration(m.id)
-  const remove = useRemoveHistory(m.id)
   const del = useDeleteMigration(m.id)
   const can = (a: Migration["actions"][number]) => m.actions.includes(a)
-  const error = pause.error ?? resume.error ?? retry.error ?? cancel.error ?? finish.error ?? remove.error ?? del.error
+  const error = pause.error ?? resume.error ?? retry.error ?? ask.error ?? del.error
   const reconnect = m.state === "needs_attention" && can("set_credentials")
   const early = ["draft", "connected", "scanning", "ready"].includes(m.state)
-  const removable = m.removable_conversations ?? 0
-  const count = num(removable)
   const address = m.source_address
   const menu = [
     can("pause") && (
@@ -212,39 +206,14 @@ function useRowActions(m: Migration) {
       </DropdownMenuItem>
     ),
     can("finish") && (
-      <DropdownMenuItem
-        key="finish"
-        onClick={() =>
-          confirm({
-            title: t`Finish the migration?`,
-            description: m.verified_at
-              ? t`Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied.`
-              : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted.`,
-            confirm: m.verified_at ? t`Finish` : t`Finish anyway`,
-            run: () => finish.mutate(!m.verified_at),
-          })
-        }
-        data-testid="migration-finish"
-      >
+      <DropdownMenuItem key="finish" onClick={ask.finish} data-testid="migration-finish">
         <Trans>Finish</Trans>
       </DropdownMenuItem>
     ),
   ].filter(Boolean)
   const danger = [
     can("cancel") && (
-      <DropdownMenuItem
-        key="cancel"
-        variant="destructive"
-        onClick={() =>
-          confirm({
-            title: t`Cancel moving ${address}?`,
-            description: t`It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox.`,
-            confirm: t`Cancel the migration`,
-            run: () => cancel.mutate(),
-          })
-        }
-        data-testid="migration-cancel"
-      >
+      <DropdownMenuItem key="cancel" variant="destructive" onClick={ask.cancel} data-testid="migration-cancel">
         <Trans>Cancel migration</Trans>
       </DropdownMenuItem>
     ),
@@ -252,17 +221,7 @@ function useRowActions(m: Migration) {
       <DropdownMenuItem
         key="remove"
         variant="destructive"
-        onClick={() =>
-          confirm({
-            title: t`Remove imported history?`,
-            description:
-              removable === 1
-                ? t`1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`
-                : t`${count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`,
-            confirm: t`Remove history`,
-            run: () => remove.mutate(removable),
-          })
-        }
+        onClick={ask.removeHistory}
         data-testid="migration-remove-history"
       >
         <Trans>Remove imported history</Trans>
@@ -317,5 +276,14 @@ function useRowActions(m: Migration) {
       )}
     </div>
   )
-  return { buttons, error, dialog }
+  return {
+    buttons,
+    error,
+    dialog: (
+      <>
+        {dialog}
+        {ask.dialog}
+      </>
+    ),
+  }
 }

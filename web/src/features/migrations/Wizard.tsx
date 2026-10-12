@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { ChooseStep } from "@/features/migrations/ChooseStep"
 import { ConnectStep } from "@/features/migrations/ConnectStep"
+import { CopyStep } from "@/features/migrations/CopyStep"
+import { DoneStep } from "@/features/migrations/DoneStep"
 import { MapStep } from "@/features/migrations/MapStep"
 import { useMigration, usePresets } from "@/features/migrations/queries"
+import { ReviewStep } from "@/features/migrations/ReviewStep"
 import { SourceStep } from "@/features/migrations/SourceStep"
+import { SwitchStep } from "@/features/migrations/SwitchStep"
 import { useMigrationText } from "@/features/migrations/text"
 import { PreviewCaption } from "@/features/setup/previews"
 import { SetupLayout } from "@/features/setup/SetupLayout"
@@ -21,7 +25,6 @@ import { useInboxes } from "@/lib/workspace"
 export const STEPS = ["source", "connect", "choose", "map", "review", "copy", "switch", "done"] as const
 export type StepKey = (typeof STEPS)[number]
 
-const BUILT: StepKey[] = ["source", "connect", "choose", "map"]
 const EARLY = ["draft", "connected", "scanning", "ready"]
 
 export function currentStep(m: Migration): StepKey {
@@ -86,7 +89,7 @@ export function WizardLayout({
   const names = useStepNames()
   const index = STEPS.indexOf(step)
   const prev = index > 0 ? STEPS[index - 1] : undefined
-  const back = m && prev && BUILT.includes(prev) && reachable(prev, m) ? `/migrations/${m.id}/${prev}` : undefined
+  const back = m && prev && reachable(prev, m) ? `/migrations/${m.id}/${prev}` : undefined
   return (
     <SetupLayout
       step={index + 1}
@@ -120,7 +123,10 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
     facts.push([t`Connection`, host ? t`Connected to ${host}` : t`Not connected yet`])
     facts.push([t`State`, text.state[m.state]])
     facts.push([t`Since`, since ? formatDate(since, i18n.locale) : t`Everything`])
-    if (est) {
+    if (m.started_at) {
+      const imported = num(m.counts.imported)
+      facts.push([t`Imported`, t`${imported} messages`])
+    } else if (est) {
       const conversations = num(est.conversations)
       const messages = num(est.messages)
       facts.push([t`Dry run`, t`${conversations} conversations, ${messages} messages`])
@@ -201,11 +207,7 @@ export function MigrationPage() {
     )
   if (!m || !presets.data) return <div className="min-h-svh bg-background" />
   const wanted = STEPS.includes(step as StepKey) ? (step as StepKey) : currentStep(m)
-  if (!BUILT.includes(wanted)) return <Navigate to="/settings/migrations" replace />
-  if (!reachable(wanted, m)) {
-    const now = currentStep(m)
-    return <Navigate to={BUILT.includes(now) ? `/migrations/${m.id}/${now}` : "/settings/migrations"} replace />
-  }
+  if (!reachable(wanted, m)) return <Navigate to={`/migrations/${m.id}/${currentStep(m)}`} replace />
   if (!step) return <Navigate to={`/migrations/${m.id}/${wanted}`} replace />
   const preset = presets.data.find((p) => p.id === m.preset)!
   switch (wanted) {
@@ -215,7 +217,15 @@ export function MigrationPage() {
       return <ConnectStep key={m.id} m={m} preset={preset} />
     case "choose":
       return <ChooseStep key={m.id} m={m} preset={preset} />
-    default:
+    case "map":
       return <MapStep key={m.id} m={m} preset={preset} />
+    case "review":
+      return <ReviewStep key={m.id} m={m} preset={preset} />
+    case "copy":
+      return <CopyStep key={m.id} m={m} preset={preset} />
+    case "switch":
+      return <SwitchStep key={m.id} m={m} preset={preset} />
+    default:
+      return <DoneStep key={m.id} m={m} preset={preset} />
   }
 }

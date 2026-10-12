@@ -1,24 +1,14 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { useEffect, useState } from "react"
-
 import { MemberAvatar } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { useContactPresence } from "@/features/contact/queries"
 import { currentRating, RatingMark } from "@/features/conversation/rating"
+import { useNow } from "@/hooks/use-now"
 import type { Conversation, Message } from "@/lib/api"
 import { useViewers } from "@/lib/presence"
 import { useSession } from "@/lib/session"
 import { useTyping } from "@/lib/typing"
 import { useMemberMap } from "@/lib/workspace"
-
-function useNow(ms: number) {
-  const [now, setNow] = useState(() => Date.now())
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), ms)
-    return () => clearInterval(id)
-  }, [ms])
-  return now
-}
 
 function WaitingFor({ since }: { since: string }) {
   const now = useNow(30_000)

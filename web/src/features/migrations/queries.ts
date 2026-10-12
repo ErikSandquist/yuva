@@ -122,7 +122,37 @@ export function useTestConnection(id: string) {
   })
 }
 
-type Step = "scan" | "start" | "pause" | "resume" | "cancel" | "retry"
+export function useMigrationPreview(m: Migration) {
+  const { workspaceId: ws } = useSession()
+  const scannedAt = m.estimate?.scanned_at ?? ""
+  return useQuery({
+    queryKey: keys.migrationPreview(ws, m.id, scannedAt),
+    queryFn: () =>
+      unwrap(api.GET("/v1/migrations/{migrationId}/preview", { params: { path: { migrationId: m.id } } })).then(
+        (r) => r.items
+      ),
+    enabled: !!scannedAt,
+    staleTime: Infinity,
+  })
+}
+
+export function useMigrationErrors(id: string, enabled: boolean) {
+  const { workspaceId: ws } = useSession()
+  return useInfiniteQuery({
+    queryKey: keys.migrationErrors(ws, id),
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/migrations/{migrationId}/errors", {
+          params: { path: { migrationId: id }, query: { cursor: pageParam, limit: 50 } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor,
+    enabled,
+  })
+}
+
+type Step = "scan" | "start" | "pause" | "resume" | "cancel" | "retry" | "probe"
 
 const stepPaths = {
   scan: "/v1/migrations/{migrationId}/scan",
@@ -131,6 +161,7 @@ const stepPaths = {
   resume: "/v1/migrations/{migrationId}/resume",
   cancel: "/v1/migrations/{migrationId}/cancel",
   retry: "/v1/migrations/{migrationId}/retry",
+  probe: "/v1/migrations/{migrationId}/probe",
 } as const
 
 export function useMigrationStep(id: string, step: Step) {
