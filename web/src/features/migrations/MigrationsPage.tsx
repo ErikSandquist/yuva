@@ -1,8 +1,8 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightLeftIcon, BookOpenIcon, MailIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react"
-import { Link, Navigate } from "react-router"
+import { ArrowRightLeftIcon, BookOpenIcon, MailIcon, MoreHorizontalIcon, PlusIcon, XIcon } from "lucide-react"
+import { Link, Navigate, useSearchParams } from "react-router"
 
-import { ErrorLine, useConfirm } from "@/components/common"
+import { ErrorLine, Notice, useConfirm } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import {
@@ -35,6 +35,7 @@ export function MigrationsPage() {
   const list = useMigrations()
   const items = list.data?.pages.flatMap((p) => p.items) ?? []
   const announcement = useStateAnnouncement(items)
+  const [params] = useSearchParams()
   if (!canManage) return <Navigate to="/settings/profile" replace />
   return (
     <>
@@ -54,6 +55,18 @@ export function MigrationsPage() {
         }
       />
       {announcement}
+      {params.get("result") === "expired" && (
+        <Notice tone="danger" icon={XIcon} className="mb-6" role="alert" data-testid="migration-sign-in-result">
+          <p className="font-medium">
+            <Trans>The sign-in expired</Trans>
+          </p>
+          <p>
+            <Trans>
+              A help-desk sign-in must come back within 10 minutes and works once. Open the migration and sign in again.
+            </Trans>
+          </p>
+        </Notice>
+      )}
       <Section>
         <Card flush>
           {list.isPending ? (
@@ -186,7 +199,7 @@ function useRowActions(m: Migration) {
   const del = useDeleteMigration(m.id)
   const can = (a: Migration["actions"][number]) => m.actions.includes(a)
   const error = pause.error ?? resume.error ?? retry.error ?? ask.error ?? del.error
-  const reconnect = m.state === "needs_attention" && can("set_credentials")
+  const reconnect = m.state === "needs_attention" && (can("set_credentials") || can("sign_in"))
   const early = ["draft", "connected", "scanning", "ready"].includes(m.state)
   const address = m.source_address
   const menu = [

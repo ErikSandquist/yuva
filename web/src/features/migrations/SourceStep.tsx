@@ -14,7 +14,7 @@ import {
   useReplaceDraft,
   useUpdateMigration,
 } from "@/features/migrations/queries"
-import { usePresetName } from "@/features/migrations/text"
+import { isHelpdesk, usePresetName } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { Field } from "@/features/settings/ui"
 import { StepHeader } from "@/features/setup/SetupLayout"
@@ -39,10 +39,12 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
   const clean = address.trim()
   const valid = EMAIL.test(clean)
   const list = presets.data ?? []
-  const mailboxes = list.filter((p) => p.source !== "file")
+  const mailboxes = list.filter((p) => p.source === "imap")
+  const desks = list.filter((p) => isHelpdesk(p.source))
   const files = list.filter((p) => p.source === "file")
   const chosen = list.find((p) => p.id === preset)
-  const detection = found && found.address === clean ? found : null
+  const desk = isHelpdesk(chosen?.source)
+  const detection = found && found.address === clean && !desk ? found : null
 
   const find = (pick: boolean) => {
     if (!valid) return
@@ -107,7 +109,18 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
           else find(true)
         }}
       >
-        <Field label={<Trans>Mailbox address</Trans>} htmlFor="migration-address">
+        <Field
+          label={desk ? <Trans>Support address</Trans> : <Trans>Mailbox address</Trans>}
+          htmlFor="migration-address"
+          hint={
+            desk && (
+              <Trans>
+                The address your customers write to. Conversations go into the inbox whose e-mail channel receives it,
+                unless the Map step sends a brand or mailbox elsewhere.
+              </Trans>
+            )
+          }
+        >
           <div className="flex gap-2">
             <Input
               id="migration-address"
@@ -117,7 +130,7 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
               autoComplete="email"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              onBlur={() => valid && !detection && !detect.isPending && find(false)}
+              onBlur={() => valid && !desk && !detection && !detect.isPending && find(false)}
               placeholder={t`support@example.com`}
               className="h-12 rounded-xl px-3.5 text-title md:text-title"
               data-testid="migration-address"
@@ -157,6 +170,22 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
           )}
           <ErrorLine error={presets.error} />
         </section>
+        {desks.length > 0 && (
+          <section className="flex flex-col gap-2.5" aria-labelledby="migration-helpdesks">
+            <div>
+              <h2 id="migration-helpdesks" className="text-body font-medium">
+                <Trans>Or move from a help desk</Trans>
+              </h2>
+              <p className="text-small text-faint">
+                <Trans>
+                  Tickets come over with their replies, notes, tags, status and assignee. Enter your support address
+                  above.
+                </Trans>
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{desks.map(tile)}</div>
+          </section>
+        )}
         {files.length > 0 && (
           <section className="flex flex-col gap-2.5" aria-labelledby="migration-files">
             <div>

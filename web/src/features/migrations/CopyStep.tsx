@@ -36,7 +36,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const address = m.source_address
   const provider = preset.name
   const attention = m.state === "needs_attention"
-  const reconnect = attention && can("set_credentials")
+  const reconnect = attention && (can("set_credentials") || can("sign_in"))
   const rate = num(m.rate_per_minute ?? 0)
   const left = m.seconds_left ? formatDuration(m.seconds_left, i18n.locale) : ""
   const waiting = isWaiting(m) && m.waiting_until ? formatDateTime(m.waiting_until, i18n.locale) : ""

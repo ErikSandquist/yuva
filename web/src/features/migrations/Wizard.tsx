@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowDownIcon, MailIcon, ShieldCheckIcon } from "lucide-react"
+import { ArrowDownIcon, LifeBuoyIcon, MailIcon, ShieldCheckIcon } from "lucide-react"
 import { Link, Navigate, useParams, useSearchParams } from "react-router"
 
 import { ErrorLine, YuvaMark } from "@/components/common"
@@ -10,12 +10,13 @@ import { ChooseStep } from "@/features/migrations/ChooseStep"
 import { ConnectStep } from "@/features/migrations/ConnectStep"
 import { CopyStep } from "@/features/migrations/CopyStep"
 import { DoneStep } from "@/features/migrations/DoneStep"
+import { HelpdeskConnectStep } from "@/features/migrations/HelpdeskConnectStep"
 import { MapStep } from "@/features/migrations/MapStep"
 import { useMigration, usePresets } from "@/features/migrations/queries"
 import { ReviewStep } from "@/features/migrations/ReviewStep"
 import { SourceStep } from "@/features/migrations/SourceStep"
 import { SwitchStep } from "@/features/migrations/SwitchStep"
-import { useFormatName, useMigrationText } from "@/features/migrations/text"
+import { isHelpdesk, useFormatName, useMigrationText } from "@/features/migrations/text"
 import { UploadStep } from "@/features/migrations/UploadStep"
 import { PreviewCaption } from "@/features/setup/previews"
 import { SetupLayout } from "@/features/setup/SetupLayout"
@@ -60,7 +61,11 @@ export function currentStep(m: Migration): StepKey {
 
 function reachable(step: StepKey, m: Migration) {
   if (!stepsFor(isFile(m)).includes(step)) return false
-  if (step === "connect" && (m.actions.includes("set_credentials") || m.actions.includes("upload"))) return true
+  if (
+    step === "connect" &&
+    (m.actions.includes("set_credentials") || m.actions.includes("upload") || m.actions.includes("sign_in"))
+  )
+    return true
   if (!EARLY.includes(m.state)) return step === currentStep(m)
   if (step === "source") return m.state === "draft"
   if (step === "connect") return true
@@ -125,6 +130,7 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
   const text = useMigrationText()
   const formatName = useFormatName()
   const file = isFile(m, preset)
+  const desk = isHelpdesk(m?.source ?? preset?.source)
   const inboxes = useInboxes().data ?? []
   const inbox = m?.inbox_id ? inboxes.find((i) => i.id === m.inbox_id) : undefined
   const provider = preset?.name ?? t`Your mail provider`
@@ -144,7 +150,7 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
     facts.push([t`Since`, since ? formatDate(since, i18n.locale) : t`Everything`])
     if (m.started_at) {
       const imported = num(m.counts.imported)
-      facts.push([t`Imported`, t`${imported} messages`])
+      facts.push([t`Imported`, desk ? t`${imported} conversations` : t`${imported} messages`])
     } else if (est) {
       const conversations = num(est.conversations)
       const messages = num(est.messages)
@@ -159,11 +165,13 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
       >
         <div className="flex items-center gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-surface text-muted-foreground [&_svg]:size-[18px]">
-            <MailIcon />
+            {desk ? <LifeBuoyIcon /> : <MailIcon />}
           </span>
           <span className="min-w-0">
             <span className="block text-caption text-faint">{provider}</span>
-            <span className="block truncate font-medium">{address || t`Your mailbox`}</span>
+            <span className="block truncate font-medium">
+              {address || (desk ? t`Your support address` : t`Your mailbox`)}
+            </span>
           </span>
         </div>
         <ArrowDownIcon className="ms-3 size-4 text-faint" aria-hidden="true" />
@@ -199,6 +207,8 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
             Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no
             notifications, no auto-replies.
           </Trans>
+        ) : desk ? (
+          <Trans>Yuva only reads the help desk. History arrives quietly: no notifications, no auto-replies.</Trans>
         ) : (
           <Trans>Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies.</Trans>
         )}
@@ -242,6 +252,8 @@ export function MigrationPage() {
     case "connect":
       return isFile(m) ? (
         <UploadStep key={m.id} m={m} preset={preset} />
+      ) : isHelpdesk(m.source) ? (
+        <HelpdeskConnectStep key={m.id} m={m} preset={preset} />
       ) : (
         <ConnectStep key={m.id} m={m} preset={preset} />
       )

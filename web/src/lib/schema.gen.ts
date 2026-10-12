@@ -3479,7 +3479,11 @@ export interface paths {
          *     is read until the mailbox is connected: set the credentials (`PUT .../credentials`), then
          *     test the connection (`POST .../test`), which moves the migration to `connected`. A `file`
          *     migration (preset `takeout` or `file`) is connected by uploading the export file of that
-         *     mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`).
+         *     mailbox in parts (`POST .../upload/parts/{part}`, then `.../upload/complete`). A `zendesk`
+         *     or `helpscout` migration is connected by signing in with the team's own OAuth client
+         *     (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
+         *     conversations go to unless `options.inboxes` names another inbox for their brand or
+         *     mailbox.
          *
          *     An `imap` migration into a channel that a `file` migration of the same mailbox imported
          *     into, without `options.since`, starts with `options.since` at the day of the newest
@@ -3616,7 +3620,8 @@ export interface paths {
          *
          *     In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
          *     test passes. In `needs_attention` it reconnects the same account on the same server
-         *     (`409 migration_state` otherwise).
+         *     (`409 migration_state` otherwise, and for help desks and export files, which connect
+         *     otherwise).
          *
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
@@ -3644,7 +3649,9 @@ export interface paths {
          *     folders and open the inbox read-only. Each step answers `ok` and, when it failed, a `code`
          *     with the server's answer in `detail` (passwords, tokens and base64 arguments removed). A
          *     passing test moves a `draft` migration to `connected` and reports the folders and
-         *     messages it saw.
+         *     messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
+         *     when it is about to expire, reads the signed-in user) and `folders` (its brands or
+         *     mailboxes, with conversations counted where the help desk tells).
          *
          *     The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
          *     refuses to send any command that could change the mailbox.
@@ -3656,6 +3663,46 @@ export interface paths {
          *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
          */
         post: operations["testMigrationConnection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/migrations/{migrationId}/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Connect a help desk with the team's OAuth client
+         * @description Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
+         *     created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
+         *     in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
+         *     in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
+         *     once, never returned or logged, and deleted with the migration's other credentials.
+         *
+         *     The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
+         *     asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
+         *     desk sends the browser back to `GET /migrations/sign-in/callback` on this server, which
+         *     exchanges the code (the only request besides `GET`s Yuva sends to the help desk), refuses
+         *     a Zendesk token granted more than `read` (`scope_too_broad`), checks that the account can
+         *     be read, stores the tokens and lists the brands or mailboxes as the migration's folders.
+         *     It then redirects to the panel's `/migrations/{migrationId}/connect?result=<result>` (see
+         *     `MigrationSignInResult`); a `draft` migration becomes `connected`. The sign-in is good
+         *     for 10 minutes and once, and must come back in the browser of the member who started it.
+         *
+         *     In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
+         *     account. `409 migration_state` for other states and for sources that do not sign in this
+         *     way.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+         */
+        post: operations["startMigrationSignIn"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7891,7 +7938,7 @@ export interface components {
         /**
          * @description Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
          *     `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-         *     (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
+         *     (`YUVA_MIGRATION_SOURCES`) among those built: all four.
          * @enum {string}
          */
         MigrationSource: "imap" | "file" | "zendesk" | "helpscout";
@@ -7900,10 +7947,11 @@ export interface components {
          *     and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
          *     `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
          *     Google Takeout file, or `file`, any other export file; both read every format the server
-         *     knows, which `upload.format` names once the upload is complete.
+         *     knows, which `upload.format` names once the upload is complete. A help desk has the preset
+         *     of its source: `zendesk` or `helpscout`.
          * @enum {string}
          */
-        MigrationPresetId: "gmail" | "google_workspace" | "microsoft" | "yandex" | "icloud" | "zoho" | "yahoo" | "fastmail" | "gmx" | "imap" | "takeout" | "file";
+        MigrationPresetId: "gmail" | "google_workspace" | "microsoft" | "yandex" | "icloud" | "zoho" | "yahoo" | "fastmail" | "gmx" | "imap" | "takeout" | "file" | "zendesk" | "helpscout";
         /**
          * @description - `draft`: created; not connected yet.
          *     - `connected`: the connection test passed; choose what to read.
@@ -7913,8 +7961,8 @@ export interface components {
          *     - `paused`: stopped by a member; resumes where it was.
          *     - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
          *       revoked app password; reconnect to continue.
-         *     - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
-         *       while the team switches its mail over.
+         *     - `syncing`: history copied; new mail in the old mailbox, or what changed in the help
+         *       desk, is fetched every two minutes while the team switches its mail over.
          *     - `completed`: finished; the credentials, or the export file, are deleted. A `file`
          *       migration completes when its copy ends.
          *     - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
@@ -7926,11 +7974,11 @@ export interface components {
          * @description What can be done with a migration in its current state: `update` (`PATCH`),
          *     `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
          *     `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
-         *     switch) and `upload` (parts of the export file, and completing it). A server lists only
-         *     the actions it offers.
+         *     switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
+         *     desk's sign-in with the team's OAuth client). A server lists only the actions it offers.
          * @enum {string}
          */
-        MigrationAction: "update" | "set_credentials" | "test_connection" | "scan" | "start" | "pause" | "resume" | "cancel" | "finish" | "retry" | "remove_history" | "delete" | "probe" | "upload";
+        MigrationAction: "update" | "set_credentials" | "test_connection" | "scan" | "start" | "pause" | "resume" | "cancel" | "finish" | "retry" | "remove_history" | "delete" | "probe" | "upload" | "sign_in";
         /**
          * @description `tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143).
          * @enum {string}
@@ -7943,11 +7991,16 @@ export interface components {
             tls: components["schemas"]["MigrationTls"];
         };
         /**
-         * @description `password`: a user name with an app password or password. `microsoft`: Sign in with Microsoft.
+         * @description `password`: a user name with an app password or password. `microsoft`: Sign in with
+         *     Microsoft. `oauth`: a help desk's sign-in with an OAuth client the team creates in its own
+         *     account (`POST /v1/migrations/{migrationId}/sign-in`).
          * @enum {string}
          */
-        MigrationAuth: "password" | "microsoft";
-        /** @description The stored credentials, without the secret. */
+        MigrationAuth: "password" | "microsoft" | "oauth";
+        /**
+         * @description The stored credentials, without the secret. A help desk's are `oauth`, with the account's
+         *     API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+         */
         MigrationCredentials: {
             /** @enum {string} */
             kind: "password" | "oauth";
@@ -7975,6 +8028,41 @@ export interface components {
             /** @description Trust this certificate (SHA-256, hexadecimal, colons allowed) even if it is not valid for the host. */
             certificate_sha256?: string;
         };
+        MigrationSignInStart: {
+            /** @description Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`. */
+            subdomain?: string;
+            /** @description The OAuth client's identifier (Zendesk) or the app's ID (Help Scout). */
+            client_id: string;
+            client_secret: string;
+        };
+        MigrationSignIn: {
+            /**
+             * Format: uri
+             * @description The help desk's consent page; open it in the browser.
+             */
+            authorize_url: string;
+            /**
+             * Format: uri
+             * @description Where the help desk sends the browser back; it must be the OAuth client's redirect URL.
+             */
+            redirect_url: string;
+            /**
+             * Format: date-time
+             * @description The sign-in must come back before this.
+             */
+            expires_at: string;
+        };
+        /**
+         * @description The `result` of the redirect to `/migrations/{migrationId}/connect` after a help-desk
+         *     sign-in: `connected`; `access_denied` (the person declined); `expired` (unknown, used or
+         *     older than 10 minutes); `session_mismatch` (it came back in another member's browser);
+         *     `scope_too_broad` (the token grants more than `read`; nothing was stored); `not_admin`,
+         *     `plan_has_no_api`, `subdomain_not_found` (as the connection test's codes);
+         *     `account_mismatch` (a reconnect signed in to another account); `token_failed` (the help
+         *     desk refused the code: usually a wrong client secret or redirect URL); `source_unreachable`.
+         * @enum {string}
+         */
+        MigrationSignInResult: "connected" | "access_denied" | "expired" | "session_mismatch" | "scope_too_broad" | "not_admin" | "plan_has_no_api" | "subdomain_not_found" | "account_mismatch" | "token_failed" | "source_unreachable";
         /**
          * @description What an export file holds: `takeout`, a Google Takeout mbox (Gmail's thread ids and
          *     labels in `X-GM-THRID` and `X-Gmail-Labels`); `mbox`, any other mbox; `mbox_zip`, a zip of
@@ -8100,7 +8188,9 @@ export interface components {
             /**
              * Format: int64
              * @description Messages read from the chosen folders: those to import and those the dry run already set
-             *     aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed.
+             *     aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed. A
+             *     help desk counts conversations (tickets) instead: each is imported whole, with all its
+             *     messages and notes.
              */
             total: number;
             /** Format: int64 */
@@ -8124,15 +8214,19 @@ export interface components {
              */
             bytes: number;
         };
-        /** @description A team address and the member its mail is imported as; without `member_id`, its own name and address are kept. */
+        /**
+         * @description A team address and the member its mail is imported as; without `member_id`, its own name
+         *     and address are kept. For a help desk, an agent's address: the agent's replies, notes and
+         *     assigned conversations become the member's.
+         */
         MigrationPerson: {
             address: components["schemas"]["Email"];
             /** Format: uuid */
             member_id?: string;
         };
         /**
-         * @description What a folder or Gmail label becomes: `create` a label of the same name, an `existing`
-         *     label (`label_id`), or `none`.
+         * @description What a folder, Gmail label or help-desk tag becomes: `create` a label of the same name, an
+         *     `existing` label (`label_id`), or `none`. For a help desk `folder` names a tag.
          */
         MigrationLabelMapping: {
             folder: string;
@@ -8141,9 +8235,25 @@ export interface components {
             /** Format: uuid */
             label_id?: string;
         };
+        /**
+         * @description Help desks: the inbox a Zendesk brand's or Help Scout mailbox's conversations go to, by the
+         *     folder's name. They are bound to that inbox's e-mail channel (the one whose address is the
+         *     mailbox's, else its oldest), so replies from Yuva reach the customer; an inbox without an
+         *     e-mail channel keeps them as history without a channel.
+         */
+        MigrationInboxMapping: {
+            folder: string;
+            /** Format: uuid */
+            inbox_id: string;
+        };
         MigrationOptions: {
-            /** @description The folders to read, by name; absent for the preset's default (inbox, sent, archive and user folders; Gmail's All Mail). */
+            /**
+             * @description The folders to read, by name; absent for the preset's default (inbox, sent, archive and
+             *     user folders; Gmail's All Mail; a help desk's every brand or mailbox).
+             */
             folders?: string[];
+            /** @description Help desks only; a brand or mailbox not named goes to the migration's inbox and channel. */
+            inboxes?: components["schemas"]["MigrationInboxMapping"][];
             /**
              * Format: date-time
              * @description Only threads whose last message is newer; absent for everything.
@@ -8153,7 +8263,8 @@ export interface components {
             skip_automatic: boolean;
             /**
              * Format: int32
-             * @description Threads whose last message is older are imported `closed`; newer ones `open` or `pending`. `0` closes everything.
+             * @description Threads whose last message is older are imported `closed`; newer ones `open` or
+             *     `pending`. `0` closes everything. Help desks keep their own status instead.
              */
             close_after_days: number;
             /** @description Keep each message's original source, as for mail that arrives live. */
@@ -8181,6 +8292,7 @@ export interface components {
             team_addresses?: components["schemas"]["Email"][];
             people?: components["schemas"]["MigrationPerson"][];
             labels?: components["schemas"]["MigrationLabelMapping"][];
+            inboxes?: components["schemas"]["MigrationInboxMapping"][];
             /** Format: int32 */
             quiet_period_hours?: number;
         };
@@ -8189,7 +8301,7 @@ export interface components {
             id: string;
             source: components["schemas"]["MigrationSource"];
             preset: components["schemas"]["MigrationPresetId"];
-            /** @description The mailbox address. */
+            /** @description The mailbox address; for a help desk, the support address whose channel is the default target. */
             source_address: string;
             /**
              * Format: uuid
@@ -8213,6 +8325,8 @@ export interface components {
             counts: components["schemas"]["MigrationCounts"];
             credentials?: components["schemas"]["MigrationCredentials"];
             upload?: components["schemas"]["MigrationFile"];
+            /** @description Help desks: how the last sign-in ended, the same `result` its redirect carried. */
+            sign_in_result?: components["schemas"]["MigrationSignInResult"];
             /**
              * Format: uuid
              * @description An `imap` migration of a mailbox whose export file this workspace imported into the
@@ -8320,7 +8434,7 @@ export interface components {
             /**
              * @description Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
              *     the All Mail messages that are also in Sent), other than the mailbox address, most
-             *     messages first. They are the team's aliases and
+             *     messages first; for a help desk, its agents, by the conversations assigned to them. They are the team's aliases and
              *     colleagues the Map step offers as `options.team_addresses`, whether or not they are
              *     already team addresses.
              */
@@ -8396,6 +8510,17 @@ export interface components {
             bytes_per_day?: number;
             /** Format: int64 */
             bytes_per_second?: number;
+            /**
+             * Format: int32
+             * @description Help desks: requests a minute until the provider reports its limit; then at most half
+             *     of the per-minute limit it reports (`X-Rate-Limit`, `X-RateLimit-Limit-Minute`).
+             */
+            requests_per_minute?: number;
+            /**
+             * Format: int32
+             * @description Zendesk: incremental export requests a minute (of the 10 Zendesk allows).
+             */
+            incremental_per_minute?: number;
         };
         MigrationPreset: {
             id: components["schemas"]["MigrationPresetId"];
@@ -8421,6 +8546,20 @@ export interface components {
             guide: string;
             /** @description `false` when this server cannot connect to the provider yet. */
             available: boolean;
+            /**
+             * Format: uri
+             * @description `oauth` presets: the redirect URL to enter in the OAuth client the team creates in its
+             *     help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps).
+             */
+            redirect_url?: string;
+            /**
+             * @description `oauth` presets: the scopes the sign-in asks for and accepts nothing beyond (Zendesk
+             *     `read`). Empty for Help Scout, which has no read-only permission: the connection's
+             *     refusal of every request but `GET` is what keeps it read-only.
+             */
+            scopes?: string[];
+            /** @description The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`). */
+            subdomain?: boolean;
         };
         MigrationPresetList: {
             items: components["schemas"]["MigrationPreset"][];
@@ -8475,9 +8614,13 @@ export interface components {
          *     - `examine_failed`: the inbox could not be opened read-only.
          *     - `timeout`: the test ran out of its 20 seconds.
          *     - `unexpected_answer`: anything else; `detail` has the server's answer.
+         *     - `not_admin`: help desks: the signed-in Zendesk user is not an admin, and only admins
+         *       may read the incremental export.
+         *     - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
+         *     - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
          * @enum {string}
          */
-        MigrationTestCode: "dns_failed" | "address_not_allowed" | "connect_failed" | "tls_failed" | "not_imap" | "starttls_unavailable" | "auth_failed" | "app_password_required" | "imap_disabled" | "basic_auth_disabled" | "web_login_required" | "too_many_connections" | "throttled" | "no_folders" | "examine_failed" | "timeout" | "unexpected_answer";
+        MigrationTestCode: "dns_failed" | "address_not_allowed" | "connect_failed" | "tls_failed" | "not_imap" | "starttls_unavailable" | "auth_failed" | "app_password_required" | "imap_disabled" | "basic_auth_disabled" | "web_login_required" | "too_many_connections" | "throttled" | "no_folders" | "examine_failed" | "timeout" | "unexpected_answer" | "not_admin" | "plan_has_no_api" | "subdomain_not_found";
         MigrationTestStep: {
             /** @enum {string} */
             step: "resolve" | "connect" | "tls" | "greeting" | "sign_in" | "folders";
@@ -8507,7 +8650,8 @@ export interface components {
         /**
          * @description What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
          *     All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
-         *     `drafts` and `other` (outbox, chats, notes), which are never read.
+         *     `drafts` and `other` (outbox, chats, notes), which are never read. A help desk lists each
+         *     Zendesk brand or Help Scout mailbox as an `inbox`.
          * @enum {string}
          */
         MigrationFolderKind: "inbox" | "sent" | "archive" | "all" | "user" | "label" | "spam" | "trash" | "drafts" | "other";
@@ -8516,6 +8660,13 @@ export interface components {
             id: number;
             name: string;
             kind: components["schemas"]["MigrationFolderKind"];
+            /** @description Help desks: the brand's or mailbox's support address, when the help desk names one. */
+            address?: string;
+            /**
+             * Format: uuid
+             * @description Help desks: the inbox its conversations go to (`options.inboxes`, else the migration's).
+             */
+            inbox_id?: string;
             /** @description Its messages are read (`options.folders`, else the preset's default). */
             selected: boolean;
             /**
@@ -8688,6 +8839,8 @@ export interface components {
              * @description The member an outgoing message is imported as.
              */
             member_id?: string;
+            /** @description Help desks: an internal note (a private comment), imported as a note. */
+            note?: boolean;
             /** Format: date-time */
             at: string;
             /** @description The visible text, quotes removed, at most 1,000 characters. */
@@ -8699,6 +8852,13 @@ export interface components {
             subject: string;
             contact: components["schemas"]["ImportedAuthor"];
             status: components["schemas"]["ConversationStatus"];
+            /** @description Help desks: the agent the conversation is assigned to. */
+            assignee?: components["schemas"]["ImportedAuthor"];
+            /**
+             * Format: uuid
+             * @description The member it is assigned to in Yuva; absent when the agent maps to none.
+             */
+            assignee_member_id?: string;
             labels: string[];
             /** Format: int32 */
             messages_total: number;
@@ -17949,6 +18109,40 @@ export interface operations {
             404: components["responses"]["Problem"];
             409: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
+        };
+    };
+    startMigrationSignIn: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                migrationId: components["parameters"]["MigrationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MigrationSignInStart"];
+            };
+        };
+        responses: {
+            /** @description Where to send the browser. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationSignIn"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
         };
     };
     getMigrationUpload: {

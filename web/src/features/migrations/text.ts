@@ -4,6 +4,8 @@ import type {
   MigrationFileFormat,
   MigrationFolderKind,
   MigrationPresetId,
+  MigrationSignInResult,
+  MigrationSource,
   MigrationState,
   MigrationTestCode,
   MigrationTestStep,
@@ -30,6 +32,10 @@ export const stateTones: Record<MigrationState, Tone> = {
   cancelled: "muted",
   removing: "warning",
   removed: "muted",
+}
+
+export function isHelpdesk(source: MigrationSource | undefined) {
+  return source === "zendesk" || source === "helpscout"
 }
 
 export function guideUrl(slug: string) {
@@ -107,6 +113,9 @@ export function useTestCodeText() {
       examine_failed: t`The inbox could not be opened read-only.`,
       timeout: t`The test ran out of its 20 seconds. The server may be slow; try again.`,
       unexpected_answer: t`The server gave an answer Yuva did not expect. The details below show it.`,
+      not_admin: t`The ${provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin.`,
+      plan_has_no_api: t`This ${provider} account's plan has no API access, which Yuva reads through.`,
+      subdomain_not_found: t`No ${provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com.`,
     })[code]
 }
 
@@ -209,6 +218,26 @@ export function useGuides() {
       link: "https://takeout.google.com/settings/takeout/custom/gmail",
       linkLabel: t`Open Google Takeout`,
     },
+    zendesk: {
+      steps: [
+        t`Sign in to Zendesk as an admin and open Admin Center › Apps and integrations › APIs › OAuth clients.`,
+        t`Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL.`,
+        t`Save it and copy its identifier and the secret, which Zendesk shows only once.`,
+        t`Paste them below with your subdomain. Yuva asks only for the scope read and accepts nothing more.`,
+      ],
+      link: guideUrl("migrate-zendesk"),
+      linkLabel: t`Read the guide`,
+    },
+    helpscout: {
+      steps: [
+        t`In Help Scout, open Your Profile › My Apps and choose Create App.`,
+        t`Name it “Yuva” and enter the redirect URL below as its redirection URL.`,
+        t`Create it, then copy its App ID and App Secret and paste them below.`,
+        t`Sign in as a user who sees every mailbox you want to move.`,
+      ],
+      link: guideUrl("migrate-helpscout"),
+      linkLabel: t`Read the guide`,
+    },
     file: {
       steps: [
         t`Thunderbird, Apple Mail and most mail apps export a folder as an .mbox file: upload that file.`,
@@ -219,6 +248,59 @@ export function useGuides() {
       linkLabel: t`Read the guide`,
     },
   } satisfies Record<MigrationPresetId, Guide>
+}
+
+export function useSignInResultText() {
+  const { t } = useLingui()
+  return (result: MigrationSignInResult, provider: string) =>
+    (
+      ({
+        connected: {
+          title: t`Signed in to ${provider}`,
+          text: t`Yuva can read the account now. Next, choose what to bring.`,
+        },
+        access_denied: {
+          title: t`The sign-in was declined`,
+          text: t`${provider} did not give Yuva access. Sign in again and allow access on ${provider}'s page.`,
+        },
+        expired: {
+          title: t`The sign-in expired`,
+          text: t`A sign-in must come back within 10 minutes and works once. Sign in again.`,
+        },
+        session_mismatch: {
+          title: t`The sign-in came back in another browser`,
+          text: t`It must end in the browser of the member who started it. Start it again here and finish it in this browser.`,
+        },
+        scope_too_broad: {
+          title: t`${provider} granted more than read access`,
+          text: t`Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again.`,
+        },
+        not_admin: {
+          title: t`Not an admin`,
+          text: t`The ${provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin.`,
+        },
+        plan_has_no_api: {
+          title: t`No API on this plan`,
+          text: t`This ${provider} account's plan has no API access, which Yuva reads through. A plan with API access is needed to move.`,
+        },
+        subdomain_not_found: {
+          title: t`Subdomain not found`,
+          text: t`No ${provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com.`,
+        },
+        account_mismatch: {
+          title: t`Another account`,
+          text: t`You signed in to another ${provider} account than the one this migration reads. Sign in to the same account to continue.`,
+        },
+        token_failed: {
+          title: t`${provider} refused the sign-in`,
+          text: t`Usually the client secret, or the redirect URL in the OAuth client, is wrong. Check both, then sign in again.`,
+        },
+        source_unreachable: {
+          title: t`${provider} could not be reached`,
+          text: t`Try again in a few minutes.`,
+        },
+      }) satisfies Record<MigrationSignInResult, { title: string; text: string }>
+    )[result]
 }
 
 export function useFormatText() {

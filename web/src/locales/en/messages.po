@@ -181,6 +181,14 @@ msgstr "{conversations} conversations, {messages} messages"
 msgid "{count, plural, =0 {No conversations} one {# conversation} other {# conversations}}"
 msgstr "{count, plural, =0 {No conversations} one {# conversation} other {# conversations}}"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{count, plural, one {# brand} other {# brands}}"
+msgstr "{count, plural, one {# brand} other {# brands}}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
+msgstr "{count, plural, one {# mailbox} other {# mailboxes}}"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
@@ -309,6 +317,10 @@ msgstr "{host} uses Yuva for its discussions. Sign in or create an account with 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 msgstr "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
+
+#: src/features/migrations/Wizard.tsx
+msgid "{imported} conversations"
+msgstr "{imported} conversations"
 
 #: src/features/migrations/CopyStep.tsx
 msgid "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
@@ -447,6 +459,10 @@ msgid "{percent}% · {sent} of {size}"
 msgstr "{percent}% · {sent} of {size}"
 
 #: src/features/migrations/parts.tsx
+msgid "{percent}%, {done} of {total} conversations"
+msgstr "{percent}%, {done} of {total} conversations"
+
+#: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "{percent}%, {done} of {total} messages"
 
@@ -463,8 +479,20 @@ msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in 
 msgstr "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
 
 #: src/features/migrations/text.ts
+msgid "{provider} could not be reached"
+msgstr "{provider} could not be reached"
+
+#: src/features/migrations/text.ts
 msgid "{provider} did not accept the user name or password. Check both, or create a new app password."
 msgstr "{provider} did not accept the user name or password. Check both, or create a new app password."
+
+#: src/features/migrations/text.ts
+msgid "{provider} did not give Yuva access. Sign in again and allow access on {provider}'s page."
+msgstr "{provider} did not give Yuva access. Sign in again and allow access on {provider}'s page."
+
+#: src/features/migrations/text.ts
+msgid "{provider} granted more than read access"
+msgstr "{provider} granted more than read access"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "{provider} keeps its copy, so the old mailbox stays complete."
@@ -478,9 +506,17 @@ msgstr "{provider} lets other apps in with an app password, a separate password 
 msgid "{provider} limits this account for now. Wait a while, then test again."
 msgstr "{provider} limits this account for now. Wait a while, then test again."
 
+#: src/features/migrations/text.ts
+msgid "{provider} refused the sign-in"
+msgstr "{provider} refused the sign-in"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "{provider} stopped accepting Yuva's sign-in. Enter a new app password; the migration continues where it stopped."
 msgstr "{provider} stopped accepting Yuva's sign-in. Enter a new app password; the migration continues where it stopped."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{provider} stopped accepting Yuva's sign-in. Sign in again to the same account; the migration continues where it stopped."
+msgstr "{provider} stopped accepting Yuva's sign-in. Sign in again to the same account; the migration continues where it stopped."
 
 #: src/features/migrations/text.ts
 msgid "{provider} wants an app password, not your account's password. Create one with the steps above."
@@ -771,6 +807,10 @@ msgstr "A file's content does not match its type. Check the file and try again."
 msgid "A former teammate"
 msgstr "A former teammate"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "A help-desk sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
+msgstr "A help-desk sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "A later message from the contact while nobody is assigned."
@@ -826,6 +866,10 @@ msgstr "A real address where you receive post"
 #: src/components/common/text.ts
 msgid "A reply was written in a discussion"
 msgstr "A reply was written in a discussion"
+
+#: src/features/migrations/text.ts
+msgid "A sign-in must come back within 10 minutes and works once. Sign in again."
+msgstr "A sign-in must come back within 10 minutes and works once. Sign in again."
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations and feedback sent from its pages."
@@ -941,6 +985,10 @@ msgstr "Add a website chat in the inbox settings"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Add an inbox"
 msgstr "Add an inbox"
+
+#: src/features/migrations/text.ts
+msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
+msgstr "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -1244,6 +1292,10 @@ msgstr "anonymous users allowed"
 msgid "anonymous visitors allowed"
 msgstr "anonymous visitors allowed"
 
+#: src/features/migrations/text.ts
+msgid "Another account"
+msgstr "Another account"
+
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
@@ -1336,9 +1388,17 @@ msgstr "App"
 msgid "App builds with the old key can no longer start sessions until you ship one with the new key. People already signed in keep their session."
 msgstr "App builds with the old key can no longer start sessions until you ship one with the new key. People already signed in keep their session."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "App ID"
+msgstr "App ID"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "App password"
 msgstr "App password"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "App Secret"
+msgstr "App Secret"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Appear online only in business hours"
@@ -1999,6 +2059,14 @@ msgstr "Clicked"
 msgid "clicked a link, roughly"
 msgstr "clicked a link, roughly"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Client identifier"
+msgstr "Client identifier"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Client secret"
+msgstr "Client secret"
+
 #: src/components/ui/dialog.tsx
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -2174,6 +2242,10 @@ msgstr "Connect {address}"
 msgid "Connect {clientName} to Yuva?"
 msgstr "Connect {clientName} to Yuva?"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Connect {provider}"
+msgstr "Connect {provider}"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connect an assistant"
@@ -2216,6 +2288,10 @@ msgstr "Connected to {address} · {folders} folders · {messages} messages"
 #: src/features/migrations/Wizard.tsx
 msgid "Connected to {host}"
 msgstr "Connected to {host}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Connected to {provider}"
+msgstr "Connected to {provider}"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
@@ -2296,6 +2372,7 @@ msgstr "Content"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/HelpdeskConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SourceStep.tsx
@@ -2305,6 +2382,10 @@ msgstr "Content"
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
 msgstr "Continue"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Continue the migration"
+msgstr "Continue the migration"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Continue with the newer mail"
@@ -2338,6 +2419,10 @@ msgstr "conversations"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Conversations"
 msgstr "Conversations"
+
+#: src/features/migrations/parts.tsx
+msgid "Conversations copied"
+msgstr "Conversations copied"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -2442,9 +2527,21 @@ msgstr "Create a key when your SMTP provider cannot sign with your domain or lea
 msgid "Create a new app password with access to mail over IMAP, named “Yuva”."
 msgstr "Create a new app password with access to mail over IMAP, named “Yuva”."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Create an app in Help Scout"
+msgstr "Create an app in Help Scout"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Create an OAuth client in Zendesk"
+msgstr "Create an OAuth client in Zendesk"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
 msgstr "Create draft"
+
+#: src/features/migrations/text.ts
+msgid "Create it, then copy its App ID and App Secret and paste them below."
+msgstr "Create it, then copy its App ID and App Secret and paste them below."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
@@ -3731,6 +3828,10 @@ msgstr "Help and feedback"
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "Help and feedback inside your iOS or Android app"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
+msgstr "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
+
 #: src/features/docs/DocsPages.tsx
 msgid "helpful"
 msgstr "helpful"
@@ -3883,6 +3984,7 @@ msgid "If {provider} mails a confirmation to that address, it arrives in this in
 msgstr "If {provider} mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/HelpdeskConnectStep.tsx
 msgid "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
 msgstr "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
 
@@ -4008,6 +4110,10 @@ msgstr "In Gmail, open Settings › See all settings › Forwarding and POP/IMAP
 #: src/features/migrations/text.ts
 msgid "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
 msgstr "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
+
+#: src/features/migrations/text.ts
+msgid "In Help Scout, open Your Profile › My Apps and choose Create App."
+msgstr "In Help Scout, open Your Profile › My Apps and choose Create App."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
@@ -4183,6 +4289,10 @@ msgstr "It is removed from every conversation."
 #: src/features/conversation/actions.ts
 msgid "It is yours now"
 msgstr "It is yours now"
+
+#: src/features/migrations/text.ts
+msgid "It must end in the browser of the member who started it. Start it again here and finish it in this browser."
+msgstr "It must end in the browser of the member who started it. Start it again here and finish it in this browser."
 
 #: src/components/common/text.ts
 msgid "It no longer exists or you cannot see it."
@@ -4971,6 +5081,10 @@ msgstr "Name"
 msgid "Name (optional)"
 msgstr "Name (optional)"
 
+#: src/features/migrations/text.ts
+msgid "Name it “Yuva” and enter the redirect URL below as its redirection URL."
+msgstr "Name it “Yuva” and enter the redirect URL below as its redirection URL."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify itself, keep its published identity. Click <0>Add</0>, then <1>Connect</1>."
 msgstr "Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify itself, keep its published identity. Click <0>Add</0>, then <1>Connect</1>."
@@ -5222,6 +5336,10 @@ msgstr "Next, choose where they go."
 msgid "No"
 msgstr "No"
 
+#: src/features/migrations/text.ts
+msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
+msgstr "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "no answer"
@@ -5229,6 +5347,10 @@ msgstr "no answer"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
 msgstr "No API keys yet."
+
+#: src/features/migrations/text.ts
+msgid "No API on this plan"
+msgstr "No API on this plan"
 
 #: src/features/migrations/text.ts
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
@@ -5569,6 +5691,10 @@ msgstr "Not a secret: it ships inside your app. Native apps send no origin, so t
 #: src/features/broadcasts/Import.tsx
 msgid "Not a valid e-mail address"
 msgstr "Not a valid e-mail address"
+
+#: src/features/migrations/text.ts
+msgid "Not an admin"
+msgstr "Not an admin"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -6135,6 +6261,10 @@ msgid "or"
 msgstr "or"
 
 #: src/features/migrations/SourceStep.tsx
+msgid "Or move from a help desk"
+msgstr "Or move from a help desk"
+
+#: src/features/migrations/SourceStep.tsx
 msgid "Or pick your provider"
 msgstr "Or pick your provider"
 
@@ -6278,6 +6408,10 @@ msgstr "Password set"
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
 msgstr "Paste it before the closing body tag of every page that should show the chat."
+
+#: src/features/migrations/text.ts
+msgid "Paste them below with your subdomain. Yuva asks only for the scope read and accepts nothing more."
+msgstr "Paste them below with your subdomain. Yuva asks only for the scope read and accepts nothing more."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Paste this before the closing body tag of your pages"
@@ -6858,9 +6992,17 @@ msgstr "Reconnect"
 msgid "Reconnect {address}"
 msgstr "Reconnect {address}"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Reconnect {provider}"
+msgstr "Reconnect {provider}"
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Redeliver"
 msgstr "Redeliver"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Redirect URL"
+msgstr "Redirect URL"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Redo"
@@ -7284,6 +7426,10 @@ msgstr "Save"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "Save draft"
+
+#: src/features/migrations/text.ts
+msgid "Save it and copy its identifier and the secret, which Zendesk shows only once."
+msgstr "Save it and copy its identifier and the secret, which Zendesk shows only once."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
@@ -7873,6 +8019,14 @@ msgstr "Shown to your team and to customers you reply to"
 msgid "Sign in"
 msgstr "Sign in"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in again only to change the client or the account's access."
+msgstr "Sign in again only to change the client or the account's access."
+
+#: src/features/migrations/text.ts
+msgid "Sign in as a user who sees every mailbox you want to move."
+msgstr "Sign in as a user who sees every mailbox you want to move."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
@@ -7897,9 +8051,17 @@ msgstr "Sign in to your Apple Account and open Sign-In and Security › App-Spec
 msgid "Sign in to Yuva"
 msgstr "Sign in to Yuva"
 
+#: src/features/migrations/text.ts
+msgid "Sign in to Zendesk as an admin and open Admin Center › Apps and integrations › APIs › OAuth clients."
+msgstr "Sign in to Zendesk as an admin and open Admin Center › Apps and integrations › APIs › OAuth clients."
+
 #: src/features/auth/SignInForm.tsx
 msgid "Sign in with a passkey"
 msgstr "Sign in with a passkey"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in with Help Scout"
+msgstr "Sign in with Help Scout"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Sign in with the mailbox's user name and password."
@@ -7908,6 +8070,10 @@ msgstr "Sign in with the mailbox's user name and password."
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Sign in with your device's fingerprint, face or screen lock instead of a code."
 msgstr "Sign in with your device's fingerprint, face or screen lock instead of a code."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in with Zendesk"
+msgstr "Sign in with Zendesk"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in:"
@@ -7936,6 +8102,14 @@ msgstr "Signed HTTP calls to your backend for this inbox's conversations, messag
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend when conversations, messages, feedback or contacts change. Endpoints of the workspace receive every inbox; inbox endpoints only their inbox."
 msgstr "Signed HTTP calls to your backend when conversations, messages, feedback or contacts change. Endpoints of the workspace receive every inbox; inbox endpoints only their inbox."
+
+#: src/features/migrations/text.ts
+msgid "Signed in to {provider}"
+msgstr "Signed in to {provider}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Signed in to {provider} again"
+msgstr "Signed in to {provider} again"
 
 #: src/components/common/text.ts
 msgid "Signed-in user"
@@ -8223,9 +8397,21 @@ msgstr "Stop taking new subscribers."
 msgid "Storage"
 msgstr "Storage"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Stored encrypted and never shown again, not even to you."
+msgstr "Stored encrypted and never shown again, not even to you."
+
 #: src/features/contact/MergePreview.tsx
 msgid "Struck-out values are not taken: this contact keeps its own value for those keys."
 msgstr "Struck-out values are not taken: this contact keeps its own value for those keys."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Subdomain"
+msgstr "Subdomain"
+
+#: src/features/migrations/text.ts
+msgid "Subdomain not found"
+msgstr "Subdomain not found"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -8294,6 +8480,7 @@ msgstr "Summary"
 msgid "Sunday"
 msgstr "Sunday"
 
+#: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Support address"
@@ -8442,9 +8629,17 @@ msgstr "That was the sixth check this hour. You can check again at {retry}."
 msgid "The .mbox file from Takeout › Mail, unzipped."
 msgstr "The .mbox file from Takeout › Mail, unzipped."
 
+#: src/features/migrations/text.ts
+msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
+msgstr "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "The address bounced or complained"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "The address your customers write to. Conversations go into the inbox whose e-mail channel receives it, unless the Map step sends a brand or mailbox elsewhere."
+msgstr "The address your customers write to. Conversations go into the inbox whose e-mail channel receives it, unless the Map step sends a brand or mailbox elsewhere."
 
 #: src/features/setup/previews.tsx
 msgid "The app logs me out after the update."
@@ -8919,6 +9114,19 @@ msgstr "The server’s operator has your request to send broadcasts. You can sch
 msgid "The server’s operator reads this before letting the workspace send. New workspaces start with a small daily limit that grows with every clean day."
 msgstr "The server’s operator reads this before letting the workspace send. New workspaces start with a small daily limit that grows with every clean day."
 
+#: src/features/migrations/text.ts
+msgid "The sign-in came back in another browser"
+msgstr "The sign-in came back in another browser"
+
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/text.ts
+msgid "The sign-in expired"
+msgstr "The sign-in expired"
+
+#: src/features/migrations/text.ts
+msgid "The sign-in was declined"
+msgstr "The sign-in was declined"
+
 #: src/app/UserMenu.tsx
 msgid "The status was not changed. Try again."
 msgstr "The status was not changed. Try again."
@@ -9047,6 +9255,14 @@ msgstr "They get no more mail from this list, and it is recorded that the team u
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "They signed up on our website and confirmed their address."
 msgstr "They signed up on our website and confirmed their address."
+
+#: src/features/migrations/text.ts
+msgid "This {provider} account's plan has no API access, which Yuva reads through."
+msgstr "This {provider} account's plan has no API access, which Yuva reads through."
+
+#: src/features/migrations/text.ts
+msgid "This {provider} account's plan has no API access, which Yuva reads through. A plan with API access is needed to move."
+msgstr "This {provider} account's plan has no API access, which Yuva reads through. A plan with API access is needed to move."
 
 #: src/components/common/text.ts
 msgid "This address got as many confirmation mails as allowed for now. Try again tomorrow."
@@ -9356,6 +9572,10 @@ msgstr "Thursday"
 msgid "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
 msgstr "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Tickets come over with their replies, notes, tags, status and assignee. Enter your support address above."
+msgstr "Tickets come over with their replies, notes, tags, status and assignee. Enter your support address above."
+
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Time"
@@ -9447,6 +9667,10 @@ msgstr "Trust this certificate for this server. Do this only if it is your own s
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Try again"
+
+#: src/features/migrations/text.ts
+msgid "Try again in a few minutes."
+msgstr "Try again in a few minutes."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Trying again"
@@ -9799,6 +10023,10 @@ msgstr "Username"
 #: src/features/setup/previews.tsx
 msgid "Usually replies within a day"
 msgstr "Usually replies within a day"
+
+#: src/features/migrations/text.ts
+msgid "Usually the client secret, or the redirect URL in the OAuth client, is wrong. Check both, then sign in again."
+msgstr "Usually the client secret, or the redirect URL in the OAuth client, is wrong. Check both, then sign in again."
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Usually your company or team; you can change it later"
@@ -10407,6 +10635,10 @@ msgstr "You leave every workspace and lose your sign-ins, passkeys and notificat
 msgid "You replied"
 msgstr "You replied"
 
+#: src/features/migrations/text.ts
+msgid "You signed in to another {provider} account than the one this migration reads. Sign in to the same account to continue."
+msgstr "You signed in to another {provider} account than the one this migration reads. Sign in to the same account to continue."
+
 #: src/features/account/AccountPage.tsx
 msgid "You started it"
 msgstr "You started it"
@@ -10518,6 +10750,10 @@ msgstr "Your role in this workspace cannot give any of the access this app asks 
 msgid "Your session has ended. Sign in again."
 msgstr "Your session has ended. Sign in again."
 
+#: src/features/migrations/Wizard.tsx
+msgid "Your support address"
+msgstr "Your support address"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Your team"
 msgstr "Your team"
@@ -10538,6 +10774,18 @@ msgstr "Your Yuva account"
 #: src/features/auth/AuthLayout.tsx
 msgid "Yuva {version}"
 msgstr "Yuva {version}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva asks for the scope {scopes} and refuses a sign-in that grants more."
+msgstr "Yuva asks for the scope {scopes} and refuses a sign-in that grants more."
+
+#: src/features/migrations/text.ts
+msgid "Yuva can read the account now. Next, choose what to bring."
+msgstr "Yuva can read the account now. Next, choose what to bring."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva deletes its token when the migration ends."
+msgstr "Yuva deletes its token when the migration ends."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva DKIM"
@@ -10568,8 +10816,16 @@ msgid "Yuva on this server is invite only. Ask your team for an invitation."
 msgstr "Yuva on this server is invite only. Ask your team for an invitation."
 
 #: src/features/migrations/Wizard.tsx
+msgid "Yuva only reads the help desk. History arrives quietly: no notifications, no auto-replies."
+msgstr "Yuva only reads the help desk. History arrives quietly: no notifications, no auto-replies."
+
+#: src/features/migrations/Wizard.tsx
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
+msgstr "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
@@ -10583,6 +10839,10 @@ msgstr "Yuva reads only the file you upload and deletes it when the migration en
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva sends a signed POST request with a JSON body for every event you pick."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva signs in to {provider} with an OAuth client you create in your own account, and only reads."
+msgstr "Yuva signs in to {provider} with an OAuth client you create in your own account, and only reads."
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
 msgstr "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
@@ -10590,6 +10850,10 @@ msgstr "Yuva signs this channel’s broadcasts, tests, confirmation and welcome 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
 msgstr "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
+
+#: src/features/migrations/text.ts
+msgid "Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again."
+msgstr "Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again."
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."

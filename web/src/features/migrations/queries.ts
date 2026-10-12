@@ -8,6 +8,7 @@ import {
   type MigrationCredentialsInput,
   type MigrationMboxFormat,
   type MigrationPresetId,
+  type MigrationSignInStart,
   type MigrationSource,
   type MigrationState,
   type MigrationUpdate,
@@ -154,6 +155,13 @@ export function useTestConnection(id: string) {
       put(r.migration)
       void qc.invalidateQueries({ queryKey: keys.migrationFolders(ws, id) })
     },
+  })
+}
+
+export function useStartSignIn(id: string) {
+  return useMutation({
+    mutationFn: (body: MigrationSignInStart) =>
+      unwrap(api.POST("/v1/migrations/{migrationId}/sign-in", { params: { path: { migrationId: id } }, body })),
   })
 }
 

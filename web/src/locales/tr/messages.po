@@ -181,6 +181,14 @@ msgstr "{conversations} konuşma, {messages} mesaj"
 msgid "{count, plural, =0 {No conversations} one {# conversation} other {# conversations}}"
 msgstr "{count, plural, =0 {Konuşma yok} one {# konuşma} other {# konuşma}}"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{count, plural, one {# brand} other {# brands}}"
+msgstr "{count, plural, one {# marka} other {# marka}}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{count, plural, one {# mailbox} other {# mailboxes}}"
+msgstr "{count, plural, one {# posta kutusu} other {# posta kutusu}}"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "{count, plural, one {It goes to # recipient.} other {It goes to # recipients.}}"
 msgstr "{count, plural, one {# alıcıya gidecek.} other {# alıcıya gidecek.}}"
@@ -309,6 +317,10 @@ msgstr "{host}, tartışmaları için Yuva'yı kullanıyor. E-posta adresinizle 
 #: src/features/conversation/ConversationStatus.tsx
 msgid "{hours, plural, one {Waiting for # hour} other {Waiting for # hours}}"
 msgstr "{hours, plural, one {# saattir bekliyor} other {# saattir bekliyor}}"
+
+#: src/features/migrations/Wizard.tsx
+msgid "{imported} conversations"
+msgstr "{imported} konuşma"
 
 #: src/features/migrations/CopyStep.tsx
 msgid "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
@@ -447,6 +459,10 @@ msgid "{percent}% · {sent} of {size}"
 msgstr "%{percent} · {size} içinden {sent}"
 
 #: src/features/migrations/parts.tsx
+msgid "{percent}%, {done} of {total} conversations"
+msgstr "%{percent}, {total} konuşmanın {done} tanesi"
+
+#: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "%{percent}, {total} mesajın {done} tanesi"
 
@@ -463,8 +479,20 @@ msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in 
 msgstr "{provider}, IMAP üzerinden şifre kabul etmiyor. Bu posta kutusu “Microsoft ile oturum aç” gerektiriyor; bu seçenek daha sonra gelecek."
 
 #: src/features/migrations/text.ts
+msgid "{provider} could not be reached"
+msgstr "{provider} hesabına ulaşılamadı"
+
+#: src/features/migrations/text.ts
 msgid "{provider} did not accept the user name or password. Check both, or create a new app password."
 msgstr "{provider} kullanıcı adını ya da şifreyi kabul etmedi. İkisini de kontrol edin ya da yeni bir uygulama şifresi oluşturun."
+
+#: src/features/migrations/text.ts
+msgid "{provider} did not give Yuva access. Sign in again and allow access on {provider}'s page."
+msgstr "{provider}, Yuva'ya erişim vermedi. Yeniden oturum açın ve {provider} sayfasında erişime izin verin."
+
+#: src/features/migrations/text.ts
+msgid "{provider} granted more than read access"
+msgstr "{provider} okumadan fazlasına izin verdi"
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "{provider} keeps its copy, so the old mailbox stays complete."
@@ -478,9 +506,17 @@ msgstr "{provider}, diğer uygulamaların bir uygulama şifresiyle, yani yalnız
 msgid "{provider} limits this account for now. Wait a while, then test again."
 msgstr "{provider} bu hesabı şimdilik sınırlıyor. Biraz bekleyip yeniden deneyin."
 
+#: src/features/migrations/text.ts
+msgid "{provider} refused the sign-in"
+msgstr "{provider} oturum açmayı reddetti"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "{provider} stopped accepting Yuva's sign-in. Enter a new app password; the migration continues where it stopped."
 msgstr "{provider}, Yuva'nın oturum açmasını kabul etmez oldu. Yeni bir uygulama şifresi girin; taşıma kaldığı yerden devam eder."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "{provider} stopped accepting Yuva's sign-in. Sign in again to the same account; the migration continues where it stopped."
+msgstr "{provider}, Yuva'nın oturum açmasını kabul etmez oldu. Aynı hesapla yeniden oturum açın; taşıma kaldığı yerden devam eder."
 
 #: src/features/migrations/text.ts
 msgid "{provider} wants an app password, not your account's password. Create one with the steps above."
@@ -771,6 +807,10 @@ msgstr "Bir dosyanın içeriği türüyle uyuşmuyor. Dosyayı kontrol edip yeni
 msgid "A former teammate"
 msgstr "Eski bir ekip arkadaşı"
 
+#: src/features/migrations/MigrationsPage.tsx
+msgid "A help-desk sign-in must come back within 10 minutes and works once. Open the migration and sign in again."
+msgstr "Yardım masası oturum açma işlemi 10 dakika içinde geri dönmeli ve yalnızca bir kez kullanılabilir. Taşımayı açıp yeniden oturum açın."
+
 #: src/features/settings/notifications/events.ts
 msgid "A later message from the contact while nobody is assigned."
 msgstr "Kimse atanmamışken kişiden gelen sonraki bir mesaj."
@@ -826,6 +866,10 @@ msgstr "Posta aldığınız gerçek bir adres"
 #: src/components/common/text.ts
 msgid "A reply was written in a discussion"
 msgstr "Bir tartışmaya yanıt yazıldı"
+
+#: src/features/migrations/text.ts
+msgid "A sign-in must come back within 10 minutes and works once. Sign in again."
+msgstr "Oturum açma işlemi 10 dakika içinde geri dönmeli ve yalnızca bir kez kullanılabilir. Yeniden oturum açın."
 
 #: src/features/inbox/SourceFilter.tsx
 msgid "A site shows the conversations and feedback sent from its pages."
@@ -941,6 +985,10 @@ msgstr "Gelen kutusu ayarlarından bir web sitesi sohbeti ekleyin"
 #: src/features/settings/SettingsColumn.tsx
 msgid "Add an inbox"
 msgstr "Gelen kutusu ekle"
+
+#: src/features/migrations/text.ts
+msgid "Add an OAuth client named “Yuva”, as a confidential client, and enter the redirect URL below as its redirect URL."
+msgstr "“Yuva” adında, gizli (confidential) türde bir OAuth istemcisi ekleyin ve yönlendirme URL'si olarak aşağıdaki adresi girin."
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -1244,6 +1292,10 @@ msgstr "anonim kullanıcılara açık"
 msgid "anonymous visitors allowed"
 msgstr "anonim ziyaretçilere açık"
 
+#: src/features/migrations/text.ts
+msgid "Another account"
+msgstr "Başka bir hesap"
+
 #: src/features/settings/channels/email/ForwardingAddressField.tsx
 msgid "Another address this channel receives mail at. Forward a mailbox here, for example {own} at its provider; forwarding to {own} itself would loop."
 msgstr "Bu kanalın e-posta aldığı başka bir adres. Bir posta kutusunu, örneğin {own} adresini, sağlayıcısında buraya yönlendirin; {own} adresinin kendisine yönlendirmek döngüye yol açar."
@@ -1336,9 +1388,17 @@ msgstr "Uygulama"
 msgid "App builds with the old key can no longer start sessions until you ship one with the new key. People already signed in keep their session."
 msgstr "Eski anahtarlı uygulama sürümleri, yeni anahtarlı bir sürüm yayımlayana kadar oturum başlatamaz. Oturumu açık olanların oturumu sürer."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "App ID"
+msgstr "App ID"
+
 #: src/features/migrations/ConnectStep.tsx
 msgid "App password"
 msgstr "Uygulama şifresi"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "App Secret"
+msgstr "App Secret"
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Appear online only in business hours"
@@ -1999,6 +2059,14 @@ msgstr "Tıkladı"
 msgid "clicked a link, roughly"
 msgstr "bir bağlantıya tıkladı, yaklaşık"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Client identifier"
+msgstr "İstemci kimliği"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Client secret"
+msgstr "İstemci gizli anahtarı"
+
 #: src/components/ui/dialog.tsx
 #: src/components/ui/sheet.tsx
 #: src/features/contact/ContactSheet.tsx
@@ -2174,6 +2242,10 @@ msgstr "{address} adresini bağlayın"
 msgid "Connect {clientName} to Yuva?"
 msgstr "{clientName} Yuva'ya bağlansın mı?"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Connect {provider}"
+msgstr "{provider} hesabını bağlayın"
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "Connect an assistant"
@@ -2216,6 +2288,10 @@ msgstr "{address} adresine bağlanıldı · {folders} klasör · {messages} mesa
 #: src/features/migrations/Wizard.tsx
 msgid "Connected to {host}"
 msgstr "{host} sunucusuna bağlı"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Connected to {provider}"
+msgstr "{provider} hesabına bağlanıldı"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Connected to {storedHost}. Enter the password again only to change it."
@@ -2296,6 +2372,7 @@ msgstr "İçerik"
 #: src/features/broadcasts/Import.tsx
 #: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/HelpdeskConnectStep.tsx
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SourceStep.tsx
@@ -2305,6 +2382,10 @@ msgstr "İçerik"
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
 msgstr "Devam"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Continue the migration"
+msgstr "Taşımaya devam et"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Continue with the newer mail"
@@ -2338,6 +2419,10 @@ msgstr "konuşma"
 #: src/features/migrations/ReviewStep.tsx
 msgid "Conversations"
 msgstr "Konuşmalar"
+
+#: src/features/migrations/parts.tsx
+msgid "Conversations copied"
+msgstr "Kopyalanan konuşmalar"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
@@ -2442,9 +2527,21 @@ msgstr "SMTP sağlayıcınız alan adınızla imzalayamıyorsa ya da abonelikten
 msgid "Create a new app password with access to mail over IMAP, named “Yuva”."
 msgstr "IMAP ile postalara erişebilen, adı “Yuva” olan yeni bir uygulama şifresi oluşturun."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Create an app in Help Scout"
+msgstr "Help Scout'ta bir uygulama oluşturun"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Create an OAuth client in Zendesk"
+msgstr "Zendesk'te bir OAuth istemcisi oluşturun"
+
 #: src/features/broadcasts/NewBroadcastDialog.tsx
 msgid "Create draft"
 msgstr "Taslak oluştur"
+
+#: src/features/migrations/text.ts
+msgid "Create it, then copy its App ID and App Secret and paste them below."
+msgstr "Oluşturun, ardından App ID ve App Secret değerlerini kopyalayıp aşağıya yapıştırın."
 
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/channels/email/Deliverability.tsx
@@ -3731,6 +3828,10 @@ msgstr "Yardım ve geri bildirim"
 msgid "Help and feedback inside your iOS or Android app"
 msgstr "iOS ya da Android uygulamanızın içinde yardım ve geri bildirim"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Help Scout has no read-only permission, so the app could change data; Yuva's connection refuses every request that is not a read."
+msgstr "Help Scout'ta salt okunur bir izin yok, bu yüzden uygulama verileri değiştirebilir; Yuva'nın bağlantısı okuma olmayan her isteği reddeder."
+
 #: src/features/docs/DocsPages.tsx
 msgid "helpful"
 msgstr "yararlı"
@@ -3883,6 +3984,7 @@ msgid "If {provider} mails a confirmation to that address, it arrives in this in
 msgstr "{provider} bu adrese bir onay e-postası gönderirse bu gelen kutusuna bir konuşma olarak gelir; onu orada açın."
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/HelpdeskConnectStep.tsx
 msgid "If an assistant sent you here, you can go back to it now, or choose what to bring yourself."
 msgstr "Sizi buraya bir asistan gönderdiyse artık ona dönebilirsiniz; ya da neyin getirileceğini kendiniz seçin."
 
@@ -4008,6 +4110,10 @@ msgstr "Gmail'de Ayarlar › Tüm ayarları göster › Yönlendirme ve POP/IMAP
 #: src/features/migrations/text.ts
 msgid "In GMX, open E-mail settings › POP3 & IMAP and allow access over IMAP."
 msgstr "GMX'te E-posta ayarları › POP3 & IMAP bölümünü açıp IMAP erişimine izin verin."
+
+#: src/features/migrations/text.ts
+msgid "In Help Scout, open Your Profile › My Apps and choose Create App."
+msgstr "Help Scout'ta Your Profile › My Apps sayfasını açın ve Create App'i seçin."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding."
@@ -4183,6 +4289,10 @@ msgstr "Tüm konuşmalardan kaldırılır."
 #: src/features/conversation/actions.ts
 msgid "It is yours now"
 msgstr "Artık senin"
+
+#: src/features/migrations/text.ts
+msgid "It must end in the browser of the member who started it. Start it again here and finish it in this browser."
+msgstr "İşlem, onu başlatan üyenin tarayıcısında bitmeli. Burada yeniden başlatın ve bu tarayıcıda tamamlayın."
 
 #: src/components/common/text.ts
 msgid "It no longer exists or you cannot see it."
@@ -4971,6 +5081,10 @@ msgstr "Ad"
 msgid "Name (optional)"
 msgstr "Ad (isteğe bağlı)"
 
+#: src/features/migrations/text.ts
+msgid "Name it “Yuva” and enter the redirect URL below as its redirection URL."
+msgstr "Adını “Yuva” koyun ve yönlendirme URL'si (Redirection URL) olarak aşağıdaki adresi girin."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Name it Yuva, paste the server URL and leave authentication on signing in. If Claude asks how to identify itself, keep its published identity. Click <0>Add</0>, then <1>Connect</1>."
 msgstr "Adını Yuva koyun, sunucu adresini yapıştırın ve kimlik doğrulamayı oturum açma olarak bırakın. Claude kendini nasıl tanıtacağını sorarsa yayımlanmış kimliğini seçili bırakın. <0>Add</0>'e, ardından <1>Connect</1>'e tıklayın."
@@ -5222,6 +5336,10 @@ msgstr "Şimdi nereye gideceklerini seçin."
 msgid "No"
 msgstr "Hayır"
 
+#: src/features/migrations/text.ts
+msgid "No {provider} account has that subdomain. Check it in your address: acme in acme.zendesk.com."
+msgstr "Bu alt alan adına sahip bir {provider} hesabı yok. Adresinizden kontrol edin: acme.zendesk.com içindeki acme."
+
 #: src/features/settings/webhooks/parts.tsx
 msgid "no answer"
 msgstr "yanıt yok"
@@ -5229,6 +5347,10 @@ msgstr "yanıt yok"
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 msgid "No API keys yet."
 msgstr "Henüz API anahtarı yok."
+
+#: src/features/migrations/text.ts
+msgid "No API on this plan"
+msgstr "Bu planda API yok"
 
 #: src/features/migrations/text.ts
 msgid "No App passwords page? Your admin must allow 2-Step Verification and IMAP in the Google Admin console."
@@ -5569,6 +5691,10 @@ msgstr "Gizli değildir: uygulamanızın içinde dağıtılır. Yerel uygulamala
 #: src/features/broadcasts/Import.tsx
 msgid "Not a valid e-mail address"
 msgstr "Geçerli bir e-posta adresi değil"
+
+#: src/features/migrations/text.ts
+msgid "Not an admin"
+msgstr "Yönetici değil"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/setup/AddChannelStep.tsx
@@ -6135,6 +6261,10 @@ msgid "or"
 msgstr "veya"
 
 #: src/features/migrations/SourceStep.tsx
+msgid "Or move from a help desk"
+msgstr "Ya da bir yardım masasından taşıyın"
+
+#: src/features/migrations/SourceStep.tsx
 msgid "Or pick your provider"
 msgstr "Ya da sağlayıcınızı seçin"
 
@@ -6278,6 +6408,10 @@ msgstr "Kayıtlı"
 #: src/features/settings/channels/chat/ChatInstall.tsx
 msgid "Paste it before the closing body tag of every page that should show the chat."
 msgstr "Sohbetin görüneceği her sayfada kapanış body etiketinden önce yapıştırın."
+
+#: src/features/migrations/text.ts
+msgid "Paste them below with your subdomain. Yuva asks only for the scope read and accepts nothing more."
+msgstr "Bunları alt alan adınızla birlikte aşağıya yapıştırın. Yuva yalnızca read kapsamını ister ve fazlasını kabul etmez."
 
 #: src/features/setup/InstallStep.tsx
 msgid "Paste this before the closing body tag of your pages"
@@ -6858,9 +6992,17 @@ msgstr "Yeniden bağlan"
 msgid "Reconnect {address}"
 msgstr "{address} adresini yeniden bağlayın"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Reconnect {provider}"
+msgstr "{provider} hesabını yeniden bağlayın"
+
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Redeliver"
 msgstr "Yeniden gönder"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Redirect URL"
+msgstr "Yönlendirme URL'si"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Redo"
@@ -7284,6 +7426,10 @@ msgstr "Kaydet"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Save draft"
 msgstr "Taslağı kaydet"
+
+#: src/features/migrations/text.ts
+msgid "Save it and copy its identifier and the secret, which Zendesk shows only once."
+msgstr "Kaydedin; kimliği ve Zendesk'in yalnızca bir kez gösterdiği gizli anahtarı kopyalayın."
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Save now and keep a version"
@@ -7873,6 +8019,14 @@ msgstr "Ekibiniz ve yanıt verdiğiniz müşteriler görür"
 msgid "Sign in"
 msgstr "Giriş yap"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in again only to change the client or the account's access."
+msgstr "Yalnızca istemciyi ya da hesabın erişimini değiştirmek için yeniden oturum açın."
+
+#: src/features/migrations/text.ts
+msgid "Sign in as a user who sees every mailbox you want to move."
+msgstr "Taşımak istediğiniz her posta kutusunu gören bir kullanıcıyla oturum açın."
+
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in from the client. It finds everything from the URL: OAuth 2.1 with PKCE, registering itself automatically or with a Client ID Metadata Document."
 msgstr "İstemciden oturum açın. İstemci her şeyi adresten bulur: PKCE ile OAuth 2.1; kendini otomatik olarak ya da bir Client ID Metadata Document ile kaydeder."
@@ -7897,9 +8051,17 @@ msgstr "Apple Hesabınıza girin ve Giriş ve Güvenlik › Uygulamaya Özel Par
 msgid "Sign in to Yuva"
 msgstr "Yuva'ya giriş yapın"
 
+#: src/features/migrations/text.ts
+msgid "Sign in to Zendesk as an admin and open Admin Center › Apps and integrations › APIs › OAuth clients."
+msgstr "Zendesk'e yönetici olarak girin ve Admin Center › Apps and integrations › APIs › OAuth clients sayfasını açın."
+
 #: src/features/auth/SignInForm.tsx
 msgid "Sign in with a passkey"
 msgstr "Geçiş anahtarıyla giriş yap"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in with Help Scout"
+msgstr "Help Scout ile oturum aç"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Sign in with the mailbox's user name and password."
@@ -7908,6 +8070,10 @@ msgstr "Posta kutusunun kullanıcı adı ve şifresiyle oturum açın."
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Sign in with your device's fingerprint, face or screen lock instead of a code."
 msgstr "Kod yerine cihazınızın parmak izi, yüz tanıma veya ekran kilidiyle giriş yapın."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Sign in with Zendesk"
+msgstr "Zendesk ile oturum aç"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Sign in:"
@@ -7936,6 +8102,14 @@ msgstr "Bu gelen kutusunun konuşmaları, mesajları ve geri bildirimleri için 
 #: src/features/settings/webhooks/WebhookList.tsx
 msgid "Signed HTTP calls to your backend when conversations, messages, feedback or contacts change. Endpoints of the workspace receive every inbox; inbox endpoints only their inbox."
 msgstr "Konuşmalar, mesajlar, geri bildirimler veya kişiler değiştiğinde arka ucunuza imzalı HTTP çağrıları. Çalışma alanı uç noktaları tüm gelen kutularını, gelen kutusu uç noktaları yalnızca kendi kutusunu alır."
+
+#: src/features/migrations/text.ts
+msgid "Signed in to {provider}"
+msgstr "{provider} hesabında oturum açıldı"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Signed in to {provider} again"
+msgstr "{provider} hesabında yeniden oturum açıldı"
 
 #: src/components/common/text.ts
 msgid "Signed-in user"
@@ -8223,9 +8397,21 @@ msgstr "Yeni abone almayı durdurun."
 msgid "Storage"
 msgstr "Depolama"
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Stored encrypted and never shown again, not even to you."
+msgstr "Şifrelenmiş olarak saklanır ve bir daha, size bile gösterilmez."
+
 #: src/features/contact/MergePreview.tsx
 msgid "Struck-out values are not taken: this contact keeps its own value for those keys."
 msgstr "Üstü çizili değerler alınmaz: bu anahtarlarda bu kişinin kendi değeri kalır."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Subdomain"
+msgstr "Alt alan adı"
+
+#: src/features/migrations/text.ts
+msgid "Subdomain not found"
+msgstr "Alt alan adı bulunamadı"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/Composer.tsx
@@ -8294,6 +8480,7 @@ msgstr "Özet"
 msgid "Sunday"
 msgstr "Pazar"
 
+#: src/features/migrations/SourceStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/setup/AddChannelStep.tsx
 msgid "Support address"
@@ -8442,9 +8629,17 @@ msgstr "Bu saatteki altıncı denetimdi. {retry} itibarıyla yeniden denetleyebi
 msgid "The .mbox file from Takeout › Mail, unzipped."
 msgstr "Takeout › Mail klasöründeki, zip'ten çıkarılmış .mbox dosyası."
 
+#: src/features/migrations/text.ts
+msgid "The {provider} user you signed in with is not an admin, and only admins can read every ticket. Sign in again as an admin."
+msgstr "Oturum açtığınız {provider} kullanıcısı yönetici değil ve tüm talepleri yalnızca yöneticiler okuyabilir. Yönetici olarak yeniden oturum açın."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "Adres geri döndü ya da şikâyet etti"
+
+#: src/features/migrations/SourceStep.tsx
+msgid "The address your customers write to. Conversations go into the inbox whose e-mail channel receives it, unless the Map step sends a brand or mailbox elsewhere."
+msgstr "Müşterilerinizin yazdığı adres. Eşleştirme adımında bir marka ya da posta kutusu başka yere gönderilmedikçe konuşmalar, bu adresi alan e-posta kanalının gelen kutusuna gider."
 
 #: src/features/setup/previews.tsx
 msgid "The app logs me out after the update."
@@ -8919,6 +9114,19 @@ msgstr "Bülten gönderme talebiniz sunucu yöneticisinde. Onaylandığında bü
 msgid "The server’s operator reads this before letting the workspace send. New workspaces start with a small daily limit that grows with every clean day."
 msgstr "Sunucu yöneticisi, çalışma alanının göndermesine izin vermeden önce bunu okur. Yeni çalışma alanları küçük bir günlük sınırla başlar; sınır sorunsuz geçen her günle büyür."
 
+#: src/features/migrations/text.ts
+msgid "The sign-in came back in another browser"
+msgstr "Oturum açma başka bir tarayıcıda döndü"
+
+#: src/features/migrations/MigrationsPage.tsx
+#: src/features/migrations/text.ts
+msgid "The sign-in expired"
+msgstr "Oturum açmanın süresi doldu"
+
+#: src/features/migrations/text.ts
+msgid "The sign-in was declined"
+msgstr "Oturum açma reddedildi"
+
 #: src/app/UserMenu.tsx
 msgid "The status was not changed. Try again."
 msgstr "Durum değiştirilemedi. Tekrar deneyin."
@@ -9047,6 +9255,14 @@ msgstr "Bu listeden artık e-posta almaz ve aboneliğini ekibin sonlandırdığ�
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "They signed up on our website and confirmed their address."
 msgstr "Sitemizde kaydolup adreslerini onayladılar."
+
+#: src/features/migrations/text.ts
+msgid "This {provider} account's plan has no API access, which Yuva reads through."
+msgstr "Bu {provider} hesabının planında, Yuva'nın okumak için kullandığı API erişimi yok."
+
+#: src/features/migrations/text.ts
+msgid "This {provider} account's plan has no API access, which Yuva reads through. A plan with API access is needed to move."
+msgstr "Bu {provider} hesabının planında, Yuva'nın okumak için kullandığı API erişimi yok. Taşımak için API erişimi olan bir plan gerekir."
 
 #: src/components/common/text.ts
 msgid "This address got as many confirmation mails as allowed for now. Try again tomorrow."
@@ -9356,6 +9572,10 @@ msgstr "Perşembe"
 msgid "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
 msgstr "Ekibinizin yazdığı adresleri işaretleyin; böylece bu adreslerden gelen e-postalar müşteri e-postası olarak aktarılmaz."
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Tickets come over with their replies, notes, tags, status and assignee. Enter your support address above."
+msgstr "Talepler yanıtları, notları, etiketleri, durumu ve atanan kişiyle birlikte gelir. Destek adresinizi yukarıya girin."
+
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Time"
@@ -9447,6 +9667,10 @@ msgstr "Bu sunucu için bu sertifikaya güven. Bunu yalnızca sunucu sizinse ve 
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Yeniden dene"
+
+#: src/features/migrations/text.ts
+msgid "Try again in a few minutes."
+msgstr "Birkaç dakika sonra yeniden deneyin."
 
 #: src/features/migrations/UploadStep.tsx
 msgid "Trying again"
@@ -9799,6 +10023,10 @@ msgstr "Kullanıcı adı"
 #: src/features/setup/previews.tsx
 msgid "Usually replies within a day"
 msgstr "Genellikle bir gün içinde yanıtlar"
+
+#: src/features/migrations/text.ts
+msgid "Usually the client secret, or the redirect URL in the OAuth client, is wrong. Check both, then sign in again."
+msgstr "Genellikle istemci gizli anahtarı ya da OAuth istemcisindeki yönlendirme URL'si yanlıştır. İkisini de kontrol edip yeniden oturum açın."
 
 #: src/features/auth/CreateWorkspace.tsx
 msgid "Usually your company or team; you can change it later"
@@ -10407,6 +10635,10 @@ msgstr "Tüm çalışma alanlarından ayrılırsınız; oturumlarınız, geçiş
 msgid "You replied"
 msgstr "Yanıt yazdınız"
 
+#: src/features/migrations/text.ts
+msgid "You signed in to another {provider} account than the one this migration reads. Sign in to the same account to continue."
+msgstr "Bu taşımanın okuduğu hesaptan farklı bir {provider} hesabında oturum açtınız. Devam etmek için aynı hesapla oturum açın."
+
 #: src/features/account/AccountPage.tsx
 msgid "You started it"
 msgstr "Siz başlattınız"
@@ -10518,6 +10750,10 @@ msgstr "Bu çalışma alanındaki rolünüz, uygulamanın istediği izinlerin hi
 msgid "Your session has ended. Sign in again."
 msgstr "Oturumunuz sona erdi. Yeniden giriş yapın."
 
+#: src/features/migrations/Wizard.tsx
+msgid "Your support address"
+msgstr "Destek adresiniz"
+
 #: src/features/migrations/MapStep.tsx
 msgid "Your team"
 msgstr "Ekibiniz"
@@ -10538,6 +10774,18 @@ msgstr "Yuva hesabınız"
 #: src/features/auth/AuthLayout.tsx
 msgid "Yuva {version}"
 msgstr "Yuva {version}"
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva asks for the scope {scopes} and refuses a sign-in that grants more."
+msgstr "Yuva yalnızca {scopes} kapsamını ister ve daha fazlasını veren bir oturum açmayı reddeder."
+
+#: src/features/migrations/text.ts
+msgid "Yuva can read the account now. Next, choose what to bring."
+msgstr "Yuva artık hesabı okuyabilir. Sıradaki adımda neyin getirileceğini seçin."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva deletes its token when the migration ends."
+msgstr "Taşıma bittiğinde Yuva kendi belirtecini siler."
 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva DKIM"
@@ -10568,8 +10816,16 @@ msgid "Yuva on this server is invite only. Ask your team for an invitation."
 msgstr "Bu sunucudaki Yuva'ya yalnızca davetle girilebilir. Ekibinizden davet isteyin."
 
 #: src/features/migrations/Wizard.tsx
+msgid "Yuva only reads the help desk. History arrives quietly: no notifications, no auto-replies."
+msgstr "Yuva yardım masasını yalnızca okur. Geçmiş sessizce gelir: bildirim yok, otomatik yanıt yok."
+
+#: src/features/migrations/Wizard.tsx
 msgid "Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies."
 msgstr "Yuva posta kutusunu yalnızca okur. Geçmiş sessizce gelir: bildirim yok, otomatik yanıt yok."
+
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva only reads. Besides signing in, its connection sends {provider} nothing but read requests, so no ticket, customer or setting changes."
+msgstr "Yuva yalnızca okur. Bağlantısı, oturum açma dışında {provider} hesabına okuma isteklerinden başka bir şey göndermez; hiçbir talep, müşteri ya da ayar değişmez."
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
@@ -10583,6 +10839,10 @@ msgstr "Yuva yalnızca yüklediğiniz dosyayı okur ve taşıma bitince siler. G
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."
 msgstr "Yuva seçtiğiniz her olay için JSON gövdeli, imzalı bir POST isteği gönderir."
 
+#: src/features/migrations/HelpdeskConnectStep.tsx
+msgid "Yuva signs in to {provider} with an OAuth client you create in your own account, and only reads."
+msgstr "Yuva, kendi hesabınızda oluşturduğunuz bir OAuth istemcisiyle {provider} hesabında oturum açar ve yalnızca okur."
+
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva signs this channel’s broadcasts, tests, confirmation and welcome mails with its own key, over the unsubscribe headers. Your provider’s signature stays next to it; support replies are not changed."
 msgstr "Yuva bu kanalın bültenlerini, deneme, onay ve hoş geldin e-postalarını abonelikten çıkma başlıklarını da kapsayacak şekilde kendi anahtarıyla imzalar. Sağlayıcınızın imzası yanında kalır; destek yanıtları değişmez."
@@ -10590,6 +10850,10 @@ msgstr "Yuva bu kanalın bültenlerini, deneme, onay ve hoş geldin e-postaları
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "Yuva stops signing with it at once. Remove the DNS record afterwards; a new key needs a new record."
 msgstr "Yuva bu anahtarla imzalamayı hemen bırakır. Ardından DNS kaydını kaldırın; yeni bir anahtar yeni bir kayıt ister."
+
+#: src/features/migrations/text.ts
+msgid "Yuva stored nothing. Make sure the OAuth client asks for nothing more than read, then sign in again."
+msgstr "Yuva hiçbir şey saklamadı. OAuth istemcisinin okumadan fazlasını istemediğinden emin olun, sonra yeniden oturum açın."
 
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off on {disabledAt}."

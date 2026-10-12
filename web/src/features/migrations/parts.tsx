@@ -6,7 +6,7 @@ import { Notice, ProgressBar, useConfirm } from "@/components/common"
 import { formatDate, formatDateTime } from "@/components/common/text"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { percentOf, useFinishMigration, useMigrationStep, useRemoveHistory } from "@/features/migrations/queries"
-import { stateTones, useMigrationText } from "@/features/migrations/text"
+import { isHelpdesk, stateTones, useMigrationText } from "@/features/migrations/text"
 import { StatusTag } from "@/features/settings/ui"
 import type { Migration, MigrationSkipped } from "@/lib/api"
 
@@ -37,12 +37,19 @@ export function MigrationBar({ m, thin }: { m: Migration; thin?: boolean }) {
   const done = num(c.imported + c.duplicate + c.skipped + c.failed)
   const total = num(c.total)
   const percent = percentOf(m)
+  const desk = isHelpdesk(m.source)
   return (
     <ProgressBar
       thin={thin}
       value={c.total > 0 ? percent : undefined}
-      label={t`Messages copied`}
-      text={c.total > 0 ? t`${percent}%, ${done} of ${total} messages` : t`Starting`}
+      label={desk ? t`Conversations copied` : t`Messages copied`}
+      text={
+        c.total <= 0
+          ? t`Starting`
+          : desk
+            ? t`${percent}%, ${done} of ${total} conversations`
+            : t`${percent}%, ${done} of ${total} messages`
+      }
       testId="migration-progress"
     />
   )
