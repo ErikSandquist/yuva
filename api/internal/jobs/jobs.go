@@ -135,7 +135,8 @@ type AnalyticsRollupScanArgs struct{}
 
 func (AnalyticsRollupScanArgs) Kind() string { return "analytics_rollup_scan" }
 
-// AnalyticsSaltsArgs is worked by the api package: it deletes the salts past their grace.
+// AnalyticsSaltsArgs is worked by the api package: it deletes the salts past their grace and the
+// visit claims past their window.
 type AnalyticsSaltsArgs struct{}
 
 func (AnalyticsSaltsArgs) Kind() string { return "analytics_salts" }

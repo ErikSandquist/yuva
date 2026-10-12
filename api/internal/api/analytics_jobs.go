@@ -447,7 +447,7 @@ func (s *Server) FoldAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUID,
 }
 
 // DeleteExpiredAnalyticsSalts deletes every salt whose day ended more than the grace ago; without
-// it a day's visitors can never be recomputed.
+// it a day's visitors can never be recomputed. Visit claims past the claim window go with them.
 func (s *Server) DeleteExpiredAnalyticsSalts(ctx context.Context) (int64, error) {
 	if s.analytics == nil {
 		return 0, nil
@@ -463,6 +463,10 @@ func (s *Server) DeleteExpiredAnalyticsSalts(ctx context.Context) (int64, error)
 			return total, err
 		}
 		total += n
+		if _, err := s.st.DeleteStaleAnalyticsVisitClaims(ctx, store.DeleteStaleAnalyticsVisitClaimsParams{
+			WorkspaceID: ws, Before: s.now().Add(-analytics.ClaimWindow)}); err != nil {
+			return total, err
+		}
 	}
 	return total, nil
 }

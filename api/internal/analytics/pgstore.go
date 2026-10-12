@@ -309,7 +309,17 @@ func upsertVisits(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow
 			browser[i], browserMajor[i], osName[i], osMajor[i] = info.Browser, info.BrowserMajor, info.OS, info.OSMajor
 			screen[i], language[i], platform[i], appVersion[i] = info.Screen, info.Language, int16(info.Platform), info.AppVersion
 		}
-		if _, err := tx.Exec(ctx, `
+		var infoProps []uuid.UUID
+		var infoDays []time.Time
+		var infoVisits []int64
+		var infoN []int32
+		for _, v := range ins {
+			if v.info != nil {
+				infoProps, infoDays, infoVisits, infoN = append(infoProps, v.property), append(infoDays, v.day), append(infoVisits, v.visit), append(infoN, v.views+v.events)
+			}
+		}
+		rows, err := tx.Query(ctx, `
+WITH up AS (
 INSERT INTO analytics_visits (workspace_id, property_id, day, visit, visitor, started_at, ended_at, hostname, entry_path, exit_path,
     views, events, interactive, engaged_ms, channel, source, referrer_host, referrer_path, utm_source, utm_medium, utm_campaign,
     utm_term, utm_content, country, region, city, device, browser, browser_major, os, os_major, screen, language, platform, app_version)
@@ -325,11 +335,29 @@ ON CONFLICT (property_id, day, visit) DO UPDATE SET
     views = analytics_visits.views + EXCLUDED.views,
     events = analytics_visits.events + EXCLUDED.events,
     interactive = analytics_visits.interactive OR EXCLUDED.interactive,
-    engaged_ms = analytics_visits.engaged_ms + EXCLUDED.engaged_ms`,
+    engaged_ms = analytics_visits.engaged_ms + EXCLUDED.engaged_ms
+RETURNING property_id, day, visit, views + events AS n)
+SELECT up.property_id, up.day, up.visit FROM up
+JOIN unnest($36::uuid[], $37::date[], $38::bigint[], $39::integer[]) AS i(property_id, day, visit, n)
+    ON up.property_id = i.property_id AND up.day = i.day AND up.visit = i.visit
+WHERE up.n > i.n`,
 			ws, props, days, visit, visitor, started, ended, hostname, entry, exit, views, events, interactive, engaged, channel, source, refHost,
 			refPath, utmSource, utmMedium, utmCampaign, utmTerm, utmContent, country, region, city, device, browser, browserMajor, osName,
-			osMajor, screen, language, platform, appVersion); err != nil {
+			osMajor, screen, language, platform, appVersion, infoProps, infoDays, infoVisits, infoN)
+		if err != nil {
 			return nil, fmt.Errorf("upsert visits: %w", err)
+		}
+		describe, err := pgx.CollectRows(rows, func(row pgx.CollectableRow) (visitKey3, error) {
+			var k visitKey3
+			err := row.Scan(&k.property, &k.day, &k.visit)
+			k.day = k.day.UTC()
+			return k, err
+		})
+		if err != nil {
+			return nil, fmt.Errorf("upsert visits: %w", err)
+		}
+		if err := describeJoinedVisits(ctx, tx, describe, ins); err != nil {
+			return nil, err
 		}
 	}
 	if len(eng) > 0 {
@@ -370,6 +398,61 @@ FROM analytics_visits v JOIN unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigi
 		}
 	}
 	return old, nil
+}
+
+// describeJoinedVisits copies the description a visit's first event carries onto a visit that was
+// already written: another process joined the visit and flushed before the one that started it.
+func describeJoinedVisits(ctx context.Context, tx pgx.Tx, keys []visitKey3, ins []*visitRow) error {
+	if len(keys) == 0 {
+		return nil
+	}
+	byKey := make(map[visitKey3]*visitRow, len(ins))
+	for _, v := range ins {
+		byKey[visitKey3{v.property, v.day, v.visit}] = v
+	}
+	var (
+		ws, props                                              []uuid.UUID
+		days                                                   []time.Time
+		visit                                                  []int64
+		source, refHost, refPath                               []string
+		utmSource, utmMedium, utmCampaign, utmTerm, utmContent []string
+		country, region, city, browser, osName, language, app  []string
+		channel, device, browserMajor, osMajor, screen, plat   []int16
+	)
+	for _, k := range keys {
+		v := byKey[k]
+		if v == nil || v.info == nil {
+			continue
+		}
+		i, a := v.info, v.info.Acquisition
+		ws, props, days, visit = append(ws, v.ws), append(props, v.property), append(days, v.day), append(visit, v.visit)
+		source, refHost, refPath = append(source, i.Source), append(refHost, i.ReferrerHost), append(refPath, i.ReferrerPath)
+		utmSource, utmMedium, utmCampaign = append(utmSource, a.Source), append(utmMedium, a.Medium), append(utmCampaign, a.Campaign)
+		utmTerm, utmContent = append(utmTerm, a.Term), append(utmContent, a.Content)
+		country, region, city = append(country, i.Country), append(region, i.Region), append(city, i.City)
+		browser, osName, language, app = append(browser, i.Browser), append(osName, i.OS), append(language, i.Language), append(app, i.AppVersion)
+		channel, device, browserMajor = append(channel, int16(i.Channel)), append(device, i.Device), append(browserMajor, i.BrowserMajor)
+		osMajor, screen, plat = append(osMajor, i.OSMajor), append(screen, i.Screen), append(plat, int16(i.Platform))
+	}
+	if len(visit) == 0 {
+		return nil
+	}
+	if _, err := tx.Exec(ctx, `
+UPDATE analytics_visits v SET channel = u.channel, source = u.source, referrer_host = u.referrer_host, referrer_path = u.referrer_path,
+    utm_source = u.utm_source, utm_medium = u.utm_medium, utm_campaign = u.utm_campaign, utm_term = u.utm_term, utm_content = u.utm_content,
+    country = u.country, region = u.region, city = u.city, device = u.device, browser = u.browser, browser_major = u.browser_major,
+    os = u.os, os_major = u.os_major, screen = u.screen, language = u.language, platform = u.platform, app_version = u.app_version
+FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[], $5::smallint[], $6::text[], $7::text[], $8::text[], $9::text[], $10::text[],
+    $11::text[], $12::text[], $13::text[], $14::text[], $15::text[], $16::text[], $17::smallint[], $18::text[], $19::smallint[], $20::text[],
+    $21::smallint[], $22::smallint[], $23::text[], $24::smallint[], $25::text[])
+    AS u(workspace_id, property_id, day, visit, channel, source, referrer_host, referrer_path, utm_source, utm_medium, utm_campaign, utm_term,
+    utm_content, country, region, city, device, browser, browser_major, os, os_major, screen, language, platform, app_version)
+WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visit = u.visit`,
+		ws, props, days, visit, channel, source, refHost, refPath, utmSource, utmMedium, utmCampaign, utmTerm, utmContent,
+		country, region, city, device, browser, browserMajor, osName, osMajor, screen, language, plat, app); err != nil {
+		return fmt.Errorf("describe joined visits: %w", err)
+	}
+	return nil
 }
 
 func collectOld(rows pgx.Rows, old map[visitKey3]bool) error {
@@ -662,6 +745,52 @@ func (s *PGStore) LatestVisit(ctx context.Context, workspaceID, propertyID uuid.
 		workspaceID, propertyID, day, visitor).Scan(&out.Visit, &out.Ended, &out.Bot)
 	if errors.Is(err, pgx.ErrNoRows) {
 		return LatestVisit{}, false, nil
+	}
+	return out, err == nil, err
+}
+
+func (s *PGStore) ClaimVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor, visit int64, now, staleBefore time.Time) (int64, bool, error) {
+	for range 3 {
+		var out int64
+		// A claim lost in a crash costs at most one split visit, so its commit does not wait for the WAL flush.
+		err := s.Pool.QueryRow(ctx, `INSERT INTO analytics_visit_claims (workspace_id, property_id, day, visitor, visit, claimed_at)
+			SELECT $1, $2, $3, $4, $5, $6 FROM (SELECT set_config('synchronous_commit', 'off', true)) AS async
+			ON CONFLICT (property_id, day, visitor) DO NOTHING RETURNING visit`,
+			workspaceID, propertyID, day, visitor, visit, now).Scan(&out)
+		if err == nil {
+			return out, true, nil
+		}
+		if !errors.Is(err, pgx.ErrNoRows) {
+			return 0, false, err
+		}
+		err = s.Pool.QueryRow(ctx, `UPDATE analytics_visit_claims SET visit = $5, claimed_at = $6
+			FROM (SELECT set_config('synchronous_commit', 'off', true)) AS async WHERE workspace_id = $1 AND property_id = $2 AND day = $3 AND visitor = $4 AND claimed_at < $7 RETURNING visit`,
+			workspaceID, propertyID, day, visitor, visit, now, staleBefore).Scan(&out)
+		if err == nil {
+			return out, true, nil
+		}
+		if !errors.Is(err, pgx.ErrNoRows) {
+			return 0, false, err
+		}
+		err = s.Pool.QueryRow(ctx, `SELECT visit FROM analytics_visit_claims WHERE workspace_id = $1 AND property_id = $2 AND day = $3 AND visitor = $4`,
+			workspaceID, propertyID, day, visitor).Scan(&out)
+		if err == nil {
+			return out, false, nil
+		}
+		if !errors.Is(err, pgx.ErrNoRows) {
+			return 0, false, err
+		}
+	}
+	return 0, false, errors.New("analytics: visit claim kept changing")
+}
+
+func (s *PGStore) ClaimedVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64, since time.Time) (int64, bool, error) {
+	var out int64
+	err := s.Pool.QueryRow(ctx, `SELECT visit FROM analytics_visit_claims
+		WHERE workspace_id = $1 AND property_id = $2 AND day = $3 AND visitor = $4 AND claimed_at >= $5`,
+		workspaceID, propertyID, day, visitor, since).Scan(&out)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return 0, false, nil
 	}
 	return out, err == nil, err
 }

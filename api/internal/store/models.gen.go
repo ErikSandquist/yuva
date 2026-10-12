@@ -195,6 +195,15 @@ type AnalyticsVisit struct {
 	Bot          bool
 }
 
+type AnalyticsVisitClaim struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Visitor     int64
+	Visit       int64
+	ClaimedAt   time.Time
+}
+
 type AnalyticsVisitPage struct {
 	WorkspaceID uuid.UUID
 	PropertyID  uuid.UUID

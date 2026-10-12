@@ -110,6 +110,9 @@ ORDER BY d.property_id, d.day;
 -- name: DeleteExpiredAnalyticsSalts :execrows
 DELETE FROM analytics_salts WHERE workspace_id = @workspace_id AND expires_at <= @now;
 
+-- name: DeleteStaleAnalyticsVisitClaims :execrows
+DELETE FROM analytics_visit_claims WHERE workspace_id = @workspace_id AND claimed_at < @before;
+
 -- name: ListAnalyticsRetention :many
 SELECT id, retention_months, timezone FROM analytics_properties
 WHERE workspace_id = @workspace_id AND retention_months IS NOT NULL AND deleted_at IS NULL

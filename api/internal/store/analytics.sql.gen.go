@@ -200,6 +200,23 @@ func (q *Queries) DeleteOldAnalyticsIngestStats(ctx context.Context, arg DeleteO
 	return result.RowsAffected(), nil
 }
 
+const deleteStaleAnalyticsVisitClaims = `-- name: DeleteStaleAnalyticsVisitClaims :execrows
+DELETE FROM analytics_visit_claims WHERE workspace_id = $1 AND claimed_at < $2
+`
+
+type DeleteStaleAnalyticsVisitClaimsParams struct {
+	WorkspaceID uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) DeleteStaleAnalyticsVisitClaims(ctx context.Context, arg DeleteStaleAnalyticsVisitClaimsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteStaleAnalyticsVisitClaims, arg.WorkspaceID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const findAnalyticsPropertyByKey = `-- name: FindAnalyticsPropertyByKey :one
 SELECT p.id, p.workspace_id, p.inbox_id, p.name, p.public_key, p.previous_key, p.previous_key_until, p.domains, p.platforms, p.timezone, p.currency, p.collection, p.consent_features, p.audience, p.excluded_paths, p.excluded_ips, p.path_rules, p.tracked_props, p.retention_months, p.visitor_key, p.rollup_version, p.first_event_at, p.last_event_at, p.created_by, p.created_at, p.updated_at, p.deleted_at FROM analytics_properties p JOIN workspaces w ON w.id = p.workspace_id
 WHERE (p.public_key = $1 OR (p.previous_key = $1 AND p.previous_key_until > $2))

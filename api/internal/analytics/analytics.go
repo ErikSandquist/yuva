@@ -142,6 +142,11 @@ type Store interface {
 	Salt(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, fresh []byte, expires time.Time) ([]byte, time.Time, error)
 	// LatestVisit is the visitor's last visit of the day, if any.
 	LatestVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64) (LatestVisit, bool, error)
+	// ClaimVisit claims visit as the visitor's new visit of the day, unless another claim was made
+	// after staleBefore, and returns the visit that holds the claim and whether it is this one.
+	ClaimVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor, visit int64, now, staleBefore time.Time) (int64, bool, error)
+	// ClaimedVisit is the visitor's visit of the day claimed after since, if any.
+	ClaimedVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64, since time.Time) (int64, bool, error)
 	VisitorsToday(ctx context.Context, workspaceID uuid.UUID, days map[uuid.UUID]time.Time) (map[uuid.UUID]int64, error)
 	// DeleteRaw deletes up to limit rows of each raw table of a property's day and says how many went.
 	DeleteRaw(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, limit int) (int64, error)
