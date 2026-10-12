@@ -87,7 +87,7 @@ drei Jahren.
 
 ## 5. Abonnenten aus dem Backend eintragen
 
-Das ist für Personen, die anderswo zugestimmt haben, etwa bei der Registrierung. Sie erklären, wie die
+Für eine ganze Datei voller Personen siehe [Abonnenten importieren](importing.md). Das ist für Personen, die anderswo zugestimmt haben, etwa bei der Registrierung. Sie erklären, wie die
 Person zugestimmt hat, und Yuva speichert es als Nachweis. Der Schlüssel braucht den Scope `lists:write`.
 
 ```sh

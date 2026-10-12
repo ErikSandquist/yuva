@@ -10,14 +10,14 @@ temsilciler, bir yanıtı anlayabilmek için gelen kutularındaki bültenleri ok
 
 ## 1. İlk bültenden önce
 
-1. Bir [liste](lists.md#2-liste-oluşturun) oluşturun ve aboneleri ekleyin. Bülten yalnızca bir listeye
-   `subscribed` olan kişilere gider.
+1. Bir [liste](lists.md#2-liste-oluşturun) oluşturun ve aboneleri bir formla, arka uçtan ya da
+   [CSV dosyası içe aktararak](importing.md) ekleyin. Bülten yalnızca bir listeye `subscribed` olan kişilere gider.
 2. Gelen kutusunun [gönderen bilgilerini](lists.md#1-gönderen-bilgilerini-girin) doldurun. Her bülten
    bunlarla biter; yasal unvan ve posta adresi yoksa gözden geçirme göndermeyi engeller.
 3. Bir [tasarım](designs.md) yapın ya da bir şablonla başlayın.
 4. Gelen kutusunda SMTP hesabı ve gönderilecek adresi olan bir [e-posta kanalı](email.md) bulunduğundan
    emin olun. Catch-all kanalın bir From adresi olmalıdır. O adresin alan adı için SPF, DKIM ve DMARC
-   kurun ([Teslim edilebilirlik](#teslim-edilebilirlik)).
+   kurun ve [teslim edilebilirlik denetimini](deliverability.md) çalıştırın.
 5. İsteğe bağlı ama akıllıca: kanala bültenler için ayrı bir hesap verin ([aşağıda](#gönderen)).
 
 Başkasının işlettiği bir sunucuda yeni bir çalışma alanının göndermeden önce
@@ -268,18 +268,12 @@ değiştirmek ve göndermek `403 broadcasts_disabled` yanıtı verir.
 
 ## Teslim edilebilirlik
 
-Yeni bir göndericinin e-postası, temeller doğru değilse spam'e düşer.
+Yeni bir göndericinin e-postası, temeller doğru değilse spam'e düşer. [Teslim edilebilirlik kılavuzu](deliverability.md)
+bunları anlatır: bir kanalın SPF, DKIM ve DMARC'ını sınayan denetim, Amazon SES, Postmark ya da başka bir
+aktarıcıyla alan adı kurulumu, Yuva DKIM, Gmail ve Yahoo kuralları, Google Postmaster Tools ve ısınma.
 
-- Kanalın From adresinin alan adı için **SPF, DKIM ve DMARC**; geçen ve hizalı olmalı. Bkz.
-  [DNS kontrol listesi](email.md#dns-kontrol-listesi). Kendi posta kutunuza bir deneme gönderin ve
-  `spf=pass`, `dkim=pass`, `dmarc=pass` arayın.
-- **Gmail ve Yahoo**, toplu e-posta gönderenlerin SPF, DKIM ve DMARC ile kimlik doğrulamasını, iki gün
-  içinde yerine getirilen tek tıkla abonelikten çıkmayı sunmasını ve spam şikâyetlerini %0,3'ün altında
-  (hedef %0,1'in altı) tutmasını bekler. Yuva her bültene abonelikten çıkma başlıklarını ve alt bilgi
-  bağlantısını ekler, %0,3'te duraklatır. Kurallar [Google'ın gönderen yönergelerinde](https://support.google.com/a/answer/81126)
-  ve [Yahoo'nun gönderen en iyi uygulamalarında](https://senders.yahooinc.com/best-practices/) yazılıdır.
-- **Küçük başlayın.** Önce birkaç yüz ilgili aboneye gönderin, sonra büyütün.
 - **Yalnızca izin verenlere gönderin.** İzin kayıtlarından kurulmuş bir liste en iyi korumanızdır.
+- **Küçük başlayın.** Önce birkaç yüz ilgili aboneye gönderin, sonra büyütün.
 - Bültenler için **ayrı bir hesap** kullanın; isterseniz `news.example.com` gibi bir alt alan adından.
 
 Yuva her bülten e-postasına tek tıkla abonelikten çıkmalı (RFC 8058) `List-Unsubscribe`, `List-Id`,

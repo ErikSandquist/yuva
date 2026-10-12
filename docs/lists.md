@@ -82,7 +82,8 @@ subscriptions are deleted after 30 days; unsubscribed ones after three years.
 
 ## 5. Add subscribers from your backend
 
-Use this for people who agreed somewhere else, such as at sign-up. You declare how they agreed, and
+For a whole file of people, see [Importing subscribers](importing.md). Use this for people who agreed
+somewhere else, such as at sign-up. You declare how they agreed, and
 Yuva stores it as proof. The key needs the `lists:write` scope.
 
 ```sh

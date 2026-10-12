@@ -83,7 +83,8 @@ abonelikler 30 gün sonra, abonelikten çıkanlar üç yıl sonra silinir.
 
 ## 5. Arka uçtan abone ekleyin
 
-Başka bir yerde, örneğin kayıt sırasında, kabul etmiş kişiler için kullanın. Kişinin nasıl kabul ettiğini
+Bir dosya dolusu kişi için [Abone içe aktarma](importing.md) sayfasına bakın. Başka bir yerde, örneğin kayıt
+sırasında, kabul etmiş kişiler için kullanın. Kişinin nasıl kabul ettiğini
 siz bildirirsiniz; Yuva bunu kanıt olarak saklar. Anahtarın `lists:write` kapsamı olmalıdır.
 
 ```sh

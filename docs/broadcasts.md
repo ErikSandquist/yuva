@@ -10,14 +10,14 @@ broadcasts of their inboxes so they understand a reply.
 
 ## 1. Before the first broadcast
 
-1. Create a [list](lists.md#2-create-a-list) and get subscribers onto it. A broadcast goes only to
-   people who are `subscribed` to a list.
+1. Create a [list](lists.md#2-create-a-list) and get subscribers onto it, with a form, from your backend or
+   by [importing a CSV file](importing.md). A broadcast goes only to people who are `subscribed` to a list.
 2. Fill in the inbox's [sender identity](lists.md#1-set-the-sender-identity). Every broadcast ends with
    it, and the review blocks sending without a legal name and a postal address.
 3. Make a [design](designs.md), or start from a template.
 4. Check that the inbox has an [e-mail channel](email.md) with an SMTP account and an address to send
    from. A catch-all channel needs a From address. Set up SPF, DKIM and DMARC for that address's domain
-   ([Deliverability](#deliverability)).
+   and run the [deliverability check](deliverability.md).
 5. Optional but wise: give the channel its own account for broadcasts ([below](#the-sender)).
 
 On a server run by someone else, a new workspace may also have to be [approved](#approval-on-hosted-servers)
@@ -265,18 +265,12 @@ sending broadcasts answers `403 broadcasts_disabled`.
 
 ## Deliverability
 
-Mail from a new sender lands in spam unless the basics are right.
+Mail from a new sender lands in spam unless the basics are right. The [Deliverability guide](deliverability.md)
+covers them: the check that tests a channel's SPF, DKIM and DMARC, setting up a domain with Amazon SES,
+Postmark or another relay, Yuva DKIM, the rules of Gmail and Yahoo, Google Postmaster Tools and warming up.
 
-- **SPF, DKIM and DMARC** for the domain of the channel's From address, passing and aligned. See the
-  [DNS checklist](email.md#dns-checklist). Send a test to a mailbox you control and look for
-  `spf=pass`, `dkim=pass` and `dmarc=pass`.
-- **Gmail and Yahoo** expect senders of bulk mail to authenticate with SPF, DKIM and DMARC, to offer
-  one-click unsubscribe that is honoured within two days, and to keep spam complaints under 0.3% (aim for
-  under 0.1%). Yuva adds the unsubscribe headers and the footer link to every broadcast, and pauses at
-  0.3%. The rules are at [Google's sender guidelines](https://support.google.com/a/answer/81126) and
-  [Yahoo's sender best practices](https://senders.yahooinc.com/best-practices/).
-- **Start small.** Mail a few hundred engaged subscribers first and grow.
 - **Only mail people who agreed.** A list built from consent records is your best protection.
+- **Start small.** Mail a few hundred engaged subscribers first and grow.
 - **Use a separate account** for broadcasts, from a subdomain such as `news.example.com` if you like.
 
 Yuva sets `List-Unsubscribe` with one-click (RFC 8058), `List-Id`, `Feedback-ID` and

@@ -11,14 +11,15 @@ Agents lesen die Broadcasts ihrer Posteingänge, damit sie eine Antwort verstehe
 
 ## 1. Vor dem ersten Broadcast
 
-1. Legen Sie eine [Liste](lists.md#2-eine-liste-anlegen) an und bringen Sie Abonnenten darauf. Ein
-   Broadcast geht nur an Personen, die auf einer Liste `subscribed` sind.
+1. Legen Sie eine [Liste](lists.md#2-eine-liste-anlegen) an und bringen Sie Abonnenten darauf, per Formular,
+   aus dem Backend oder durch [Import einer CSV-Datei](importing.md). Ein Broadcast geht nur an Personen, die
+   auf einer Liste `subscribed` sind.
 2. Tragen Sie die [Absenderangaben](lists.md#1-absenderangaben-eintragen) des Posteingangs ein. Jeder
    Broadcast endet damit, und die Prüfung blockiert den Versand ohne rechtlichen Namen und Postanschrift.
 3. Bauen Sie ein [Design](designs.md) oder starten Sie mit einer Vorlage.
 4. Der Posteingang braucht einen [E-Mail-Kanal](email.md) mit SMTP-Konto und einer Absenderadresse. Ein
    Catch-all-Kanal braucht eine From-Adresse. Richten Sie SPF, DKIM und DMARC für die Domain dieser
-   Adresse ein ([Zustellbarkeit](#zustellbarkeit)).
+   Adresse ein und starten Sie die [Zustellbarkeitsprüfung](deliverability.md).
 5. Optional, aber ratsam: ein eigenes Konto des Kanals für Broadcasts ([unten](#der-absender)).
 
 Auf einem Server, den jemand anderes betreibt, muss ein neuer Workspace vor dem Versand eventuell auch
@@ -278,21 +279,15 @@ Broadcasts anlegen, ändern und senden antwortet mit `403 broadcasts_disabled`.
 
 ## Zustellbarkeit
 
-Mail eines neuen Absenders landet im Spam, wenn die Grundlagen nicht stimmen.
+Mail eines neuen Absenders landet im Spam, wenn die Grundlagen nicht stimmen. Der [Leitfaden zur
+Zustellbarkeit](deliverability.md) behandelt sie: die Prüfung, die SPF, DKIM und DMARC eines Kanals testet, die
+Einrichtung einer Domain mit Amazon SES, Postmark oder einem anderen Relay, Yuva DKIM, die Regeln von Gmail und
+Yahoo, Google Postmaster Tools und das Aufwärmen.
 
-- **SPF, DKIM und DMARC** für die Domain der From-Adresse des Kanals, bestanden und ausgerichtet. Siehe
-  die [DNS-Checkliste](email.md#dns-checkliste). Senden Sie einen Test an ein Postfach, das Sie
-  kontrollieren, und suchen Sie `spf=pass`, `dkim=pass` und `dmarc=pass`.
-- **Gmail und Yahoo** erwarten von Absendern großer Mengen Mail, dass sie sich mit SPF, DKIM und DMARC
-  authentifizieren, Abmeldung mit einem Klick anbieten, die innerhalb von zwei Tagen umgesetzt wird, und
-  Spam-Beschwerden unter 0,3 % halten (Ziel: unter 0,1 %). Yuva fügt jedem Broadcast die
-  Abmelde-Header und den Fußzeilen-Link hinzu und pausiert bei 0,3 %. Die Regeln stehen in
-  [Googles Absenderrichtlinien](https://support.google.com/a/answer/81126) und
-  [Yahoos Best Practices für Absender](https://senders.yahooinc.com/best-practices/).
-- **Fangen Sie klein an.** Senden Sie zuerst an ein paar hundert interessierte Abonnenten und steigern Sie
-  sich.
 - **Schreiben Sie nur Personen an, die zugestimmt haben.** Eine Liste aus Einwilligungsnachweisen ist Ihr
   bester Schutz.
+- **Fangen Sie klein an.** Senden Sie zuerst an ein paar hundert interessierte Abonnenten und steigern Sie
+  sich.
 - **Nutzen Sie ein eigenes Konto** für Broadcasts, wenn Sie möchten von einer Subdomain wie
   `news.example.com`.
 
