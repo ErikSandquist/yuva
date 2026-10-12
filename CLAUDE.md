@@ -78,10 +78,11 @@ owners implement from their plan, and the orchestrator writes their decisions in
   person.
 - How broadcast mail looks and lands is checked without anyone's personal mailbox: every design is
   rendered and checked against caniemail data (Mailpit's html-check) and screenshotted in WebKit (Apple
-  Mail's engine, on the Mac) and Chromium at desktop, phone and dark; delivery is checked by sending to
-  the project's own seed mailboxes at Gmail, Outlook and iCloud (owned by the project, not a person) and
-  reading them read-only over IMAP for inbox or spam placement, SPF, DKIM and DMARC. A paid rendering
-  service is used only on the owner's go-ahead.
+  Mail's engine, on the Mac) and Chromium at desktop, phone and dark; delivery is checked with the
+  deliverability probe on one of our own sending domains behind the edge (SPF, DKIM, DMARC, signed list
+  headers). Nobody creates provider test accounts or seed mailboxes (Gmail, Yandex, Outlook, iCloud):
+  migrations are checked on the Dovecot fixture, help desks against recorded API answers. A paid
+  rendering service is used only on the owner's go-ahead.
 - `deploy/compose.yaml` runs Mailpit, which catches everything e-mail channels send in
   development. Give a channel SMTP host `mailpit`, port `1025`, TLS `none` and no username. Read
   caught mail at `127.0.0.1:58025`: the web UI, `curl -s 127.0.0.1:58025/api/v1/messages`, one

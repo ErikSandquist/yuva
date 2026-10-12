@@ -197,9 +197,9 @@ Status: planned; umbrella issue #25, decisions in `architecture.md` › Broadcas
   subscriptions in the mobile SDKs, the İYS export.
 
 Accept: a visitor subscribes through `<yuva-subscribe>` and confirms; a member designs a newsletter from a
-gallery template, sends a test, schedules it to the list and it lands in the inbox (not spam) of the project's seed
-mailboxes at Gmail, Outlook and iCloud with SPF, DKIM and DMARC passing, and its WebKit and Chromium renders
-match the preview, in light and dark; one recipient replies and the reply is a conversation in the inbox;
+gallery template, sends a test and schedules it to the list; the deliverability check on one of our own
+sending domains behind the edge shows SPF, DKIM and DMARC passing with the list headers signed, and its
+WebKit and Chromium renders match the preview, in light and dark; one recipient replies and the reply is a conversation in the inbox;
 an out-of-office reply is not; another unsubscribes with one click and gets no further broadcast; a bounce
 suppresses the address and a complaint unsubscribes it; a hosted workspace cannot send before approval;
 another workspace sees none of it.
@@ -226,9 +226,10 @@ mailbox; killing the server mid-copy loses and duplicates nothing; the inbox sho
 original dates, members as authors and labels, nothing unread and no notification, webhook or push;
 mail arriving during the switch is stored once and notifies; the forwarding is verified by a probe;
 finishing deletes the credentials; the source mailbox is byte-identical (UIDs, flags, modseq) before
-and after. An Outlook.com and a Microsoft 365 mailbox, a Takeout file, a Zendesk and a Help Scout
-account import the same way. An assistant runs the whole flow through MCP without ever handling a
-password.
+and after, on the Dovecot fixture; the wizard and the guides tell people where each provider keeps
+its IMAP settings and app passwords. A Takeout file imports the same way, and the help-desk imports
+pass against recorded API answers; no check needs a real provider account. An assistant runs the
+whole flow through MCP without ever handling a password.
 
 ## M15 — Analytics
 
