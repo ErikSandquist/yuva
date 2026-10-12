@@ -77,7 +77,7 @@ function Kpis() {
             )}
             data-testid={`kpi-${m}`}
           >
-            <span className="truncate text-small text-faint">{text.metric[m]}</span>
+            <span className="max-w-full truncate text-small text-faint">{text.metric[m]}</span>
             {q.isPending ? (
               <Skeleton className="mt-1 h-7 w-16" />
             ) : (
@@ -87,7 +87,7 @@ function Kpis() {
               </span>
             )}
             {view.compare && !q.isPending && (
-              <span className="truncate text-caption text-faint tabular-nums">
+              <span className="max-w-full truncate text-caption text-faint tabular-nums">
                 {formatMetric(m, before?.[m], i18n.locale)}
               </span>
             )}
