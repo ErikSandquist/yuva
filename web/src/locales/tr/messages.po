@@ -940,6 +940,10 @@ msgid "Access"
 msgstr "Erişim"
 
 #: src/features/migrations/DoneStep.tsx
+msgid "Access to {provider}"
+msgstr "{provider} erişimi"
+
+#: src/features/migrations/DoneStep.tsx
 msgid "Access to the mailbox"
 msgstr "Posta kutusuna erişim"
 
@@ -1508,6 +1512,10 @@ msgid "Ask for approval"
 msgstr "Onay iste"
 
 #: src/features/migrations/SwitchStep.tsx
+msgid "Ask the admin of your mail server to deliver {address} to the address below instead of to {provider}."
+msgstr "E-posta sunucunuzun yöneticisinden {address} adresine gelen e-postaları {provider} yerine aşağıdaki adrese teslim etmesini isteyin."
+
+#: src/features/migrations/SwitchStep.tsx
 msgid "Ask the admin of your mail server to forward {address} to the address below on the server, keeping delivery to the mailbox."
 msgstr "E-posta sunucunuzun yöneticisinden {address} adresini, posta kutusuna teslimi sürdürerek sunucuda aşağıdaki adrese yönlendirmesini isteyin."
 
@@ -1871,6 +1879,10 @@ msgstr "Taşımayı iptal et"
 msgid "Cancel moving {address}?"
 msgstr "{address} taşınması iptal edilsin mi?"
 
+#: src/features/migrations/parts.tsx
+msgid "Cancel moving from {provider}?"
+msgstr "{provider} taşıması iptal edilsin mi?"
+
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Cancel the broadcast"
@@ -1929,6 +1941,10 @@ msgstr "Bilgi: {cc}"
 #: src/features/auth/SignInForm.tsx
 msgid "Change address"
 msgstr "Adresi değiştir"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Change that forwarding to the address below, so the mail of {address} reaches Yuva instead of {provider}."
+msgstr "Bu yönlendirmeyi aşağıdaki adrese çevirin; böylece {address} adresine gelen e-postalar {provider} yerine Yuva'ya ulaşır."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "Change the choice"
@@ -2468,6 +2484,10 @@ msgstr "Kopyalanan konuşmalar"
 msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {address}."
 msgstr "Aktarımdan sonra kimsenin yazmadığı konuşmalar silindi. {address} içinde hiçbir şey değişmedi."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Conversations nobody wrote in after the import are deleted. Nothing changed in {provider}."
+msgstr "Aktarımdan sonra kimsenin yazmadığı konuşmalar silindi. {provider} tarafında hiçbir şey değişmedi."
+
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Conversations that started on it keep their messages."
 msgstr "Bu kanalda başlayan konuşmaların mesajları korunur."
@@ -2475,6 +2495,10 @@ msgstr "Bu kanalda başlayan konuşmaların mesajları korunur."
 #: src/features/migrations/DoneStep.tsx
 msgid "Conversations your team wrote in stay. Nothing changes in {address}."
 msgstr "Ekibinizin yazdığı konuşmalar kalır. {address} içinde hiçbir şey değişmez."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Conversations your team wrote in stay. Nothing changes in {provider}."
+msgstr "Ekibinizin yazdığı konuşmalar kalır. {provider} tarafında hiçbir şey değişmez."
 
 #: src/app/Rail.tsx
 msgid "Conversations, {unread} unread"
@@ -2753,9 +2777,17 @@ msgstr "Hesabımı sil"
 msgid "Delete subscription"
 msgstr "Aboneliği sil"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Delete the app you created for Yuva"
+msgstr "Yuva için oluşturduğunuz uygulamayı silin"
+
 #: src/features/settings/labels/LabelsPage.tsx
 msgid "Delete the label {name}?"
 msgstr "{name} etiketi silinsin mi?"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Delete the OAuth client you created for Yuva"
+msgstr "Yuva için oluşturduğunuz OAuth istemcisini silin"
 
 #: src/components/common/ShortcutSheet.tsx
 msgid "Delete the selected block"
@@ -3963,6 +3995,10 @@ msgstr "{address} adresinden aktarılan geçmiş"
 msgid "History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to Yuva."
 msgstr "Geçmiş aktarıldı. Siz e-postaları Yuva'ya yönlendirirken hiçbir şey kaybolmasın diye Yuva {address} adresini iki dakikada bir okumaya devam eder."
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "History is in. Yuva keeps reading {provider} every two minutes, so nothing is lost while you send the mail of {address} to Yuva."
+msgstr "Geçmiş aktarıldı. Siz {address} adresinin e-postalarını Yuva'ya yönlendirirken hiçbir şey kaybolmasın diye Yuva {provider} hesabını iki dakikada bir okumaya devam eder."
+
 #: src/features/migrations/text.ts
 msgid "History removed"
 msgstr "Geçmiş kaldırıldı"
@@ -4049,6 +4085,10 @@ msgid "If it is not finished by {syncUntil}, sync stops on its own and the crede
 msgstr "{syncUntil} tarihine kadar bitirilmezse eşitleme kendiliğinden durur ve erişim bilgileri silinir."
 
 #: src/features/migrations/SwitchStep.tsx
+msgid "If nothing reaches only {provider}, the migration finishes on its own {when} ({at})."
+msgstr "Yalnızca {provider} hesabına ulaşan bir şey olmazsa taşıma {when} ({at}) kendiliğinden biter."
+
+#: src/features/migrations/SwitchStep.tsx
 msgid "If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at})."
 msgstr "Yalnızca eski posta kutusuna ulaşan bir şey olmazsa taşıma {when} kendiliğinden biter ({at})."
 
@@ -4059,6 +4099,10 @@ msgstr "Yalnızca Yuva için bir şifre oluşturduysanız {provider} içinden ka
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "If your DNS provider limits a TXT string to 255 characters, split the value into several strings of one record."
 msgstr "DNS sağlayıcınız bir TXT metnini 255 karakterle sınırlıyorsa değeri tek bir kaydın birkaç metnine bölün."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there."
+msgstr "E-posta sağlayıcınız bu adrese bir onay e-postası gönderirse, bu gelen kutusuna bir konuşma olarak düşer; onu oradan açın."
 
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Image descriptions"
@@ -4373,6 +4417,10 @@ msgstr "Gönderene ya da zamanlayana kadar taslak kalır. Yanıtlar seçtiğiniz
 #: src/features/migrations/parts.tsx
 msgid "It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox."
 msgstr "Kalıcı olarak durur. Aktarılanlar kalır, posta kutusunun erişim bilgileri silinir. Posta kutusunda hiçbir şey değişmez."
+
+#: src/features/migrations/parts.tsx
+msgid "It stops for good. What was imported stays, and Yuva's token is deleted. Nothing changes in {provider}."
+msgstr "Taşıma tamamen durur. Aktarılanlar kalır ve Yuva'nın belirteci silinir. {provider} tarafında hiçbir şey değişmez."
 
 #: src/features/broadcasts/Import.tsx
 msgid "It stops within a moment. Subscribers it already added stay on the list."
@@ -4769,6 +4817,10 @@ msgstr "E-posta boyutu"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Mail still reaches {provider} but is not sent to Yuva yet."
 msgstr "E-postalar hâlâ {provider} hesabına ulaşıyor ama henüz Yuva'ya gönderilmiyor."
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Mail that still reaches {provider} meanwhile is read every two minutes, so nothing is lost."
+msgstr "Bu sırada hâlâ {provider} hesabına ulaşan e-postalar iki dakikada bir okunur; hiçbir şey kaybolmaz."
 
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "Mail them a confirmation"
@@ -5684,6 +5736,10 @@ msgid "No teammate can see this inbox"
 msgstr "Bu kutuyu gören başka ekip arkadaşı yok"
 
 #: src/features/migrations/parts.tsx
+msgid "No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to {provider} is not copied. Yuva's token is deleted."
+msgstr "Yeni yoldan Yuva'ya henüz hiçbir deneme mesajı ulaşmadı. Şimdi bitirirseniz yalnızca {provider} hesabına gitmeye devam eden e-postalar kopyalanmaz. Yuva'nın belirteci silinir."
+
+#: src/features/migrations/parts.tsx
 msgid "No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted."
 msgstr "Henüz hiçbir deneme e-postası yeni yoldan Yuva'ya ulaşmadı. Şimdi bitirirseniz yalnızca eski posta kutusuna gitmeye devam eden e-postalar kopyalanmaz. Erişim bilgileri silinir."
 
@@ -5879,6 +5935,10 @@ msgstr "Hiçbiri"
 msgid "Nothing answers on that port of {host}. Check the port and that IMAP is on."
 msgstr "{host} üzerinde o bağlantı noktası yanıt vermiyor. Bağlantı noktasını ve IMAP'in açık olduğunu kontrol edin."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Nothing changed in {provider}; keep the account as an archive if you like."
+msgstr "{provider} tarafında hiçbir şey değişmedi; isterseniz hesabı arşiv olarak saklayın."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Nothing from the file is added, and the uploaded file is deleted."
 msgstr "Dosyadan hiçbir şey eklenmez ve yüklenen dosya silinir."
@@ -6036,6 +6096,10 @@ msgstr "Team ve Enterprise planlarında bir sahip bunu <0>Organization settings 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "On the web"
 msgstr "Web'de"
+
+#: src/features/migrations/SwitchStep.tsx
+msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the migration finishes on its own. You can also finish it yourself."
+msgstr "Bir deneme mesajı ulaştığında Yuva {hours} saat bekler. Bu sürede yalnızca {provider} hesabına ulaşan bir şey olmazsa taşıma kendiliğinden biter. Taşımayı kendiniz de bitirebilirsiniz."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only the old mailbox in that time, the migration finishes on its own. You can also finish it yourself."
@@ -8624,6 +8688,10 @@ msgstr "E-postalarınızı Yuva'ya yönlendirin"
 msgid "Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied."
 msgstr "Eşitleme durur ve posta kutusunun erişim bilgileri silinir. Bundan sonra yalnızca eski posta kutusuna ulaşan e-postalar kopyalanmaz."
 
+#: src/features/migrations/parts.tsx
+msgid "Sync stops and Yuva's token for {provider} is deleted. What reaches only {provider} from now on is not copied."
+msgstr "Eşitleme durur ve Yuva'nın {provider} belirteci silinir. Bundan sonra yalnızca {provider} hesabına ulaşanlar kopyalanmaz."
+
 #: src/features/migrations/text.ts
 msgid "Syncing"
 msgstr "Eşitleniyor"
@@ -8962,6 +9030,10 @@ msgstr "Form şu adreslerde çalışır:"
 #: src/features/oauth/ConsentPage.tsx
 msgid "The full API: MCP, the REST API and live updates, like a member app."
 msgstr "Tüm API: bir üye uygulaması gibi MCP, REST API ve canlı güncellemeler."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The history from {provider} is in Yuva"
+msgstr "{provider} geçmişi Yuva'da"
 
 #: src/features/migrations/DoneStep.tsx
 msgid "The history from the export file is copied into Yuva."
@@ -9735,6 +9807,10 @@ msgstr "Kime: {emailTo}"
 msgid "Today"
 msgstr "Bugün"
 
+#: src/features/migrations/SwitchStep.tsx
+msgid "Today {address} is forwarded to {provider}, in the settings of the mail provider that hosts it or by a rule there."
+msgstr "Bugün {address} adresi, onu barındıran e-posta sağlayıcısının ayarlarında ya da oradaki bir kuralla {provider} hesabına yönlendiriliyor."
+
 #: src/features/conversation/HeaderActions.tsx
 msgid "today at {at}"
 msgstr "bugün saat {at}"
@@ -10376,6 +10452,10 @@ msgstr "Kabul ettiği metin"
 msgid "What was imported stays. Nothing changed in {address}."
 msgstr "Aktarılanlar kalır. {address} içinde hiçbir şey değişmedi."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "What was imported stays. Nothing changed in {provider}."
+msgstr "Aktarılanlar kalır. {provider} tarafında hiçbir şey değişmedi."
+
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "What went out"
 msgstr "Ne gönderildi"
@@ -10904,6 +10984,22 @@ msgstr "Yuva yalnızca {scopes} kapsamını ister ve daha fazlasını veren bir 
 #: src/features/migrations/text.ts
 msgid "Yuva can read the account now. Next, choose what to bring."
 msgstr "Yuva artık hesabı okuyabilir. Sıradaki adımda neyin getirileceğini seçin."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token {deletedAt} and can no longer read {provider}."
+msgstr "Yuva kendi belirtecini sildi ({deletedAt}) ve artık {provider} hesabını okuyamaz."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token and can no longer read {provider}."
+msgstr "Yuva kendi belirtecini sildi ve artık {provider} hesabını okuyamaz."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token but cannot revoke it in Help Scout. Delete the app in Your Profile › My Apps; Yuva does not need it any more."
+msgstr "Yuva kendi belirtecini sildi ama Help Scout'ta geçersiz kılamaz. Uygulamayı Your Profile › My Apps sayfasından silin; Yuva'nın artık ona ihtiyacı yok."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token but cannot revoke it in Zendesk. Delete the client in Admin Center › Apps and integrations › APIs › OAuth clients; Yuva does not need it any more."
+msgstr "Yuva kendi belirtecini sildi ama Zendesk'te geçersiz kılamaz. İstemciyi Admin Center › Apps and integrations › APIs › OAuth clients sayfasından silin; Yuva'nın artık ona ihtiyacı yok."
 
 #: src/features/migrations/HelpdeskConnectStep.tsx
 msgid "Yuva deletes its token when the migration ends."

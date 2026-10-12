@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { MigrationStateTag, useMigrationConfirms, useStateAnnouncement } from "@/features/migrations/parts"
 import { useMigrationStep } from "@/features/migrations/queries"
-import { guideUrl } from "@/features/migrations/text"
+import { guideUrl, isHelpdesk } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import { useNow } from "@/hooks/use-now"
@@ -34,20 +34,31 @@ function isGoogle(m: Migration) {
 function useWaySteps(m: Migration, provider: string) {
   const { t } = useLingui()
   const address = m.source_address
-  const forward = isGoogle(m)
+  const desk = isHelpdesk(m.source)
+  const forward = desk
     ? [
-        t`In Gmail, open Settings › See all settings › Forwarding and POP/IMAP.`,
-        t`Choose “Add a forwarding address” and paste the address below.`,
-        t`Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link.`,
-        t`Choose “Forward a copy of incoming mail to” the address, keep Gmail's copy in the inbox, and save.`,
+        t`Today ${address} is forwarded to ${provider}, in the settings of the mail provider that hosts it or by a rule there.`,
+        t`Change that forwarding to the address below, so the mail of ${address} reaches Yuva instead of ${provider}.`,
+        t`If your mail provider mails a confirmation to that address, it arrives in this inbox as a conversation; open it there.`,
       ]
-    : [
-        t`Open ${provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail.`,
-        t`Forward all incoming mail to the address below and keep a copy in the mailbox.`,
-        t`If ${provider} mails a confirmation to that address, it arrives in this inbox as a conversation; open it there.`,
+    : isGoogle(m)
+      ? [
+          t`In Gmail, open Settings › See all settings › Forwarding and POP/IMAP.`,
+          t`Choose “Add a forwarding address” and paste the address below.`,
+          t`Google mails a confirmation code to that address. It shows up on this page: enter it in Gmail, or open its link.`,
+          t`Choose “Forward a copy of incoming mail to” the address, keep Gmail's copy in the inbox, and save.`,
+        ]
+      : [
+          t`Open ${provider}'s mail settings and find forwarding, or a filter that forwards all incoming mail.`,
+          t`Forward all incoming mail to the address below and keep a copy in the mailbox.`,
+          t`If ${provider} mails a confirmation to that address, it arrives in this inbox as a conversation; open it there.`,
+        ]
+  const route = desk
+    ? [
+        t`Ask the admin of your mail server to deliver ${address} to the address below instead of to ${provider}.`,
+        t`In Microsoft 365 that is mailbox forwarding or a mail flow rule; an admin may first have to allow external forwarding.`,
       ]
-  const route =
-    m.preset === "google_workspace"
+    : m.preset === "google_workspace"
       ? [
           t`In the Google Admin console, open Apps › Google Workspace › Gmail › Routing.`,
           t`Add a rule for ${address} that also delivers its mail to the address below, keeping delivery to the mailbox.`,
@@ -61,11 +72,14 @@ function useWaySteps(m: Migration, provider: string) {
     t`A day ahead, lower the TTL of the MX records, so the change spreads quickly.`,
     t`Point the MX records at Yuva as the e-mail guide describes. Sync catches the mail that still reaches the old server meanwhile.`,
   ]
+  const caught = t`Mail that still reaches ${provider} meanwhile is read every two minutes, so nothing is lost.`
   const note = {
-    forward: isGoogle(m)
-      ? t`Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing.`
-      : t`${provider} keeps its copy, so the old mailbox stays complete.`,
-    route: t`The old mailbox keeps its copy.`,
+    forward: desk
+      ? caught
+      : isGoogle(m)
+        ? t`Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing.`
+        : t`${provider} keeps its copy, so the old mailbox stays complete.`,
+    route: desk ? caught : t`The old mailbox keeps its copy.`,
     mx: t`The old mailbox stops receiving mail for that domain.`,
   }
   return { forward, route, mx, note }
@@ -91,10 +105,17 @@ export function SwitchStep({ m, preset }: { m: Migration; preset: MigrationPrese
   return (
     <WizardLayout step="switch" m={m} preset={preset}>
       <StepHeader title={<Trans>Switch your mail to Yuva</Trans>}>
-        <Trans>
-          History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to
-          Yuva.
-        </Trans>
+        {isHelpdesk(m.source) ? (
+          <Trans>
+            History is in. Yuva keeps reading {provider} every two minutes, so nothing is lost while you send the mail
+            of {address} to Yuva.
+          </Trans>
+        ) : (
+          <Trans>
+            History is in. Yuva keeps reading {address} every two minutes, so nothing is lost while you send its mail to
+            Yuva.
+          </Trans>
+        )}
       </StepHeader>
       {announcement}
 
@@ -166,7 +187,7 @@ export function SwitchStep({ m, preset }: { m: Migration; preset: MigrationPrese
           <h2 id="migration-finish" className="text-title">
             <Trans>3. Finish</Trans>
           </h2>
-          <Quiet m={m} />
+          <Quiet m={m} provider={provider} />
           {syncUntil && (
             <p className="text-small text-faint">
               <Trans>
@@ -337,18 +358,26 @@ function Probe({ m, provider }: { m: Migration; provider: string }) {
   )
 }
 
-function Quiet({ m }: { m: Migration }) {
+function Quiet({ m, provider }: { m: Migration; provider: string }) {
   const { i18n } = useLingui()
   const num = useNumber()
   const now = useNow(30_000)
   const hours = num(m.options.quiet_period_hours)
+  const desk = isHelpdesk(m.source)
   if (!m.verified_at || !m.quiet_until)
     return (
       <p className="text-body text-muted-foreground">
-        <Trans>
-          Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only the old mailbox in that time,
-          the migration finishes on its own. You can also finish it yourself.
-        </Trans>
+        {desk ? (
+          <Trans>
+            Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only {provider} in that time, the
+            migration finishes on its own. You can also finish it yourself.
+          </Trans>
+        ) : (
+          <Trans>
+            Once a test message arrives, Yuva waits {hours} hours. If nothing reaches only the old mailbox in that time,
+            the migration finishes on its own. You can also finish it yourself.
+          </Trans>
+        )}
       </p>
     )
   const end = new Date(m.quiet_until).getTime()
@@ -358,7 +387,11 @@ function Quiet({ m }: { m: Migration }) {
     <p className="flex items-start gap-2 text-body" data-testid="migration-quiet">
       <HourglassIcon className="mt-0.5 size-4 shrink-0 text-faint" />
       <span>
-        {end > now ? (
+        {end > now && desk ? (
+          <Trans>
+            If nothing reaches only {provider}, the migration finishes on its own {when} ({at}).
+          </Trans>
+        ) : end > now ? (
           <Trans>
             If nothing reaches only the old mailbox, the migration finishes on its own {when} ({at}).
           </Trans>

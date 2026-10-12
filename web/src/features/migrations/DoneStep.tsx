@@ -1,15 +1,23 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightIcon, ArrowUpRightIcon, CircleCheckIcon, InboxIcon, LoaderIcon, ShieldCheckIcon } from "lucide-react"
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CircleCheckIcon,
+  InboxIcon,
+  KeyRoundIcon,
+  LoaderIcon,
+  ShieldCheckIcon,
+} from "lucide-react"
 import { Link, useNavigate } from "react-router"
 
-import { ErrorLine, ProgressBar } from "@/components/common"
+import { ErrorLine, Notice, ProgressBar } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Figure, SkippedList, useMigrationConfirms, useStateAnnouncement } from "@/features/migrations/parts"
 import { useCreateMigration, useMigrations } from "@/features/migrations/queries"
-import { useGuides } from "@/features/migrations/text"
+import { isHelpdesk, useGuides } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
@@ -32,6 +40,7 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const deletedAt = m.credentials_deleted_at ? formatDateTime(m.credentials_deleted_at, i18n.locale) : ""
   const removable = m.removable_conversations ?? 0
   const file = m.source === "file"
+  const desk = isHelpdesk(m.source)
   const fileDeletedAt = m.upload?.deleted_at ? formatDateTime(m.upload.deleted_at, i18n.locale) : ""
   const openInbox = () => {
     if (m.inbox_id) setInbox(m.inbox_id)
@@ -42,7 +51,9 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
       <StepHeader
         icon={completed ? <CircleCheckIcon /> : undefined}
         title={
-          completed ? (
+          completed && desk ? (
+            <Trans>The history from {provider} is in Yuva</Trans>
+          ) : completed ? (
             <Trans>{address} is in Yuva</Trans>
           ) : removing ? (
             <Trans>Removing imported history…</Trans>
@@ -57,10 +68,16 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
           <Trans>The history from the export file is copied into Yuva.</Trans>
         ) : completed ? (
           <Trans>The history is copied and its mail now reaches Yuva.</Trans>
+        ) : removed && desk ? (
+          <Trans>Conversations nobody wrote in after the import are deleted. Nothing changed in {provider}.</Trans>
         ) : removed ? (
           <Trans>Conversations nobody wrote in after the import are deleted. Nothing changed in {address}.</Trans>
+        ) : removing && desk ? (
+          <Trans>Conversations your team wrote in stay. Nothing changes in {provider}.</Trans>
         ) : removing ? (
           <Trans>Conversations your team wrote in stay. Nothing changes in {address}.</Trans>
+        ) : desk ? (
+          <Trans>What was imported stays. Nothing changed in {provider}.</Trans>
         ) : (
           <Trans>What was imported stays. Nothing changed in {address}.</Trans>
         )}
@@ -77,7 +94,7 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
             </h2>
             <div className="grid grid-cols-2 gap-2.5" data-testid="migration-summary">
               <Figure value={num(m.imported_conversations ?? 0)} label={<Trans>Conversations</Trans>} />
-              <Figure value={num(c.imported)} label={<Trans>Messages imported</Trans>} />
+              {!desk && <Figure value={num(c.imported)} label={<Trans>Messages imported</Trans>} />}
               <Figure value={num(c.duplicate)} label={<Trans>Already in Yuva</Trans>} />
               <Figure value={num(c.skipped + c.failed)} label={<Trans>Skipped or failed</Trans>} />
               {est && <Figure value={num(est.contacts_new)} label={<Trans>New contacts</Trans>} />}
@@ -96,7 +113,67 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
 
         {completed && m.preset === "takeout" && <NewerMail m={m} />}
 
-        {file ? (
+        {desk ? (
+          <section className="flex flex-col gap-3" aria-labelledby="migration-access">
+            <h2 id="migration-access" className="text-title">
+              <Trans>Access to {provider}</Trans>
+            </h2>
+            <p className="flex items-start gap-2 text-body" data-testid="migration-credentials">
+              <ShieldCheckIcon className="mt-0.5 size-4 shrink-0 text-success" />
+              <span>
+                {deletedAt ? (
+                  <Trans>
+                    Yuva deleted its token {deletedAt} and can no longer read {provider}.
+                  </Trans>
+                ) : (
+                  <Trans>Yuva deleted its token and can no longer read {provider}.</Trans>
+                )}
+              </span>
+            </p>
+            <Notice icon={KeyRoundIcon} data-testid="migration-revoke-note">
+              <p className="font-medium text-foreground">
+                {m.source === "zendesk" ? (
+                  <Trans>Delete the OAuth client you created for Yuva</Trans>
+                ) : (
+                  <Trans>Delete the app you created for Yuva</Trans>
+                )}
+              </p>
+              <p>
+                {m.source === "zendesk" ? (
+                  <Trans>
+                    Yuva deleted its token but cannot revoke it in Zendesk. Delete the client in Admin Center › Apps and
+                    integrations › APIs › OAuth clients; Yuva does not need it any more.
+                  </Trans>
+                ) : (
+                  <Trans>
+                    Yuva deleted its token but cannot revoke it in Help Scout. Delete the app in Your Profile › My Apps;
+                    Yuva does not need it any more.
+                  </Trans>
+                )}
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="self-start"
+                render={<a href={guide.link} target="_blank" rel="noreferrer" />}
+                data-testid="migration-revoke"
+              >
+                {guide.linkLabel}
+                <ArrowUpRightIcon className="rtl:-scale-x-100" />
+              </Button>
+            </Notice>
+            {completed && (
+              <ul className="flex list-disc flex-col gap-1 ps-5 text-body text-muted-foreground">
+                <li>
+                  <Trans>Keep the forwarding, routing or MX as it is: that is how mail reaches Yuva now.</Trans>
+                </li>
+                <li>
+                  <Trans>Nothing changed in {provider}; keep the account as an archive if you like.</Trans>
+                </li>
+              </ul>
+            )}
+          </section>
+        ) : file ? (
           <section className="flex flex-col gap-3" aria-labelledby="migration-file">
             <h2 id="migration-file" className="text-title">
               <Trans>The export file</Trans>

@@ -5,7 +5,13 @@ import { useEffect, useRef, useState } from "react"
 import { Notice, ProgressBar, useConfirm } from "@/components/common"
 import { formatDate, formatDateTime } from "@/components/common/text"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
-import { percentOf, useFinishMigration, useMigrationStep, useRemoveHistory } from "@/features/migrations/queries"
+import {
+  percentOf,
+  useFinishMigration,
+  useMigrationStep,
+  usePresets,
+  useRemoveHistory,
+} from "@/features/migrations/queries"
 import { isHelpdesk, stateTones, useMigrationText } from "@/features/migrations/text"
 import { StatusTag } from "@/features/settings/ui"
 import type { Migration, MigrationSkipped } from "@/lib/api"
@@ -114,6 +120,8 @@ export function useMigrationConfirms(m: Migration) {
   const removable = m.removable_conversations ?? 0
   const count = num(removable)
   const address = m.source_address
+  const provider = usePresets().data?.find((p) => p.id === m.preset)?.name ?? ""
+  const desk = isHelpdesk(m.source) && provider !== ""
   return {
     dialog,
     error: cancel.error ?? finish.error ?? remove.error,
@@ -121,16 +129,22 @@ export function useMigrationConfirms(m: Migration) {
     finish: () =>
       confirm({
         title: t`Finish the migration?`,
-        description: m.verified_at
-          ? t`Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied.`
-          : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted.`,
+        description: desk
+          ? m.verified_at
+            ? t`Sync stops and Yuva's token for ${provider} is deleted. What reaches only ${provider} from now on is not copied.`
+            : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to ${provider} is not copied. Yuva's token is deleted.`
+          : m.verified_at
+            ? t`Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied.`
+            : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted.`,
         confirm: m.verified_at ? t`Finish` : t`Finish anyway`,
         run: () => finish.mutate(!m.verified_at),
       }),
     cancel: () =>
       confirm({
-        title: t`Cancel moving ${address}?`,
-        description: t`It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox.`,
+        title: desk ? t`Cancel moving from ${provider}?` : t`Cancel moving ${address}?`,
+        description: desk
+          ? t`It stops for good. What was imported stays, and Yuva's token is deleted. Nothing changes in ${provider}.`
+          : t`It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox.`,
         confirm: t`Cancel the migration`,
         run: () => cancel.mutate(),
       }),
