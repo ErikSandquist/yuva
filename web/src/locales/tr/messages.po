@@ -28,9 +28,11 @@ msgstr "(siz)"
 msgid "{0, plural, one {# attachment} other {# attachments}}"
 msgstr "{0, plural, one {# ek} other {# ek}}"
 
+#. placeholder {0}: f.messages
 #. placeholder {0}: l.conversations
 #. placeholder {0}: load.get(m.id) ?? 0
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# conversation} other {# conversations}}"
 msgstr "{0, plural, one {# konuşmada} other {# konuşmada}}"
@@ -144,6 +146,10 @@ msgstr "{added} eklendi · {out} dışarıda kaldı"
 #: src/features/migrations/DoneStep.tsx
 msgid "{address} is in Yuva"
 msgstr "{address} artık Yuva'da"
+
+#: src/features/migrations/MapStep.tsx
+msgid "{assigned, plural, one {# assigned conversation} other {# assigned conversations}}"
+msgstr "{assigned, plural, one {# atanmış konuşma} other {# atanmış konuşma}}"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "{attachments} files, {attachmentSize}"
@@ -526,6 +532,10 @@ msgstr "{provider}, hesap şifrenizi değil bir uygulama şifresi istiyor. Yukar
 msgid "{provider} wants you to sign in once in the browser. Sign in to your mail on the web, then test again."
 msgstr "{provider}, bir kez tarayıcıdan oturum açmanızı istiyor. E-postanıza web üzerinden girin, sonra yeniden deneyin."
 
+#: src/features/migrations/MapStep.tsx
+msgid "{provider}'s tags become Yuva labels on their conversations."
+msgstr "{provider} etiketleri, bulundukları konuşmalarda Yuva etiketlerine dönüşür."
+
 #: src/features/migrations/CopyStep.tsx
 msgid "{rate} a minute"
 msgstr "dakikada {rate}"
@@ -750,6 +760,10 @@ msgstr "Bir konuşma değişti"
 #: src/features/settings/notifications/events.ts
 msgid "A conversation is assigned to me"
 msgstr "Bir konuşma bana atandığında"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "A conversation is taken whole when it was last updated in the range."
+msgstr "Son güncellemesi aralıkta olan bir konuşma bütünüyle alınır."
 
 #: src/components/common/text.ts
 msgid "A conversation started"
@@ -1093,6 +1107,10 @@ msgstr "Yönetici yönlendirmesi"
 msgid "Agent"
 msgstr "Temsilci"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Agents"
+msgstr "Temsilciler"
+
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
 msgstr "Kimin yanıtlayacağına karar verin."
@@ -1219,6 +1237,10 @@ msgstr "Amazon SES, hesabınızın en yüksek gönderim hızını konsolunda gö
 #: src/features/migrations/UploadStep.tsx
 msgid "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
 msgstr "Bir .mbox dosyası ya da .eml dosyalarının, bir Maildir'in veya sıkıştırılmamış .mbox dosyalarının .zip'i."
+
+#: src/features/migrations/MapStep.tsx
+msgid "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
+msgstr "Bir temsilcinin yanıtları, notları ve atanmış konuşmaları üyeye geçer. Üye seçilmezse temsilcinin adı korunur."
 
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
@@ -1718,6 +1740,11 @@ msgstr "Geri döndü ya da spam bildirildi"
 #: src/features/broadcasts/Import.tsx
 msgid "Bounced or reported as spam before"
 msgstr "Daha önce geri döndü ya da spam olarak bildirildi"
+
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/MapStep.tsx
+msgid "Brands"
+msgstr "Markalar"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Bring a mailbox's history from Gmail, Yandex or any IMAP server"
@@ -3132,6 +3159,14 @@ msgid "E-mail: {label}"
 msgstr "E-posta: {label}"
 
 #: src/features/migrations/MapStep.tsx
+msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
+msgstr "Her konuşma, {provider} tarafından bildirilen durumunu korur: açık, beklemede ya da kapalı."
+
+#: src/features/migrations/MapStep.tsx
+msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
+msgstr "Her biri, seçilen gelen kutusunda kendi adresini alan e-posta kanalına, yoksa o gelen kutusunun en eski e-posta kanalına gider; böylece yanıtlar müşteriye ulaşır. E-posta kanalı olmayan bir gelen kutusu onları yalnızca geçmiş olarak tutar."
+
+#: src/features/migrations/MapStep.tsx
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Canlı gelen e-postalarda olduğu gibi her mesajın özgün kaynağı saklanır. Daha fazla depolama kullanır."
 
@@ -4170,6 +4205,10 @@ msgstr "Gelen kutusu"
 msgid "Inbox color"
 msgstr "Gelen kutusu rengi"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Inbox for {name}"
+msgstr "{name} için gelen kutusu"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -4589,6 +4628,10 @@ msgstr "Liste geri alındı"
 msgid "Listening for the first message…"
 msgstr "İlk mesaj bekleniyor…"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Listing the tickets…"
+msgstr "Talepler listeleniyor…"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -4725,6 +4768,11 @@ msgstr "Destek adresinize gelen postalar, aynı adresten yanıtlanır"
 #: src/features/migrations/SourceStep.tsx
 msgid "Mailbox address"
 msgstr "Posta kutusu adresi"
+
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/MapStep.tsx
+msgid "Mailboxes"
+msgstr "Posta kutuları"
 
 #: src/features/migrations/text.ts
 msgid "Maildir in a zip"
@@ -5605,6 +5653,10 @@ msgstr "Henüz konu yok"
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "Henüz abone yok. Abonelik formunu sitenize koyun ya da zaten izin vermiş kişileri ekleyin."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "No support address"
+msgstr "Destek adresi yok"
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "No teammate can see this inbox"
 msgstr "Bu kutuyu gören başka ekip arkadaşı yok"
@@ -6058,6 +6110,10 @@ msgstr "Sohbeti yalnızca bu adreslerdeki sayfalar açabilir. Yol olmadan, şema
 #: src/features/broadcasts/Composer.tsx
 msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
 msgstr "Yalnızca abone olanlar alır. Ayrılan, onaylamayan, geri dönen ve engellenen adresler her zaman dışarıda kalır."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
+msgstr "Yalnızca okuma istekleri gönderilir. Bu sayfayı kapatabilirsiniz; tarama sürer ve bittiğinde Ayarlar'daki liste bunu gösterir."
 
 #: src/components/common/text.ts
 msgid "Only the person can subscribe again, by confirming a mail."
@@ -6611,6 +6667,10 @@ msgstr "Klasörleri ve ne kadar geriye gidileceğini seçin. Tarama, tam olarak 
 msgid "Pick the inbox for {address}, who on your team wrote what, and how folders become labels. Changing these after the scan plans the import again in a moment."
 msgstr "{address} için gelen kutusunu, ekibinizden kimin ne yazdığını ve klasörlerin nasıl etikete dönüşeceğini seçin. Taramadan sonra bunları değiştirirseniz aktarım birkaç saniyede yeniden planlanır."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
+msgstr "{provider} konuşmalarının gideceği gelen kutularını, her temsilcinin hangi üye olduğunu ve etiketlerin nasıl Yuva etiketine dönüşeceğini seçin. Taramadan sonra bunları değiştirirseniz aktarım birkaç saniyede yeniden planlanır."
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "Diğer kişiyi seçin. Bu kişiyle birleştirilir ve ardından silinir."
@@ -6638,6 +6698,10 @@ msgstr "Sunucu ayarları altında veri merkezinizin sunucusunu seçin."
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Pick the workspace <0>{workspace}</0>, check the scopes and allow. You go back to {clientName}, and the connection shows up here."
 msgstr "<0>{workspace}</0> çalışma alanını seçin, yetkileri gözden geçirip izin verin. {clientName} uygulamasına dönersiniz ve bağlantı burada görünür."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Pick what to bring and how far back to go. The scan lists the tickets to show exactly what will be imported; nothing is imported yet."
+msgstr "Neyin getirileceğini ve ne kadar geriye gidileceğini seçin. Tarama, tam olarak neyin içe aktarılacağını göstermek için talepleri listeler; henüz hiçbir şey içe aktarılmaz."
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -7395,6 +7459,14 @@ msgstr "Uygulamanızı SDK ile çalıştırıp bir mesaj gönderin. Konuşma ba�
 #: src/features/migrations/MapStep.tsx
 msgid "sales@example.com"
 msgstr "satis@ornek.com"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Same as above"
+msgstr "Yukarıdakiyle aynı"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Same as above: {inboxName}"
+msgstr "Yukarıdakiyle aynı: {inboxName}"
 
 #: src/features/contact/ContactSheet.tsx
 msgid "Satisfaction"
@@ -8275,6 +8347,10 @@ msgstr "Kaynak"
 msgid "Spam"
 msgstr "Spam"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Spam and deleted tickets are never imported."
+msgstr "Spam ve silinmiş talepler asla içe aktarılmaz."
+
 #: src/components/common/text.ts
 msgid "Spam report"
 msgstr "Spam bildirimi"
@@ -8531,6 +8607,10 @@ msgstr "Sistem, cihazının ayarını izler"
 #: src/features/broadcasts/Import.tsx
 msgid "tabs"
 msgstr "sekme"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Tags"
+msgstr "Talep etiketleri"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
@@ -9056,6 +9136,10 @@ msgstr "Kontrol, gönderimi engelleyen bir şey buldu. Önce kırmızı maddeler
 #: src/features/broadcasts/Import.tsx
 msgid "The rows left out are no longer kept."
 msgstr "Dışarıda kalan satırlar artık saklanmıyor."
+
+#: src/features/migrations/MapStep.tsx
+msgid "The scan found no agents."
+msgstr "Tarama hiç temsilci bulmadı."
 
 #: src/features/migrations/MapStep.tsx
 msgid "The scan is running. You can change these when it is done."

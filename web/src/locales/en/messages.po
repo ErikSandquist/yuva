@@ -28,9 +28,11 @@ msgstr "(you)"
 msgid "{0, plural, one {# attachment} other {# attachments}}"
 msgstr "{0, plural, one {# attachment} other {# attachments}}"
 
+#. placeholder {0}: f.messages
 #. placeholder {0}: l.conversations
 #. placeholder {0}: load.get(m.id) ?? 0
 #: src/features/conversation/HeaderActions.tsx
+#: src/features/migrations/ChooseStep.tsx
 #: src/features/migrations/ReviewStep.tsx
 msgid "{0, plural, one {# conversation} other {# conversations}}"
 msgstr "{0, plural, one {# conversation} other {# conversations}}"
@@ -144,6 +146,10 @@ msgstr "{added} added · {out} left out"
 #: src/features/migrations/DoneStep.tsx
 msgid "{address} is in Yuva"
 msgstr "{address} is in Yuva"
+
+#: src/features/migrations/MapStep.tsx
+msgid "{assigned, plural, one {# assigned conversation} other {# assigned conversations}}"
+msgstr "{assigned, plural, one {# assigned conversation} other {# assigned conversations}}"
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "{attachments} files, {attachmentSize}"
@@ -526,6 +532,10 @@ msgstr "{provider} wants an app password, not your account's password. Create on
 msgid "{provider} wants you to sign in once in the browser. Sign in to your mail on the web, then test again."
 msgstr "{provider} wants you to sign in once in the browser. Sign in to your mail on the web, then test again."
 
+#: src/features/migrations/MapStep.tsx
+msgid "{provider}'s tags become Yuva labels on their conversations."
+msgstr "{provider}'s tags become Yuva labels on their conversations."
+
 #: src/features/migrations/CopyStep.tsx
 msgid "{rate} a minute"
 msgstr "{rate} a minute"
@@ -750,6 +760,10 @@ msgstr "A conversation changed"
 #: src/features/settings/notifications/events.ts
 msgid "A conversation is assigned to me"
 msgstr "A conversation is assigned to me"
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "A conversation is taken whole when it was last updated in the range."
+msgstr "A conversation is taken whole when it was last updated in the range."
 
 #: src/components/common/text.ts
 msgid "A conversation started"
@@ -1093,6 +1107,10 @@ msgstr "Admin routing"
 msgid "Agent"
 msgstr "Agent"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Agents"
+msgstr "Agents"
+
 #: src/features/conversation/Collision.tsx
 msgid "Agree who replies."
 msgstr "Agree who replies."
@@ -1219,6 +1237,10 @@ msgstr "Amazon SES shows your account’s maximum send rate in its console; new 
 #: src/features/migrations/UploadStep.tsx
 msgid "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
 msgstr "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
+
+#: src/features/migrations/MapStep.tsx
+msgid "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
+msgstr "An agent's replies, notes and assigned conversations become the member's. Without a member, the agent's name is kept."
 
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
@@ -1718,6 +1740,11 @@ msgstr "Bounced or reported as spam"
 #: src/features/broadcasts/Import.tsx
 msgid "Bounced or reported as spam before"
 msgstr "Bounced or reported as spam before"
+
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/MapStep.tsx
+msgid "Brands"
+msgstr "Brands"
 
 #: src/features/settings/SettingsColumn.tsx
 msgid "Bring a mailbox's history from Gmail, Yandex or any IMAP server"
@@ -3132,6 +3159,14 @@ msgid "E-mail: {label}"
 msgstr "E-mail: {label}"
 
 #: src/features/migrations/MapStep.tsx
+msgid "Each conversation keeps the status {provider} reports for it: open, pending or closed."
+msgstr "Each conversation keeps the status {provider} reports for it: open, pending or closed."
+
+#: src/features/migrations/MapStep.tsx
+msgid "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
+msgstr "Each goes into its inbox's e-mail channel for its address, else that inbox's oldest e-mail channel, so replies reach the customer. An inbox without an e-mail channel keeps them as history only."
+
+#: src/features/migrations/MapStep.tsx
 msgid "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 msgstr "Each message's original source is stored, as for mail that arrives live. Uses more storage."
 
@@ -4170,6 +4205,10 @@ msgstr "Inbox"
 msgid "Inbox color"
 msgstr "Inbox color"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Inbox for {name}"
+msgstr "Inbox for {name}"
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/SettingsColumn.tsx
@@ -4589,6 +4628,10 @@ msgstr "List restored"
 msgid "Listening for the first message…"
 msgstr "Listening for the first message…"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Listing the tickets…"
+msgstr "Listing the tickets…"
+
 #: src/features/broadcasts/AudienceBuilder.tsx
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
@@ -4725,6 +4768,11 @@ msgstr "Mail to your support address, answered from it"
 #: src/features/migrations/SourceStep.tsx
 msgid "Mailbox address"
 msgstr "Mailbox address"
+
+#: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/MapStep.tsx
+msgid "Mailboxes"
+msgstr "Mailboxes"
 
 #: src/features/migrations/text.ts
 msgid "Maildir in a zip"
@@ -5605,6 +5653,10 @@ msgstr "No subject yet"
 msgid "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 msgstr "No subscribers yet. Put the subscribe form on your site, or add people who already agreed."
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "No support address"
+msgstr "No support address"
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "No teammate can see this inbox"
 msgstr "No teammate can see this inbox"
@@ -6058,6 +6110,10 @@ msgstr "Only pages on these addresses can open the chat. Enter scheme and host, 
 #: src/features/broadcasts/Composer.tsx
 msgid "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
 msgstr "Only people who subscribed get it. Unsubscribed, unconfirmed, bounced and blocked addresses are always left out."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
+msgstr "Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows when it is done."
 
 #: src/components/common/text.ts
 msgid "Only the person can subscribe again, by confirming a mail."
@@ -6611,6 +6667,10 @@ msgstr "Pick the folders and how far back to go. The scan reads only the headers
 msgid "Pick the inbox for {address}, who on your team wrote what, and how folders become labels. Changing these after the scan plans the import again in a moment."
 msgstr "Pick the inbox for {address}, who on your team wrote what, and how folders become labels. Changing these after the scan plans the import again in a moment."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
+msgstr "Pick the inboxes for {provider}'s conversations, which member each agent is, and how tags become labels. Changing these after the scan plans the import again in a moment."
+
 #: src/features/contact/MergeContactDialog.tsx
 msgid "Pick the other contact. It is merged into this one and then deleted."
 msgstr "Pick the other contact. It is merged into this one and then deleted."
@@ -6638,6 +6698,10 @@ msgstr "Pick the server of your data centre under Server settings."
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Pick the workspace <0>{workspace}</0>, check the scopes and allow. You go back to {clientName}, and the connection shows up here."
 msgstr "Pick the workspace <0>{workspace}</0>, check the scopes and allow. You go back to {clientName}, and the connection shows up here."
+
+#: src/features/migrations/ChooseStep.tsx
+msgid "Pick what to bring and how far back to go. The scan lists the tickets to show exactly what will be imported; nothing is imported yet."
+msgstr "Pick what to bring and how far back to go. The scan lists the tickets to show exactly what will be imported; nothing is imported yet."
 
 #: src/features/conversation/ConversationMenu.tsx
 #: src/features/inbox/ChatList.tsx
@@ -7395,6 +7459,14 @@ msgstr "Run your app with the SDK and send a message. The conversation appears h
 #: src/features/migrations/MapStep.tsx
 msgid "sales@example.com"
 msgstr "sales@example.com"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Same as above"
+msgstr "Same as above"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Same as above: {inboxName}"
+msgstr "Same as above: {inboxName}"
 
 #: src/features/contact/ContactSheet.tsx
 msgid "Satisfaction"
@@ -8275,6 +8347,10 @@ msgstr "Source"
 msgid "Spam"
 msgstr "Spam"
 
+#: src/features/migrations/ChooseStep.tsx
+msgid "Spam and deleted tickets are never imported."
+msgstr "Spam and deleted tickets are never imported."
+
 #: src/components/common/text.ts
 msgid "Spam report"
 msgstr "Spam report"
@@ -8531,6 +8607,10 @@ msgstr "System follows your device"
 #: src/features/broadcasts/Import.tsx
 msgid "tabs"
 msgstr "tabs"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Tags"
+msgstr "Tags"
 
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Taking the recipients: {prepared} so far"
@@ -9056,6 +9136,10 @@ msgstr "The review found something that blocks sending. Fix the red items first.
 #: src/features/broadcasts/Import.tsx
 msgid "The rows left out are no longer kept."
 msgstr "The rows left out are no longer kept."
+
+#: src/features/migrations/MapStep.tsx
+msgid "The scan found no agents."
+msgstr "The scan found no agents."
 
 #: src/features/migrations/MapStep.tsx
 msgid "The scan is running. You can change these when it is done."

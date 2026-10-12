@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro"
+import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { useMutation } from "@tanstack/react-query"
 import { ArrowRightIcon, CheckIcon, ScanSearchIcon } from "lucide-react"
 import { useState } from "react"
@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { FollowsNotice, WaitingLine } from "@/features/migrations/parts"
 import { useMigrationFolders, useMigrationStep, useUpdateMigration } from "@/features/migrations/queries"
-import { NEVER_READ, useMigrationText } from "@/features/migrations/text"
+import { isHelpdesk, NEVER_READ, useMigrationText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationOptionsInput, MigrationPreset } from "@/lib/api"
@@ -49,6 +49,7 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
   const scanning = m.state === "scanning"
   const ready = m.state === "ready"
   const canEdit = m.actions.includes("update")
+  const desk = isHelpdesk(m.source)
   const list = folders.data ?? []
   const selected = picked ?? new Set(list.filter((f) => f.selected).map((f) => f.name))
   const since =
@@ -92,10 +93,17 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
   return (
     <WizardLayout step="choose" m={m} preset={preset}>
       <StepHeader title={<Trans>What should Yuva bring?</Trans>}>
-        <Trans>
-          Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be
-          imported; nothing is imported yet.
-        </Trans>
+        {desk ? (
+          <Trans>
+            Pick what to bring and how far back to go. The scan lists the tickets to show exactly what will be imported;
+            nothing is imported yet.
+          </Trans>
+        ) : (
+          <Trans>
+            Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be
+            imported; nothing is imported yet.
+          </Trans>
+        )}
       </StepHeader>
 
       <div className="flex flex-col gap-7">
@@ -104,11 +112,23 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
         ) : (
           <CheckList
             labelId="migration-folders"
-            label={<Trans>Folders</Trans>}
+            label={
+              m.source === "zendesk" ? (
+                <Trans>Brands</Trans>
+              ) : m.source === "helpscout" ? (
+                <Trans>Mailboxes</Trans>
+              ) : (
+                <Trans>Folders</Trans>
+              )
+            }
             hint={
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-small text-faint">
                 <span>
-                  <Trans>Spam, trash and drafts are never read.</Trans>
+                  {desk ? (
+                    <Trans>Spam and deleted tickets are never imported.</Trans>
+                  ) : (
+                    <Trans>Spam, trash and drafts are never read.</Trans>
+                  )}
                 </span>
                 {canEdit && (picked || m.options.folders) && (
                   <Button
@@ -140,7 +160,9 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
                   <span className="flex items-baseline gap-2">
                     <span className="min-w-0 flex-1 truncate">{f.name}</span>
                     <span className="shrink-0 text-small text-faint tabular-nums">
-                      {size ? (
+                      {desk ? (
+                        <Plural value={f.messages} one="# conversation" other="# conversations" />
+                      ) : size ? (
                         <Trans>
                           {count} messages · {size}
                         </Trans>
@@ -149,8 +171,10 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
                       )}
                     </span>
                   </span>
-                  <span className="text-small text-faint">
-                    {f.use === "labels" && f.kind === "sent" ? (
+                  <span className="truncate text-small text-faint">
+                    {desk ? (
+                      (f.address ?? <Trans>No support address</Trans>)
+                    ) : f.use === "labels" && f.kind === "sent" ? (
                       <Trans>Read to suggest your team's addresses: its mail comes from All mail.</Trans>
                     ) : f.use === "labels" ? (
                       <Trans>Label only: its mail comes from All mail, and its conversations get the label.</Trans>
@@ -195,35 +219,48 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
             </Label>
           )}
           <p className="text-small text-faint">
-            <Trans>A thread is taken whole when its last message is in the range.</Trans>
+            {desk ? (
+              <Trans>A conversation is taken whole when it was last updated in the range.</Trans>
+            ) : (
+              <Trans>A thread is taken whole when its last message is in the range.</Trans>
+            )}
           </p>
         </fieldset>
 
-        <Label className="items-start gap-3 font-normal">
-          <Checkbox checked={skipAuto} onCheckedChange={setSkipAuto} disabled={!canEdit} className="mt-0.5" />
-          <span className="flex flex-col gap-0.5">
-            <span className="font-medium">
-              <Trans>Skip threads that contain only automatic mail</Trans>
+        {!desk && (
+          <Label className="items-start gap-3 font-normal">
+            <Checkbox checked={skipAuto} onCheckedChange={setSkipAuto} disabled={!canEdit} className="mt-0.5" />
+            <span className="flex flex-col gap-0.5">
+              <span className="font-medium">
+                <Trans>Skip threads that contain only automatic mail</Trans>
+              </span>
+              <span className="text-small text-faint">
+                <Trans>Auto-replies, newsletters and delivery reports nobody answered.</Trans>
+              </span>
             </span>
-            <span className="text-small text-faint">
-              <Trans>Auto-replies, newsletters and delivery reports nobody answered.</Trans>
-            </span>
-          </span>
-        </Label>
+          </Label>
+        )}
 
         {scanning && (
           <div className="flex flex-col gap-3 rounded-2xl border p-4" data-testid="migration-scanning">
             <p role="status" aria-live="polite" className="flex items-center gap-2 text-body font-medium">
               <ScanSearchIcon className="size-4 text-faint" />
-              <Trans>Scanning the headers…</Trans>
+              {desk ? <Trans>Listing the tickets…</Trans> : <Trans>Scanning the headers…</Trans>}
             </p>
             <ProgressBar label={t`Scan`} text={t`Scanning`} />
             <WaitingLine m={m} />
             <p className="text-small text-faint">
-              <Trans>
-                Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the
-                list in Settings shows when it is done.
-              </Trans>
+              {desk ? (
+                <Trans>
+                  Only read requests are sent. You can close this page; the scan goes on and the list in Settings shows
+                  when it is done.
+                </Trans>
+              ) : (
+                <Trans>
+                  Only headers are read: no message is opened or marked. You can close this page; the scan goes on and
+                  the list in Settings shows when it is done.
+                </Trans>
+              )}
             </p>
           </div>
         )}
