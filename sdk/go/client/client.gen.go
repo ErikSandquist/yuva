@@ -2660,17 +2660,22 @@ func (e MigrationProgressEventType) Valid() bool {
 
 // Defines values for MigrationSignInResult.
 const (
-	SignInAccessDenied      MigrationSignInResult = "access_denied"
-	SignInAccountMismatch   MigrationSignInResult = "account_mismatch"
-	SignInConnected         MigrationSignInResult = "connected"
-	SignInExpired           MigrationSignInResult = "expired"
-	SignInNotAdmin          MigrationSignInResult = "not_admin"
-	SignInPlanHasNoApi      MigrationSignInResult = "plan_has_no_api"
-	SignInScopeTooBroad     MigrationSignInResult = "scope_too_broad"
-	SignInSessionMismatch   MigrationSignInResult = "session_mismatch"
-	SignInSourceUnreachable MigrationSignInResult = "source_unreachable"
-	SignInSubdomainNotFound MigrationSignInResult = "subdomain_not_found"
-	SignInTokenFailed       MigrationSignInResult = "token_failed"
+	SignInAccessDenied         MigrationSignInResult = "access_denied"
+	SignInAccountMismatch      MigrationSignInResult = "account_mismatch"
+	SignInAdminConsentRequired MigrationSignInResult = "admin_consent_required"
+	SignInAdminConsented       MigrationSignInResult = "admin_consented"
+	SignInConditionalAccess    MigrationSignInResult = "conditional_access"
+	SignInConnected            MigrationSignInResult = "connected"
+	SignInConsentRequired      MigrationSignInResult = "consent_required"
+	SignInExpired              MigrationSignInResult = "expired"
+	SignInNotAdmin             MigrationSignInResult = "not_admin"
+	SignInPlanHasNoApi         MigrationSignInResult = "plan_has_no_api"
+	SignInScopeTooBroad        MigrationSignInResult = "scope_too_broad"
+	SignInSessionMismatch      MigrationSignInResult = "session_mismatch"
+	SignInSourceUnreachable    MigrationSignInResult = "source_unreachable"
+	SignInSubdomainNotFound    MigrationSignInResult = "subdomain_not_found"
+	SignInTokenFailed          MigrationSignInResult = "token_failed"
+	SignInXoauth2Failed        MigrationSignInResult = "xoauth2_failed"
 )
 
 // Valid indicates whether the value is a known member of the MigrationSignInResult enum.
@@ -2680,7 +2685,15 @@ func (e MigrationSignInResult) Valid() bool {
 		return true
 	case SignInAccountMismatch:
 		return true
+	case SignInAdminConsentRequired:
+		return true
+	case SignInAdminConsented:
+		return true
+	case SignInConditionalAccess:
+		return true
 	case SignInConnected:
+		return true
+	case SignInConsentRequired:
 		return true
 	case SignInExpired:
 		return true
@@ -2697,6 +2710,8 @@ func (e MigrationSignInResult) Valid() bool {
 	case SignInSubdomainNotFound:
 		return true
 	case SignInTokenFailed:
+		return true
+	case SignInXoauth2Failed:
 		return true
 	default:
 		return false
@@ -2789,14 +2804,17 @@ const (
 	TestCodeNotAdmin            MigrationTestCode = "not_admin"
 	TestCodeNotImap             MigrationTestCode = "not_imap"
 	TestCodePlanHasNoApi        MigrationTestCode = "plan_has_no_api"
+	TestCodeScopeTooBroad       MigrationTestCode = "scope_too_broad"
 	TestCodeStarttlsUnavailable MigrationTestCode = "starttls_unavailable"
 	TestCodeSubdomainNotFound   MigrationTestCode = "subdomain_not_found"
 	TestCodeThrottled           MigrationTestCode = "throttled"
 	TestCodeTimeout             MigrationTestCode = "timeout"
 	TestCodeTlsFailed           MigrationTestCode = "tls_failed"
+	TestCodeTokenRefreshFailed  MigrationTestCode = "token_refresh_failed"
 	TestCodeTooManyConnections  MigrationTestCode = "too_many_connections"
 	TestCodeUnexpectedAnswer    MigrationTestCode = "unexpected_answer"
 	TestCodeWebLoginRequired    MigrationTestCode = "web_login_required"
+	TestCodeXoauth2Failed       MigrationTestCode = "xoauth2_failed"
 )
 
 // Valid indicates whether the value is a known member of the MigrationTestCode enum.
@@ -2826,6 +2844,8 @@ func (e MigrationTestCode) Valid() bool {
 		return true
 	case TestCodePlanHasNoApi:
 		return true
+	case TestCodeScopeTooBroad:
+		return true
 	case TestCodeStarttlsUnavailable:
 		return true
 	case TestCodeSubdomainNotFound:
@@ -2836,11 +2856,15 @@ func (e MigrationTestCode) Valid() bool {
 		return true
 	case TestCodeTlsFailed:
 		return true
+	case TestCodeTokenRefreshFailed:
+		return true
 	case TestCodeTooManyConnections:
 		return true
 	case TestCodeUnexpectedAnswer:
 		return true
 	case TestCodeWebLoginRequired:
+		return true
+	case TestCodeXoauth2Failed:
 		return true
 	default:
 		return false
@@ -8500,6 +8524,12 @@ type MessageUpdatedEventType string
 type Migration struct {
 	Actions []MigrationAction `json:"actions"`
 
+	// AdminConsentUrl `microsoft`, after `admin_consent_required`: the link an admin of the mailbox's
+	// organization opens to grant consent to the app for everyone in it
+	// (`login.microsoftonline.com/<domain>/v2.0/adminconsent`, asking for
+	// `IMAP.AccessAsUser.All` only); afterwards the person signs in again.
+	AdminConsentUrl *string `json:"admin_consent_url,omitempty"`
+
 	// ApiKeyId The API key that created it.
 	ApiKeyId *uuid.UUID `json:"api_key_id,omitempty"`
 
@@ -8509,7 +8539,10 @@ type Migration struct {
 	CreatedAt time.Time       `json:"created_at"`
 
 	// Credentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
-	// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+	// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+	// sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+	// `scopes` and when the access token expires; the token is refreshed before a connection
+	// when it expires within five minutes.
 	Credentials *MigrationCredentials `json:"credentials,omitempty"`
 
 	// CredentialsDeletedAt When the credentials were deleted because the migration ended.
@@ -8578,7 +8611,7 @@ type Migration struct {
 	// SecondsLeft While copying, how long the rest takes at that rate.
 	SecondsLeft *int64 `json:"seconds_left,omitempty"`
 
-	// SignInResult Help desks: how the last sign-in ended, the same `result` its redirect carried.
+	// SignInResult Help desks and `microsoft`: how the last sign-in ended, the same `result` its redirect carried.
 	SignInResult *MigrationSignInResult `json:"sign_in_result,omitempty"`
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
@@ -8646,12 +8679,14 @@ type MigrationVerifiedRoute string
 // `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
 // `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
 // switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
-// desk's sign-in with the team's OAuth client). A server lists only the actions it offers.
+// desk's sign-in with the team's OAuth client, or Sign in with Microsoft). A server lists
+// only the actions it offers.
 type MigrationAction string
 
 // MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with
-// Microsoft. `oauth`: a help desk's sign-in with an OAuth client the team creates in its own
-// account (`POST /v1/migrations/{migrationId}/sign-in`).
+// Microsoft (`POST /v1/migrations/{migrationId}/sign-in`), whose token is sent with
+// `AUTHENTICATE XOAUTH2`. `oauth`: a help desk's sign-in with an OAuth client the team
+// creates in its own account (`POST /v1/migrations/{migrationId}/sign-in`).
 type MigrationAuth string
 
 // MigrationBudget The pace Yuva keeps with this provider, below its published limits.
@@ -8713,7 +8748,10 @@ type MigrationCreate struct {
 }
 
 // MigrationCredentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
-// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
+// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`). A Microsoft
+// sign-in's are `oauth` too, with `outlook.office365.com:993` as `server`, the granted
+// `scopes` and when the access token expires; the token is refreshed before a connection
+// when it expires within five minutes.
 type MigrationCredentials struct {
 	// CertificateSha256 The trusted certificate's SHA-256, when one is pinned.
 	CertificateSha256 *string `json:"certificate_sha256,omitempty"`
@@ -8771,7 +8809,8 @@ type MigrationDetection struct {
 	// Name The provider's name.
 	Name string `json:"name"`
 
-	// Note `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+	// Note `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+	// offer (see the `microsoft` preset's `available`).
 	// `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
 	// computer; export the mail instead. `cloudflare`: the domain forwards mail through
 	// Cloudflare Email Routing; connect the mailbox it ends up in.
@@ -8792,7 +8831,8 @@ type MigrationDetection struct {
 // MigrationDetectionFoundBy `domain`, `mx`, `autoconfig`, `srv` or `guess` (`imap.` or `mail.` of the domain answered); `none` when nothing was found.
 type MigrationDetectionFoundBy string
 
-// MigrationDetectionNote `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in is not offered yet.
+// MigrationDetectionNote `microsoft_later`: Outlook.com or Microsoft 365, whose sign-in this server cannot
+// offer (see the `microsoft` preset's `available`).
 // `proton`: Proton Mail, reachable only through Proton Mail Bridge on the user's
 // computer; export the mail instead. `cloudflare`: the domain forwards mail through
 // Cloudflare Email Routing; connect the mailbox it ends up in.
@@ -8804,7 +8844,10 @@ type MigrationError struct {
 	// `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
 	// `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
 	// again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
-	// a bug).
+	// a bug), and for `microsoft` `token_refresh_failed` (Microsoft refused to refresh the
+	// sign-in) and `xoauth2_failed` (the mailbox refused the token, usually because IMAP was
+	// turned off for it); both stop the migration in `needs_attention` until the person
+	// signs in again.
 	Code      string     `json:"code"`
 	CreatedAt time.Time  `json:"created_at"`
 	Detail    string     `json:"detail"`
@@ -9182,7 +9225,9 @@ type MigrationPreset struct {
 	AppPassword bool            `json:"app_password"`
 	Auth        []MigrationAuth `json:"auth"`
 
-	// Available `false` when this server cannot connect to the provider yet.
+	// Available `false` when this server cannot connect to the provider yet; for `microsoft`, when it
+	// has no Microsoft app of its own and its public URL is not one Microsoft accepts as a
+	// redirect URL (HTTPS, or `http://localhost`).
 	Available bool `json:"available"`
 
 	// Budget The pace Yuva keeps with this provider, below its published limits.
@@ -9204,13 +9249,18 @@ type MigrationPreset struct {
 	Id   MigrationPresetId `json:"id"`
 	Name string            `json:"name"`
 
-	// RedirectUrl `oauth` presets: the redirect URL to enter in the OAuth client the team creates in its
-	// help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps).
+	// RedirectUrl `oauth` and `microsoft` presets: the redirect URL to enter in the OAuth client the team
+	// creates in its help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps)
+	// or, for Microsoft, as the Web redirect URI of the team's own app registration.
 	RedirectUrl *string `json:"redirect_url,omitempty"`
 
-	// Scopes `oauth` presets: the scopes the sign-in asks for and accepts nothing beyond (Zendesk
-	// `read`). Empty for Help Scout, which has no read-only permission: the connection's
-	// refusal of every request but `GET` is what keeps it read-only.
+	// Scopes `oauth` and `microsoft` presets: the scopes the sign-in asks for and accepts nothing
+	// beyond (Zendesk `read`; Microsoft
+	// `https://outlook.office.com/IMAP.AccessAsUser.All` and `offline_access`). Empty for Help
+	// Scout, which has no read-only permission: the connection's refusal of every request but
+	// `GET` is what keeps it read-only. Microsoft's IMAP permission is not read-only either
+	// (its consent screen says "read and write"); the connection's refusal of every command
+	// that changes anything is what keeps it so.
 	Scopes *[]string `json:"scopes,omitempty"`
 
 	// Servers The IMAP servers it uses, the first by default; empty for `imap`, whose server is typed or detected.
@@ -9223,6 +9273,12 @@ type MigrationPreset struct {
 
 	// Subdomain The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`).
 	Subdomain *bool `json:"subdomain,omitempty"`
+
+	// TeamClient `oauth` and `microsoft` presets: the sign-in takes the client id and secret of an
+	// OAuth client or app registration the team creates itself, with `redirect_url`. Always
+	// `true` for help desks; `false` for `microsoft` when the server has a Microsoft app of
+	// its own (`YUVA_MICROSOFT_CLIENT_ID`), which a team may still replace with its own.
+	TeamClient *bool `json:"team_client,omitempty"`
 
 	// Username What the user name is: the whole `address` or its `local_part`.
 	Username MigrationPresetUsername `json:"username"`
@@ -9356,23 +9412,45 @@ type MigrationSignIn struct {
 	RedirectUrl string `json:"redirect_url"`
 }
 
-// MigrationSignInResult The `result` of the redirect to `/migrations/{migrationId}/connect` after a help-desk
-// sign-in: `connected`; `access_denied` (the person declined); `expired` (unknown, used or
-// older than 10 minutes); `session_mismatch` (it came back in another member's browser);
-// `scope_too_broad` (the token grants more than `read`; nothing was stored); `not_admin`,
-// `plan_has_no_api`, `subdomain_not_found` (as the connection test's codes);
-// `account_mismatch` (a reconnect signed in to another account); `token_failed` (the help
-// desk refused the code: usually a wrong client secret or redirect URL); `source_unreachable`.
+// MigrationSignInResult The `result` of the redirect to `/migrations/{migrationId}/connect` after a sign-in:
+// `connected`; `access_denied` (the person declined); `expired` (unknown, used or older
+// than 10 minutes); `session_mismatch` (it came back in another member's browser);
+// `scope_too_broad` (the token grants other permissions than the requested ones: more than
+// `read` for Zendesk, anything but `IMAP.AccessAsUser.All` for Microsoft; nothing was
+// stored); `not_admin`, `plan_has_no_api`, `subdomain_not_found` (as the connection test's
+// codes); `account_mismatch` (a help desk's reconnect signed in to another account, or a
+// Microsoft sign-in to another account than the mailbox; nothing was stored);
+// `token_failed` (the provider refused the code: usually a wrong client secret or redirect
+// URL); `source_unreachable`.
+//
+// Microsoft only: `consent_required` (Microsoft wants the person to consent again: sign in
+// again and accept); `admin_consent_required` (`AADSTS65001`, `AADSTS90094`, `AADSTS90095`:
+// the organization lets only an admin consent to the app; the migration's
+// `admin_consent_url` is the link to send the admin); `conditional_access` (a Conditional
+// Access policy of the organization blocked the sign-in, `AADSTS53000`–`AADSTS53011`);
+// `xoauth2_failed` (Microsoft signed the mailbox in but the mailbox refused the token over
+// IMAP: usually IMAP is turned off for it, which an admin turns on in the Microsoft 365
+// admin center › Users › Mail › Email apps, or with `Set-CASMailbox -ImapEnabled $true`).
+// `admin_consented` is where an admin lands after granting consent through
+// `admin_consent_url` (`/settings/migrations?result=admin_consented`).
 type MigrationSignInResult string
 
-// MigrationSignInStart defines model for MigrationSignInStart.
+// MigrationSignInStart Help desks need `client_id` and `client_secret`. Microsoft needs them when the preset has
+// `team_client: true`; otherwise they are left out to use the server's own app, or given to
+// use the team's own app registration instead.
 type MigrationSignInStart struct {
-	// ClientId The OAuth client's identifier (Zendesk) or the app's ID (Help Scout).
-	ClientId     string  `json:"client_id"`
+	// ClientId The OAuth client's identifier (Zendesk), the app's ID (Help Scout) or the app
+	// registration's Application (client) ID (Microsoft).
+	ClientId     string  `json:"client_id,omitempty"`
 	ClientSecret *string `json:"client_secret,omitempty"`
 
 	// Subdomain Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`.
 	Subdomain *string `json:"subdomain,omitempty"`
+
+	// Tenant Microsoft, with the team's own app registration only: the Directory (tenant) ID or a
+	// verified domain of the tenant that holds a single-tenant app. Without it the authority
+	// follows the mailbox's address.
+	Tenant *string `json:"tenant,omitempty"`
 }
 
 // MigrationSkipped Messages that will not be imported, by reason.
@@ -9460,6 +9538,14 @@ type MigrationTeamSuggestion struct {
 //     may read the incremental export.
 //   - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
 //   - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+//   - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+//     failed, or the server answers "User is authenticated but not connected"): usually IMAP
+//     is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+//     or `Set-CASMailbox -ImapEnabled $true`).
+//   - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+//     password changed, or the sign-in expired after long disuse): sign in again.
+//   - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+//     `IMAP.AccessAsUser.All`; it is not used.
 type MigrationTestCode string
 
 // MigrationTestResult defines model for MigrationTestResult.
@@ -9503,6 +9589,14 @@ type MigrationTestStep struct {
 	//   may read the incremental export.
 	// - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
 	// - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
+	// - `xoauth2_failed`: Microsoft: the mailbox refused the token (`AUTHENTICATE XOAUTH2`
+	//   failed, or the server answers "User is authenticated but not connected"): usually IMAP
+	//   is turned off for the mailbox (Microsoft 365 admin center › Users › Mail › Email apps,
+	//   or `Set-CASMailbox -ImapEnabled $true`).
+	// - `token_refresh_failed`: Microsoft refused to refresh the token (consent withdrawn,
+	//   password changed, or the sign-in expired after long disuse): sign in again.
+	// - `scope_too_broad`: Microsoft: a refreshed token grants other permissions than
+	//   `IMAP.AccessAsUser.All`; it is not used.
 	Code *MigrationTestCode `json:"code,omitempty"`
 
 	// Detail The server's answer or the error, without secrets.
@@ -19874,7 +19968,9 @@ type ClientInterface interface {
 	// or `helpscout` migration is connected by signing in with the team's own OAuth client
 	// (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 	// conversations go to unless `options.inboxes` names another inbox for their brand or
-	// mailbox.
+	// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+	// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+	// `source_address`, which only obtains a token for IMAP.
 	//
 	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
 	// into, without `options.since`, starts with `options.since` at the day of the newest
@@ -19886,8 +19982,10 @@ type ClientInterface interface {
 	// be set later; a channel names its inbox.
 	//
 	// A source this server does not offer answers `422 hosted_limit` (the operator's
-	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-	// "Sign in with Microsoft" is set up on the server.
+	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+	// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+	// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+	// URL for a team's own app (HTTPS, or `http://localhost`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -19907,7 +20005,9 @@ type ClientInterface interface {
 	// or `helpscout` migration is connected by signing in with the team's own OAuth client
 	// (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 	// conversations go to unless `options.inboxes` names another inbox for their brand or
-	// mailbox.
+	// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+	// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+	// `source_address`, which only obtains a token for IMAP.
 	//
 	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
 	// into, without `options.since`, starts with `options.since` at the day of the newest
@@ -19919,8 +20019,10 @@ type ClientInterface interface {
 	// be set later; a channel names its inbox.
 	//
 	// A source this server does not offer answers `422 hosted_limit` (the operator's
-	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-	// "Sign in with Microsoft" is set up on the server.
+	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+	// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+	// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+	// URL for a team's own app (HTTPS, or `http://localhost`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -19935,9 +20037,10 @@ type ClientInterface interface {
 	// domain's MX records (5 seconds), else from the domain's own autoconfig file
 	// (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 	// record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-	// connections follow the same address rules as the connection test. Outlook.com and
-	// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-	// offered; Proton and Cloudflare Email Routing get a `note`.
+	// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+	// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+	// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+	// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -19952,9 +20055,10 @@ type ClientInterface interface {
 	// domain's MX records (5 seconds), else from the domain's own autoconfig file
 	// (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 	// record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-	// connections follow the same address rules as the connection test. Outlook.com and
-	// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-	// offered; Proton and Cloudflare Email Routing get a `note`.
+	// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+	// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+	// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+	// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -20047,8 +20151,8 @@ type ClientInterface interface {
 	//
 	// In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 	// test passes. In `needs_attention` it reconnects the same account on the same server
-	// (`409 migration_state` otherwise, and for help desks and export files, which connect
-	// otherwise).
+	// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+	// connect otherwise).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -20069,8 +20173,8 @@ type ClientInterface interface {
 	//
 	// In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 	// test passes. In `needs_attention` it reconnects the same account on the same server
-	// (`409 migration_state` otherwise, and for help desks and export files, which connect
-	// otherwise).
+	// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+	// connect otherwise).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -20249,13 +20353,36 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
 	ScanMigration(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StartMigrationSignInWithBody Connect a help desk with the team's OAuth client
+	// StartMigrationSignInWithBody Connect a help desk or a Microsoft mailbox with a sign-in
 	//
 	// Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 	// created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 	// in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 	// in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 	// once, never returned or logged, and deleted with the migration's other credentials.
+	//
+	// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+	// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+	// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+	// `login_hint`. It uses the server's own app registration when the preset has
+	// `team_client: false` and the body names no client; otherwise the body carries the
+	// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+	// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+	// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+	// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+	// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+	// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+	// every other command). The callback refuses, storing nothing, a token whose granted scopes
+	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+	// name it, from the mailbox refusing the token), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+	// tokens encrypted; they are refreshed before a connection when they expire within five
+	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+	// account) when the migration is done.
 	//
 	// The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 	// asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -20269,7 +20396,9 @@ type ClientInterface interface {
 	//
 	// In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 	// account. `409 migration_state` for other states and for sources that do not sign in this
-	// way.
+	// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+	// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+	// not `available`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -20278,13 +20407,36 @@ type ClientInterface interface {
 	// Corresponds with POST /v1/migrations/{migrationId}/sign-in (the `StartMigrationSignIn` operationId).
 	StartMigrationSignInWithBody(ctx context.Context, migrationId MigrationId, params *StartMigrationSignInParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// StartMigrationSignIn Connect a help desk with the team's OAuth client
+	// StartMigrationSignIn Connect a help desk or a Microsoft mailbox with a sign-in
 	//
 	// Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 	// created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 	// in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 	// in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 	// once, never returned or logged, and deleted with the migration's other credentials.
+	//
+	// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+	// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+	// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+	// `login_hint`. It uses the server's own app registration when the preset has
+	// `team_client: false` and the body names no client; otherwise the body carries the
+	// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+	// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+	// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+	// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+	// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+	// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+	// every other command). The callback refuses, storing nothing, a token whose granted scopes
+	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+	// name it, from the mailbox refusing the token), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+	// tokens encrypted; they are refreshed before a connection when they expire within five
+	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+	// account) when the migration is done.
 	//
 	// The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 	// asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -20298,7 +20450,9 @@ type ClientInterface interface {
 	//
 	// In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 	// account. `409 migration_state` for other states and for sources that do not sign in this
-	// way.
+	// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+	// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+	// not `available`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -20337,7 +20491,11 @@ type ClientInterface interface {
 	// passing test moves a `draft` migration to `connected` and reports the folders and
 	// messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
 	// when it is about to expire, reads the signed-in user) and `folders` (its brands or
-	// mailboxes, with conversations counted where the help desk tells).
+	// mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+	// signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+	// again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+	// the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+	// `xoauth2_failed`.
 	//
 	// The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
 	// refuses to send any command that could change the mailbox.
@@ -27271,7 +27429,9 @@ func (c *Client) ListMigrations(ctx context.Context, params *ListMigrationsParam
 // or `helpscout` migration is connected by signing in with the team's own OAuth client
 // (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 // conversations go to unless `options.inboxes` names another inbox for their brand or
-// mailbox.
+// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+// `source_address`, which only obtains a token for IMAP.
 //
 // An `imap` migration into a channel that a `file` migration of the same mailbox imported
 // into, without `options.since`, starts with `options.since` at the day of the newest
@@ -27283,8 +27443,10 @@ func (c *Client) ListMigrations(ctx context.Context, params *ListMigrationsParam
 // be set later; a channel names its inbox.
 //
 // A source this server does not offer answers `422 hosted_limit` (the operator's
-// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-// "Sign in with Microsoft" is set up on the server.
+// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+// URL for a team's own app (HTTPS, or `http://localhost`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27314,7 +27476,9 @@ func (c *Client) CreateMigrationWithBody(ctx context.Context, params *CreateMigr
 // or `helpscout` migration is connected by signing in with the team's own OAuth client
 // (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 // conversations go to unless `options.inboxes` names another inbox for their brand or
-// mailbox.
+// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+// `source_address`, which only obtains a token for IMAP.
 //
 // An `imap` migration into a channel that a `file` migration of the same mailbox imported
 // into, without `options.since`, starts with `options.since` at the day of the newest
@@ -27326,8 +27490,10 @@ func (c *Client) CreateMigrationWithBody(ctx context.Context, params *CreateMigr
 // be set later; a channel names its inbox.
 //
 // A source this server does not offer answers `422 hosted_limit` (the operator's
-// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-// "Sign in with Microsoft" is set up on the server.
+// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+// URL for a team's own app (HTTPS, or `http://localhost`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27352,9 +27518,10 @@ func (c *Client) CreateMigration(ctx context.Context, params *CreateMigrationPar
 // domain's MX records (5 seconds), else from the domain's own autoconfig file
 // (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 // record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-// connections follow the same address rules as the connection test. Outlook.com and
-// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-// offered; Proton and Cloudflare Email Routing get a `note`.
+// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27379,9 +27546,10 @@ func (c *Client) DetectMigrationSourceWithBody(ctx context.Context, params *Dete
 // domain's MX records (5 seconds), else from the domain's own autoconfig file
 // (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 // record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-// connections follow the same address rules as the connection test. Outlook.com and
-// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-// offered; Proton and Cloudflare Email Routing get a `note`.
+// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27544,8 +27712,8 @@ func (c *Client) CancelMigration(ctx context.Context, migrationId MigrationId, p
 //
 // In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 // test passes. In `needs_attention` it reconnects the same account on the same server
-// (`409 migration_state` otherwise, and for help desks and export files, which connect
-// otherwise).
+// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+// connect otherwise).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27576,8 +27744,8 @@ func (c *Client) SetMigrationCredentialsWithBody(ctx context.Context, migrationI
 //
 // In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 // test passes. In `needs_attention` it reconnects the same account on the same server
-// (`409 migration_state` otherwise, and for help desks and export files, which connect
-// otherwise).
+// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+// connect otherwise).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27886,13 +28054,36 @@ func (c *Client) ScanMigration(ctx context.Context, migrationId MigrationId, par
 	return c.Client.Do(req)
 }
 
-// StartMigrationSignInWithBody Connect a help desk with the team's OAuth client
+// StartMigrationSignInWithBody Connect a help desk or a Microsoft mailbox with a sign-in
 //
 // Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 // created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 // in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 // in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 // once, never returned or logged, and deleted with the migration's other credentials.
+//
+// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+// `login_hint`. It uses the server's own app registration when the preset has
+// `team_client: false` and the body names no client; otherwise the body carries the
+// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+// every other command). The callback refuses, storing nothing, a token whose granted scopes
+// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+// name it, from the mailbox refusing the token), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+// tokens encrypted; they are refreshed before a connection when they expire within five
+// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+// account) when the migration is done.
 //
 // The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 // asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -27906,7 +28097,9 @@ func (c *Client) ScanMigration(ctx context.Context, migrationId MigrationId, par
 //
 // In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 // account. `409 migration_state` for other states and for sources that do not sign in this
-// way.
+// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+// not `available`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -27925,13 +28118,36 @@ func (c *Client) StartMigrationSignInWithBody(ctx context.Context, migrationId M
 	return c.Client.Do(req)
 }
 
-// StartMigrationSignIn Connect a help desk with the team's OAuth client
+// StartMigrationSignIn Connect a help desk or a Microsoft mailbox with a sign-in
 //
 // Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 // created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 // in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 // in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 // once, never returned or logged, and deleted with the migration's other credentials.
+//
+// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+// `login_hint`. It uses the server's own app registration when the preset has
+// `team_client: false` and the body names no client; otherwise the body carries the
+// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+// every other command). The callback refuses, storing nothing, a token whose granted scopes
+// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+// name it, from the mailbox refusing the token), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+// tokens encrypted; they are refreshed before a connection when they expire within five
+// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+// account) when the migration is done.
 //
 // The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 // asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -27945,7 +28161,9 @@ func (c *Client) StartMigrationSignInWithBody(ctx context.Context, migrationId M
 //
 // In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 // account. `409 migration_state` for other states and for sources that do not sign in this
-// way.
+// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+// not `available`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -28004,7 +28222,11 @@ func (c *Client) StartMigration(ctx context.Context, migrationId MigrationId, pa
 // passing test moves a `draft` migration to `connected` and reports the folders and
 // messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
 // when it is about to expire, reads the signed-in user) and `folders` (its brands or
-// mailboxes, with conversations counted where the help desk tells).
+// mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+// signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+// again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+// the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+// `xoauth2_failed`.
 //
 // The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
 // refuses to send any command that could change the mailbox.
@@ -48096,7 +48318,9 @@ type ClientWithResponsesInterface interface {
 	// or `helpscout` migration is connected by signing in with the team's own OAuth client
 	// (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 	// conversations go to unless `options.inboxes` names another inbox for their brand or
-	// mailbox.
+	// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+	// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+	// `source_address`, which only obtains a token for IMAP.
 	//
 	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
 	// into, without `options.since`, starts with `options.since` at the day of the newest
@@ -48108,8 +48332,10 @@ type ClientWithResponsesInterface interface {
 	// be set later; a channel names its inbox.
 	//
 	// A source this server does not offer answers `422 hosted_limit` (the operator's
-	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-	// "Sign in with Microsoft" is set up on the server.
+	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+	// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+	// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+	// URL for a team's own app (HTTPS, or `http://localhost`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48129,7 +48355,9 @@ type ClientWithResponsesInterface interface {
 	// or `helpscout` migration is connected by signing in with the team's own OAuth client
 	// (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 	// conversations go to unless `options.inboxes` names another inbox for their brand or
-	// mailbox.
+	// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+	// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+	// `source_address`, which only obtains a token for IMAP.
 	//
 	// An `imap` migration into a channel that a `file` migration of the same mailbox imported
 	// into, without `options.since`, starts with `options.since` at the day of the newest
@@ -48141,8 +48369,10 @@ type ClientWithResponsesInterface interface {
 	// be set later; a channel names its inbox.
 	//
 	// A source this server does not offer answers `422 hosted_limit` (the operator's
-	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-	// "Sign in with Microsoft" is set up on the server.
+	// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+	// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+	// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+	// URL for a team's own app (HTTPS, or `http://localhost`).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48157,9 +48387,10 @@ type ClientWithResponsesInterface interface {
 	// domain's MX records (5 seconds), else from the domain's own autoconfig file
 	// (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 	// record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-	// connections follow the same address rules as the connection test. Outlook.com and
-	// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-	// offered; Proton and Cloudflare Email Routing get a `note`.
+	// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+	// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+	// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+	// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48174,9 +48405,10 @@ type ClientWithResponsesInterface interface {
 	// domain's MX records (5 seconds), else from the domain's own autoconfig file
 	// (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 	// record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-	// connections follow the same address rules as the connection test. Outlook.com and
-	// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-	// offered; Proton and Cloudflare Email Routing get a `note`.
+	// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+	// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+	// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+	// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48277,8 +48509,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 	// test passes. In `needs_attention` it reconnects the same account on the same server
-	// (`409 migration_state` otherwise, and for help desks and export files, which connect
-	// otherwise).
+	// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+	// connect otherwise).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48299,8 +48531,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 	// test passes. In `needs_attention` it reconnects the same account on the same server
-	// (`409 migration_state` otherwise, and for help desks and export files, which connect
-	// otherwise).
+	// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+	// connect otherwise).
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48495,13 +48727,36 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
 	ScanMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*ScanMigrationResponse, error)
 
-	// StartMigrationSignInWithBodyWithResponse Connect a help desk with the team's OAuth client
+	// StartMigrationSignInWithBodyWithResponse Connect a help desk or a Microsoft mailbox with a sign-in
 	//
 	// Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 	// created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 	// in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 	// in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 	// once, never returned or logged, and deleted with the migration's other credentials.
+	//
+	// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+	// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+	// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+	// `login_hint`. It uses the server's own app registration when the preset has
+	// `team_client: false` and the body names no client; otherwise the body carries the
+	// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+	// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+	// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+	// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+	// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+	// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+	// every other command). The callback refuses, storing nothing, a token whose granted scopes
+	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+	// name it, from the mailbox refusing the token), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+	// tokens encrypted; they are refreshed before a connection when they expire within five
+	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+	// account) when the migration is done.
 	//
 	// The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 	// asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -48515,7 +48770,9 @@ type ClientWithResponsesInterface interface {
 	//
 	// In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 	// account. `409 migration_state` for other states and for sources that do not sign in this
-	// way.
+	// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+	// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+	// not `available`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48524,13 +48781,36 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with POST /v1/migrations/{migrationId}/sign-in (the `StartMigrationSignIn` operationId).
 	StartMigrationSignInWithBodyWithResponse(ctx context.Context, migrationId MigrationId, params *StartMigrationSignInParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StartMigrationSignInResponse, error)
 
-	// StartMigrationSignInWithResponse Connect a help desk with the team's OAuth client
+	// StartMigrationSignInWithResponse Connect a help desk or a Microsoft mailbox with a sign-in
 	//
 	// Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 	// created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 	// in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 	// in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 	// once, never returned or logged, and deleted with the migration's other credentials.
+	//
+	// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+	// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+	// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+	// `login_hint`. It uses the server's own app registration when the preset has
+	// `team_client: false` and the body names no client; otherwise the body carries the
+	// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+	// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+	// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+	// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+	// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+	// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+	// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+	// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+	// every other command). The callback refuses, storing nothing, a token whose granted scopes
+	// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+	// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+	// name it, from the mailbox refusing the token), then signs in to
+	// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+	// tokens encrypted; they are refreshed before a connection when they expire within five
+	// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+	// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+	// account) when the migration is done.
 	//
 	// The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 	// asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -48544,7 +48824,9 @@ type ClientWithResponsesInterface interface {
 	//
 	// In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 	// account. `409 migration_state` for other states and for sources that do not sign in this
-	// way.
+	// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+	// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+	// not `available`.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -48585,7 +48867,11 @@ type ClientWithResponsesInterface interface {
 	// passing test moves a `draft` migration to `connected` and reports the folders and
 	// messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
 	// when it is about to expire, reads the signed-in user) and `folders` (its brands or
-	// mailboxes, with conversations counted where the help desk tells).
+	// mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+	// signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+	// again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+	// the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+	// `xoauth2_failed`.
 	//
 	// The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
 	// refuses to send any command that could change the mailbox.
@@ -71738,7 +72024,9 @@ func (c *ClientWithResponses) ListMigrationsWithResponse(ctx context.Context, pa
 // or `helpscout` migration is connected by signing in with the team's own OAuth client
 // (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 // conversations go to unless `options.inboxes` names another inbox for their brand or
-// mailbox.
+// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+// `source_address`, which only obtains a token for IMAP.
 //
 // An `imap` migration into a channel that a `file` migration of the same mailbox imported
 // into, without `options.since`, starts with `options.since` at the day of the newest
@@ -71750,8 +72038,10 @@ func (c *ClientWithResponses) ListMigrationsWithResponse(ctx context.Context, pa
 // be set later; a channel names its inbox.
 //
 // A source this server does not offer answers `422 hosted_limit` (the operator's
-// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-// "Sign in with Microsoft" is set up on the server.
+// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+// URL for a team's own app (HTTPS, or `http://localhost`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -71777,7 +72067,9 @@ func (c *ClientWithResponses) CreateMigrationWithBodyWithResponse(ctx context.Co
 // or `helpscout` migration is connected by signing in with the team's own OAuth client
 // (`POST .../sign-in`); its `source_address` is the support address whose e-mail channel
 // conversations go to unless `options.inboxes` names another inbox for their brand or
-// mailbox.
+// mailbox. A `microsoft` migration (Outlook.com, Hotmail, Live and Microsoft 365) is
+// connected by signing in with Microsoft (`POST .../sign-in`) as the mailbox
+// `source_address`, which only obtains a token for IMAP.
 //
 // An `imap` migration into a channel that a `file` migration of the same mailbox imported
 // into, without `options.since`, starts with `options.since` at the day of the newest
@@ -71789,8 +72081,10 @@ func (c *ClientWithResponses) CreateMigrationWithBodyWithResponse(ctx context.Co
 // be set later; a channel names its inbox.
 //
 // A source this server does not offer answers `422 hosted_limit` (the operator's
-// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` until
-// "Sign in with Microsoft" is set up on the server.
+// `YUVA_MIGRATION_SOURCES`); `microsoft` answers `409 provider_not_configured` when the
+// server can offer no "Sign in with Microsoft": it has no Microsoft app of its own
+// (`YUVA_MICROSOFT_CLIENT_ID`) and its public URL is not one Microsoft accepts as a redirect
+// URL for a team's own app (HTTPS, or `http://localhost`).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -71811,9 +72105,10 @@ func (c *ClientWithResponses) CreateMigrationWithResponse(ctx context.Context, p
 // domain's MX records (5 seconds), else from the domain's own autoconfig file
 // (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 // record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-// connections follow the same address rules as the connection test. Outlook.com and
-// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-// offered; Proton and Cloudflare Email Routing get a `note`.
+// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -71834,9 +72129,10 @@ func (c *ClientWithResponses) DetectMigrationSourceWithBodyWithResponse(ctx cont
 // domain's MX records (5 seconds), else from the domain's own autoconfig file
 // (`autoconfig.<domain>` and `<domain>/.well-known/autoconfig`), then the `_imaps._tcp` SRV
 // record, then `imap.<domain>` and `mail.<domain>`. Nothing is sent to a third party; the
-// connections follow the same address rules as the connection test. Outlook.com and
-// Microsoft 365 are recognised and answered with `available: false` until their sign-in is
-// offered; Proton and Cloudflare Email Routing get a `note`.
+// connections follow the same address rules as the connection test. Outlook.com, Hotmail,
+// Live and Microsoft 365 (MX `*.mail.protection.outlook.com`) get the `microsoft` preset,
+// `available: false` with the note `microsoft_later` when the server cannot offer "Sign in
+// with Microsoft"; Proton and Cloudflare Email Routing get a `note`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -71979,8 +72275,8 @@ func (c *ClientWithResponses) CancelMigrationWithResponse(ctx context.Context, m
 //
 // In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 // test passes. In `needs_attention` it reconnects the same account on the same server
-// (`409 migration_state` otherwise, and for help desks and export files, which connect
-// otherwise).
+// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+// connect otherwise).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -72007,8 +72303,8 @@ func (c *ClientWithResponses) SetMigrationCredentialsWithBodyWithResponse(ctx co
 //
 // In `draft` and `connected`; a `connected` migration goes back to `draft` until the next
 // test passes. In `needs_attention` it reconnects the same account on the same server
-// (`409 migration_state` otherwise, and for help desks and export files, which connect
-// otherwise).
+// (`409 migration_state` otherwise, and for help desks, export files and `microsoft`, which
+// connect otherwise).
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -72281,13 +72577,36 @@ func (c *ClientWithResponses) ScanMigrationWithResponse(ctx context.Context, mig
 	return ParseScanMigrationResponse(rsp)
 }
 
-// StartMigrationSignInWithBodyWithResponse Connect a help desk with the team's OAuth client
+// StartMigrationSignInWithBodyWithResponse Connect a help desk or a Microsoft mailbox with a sign-in
 //
 // Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 // created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 // in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 // in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 // once, never returned or logged, and deleted with the migration's other credentials.
+//
+// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+// `login_hint`. It uses the server's own app registration when the preset has
+// `team_client: false` and the body names no client; otherwise the body carries the
+// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+// every other command). The callback refuses, storing nothing, a token whose granted scopes
+// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+// name it, from the mailbox refusing the token), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+// tokens encrypted; they are refreshed before a connection when they expire within five
+// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+// account) when the migration is done.
 //
 // The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 // asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -72301,7 +72620,9 @@ func (c *ClientWithResponses) ScanMigrationWithResponse(ctx context.Context, mig
 //
 // In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 // account. `409 migration_state` for other states and for sources that do not sign in this
-// way.
+// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+// not `available`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -72316,13 +72637,36 @@ func (c *ClientWithResponses) StartMigrationSignInWithBodyWithResponse(ctx conte
 	return ParseStartMigrationSignInResponse(rsp)
 }
 
-// StartMigrationSignInWithResponse Connect a help desk with the team's OAuth client
+// StartMigrationSignInWithResponse Connect a help desk or a Microsoft mailbox with a sign-in
 //
 // Starts the sign-in of a `zendesk` or `helpscout` migration with an OAuth client the team
 // created in its own help desk account, whose redirect URL is the preset's `redirect_url`:
 // in Zendesk an OAuth client (Admin Center › Apps and integrations › APIs › OAuth clients),
 // in Help Scout an app (Your Profile › My Apps). The client id and secret are encrypted at
 // once, never returned or logged, and deleted with the migration's other credentials.
+//
+// A `microsoft` migration signs in with Microsoft only to obtain a token for IMAP: the
+// authorization-code flow with PKCE at `login.microsoftonline.com` asks for exactly
+// `https://outlook.office.com/IMAP.AccessAsUser.All offline_access`, with the mailbox as
+// `login_hint`. It uses the server's own app registration when the preset has
+// `team_client: false` and the body names no client; otherwise the body carries the
+// `client_id` and `client_secret` of an app registration the team created (Microsoft Entra
+// admin center › App registrations: the preset's `redirect_url` as a Web redirect URI and
+// the delegated permission `IMAP.AccessAsUser.All` of Office 365 Exchange Online), with its
+// `tenant` when the app is single-tenant. Without `tenant` the authority follows the address:
+// `consumers` for Outlook.com, Hotmail and Live, `organizations` for a domain whose mail
+// Microsoft 365 receives, `common` otherwise. Microsoft's consent screen says "read and
+// write access to mailboxes via IMAP", since Microsoft has no read-only IMAP permission;
+// Yuva's connection still only reads (`EXAMINE`, `BODY.PEEK`, and a guard that refuses
+// every other command). The callback refuses, storing nothing, a token whose granted scopes
+// differ from the requested set (`scope_too_broad`) and a sign-in to another account than
+// the mailbox (`account_mismatch`, from the token's account or, where Microsoft does not
+// name it, from the mailbox refusing the token), then signs in to
+// `outlook.office365.com:993` with `AUTHENTICATE XOAUTH2`, lists the folders and stores the
+// tokens encrypted; they are refreshed before a connection when they expire within five
+// minutes. Tokens are not revoked at Microsoft: the person removes the app from their
+// account (account.microsoft.com › Privacy › Apps and services, or My Apps for a work
+// account) when the migration is done.
 //
 // The answer's `authorize_url` opens the help desk's consent page in the browser. Zendesk is
 // asked for the scope `read` only, with PKCE; Help Scout has no scopes and no PKCE. The help
@@ -72336,7 +72680,9 @@ func (c *ClientWithResponses) StartMigrationSignInWithBodyWithResponse(ctx conte
 //
 // In `draft`, `connected` and `needs_attention`; in `needs_attention` it reconnects the same
 // account. `409 migration_state` for other states and for sources that do not sign in this
-// way.
+// way. For `microsoft`: `400 validation_failed` without `client_id` and `client_secret` when
+// the preset has `team_client: true`, and `409 provider_not_configured` when the preset is
+// not `available`.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -72389,7 +72735,11 @@ func (c *ClientWithResponses) StartMigrationWithResponse(ctx context.Context, mi
 // passing test moves a `draft` migration to `connected` and reports the folders and
 // messages it saw. A help desk's test runs two steps: `sign_in` (the stored token, refreshed
 // when it is about to expire, reads the signed-in user) and `folders` (its brands or
-// mailboxes, with conversations counted where the help desk tells).
+// mailboxes, with conversations counted where the help desk tells). A `microsoft` migration
+// signs in with `AUTHENTICATE XOAUTH2` and the stored token, refreshed first (and stored
+// again, encrypted) when it expires within five minutes; a refresh Microsoft refuses fails
+// the `sign_in` step with `token_refresh_failed`, and the mailbox refusing the token with
+// `xoauth2_failed`.
 //
 // The connection only reads: it opens folders with `EXAMINE`, fetches with `BODY.PEEK`, and
 // refuses to send any command that could change the mailbox.
