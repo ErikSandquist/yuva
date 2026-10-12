@@ -1,0 +1,5 @@
+code: xoauth2_failed
+host: outlook.office365.com
+mechanism: xoauth2
+source: Exchange Online answer to AUTHENTICATE XOAUTH2 when the mailbox has IMAP turned off (Set-CASMailbox -ImapEnabled $false) or does not accept the token, as quoted in Microsoft Q&A threads on authenticating IMAP with OAuth
+answer: NO AUTHENTICATE failed.

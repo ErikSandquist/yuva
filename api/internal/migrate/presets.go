@@ -3,7 +3,11 @@
 // connection test.
 package migrate
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/productdevbook/yuva/api/internal/migrate/microsoft"
+)
 
 type Server struct {
 	Host string
@@ -32,7 +36,8 @@ type Preset struct {
 	Budget      Budget
 	Guide       string
 	Available   bool
-	// Scopes are what a help desk's sign-in asks for; Subdomain, that it needs the account's.
+	// Scopes are what a help desk's or Microsoft's sign-in asks for; Subdomain, that it needs the
+	// account's. Microsoft's Available is the server's to tell (Sign in with Microsoft).
 	Scopes    []string
 	Subdomain bool
 }
@@ -96,7 +101,7 @@ var Presets = []Preset{
 	{ID: PresetGoogleWorkspace, Name: "Google Workspace", Servers: tls993("imap.gmail.com"), Auth: []string{AuthPassword}, AppPassword: true,
 		Username: UsernameAddress, Folders: []string{`\All`}, Budget: gmailBudget, Guide: "migrate-google-workspace", Available: true},
 	{ID: PresetMicrosoft, Name: "Outlook.com and Microsoft 365", Servers: tls993("outlook.office365.com"), Auth: []string{AuthMicrosoft},
-		Username: UsernameAddress, Folders: withArchive, Budget: defaultBudget, Guide: "migrate-microsoft"},
+		Username: UsernameAddress, Folders: withArchive, Budget: defaultBudget, Guide: "migrate-microsoft", Scopes: microsoft.Scopes},
 	{ID: PresetYandex, Name: "Yandex", Servers: tls993("imap.yandex.com"), Auth: []string{AuthPassword}, AppPassword: true,
 		Username: UsernameAddress, Folders: inboxSentUser, Budget: defaultBudget, Guide: "migrate-yandex", Available: true},
 	{ID: PresetICloud, Name: "iCloud Mail", Servers: tls993("imap.mail.me.com"), Auth: []string{AuthPassword}, AppPassword: true,

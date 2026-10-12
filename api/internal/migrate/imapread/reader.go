@@ -70,7 +70,13 @@ var (
 	ErrNoStartTLS       = errors.New("the server offers no STARTTLS")
 	ErrPreauthPlaintext = errors.New("the server signed in before TLS")
 	ErrNoSignIn         = errors.New("the server offers no password sign-in")
+	ErrNoXOAUTH2        = errors.New("the server offers no XOAUTH2 sign-in")
 )
+
+// TokenRefusedError is the server's answer to AUTHENTICATE XOAUTH2 that refused the token.
+type TokenRefusedError struct{ *ServerError }
+
+func (e *TokenRefusedError) Unwrap() error { return e.ServerError }
 
 type Config struct {
 	Host string
@@ -351,13 +357,44 @@ func (r *Reader) Login(ctx context.Context, username, password string) error {
 	if err != nil {
 		return r.fail(StepSignIn, err)
 	}
+	r.readCaps()
+	return nil
+}
+
+func (r *Reader) readCaps() {
 	caps := r.client.Caps()
 	r.caps = map[string]bool{}
 	for c := range caps {
 		r.caps[strings.ToUpper(string(c))] = true
 	}
+}
+
+// LoginXOAUTH2 signs in with an OAuth access token for username (SASL XOAUTH2).
+func (r *Reader) LoginXOAUTH2(ctx context.Context, username, token string) error {
+	defer r.bind(ctx)()
+	if !r.caps["AUTH=XOAUTH2"] {
+		return &Error{Step: StepSignIn, Err: ErrNoXOAUTH2}
+	}
+	if err := r.client.Authenticate(xoauth2{user: username, token: token}); err != nil {
+		var se *ServerError
+		if errors.As(serverError(err), &se) {
+			return &Error{Step: StepSignIn, Err: &TokenRefusedError{se}}
+		}
+		return r.fail(StepSignIn, err)
+	}
+	r.readCaps()
 	return nil
 }
+
+type xoauth2 struct{ user, token string }
+
+func (x xoauth2) Start() (string, []byte, error) {
+	return "XOAUTH2", []byte("user=" + x.user + "\x01auth=Bearer " + x.token + "\x01\x01"), nil
+}
+
+// Next answers the error the server sends as a challenge with the empty response that ends the
+// exchange, so the server's final answer says why.
+func (x xoauth2) Next([]byte) ([]byte, error) { return []byte{}, nil }
 
 // Folders lists every folder with its attributes, special use included where the server has it.
 func (r *Reader) Folders(ctx context.Context) ([]Folder, error) {

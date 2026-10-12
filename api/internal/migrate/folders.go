@@ -47,7 +47,14 @@ var folderNames = map[string]string{
 
 	"outbox": KindOther, "postausgang": KindOther, "giden kutusu": KindOther, "исходящие": KindOther,
 	"conversation history": KindOther, "sync issues": KindOther, "rss feeds": KindOther, "notes": KindOther,
-	"chats": KindOther, "starred": KindOther, "important": KindOther,
+	"unterhaltungsverlauf": KindOther, "konuşma geçmişi": KindOther, "historique des conversations": KindOther,
+	"журнал бесед": KindOther, "historial de conversaciones": KindOther, "cronologia conversazioni": KindOther,
+	"junk-e-mail": KindSpam, "gereksiz e-posta": KindSpam, "нежелательная почта": KindSpam, "correo no deseado": KindSpam,
+	"posta indesiderata": KindSpam, "ongewenste e-mail": KindSpam,
+	"éléments supprimés": KindTrash, "удаленные элементы": KindTrash, "elementos eliminados": KindTrash, "posta eliminata": KindTrash,
+	"verwijderde items": KindTrash, "отправленные элементы": KindSent, "elementos enviados": KindSent, "elementi inviati": KindSent,
+	"postvak uit": KindOther,
+	"chats":       KindOther, "starred": KindOther, "important": KindOther,
 }
 
 // FolderKind tells what a folder holds, by its special-use attribute first and its name second.

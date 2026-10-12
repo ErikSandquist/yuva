@@ -7,6 +7,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/migrate/helpdesk"
 	"github.com/productdevbook/yuva/api/internal/migrate/imapread"
+	"github.com/productdevbook/yuva/api/internal/migrate/microsoft"
 )
 
 const (
@@ -95,11 +96,16 @@ func Classify(err error, host string, secrets ...string) (Trouble, string, strin
 	if trouble, code, detail, ok := classifyHelpdesk(err); ok {
 		return trouble, code, Scrub(detail, secrets...)
 	}
+	if trouble, code, detail, ok := classifyMicrosoft(err); ok {
+		return trouble, code, Scrub(detail, secrets...)
+	}
 	var se *imapread.ServerError
 	if errors.As(err, &se) {
 		code, detail := ClassifyAnswer(se, host)
 		detail = Scrub(detail, secrets...)
 		switch code {
+		case CodeXOAUTH2Failed:
+			return TroubleReconnect, CodeXOAUTH2Failed, detail
 		case CodeAuthFailed, CodeAppPasswordRequired, CodeIMAPDisabled, CodeBasicAuthDisabled, CodeWebLoginRequired:
 			return TroubleReconnect, "auth_failed", detail
 		case CodeThrottled, CodeTooManyConnections:
@@ -118,6 +124,32 @@ func Classify(err error, host string, secrets ...string) (Trouble, string, strin
 		return TroubleReconnect, "source_unreachable", Scrub(err.Error(), secrets...)
 	}
 	return TroubleNetwork, "source_unreachable", Scrub(err.Error(), secrets...)
+}
+
+// classifyMicrosoft tells what a Microsoft sign-in's failure asks for: a refresh Microsoft refused
+// or a token the mailbox refused needs the person to sign in again.
+func classifyMicrosoft(err error) (Trouble, string, string, bool) {
+	var refusedToken *imapread.TokenRefusedError
+	var refusedRequest *microsoft.RefusedError
+	var tokenErr *microsoft.Error
+	var scopeErr *microsoft.ScopeError
+	switch {
+	case errors.As(err, &refusedRequest):
+		return TroubleRefused, "source_write_refused", "refused to send " + refusedRequest.Method + " to Microsoft", true
+	case errors.As(err, &refusedToken):
+		code, detail := ClassifyXOAUTH2(refusedToken.ServerError)
+		if code == CodeThrottled || code == CodeTooManyConnections {
+			return TroubleLimit, "throttled", detail, true
+		}
+		return TroubleReconnect, CodeXOAUTH2Failed, detail, true
+	case errors.Is(err, imapread.ErrNoXOAUTH2):
+		return TroubleReconnect, CodeXOAUTH2Failed, err.Error(), true
+	case errors.As(err, &tokenErr):
+		return TroubleReconnect, CodeTokenRefreshFailed, tokenErr.Error(), true
+	case errors.As(err, &scopeErr):
+		return TroubleReconnect, CodeScopeTooBroad, scopeErr.Error(), true
+	}
+	return "", "", "", false
 }
 
 // classifyHelpdesk tells what a help desk's failure asks for.

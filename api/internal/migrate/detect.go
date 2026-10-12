@@ -48,6 +48,8 @@ type Detector struct {
 	Resolver     Resolver
 	HTTP         HTTPDoer
 	AllowPrivate bool
+	// MicrosoftAvailable is whether the server can offer Sign in with Microsoft.
+	MicrosoftAvailable bool
 	// Timeout bounds each lookup and connection; 5 seconds when zero.
 	Timeout time.Duration
 }
@@ -206,9 +208,31 @@ func (d Detector) withPreset(out Detection, id, host, note, by string) Detection
 		out.Server = &s
 	}
 	if id == PresetMicrosoft {
-		out.Note = NoteMicrosoftLater
+		out.Available = d.MicrosoftAvailable
+		if !out.Available {
+			out.Note = NoteMicrosoftLater
+		}
 	}
 	return out
+}
+
+// MicrosoftAccount tells whether address is a personal Microsoft account (Outlook.com, Hotmail,
+// Live, MSN) or a work one, whose domain's mail Microsoft 365 receives; neither when unknown.
+func MicrosoftAccount(ctx context.Context, r Resolver, address string, timeout time.Duration) (personal, work bool) {
+	_, domain, _ := strings.Cut(strings.ToLower(strings.TrimSpace(address)), "@")
+	domain = strings.TrimSuffix(domain, ".")
+	if id, _, ok := consumer(domain); ok {
+		return id == PresetMicrosoft, false
+	}
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	mxs, _ := r.LookupMX(ctx, domain)
+	for _, mx := range mxs {
+		if id, _, _, ok := MatchMX(mx.Host); ok && id == PresetMicrosoft {
+			return false, true
+		}
+	}
+	return false, false
 }
 
 type autoconfigDoc struct {

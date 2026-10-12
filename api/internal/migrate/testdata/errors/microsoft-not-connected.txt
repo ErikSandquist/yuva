@@ -1,0 +1,4 @@
+code: xoauth2_failed
+host: outlook.office365.com
+source: Exchange Online answer to LIST after AUTHENTICATE XOAUTH2 succeeded with a token that cannot open the mailbox, as quoted in Microsoft Q&A threads on authenticating IMAP with OAuth
+answer: BAD User is authenticated but not connected.

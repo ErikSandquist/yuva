@@ -1,0 +1,5 @@
+code: xoauth2_failed
+host: imap.example.com
+mechanism: xoauth2
+source: Dovecot 2.4 answer to AUTHENTICATE XOAUTH2 when its oauth2 passdb finds the token inactive or issued to another user (the XOAUTH2 integration test's server)
+answer: NO [AUTHENTICATIONFAILED] Authentication failed.

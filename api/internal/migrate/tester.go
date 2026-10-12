@@ -40,6 +40,9 @@ const (
 	CodeExamineFailed       = "examine_failed"
 	CodeTimeout             = "timeout"
 	CodeUnexpectedAnswer    = "unexpected_answer"
+	CodeXOAUTH2Failed       = "xoauth2_failed"
+	CodeTokenRefreshFailed  = "token_refresh_failed"
+	CodeScopeTooBroad       = "scope_too_broad"
 
 	TestTimeout = 20 * time.Second
 )
@@ -76,19 +79,24 @@ func (r TestResult) Failed() TestStep {
 	return r.Steps[len(r.Steps)-1]
 }
 
+// Target is what a test connects to and signs in with: a password, or an OAuth access token sent
+// with AUTHENTICATE XOAUTH2.
 type Target struct {
 	Preset            Preset
 	Server            Server
 	Username          string
 	Password          string
+	Token             string
 	CertificateSHA256 string
 }
 
+// Tester runs connection tests. Dial, when set, replaces resolving and connecting, for tests.
 type Tester struct {
 	Resolver     Resolver
 	AllowPrivate bool
 	RootCAs      *x509.CertPool
 	Timeout      time.Duration
+	Dial         func(ctx context.Context, network, addr string) (net.Conn, error)
 }
 
 // Run goes through the steps a migration will take and stops at the first that fails.
@@ -105,21 +113,24 @@ func (t Tester) Run(ctx context.Context, target Target) TestResult {
 		if ctx.Err() != nil {
 			code, detail = CodeTimeout, "the test ran out of its "+timeout.String()
 		}
-		res.Steps = append(res.Steps, TestStep{Step: step, Code: code, Detail: Scrub(detail, target.Username, target.Password)})
+		res.Steps = append(res.Steps, TestStep{Step: step, Code: code, Detail: Scrub(detail, target.Username, target.Password, target.Token)})
 		return res
 	}
 	host := target.Server.Host
-	ips, err := Addresses(ctx, t.Resolver, host, t.AllowPrivate)
-	if errors.Is(err, ErrNotAllowed) {
-		return fail(StepResolve, CodeAddressNotAllowed, host+" is on a private or local network")
-	}
-	if err != nil {
-		return fail(StepResolve, CodeDNSFailed, host+" does not resolve")
+	dial := t.Dial
+	if dial == nil {
+		ips, err := Addresses(ctx, t.Resolver, host, t.AllowPrivate)
+		if errors.Is(err, ErrNotAllowed) {
+			return fail(StepResolve, CodeAddressNotAllowed, host+" is on a private or local network")
+		}
+		if err != nil {
+			return fail(StepResolve, CodeDNSFailed, host+" does not resolve")
+		}
+		dial = func(ctx context.Context, _, _ string) (net.Conn, error) {
+			return DialAddresses(ctx, ips, target.Server.Port, 10*time.Second)
+		}
 	}
 	pass(StepResolve)
-	dial := func(ctx context.Context, _, _ string) (net.Conn, error) {
-		return DialAddresses(ctx, ips, target.Server.Port, 10*time.Second)
-	}
 	r, err := imapread.Open(ctx, imapread.Config{
 		Host: host, Port: target.Server.Port, TLS: imapread.TLSMode(target.Server.TLS),
 		CertificateSHA256: target.CertificateSHA256, Dial: dial, RootCAs: t.RootCAs,
@@ -157,7 +168,19 @@ func (t Tester) Run(ctx context.Context, target Target) TestResult {
 	pass(StepConnect)
 	pass(StepTLS)
 	pass(StepGreeting)
-	if err := r.Login(ctx, target.Username, target.Password); err != nil {
+	if target.Token != "" {
+		if err := r.LoginXOAUTH2(ctx, target.Username, target.Token); err != nil {
+			var se *imapread.ServerError
+			switch {
+			case errors.As(err, &se):
+				code, detail := ClassifyXOAUTH2(se)
+				return fail(StepSignIn, code, detail)
+			case errors.Is(err, imapread.ErrNoXOAUTH2):
+				return fail(StepSignIn, CodeXOAUTH2Failed, host+" offers no XOAUTH2 sign-in")
+			}
+			return fail(StepSignIn, CodeUnexpectedAnswer, err.Error())
+		}
+	} else if err := r.Login(ctx, target.Username, target.Password); err != nil {
 		var se *imapread.ServerError
 		if errors.As(err, &se) {
 			code, detail := ClassifyAnswer(se, host)
@@ -171,6 +194,12 @@ func (t Tester) Run(ctx context.Context, target Target) TestResult {
 	pass(StepSignIn)
 	folders, err := r.Folders(ctx)
 	if err != nil {
+		var se *imapread.ServerError
+		if errors.As(err, &se) {
+			if code, detail := ClassifyAnswer(se, host); code == CodeXOAUTH2Failed {
+				return fail(StepFolders, code, detail)
+			}
+		}
 		return fail(StepFolders, CodeNoFolders, answerText(err))
 	}
 	if len(folders) == 0 {
@@ -250,6 +279,7 @@ var (
 	imapOffRe     = regexp.MustCompile(`(?i)imap (is |access is |access )?(disabled|not enabled|turned off)|enable imap|imap access (is )?not allowed|imap is not enabled`)
 	connectionsRe = regexp.MustCompile(`(?i)too many (simultaneous )?connections|maximum number of connections|connection limit`)
 	throttledRe   = regexp.MustCompile(`(?i)throttl|rate limit|too many (login|requests|commands)|bandwidth limit|try again later|server busy|temporarily unavailable`)
+	notConnected  = regexp.MustCompile(`(?i)authenticated but not connected`)
 )
 
 // ClassifyAnswer maps a server's answer to a sign-in or greeting to a test code and a detail
@@ -259,6 +289,8 @@ func ClassifyAnswer(se *imapread.ServerError, host string) (string, string) {
 	text := se.Code + " " + se.Text
 	code := strings.ToUpper(se.Code)
 	switch {
+	case notConnected.MatchString(text):
+		return CodeXOAUTH2Failed, detail
 	case appPasswordRe.MatchString(text):
 		return CodeAppPasswordRequired, detail
 	case webLoginRe.MatchString(text):
@@ -275,6 +307,21 @@ func ClassifyAnswer(se *imapread.ServerError, host string) (string, string) {
 		return CodeAuthFailed, detail
 	}
 	return CodeUnexpectedAnswer, detail
+}
+
+// ClassifyXOAUTH2 maps the answer to AUTHENTICATE XOAUTH2: a limit, or the mailbox refusing the
+// token, which on Microsoft 365 usually means IMAP is turned off for the mailbox.
+func ClassifyXOAUTH2(se *imapread.ServerError) (string, string) {
+	detail := se.Error()
+	text := se.Code + " " + se.Text
+	code := strings.ToUpper(se.Code)
+	switch {
+	case connectionsRe.MatchString(text):
+		return CodeTooManyConnections, detail
+	case code == "THROTTLED" || code == "LIMIT" || throttledRe.MatchString(text):
+		return CodeThrottled, detail
+	}
+	return CodeXOAUTH2Failed, detail
 }
 
 var base64Run = regexp.MustCompile(`[A-Za-z0-9+/]{16,}={0,2}`)

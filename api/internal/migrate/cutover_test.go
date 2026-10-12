@@ -89,10 +89,17 @@ func TestErrorCorpusTrouble(t *testing.T) {
 			code, text, _ := strings.Cut(rest[1:], "] ")
 			se.Code, se.Text = code, text+" "+password+" "+blob
 		}
-		kind, _, detail := Classify(se, fields["host"], password)
+		var answer error = se
+		if fields["mechanism"] == "xoauth2" {
+			answer = &imapread.Error{Step: imapread.StepSignIn, Err: &imapread.TokenRefusedError{ServerError: se}}
+		}
+		kind, code, detail := Classify(answer, fields["host"], password)
+		if fields["code"] == CodeXOAUTH2Failed && code != CodeXOAUTH2Failed {
+			t.Errorf("%s: code %s, want %s", f, code, CodeXOAUTH2Failed)
+		}
 		var want []Trouble
 		switch fields["code"] {
-		case CodeAuthFailed, CodeAppPasswordRequired, CodeIMAPDisabled, CodeBasicAuthDisabled, CodeWebLoginRequired:
+		case CodeAuthFailed, CodeAppPasswordRequired, CodeIMAPDisabled, CodeBasicAuthDisabled, CodeWebLoginRequired, CodeXOAUTH2Failed:
 			want = []Trouble{TroubleReconnect}
 		case CodeThrottled, CodeTooManyConnections:
 			want = []Trouble{TroubleLimit, TroubleDaily}

@@ -225,6 +225,9 @@ func TestErrorCorpus(t *testing.T) {
 			se.Code, se.Text = code, text
 		}
 		code, detail := ClassifyAnswer(se, fields["host"])
+		if fields["mechanism"] == "xoauth2" {
+			code, detail = ClassifyXOAUTH2(se)
+		}
 		if code != fields["code"] {
 			t.Errorf("%s: %s, want %s", f, code, fields["code"])
 		}
