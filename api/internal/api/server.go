@@ -38,7 +38,7 @@ const maxBodyBytes = 8 << 20
 
 var apiPrefixes = []string{"/v1/", "/client/v1/", "/ingress/", "/.well-known/", emailImagePathPrefix, emailTemplatesPathPrefix, clickPathPrefix}
 
-var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp"}
+var apiPaths = []string{"/v1", "/client/v1", "/healthz", "/readyz", "/oauth/register", "/oauth/authorize", "/oauth/token", "/oauth/revoke", "/mcp", signInCallbackPath}
 
 type Server struct {
 	log      *slog.Logger
@@ -313,6 +313,7 @@ func (s *Server) Handler() http.Handler {
 		},
 	})
 	mux.HandleFunc("GET /v1/realtime", s.serveRealtime)
+	mux.HandleFunc("GET "+signInCallbackPath, s.serveMigrationSignIn)
 	mux.HandleFunc("GET /client/v1/realtime", s.serveClientRealtime)
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)

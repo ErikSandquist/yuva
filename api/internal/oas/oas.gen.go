@@ -2180,6 +2180,7 @@ const (
 	MigrationActionRetry          MigrationAction = "retry"
 	MigrationActionScan           MigrationAction = "scan"
 	MigrationActionSetCredentials MigrationAction = "set_credentials"
+	MigrationActionSignIn         MigrationAction = "sign_in"
 	MigrationActionStart          MigrationAction = "start"
 	MigrationActionTestConnection MigrationAction = "test_connection"
 	MigrationActionUpdate         MigrationAction = "update"
@@ -2209,6 +2210,8 @@ func (e MigrationAction) Valid() bool {
 		return true
 	case MigrationActionSetCredentials:
 		return true
+	case MigrationActionSignIn:
+		return true
 	case MigrationActionStart:
 		return true
 	case MigrationActionTestConnection:
@@ -2225,6 +2228,7 @@ func (e MigrationAction) Valid() bool {
 // Defines values for MigrationAuth.
 const (
 	MigrationAuthMicrosoft MigrationAuth = "microsoft"
+	MigrationAuthOauth     MigrationAuth = "oauth"
 	MigrationAuthPassword  MigrationAuth = "password"
 )
 
@@ -2232,6 +2236,8 @@ const (
 func (e MigrationAuth) Valid() bool {
 	switch e {
 	case MigrationAuthMicrosoft:
+		return true
+	case MigrationAuthOauth:
 		return true
 	case MigrationAuthPassword:
 		return true
@@ -2592,12 +2598,14 @@ const (
 	PresetGmail           MigrationPresetId = "gmail"
 	PresetGmx             MigrationPresetId = "gmx"
 	PresetGoogleWorkspace MigrationPresetId = "google_workspace"
+	PresetHelpscout       MigrationPresetId = "helpscout"
 	PresetIcloud          MigrationPresetId = "icloud"
 	PresetImap            MigrationPresetId = "imap"
 	PresetMicrosoft       MigrationPresetId = "microsoft"
 	PresetTakeout         MigrationPresetId = "takeout"
 	PresetYahoo           MigrationPresetId = "yahoo"
 	PresetYandex          MigrationPresetId = "yandex"
+	PresetZendesk         MigrationPresetId = "zendesk"
 	PresetZoho            MigrationPresetId = "zoho"
 )
 
@@ -2614,6 +2622,8 @@ func (e MigrationPresetId) Valid() bool {
 		return true
 	case PresetGoogleWorkspace:
 		return true
+	case PresetHelpscout:
+		return true
 	case PresetIcloud:
 		return true
 	case PresetImap:
@@ -2625,6 +2635,8 @@ func (e MigrationPresetId) Valid() bool {
 	case PresetYahoo:
 		return true
 	case PresetYandex:
+		return true
+	case PresetZendesk:
 		return true
 	case PresetZoho:
 		return true
@@ -2642,6 +2654,51 @@ const (
 func (e MigrationProgressEventType) Valid() bool {
 	switch e {
 	case MigrationProgressEventTypeMigrationProgress:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationSignInResult.
+const (
+	SignInAccessDenied      MigrationSignInResult = "access_denied"
+	SignInAccountMismatch   MigrationSignInResult = "account_mismatch"
+	SignInConnected         MigrationSignInResult = "connected"
+	SignInExpired           MigrationSignInResult = "expired"
+	SignInNotAdmin          MigrationSignInResult = "not_admin"
+	SignInPlanHasNoApi      MigrationSignInResult = "plan_has_no_api"
+	SignInScopeTooBroad     MigrationSignInResult = "scope_too_broad"
+	SignInSessionMismatch   MigrationSignInResult = "session_mismatch"
+	SignInSourceUnreachable MigrationSignInResult = "source_unreachable"
+	SignInSubdomainNotFound MigrationSignInResult = "subdomain_not_found"
+	SignInTokenFailed       MigrationSignInResult = "token_failed"
+)
+
+// Valid indicates whether the value is a known member of the MigrationSignInResult enum.
+func (e MigrationSignInResult) Valid() bool {
+	switch e {
+	case SignInAccessDenied:
+		return true
+	case SignInAccountMismatch:
+		return true
+	case SignInConnected:
+		return true
+	case SignInExpired:
+		return true
+	case SignInNotAdmin:
+		return true
+	case SignInPlanHasNoApi:
+		return true
+	case SignInScopeTooBroad:
+		return true
+	case SignInSessionMismatch:
+		return true
+	case SignInSourceUnreachable:
+		return true
+	case SignInSubdomainNotFound:
+		return true
+	case SignInTokenFailed:
 		return true
 	default:
 		return false
@@ -2731,8 +2788,11 @@ const (
 	TestCodeExamineFailed       MigrationTestCode = "examine_failed"
 	TestCodeImapDisabled        MigrationTestCode = "imap_disabled"
 	TestCodeNoFolders           MigrationTestCode = "no_folders"
+	TestCodeNotAdmin            MigrationTestCode = "not_admin"
 	TestCodeNotImap             MigrationTestCode = "not_imap"
+	TestCodePlanHasNoApi        MigrationTestCode = "plan_has_no_api"
 	TestCodeStarttlsUnavailable MigrationTestCode = "starttls_unavailable"
+	TestCodeSubdomainNotFound   MigrationTestCode = "subdomain_not_found"
 	TestCodeThrottled           MigrationTestCode = "throttled"
 	TestCodeTimeout             MigrationTestCode = "timeout"
 	TestCodeTlsFailed           MigrationTestCode = "tls_failed"
@@ -2762,9 +2822,15 @@ func (e MigrationTestCode) Valid() bool {
 		return true
 	case TestCodeNoFolders:
 		return true
+	case TestCodeNotAdmin:
+		return true
 	case TestCodeNotImap:
 		return true
+	case TestCodePlanHasNoApi:
+		return true
 	case TestCodeStarttlsUnavailable:
+		return true
+	case TestCodeSubdomainNotFound:
 		return true
 	case TestCodeThrottled:
 		return true
@@ -8444,7 +8510,8 @@ type Migration struct {
 	Counts    MigrationCounts `json:"counts"`
 	CreatedAt time.Time       `json:"created_at"`
 
-	// Credentials The stored credentials, without the secret.
+	// Credentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
+	// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
 	Credentials *MigrationCredentials `json:"credentials,omitempty"`
 
 	// CredentialsDeletedAt When the credentials were deleted because the migration ended.
@@ -8488,7 +8555,8 @@ type Migration struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 	// Google Takeout file, or `file`, any other export file; both read every format the server
-	// knows, which `upload.format` names once the upload is complete.
+	// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+	// of its source: `zendesk` or `helpscout`.
 	Preset MigrationPresetId `json:"preset"`
 
 	// ProbeSentAt When the last test message was sent.
@@ -8512,12 +8580,15 @@ type Migration struct {
 	// SecondsLeft While copying, how long the rest takes at that rate.
 	SecondsLeft *int64 `json:"seconds_left,omitempty"`
 
+	// SignInResult Help desks: how the last sign-in ended, the same `result` its redirect carried.
+	SignInResult *MigrationSignInResult `json:"sign_in_result,omitempty"`
+
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built: all four.
 	Source MigrationSource `json:"source"`
 
-	// SourceAddress The mailbox address.
+	// SourceAddress The mailbox address; for a help desk, the support address whose channel is the default target.
 	SourceAddress string     `json:"source_address"`
 	StartedAt     *time.Time `json:"started_at,omitempty"`
 
@@ -8529,8 +8600,8 @@ type Migration struct {
 	// - `paused`: stopped by a member; resumes where it was.
 	// - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
 	//   revoked app password; reconnect to continue.
-	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
-	//   while the team switches its mail over.
+	// - `syncing`: history copied; new mail in the old mailbox, or what changed in the help
+	//   desk, is fetched every two minutes while the team switches its mail over.
 	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
 	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
@@ -8548,7 +8619,7 @@ type Migration struct {
 
 	// TeamSuggestions Once a scan finished: the `From` addresses of the messages in the Sent folders (for Gmail,
 	// the All Mail messages that are also in Sent), other than the mailbox address, most
-	// messages first. They are the team's aliases and
+	// messages first; for a help desk, its agents, by the conversations assigned to them. They are the team's aliases and
 	// colleagues the Map step offers as `options.team_addresses`, whether or not they are
 	// already team addresses.
 	TeamSuggestions *[]MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
@@ -8576,11 +8647,13 @@ type MigrationVerifiedRoute string
 // MigrationAction What can be done with a migration in its current state: `update` (`PATCH`),
 // `set_credentials`, `test_connection`, `scan`, `start`, `pause`, `resume`, `cancel`, `finish`,
 // `retry` (failed items), `remove_history`, `delete`, `probe` (a test mail to check the
-// switch) and `upload` (parts of the export file, and completing it). A server lists only
-// the actions it offers.
+// switch), `upload` (parts of the export file, and completing it) and `sign_in` (a help
+// desk's sign-in with the team's OAuth client). A server lists only the actions it offers.
 type MigrationAction string
 
-// MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with Microsoft.
+// MigrationAuth `password`: a user name with an app password or password. `microsoft`: Sign in with
+// Microsoft. `oauth`: a help desk's sign-in with an OAuth client the team creates in its own
+// account (`POST /v1/migrations/{migrationId}/sign-in`).
 type MigrationAuth string
 
 // MigrationBudget The pace Yuva keeps with this provider, below its published limits.
@@ -8588,6 +8661,13 @@ type MigrationBudget struct {
 	BytesPerDay    *int64 `json:"bytes_per_day,omitempty"`
 	BytesPerSecond *int64 `json:"bytes_per_second,omitempty"`
 	Connections    int32  `json:"connections"`
+
+	// IncrementalPerMinute Zendesk: incremental export requests a minute (of the 10 Zendesk allows).
+	IncrementalPerMinute *int32 `json:"incremental_per_minute,omitempty"`
+
+	// RequestsPerMinute Help desks: requests a minute until the provider reports its limit; then at most half
+	// of the per-minute limit it reports (`X-Rate-Limit`, `X-RateLimit-Limit-Minute`).
+	RequestsPerMinute *int32 `json:"requests_per_minute,omitempty"`
 }
 
 // MigrationCounts defines model for MigrationCounts.
@@ -8605,7 +8685,9 @@ type MigrationCounts struct {
 	Skipped int64 `json:"skipped"`
 
 	// Total Messages read from the chosen folders: those to import and those the dry run already set
-	// aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed.
+	// aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed. A
+	// help desk counts conversations (tickets) instead: each is imported whole, with all its
+	// messages and notes.
 	Total int64 `json:"total"`
 }
 
@@ -8621,7 +8703,8 @@ type MigrationCreate struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 	// Google Takeout file, or `file`, any other export file; both read every format the server
-	// knows, which `upload.format` names once the upload is complete.
+	// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+	// of its source: `zendesk` or `helpscout`.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Source `imap` when absent.
@@ -8631,7 +8714,8 @@ type MigrationCreate struct {
 	SourceAddress Email `json:"source_address"`
 }
 
-// MigrationCredentials The stored credentials, without the secret.
+// MigrationCredentials The stored credentials, without the secret. A help desk's are `oauth`, with the account's
+// API host as `server` (`<subdomain>.zendesk.com`, `api.helpscout.net`).
 type MigrationCredentials struct {
 	// CertificateSha256 The trusted certificate's SHA-256, when one is pinned.
 	CertificateSha256 *string `json:"certificate_sha256,omitempty"`
@@ -8699,7 +8783,8 @@ type MigrationDetection struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 	// Google Takeout file, or `file`, any other export file; both read every format the server
-	// knows, which `upload.format` names once the upload is complete.
+	// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+	// of its source: `zendesk` or `helpscout`.
 	Preset MigrationPresetId `json:"preset"`
 
 	// Server The IMAP server to use; absent when none was found.
@@ -8891,6 +8976,9 @@ type MigrationFinish struct {
 
 // MigrationFolder defines model for MigrationFolder.
 type MigrationFolder struct {
+	// Address Help desks: the brand's or mailbox's support address, when the help desk names one.
+	Address *string `json:"address,omitempty"`
+
 	// Bytes Bytes copied from this folder.
 	Bytes     int64 `json:"bytes"`
 	Duplicate int64 `json:"duplicate"`
@@ -8898,9 +8986,13 @@ type MigrationFolder struct {
 	Id        int32 `json:"id"`
 	Imported  int64 `json:"imported"`
 
+	// InboxId Help desks: the inbox its conversations go to (`options.inboxes`, else the migration's).
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
 	// Kind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
 	// All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
-	// `drafts` and `other` (outbox, chats, notes), which are never read.
+	// `drafts` and `other` (outbox, chats, notes), which are never read. A help desk lists each
+	// Zendesk brand or Help Scout mailbox as an `inbox`.
 	Kind MigrationFolderKind `json:"kind"`
 
 	// LabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
@@ -8939,7 +9031,8 @@ type MigrationFolderUse string
 
 // MigrationFolderKind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
 // All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
-// `drafts` and `other` (outbox, chats, notes), which are never read.
+// `drafts` and `other` (outbox, chats, notes), which are never read. A help desk lists each
+// Zendesk brand or Help Scout mailbox as an `inbox`.
 type MigrationFolderKind string
 
 // MigrationFolderList defines model for MigrationFolderList.
@@ -8998,8 +9091,17 @@ type MigrationForwardingConfirmationEvent struct {
 // MigrationForwardingConfirmationEventType defines model for MigrationForwardingConfirmationEvent.Type.
 type MigrationForwardingConfirmationEventType string
 
-// MigrationLabelMapping What a folder or Gmail label becomes: `create` a label of the same name, an `existing`
-// label (`label_id`), or `none`.
+// MigrationInboxMapping Help desks: the inbox a Zendesk brand's or Help Scout mailbox's conversations go to, by the
+// folder's name. They are bound to that inbox's e-mail channel (the one whose address is the
+// mailbox's, else its oldest), so replies from Yuva reach the customer; an inbox without an
+// e-mail channel keeps them as history without a channel.
+type MigrationInboxMapping struct {
+	Folder  string    `json:"folder"`
+	InboxId uuid.UUID `json:"inbox_id"`
+}
+
+// MigrationLabelMapping What a folder, Gmail label or help-desk tag becomes: `create` a label of the same name, an
+// `existing` label (`label_id`), or `none`. For a help desk `folder` names a tag.
 type MigrationLabelMapping struct {
 	Action  MigrationLabelMappingAction `json:"action"`
 	Folder  string                      `json:"folder"`
@@ -9016,11 +9118,16 @@ type MigrationMboxFormat string
 
 // MigrationOptions defines model for MigrationOptions.
 type MigrationOptions struct {
-	// CloseAfterDays Threads whose last message is older are imported `closed`; newer ones `open` or `pending`. `0` closes everything.
+	// CloseAfterDays Threads whose last message is older are imported `closed`; newer ones `open` or
+	// `pending`. `0` closes everything. Help desks keep their own status instead.
 	CloseAfterDays int32 `json:"close_after_days"`
 
-	// Folders The folders to read, by name; absent for the preset's default (inbox, sent, archive and user folders; Gmail's All Mail).
+	// Folders The folders to read, by name; absent for the preset's default (inbox, sent, archive and
+	// user folders; Gmail's All Mail; a help desk's every brand or mailbox).
 	Folders *[]string `json:"folders,omitempty"`
+
+	// Inboxes Help desks only; a brand or mailbox not named goes to the migration's inbox and channel.
+	Inboxes *[]MigrationInboxMapping `json:"inboxes,omitempty"`
 
 	// KeepOriginals Keep each message's original source, as for mail that arrives live.
 	KeepOriginals bool                    `json:"keep_originals"`
@@ -9046,6 +9153,7 @@ type MigrationOptionsInput struct {
 
 	// Folders `null` for the preset's default.
 	Folders          nullable.Nullable[[]string]  `json:"folders,omitempty"`
+	Inboxes          *[]MigrationInboxMapping     `json:"inboxes,omitempty"`
 	KeepOriginals    *bool                        `json:"keep_originals,omitempty"`
 	Labels           *[]MigrationLabelMapping     `json:"labels,omitempty"`
 	People           *[]MigrationPerson           `json:"people,omitempty"`
@@ -9061,7 +9169,9 @@ type MigrationPage struct {
 	NextCursor *string     `json:"next_cursor,omitempty"`
 }
 
-// MigrationPerson A team address and the member its mail is imported as; without `member_id`, its own name and address are kept.
+// MigrationPerson A team address and the member its mail is imported as; without `member_id`, its own name
+// and address are kept. For a help desk, an agent's address: the agent's replies, notes and
+// assigned conversations become the member's.
 type MigrationPerson struct {
 	// Address Examples: owner@example.com
 	Address  Email      `json:"address"`
@@ -9091,17 +9201,30 @@ type MigrationPreset struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 	// Google Takeout file, or `file`, any other export file; both read every format the server
-	// knows, which `upload.format` names once the upload is complete.
+	// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+	// of its source: `zendesk` or `helpscout`.
 	Id   MigrationPresetId `json:"id"`
 	Name string            `json:"name"`
+
+	// RedirectUrl `oauth` presets: the redirect URL to enter in the OAuth client the team creates in its
+	// help desk (Zendesk: an OAuth client; Help Scout: an app under My Apps).
+	RedirectUrl *string `json:"redirect_url,omitempty"`
+
+	// Scopes `oauth` presets: the scopes the sign-in asks for and accepts nothing beyond (Zendesk
+	// `read`). Empty for Help Scout, which has no read-only permission: the connection's
+	// refusal of every request but `GET` is what keeps it read-only.
+	Scopes *[]string `json:"scopes,omitempty"`
 
 	// Servers The IMAP servers it uses, the first by default; empty for `imap`, whose server is typed or detected.
 	Servers []MigrationServer `json:"servers"`
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-	// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
+	// (`YUVA_MIGRATION_SOURCES`) among those built: all four.
 	Source MigrationSource `json:"source"`
+
+	// Subdomain The sign-in needs the account's subdomain (Zendesk's `<subdomain>.zendesk.com`).
+	Subdomain *bool `json:"subdomain,omitempty"`
 
 	// Username What the user name is: the whole `address` or its `local_part`.
 	Username MigrationPresetUsername `json:"username"`
@@ -9114,7 +9237,8 @@ type MigrationPresetUsername string
 // and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 // `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 // Google Takeout file, or `file`, any other export file; both read every format the server
-// knows, which `upload.format` names once the upload is complete.
+// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+// of its source: `zendesk` or `helpscout`.
 type MigrationPresetId string
 
 // MigrationPresetList defines model for MigrationPresetList.
@@ -9139,12 +9263,21 @@ type MigrationPreviewMessage struct {
 	// MemberId The member an outgoing message is imported as.
 	MemberId *uuid.UUID `json:"member_id,omitempty"`
 
+	// Note Help desks: an internal note (a private comment), imported as a note.
+	Note *bool `json:"note,omitempty"`
+
 	// Text The visible text, quotes removed, at most 1,000 characters.
 	Text string `json:"text"`
 }
 
 // MigrationPreviewThread defines model for MigrationPreviewThread.
 type MigrationPreviewThread struct {
+	// Assignee Help desks: the agent the conversation is assigned to.
+	Assignee *ImportedAuthor `json:"assignee,omitempty"`
+
+	// AssigneeMemberId The member it is assigned to in Yuva; absent when the agent maps to none.
+	AssigneeMemberId *uuid.UUID `json:"assignee_member_id,omitempty"`
+
 	// Contact An imported message's sender from the team who is not mapped to a member.
 	Contact ImportedAuthor `json:"contact"`
 	Labels  []string       `json:"labels"`
@@ -9174,8 +9307,8 @@ type MigrationProgress struct {
 	// - `paused`: stopped by a member; resumes where it was.
 	// - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
 	//   revoked app password; reconnect to continue.
-	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
-	//   while the team switches its mail over.
+	// - `syncing`: history copied; new mail in the old mailbox, or what changed in the help
+	//   desk, is fetched every two minutes while the team switches its mail over.
 	// - `completed`: finished; the credentials, or the export file, are deleted. A `file`
 	//   migration completes when its copy ends.
 	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
@@ -9213,6 +9346,37 @@ type MigrationServer struct {
 	Tls MigrationTls `json:"tls"`
 }
 
+// MigrationSignIn defines model for MigrationSignIn.
+type MigrationSignIn struct {
+	// AuthorizeUrl The help desk's consent page; open it in the browser.
+	AuthorizeUrl string `json:"authorize_url"`
+
+	// ExpiresAt The sign-in must come back before this.
+	ExpiresAt time.Time `json:"expires_at"`
+
+	// RedirectUrl Where the help desk sends the browser back; it must be the OAuth client's redirect URL.
+	RedirectUrl string `json:"redirect_url"`
+}
+
+// MigrationSignInResult The `result` of the redirect to `/migrations/{migrationId}/connect` after a help-desk
+// sign-in: `connected`; `access_denied` (the person declined); `expired` (unknown, used or
+// older than 10 minutes); `session_mismatch` (it came back in another member's browser);
+// `scope_too_broad` (the token grants more than `read`; nothing was stored); `not_admin`,
+// `plan_has_no_api`, `subdomain_not_found` (as the connection test's codes);
+// `account_mismatch` (a reconnect signed in to another account); `token_failed` (the help
+// desk refused the code: usually a wrong client secret or redirect URL); `source_unreachable`.
+type MigrationSignInResult string
+
+// MigrationSignInStart defines model for MigrationSignInStart.
+type MigrationSignInStart struct {
+	// ClientId The OAuth client's identifier (Zendesk) or the app's ID (Help Scout).
+	ClientId     string  `json:"client_id"`
+	ClientSecret *string `json:"client_secret,omitempty"`
+
+	// Subdomain Zendesk only, and required there: the account's subdomain, `acme` of `acme.zendesk.com`.
+	Subdomain *string `json:"subdomain,omitempty"`
+}
+
 // MigrationSkipped Messages that will not be imported, by reason.
 type MigrationSkipped struct {
 	// AlreadyInYuva Already stored for the channel, by an earlier migration or live mail.
@@ -9245,7 +9409,7 @@ type MigrationSkipped struct {
 
 // MigrationSource Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 // `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
-// (`YUVA_MIGRATION_SOURCES`) among those built; so far that is `imap` and `file`.
+// (`YUVA_MIGRATION_SOURCES`) among those built: all four.
 type MigrationSource string
 
 // MigrationState - `draft`: created; not connected yet.
@@ -9256,8 +9420,8 @@ type MigrationSource string
 //   - `paused`: stopped by a member; resumes where it was.
 //   - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
 //     revoked app password; reconnect to continue.
-//   - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
-//     while the team switches its mail over.
+//   - `syncing`: history copied; new mail in the old mailbox, or what changed in the help
+//     desk, is fetched every two minutes while the team switches its mail over.
 //   - `completed`: finished; the credentials, or the export file, are deleted. A `file`
 //     migration completes when its copy ends.
 //   - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
@@ -9294,6 +9458,10 @@ type MigrationTeamSuggestion struct {
 //   - `examine_failed`: the inbox could not be opened read-only.
 //   - `timeout`: the test ran out of its 20 seconds.
 //   - `unexpected_answer`: anything else; `detail` has the server's answer.
+//   - `not_admin`: help desks: the signed-in Zendesk user is not an admin, and only admins
+//     may read the incremental export.
+//   - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
+//   - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
 type MigrationTestCode string
 
 // MigrationTestResult defines model for MigrationTestResult.
@@ -9333,6 +9501,10 @@ type MigrationTestStep struct {
 	// - `examine_failed`: the inbox could not be opened read-only.
 	// - `timeout`: the test ran out of its 20 seconds.
 	// - `unexpected_answer`: anything else; `detail` has the server's answer.
+	// - `not_admin`: help desks: the signed-in Zendesk user is not an admin, and only admins
+	//   may read the incremental export.
+	// - `plan_has_no_api`: help desks: the account's plan has no API (Help Scout Free).
+	// - `subdomain_not_found`: help desks: no Zendesk account has the subdomain.
 	Code *MigrationTestCode `json:"code,omitempty"`
 
 	// Detail The server's answer or the error, without secrets.
@@ -9359,7 +9531,8 @@ type MigrationUpdate struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server. For a `file` migration: `takeout`, a
 	// Google Takeout file, or `file`, any other export file; both read every format the server
-	// knows, which `upload.format` names once the upload is complete.
+	// knows, which `upload.format` names once the upload is complete. A help desk has the preset
+	// of its source: `zendesk` or `helpscout`.
 	Preset *MigrationPresetId `json:"preset,omitempty"`
 
 	// SourceAddress Examples: owner@example.com
@@ -12512,6 +12685,12 @@ type ScanMigrationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// StartMigrationSignInParams defines parameters for StartMigrationSignIn.
+type StartMigrationSignInParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // StartMigrationParams defines parameters for StartMigration.
 type StartMigrationParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -13185,6 +13364,9 @@ type FinishMigrationJSONRequestBody = MigrationFinish
 
 // RemoveMigrationHistoryJSONRequestBody defines body for RemoveMigrationHistory for application/json ContentType.
 type RemoveMigrationHistoryJSONRequestBody = MigrationRemoveHistory
+
+// StartMigrationSignInJSONRequestBody defines body for StartMigrationSignIn for application/json ContentType.
+type StartMigrationSignInJSONRequestBody = MigrationSignInStart
 
 // CompleteMigrationUploadJSONRequestBody defines body for CompleteMigrationUpload for application/json ContentType.
 type CompleteMigrationUploadJSONRequestBody = MigrationUploadComplete
@@ -16700,6 +16882,9 @@ type ServerInterface interface {
 	// ScanMigration Read the mailbox's headers for the dry run
 	// (POST /v1/migrations/{migrationId}/scan)
 	ScanMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ScanMigrationParams)
+	// StartMigrationSignIn Connect a help desk with the team's OAuth client
+	// (POST /v1/migrations/{migrationId}/sign-in)
+	StartMigrationSignIn(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationSignInParams)
 	// StartMigration Start copying
 	// (POST /v1/migrations/{migrationId}/start)
 	StartMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationParams)
@@ -28986,6 +29171,56 @@ func (siw *ServerInterfaceWrapper) ScanMigration(w http.ResponseWriter, r *http.
 	handler.ServeHTTP(w, r)
 }
 
+// StartMigrationSignIn operation middleware
+func (siw *ServerInterfaceWrapper) StartMigrationSignIn(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StartMigrationSignInParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.StartMigrationSignIn(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // StartMigration operation middleware
 func (siw *ServerInterfaceWrapper) StartMigration(w http.ResponseWriter, r *http.Request) {
 
@@ -30750,6 +30985,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/migrations/{migrationId}", wrapper.UpdateMigration)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/migrations/{migrationId}/credentials", wrapper.SetMigrationCredentials)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/test", wrapper.TestMigrationConnection)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/sign-in", wrapper.StartMigrationSignIn)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload", wrapper.GetMigrationUpload)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload/parts/{part}", wrapper.UploadMigrationPart)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/upload/complete", wrapper.CompleteMigrationUpload)
@@ -49915,6 +50151,102 @@ func (response ScanMigration422ApplicationProblemPlusJSONResponse) VisitScanMigr
 	return err
 }
 
+type StartMigrationSignInRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      StartMigrationSignInParams
+	Body        *StartMigrationSignInJSONRequestBody
+}
+
+type StartMigrationSignInResponseObject interface {
+	VisitStartMigrationSignInResponse(w http.ResponseWriter) error
+}
+
+type StartMigrationSignIn200JSONResponse MigrationSignIn
+
+func (response StartMigrationSignIn200JSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationSignIn400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response StartMigrationSignIn400ApplicationProblemPlusJSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationSignIn401ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigrationSignIn401ApplicationProblemPlusJSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationSignIn403ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigrationSignIn403ApplicationProblemPlusJSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationSignIn404ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigrationSignIn404ApplicationProblemPlusJSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationSignIn409ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigrationSignIn409ApplicationProblemPlusJSONResponse) VisitStartMigrationSignInResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type StartMigrationRequestObject struct {
 	MigrationId MigrationId `json:"migrationId"`
 	Params      StartMigrationParams
@@ -52722,6 +53054,9 @@ type StrictServerInterface interface {
 	// ScanMigration Read the mailbox's headers for the dry run
 	// (POST /v1/migrations/{migrationId}/scan)
 	ScanMigration(ctx context.Context, request ScanMigrationRequestObject) (ScanMigrationResponseObject, error)
+	// StartMigrationSignIn Connect a help desk with the team's OAuth client
+	// (POST /v1/migrations/{migrationId}/sign-in)
+	StartMigrationSignIn(ctx context.Context, request StartMigrationSignInRequestObject) (StartMigrationSignInResponseObject, error)
 	// StartMigration Start copying
 	// (POST /v1/migrations/{migrationId}/start)
 	StartMigration(ctx context.Context, request StartMigrationRequestObject) (StartMigrationResponseObject, error)
@@ -59556,6 +59891,40 @@ func (sh *strictHandler) ScanMigration(w http.ResponseWriter, r *http.Request, m
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(ScanMigrationResponseObject); ok {
 		if err := validResponse.VisitScanMigrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// StartMigrationSignIn operation middleware
+func (sh *strictHandler) StartMigrationSignIn(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationSignInParams) {
+	var request StartMigrationSignInRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	var body StartMigrationSignInJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.StartMigrationSignIn(ctx, request.(StartMigrationSignInRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "StartMigrationSignIn")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(StartMigrationSignInResponseObject); ok {
+		if err := validResponse.VisitStartMigrationSignInResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

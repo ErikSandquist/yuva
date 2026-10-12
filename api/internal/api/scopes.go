@@ -186,6 +186,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteMigration":         {oas.MigrationsManage},
 	"SetMigrationCredentials": {oas.MigrationsManage},
 	"TestMigrationConnection": {oas.MigrationsManage},
+	"StartMigrationSignIn":    {oas.MigrationsManage},
 	"GetMigrationUpload":      {oas.MigrationsManage},
 	"UploadMigrationPart":     {oas.MigrationsManage},
 	"CompleteMigrationUpload": {oas.MigrationsManage},

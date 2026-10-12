@@ -14,6 +14,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/jobs"
 	"github.com/productdevbook/yuva/api/internal/migrate"
+	"github.com/productdevbook/yuva/api/internal/migrate/helpdesk"
 	"github.com/productdevbook/yuva/api/internal/migrate/imapread"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/realtime"
@@ -160,6 +161,7 @@ type migrationRun struct {
 	throttle  migrate.Throttle
 	reader    *sourceReader
 	file      *uploadFile
+	deskSrc   helpdesk.Source
 	host      string
 	secrets   []string
 	lastFlush time.Time
@@ -215,6 +217,7 @@ func (r *migrationRun) close() {
 		_ = r.reader.r.Close()
 		r.reader = nil
 	}
+	r.deskSrc = nil
 }
 
 func (r *migrationRun) timeLeft() bool { return time.Now().Before(r.deadline) }
@@ -398,6 +401,10 @@ func (r *migrationRun) trouble(ctx context.Context, err error) (MigrationSlice, 
 		until, reason = r.throttle.WindowEnd(now), reasonDaily
 	case migrate.TroubleLimit:
 		until, reason = r.throttle.Retry(now), reasonLimit
+		var limit *helpdesk.LimitError
+		if errors.As(err, &limit) {
+			until = limit.Until
+		}
 	default:
 		until, reason = r.throttle.Retry(now), reasonNetwork
 		if r.throttle.Backoff >= migrationNetworkFailures {

@@ -165,7 +165,7 @@ func TestMigrationAccess(t *testing.T) {
 		t.Fatal("no audit row")
 	}
 	mt.owner.expectProblem(http.StatusConflict, "provider_not_configured", "POST", "/v1/migrations", map[string]any{"preset": "microsoft", "source_address": "a@outlook.com"})
-	mt.owner.expectProblem(http.StatusUnprocessableEntity, "hosted_limit", "POST", "/v1/migrations", map[string]any{"source": "zendesk", "preset": "imap", "source_address": "a@example.com"})
+	mt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/migrations", map[string]any{"source": "zendesk", "preset": "imap", "source_address": "a@example.com"})
 	mt.owner.expectProblem(http.StatusBadRequest, "validation_failed", "POST", "/v1/migrations", map[string]any{"preset": "hotmail", "source_address": "a@example.com"})
 
 	for _, c := range [][2]string{{"GET", "/v1/migrations"}, {"GET", "/v1/migrations/presets"}, {"GET", "/v1/migrations/" + id}, {"PATCH", "/v1/migrations/" + id},
@@ -202,7 +202,7 @@ func TestMigrationAccess(t *testing.T) {
 	for _, p := range presets {
 		byID[p.(map[string]any)["id"].(string)] = p.(map[string]any)
 	}
-	if len(byID) != 12 || byID["takeout"]["source"] != "file" || byID["file"]["source"] != "file" || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != false || byID["icloud"]["username"] != "local_part" ||
+	if len(byID) != 14 || byID["zendesk"]["source"] != "zendesk" || byID["helpscout"]["auth"].([]any)[0] != "oauth" || byID["takeout"]["source"] != "file" || byID["file"]["source"] != "file" || byID["gmail"]["available"] != true || byID["microsoft"]["available"] != false || byID["icloud"]["username"] != "local_part" ||
 		byID["gmail"]["budget"].(map[string]any)["bytes_per_day"] != float64(1500000000) {
 		t.Fatalf("presets: %v", byID)
 	}

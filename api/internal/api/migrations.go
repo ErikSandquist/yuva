@@ -51,7 +51,7 @@ var (
 	errProviderNotConfigured = problem(http.StatusConflict, "provider_not_configured", "Outlook.com and Microsoft 365 connect with Sign in with Microsoft, which this server does not offer yet")
 	errMigrationNoCreds      = problem(http.StatusConflict, "migration_state", "set the mailbox's credentials before testing the connection")
 	errFileNoCredentials     = problem(http.StatusConflict, "migration_state", "an export file migration reads its uploaded file; it has no mailbox to connect to")
-	builtMigrationSources    = []string{string(oas.MigrationSourceImap), string(oas.MigrationSourceFile)}
+	builtMigrationSources    = []string{string(oas.MigrationSourceImap), string(oas.MigrationSourceFile), string(oas.MigrationSourceZendesk), string(oas.MigrationSourceHelpscout)}
 	runningMigrationStates   = []string{migrationScanning, migrationCopying, migrationSyncing, migrationRemoving}
 )
 
@@ -91,6 +91,10 @@ type MigrationSettings struct {
 	// UploadMaxBytes is the largest export file (YUVA_MIGRATION_UPLOAD_MAX_BYTES); 0 means 20 GiB.
 	// An operator turns file imports off by leaving file out of Sources.
 	UploadMaxBytes int64
+	// HelpdeskDial replaces the dialer help-desk readers connect with, for tests.
+	HelpdeskDial func(ctx context.Context, network, addr string) (net.Conn, error)
+	// HelpdeskSleep replaces how a help-desk reader waits for its request budget, for tests.
+	HelpdeskSleep func(ctx context.Context, d time.Duration) error
 }
 
 func migrationSettings(in MigrationSettings) MigrationSettings {
@@ -185,7 +189,14 @@ func migrationActions(m store.Migration, hasCreds bool) []oas.MigrationAction {
 	if file {
 		hasCreds = uploadReady(m)
 	}
+	desk := helpdeskMigration(m)
 	switch {
+	case desk && (m.State == migrationDraft || m.State == migrationConnected):
+		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionSignIn)
+	case desk && m.State == migrationReady:
+		out = append(out, oas.MigrationActionUpdate)
+	case desk && m.State == migrationNeedsAttention:
+		out = append(out, oas.MigrationActionSignIn)
 	case m.State == migrationDraft && file:
 		out = append(out, oas.MigrationActionUpdate, oas.MigrationActionUpload)
 	case m.State == migrationConnected && file, m.State == migrationReady:
@@ -268,6 +279,9 @@ func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migratio
 	}
 	if m.StateReason != "" {
 		out.StateReason = &m.StateReason
+	}
+	if r := readSourceState(m.SourceState).SignInResult; r != "" && helpdeskMigration(m) {
+		out.SignInResult = new(oas.MigrationSignInResult(r))
 	}
 	out.LiveFrom, out.SyncedAt, out.ProbeSentAt, out.ProbeSyncedAt, out.VerifiedAt = m.LiveFrom, m.SyncedAt, m.ProbeSentAt, m.ProbeSyncedAt, m.VerifiedAt
 	if m.VerifiedRoute != nil {
@@ -610,6 +624,27 @@ func applyMigrationOptions(ctx context.Context, q *store.Queries, p principal, c
 		}
 		out.Labels = labels
 	}
+	if in.Inboxes != nil {
+		if len(*in.Inboxes) > maxMigrationFolders {
+			return out, false, errValidation("options.inboxes holds at most 1,000 brands or mailboxes")
+		}
+		inboxes := []oas.MigrationInboxMapping{}
+		seen := map[string]bool{}
+		for _, ib := range *in.Inboxes {
+			if n := len([]rune(ib.Folder)); n < 1 || n > 1000 {
+				return out, false, errValidation("a folder name is 1 to 1,000 characters")
+			}
+			if seen[ib.Folder] {
+				return out, false, errValidation("options.inboxes names " + ib.Folder + " twice")
+			}
+			seen[ib.Folder] = true
+			if _, err := visibleInbox(ctx, q, p, ib.InboxId); err != nil {
+				return out, false, errValidation("options.inboxes names an inbox that does not exist")
+			}
+			inboxes = append(inboxes, ib)
+		}
+		out.Inboxes = &inboxes
+	}
 	readChanged := !sameFolders(cur.Folders, out.Folders) || !sameTime(cur.Since, out.Since) || cur.SkipAutomatic != out.SkipAutomatic
 	return out, readChanged, nil
 }
@@ -630,7 +665,14 @@ func (s *Server) ListMigrationPresets(ctx context.Context, req oas.ListMigration
 		if !s.migrationSourceAllowed(p.Source) {
 			continue
 		}
-		out.Items = append(out.Items, presetBody(p))
+		body := presetBody(p)
+		if slices.Contains(p.Auth, migrate.AuthOAuth) {
+			body.RedirectUrl, body.Scopes = new(s.signInRedirectURL()), new(slices.Clone(p.Scopes))
+			if p.Subdomain {
+				body.Subdomain = new(true)
+			}
+		}
+		out.Items = append(out.Items, body)
 	}
 	return out, nil
 }
@@ -641,6 +683,12 @@ func presetBody(p migrate.Preset) oas.MigrationPreset {
 		Auth: authWays(p.Auth), AppPassword: p.AppPassword, Username: oas.MigrationPresetUsername(p.Username),
 		Folders: p.Folders, Guide: p.Guide, Available: p.Available,
 		Budget: oas.MigrationBudget{Connections: int32(p.Budget.Connections)},
+	}
+	if p.Budget.RequestsPerMinute > 0 {
+		out.Budget.RequestsPerMinute = new(int32(p.Budget.RequestsPerMinute))
+	}
+	if p.Budget.IncrementalPerMinute > 0 {
+		out.Budget.IncrementalPerMinute = new(int32(p.Budget.IncrementalPerMinute))
 	}
 	for _, sv := range p.Servers {
 		out.Servers = append(out.Servers, serverBody(sv))
@@ -1028,6 +1076,9 @@ func (s *Server) SetMigrationCredentials(ctx context.Context, req oas.SetMigrati
 		if fileMigration(m) {
 			return errFileNoCredentials
 		}
+		if helpdeskMigration(m) {
+			return errHelpdeskNoPassword
+		}
 		preset, ok := migrate.LookupPreset(m.Preset)
 		if !ok || !preset.Available || !slices.Contains(preset.Auth, migrate.AuthPassword) {
 			return errProviderNotConfigured
@@ -1105,6 +1156,11 @@ func (s *Server) claimMigrationTest(ctx context.Context, q *store.Queries, p pri
 
 func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrationConnectionRequestObject) (oas.TestMigrationConnectionResponseObject, error) {
 	p := principalFrom(ctx)
+	if m, err := visibleMigration(ctx, s.st.Queries, p, req.MigrationId, false); err != nil {
+		return nil, err
+	} else if helpdeskMigration(m) {
+		return s.testHelpdeskConnection(ctx, p, req.MigrationId)
+	}
 	var (
 		auditID int64
 		target  migrate.Target
@@ -1202,6 +1258,14 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 	if err != nil {
 		return nil, err
 	}
+	body := testResultBody(res, out)
+	if res.Certificate != "" && failed.Code == migrate.CodeTLSFailed {
+		body.CertificateSha256 = new(res.Certificate)
+	}
+	return body, nil
+}
+
+func testResultBody(res migrate.TestResult, out oas.Migration) oas.TestMigrationConnection200JSONResponse {
 	body := oas.TestMigrationConnection200JSONResponse{Ok: res.OK, Steps: make([]oas.MigrationTestStep, len(res.Steps)), Migration: out}
 	for i, st := range res.Steps {
 		step := oas.MigrationTestStep{Step: oas.MigrationTestStepStep(st.Step), Ok: st.OK}
@@ -1217,8 +1281,5 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 		body.Folders = new(int32(res.Folders))
 		body.Messages = new(res.Messages)
 	}
-	if res.Certificate != "" && failed.Code == migrate.CodeTLSFailed {
-		body.CertificateSha256 = new(res.Certificate)
-	}
-	return body, nil
+	return body
 }

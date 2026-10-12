@@ -232,6 +232,9 @@ func (s *Server) CancelMigration(ctx context.Context, req oas.CancelMigrationReq
 		if err != nil {
 			return cur, err
 		}
+		if err := q.DeleteMigrationSignIn(ctx, store.DeleteMigrationSignInParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID}); err != nil {
+			return cur, err
+		}
 		m, err := q.FinishMigration(ctx, store.FinishMigrationParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, State: string(oas.MigrationCancelled), Now: new(s.now())})
 		if err != nil {
 			return m, err
@@ -308,12 +311,19 @@ func (s *Server) ListMigrationFolders(ctx context.Context, req oas.ListMigration
 		return nil, err
 	}
 	out := oas.ListMigrationFolders200JSONResponse{Items: make([]oas.MigrationFolder, len(rows))}
+	var targets map[int32]uuid.UUID
+	if helpdeskMigration(m) {
+		targets = folderInboxes(m, rows)
+	}
 	for i, f := range rows {
 		out.Items[i] = oas.MigrationFolder{
 			Id: f.ID, Name: f.Name, Kind: oas.MigrationFolderKind(f.Kind), Selected: f.Selected, Use: folderUse(f, rows),
 			LabelAction: oas.MigrationFolderLabelAction(f.LabelAction), LabelId: f.LabelID, Messages: int64(f.Total), SizeBytes: f.SizeBytes,
 			OldestAt: f.OldestAt, NewestAt: f.NewestAt, Imported: int64(f.Imported), Duplicate: int64(f.Duplicate), Skipped: int64(f.Skipped),
-			Failed: int64(f.Failed), Bytes: f.Bytes,
+			Failed: int64(f.Failed), Bytes: f.Bytes, Address: f.Address,
+		}
+		if id, ok := targets[f.ID]; ok {
+			out.Items[i].InboxId = &id
 		}
 	}
 	return out, nil

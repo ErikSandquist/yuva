@@ -794,6 +794,7 @@ type Migration struct {
 	ProbeSyncedAt          *time.Time
 	Upload                 []byte
 	FollowsMigrationID     *uuid.UUID
+	SourceState            []byte
 }
 
 type MigrationAudit struct {
@@ -859,6 +860,8 @@ type MigrationFolder struct {
 	SizeBytes   int64
 	OldestAt    *time.Time
 	NewestAt    *time.Time
+	SourceRef   *string
+	Address     *string
 }
 
 type MigrationItem struct {
@@ -893,6 +896,18 @@ type MigrationPlanNode struct {
 	Node        string
 	Root        string
 	Size        int32
+}
+
+type MigrationSignIn struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	StateHash   string
+	Sealed      []byte
+	Host        string
+	MemberID    *uuid.UUID
+	ApiKeyID    *uuid.UUID
+	ExpiresAt   time.Time
+	CreatedAt   time.Time
 }
 
 type MigrationThread struct {

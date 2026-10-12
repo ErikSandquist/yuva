@@ -51,8 +51,11 @@ func fromSource(err error) error {
 	return &sourceError{err}
 }
 
-// waitError asks the run to wait for the daily budget.
-type waitError struct{ until time.Time }
+// waitError asks the run to wait for the daily budget, or for what reason says.
+type waitError struct {
+	until  time.Time
+	reason string
+}
 
 func (e *waitError) Error() string { return "waiting for the daily budget" }
 
@@ -278,9 +281,12 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 		switch phase {
 		case scanPhaseHeaders:
 			var more bool
-			if fileMigration(r.m) {
+			switch {
+			case helpdeskMigration(r.m):
+				more, err = r.scanHelpdesk(ctx)
+			case fileMigration(r.m):
 				more, err = r.scanFile(ctx)
-			} else {
+			default:
 				more, err = r.scanHeaders(ctx)
 			}
 			if err == nil && !more {
@@ -288,17 +294,28 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 			}
 		case scanPhasePlan:
 			var more bool
-			if more, err = r.plan(ctx); err == nil && !more {
+			plan := r.plan
+			if helpdeskMigration(r.m) {
+				plan = r.planHelpdesk
+			}
+			if more, err = plan(ctx); err == nil && !more {
 				phase = scanPhasePreview
 			}
 		case scanPhasePreview:
-			if err = r.preview(ctx); err == nil {
+			preview := r.preview
+			if helpdeskMigration(r.m) {
+				preview = r.previewHelpdesk
+			}
+			if err = preview(ctx); err == nil {
 				return MigrationSlice{Done: true}, r.scanned(ctx)
 			}
 		default:
-			if fileMigration(r.m) {
+			switch {
+			case helpdeskMigration(r.m):
+				err = r.listHelpdeskFolders(ctx)
+			case fileMigration(r.m):
 				err = r.listFileFolders(ctx)
-			} else {
+			default:
 				err = r.listFolders(ctx)
 			}
 			if err == nil {
@@ -309,7 +326,7 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 		var src *sourceError
 		switch {
 		case errors.As(err, &wait):
-			return r.waitDaily(ctx, wait.until)
+			return r.waitFor(ctx, wait)
 		case errors.As(err, &src):
 			return r.trouble(ctx, src.err)
 		case err != nil:
@@ -329,12 +346,16 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 	return MigrationSlice{}, nil
 }
 
-func (r *migrationRun) waitDaily(ctx context.Context, until time.Time) (MigrationSlice, error) {
+func (r *migrationRun) waitFor(ctx context.Context, wait *waitError) (MigrationSlice, error) {
 	if err := r.saveThrottle(ctx); err != nil {
 		return MigrationSlice{}, err
 	}
+	until, reason := wait.until, wait.reason
+	if reason == "" {
+		reason = reasonDaily
+	}
 	m, err := r.s.st.SetMigrationRunState(ctx, store.SetMigrationRunStateParams{
-		WorkspaceID: r.m.WorkspaceID, ID: r.m.ID, State: r.m.State, StateReason: reasonDaily, WaitingUntil: &until, Now: r.s.now(),
+		WorkspaceID: r.m.WorkspaceID, ID: r.m.ID, State: r.m.State, StateReason: reason, WaitingUntil: &until, Now: r.s.now(),
 	})
 	if err != nil {
 		return MigrationSlice{}, err
@@ -347,7 +368,7 @@ func (r *migrationRun) waitDaily(ctx context.Context, until time.Time) (Migratio
 // budget reserves the next read within a daily budget.
 func (r *migrationRun) budget(next int64) error {
 	if until := r.throttle.Wait(r.preset.Budget, r.s.now(), next); !until.IsZero() {
-		return &waitError{until}
+		return &waitError{until: until}
 	}
 	return nil
 }
@@ -985,7 +1006,7 @@ func sortedKeys(m map[string]bool) []string {
 func (s *Server) dryRun(ctx context.Context, q *store.Queries, m store.Migration, folders []store.MigrationFolder, t migrate.Totals, contactsExisting, contactsNew int64) (oas.MigrationEstimate, error) {
 	opts := migrationOptions(m.Options)
 	est := oas.MigrationEstimate{
-		ScannedAt: s.now(), Conversations: t.Conversations, Messages: t.In + t.Out, MessagesIn: t.In, MessagesOut: t.Out,
+		ScannedAt: s.now(), Conversations: t.Conversations, Messages: t.In + t.Out + t.Messages, MessagesIn: t.In, MessagesOut: t.Out,
 		Labels: []oas.MigrationEstimateLabel{}, Attachments: t.Attachments, AttachmentBytes: t.AttachmentBytes,
 		AttachmentsSkipped: t.AttachmentsSkipped, Bytes: t.Bytes, StorageBytes: t.AttachmentBytes,
 		Skipped: oas.MigrationSkipped{
@@ -1030,6 +1051,8 @@ func (s *Server) dryRun(ctx context.Context, q *store.Queries, m store.Migration
 		secs = max(secs, float64(t.Bytes)/float64(preset.Budget.BytesPerDay)*86400)
 	case preset.Budget.BytesPerSecond > 0:
 		secs = max(secs, float64(t.Bytes)/float64(preset.Budget.BytesPerSecond))
+	case preset.Budget.RequestsPerMinute > 0:
+		secs = max(secs, float64(t.Conversations)*helpdeskRequestsPerTicket*60/float64(preset.Budget.RequestsPerMinute))
 	}
 	est.SecondsMin = int64(math.Ceil(secs))
 	est.SecondsMax = int64(math.Ceil(secs * estimateMarginRatio))

@@ -403,7 +403,7 @@ INSERT INTO migrations (id, workspace_id, source, preset, source_address, inbox_
     created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
     $9, $10, $11, $12, $12)
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type CreateMigrationParams struct {
@@ -473,6 +473,7 @@ func (q *Queries) CreateMigration(ctx context.Context, arg CreateMigrationParams
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -670,7 +671,7 @@ func (q *Queries) DeleteOldMigrationAudit(ctx context.Context, arg DeleteOldMigr
 const enterMigrationSync = `-- name: EnterMigrationSync :one
 UPDATE migrations SET state = 'syncing', state_reason = '', waiting_until = NULL, live_from = coalesce(live_from, $1), updated_at = $1
 WHERE workspace_id = $2 AND id = $3
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type EnterMigrationSyncParams struct {
@@ -718,6 +719,7 @@ func (q *Queries) EnterMigrationSync(ctx context.Context, arg EnterMigrationSync
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -791,7 +793,7 @@ func (q *Queries) FindFollowedFileMigration(ctx context.Context, arg FindFollowe
 }
 
 const findForwardingMigration = `-- name: FindForwardingMigration :one
-SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id FROM migrations
+SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state FROM migrations
 WHERE workspace_id = $1 AND channel_id = $2
   AND state IN ('connected', 'scanning', 'ready', 'copying', 'paused', 'needs_attention', 'syncing')
 ORDER BY created_at DESC, id DESC
@@ -842,6 +844,7 @@ func (q *Queries) FindForwardingMigration(ctx context.Context, arg FindForwardin
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -878,7 +881,7 @@ const finishMigration = `-- name: FinishMigration :one
 UPDATE migrations SET state = $1, state_reason = $2, waiting_until = NULL, lease_until = NULL, lease_job_id = NULL,
     finished_at = $3, credentials_deleted_at = coalesce(credentials_deleted_at, $3), updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type FinishMigrationParams struct {
@@ -934,12 +937,13 @@ func (q *Queries) FinishMigration(ctx context.Context, arg FinishMigrationParams
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
 
 const getChannelMigration = `-- name: GetChannelMigration :one
-SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id FROM migrations WHERE workspace_id = $1 AND id = $2 AND channel_id = $3
+SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state FROM migrations WHERE workspace_id = $1 AND id = $2 AND channel_id = $3
 `
 
 type GetChannelMigrationParams struct {
@@ -987,6 +991,7 @@ func (q *Queries) GetChannelMigration(ctx context.Context, arg GetChannelMigrati
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -1014,7 +1019,7 @@ func (q *Queries) GetLabelByName(ctx context.Context, arg GetLabelByNameParams) 
 }
 
 const getMigration = `-- name: GetMigration :one
-SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id FROM migrations WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state FROM migrations WHERE workspace_id = $1 AND id = $2
 `
 
 type GetMigrationParams struct {
@@ -1061,6 +1066,7 @@ func (q *Queries) GetMigration(ctx context.Context, arg GetMigrationParams) (Mig
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -1883,7 +1889,7 @@ func (q *Queries) ListMigrationFolderSeen(ctx context.Context, arg ListMigration
 }
 
 const listMigrationFolders = `-- name: ListMigrationFolders :many
-SELECT workspace_id, migration_id, id, name, kind, selected, label_action, label_id, uidvalidity, scanned_uid, seen_uid, cursor, total, imported, duplicate, skipped, failed, bytes, delim, uidnext, size_bytes, oldest_at, newest_at FROM migration_folders WHERE workspace_id = $1 AND migration_id = $2 ORDER BY id
+SELECT workspace_id, migration_id, id, name, kind, selected, label_action, label_id, uidvalidity, scanned_uid, seen_uid, cursor, total, imported, duplicate, skipped, failed, bytes, delim, uidnext, size_bytes, oldest_at, newest_at, source_ref, address FROM migration_folders WHERE workspace_id = $1 AND migration_id = $2 ORDER BY id
 `
 
 type ListMigrationFoldersParams struct {
@@ -1924,6 +1930,8 @@ func (q *Queries) ListMigrationFolders(ctx context.Context, arg ListMigrationFol
 			&i.SizeBytes,
 			&i.OldestAt,
 			&i.NewestAt,
+			&i.SourceRef,
+			&i.Address,
 		); err != nil {
 			return nil, err
 		}
@@ -2403,7 +2411,7 @@ func (q *Queries) ListMigrationUploadTotals(ctx context.Context, arg ListMigrati
 }
 
 const listMigrations = `-- name: ListMigrations :many
-SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id FROM migrations
+SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state FROM migrations
 WHERE workspace_id = $1
   AND (cardinality($2::text[]) = 0 OR state = ANY($2::text[]))
   AND ($3::timestamptz IS NULL
@@ -2471,6 +2479,7 @@ func (q *Queries) ListMigrations(ctx context.Context, arg ListMigrationsParams) 
 			&i.ProbeSyncedAt,
 			&i.Upload,
 			&i.FollowsMigrationID,
+			&i.SourceState,
 		); err != nil {
 			return nil, err
 		}
@@ -2635,7 +2644,7 @@ func (q *Queries) ListStaleMigrations(ctx context.Context, now *time.Time) ([]Li
 }
 
 const lockMigration = `-- name: LockMigration :one
-SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id FROM migrations WHERE workspace_id = $1 AND id = $2 FOR UPDATE
+SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state FROM migrations WHERE workspace_id = $1 AND id = $2 FOR UPDATE
 `
 
 type LockMigrationParams struct {
@@ -2682,6 +2691,7 @@ func (q *Queries) LockMigration(ctx context.Context, arg LockMigrationParams) (M
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3257,7 +3267,7 @@ func (q *Queries) SetMigrationFollows(ctx context.Context, arg SetMigrationFollo
 const setMigrationForwardingConfirmation = `-- name: SetMigrationForwardingConfirmation :one
 UPDATE migrations SET forwarding_confirmation = $1, updated_at = $2
 WHERE workspace_id = $3 AND id = $4
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type SetMigrationForwardingConfirmationParams struct {
@@ -3311,6 +3321,7 @@ func (q *Queries) SetMigrationForwardingConfirmation(ctx context.Context, arg Se
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3367,7 +3378,7 @@ func (q *Queries) SetMigrationPlanSizes(ctx context.Context, arg SetMigrationPla
 const setMigrationProbeSent = `-- name: SetMigrationProbeSent :one
 UPDATE migrations SET probe_sent_at = $1, updated_at = $1
 WHERE workspace_id = $2 AND id = $3
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type SetMigrationProbeSentParams struct {
@@ -3415,6 +3426,7 @@ func (q *Queries) SetMigrationProbeSent(ctx context.Context, arg SetMigrationPro
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3437,7 +3449,7 @@ func (q *Queries) SetMigrationProbeSynced(ctx context.Context, arg SetMigrationP
 const setMigrationRunState = `-- name: SetMigrationRunState :one
 UPDATE migrations SET state = $1, state_reason = $2, waiting_until = $3, updated_at = $4
 WHERE workspace_id = $5 AND id = $6
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type SetMigrationRunStateParams struct {
@@ -3495,6 +3507,7 @@ func (q *Queries) SetMigrationRunState(ctx context.Context, arg SetMigrationRunS
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3502,7 +3515,7 @@ func (q *Queries) SetMigrationRunState(ctx context.Context, arg SetMigrationRunS
 const setMigrationState = `-- name: SetMigrationState :one
 UPDATE migrations SET state = $1, state_reason = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type SetMigrationStateParams struct {
@@ -3558,6 +3571,7 @@ func (q *Queries) SetMigrationState(ctx context.Context, arg SetMigrationStatePa
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3624,7 +3638,7 @@ func (q *Queries) SetMigrationThrottle(ctx context.Context, arg SetMigrationThro
 const setMigrationUpload = `-- name: SetMigrationUpload :one
 UPDATE migrations SET upload = $1, state = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type SetMigrationUploadParams struct {
@@ -3680,6 +3694,7 @@ func (q *Queries) SetMigrationUpload(ctx context.Context, arg SetMigrationUpload
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3720,7 +3735,7 @@ const startMigrationCopy = `-- name: StartMigrationCopy :one
 UPDATE migrations SET state = 'copying', state_reason = '', waiting_until = NULL, started_at = coalesce(started_at, $1),
     updated_at = $1
 WHERE workspace_id = $2 AND id = $3
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type StartMigrationCopyParams struct {
@@ -3768,6 +3783,7 @@ func (q *Queries) StartMigrationCopy(ctx context.Context, arg StartMigrationCopy
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3776,7 +3792,7 @@ const takeMigrationLease = `-- name: TakeMigrationLease :one
 UPDATE migrations SET lease_until = $1, lease_job_id = $2
 WHERE workspace_id = $3 AND id = $4 AND state = ANY($5::text[])
   AND (lease_until IS NULL OR lease_until < $6 OR lease_job_id = $2)
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type TakeMigrationLeaseParams struct {
@@ -3834,6 +3850,7 @@ func (q *Queries) TakeMigrationLease(ctx context.Context, arg TakeMigrationLease
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3842,7 +3859,7 @@ const updateMigration = `-- name: UpdateMigration :one
 UPDATE migrations SET preset = $1, source_address = $2, inbox_id = $3,
     channel_id = $4, options = $5, state = $6, updated_at = $7
 WHERE workspace_id = $8 AND id = $9
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type UpdateMigrationParams struct {
@@ -3906,6 +3923,7 @@ func (q *Queries) UpdateMigration(ctx context.Context, arg UpdateMigrationParams
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }
@@ -3985,7 +4003,7 @@ func (q *Queries) UpsertMigrationUploadPart(ctx context.Context, arg UpsertMigra
 const verifyMigrationDelivery = `-- name: VerifyMigrationDelivery :one
 UPDATE migrations SET verified_at = $1, verified_route = $2, updated_at = $1
 WHERE workspace_id = $3 AND id = $4 AND verified_at IS NULL
-RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at, synced_at, quiet_since, probe_sent_at, probe_synced_at, upload, follows_migration_id, source_state
 `
 
 type VerifyMigrationDeliveryParams struct {
@@ -4039,6 +4057,7 @@ func (q *Queries) VerifyMigrationDelivery(ctx context.Context, arg VerifyMigrati
 		&i.ProbeSyncedAt,
 		&i.Upload,
 		&i.FollowsMigrationID,
+		&i.SourceState,
 	)
 	return i, err
 }

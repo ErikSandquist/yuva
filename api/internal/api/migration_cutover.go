@@ -319,6 +319,9 @@ func (s *Server) completeMigration(ctx context.Context, q *store.Queries, events
 	if err != nil {
 		return cur, err
 	}
+	if err := q.DeleteMigrationSignIn(ctx, store.DeleteMigrationSignInParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID}); err != nil {
+		return cur, err
+	}
 	m, err := q.FinishMigration(ctx, store.FinishMigrationParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, State: migrationCompleted, StateReason: reason, Now: new(s.now())})
 	if err != nil {
 		return m, err

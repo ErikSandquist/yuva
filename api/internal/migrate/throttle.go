@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/productdevbook/yuva/api/internal/migrate/helpdesk"
 	"github.com/productdevbook/yuva/api/internal/migrate/imapread"
 )
 
@@ -20,6 +21,8 @@ type Throttle struct {
 	WindowStart time.Time `json:"window_start,omitzero"`
 	WindowBytes int64     `json:"window_bytes,omitempty"`
 	Backoff     int       `json:"backoff,omitempty"`
+	// Requests is a help desk's request budget.
+	Requests *helpdesk.Budget `json:"requests,omitempty"`
 }
 
 func (t *Throttle) roll(now time.Time) {
@@ -89,6 +92,9 @@ func Classify(err error, host string, secrets ...string) (Trouble, string, strin
 	if errors.As(err, &refused) {
 		return TroubleRefused, "source_write_refused", "refused to send " + refused.Command
 	}
+	if trouble, code, detail, ok := classifyHelpdesk(err); ok {
+		return trouble, code, Scrub(detail, secrets...)
+	}
 	var se *imapread.ServerError
 	if errors.As(err, &se) {
 		code, detail := ClassifyAnswer(se, host)
@@ -112,4 +118,26 @@ func Classify(err error, host string, secrets ...string) (Trouble, string, strin
 		return TroubleReconnect, "source_unreachable", Scrub(err.Error(), secrets...)
 	}
 	return TroubleNetwork, "source_unreachable", Scrub(err.Error(), secrets...)
+}
+
+// classifyHelpdesk tells what a help desk's failure asks for.
+func classifyHelpdesk(err error) (Trouble, string, string, bool) {
+	var refused *helpdesk.RefusedError
+	var auth *helpdesk.AuthError
+	var token *helpdesk.TokenError
+	var limit *helpdesk.LimitError
+	var status *helpdesk.StatusError
+	switch {
+	case errors.As(err, &refused):
+		return TroubleRefused, "source_write_refused", "refused to send " + refused.Method, true
+	case errors.As(err, &auth), errors.As(err, &token):
+		return TroubleReconnect, "auth_failed", err.Error(), true
+	case errors.As(err, &limit):
+		return TroubleLimit, "throttled", err.Error(), true
+	case errors.As(err, &status) && status.Status == 403:
+		return TroubleReconnect, "auth_failed", err.Error(), true
+	case errors.As(err, &status):
+		return TroubleNetwork, "source_unreachable", err.Error(), true
+	}
+	return "", "", "", false
 }

@@ -667,30 +667,8 @@ func (s *Server) threadFor(ctx context.Context, q *store.Queries, events *eventB
 		}
 	}
 	if found != nil {
-		c, err := q.LockConversation(ctx, store.LockConversationParams{WorkspaceID: ws, ID: found.ID})
-		if err != nil {
-			return c, false, err
-		}
-		if c.Status == string(oas.ConversationStatusOpen) {
-			return c, false, nil
-		}
-		updated, err := q.UpdateConversation(ctx, store.UpdateConversationParams{
-			WorkspaceID: ws, ID: c.ID, Subject: c.Subject, Status: string(oas.ConversationStatusOpen), Priority: c.Priority,
-			AssigneeID: c.AssigneeID, Spam: c.Spam, Now: now,
-		})
-		if err != nil {
-			return c, false, err
-		}
-		body, err := oneConversation(ctx, q, updated)
-		if err != nil {
-			return c, false, err
-		}
-		events.conversation(realtime.ConversationUpdated, updated, body)
-		st, prev := oas.ConversationStatusOpen, oas.ConversationStatus(c.Status)
-		if err := s.systemEvent(ctx, q, events, updated, oas.MessageEvent{Type: oas.StatusChanged, Status: &st, PreviousStatus: &prev}, now); err != nil {
-			return c, false, err
-		}
-		return updated, false, nil
+		c, err := s.reopenConversation(ctx, q, events, ws, found.ID, now)
+		return c, false, err
 	}
 	c, err := q.CreateConversation(ctx, store.CreateConversationParams{
 		ID: newID(), WorkspaceID: ws, InboxID: ch.InboxID, ContactID: contactID, ChannelID: &ch.ChannelID,
@@ -790,4 +768,32 @@ func (s *Server) autoReply(ctx context.Context, q *store.Queries, events *eventB
 	}
 	events.conversation(realtime.MessageCreated, c, withEmail(messageBody(msg, nil), summary))
 	return nil
+}
+
+// reopenConversation opens a conversation a contact wrote in again, with the events of the change.
+func (s *Server) reopenConversation(ctx context.Context, q *store.Queries, events *eventBatch, ws, id uuid.UUID, now time.Time) (store.Conversation, error) {
+	c, err := q.LockConversation(ctx, store.LockConversationParams{WorkspaceID: ws, ID: id})
+	if err != nil {
+		return c, err
+	}
+	if c.Status == string(oas.ConversationStatusOpen) {
+		return c, nil
+	}
+	updated, err := q.UpdateConversation(ctx, store.UpdateConversationParams{
+		WorkspaceID: ws, ID: c.ID, Subject: c.Subject, Status: string(oas.ConversationStatusOpen), Priority: c.Priority,
+		AssigneeID: c.AssigneeID, Spam: c.Spam, Now: now,
+	})
+	if err != nil {
+		return c, err
+	}
+	body, err := oneConversation(ctx, q, updated)
+	if err != nil {
+		return c, err
+	}
+	events.conversation(realtime.ConversationUpdated, updated, body)
+	st, prev := oas.ConversationStatusOpen, oas.ConversationStatus(c.Status)
+	if err := s.systemEvent(ctx, q, events, updated, oas.MessageEvent{Type: oas.StatusChanged, Status: &st, PreviousStatus: &prev}, now); err != nil {
+		return c, err
+	}
+	return updated, nil
 }

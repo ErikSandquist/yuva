@@ -15,6 +15,9 @@ type Budget struct {
 	Connections    int
 	BytesPerDay    int64
 	BytesPerSecond int64
+	// RequestsPerMinute and IncrementalPerMinute are a help desk's, until it reports its limit.
+	RequestsPerMinute    int
+	IncrementalPerMinute int
 }
 
 type Preset struct {
@@ -29,11 +32,18 @@ type Preset struct {
 	Budget      Budget
 	Guide       string
 	Available   bool
+	// Scopes are what a help desk's sign-in asks for; Subdomain, that it needs the account's.
+	Scopes    []string
+	Subdomain bool
 }
 
 const (
 	AuthPassword  = "password"
 	AuthMicrosoft = "microsoft"
+	AuthOAuth     = "oauth"
+
+	SourceZendesk   = "zendesk"
+	SourceHelpScout = "helpscout"
 
 	UsernameAddress   = "address"
 	UsernameLocalPart = "local_part"
@@ -52,6 +62,8 @@ const (
 	PresetIMAP            = "imap"
 	PresetTakeout         = "takeout"
 	PresetFile            = "file"
+	PresetZendesk         = "zendesk"
+	PresetHelpScout       = "helpscout"
 )
 
 func tls993(hosts ...string) []Server {
@@ -103,7 +115,16 @@ var Presets = []Preset{
 		Guide: "migrate-files", Available: true},
 	{ID: PresetFile, Source: "file", Name: "Export file", Auth: []string{}, Username: UsernameAddress, Folders: withArchive,
 		Guide: "migrate-files", Available: true},
+	{ID: PresetZendesk, Source: SourceZendesk, Name: "Zendesk", Auth: []string{AuthOAuth}, Username: UsernameAddress, Folders: []string{"INBOX"},
+		Budget: Budget{Connections: 1, RequestsPerMinute: 100, IncrementalPerMinute: 5}, Guide: "migrate-zendesk", Available: true,
+		Scopes: []string{"read"}, Subdomain: true},
+	{ID: PresetHelpScout, Source: SourceHelpScout, Name: "Help Scout", Servers: []Server{{Host: "api.helpscout.net", Port: 443, TLS: "tls"}},
+		Auth: []string{AuthOAuth}, Username: UsernameAddress, Folders: []string{"INBOX"}, Budget: Budget{Connections: 1, RequestsPerMinute: 100},
+		Guide: "migrate-helpscout", Available: true, Scopes: []string{}},
 }
+
+// Helpdesk tells a help-desk source.
+func Helpdesk(source string) bool { return source == SourceZendesk || source == SourceHelpScout }
 
 func init() {
 	for i := range Presets {

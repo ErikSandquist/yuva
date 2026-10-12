@@ -59,19 +59,23 @@ func (r *migrationRun) sync(ctx context.Context) (MigrationSlice, error) {
 	if r.m.ChannelID == nil || r.m.InboxID == nil {
 		return MigrationSlice{Done: true}, r.targetGone(ctx)
 	}
-	row, err := s.st.GetIngestChannel(ctx, store.GetIngestChannelParams{WorkspaceID: r.m.WorkspaceID, ChannelID: *r.m.ChannelID})
-	if store.IsNotFound(err) {
-		return MigrationSlice{Done: true}, r.targetGone(ctx)
+	var pass syncPass
+	if helpdeskMigration(r.m) {
+		pass, err = r.syncHelpdesk(ctx)
+	} else {
+		row, lerr := s.st.GetIngestChannel(ctx, store.GetIngestChannelParams{WorkspaceID: r.m.WorkspaceID, ChannelID: *r.m.ChannelID})
+		if store.IsNotFound(lerr) {
+			return MigrationSlice{Done: true}, r.targetGone(ctx)
+		}
+		if lerr != nil {
+			return MigrationSlice{}, lerr
+		}
+		team, terr := s.teamOf(ctx, s.st.Queries, r.m)
+		if terr != nil {
+			return MigrationSlice{}, terr
+		}
+		pass, err = r.readNew(ctx, team, store.FindEmailChannelByAddressRow(row))
 	}
-	if err != nil {
-		return MigrationSlice{}, err
-	}
-	ch := store.FindEmailChannelByAddressRow(row)
-	team, err := s.teamOf(ctx, s.st.Queries, r.m)
-	if err != nil {
-		return MigrationSlice{}, err
-	}
-	pass, err := r.readNew(ctx, team, ch)
 	if pass.stored || (err == nil && pass.finished) {
 		var quiet *time.Time
 		if pass.stored {
@@ -85,7 +89,7 @@ func (r *migrationRun) sync(ctx context.Context) (MigrationSlice, error) {
 	var src *sourceError
 	switch {
 	case errors.As(err, &wait):
-		return r.waitDaily(ctx, wait.until)
+		return r.waitFor(ctx, wait)
 	case errors.As(err, &src):
 		return r.trouble(ctx, src.err)
 	case err != nil:

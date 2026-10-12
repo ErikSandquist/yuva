@@ -77,11 +77,15 @@ type ThreadPlan struct {
 	In        int       `json:"in"`
 	Out       int       `json:"out"`
 	SourceIDs []string  `json:"-"`
+	// Help desks: the agent it is assigned to, and its messages as the help desk counts them.
+	Assignee *Address `json:"assignee,omitempty"`
+	Messages int      `json:"messages,omitempty"`
 }
 
 type Totals struct {
 	Conversations      int64
 	In, Out            int64
+	Messages           int64
 	Contacts           map[string]bool
 	Labels             map[string]int64
 	Skipped            map[string]int64
@@ -305,6 +309,7 @@ func (t *Totals) Add(o Totals) {
 	t.Conversations += o.Conversations
 	t.In += o.In
 	t.Out += o.Out
+	t.Messages += o.Messages
 	t.Attachments += o.Attachments
 	t.AttachmentBytes += o.AttachmentBytes
 	t.AttachmentsSkipped += o.AttachmentsSkipped

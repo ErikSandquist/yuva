@@ -57,6 +57,9 @@ func (r *migrationRun) targetGone(ctx context.Context) error {
 // copyPlanned imports planned messages, newest threads first, until none is left (empty) or the
 // slice's time is up; a result that is Done or waits ends the slice.
 func (r *migrationRun) copyPlanned(ctx context.Context) (MigrationSlice, bool, error) {
+	if helpdeskMigration(r.m) {
+		return r.copyHelpdesk(ctx)
+	}
 	s, m := r.s, r.m
 	if m.ChannelID == nil || m.InboxID == nil {
 		return MigrationSlice{Done: true}, false, r.targetGone(ctx)
@@ -101,7 +104,7 @@ func (r *migrationRun) copyPlanned(ctx context.Context) (MigrationSlice, bool, e
 		if err := r.budget(size); err != nil {
 			var wait *waitError
 			if errors.As(err, &wait) {
-				res, err := r.waitDaily(ctx, wait.until)
+				res, err := r.waitFor(ctx, wait)
 				return res, false, err
 			}
 			return MigrationSlice{}, false, err

@@ -10,6 +10,7 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/oapi-codegen/nullable"
 
+	"github.com/productdevbook/yuva/api/internal/migrate"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
@@ -17,7 +18,7 @@ import (
 var (
 	errNotMigrationManager = problem(http.StatusForbidden, "forbidden", "only owners, admins and API keys without an inbox limit move mailboxes into Yuva")
 	migrationStates        = []any{"draft", "connected", "scanning", "ready", "copying", "paused", "needs_attention", "syncing", "completed", "cancelled", "removing", "removed"}
-	migrationPresets       = []any{"gmail", "google_workspace", "yandex", "icloud", "zoho", "yahoo", "fastmail", "gmx", "imap"}
+	migrationPresets       = []any{"gmail", "google_workspace", "yandex", "icloud", "zoho", "yahoo", "fastmail", "gmx", "imap", "zendesk", "helpscout"}
 )
 
 const readOnlyPromise = "Yuva only reads the mailbox: it opens folders read-only, never deletes, moves, flags or marks anything there, and the old mailbox stays as it is."
@@ -254,7 +255,7 @@ func (o *migrationOptionsIn) body() *oas.MigrationOptionsInput {
 
 type createMigrationIn struct {
 	Address   string              `json:"address" jsonschema:"the mailbox to move"`
-	Provider  string              `json:"provider,omitempty" jsonschema:"the preset from detect_mail_source; detected when empty"`
+	Provider  string              `json:"provider,omitempty" jsonschema:"the preset from detect_mail_source, or zendesk or helpscout for a help desk (address is then its support address); detected when empty"`
 	InboxID   *uuid.UUID          `json:"inbox_id,omitempty" jsonschema:"the inbox the history goes to"`
 	ChannelID *uuid.UUID          `json:"channel_id,omitempty" jsonschema:"the inbox's e-mail channel that receives mail at the address; with inbox_id and no channel_id, that channel is found or created"`
 	Options   *migrationOptionsIn `json:"options,omitempty"`
@@ -480,7 +481,7 @@ var mcpMigrationTools = []mcpTool{
 				if !oas.MigrationPresetId(preset).Valid() {
 					return mcpMigration{}, errValidation("preset is not a known preset")
 				}
-				if err := c.s.checkMigrationPreset(string(oas.MigrationSourceImap), preset); err != nil {
+				if err := c.s.checkMigrationPreset(presetSource(preset), preset); err != nil {
 					return mcpMigration{}, err
 				}
 				address, err := normalizeEmail(oas.Email(in.Address))
@@ -494,8 +495,8 @@ var mcpMigrationTools = []mcpTool{
 				channelID, created = &id, made
 			}
 			res, err := c.s.CreateMigration(ctx, oas.CreateMigrationRequestObject{Body: &oas.MigrationCreate{
-				Preset: oas.MigrationPresetId(preset), SourceAddress: oas.Email(in.Address), InboxId: in.InboxID, ChannelId: channelID,
-				Options: in.Options.body(),
+				Source: new(oas.MigrationSource(presetSource(preset))), Preset: oas.MigrationPresetId(preset), SourceAddress: oas.Email(in.Address),
+				InboxId: in.InboxID, ChannelId: channelID, Options: in.Options.body(),
 			}})
 			out, err := c.step(ctx, res, err)
 			if err != nil || !created {
@@ -704,4 +705,12 @@ func (c *mcpCall) moveToYuvaPrompt(args map[string]string) *mcp.GetPromptResult 
 			"7. When state is syncing, the history is in and new mail is copied every two minutes. Explain how to switch the mail for this provider: forward the mailbox to forwarding_address (keeping a copy), route it there on the admin side, or move the MX. If forwarding_confirmation appears, give me its code and link for the provider's settings. Then call send_migration_probe and check get_migration: verified_at means mail reaches Yuva; probe_synced_at without verified_at after ten minutes means mail still reaches only the old mailbox.\n"+
 			"8. Once verified, the migration finishes on its own at quiet_until; when I want to finish earlier, call finish_migration. Finishing deletes the mailbox's credentials: tell me to remove the app password at the provider too, and that the old mailbox is unchanged and can stay as an archive.",
 		"Use remove_migration_history only when I ask to undo an import, with confirm_count equal to removable_conversations after I confirmed that number.")
+}
+
+// presetSource is the source a preset reads: a help desk's own, else IMAP.
+func presetSource(preset string) string {
+	if p, ok := migrate.LookupPreset(preset); ok && migrate.Helpdesk(p.Source) {
+		return p.Source
+	}
+	return string(oas.MigrationSourceImap)
 }
