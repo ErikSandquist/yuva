@@ -19,6 +19,7 @@ import (
 	"github.com/productdevbook/yuva/api/internal/analytics"
 	"github.com/productdevbook/yuva/api/internal/mail"
 	"github.com/productdevbook/yuva/api/internal/oas"
+	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
@@ -98,6 +99,9 @@ func (s *Server) newAnalytics(d Deps) *analyticsState {
 		resolver: &analytics.Resolver{Store: st, Salts: analytics.NewSalts(st), Visits: analytics.NewVisits(set.VisitCache), Grace: set.SaltGrace},
 	}
 	a.flusher = &analytics.Flusher{Store: st, Buffer: a.buffer, Log: s.log, Now: s.now, AfterFlush: s.afterAnalyticsFlush}
+	if d.Hub != nil {
+		d.Hub.OnInvalidate(a.invalidated)
+	}
 	return a
 }
 
@@ -105,6 +109,40 @@ func (a *analyticsState) forget(propertyID uuid.UUID) {
 	a.props.forget(propertyID)
 	a.resolver.Salts.Forget(propertyID)
 	a.resolver.Visits.Forget(propertyID)
+}
+
+const analyticsInvalidation = "analytics:"
+
+// notifyAnalyticsChanged tells every process, once the transaction commits, to drop what it cached
+// of a property, or of every property of the workspace when propertyID is nil, so a deleted
+// property's key stops answering everywhere at once.
+func notifyAnalyticsChanged(ctx context.Context, q *store.Queries, ws uuid.UUID, propertyID *uuid.UUID) error {
+	target := "*"
+	if propertyID != nil {
+		target = propertyID.String()
+	}
+	return q.NotifySignal(ctx, store.NotifySignalParams{Channel: realtime.InvalidateChannel, Payload: analyticsInvalidation + ws.String() + ":" + target})
+}
+
+func (a *analyticsState) invalidated(payload string) {
+	if payload == realtime.InvalidateAll {
+		a.props.forgetAll()
+		return
+	}
+	rest, ok := strings.CutPrefix(payload, analyticsInvalidation)
+	if !ok {
+		return
+	}
+	ws, target, _ := strings.Cut(rest, ":")
+	if target == "*" {
+		if id, err := uuid.Parse(ws); err == nil {
+			a.props.forgetWorkspace(id)
+		}
+		return
+	}
+	if id, err := uuid.Parse(target); err == nil {
+		a.forget(id)
+	}
 }
 
 // RunAnalytics writes collected events until ctx ends and then drains what is left; it returns at
@@ -137,8 +175,9 @@ type cachedProperty struct {
 // propertyCache finds properties by public key for a minute; an unknown key is remembered too, so
 // a flood of made-up keys does not reach the database on every request.
 type propertyCache struct {
-	mu sync.Mutex
-	m  map[string]*cachedProperty
+	mu  sync.Mutex
+	m   map[string]*cachedProperty
+	gen uint64
 }
 
 func (c *propertyCache) get(ctx context.Context, st *store.Store, key string, now time.Time) (*cachedProperty, error) {
@@ -151,6 +190,9 @@ func (c *propertyCache) get(ctx context.Context, st *store.Store, key string, no
 		}
 		return e, nil
 	}
+	c.mu.Lock()
+	gen := c.gen
+	c.mu.Unlock()
 	e = &cachedProperty{at: now}
 	prop, err := st.FindAnalyticsPropertyByKey(ctx, store.FindAnalyticsPropertyByKeyParams{Key: key, Now: new(now)})
 	switch {
@@ -164,7 +206,9 @@ func (c *propertyCache) get(ctx context.Context, st *store.Store, key string, no
 	if len(c.m) >= maxCachedKeys {
 		c.m = map[string]*cachedProperty{}
 	}
-	c.m[key] = e
+	if c.gen == gen {
+		c.m[key] = e
+	}
 	c.mu.Unlock()
 	if e.prop.ID == uuid.Nil() {
 		return nil, nil
@@ -172,9 +216,17 @@ func (c *propertyCache) get(ctx context.Context, st *store.Store, key string, no
 	return e, nil
 }
 
+func (c *propertyCache) forgetAll() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.gen++
+	c.m = map[string]*cachedProperty{}
+}
+
 func (c *propertyCache) forgetWorkspace(ws uuid.UUID) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
+	c.gen++
 	for k, e := range c.m {
 		if e.prop.WorkspaceID == ws {
 			delete(c.m, k)
@@ -185,6 +237,7 @@ func (c *propertyCache) forgetWorkspace(ws uuid.UUID) {
 func (c *propertyCache) forget(propertyID uuid.UUID) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
+	c.gen++
 	for k, e := range c.m {
 		if e.prop.ID == propertyID {
 			delete(c.m, k)

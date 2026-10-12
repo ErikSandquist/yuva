@@ -41,19 +41,24 @@ func listenOnce(ctx context.Context, dsn string, q *store.Queries, hub *Hub) (bo
 		return false, err
 	}
 	defer conn.Close(context.WithoutCancel(ctx))
-	for _, ch := range []string{Channel, SignalChannel} {
+	for _, ch := range []string{Channel, SignalChannel, InvalidateChannel} {
 		if _, err := conn.Exec(ctx, "LISTEN "+ch); err != nil {
 			return false, err
 		}
 	}
 	// Connections that subscribed while nothing was listening may have missed events; they resume.
 	hub.StopAll(ReasonRestart)
+	hub.invalidate(InvalidateAll)
 	hub.listening.Store(true)
 	defer hub.listening.Store(false)
 	for {
 		n, err := conn.WaitForNotification(ctx)
 		if err != nil {
 			return true, err
+		}
+		if n.Channel == InvalidateChannel {
+			hub.invalidate(n.Payload)
+			continue
 		}
 		if n.Channel == SignalChannel {
 			if e, err := parseSignal(n.Payload); err == nil {

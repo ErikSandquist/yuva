@@ -517,7 +517,10 @@ func (s *Server) UpdateAnalyticsProperty(ctx context.Context, req oas.UpdateAnal
 			ExcludedPaths: nonNil(f.excludedPaths), ExcludedIps: nonNil(f.excludedIPs), PathRules: mustJSON(nonNil(f.pathRules)),
 			TrackedProps: nonNil(f.trackedProps), RetentionMonths: f.retention, Now: s.now(),
 		})
-		return err
+		if err != nil {
+			return err
+		}
+		return notifyAnalyticsChanged(ctx, q, p.workspaceID, &out.ID)
 	})
 	if err != nil {
 		return nil, err
@@ -548,7 +551,10 @@ func (s *Server) RotateAnalyticsKey(ctx context.Context, req oas.RotateAnalytics
 		out, err = q.RotateAnalyticsKey(ctx, store.RotateAnalyticsKeyParams{
 			WorkspaceID: p.workspaceID, ID: cur.ID, PublicKey: newAnalyticsKey(), PreviousUntil: new(now.Add(analyticsKeyOverlap)), Now: now,
 		})
-		return err
+		if err != nil {
+			return err
+		}
+		return notifyAnalyticsChanged(ctx, q, p.workspaceID, &out.ID)
 	})
 	if err != nil {
 		return nil, err
@@ -582,6 +588,9 @@ func (s *Server) DeleteAnalyticsProperty(ctx context.Context, req oas.DeleteAnal
 			return err
 		}
 		id = cur.ID
+		if err := notifyAnalyticsChanged(ctx, q, p.workspaceID, &id); err != nil {
+			return err
+		}
 		_, err = s.jobs.InsertTx(ctx, tx, AnalyticsDeleteArgs{WorkspaceID: p.workspaceID, PropertyID: cur.ID, Property: true},
 			&river.InsertOpts{ScheduledAt: s.now().Add(analyticsDeleteDelay)})
 		return err

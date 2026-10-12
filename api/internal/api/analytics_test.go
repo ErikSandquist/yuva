@@ -597,3 +597,41 @@ func TestAnalyticsScriptIsServed(t *testing.T) {
 		t.Fatalf("script %d %v", res.StatusCode, res.Header)
 	}
 }
+
+func TestAnalyticsDeletedKeyStopsOnEveryProcess(t *testing.T) {
+	h := newHarness(t)
+	other := newHarness(t)
+	tm := newTeam(t, h)
+	send := func(on *harness, key string) int {
+		return collect(on, key, collectReq{origin: "https://example.com", ip: "203.0.113.7", body: pageview("https://example.com/")}).status
+	}
+	refused := func(on *harness, key string) bool {
+		deadline := time.Now().Add(3 * time.Second)
+		for time.Now().Before(deadline) {
+			if send(on, key) == http.StatusNotFound {
+				return true
+			}
+			time.Sleep(20 * time.Millisecond)
+		}
+		return false
+	}
+	id, key := createProperty(tm.owner, map[string]any{"name": "Site", "domains": []string{"example.com"}})
+	if send(other, key) != http.StatusAccepted {
+		t.Fatal("the second process refused a live key")
+	}
+	tm.owner.expect(http.StatusAccepted, "DELETE", "/v1/analytics/properties/"+id, map[string]any{"name": "Site"})
+	if !refused(other, key) {
+		t.Fatal("the second process still takes a deleted property's key")
+	}
+
+	_, key = createProperty(tm.owner, map[string]any{"name": "Second", "domains": []string{"example.com"}})
+	if send(other, key) != http.StatusAccepted {
+		t.Fatal("the second process refused a live key")
+	}
+	if err := h.srv.OperatorDeleteWorkspace(context.Background(), uuid.MustParse(tm.ws)); err != nil {
+		t.Fatal(err)
+	}
+	if !refused(other, key) {
+		t.Fatal("the second process still takes a deleted workspace's key")
+	}
+}

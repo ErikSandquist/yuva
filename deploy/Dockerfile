@@ -25,7 +25,8 @@ RUN if [ -f /tmp/web-dist/index.html ]; then \
       cp /tmp/widget-dist/yuva.js /tmp/widget-dist/yuva-chat.js /tmp/widget-dist/yuva-docs.js /tmp/widget-dist/yuva-subscribe.js internal/widget/dist/; \
       rm -rf internal/widget/dist/widget; \
       if [ -d /tmp/widget-dist/widget ]; then cp -R /tmp/widget-dist/widget internal/widget/dist/; fi; \
-    fi
+    fi; \
+    if [ -f /tmp/widget-dist/yuva-analytics.js ]; then cp /tmp/widget-dist/yuva-analytics.js internal/widget/dist/; fi
 ARG VERSION=dev
 ARG TARGETOS TARGETARCH
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \

@@ -16,6 +16,13 @@ const Channel = "yuva_events"
 // they are not stored, have no id and are never replayed.
 const SignalChannel = "yuva_signals"
 
+// InvalidateChannel tells every process to drop cached state, such as an analytics key that stopped
+// working. The payload names what to drop; InvalidateAll drops everything, and each process does so
+// itself when its listener (re)connects, since notifications sent while it was away are lost.
+const InvalidateChannel = "yuva_invalidate"
+
+const InvalidateAll = "*"
+
 const (
 	ConversationCreated = "conversation.created"
 	ConversationUpdated = "conversation.updated"
@@ -117,6 +124,24 @@ type Hub struct {
 	listening atomic.Bool
 	mu        sync.Mutex
 	subs      map[uuid.UUID]map[*Subscription]struct{}
+	invMu     sync.Mutex
+	inv       []func(string)
+}
+
+// OnInvalidate calls fn with the payload of every notice on InvalidateChannel.
+func (h *Hub) OnInvalidate(fn func(payload string)) {
+	h.invMu.Lock()
+	defer h.invMu.Unlock()
+	h.inv = append(h.inv, fn)
+}
+
+func (h *Hub) invalidate(payload string) {
+	h.invMu.Lock()
+	fns := h.inv
+	h.invMu.Unlock()
+	for _, fn := range fns {
+		fn(payload)
+	}
 }
 
 func (h *Hub) Listening() bool { return h.listening.Load() }
