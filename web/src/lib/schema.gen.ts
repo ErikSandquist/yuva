@@ -4572,6 +4572,214 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/analytics/properties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List analytics properties
+         * @description The properties the caller can see, oldest first, with today's visitors (in each property's
+         *     time zone) and the workspace's analytics usage this month: `usage.limit` is its monthly
+         *     event cap, absent when there is none, and `usage.limit_reached_at` says when this month's
+         *     events reached it; events over the cap are dropped until the month ends.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsProperties"];
+        put?: never;
+        /**
+         * Create an analytics property
+         * @description A website or app to measure. The answer carries its `public_key`, which pages and apps send
+         *     events with. `inbox_id` links the property to an inbox: agents of that inbox can then read
+         *     it. A workspace has at most `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` properties
+         *     (`403 property_limit`). A children's property (`audience: children`) cannot offer
+         *     `consent_features` or `tracked_props`.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createAnalyticsProperty"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An analytics property
+         * @description Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsProperty"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an analytics property
+         * @description The body repeats the property's name exactly. Its key stops working at once (`404` on the
+         *     collection endpoint); a background job then deletes its visits, events, rollups and salts,
+         *     and finally the property.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsProperty"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an analytics property
+         * @description Changes the given fields. `inbox_id: null` unlinks the property from its inbox;
+         *     `retention_months: null` keeps its rollups forever. A new `timezone` applies to events
+         *     received from then on: finished days keep the zone they were counted in.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsProperty"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/rotate-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Give an analytics property a new public key
+         * @description The property gets a new `public_key`. The old one keeps working for 24 hours
+         *     (`previous_key_expires_at`), so pages and apps can be updated without losing events; a
+         *     second rotation within that time ends the key before it at once.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["rotateAnalyticsKey"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/delete-data": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Delete a property's collected data
+         * @description Deletes the visits and events of the days `from` to `to` (dates in the property's time
+         *     zone, at most 400 days apart), or with `all: true` every day's together with the rollups.
+         *     The property and its key stay. A background job does the work; days it touched are rolled
+         *     up again.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["deleteAnalyticsData"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Query a property's numbers
+         * @description One query serves the panel, the API and the MCP tools: metrics over a range of the
+         *     property's days, broken down by up to two dimensions (one of them may be a time grain) and
+         *     narrowed by filters, with an optional comparison range. `?format=csv` answers the rows as CSV
+         *     (one column per dimension and metric) instead.
+         *
+         *     A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
+         *     day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+         *     until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
+         *     Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
+         *     with one `is` filter on `channel`, `source` or `country` come from rollups. Other
+         *     combinations need raw rows, which are kept for `YUVA_ANALYTICS_RAW_DAYS` days: a range that
+         *     starts earlier answers `422 needs_raw_window`, with the first day that can be served in
+         *     `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
+         *     added up as `(other)`.
+         *
+         *     Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
+         *     two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
+         *     answers that include today for 30 seconds.
+         *
+         *     Scope: `analytics:read`.
+         */
+        post: operations["queryAnalytics"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/realtime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * The last 30 minutes
+         * @description Visitors and page views of the last 30 minutes, per minute, with the top pages, sources and
+         *     countries. Cached for ten seconds.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsRealtime"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How a property's collection is doing
+         * @description Events accepted and dropped per day and reason (bots, rate limits, refused origins, invalid
+         *     payloads, the monthly cap, a full buffer, exclusions), events that had something scrubbed,
+         *     the last event, days waiting for their rollup, and the GeoIP database in use. Nothing about
+         *     a dropped request is stored but its count. When `geoip.attribution` is present, show it
+         *     with a link to `geoip.attribution_url` wherever locations are shown.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsHealth"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/realtime": {
         parameters: {
             query?: never;
@@ -5340,6 +5548,42 @@ export interface paths {
         get: operations["downloadClientAttachment"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send analytics events
+         * @description Called by `/yuva-analytics.js` and `useyuva/analytics` with an analytics property's public
+         *     key: one event, or up to 100 as `{"e": [...]}`, at most 64 KiB. Send the JSON as
+         *     `text/plain` so a browser needs no preflight; `application/json` works too, with a
+         *     preflight. No cookie, session or `Set-Cookie`, and the answer is `202` before anything is
+         *     written.
+         *
+         *     A browser's `Origin` host and every event's page host (`u`) must be one of the property's
+         *     `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
+         *     `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
+         *     are refused until app collection exists. An unknown or deleted key answers `404`.
+         *
+         *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+         *     of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+         *     path; events over the property's per-minute limit or the workspace's monthly cap. One
+         *     shortened address may send 120 events a minute to a property (`429 rate_limited` with
+         *     `Retry-After`). When the server cannot take more events it answers `503` with
+         *     `Retry-After`.
+         */
+        post: operations["collectAnalytics"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6227,11 +6471,16 @@ export interface components {
          *     - `migrations:manage`: detect, create, change, connect, test and delete migrations into
          *       Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
          *       to inboxes.
+         *     - `analytics:read`: analytics properties.
+         *     - `analytics:write`: server-side analytics events; for API keys only, never offered to
+         *       OAuth clients.
+         *     - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
+         *       delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
          *
-         *     `lists:*`, `broadcasts:*` and `migrations:manage` are never added to keys made before they existed.
+         *     `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
          * @enum {string}
          */
-        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage";
+        ApiKeyScope: "conversations:read" | "conversations:write" | "messages:write" | "drafts:send" | "notes:write" | "contacts:read" | "contacts:write" | "inboxes:read" | "inboxes:manage" | "labels:write" | "canned_replies:write" | "webhooks:manage" | "workspace:manage" | "feedback:write" | "lists:read" | "lists:write" | "broadcasts:read" | "broadcasts:write" | "broadcasts:send" | "migrations:manage" | "analytics:read" | "analytics:write" | "analytics:manage";
         /**
          * Format: uri
          * @description An `https` image URL.
@@ -7967,6 +8216,11 @@ export interface components {
              * @description Bytes read from mailboxes moved into Yuva.
              */
             imported_bytes: number;
+            /**
+             * Format: int64
+             * @description Analytics events stored.
+             */
+            analytics_events: number;
         };
         UsageList: {
             items: components["schemas"]["UsageMonth"][];
@@ -11528,6 +11782,516 @@ export interface components {
         };
         /** @description One server message on `/client/v1/realtime`, told apart by `type`. */
         ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
+        /**
+         * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+         * @enum {string}
+         */
+        AnalyticsPlatform: "web" | "ios" | "android";
+        /**
+         * @description `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+         *     address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+         *     script sends after `yuva.consent({analytics: true})`.
+         * @enum {string}
+         */
+        AnalyticsCollection: "anonymous" | "consent";
+        /**
+         * @description Offered only to visitors who consented: `persistent` keeps a random id on the device for at
+         *     most 13 months, `identify` links a verified user's visits to their contact.
+         * @enum {string}
+         */
+        AnalyticsConsentFeature: "persistent" | "identify";
+        /**
+         * @description `children` keeps location at country level and allows no consent features or tracked props.
+         * @enum {string}
+         */
+        AnalyticsAudience: "general" | "children";
+        /**
+         * @description A host name whose pages may send events, without scheme or port: `example.com`,
+         *     `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
+         *     `localhost`, `127.0.0.1` and `[::1]` count only when listed.
+         * @example www.example.com
+         * @example *.example.com
+         */
+        AnalyticsDomain: string;
+        /**
+         * @description A path starting with `/`, where `*` matches one segment and `**` any number of them.
+         * @example /admin/**
+         * @example /preview/*
+         */
+        AnalyticsPathPattern: string;
+        /** @description Pages whose path matches `pattern` are stored as `replacement`, so `/orders/*` can count as `/orders/:id`. */
+        AnalyticsPathRule: {
+            pattern: components["schemas"]["AnalyticsPathPattern"];
+            /** @example /orders/:id */
+            replacement: string;
+        };
+        /**
+         * @description An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
+         * @example 203.0.113.7
+         * @example 198.51.100.0/24
+         */
+        AnalyticsExcludedAddress: string;
+        AnalyticsTrackedProp: string;
+        /** @description A website or app the workspace measures. */
+        AnalyticsProperty: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Format: uuid
+             * @description The linked inbox, whose agents can read the property; absent when none.
+             */
+            inbox_id?: string;
+            name: string;
+            /**
+             * @description Sent by pages and apps, `yuva_ak_…`. Public like a chat channel's key.
+             * @example yuva_ak_3kq9TzWb0xY1aB2cD3eF4gH5
+             */
+            public_key: string;
+            /**
+             * Format: date-time
+             * @description After a rotation, when the previous key stops working; absent when there is none.
+             */
+            previous_key_expires_at?: string;
+            domains: components["schemas"]["AnalyticsDomain"][];
+            platforms: components["schemas"]["AnalyticsPlatform"][];
+            /** @description IANA time zone that defines the property's day. */
+            timezone: string;
+            /** @description ISO 4217 code revenue is reported in. */
+            currency: string;
+            collection: components["schemas"]["AnalyticsCollection"];
+            consent_features: components["schemas"]["AnalyticsConsentFeature"][];
+            audience: components["schemas"]["AnalyticsAudience"];
+            excluded_paths: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description Rollups older than this are deleted; absent when they are kept forever.
+             */
+            retention_months?: number;
+            /**
+             * Format: int64
+             * @description Distinct visitors so far today, in the property's time zone.
+             */
+            visitors_today: number;
+            /**
+             * Format: date-time
+             * @description When the first event was stored; absent until then.
+             */
+            first_event_at?: string;
+            /**
+             * Format: date-time
+             * @description When an event was last stored, to the minute.
+             */
+            last_event_at?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsPropertyCreate: {
+            name: string;
+            /** Format: uuid */
+            inbox_id?: string;
+            domains: components["schemas"]["AnalyticsDomain"][];
+            /** @description `[web]` when absent. */
+            platforms?: components["schemas"]["AnalyticsPlatform"][];
+            /** @description The linked inbox's time zone when absent, else `UTC`. */
+            timezone?: string;
+            /** @default EUR */
+            currency: string;
+            collection?: components["schemas"]["AnalyticsCollection"];
+            consent_features?: components["schemas"]["AnalyticsConsentFeature"][];
+            audience?: components["schemas"]["AnalyticsAudience"];
+            excluded_paths?: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips?: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules?: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props?: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description 25 when absent; `null` keeps rollups forever.
+             */
+            retention_months?: number | null;
+        };
+        AnalyticsPropertyUpdate: {
+            name?: string;
+            /**
+             * Format: uuid
+             * @description `null` unlinks the property from its inbox.
+             */
+            inbox_id?: string | null;
+            domains?: components["schemas"]["AnalyticsDomain"][];
+            platforms?: components["schemas"]["AnalyticsPlatform"][];
+            timezone?: string;
+            currency?: string;
+            collection?: components["schemas"]["AnalyticsCollection"];
+            consent_features?: components["schemas"]["AnalyticsConsentFeature"][];
+            audience?: components["schemas"]["AnalyticsAudience"];
+            excluded_paths?: components["schemas"]["AnalyticsPathPattern"][];
+            excluded_ips?: components["schemas"]["AnalyticsExcludedAddress"][];
+            path_rules?: components["schemas"]["AnalyticsPathRule"][];
+            tracked_props?: components["schemas"]["AnalyticsTrackedProp"][];
+            /**
+             * Format: int32
+             * @description `null` keeps rollups forever.
+             */
+            retention_months?: number | null;
+        };
+        /** @description The workspace's analytics events this calendar month (UTC). */
+        AnalyticsUsage: {
+            /** @example 2026-10 */
+            month: string;
+            /**
+             * Format: int64
+             * @description Events stored this month.
+             */
+            events: number;
+            /**
+             * Format: int64
+             * @description The monthly event cap; absent when there is none.
+             */
+            limit?: number;
+            /**
+             * Format: date-time
+             * @description When this month's events reached the cap; later events are dropped until the month ends.
+             */
+            limit_reached_at?: string;
+        };
+        AnalyticsPropertyList: {
+            items: components["schemas"]["AnalyticsProperty"][];
+            usage: components["schemas"]["AnalyticsUsage"];
+        };
+        AnalyticsPropertyDeletion: {
+            /** @description The property's name, exactly. */
+            name: string;
+        };
+        /** @description Either `from` and `to`, or `all: true`. */
+        AnalyticsDataDeletion: {
+            /** Format: date */
+            from?: string;
+            /** Format: date */
+            to?: string;
+            all?: boolean;
+        };
+        /**
+         * @description `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+         *     `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+         *     `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+         *     focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+         *     page view that reported it), `events` (custom events).
+         * @enum {string}
+         */
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events";
+        /**
+         * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+         *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+         *     `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+         *     `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+         *     (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+         *     `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+         *     code. Unknown values are empty strings.
+         * @enum {string}
+         */
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version";
+        /**
+         * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
+         *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
+         *     `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
+         *     values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
+         *     range is present.
+         * @enum {string}
+         */
+        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version";
+        /**
+         * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
+         *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
+         *     them, elsewhere `*` is any text. Several values are alternatives. A `page` filter keeps the
+         *     visits that viewed a matching page and, in a page breakdown, only matching pages.
+         */
+        AnalyticsFilter: {
+            dimension: components["schemas"]["AnalyticsFilterDimension"];
+            /** @enum {string} */
+            op: "is" | "is_not" | "contains" | "not_contains" | "matches";
+            values: string[];
+        };
+        /**
+         * @description Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+         *     `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+         *     `year` are the current calendar month and year to date; `last_month` the one before), or
+         *     `from` and `to` (inclusive, at most 400 days apart).
+         */
+        AnalyticsRange: {
+            /** @enum {string} */
+            period?: "today" | "yesterday" | "7d" | "28d" | "30d" | "90d" | "6mo" | "12mo" | "month" | "last_month" | "year";
+            /** Format: date */
+            from?: string;
+            /** Format: date */
+            to?: string;
+        };
+        /**
+         * @description `previous` is the range of the same length just before, `year` the same days a year
+         *     earlier, `range` the days `from` to `to`.
+         */
+        AnalyticsCompare: {
+            /** @enum {string} */
+            with: "previous" | "year" | "range";
+            /** Format: date */
+            from?: string;
+            /** Format: date */
+            to?: string;
+        };
+        AnalyticsOrder: {
+            metric: components["schemas"]["AnalyticsMetric"];
+            /**
+             * @default desc
+             * @enum {string}
+             */
+            dir: "asc" | "desc";
+        };
+        AnalyticsQuery: {
+            metrics: components["schemas"]["AnalyticsMetric"][];
+            dimensions?: components["schemas"]["AnalyticsDimension"][];
+            filters?: components["schemas"]["AnalyticsFilter"][];
+            range: components["schemas"]["AnalyticsRange"];
+            compare?: components["schemas"]["AnalyticsCompare"];
+            /** @description Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise. */
+            order_by?: components["schemas"]["AnalyticsOrder"][];
+            /**
+             * @description Rows per page; time series are never cut.
+             * @default 100
+             */
+            limit: number;
+            /** @description `next_cursor` of the previous page. */
+            cursor?: string;
+        };
+        /** @description The metrics the query asked for. */
+        AnalyticsMetrics: {
+            /** Format: double */
+            visitors?: number;
+            /** Format: double */
+            visits?: number;
+            /** Format: double */
+            pageviews?: number;
+            /** Format: double */
+            views_per_visit?: number;
+            /** Format: double */
+            bounce_rate?: number;
+            /** Format: double */
+            visit_duration?: number;
+            /** Format: double */
+            time_on_page?: number;
+            /** Format: double */
+            scroll_depth?: number;
+            /** Format: double */
+            events?: number;
+        };
+        AnalyticsRow: {
+            /** @description One value per dimension of the query, in its order. */
+            dimensions: string[];
+            /** @description With a `region` or `city` dimension, the place's country. */
+            country?: string;
+            /** @description With a `city` dimension, the city's region. */
+            region?: string;
+            metrics: components["schemas"]["AnalyticsMetrics"];
+        };
+        AnalyticsComparison: {
+            /** Format: date */
+            from: string;
+            /** Format: date */
+            to: string;
+            totals: components["schemas"]["AnalyticsMetrics"];
+            /** @description The comparison range's rows with the same dimension values as `rows` (time buckets by position). */
+            rows: components["schemas"]["AnalyticsRow"][];
+        };
+        AnalyticsResultMeta: {
+            /** Format: date */
+            from: string;
+            /** Format: date */
+            to: string;
+            timezone: string;
+            /** @enum {string} */
+            served_from: "rollups" | "raw" | "mixed";
+            /**
+             * Format: date
+             * @description The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
+             */
+            raw_window_from: string;
+        };
+        AnalyticsResult: {
+            /** @description Empty when the query has no dimensions. */
+            rows: components["schemas"]["AnalyticsRow"][];
+            totals: components["schemas"]["AnalyticsMetrics"];
+            comparison?: components["schemas"]["AnalyticsComparison"];
+            meta: components["schemas"]["AnalyticsResultMeta"];
+            /** @description Present when there are more rows. */
+            next_cursor?: string;
+        };
+        AnalyticsRangeProblem: components["schemas"]["Problem"] & {
+            /** Format: date */
+            raw_window_from?: string;
+        };
+        AnalyticsTopValue: {
+            value: string;
+            /** Format: int64 */
+            visitors: number;
+        };
+        AnalyticsMinute: {
+            /** Format: date-time */
+            at: string;
+            /** Format: int64 */
+            visitors: number;
+            /** Format: int64 */
+            pageviews: number;
+        };
+        AnalyticsRealtime: {
+            /**
+             * Format: int64
+             * @description Distinct visitors with an event in the last 30 minutes.
+             */
+            visitors: number;
+            /** Format: int64 */
+            pageviews: number;
+            /** @description The last 30 minutes, oldest first, every minute present. */
+            minutes: components["schemas"]["AnalyticsMinute"][];
+            /** @description The ten paths with the most visitors. */
+            pages: components["schemas"]["AnalyticsTopValue"][];
+            /** @description The ten sources with the most visitors (empty is direct). */
+            sources: components["schemas"]["AnalyticsTopValue"][];
+            countries: components["schemas"]["AnalyticsTopValue"][];
+        };
+        AnalyticsDropCounts: {
+            /**
+             * Format: int64
+             * @description Crawlers, headless browsers, scripts without browser headers, referrer spam and visitors over the day's volume limits.
+             */
+            bot: number;
+            /**
+             * Format: int64
+             * @description Over the per-address or per-property rate limit.
+             */
+            rate: number;
+            /**
+             * Format: int64
+             * @description From an origin or page host that is not one of the property's domains.
+             */
+            origin: number;
+            /** Format: int64 */
+            invalid: number;
+            /** Format: int64 */
+            late: number;
+            /**
+             * Format: int64
+             * @description Over the workspace's monthly cap.
+             */
+            over_limit: number;
+            /**
+             * Format: int64
+             * @description The server's buffer was full.
+             */
+            buffer: number;
+            /**
+             * Format: int64
+             * @description From an excluded address or path.
+             */
+            excluded: number;
+        };
+        AnalyticsHealthDay: {
+            /** Format: date */
+            day: string;
+            /** Format: int64 */
+            accepted: number;
+            /**
+             * Format: int64
+             * @description Accepted events that had an e-mail-shaped part removed.
+             */
+            scrubbed: number;
+            dropped: components["schemas"]["AnalyticsDropCounts"];
+        };
+        /** @description The asked days added up. */
+        AnalyticsIngestCounts: {
+            /** Format: int64 */
+            accepted: number;
+            /** Format: int64 */
+            scrubbed: number;
+            dropped: components["schemas"]["AnalyticsDropCounts"];
+        };
+        AnalyticsGeoIP: {
+            /**
+             * @description `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
+             * @enum {string}
+             */
+            source: "dbip" | "file" | "off";
+            /**
+             * Format: date-time
+             * @description When the database in use was built; absent when none is loaded on the process that answered.
+             */
+            built_at?: string;
+            /** @description The credit the database's license asks for, such as "IP Geolocation by DB-IP". */
+            attribution?: string;
+            /** Format: uri */
+            attribution_url?: string;
+            /** @description Why no database is loaded, or why the last update failed. */
+            error?: string;
+        };
+        AnalyticsHealth: {
+            /** Format: date-time */
+            first_event_at?: string;
+            /** Format: date-time */
+            last_event_at?: string;
+            /** Format: date */
+            raw_window_from: string;
+            /**
+             * Format: int64
+             * @description Days with raw rows that are not rolled up yet or changed since.
+             */
+            pending_rollup_days: number;
+            geoip: components["schemas"]["AnalyticsGeoIP"];
+            /** @description The asked days, newest first, every day present. */
+            days: components["schemas"]["AnalyticsHealthDay"][];
+            totals: components["schemas"]["AnalyticsIngestCounts"];
+        };
+        AnalyticsConsent: {
+            /**
+             * @description `1` when the visitor agreed to analytics.
+             * @enum {integer}
+             */
+            a?: 0 | 1;
+        };
+        /**
+         * @description One event. Keys the server does not know are ignored, so newer scripts keep working with
+         *     older servers.
+         */
+        AnalyticsEvent: {
+            /**
+             * @description `pageview`, or `engagement` (sent once per view when the page is hidden or left).
+             * @enum {string}
+             */
+            n: "pageview" | "engagement";
+            /**
+             * @description The page URL. Only the host and the path are kept; of the query, only `utm_source`,
+             *     `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
+             *     the visit's acquisition. Path segments shaped like e-mail addresses are stored as
+             *     `:email`.
+             */
+            u: string;
+            /** @description `document.referrer`; only its host and path are kept, and none when it is the page's own host. */
+            r?: string;
+            /** @description Viewport width in CSS pixels, turned into a screen size class and not stored. */
+            w?: number;
+            /** @description The page uses hash routing, so the fragment is part of the path. */
+            h?: boolean;
+            /** @description `engagement` only: milliseconds the page was visible and focused, at most 30 minutes. */
+            ms?: number;
+            /** @description `engagement` only: the deepest scroll position reached, in percent. */
+            sd?: number;
+            c?: components["schemas"]["AnalyticsConsent"];
+        };
+        AnalyticsEventBatch: {
+            e: components["schemas"]["AnalyticsEvent"][];
+        };
+        /** @description One event, or up to 100 in `e`. */
+        AnalyticsBatch: components["schemas"]["AnalyticsEvent"] | components["schemas"]["AnalyticsEventBatch"];
         IngressResult: {
             /**
              * @description `stored` (a message was added), `duplicate` (seen before), `bounce` (a delivery report
@@ -12353,6 +13117,7 @@ export interface components {
         CannedReplyId: string;
         /** @description The chat channel's public key. */
         ChannelKey: string;
+        AnalyticsPropertyId: string;
         ListId: string;
         MigrationId: string;
         ImportId: string;
@@ -19298,6 +20063,334 @@ export interface operations {
             403: components["responses"]["Problem"];
         };
     };
+    listAnalyticsProperties: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The properties. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsPropertyList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyCreate"];
+            };
+        };
+        responses: {
+            /** @description The property. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The property. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyDeletion"];
+            };
+        };
+        responses: {
+            /** @description The property is gone and its data is being deleted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsProperty: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsPropertyUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated property. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    rotateAnalyticsKey: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The property with its new key. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsProperty"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsData: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsDataDeletion"];
+            };
+        };
+        responses: {
+            /** @description The data is being deleted. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    queryAnalytics: {
+        parameters: {
+            query?: {
+                /** @description `json` (the default) or `csv`. */
+                format?: "json" | "csv";
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsQuery"];
+            };
+        };
+        responses: {
+            /** @description The numbers. */
+            200: {
+                headers: {
+                    /** @description With `format=csv`, an attachment file name. */
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsResult"];
+                    "text/csv": string;
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /**
+             * @description `needs_raw_window`: the query needs raw rows for days that are no longer kept;
+             *     `raw_window_from` is the first day it can serve. `range_too_large`: the range is longer
+             *     than 400 days.
+             */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AnalyticsRangeProblem"];
+                };
+            };
+            429: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsRealtime: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The last 30 minutes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRealtime"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsHealth: {
+        parameters: {
+            query?: {
+                /** @description How many days back, today included. */
+                days?: number;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The property's collection health. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsHealth"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
     realtime: {
         parameters: {
             query?: {
@@ -20301,6 +21394,38 @@ export interface operations {
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
+        };
+    };
+    collectAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The analytics property's public key, `yuva_ak_…`. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "text/plain": components["schemas"]["AnalyticsBatch"];
+                "application/json": components["schemas"]["AnalyticsBatch"];
+            };
+        };
+        responses: {
+            /** @description Taken; stored unless one of the rules above dropped it. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            413: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
         };
     };
     clientRealtime: {
