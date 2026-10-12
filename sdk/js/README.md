@@ -212,9 +212,9 @@ Methods (`window.yuva` for the script): `pageview({ url?, referrer? })`, `consen
 before the script loads go to `(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true }])`.
 Links to `#yuva-optout` and `#yuva-optin` opt the visitor out and back in.
 
-In React, render `<YuvaAnalytics server="…" key="…" />` once (it renders nothing) and call
+In React, render `<YuvaAnalytics server="…" publicKey="yuva_ak_…" />` once (it renders nothing) and call
 `useYuvaAnalytics()` anywhere for `pageview`, `consent`, `optOut` and `optIn`; calls before it has
-loaded wait for it. In Nuxt, set `yuva.analytics` (below) and use `useYuvaAnalytics()`.
+loaded wait for it. The prop is `publicKey` because React keeps `key` for itself. In Nuxt, set `yuva.analytics` (below) and use `useYuvaAnalytics()`.
 
 ## Nuxt
 

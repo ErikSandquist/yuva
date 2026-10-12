@@ -388,9 +388,11 @@ export function YuvaSubscribe({ onSubscribe, onError, ...props }: YuvaSubscribeP
   )
 }
 
-export type YuvaAnalyticsProps = AnalyticsOptions
+export interface YuvaAnalyticsProps extends Omit<AnalyticsOptions, "key"> {
+  publicKey: string
+}
 
-export function YuvaAnalytics({ server, key, hash, consent, manual }: YuvaAnalyticsProps): null {
+export function YuvaAnalytics({ server, publicKey: key, hash, consent, manual }: YuvaAnalyticsProps): null {
   useEffect(() => {
     let instance: Analytics | undefined
     let mounted = true
