@@ -17,8 +17,8 @@ expect fixes to ship as a new 0.0.x release rather than as patches to older ones
 
 Report a vulnerability privately through GitHub's private vulnerability reporting:
 **Security → Report a vulnerability** on https://github.com/productdevbook/yuva
-(https://github.com/productdevbook/yuva/security/advisories/new).
-Do not open a public issue for it.
+(https://github.com/productdevbook/yuva/security/advisories/new), or by e-mail to
+security@useyuva.com. Do not open a public issue for it.
 
 Include the affected version or commit, the steps to reproduce and the impact you see. You will get
 an answer within 7 days. Fixes are released before the report is made public, and reporters are
