@@ -8424,8 +8424,14 @@ type Migration struct {
 	SyncUntil *time.Time `json:"sync_until,omitempty"`
 
 	// SyncedAt When catch-up sync last read the old mailbox.
-	SyncedAt  *time.Time `json:"synced_at,omitempty"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	SyncedAt *time.Time `json:"synced_at,omitempty"`
+
+	// TeamSuggestions Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
+	// other than the mailbox address, most messages first. They are the team's aliases and
+	// colleagues the Map step offers as `options.team_addresses`, whether or not they are
+	// already team addresses.
+	TeamSuggestions *[]MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
+	UpdatedAt       time.Time                  `json:"updated_at"`
 
 	// VerifiedAt When a test message first reached Yuva by the new route.
 	VerifiedAt *time.Time `json:"verified_at,omitempty"`
@@ -9036,6 +9042,18 @@ type MigrationSource string
 //   - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
 //   - `removing`, `removed`: imported history is being, or was, removed.
 type MigrationState string
+
+// MigrationTeamSuggestion defines model for MigrationTeamSuggestion.
+type MigrationTeamSuggestion struct {
+	// Address Lowercased.
+	Address string `json:"address"`
+
+	// Messages Messages from it in the Sent folders, each message once.
+	Messages int64 `json:"messages"`
+
+	// Name The display name it sent with most often.
+	Name *string `json:"name,omitempty"`
+}
 
 // MigrationTestCode - `dns_failed`: the server's name does not resolve.
 //   - `address_not_allowed`: the server is on a private or local network.

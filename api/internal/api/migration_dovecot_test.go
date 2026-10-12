@@ -445,6 +445,7 @@ func checkDryRun(t *testing.T, est map[string]any, want expectedMailbox) {
 func TestDovecotMigrationDryRunsMatchExpected(t *testing.T) {
 	d := newDovecotRun(t)
 	ctx := context.Background()
+	suggestions := map[string][]string{"acme": {"deniz@example.com Deniz Kaya 1", "sales@example.com Acme Sales 1"}, "yerel": nil}
 	for _, user := range []string{"acme", "yerel"} {
 		want := expectedFixture(t, d.fixtures, user)
 		box := copyMailbox(t, d.fixtures, user)
@@ -463,6 +464,9 @@ func TestDovecotMigrationDryRunsMatchExpected(t *testing.T) {
 				t.Errorf("%s folder %s after the test: %v, want %+v", user, f.Name, got, f)
 			}
 		}
+		if m := d.migration(id); m.body["team_suggestions"] != nil {
+			t.Errorf("%s team suggestions before the scan: %s", user, m.raw)
+		}
 		d.tm.owner.expectProblem(http.StatusConflict, "migration_state", "POST", "/v1/migrations/"+id+"/start", nil)
 		d.tm.owner.expectProblem(http.StatusConflict, "migration_state", "GET", "/v1/migrations/"+id+"/preview", nil)
 		if s := d.tm.owner.expect(http.StatusOK, "POST", "/v1/migrations/"+id+"/scan", nil).str("state"); s != "scanning" {
@@ -476,6 +480,17 @@ func TestDovecotMigrationDryRunsMatchExpected(t *testing.T) {
 			t.Fatalf("%s after the scan: %s", user, m.raw)
 		}
 		checkDryRun(t, m.body["estimate"].(map[string]any), want)
+		var suggested []string
+		for _, sg := range m.body["team_suggestions"].([]any) {
+			sg := sg.(map[string]any)
+			if sg["address"] == want.Address {
+				continue
+			}
+			suggested = append(suggested, fmt.Sprintf("%s %v %d", sg["address"], sg["name"], num(sg["messages"])))
+		}
+		if !reflect.DeepEqual(suggested, suggestions[user]) {
+			t.Errorf("%s team suggestions %q, want %q", user, suggested, suggestions[user])
+		}
 		byName := map[string]map[string]any{}
 		for _, f := range d.tm.owner.expect(http.StatusOK, "GET", "/v1/migrations/"+id+"/folders", nil).body["items"].([]any) {
 			byName[f.(map[string]any)["name"].(string)] = f.(map[string]any)

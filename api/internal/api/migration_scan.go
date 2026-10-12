@@ -33,6 +33,7 @@ const (
 	previewTextRunes    = 1000
 	importMessagesPerS  = 20
 	estimateMarginRatio = 1.1
+	teamSuggestions     = 50
 )
 
 // sourceError marks a failure of the mailbox, as opposed to one of the database.
@@ -54,8 +55,9 @@ type waitError struct{ until time.Time }
 func (e *waitError) Error() string { return "waiting for the daily budget" }
 
 type migrationEstimateDoc struct {
-	DryRun  oas.MigrationEstimate `json:"dry_run"`
-	Preview *oas.MigrationPreview `json:"preview,omitempty"`
+	DryRun          oas.MigrationEstimate         `json:"dry_run"`
+	Preview         *oas.MigrationPreview         `json:"preview,omitempty"`
+	TeamSuggestions []oas.MigrationTeamSuggestion `json:"team_suggestions,omitempty"`
 }
 
 func readEstimate(raw []byte) *migrationEstimateDoc {
@@ -536,11 +538,13 @@ func (r *migrationRun) plan(ctx context.Context) error {
 		return err
 	}
 	planFolders := map[int32]migrate.PlanFolder{}
+	sent := map[int32]bool{}
 	for _, f := range folders {
 		use := folderUse(f, folders)
 		if use == oas.FolderUseSkip {
 			continue
 		}
+		sent[f.ID] = f.Kind == migrate.KindSent
 		label, err := labelName(ctx, q, f)
 		if err != nil {
 			return err
@@ -604,6 +608,14 @@ func (r *migrationRun) plan(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+	suggestions := []oas.MigrationTeamSuggestion{}
+	for _, f := range migrate.SentFrom(items, sent, m.SourceAddress, teamSuggestions) {
+		sg := oas.MigrationTeamSuggestion{Address: f.Address, Messages: f.Messages}
+		if f.Name != "" {
+			sg.Name = &f.Name
+		}
+		suggestions = append(suggestions, sg)
+	}
 	return s.st.InTx(ctx, func(q *store.Queries) error {
 		if err := q.ResetMigrationItemsPlan(ctx, store.ResetMigrationItemsPlanParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}); err != nil {
 			return err
@@ -635,7 +647,7 @@ func (r *migrationRun) plan(ctx context.Context) error {
 				return err
 			}
 		}
-		return q.SetMigrationEstimate(ctx, store.SetMigrationEstimateParams{WorkspaceID: m.WorkspaceID, ID: m.ID, Estimate: mustJSON(migrationEstimateDoc{DryRun: est})})
+		return q.SetMigrationEstimate(ctx, store.SetMigrationEstimateParams{WorkspaceID: m.WorkspaceID, ID: m.ID, Estimate: mustJSON(migrationEstimateDoc{DryRun: est, TeamSuggestions: suggestions})})
 	})
 }
 

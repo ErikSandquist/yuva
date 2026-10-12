@@ -67,6 +67,12 @@ type mcpMigrationFolder struct {
 	Failed   int64  `json:"failed"`
 }
 
+type mcpTeamSuggestion struct {
+	Address  string `json:"address"`
+	Name     string `json:"name,omitempty"`
+	Messages int64  `json:"messages" jsonschema:"messages it sent from the mailbox's Sent folders"`
+}
+
 type mcpForwardingConfirmation struct {
 	Provider   string    `json:"provider"`
 	Code       string    `json:"code" jsonschema:"the code to enter in the provider's forwarding settings"`
@@ -91,6 +97,7 @@ type mcpMigration struct {
 	ConnectURL             string                     `json:"connect_url,omitempty" jsonschema:"the page where the person connects the mailbox (app password or sign-in); give it to them and never ask for a password; its workspace parameter opens it in this workspace even when another one is open in the panel"`
 	Estimate               *mcpMigrationEstimate      `json:"estimate,omitempty" jsonschema:"the dry run, once scanned"`
 	Folders                []mcpMigrationFolder       `json:"folders,omitempty"`
+	TeamSuggestions        []mcpTeamSuggestion        `json:"team_suggestions,omitempty" jsonschema:"once scanned: the other addresses that sent mail from the mailbox's Sent folders, most first; ask the person which are the team's (aliases, colleagues) and pass those as team_addresses"`
 	LiveFrom               *time.Time                 `json:"live_from,omitempty" jsonschema:"mail received after this is new mail with notifications"`
 	ForwardingAddress      string                     `json:"forwarding_address,omitempty" jsonschema:"forward the old mailbox here"`
 	ForwardingConfirmation *mcpForwardingConfirmation `json:"forwarding_confirmation,omitempty"`
@@ -156,6 +163,11 @@ func (c *mcpCall) migrationOut(m oas.Migration) mcpMigration {
 			}
 		}
 		out.Estimate = est
+	}
+	if m.TeamSuggestions != nil {
+		for _, t := range *m.TeamSuggestions {
+			out.TeamSuggestions = append(out.TeamSuggestions, mcpTeamSuggestion{Address: t.Address, Name: deref(t.Name), Messages: t.Messages})
+		}
 	}
 	if !c.s.noPanel {
 		out.PanelURL = c.panelURL("/migrations/" + m.Id.String())
@@ -687,7 +699,7 @@ func (c *mcpCall) moveToYuvaPrompt(args map[string]string) *mcp.GetPromptResult 
 			"2. Inbox: call list_inboxes and pick "+inbox+". "+createInbox+"\n"+
 			"3. Call create_migration with address "+address+", the provider and the inbox_id, without channel_id: it uses the inbox's e-mail channel for "+address+" and creates that channel when there is none. If channel_setup is in the answer, tell me what it says and give me channel_settings_url. Then give me connect_url and ask me to open it, follow the provider's guide there and connect the mailbox; wait until I say I did.\n"+
 			"4. Call get_migration until connected is true and state is connected (call test_migration_connection once if it stays draft, and explain any failed step). Suggest in plain words which folders to read and a date range, apply what I choose with update_migration, then call scan_migration.\n"+
-			"5. Call get_migration until state is ready. Summarise the estimate: conversations, messages in and out, new and existing contacts, labels, what is skipped and why, storage and time. Call preview_migration and show two or three threads briefly. Ask me to confirm. Only after I confirm, call start_migration.\n"+
+			"5. Call get_migration until state is ready. The first time it is ready with team_suggestions, show those addresses with their counts and ask me which are the team's (aliases or colleagues): mail from them is imported as sent by the team, mail from the others as from customers. If I name any, call update_migration with team_addresses set to them and every team address set before, call scan_migration again and wait for ready. Summarise the estimate: conversations, messages in and out, new and existing contacts, labels, what is skipped and why, storage and time. Call preview_migration and show two or three threads briefly. Ask me to confirm. Only after I confirm, call start_migration.\n"+
 			"6. When I ask, report progress from get_migration (percent, counts, waiting_until). If state is needs_attention, explain reason and how to fix it; when the mailbox must be reconnected, give me connect_url again, then call resume_migration.\n"+
 			"7. When state is syncing, the history is in and new mail is copied every two minutes. Explain how to switch the mail for this provider: forward the mailbox to forwarding_address (keeping a copy), route it there on the admin side, or move the MX. If forwarding_confirmation appears, give me its code and link for the provider's settings. Then call send_migration_probe and check get_migration: verified_at means mail reaches Yuva; probe_synced_at without verified_at after ten minutes means mail still reaches only the old mailbox.\n"+
 			"8. Once verified, the migration finishes on its own at quiet_until; when I want to finish earlier, call finish_migration. Finishing deletes the mailbox's credentials: tell me to remove the app password at the provider too, and that the old mailbox is unchanged and can stay as an archive.",

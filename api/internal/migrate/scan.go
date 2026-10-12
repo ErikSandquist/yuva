@@ -1,11 +1,13 @@
 package migrate
 
 import (
+	"cmp"
 	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"regexp"
+	"slices"
 	"strings"
 	"time"
 	"uuid"
@@ -169,4 +171,55 @@ func NameID(ns uuid.UUID, name string) uuid.UUID {
 	u[6] = u[6]&0x0f | 0x50
 	u[8] = u[8]&0x3f | 0x80
 	return u
+}
+
+// Sender is an address that sent mail from the mailbox, with how many messages.
+type Sender struct {
+	Address  string
+	Name     string
+	Messages int64
+}
+
+// SentFrom counts the From addresses of the items in the sent folders, each message once, other
+// than the mailbox address, most messages first.
+func SentFrom(items []Item, sent map[int32]bool, mailbox string, limit int) []Sender {
+	mailbox = strings.ToLower(strings.TrimSpace(mailbox))
+	seen := map[string]bool{}
+	counts := map[string]int64{}
+	names := map[string]map[string]int{}
+	for _, it := range items {
+		addr := it.Meta.From.Email
+		if !sent[it.FolderID] || addr == "" || addr == mailbox || seen[it.DedupeKey] {
+			continue
+		}
+		seen[it.DedupeKey] = true
+		counts[addr]++
+		if n := it.Meta.From.Name; n != "" {
+			if names[addr] == nil {
+				names[addr] = map[string]int{}
+			}
+			names[addr][n]++
+		}
+	}
+	out := make([]Sender, 0, len(counts))
+	for addr, n := range counts {
+		s := Sender{Address: addr, Messages: n}
+		best := 0
+		for name, c := range names[addr] {
+			if c > best || (c == best && name < s.Name) {
+				s.Name, best = name, c
+			}
+		}
+		out = append(out, s)
+	}
+	slices.SortFunc(out, func(a, b Sender) int {
+		if a.Messages != b.Messages {
+			return cmp.Compare(b.Messages, a.Messages)
+		}
+		return strings.Compare(a.Address, b.Address)
+	})
+	if len(out) > limit {
+		out = out[:limit]
+	}
+	return out
 }

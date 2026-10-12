@@ -272,6 +272,11 @@ func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migratio
 	}
 	if doc := readEstimate(m.Estimate); doc != nil {
 		out.Estimate = &doc.DryRun
+		suggestions := doc.TeamSuggestions
+		if suggestions == nil {
+			suggestions = []oas.MigrationTeamSuggestion{}
+		}
+		out.TeamSuggestions = &suggestions
 	}
 	if m.State == migrationCopying {
 		out.RatePerMinute, out.SecondsLeft = migrationRate(readCheckpoint(m.Checkpoint), out.Counts)

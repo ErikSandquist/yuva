@@ -13222,6 +13222,30 @@ components:
           type: integer
           format: int64
           description: Of those, the ones nobody wrote in since the import, which "Remove imported history" deletes.
+        team_suggestions:
+          type: array
+          maxItems: 50
+          description: |
+            Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
+            other than the mailbox address, most messages first. They are the team's aliases and
+            colleagues the Map step offers as `options.team_addresses`, whether or not they are
+            already team addresses.
+          items:
+            $ref: "#/components/schemas/MigrationTeamSuggestion"
+    MigrationTeamSuggestion:
+      type: object
+      required: [address, messages]
+      properties:
+        address:
+          type: string
+          description: Lowercased.
+        name:
+          type: string
+          description: The display name it sent with most often.
+        messages:
+          type: integer
+          format: int64
+          description: Messages from it in the Sent folders, each message once.
     MigrationForwardingConfirmation:
       type: object
       description: |
