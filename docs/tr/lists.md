@@ -112,7 +112,7 @@ kullanın. `201` yeni bir abonelik, `200` listede zaten olan bir adrestir.
 ## 6. İzin kayıtlarını dışa aktarın
 
 Listeyi açın, sonra Dışa aktar'ı seçin ya da `GET /v1/lists/{listId}/consent-export` çağırın
-(`format=csv` veya `json`; daha yeni olaylar için `since`). Her satır bir olaydır: adres, durum, zaman,
+(`format=csv` veya `json`; daha yeni olaylar için `since`; Türkiye'deki göndericiler aşağıdaki Türkiye: İYS bölümüne bakın). Her satır bir olaydır: adres, durum, zaman,
 kaynak, IP adresi, sayfa ve kişinin gördüğü sözler. `GET /v1/contacts/{contactId}/consent` bir kişinin
 tüm listelerdeki kayıtlarını verir; GDPR m. 15 ya da KVKK m. 11 kapsamındaki erişim talepleri içindir.
 `=`, `+`, `-` ya da `@` ile başlayan hücrelerin başına işaret konur, böylece e-tablolar bunları formül
@@ -120,8 +120,26 @@ olarak çalıştırmaz.
 
 ## Türkiye: İYS
 
-Yuva İYS'ye bağlanmaz. Listenin izin kayıtlarını dışa aktarın ve İYS'ye kendiniz yükleyin; orada
-gönderici olarak kaydolmak da size aittir. Bu sayfa hukuki tavsiye değildir.
+Yuva İYS'ye bağlanmaz. İYS'ye kendiniz yükleyeceğiniz bir dosya verir; orada gönderici olarak kaydolmak
+da size aittir.
+
+Listeyi açın, sonra Dışa aktar'ı seçin ve **İYS için indir**'e basın ya da
+`GET /v1/lists/{listId}/consent-export?format=iys` çağırın. Yalnızca o tarihten sonra izin verenleri ya da
+ayrılanları almak için "Başlangıç (isteğe bağlı)" alanına tarih girin ya da `since` verin. Dosya, abone başına
+bir satır içeren bir CSV'dir:
+
+| Sütun | Değer |
+|---|---|
+| `recipient` | E-posta adresi. |
+| `type` | `EPOSTA`. |
+| `source` | Form ya da tercih sayfasından gelen abonelikler için `HS_WEB`, diğerleri için `HS_EORTAM`. |
+| `status` | Abone olanlar için `ONAY`, ayrılanlar için `RET`. |
+| `consentDate` | Kişinin izin verdiği ya da ayrıldığı zaman, Türkiye saatiyle (`YYYY-MM-DD HH:MM:SS`). |
+| `recipientType` | `BIREYSEL`. |
+
+Henüz onaylamamış, onay bekleyen abonelikler dosyaya alınmaz. Sütunlar, bildiğimiz kadarıyla İYS'nin izin
+alanlarını izler. Yüklemeden önce İYS hesabınızın istediğiyle karşılaştırın ve yalnızca ticari e-posta
+gönderen listeleri kaydedin. Bu sayfa hukuki tavsiye değildir.
 
 ## Sorun giderme
 

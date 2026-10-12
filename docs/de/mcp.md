@@ -59,6 +59,44 @@ Kanals. Hat er Zugriff auf Ihren Code, fügt er ihn dort ein, sonst zeigt er ihn
 Identitätsgeheimnis für [angemeldete Nutzer](identity.md) bekommen Assistenten nicht; erneuern Sie
 es bei Bedarf in den Einstellungen des Posteingangs.
 
+## Newsletter-Entwürfe von einem Assistenten
+
+Ein Assistent kann einen Newsletter in ein Design und einen Broadcast-Entwurf schreiben, Ihnen einen Test
+schicken und danach den Bericht lesen. An Ihre Abonnenten sendet er nur, wenn Sie es erlauben: Das
+Planen ist ein eigener Schritt, den Sie steuern.
+
+- Geben Sie beim Verbinden `lists:read`, `broadcasts:read` und `broadcasts:write` frei (ein API-Key braucht
+  sie ebenfalls). Der Prompt `draft_newsletter` geht von einem Briefing aus und plant nie.
+- Ein Test über einen verbundenen Assistenten geht nur an Sie. Ein API-Key nennt die Mitglieder, die ihn bekommen.
+- `schedule_broadcast` wird nur aufgelistet, wenn der Key oder das Token `broadcasts:send` hat **und** ein
+  Inhaber oder Admin „Keys and assistants may send broadcasts“ eingeschaltet hat ([Keys und
+  Assistenten](broadcasts.md#7-keys-und-assistenten)). Es braucht `send_at` und `confirm_recipients`, die
+  Empfängerzahl, die `get_broadcast` gezeigt hat und die Sie bestätigt haben. Hat sich die Zielgruppe
+  inzwischen geändert, wird nichts geplant.
+
+Ein Beispiel:
+
+> **Sie:** Entwirf einen Newsletter an die Liste „Produktneuigkeiten“ aus der Newsletter-Vorlage: Version
+> 2.1 ist da, mit Dark Mode und schnellerer Suche. Verlinke das Änderungsprotokoll.
+>
+> **Assistent:** Ich habe aus der Newsletter-Vorlage das Design „Release 2.1“ und den Broadcast-Entwurf
+> „Release 2.1“ mit dem Betreff „Dark Mode und schnellere Suche sind da“ erstellt. Die Prüfung ist
+> bestanden. Die Zielgruppe sind 1.248 Personen. Öffnen Sie den Entwurf in Yuva: *Link*.
+>
+> **Sie:** Schick mir einen Test.
+>
+> **Assistent:** An Sie gesendet. Sehen Sie in Ihrer Mail-App nach, wie er aussieht.
+>
+> **Sie:** Gut. Plane ihn für morgen um 9:00.
+>
+> **Assistent:** Er geht an 1.248 Personen, wie im Entwurf steht. Soll ich ihn für morgen um 9:00 planen?
+>
+> **Sie:** Ja.
+>
+> **Assistent:** Für morgen um 9:00 geplant.
+
+Der Assistent plant erst, nachdem Sie die Zahl bestätigt haben; fragen Sie danach, wenn er sie nicht zeigt.
+
 ## Referenz
 
 ### Tools
@@ -77,8 +115,12 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (Inhaber, Admins, Schlüssel ohne Posteingangs-Beschränkung) | `contacts:write` |
-| `list_channels`, `get_install_snippet` (Code für `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` und Dokumentationsseiten) | `inboxes:read` |
+| `list_channels`, `get_install_snippet` (Code für `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, Dokumentationsseiten mit den `docs-`-Varianten und Anmeldeformulare mit `subscribe-html`, `subscribe-react`, `subscribe-nuxt` und `subscribe-shadcn`, die `list_ids` nehmen) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (Inhaber und Admins) | `inboxes:manage` |
+| `list_mailing_lists` | `lists:read` |
+| `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
+| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (Inhaber und Admins) | `broadcasts:write` |
+| `schedule_broadcast` (nur wenn der Workspace Keys und Assistenten das Senden von Broadcasts erlaubt) | `broadcasts:send` |
 
 Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `draft_pending`.
 
@@ -86,8 +128,8 @@ Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `dr
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`; Abonnements folgen Änderungen. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; Abonnements folgen Änderungen. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
 
 ### Sicherheit und Grenzen
 

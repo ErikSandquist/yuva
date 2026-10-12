@@ -111,15 +111,32 @@ are not sure they agreed. `201` is a new subscription, `200` an address that was
 ## 6. Export consent records
 
 Open the list, then Export, or call `GET /v1/lists/{listId}/consent-export` (`format=csv` or `json`,
-`since` for newer events). Each row is one event with the address, state, time, source, IP address,
+`since` for newer events; for Turkish senders see Türkiye: İYS below). Each row is one event with the address, state, time, source, IP address,
 page and the words the person saw. `GET /v1/contacts/{contactId}/consent` returns one person's
 records across lists, for an access request under GDPR Art. 15 or KVKK Art. 11. Cells that start
 with `=`, `+`, `-` or `@` are prefixed so spreadsheets do not run them.
 
 ## Türkiye: İYS
 
-Yuva does not connect to İYS. Export the list's consent records and upload them to İYS yourself;
-registering as a sender there is your task too. This page is not legal advice.
+Yuva does not connect to İYS. It gives you a file to upload there yourself; registering as a sender in
+İYS is your task too.
+
+Open the list, then Export, and choose **Download for İYS**, or call
+`GET /v1/lists/{listId}/consent-export?format=iys`. Set a date in "From (optional)", or pass `since`, to
+get only the people who agreed or left from then on. The file is a CSV with one row per subscriber:
+
+| Column | Value |
+|---|---|
+| `recipient` | The e-mail address. |
+| `type` | `EPOSTA`. |
+| `source` | `HS_WEB` for subscriptions from a form or the preference page, `HS_EORTAM` for the rest. |
+| `status` | `ONAY` for subscribed, `RET` for unsubscribed. |
+| `consentDate` | When the person agreed or left, in Türkiye's time (`YYYY-MM-DD HH:MM:SS`). |
+| `recipientType` | `BIREYSEL`. |
+
+Pending subscriptions, which have not confirmed yet, are left out. The columns follow İYS's consent
+fields as we understand them. Check them against what your İYS account asks for before you upload, and
+register only the lists that send commercial mail. This page is not legal advice.
 
 ## Troubleshooting
 

@@ -58,6 +58,43 @@ ekler, yoksa gösterir. `inboxes:manage` olmayan bir bağlantı yetkinin adını
 yeniden bağlanıp bu yetkiyi verin. [Giriş yapmış kullanıcılar](identity.md) için kimlik sırrı
 asistanlara verilmez; gerektiğinde gelen kutusu ayarlarında yenileyin.
 
+## Bir asistanla bülten taslağı hazırlayın
+
+Bir asistan bir bülteni tasarıma ve taslak bir bültene yazabilir, size deneme gönderebilir ve sonra raporu
+okuyabilir. İzin vermedikçe abonelerinize gönderemez: zamanlama ayrı bir adımdır ve onu siz yönetirsiniz.
+
+- Bağlanırken `lists:read`, `broadcasts:read` ve `broadcasts:write` yetkilerini verin (API anahtarının da
+  bunlara ihtiyacı var). `draft_newsletter` prompt'u bir özetle başlar ve asla zamanlamaz.
+- Bağlı bir asistanla gönderilen deneme yalnızca size gider. API anahtarı, denemeyi alacak üyeleri adıyla belirtir.
+- `schedule_broadcast` yalnızca anahtar ya da belirteçte `broadcasts:send` varsa **ve** bir sahip veya
+  yönetici "Anahtarlar ve asistanlar bülten gönderebilir" seçeneğini açtıysa listelenir ([Anahtarlar ve
+  asistanlar](broadcasts.md#7-anahtarlar-ve-asistanlar)). `send_at` ve `confirm_recipients` ister;
+  ikincisi `get_broadcast`'in gösterdiği ve sizin onayladığınız alıcı sayısıdır. Kitle bu arada değiştiyse
+  hiçbir şey zamanlanmaz.
+
+Bir örnek:
+
+> **Siz:** "Ürün haberleri" listesine bülten şablonundan bir bülten taslağı hazırla: 2.1 sürümü çıktı,
+> karanlık mod ve daha hızlı arama var. Değişiklik günlüğüne bağlantı ver.
+>
+> **Asistan:** Bülten şablonundan "Sürüm 2.1" tasarımını ve "Karanlık mod ve daha hızlı arama geldi"
+> konulu "Sürüm 2.1" taslak bültenini oluşturdum. Gözden geçirme geçiyor. Kitle 1.248 kişi. Taslağı
+> Yuva'da açın: *bağlantı*.
+>
+> **Siz:** Bana deneme gönder.
+>
+> **Asistan:** Size gönderildi. E-posta uygulamanızda nasıl göründüğüne bakın.
+>
+> **Siz:** İyi. Yarın 9:00'a zamanla.
+>
+> **Asistan:** Taslakta yazdığı gibi 1.248 kişiye gidecek. Yarın 9:00'a zamanlayayım mı?
+>
+> **Siz:** Evet.
+>
+> **Asistan:** Yarın 9:00'a zamanlandı.
+
+Asistan yalnızca sayıyı onayladıktan sonra zamanlar; göstermezse sayıyı sorun.
+
 ## Başvuru
 
 ### Araçlar
@@ -76,8 +113,12 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `contacts:write` |
-| `list_channels`, `get_install_snippet` (`html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` ve dokümantasyon siteleri için kod) | `inboxes:read` |
+| `list_channels`, `get_install_snippet` (`html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, `docs-` varyantlarıyla dokümantasyon siteleri ve `list_ids` alan `subscribe-html`, `subscribe-react`, `subscribe-nuxt` ve `subscribe-shadcn` ile abonelik formları için kod) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
+| `list_mailing_lists` | `lists:read` |
+| `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
+| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (sahipler ve yöneticiler) | `broadcasts:write` |
+| `schedule_broadcast` (yalnızca çalışma alanı anahtarların ve asistanların bülten göndermesine izin veriyorsa) | `broadcasts:send` |
 
 Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` döner.
 
@@ -85,8 +126,8 @@ Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` 
 
 | Tür | Öğeler |
 |---|---|
-| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`; abonelikler değişiklikleri izler. |
-| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
+| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; abonelikler değişiklikleri izler. |
+| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
 
 ### Güvenlik ve sınırlar
 

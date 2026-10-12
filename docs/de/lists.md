@@ -116,7 +116,7 @@ schon auf der Liste war.
 ## 6. Einwilligungen exportieren
 
 Öffnen Sie die Liste und dann Export, oder rufen Sie `GET /v1/lists/{listId}/consent-export` auf
-(`format=csv` oder `json`, `since` für neuere Ereignisse). Jede Zeile ist ein Ereignis mit Adresse,
+(`format=csv` oder `json`, `since` für neuere Ereignisse; für Absender in der Türkei siehe Türkei: İYS unten). Jede Zeile ist ein Ereignis mit Adresse,
 Status, Zeit, Quelle, IP-Adresse, Seite und den Worten, die die Person gesehen hat.
 `GET /v1/contacts/{contactId}/consent` liefert die Einträge einer Person über alle Listen, für ein
 Auskunftsersuchen nach Art. 15 DSGVO oder Art. 11 KVKK. Zellen, die mit `=`, `+`, `-` oder `@`
@@ -124,9 +124,27 @@ beginnen, erhalten ein Präfix, damit Tabellenprogramme sie nicht als Formel aus
 
 ## Türkei: İYS
 
-Yuva verbindet sich nicht mit İYS. Exportieren Sie die Einwilligungen der Liste und laden Sie sie selbst
-bei İYS hoch; die Registrierung als Absender dort ist ebenfalls Ihre Aufgabe. Diese Seite ist keine
-Rechtsberatung.
+Yuva verbindet sich nicht mit İYS. Es liefert Ihnen eine Datei, die Sie selbst bei İYS hochladen; die
+Registrierung als Absender dort ist ebenfalls Ihre Aufgabe.
+
+Öffnen Sie die Liste, dann Export, und wählen Sie **Für İYS herunterladen**, oder rufen Sie
+`GET /v1/lists/{listId}/consent-export?format=iys` auf. Mit einem Datum bei „Ab (optional)“ oder mit
+`since` erhalten Sie nur die Personen, die ab dann zugestimmt haben oder gegangen sind. Die Datei ist eine
+CSV mit einer Zeile pro Abonnent:
+
+| Spalte | Wert |
+|---|---|
+| `recipient` | Die E-Mail-Adresse. |
+| `type` | `EPOSTA`. |
+| `source` | `HS_WEB` für Anmeldungen über ein Formular oder die Einstellungsseite, sonst `HS_EORTAM`. |
+| `status` | `ONAY` für angemeldet, `RET` für abgemeldet. |
+| `consentDate` | Wann die Person zugestimmt hat oder gegangen ist, in türkischer Zeit (`YYYY-MM-DD HH:MM:SS`). |
+| `recipientType` | `BIREYSEL`. |
+
+Ausstehende Anmeldungen, die noch nicht bestätigt haben, fehlen in der Datei. Die Spalten folgen nach
+unserem Kenntnisstand den Einwilligungsfeldern von İYS. Prüfen Sie sie vor dem Hochladen gegen das, was
+Ihr İYS-Konto verlangt, und registrieren Sie nur Listen, über die Sie Werbe-E-Mails senden. Diese Seite
+ist keine Rechtsberatung.
 
 ## Fehlerbehebung
 

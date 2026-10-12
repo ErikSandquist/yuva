@@ -56,6 +56,44 @@ the code there; otherwise it shows it. A connection without `inboxes:manage` get
 the scope: reconnect and grant it. The identity secret for [signed-in users](identity.md) is not
 given to assistants; rotate it in the inbox settings when you need it.
 
+## Draft newsletters from an assistant
+
+An assistant can write a newsletter into a design and a draft broadcast, send you a test and read the
+report afterwards. It cannot send to your subscribers unless you allow it: scheduling is a separate
+step that you control.
+
+- Grant `lists:read`, `broadcasts:read` and `broadcasts:write` when you connect (an API key needs them
+  too). The `draft_newsletter` prompt starts from a brief and never schedules.
+- A test sent through a connected assistant goes only to you. An API key names the members who get it.
+- `schedule_broadcast` is listed only when the key or token has `broadcasts:send` **and** an owner or
+  admin has switched on "Keys and assistants may send broadcasts" ([Keys and
+  assistants](broadcasts.md#7-keys-and-assistants)). It needs `send_at` and `confirm_recipients`, the
+  audience count that `get_broadcast` showed and you confirmed. If the audience changed since, nothing
+  is scheduled.
+
+An example:
+
+> **You:** Draft a newsletter to the "Product news" list from the newsletter template: version 2.1 is
+> out, with dark mode and faster search. Link to the changelog.
+>
+> **Assistant:** I made the design "Release 2.1" from the newsletter template and the draft broadcast
+> "Release 2.1" with the subject "Dark mode and faster search are here". The review passes. The
+> audience is 1,248 people. Open the draft in Yuva: *link*.
+>
+> **You:** Send me a test.
+>
+> **Assistant:** Sent to you. Check how it looks in your mail app.
+>
+> **You:** Good. Schedule it for tomorrow at 9:00.
+>
+> **Assistant:** It goes to 1,248 people, as the draft says. Shall I schedule it for tomorrow at 9:00?
+>
+> **You:** Yes.
+>
+> **Assistant:** Scheduled for tomorrow at 9:00.
+
+The assistant schedules only after you confirm the count, so ask for the number if it does not show it.
+
 ## Reference
 
 ### Tools
@@ -74,8 +112,12 @@ answers `insufficient_scope` with the scope to grant.
 | `add_note` | `notes:write` |
 | `assign`, `set_status`, `snooze`, `add_labels`, `remove_labels`, `move_conversation`, `bulk_update` | `conversations:write` |
 | `merge_contacts` (owners, admins, keys without an inbox limit) | `contacts:write` |
-| `list_channels`, `get_install_snippet` (code for `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn` and documentation sites) | `inboxes:read` |
+| `list_channels`, `get_install_snippet` (code for `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, documentation sites with the `docs-` variants, and subscribe forms with `subscribe-html`, `subscribe-react`, `subscribe-nuxt` and `subscribe-shadcn`, which take `list_ids`) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
+| `list_mailing_lists` | `lists:read` |
+| `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
+| `list_email_templates`, `create_design`, `update_design`, `preview_design`, `create_broadcast_draft`, `send_test_broadcast` (owners and admins) | `broadcasts:write` |
+| `schedule_broadcast` (only while the workspace allows keys and assistants to send broadcasts) | `broadcasts:send` |
 
 With your draft open in a conversation, `send_reply` there answers `draft_pending`.
 
@@ -83,8 +125,8 @@ With your draft open in a conversation, `send_reply` there answers `draft_pendin
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`; subscriptions follow changes. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`. |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`; subscriptions follow changes. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`. |
 
 ### Safety and limits
 
