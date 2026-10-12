@@ -23,6 +23,7 @@ import { CannedRepliesPage } from "@/features/settings/canned/CannedRepliesPage"
 import { AssistantPage } from "@/features/settings/connected-apps/AssistantPage"
 import { ConnectedAppsPage } from "@/features/settings/connected-apps/ConnectedAppsPage"
 import { InboxPage } from "@/features/settings/inboxes/InboxPage"
+import { ChannelSendingPage } from "@/features/settings/channels/email/ChannelSendingPage"
 import { InboxWebhooksPage } from "@/features/settings/inboxes/InboxWebhooksPage"
 import { LabelsPage } from "@/features/settings/labels/LabelsPage"
 import { MembersPage } from "@/features/settings/members/MembersPage"
@@ -112,6 +113,7 @@ export function AppRoutes() {
               <Route path="members" element={<MembersPage />} />
               <Route path="inboxes/:inboxId" element={<InboxPage />} />
               <Route path="inboxes/:inboxId/webhooks" element={<InboxWebhooksPage />} />
+              <Route path="inboxes/:inboxId/channels/:channelId" element={<ChannelSendingPage />} />
               <Route path="labels" element={<LabelsPage />} />
               <Route path="canned-replies" element={<CannedRepliesPage />} />
               <Route path="api-keys" element={<ApiKeysPage />} />

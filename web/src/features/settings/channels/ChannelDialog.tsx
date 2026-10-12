@@ -22,6 +22,7 @@ import { AppInstall } from "@/features/settings/channels/app/AppInstall"
 import { ChatFields } from "@/features/settings/channels/chat/ChatFields"
 import { chatChannelInput, chatErrorField, chatForm, type ChatForm } from "@/features/settings/channels/chat/form"
 import { ChatInstall } from "@/features/settings/channels/chat/ChatInstall"
+import { channelLink } from "@/features/settings/channels/email/deliverability"
 import { EmailFields } from "@/features/settings/channels/email/EmailFields"
 import {
   emailErrorField,
@@ -167,6 +168,7 @@ export function ChannelDialog({
                 set={(patch) => setEmail((f) => ({ ...f, ...patch }))}
                 error={fieldError}
                 taken={taken}
+                sendingLink={channel?.email ? channelLink(inboxId, channel.id) : undefined}
               />
             )}
             {kind === "chat" && (

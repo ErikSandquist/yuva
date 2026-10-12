@@ -21,6 +21,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { problemOf, useSchedule } from "@/features/broadcasts/broadcastQueries"
 import { useBroadcastsStatus, useNumber, utcLine } from "@/features/broadcasts/BroadcastParts"
 import { designLink } from "@/features/designs/queries"
+import { channelLink, isChecking, useDeliverability } from "@/features/settings/channels/email/deliverability"
 import type { Broadcast, BroadcastReview, BroadcastReviewItem, BroadcastReviewKey } from "@/lib/api"
 import { ApiError } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -33,6 +34,7 @@ const ORDER: BroadcastReviewKey[] = [
   "approval",
   "sender_identity",
   "sender_ready",
+  "deliverability",
   "audience_nonempty",
   "design",
   "subject",
@@ -45,14 +47,40 @@ const ORDER: BroadcastReviewKey[] = [
   "test_sent",
 ]
 
-function useItemText(review: BroadcastReview) {
+function useDeliverabilityText(b: Broadcast, review: BroadcastReview) {
+  const { t } = useLingui()
+  const item = review.items.find((i) => i.key === "deliverability")
+  const wanted = !!item && item.status !== "ok"
+  const check = useDeliverability(wanted ? b.channel_id : undefined).data
+  if (item?.status === "blocking")
+    return t`The last check found no passing DKIM signature. Set up DKIM with your SMTP provider, or turn on Yuva DKIM for the channel.`
+  if (check === null)
+    return t`The channel’s deliverability was never checked. Run the check before the first broadcast.`
+  if (!check) return t`The last deliverability check found something to fix.`
+  if (isChecking(check)) return t`The deliverability check has not finished yet.`
+  if (check.state === "timeout") return t`The last check’s test mail did not come back within 10 minutes. Check again.`
+  if (check.state === "failed")
+    return t`The last check could not send its test mail. Look at the channel’s SMTP settings.`
+  const found: string[] = []
+  if (check.state === "unverifiable")
+    found.push(t`Only DNS could be checked, not how receiving servers judge the mail.`)
+  else if (!check.dkim.aligned) found.push(t`DKIM does not pass for the sending domain.`)
+  else if (!check.dkim.covers_list_unsubscribe)
+    found.push(t`The DKIM signature does not cover the unsubscribe headers.`)
+  if (!check.dmarc.record) found.push(t`The sending domain has no DMARC record.`)
+  return found.length ? found.join(" ") : t`The last deliverability check found something to fix.`
+}
+
+function useItemText(b: Broadcast, review: BroadcastReview) {
   const { t, i18n } = useLingui()
+  const deliverability = useDeliverabilityText(b, review)
   const status = useBroadcastsStatus()
   const size = review.html_bytes !== undefined ? formatBytes(review.html_bytes, i18n.locale) : ""
   const days = review.days ?? 0
   const titles: Record<BroadcastReviewKey, string> = {
     sender_identity: t`Sender details for the footer`,
     sender_ready: t`Sending channel`,
+    deliverability: t`Deliverability`,
     approval: t`Permission to send`,
     design: t`Design`,
     audience_nonempty: t`Recipients`,
@@ -72,6 +100,8 @@ function useItemText(review: BroadcastReview) {
         return t`The inbox has no legal name or postal address yet. Every broadcast ends with them, as the law asks.`
       case "sender_ready":
         return t`The channel cannot send yet. It needs an SMTP account and an address to send from.`
+      case "deliverability":
+        return deliverability
       case "approval":
         return status?.status === "suspended"
           ? t`The workspace may not send broadcasts for now.`
@@ -113,6 +143,8 @@ function fixOf(b: Broadcast, key: BroadcastReviewKey): Fix | null {
       return { to: `/settings/inboxes/${b.inbox_id}` }
     case "sender_ready":
       return { spot: "sender" }
+    case "deliverability":
+      return b.channel_id ? { to: channelLink(b.inbox_id, b.channel_id, "deliverability") } : { spot: "sender" }
     case "approval":
       return { to: "/settings/workspace" }
     case "audience_nonempty":
@@ -152,7 +184,7 @@ function Checklist({
   readOnly: boolean
 }) {
   const { t } = useLingui()
-  const { titles, problem } = useItemText(review)
+  const { titles, problem } = useItemText(b, review)
   const items = [...review.items].sort((x, y) => ORDER.indexOf(x.key) - ORDER.indexOf(y.key))
   const rank = { blocking: 0, warning: 1, ok: 2 }
   items.sort((x, y) => rank[x.status] - rank[y.status])

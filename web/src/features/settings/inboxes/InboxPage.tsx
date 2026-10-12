@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { Trash2Icon } from "lucide-react"
+import { ShieldCheckIcon, Trash2Icon } from "lucide-react"
 import { createContext, useContext, useMemo, useState } from "react"
 import { Link, useLocation, useParams } from "react-router"
 
@@ -13,6 +13,7 @@ import { Switch } from "@/components/ui/switch"
 import { Textarea } from "@/components/ui/textarea"
 import { ChannelDialog } from "@/features/settings/channels/ChannelDialog"
 import { ChannelSummary } from "@/features/settings/channels/ChannelSummary"
+import { channelLink } from "@/features/settings/channels/email/deliverability"
 import { DeleteInbox, IdentitySecret } from "@/features/settings/inboxes/InboxSecurity"
 import { useInbox, useSaveInbox } from "@/features/settings/inboxes/queries"
 import { SenderIdentity } from "@/features/settings/inboxes/SenderIdentity"
@@ -132,6 +133,18 @@ function Channels({ inbox }: { inbox: Inbox }) {
                   <StatusTag tone="warning">
                     <Trans>Receives only</Trans>
                   </StatusTag>
+                )}
+                {ch.kind === "email" && (ch.email?.smtp || ch.email?.broadcast_smtp) && (
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    aria-label={t`Deliverability and DKIM of ${ch.name}`}
+                    title={t`Deliverability and DKIM`}
+                    render={<Link to={channelLink(inbox.id, ch.id)} />}
+                    data-testid="channel-deliverability"
+                  >
+                    <ShieldCheckIcon />
+                  </Button>
                 )}
                 {canManage && (
                   <Button

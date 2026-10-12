@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CheckIcon } from "lucide-react"
+import { CheckIcon, ShieldCheckIcon } from "lucide-react"
+import { Link } from "react-router"
 
 import { CodeLine, Notice } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -17,6 +18,7 @@ type Props = {
   set: (patch: Partial<EmailForm>) => void
   error: (field: EmailField) => string | undefined
   taken: boolean
+  sendingLink?: string
 }
 
 function useInvalid({ error, taken }: Pick<Props, "error" | "taken">) {
@@ -469,6 +471,16 @@ function BroadcastSending(p: Props) {
         />
         <FieldError id="err-broadcast_rate">{error("broadcast_rate")}</FieldError>
       </Field>
+      {p.sendingLink && (
+        <Link
+          to={p.sendingLink}
+          className="inline-flex w-fit items-center gap-1.5 text-body text-brand underline-offset-4 hover:underline"
+          data-testid="channel-deliverability-link"
+        >
+          <ShieldCheckIcon className="size-4" />
+          <Trans>Check deliverability and set up DKIM</Trans>
+        </Link>
+      )}
     </FormBlock>
   )
 }
