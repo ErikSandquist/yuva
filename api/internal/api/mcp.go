@@ -101,6 +101,15 @@ type mcpCall struct {
 	cancel context.CancelFunc
 }
 
+func (c *mcpCall) panelURL(path string) string {
+	u := c.s.auth.PublicURL + path
+	sep := "?"
+	if strings.Contains(path, "?") {
+		sep = "&"
+	}
+	return u + sep + "workspace=" + c.p.workspaceID.String()
+}
+
 func (c *mcpCall) as(ctx context.Context) context.Context {
 	return context.WithValue(context.WithValue(ctx, principalKey, c.p), requestKey, c.r)
 }

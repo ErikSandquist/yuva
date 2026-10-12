@@ -114,7 +114,7 @@ func TestMCPMigrationTools(t *testing.T) {
 		t.Fatal(errText)
 	}
 	id := created["id"].(string)
-	if created["state"] != "draft" || created["connect_url"] != testOrigin+"/migrations/"+id+"/connect" || created["connected"] != false {
+	if created["state"] != "draft" || created["connect_url"] != testOrigin+"/migrations/"+id+"/connect?workspace="+tm.ws || created["connected"] != false {
 		t.Fatalf("create_migration: %v", created)
 	}
 	got, errText := callTool(t, cs, "get_migration", map[string]any{"migration_id": id})

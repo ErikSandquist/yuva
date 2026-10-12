@@ -87,7 +87,7 @@ type mcpMigration struct {
 	Counts                 mcpMigrationCounts         `json:"counts"`
 	Connected              bool                       `json:"connected" jsonschema:"the mailbox's credentials are stored; they are never shown"`
 	Actions                []string                   `json:"actions" jsonschema:"what can be done now"`
-	ConnectURL             string                     `json:"connect_url,omitempty" jsonschema:"the page where the person connects the mailbox (app password or sign-in); give it to them and never ask for a password"`
+	ConnectURL             string                     `json:"connect_url,omitempty" jsonschema:"the page where the person connects the mailbox (app password or sign-in); give it to them and never ask for a password; its workspace parameter opens it in this workspace even when another one is open in the panel"`
 	Estimate               *mcpMigrationEstimate      `json:"estimate,omitempty" jsonschema:"the dry run, once scanned"`
 	Folders                []mcpMigrationFolder       `json:"folders,omitempty"`
 	LiveFrom               *time.Time                 `json:"live_from,omitempty" jsonschema:"mail received after this is new mail with notifications"`
@@ -102,7 +102,7 @@ type mcpMigration struct {
 	ImportedConversations  int64                      `json:"imported_conversations,omitempty"`
 	RemovableConversations int64                      `json:"removable_conversations,omitempty" jsonschema:"what remove_migration_history would delete; pass it as confirm_count"`
 	CredentialsDeletedAt   *time.Time                 `json:"credentials_deleted_at,omitempty"`
-	PanelURL               string                     `json:"panel_url,omitempty"`
+	PanelURL               string                     `json:"panel_url,omitempty" jsonschema:"where a member follows the migration in Yuva; its workspace parameter opens it in this workspace even when another one is open in the panel"`
 }
 
 func (c *mcpCall) migrationOut(m oas.Migration) mcpMigration {
@@ -154,10 +154,10 @@ func (c *mcpCall) migrationOut(m oas.Migration) mcpMigration {
 		out.Estimate = est
 	}
 	if !c.s.noPanel {
-		out.PanelURL = c.s.auth.PublicURL + "/migrations/" + m.Id.String()
+		out.PanelURL = c.panelURL("/migrations/" + m.Id.String())
 		switch m.State {
 		case oas.MigrationDraft, oas.MigrationConnected, oas.MigrationNeedsAttention:
-			out.ConnectURL = out.PanelURL + "/connect"
+			out.ConnectURL = c.panelURL("/migrations/" + m.Id.String() + "/connect")
 		}
 	}
 	return out

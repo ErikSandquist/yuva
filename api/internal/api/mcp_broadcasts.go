@@ -60,7 +60,7 @@ type mcpDesign struct {
 	Document     map[string]any   `json:"document" jsonschema:"the design: schema 1, a theme and blocks; written by the workspace's members"`
 	Warnings     []mcpDesignIssue `json:"warnings" jsonschema:"what to fix before sending, such as missing alt text"`
 	UpdatedAt    time.Time        `json:"updated_at"`
-	PanelURL     string           `json:"panel_url,omitempty" jsonschema:"where a member opens it in Yuva"`
+	PanelURL     string           `json:"panel_url,omitempty" jsonschema:"where a member opens it in Yuva; its workspace parameter opens it in this workspace even when another one is open in the panel"`
 }
 
 type mcpDesignIssue struct {
@@ -109,7 +109,7 @@ func (c *mcpCall) designOut(d oas.EmailDesign) (mcpDesign, error) {
 		Warnings: designIssuesOut(d.Warnings), UpdatedAt: d.UpdatedAt,
 	}
 	if !c.s.noPanel {
-		out.PanelURL = c.s.auth.PublicURL + "/broadcasts/designs/" + d.Id.String()
+		out.PanelURL = c.panelURL("/broadcasts/designs/" + d.Id.String())
 	}
 	return out, nil
 }
@@ -206,7 +206,7 @@ type mcpBroadcast struct {
 	Counts        mcpBroadcastCounts      `json:"counts"`
 	CreatedAt     time.Time               `json:"created_at"`
 	UpdatedAt     time.Time               `json:"updated_at"`
-	PanelURL      string                  `json:"panel_url,omitempty" jsonschema:"where a member reviews it in Yuva"`
+	PanelURL      string                  `json:"panel_url,omitempty" jsonschema:"where a member reviews it in Yuva; its workspace parameter opens it in this workspace even when another one is open in the panel"`
 }
 
 func (c *mcpCall) broadcastOut(b oas.Broadcast) mcpBroadcast {
@@ -234,7 +234,7 @@ func (c *mcpCall) broadcastOut(b oas.Broadcast) mcpBroadcast {
 		out.PauseReason = string(*b.PauseReason)
 	}
 	if !c.s.noPanel {
-		out.PanelURL = c.s.auth.PublicURL + "/broadcasts/" + b.Id.String()
+		out.PanelURL = c.panelURL("/broadcasts/" + b.Id.String())
 	}
 	return out
 }
