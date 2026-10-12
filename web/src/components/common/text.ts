@@ -13,6 +13,7 @@ import {
   type ConversationStatus,
   type FeedbackCategory,
   type InboxMode,
+  type MigrationFileRefusal,
   type Priority,
   type Role,
   type SubscriptionSource,
@@ -315,11 +316,38 @@ export function useErrorText() {
       if (limit === "YUVA_MIGRATION_SOURCES") return t`This server does not offer imports from this kind of mailbox.`
       if (limit === "YUVA_MIGRATION_MAX_ACTIVE")
         return t`This server runs as many migrations at once as it allows. Wait until a running one ends, or ask the server's operator.`
+      if (limit === "YUVA_MIGRATION_UPLOAD_MAX_BYTES")
+        return t`The file is larger than this server takes for one export file. Split the export, or ask the server's operator.`
       if (limit === "YUVA_MIGRATION_MAX_BYTES")
         return t`The mailbox is larger than this server allows for one migration. Ask the server's operator.`
       if (err.detail) return err.detail
       return t`This server's limit for migrations is reached. Wait until a running one ends, or ask the server's operator.`
     }
+    if (err.code === "file_refused") {
+      const body = err.body as { reason?: MigrationFileRefusal; entry?: string } | undefined
+      const reasons: Record<MigrationFileRefusal, string> = {
+        unknown_format: t`This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir.`,
+        empty: t`The file holds no messages.`,
+        corrupt: t`The zip cannot be read; it may be damaged or cut off. Make it again and upload it.`,
+        path_traversal: t`The zip has an entry that points outside of it, so it was refused. Make the zip again from the folder.`,
+        symlink: t`The zip holds a symbolic link, which Yuva does not follow. Make the zip again without links.`,
+        too_many_entries: t`The zip has more than 1,000,000 entries. Split it into smaller zips, one migration each.`,
+        zip_bomb: t`An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe.`,
+        entry_too_large: t`An entry in the zip is larger, unpacked, than this server takes for one file.`,
+        encrypted: t`The zip is protected with a password. Make it again without one.`,
+        unsupported_compression: t`The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip.`,
+        compressed_mbox: t`The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file.`,
+      }
+      const text = (body?.reason && reasons[body.reason]) || t`The file was refused.`
+      const entry = body?.entry
+      return entry ? `${text} ${t`Entry: ${entry}`}` : text
+    }
+    if (err.code === "upload_incomplete")
+      return t`Some parts of the file did not arrive. Pick the same file again to send them.`
+    if (err.code === "checksum_mismatch")
+      return t`A part of the file arrived damaged several times. Check your connection, then pick the file again to continue.`
+    if (err.code === "part_too_large")
+      return t`A part of the file was larger than the server takes. Reload the page and pick the file again.`
     if (err.code === "provider_not_configured")
       return t`Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet.`
     if (err.code === "confirm_count_mismatch")

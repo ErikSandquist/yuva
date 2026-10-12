@@ -96,6 +96,7 @@ export const keys = {
   migrationPreview: (ws: string, id: string, scannedAt: string) =>
     ["ws", ws, "migrations", "preview", id, scannedAt] as const,
   migrationErrors: (ws: string, id: string) => ["ws", ws, "migrations", "errors", id] as const,
+  migrationUpload: (ws: string, id: string) => ["ws", ws, "migrations", "upload", id] as const,
   broadcastDeliveries: (ws: string, id: string, state: BroadcastDeliveryState | "", q: string, replied: boolean) =>
     ["ws", ws, "broadcasts", "deliveries", id, state, q, replied] as const,
 }

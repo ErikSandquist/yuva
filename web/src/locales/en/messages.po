@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/migrations/text.ts
+msgid ".eml files in a zip"
+msgstr ".eml files in a zip"
+
 #: src/features/setup/ChannelStep.tsx
 msgid "“Was this page helpful?”, feedback and discussions on your docs"
 msgstr "“Was this page helpful?”, feedback and discussions on your docs"
@@ -230,6 +234,10 @@ msgstr "{days, plural, one {Waiting for # day} other {Waiting for # days}}"
 msgid "{done} of {total} rows"
 msgstr "{done} of {total} rows"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "{doneParts} of {totalParts} parts"
+msgstr "{doneParts} of {totalParts} parts"
+
 #: src/features/migrations/CopyStep.tsx
 msgid "{doneText} of {total}"
 msgstr "{doneText} of {total}"
@@ -434,6 +442,10 @@ msgstr "{people, plural, one {Its # subscription and its consent record are dele
 msgid "{percent}%"
 msgstr "{percent}%"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "{percent}% · {sent} of {size}"
+msgstr "{percent}% · {sent} of {size}"
+
 #: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "{percent}%, {done} of {total} messages"
@@ -441,6 +453,10 @@ msgstr "{percent}%, {done} of {total} messages"
 #: src/features/migrations/CopyStep.tsx
 msgid "{percent}%, {doneText} of {total}"
 msgstr "{percent}%, {doneText} of {total}"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "{percent}%, {sent} of {size}"
+msgstr "{percent}%, {sent} of {size}"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
@@ -787,6 +803,14 @@ msgstr "A new version of Yuva is ready."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "A note for the team… type @ to mention a teammate"
 
+#: src/components/common/text.ts
+msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
+msgstr "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
+
+#: src/components/common/text.ts
+msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
+msgstr "A part of the file was larger than the server takes. Reload the page and pick the file again."
+
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "A question about {name}"
@@ -856,6 +880,10 @@ msgstr "Access"
 #: src/features/migrations/DoneStep.tsx
 msgid "Access to the mailbox"
 msgstr "Access to the mailbox"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Access to your mailbox: none"
+msgstr "Access to your mailbox: none"
 
 #: src/features/account/AccountPage.tsx
 msgid "Account"
@@ -1068,6 +1096,10 @@ msgstr "All marked as read"
 msgid "All of its conversations are deleted with it."
 msgstr "All of its conversations are deleted with it."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "All parts arrived. Reading the file…"
+msgstr "All parts arrived. Reading the file…"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1136,6 +1168,10 @@ msgstr "Also send message.created for members' internal notes. Internal events a
 msgid "Amazon SES shows your account’s maximum send rate in its console; new accounts often start at 14. A mailbox account such as Google Workspace or Microsoft 365 is not made for bulk mail: keep it at 1."
 msgstr "Amazon SES shows your account’s maximum send rate in its console; new accounts often start at 14. A mailbox account such as Google Workspace or Microsoft 365 is not made for bulk mail: keep it at 1."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
+msgstr "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
+
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
 msgstr "An answer was accepted in <0>{title}</0>"
@@ -1164,6 +1200,14 @@ msgstr "An e-mail address, phone number or web address"
 msgid "An e-mail goes out only if the conversation is still unread by then."
 msgstr "An e-mail goes out only if the conversation is still unread by then."
 
+#: src/components/common/text.ts
+msgid "An entry in the zip is larger, unpacked, than this server takes for one file."
+msgstr "An entry in the zip is larger, unpacked, than this server takes for one file."
+
+#: src/components/common/text.ts
+msgid "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
+msgstr "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "An https image URL."
 msgstr "An https image URL."
@@ -1183,6 +1227,10 @@ msgstr "An owner or admin can let assistants send on their own with Bots may sen
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "An owner or admin turns signing on once the record is published."
 msgstr "An owner or admin turns signing on once the record is published."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "An upload was cut off: {count} parts, {size}, are already on the server."
+msgstr "An upload was cut off: {count} parts, {size}, are already on the server."
 
 #: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
@@ -1860,6 +1908,7 @@ msgid "Checked and waiting for an owner or admin to start it."
 msgstr "Checked and waiting for an owner or admin to start it."
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/UploadStep.tsx
 msgid "Checking"
 msgstr "Checking"
 
@@ -1870,6 +1919,14 @@ msgstr "Checking every address…"
 #: src/features/broadcasts/Import.tsx
 msgid "Checking the file"
 msgstr "Checking the file"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Checking what is already on the server…"
+msgstr "Checking what is already on the server…"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Checking what is on the server"
+msgstr "Checking what is on the server"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -2241,6 +2298,7 @@ msgstr "Content"
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SourceStep.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
@@ -2832,6 +2890,10 @@ msgstr "Done"
 msgid "Download {0}"
 msgstr "Download {0}"
 
+#: src/features/migrations/text.ts
+msgid "Download and unzip it, then upload the .mbox file from the Takeout › Mail folder. The .mbox file inside the .zip is compressed and cannot be read from there."
+msgstr "Download and unzip it, then upload the .mbox file from the Takeout › Mail folder. The .mbox file inside the .zip is compressed and cannot be read from there."
+
 #: src/components/common/ExportButtons.tsx
 msgid "Download CSV"
 msgstr "Download CSV"
@@ -3083,6 +3145,10 @@ msgstr "Enter the address of the mailbox you answer from today. Yuva finds its p
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 
+#: src/components/common/text.ts
+msgid "Entry: {entry}"
+msgstr "Entry: {entry}"
+
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
 msgstr "Error or answer"
@@ -3200,6 +3266,10 @@ msgstr "expires {expires}"
 msgid "Export"
 msgstr "Export"
 
+#: src/features/migrations/text.ts
+msgid "Export once as a .zip file. Google mails you a link when it is ready; for a large mailbox that can take a day or more."
+msgstr "Export once as a .zip file. Google mails you a link when it is ready; for a large mailbox that can take a day or more."
+
 #: src/features/broadcasts/Import.tsx
 msgid "External id"
 msgstr "External id"
@@ -3250,6 +3320,10 @@ msgstr "Feedback sent from a documentation page"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Feedback sent from the app"
+
+#: src/features/migrations/Wizard.tsx
+msgid "File"
+msgstr "File"
 
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
@@ -3354,6 +3428,10 @@ msgstr "Folders"
 msgid "Folders not chosen or never read"
 msgstr "Folders not chosen or never read"
 
+#: src/features/migrations/text.ts
+msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
+msgstr "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
+
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
 msgstr "Follow the system appearance"
@@ -3370,6 +3448,10 @@ msgstr "For {0}, received {when}. Enter it in Gmail's forwarding settings, or op
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
 msgstr "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "For a very large mailbox, or one Yuva cannot sign in to: Google Takeout, mbox, or .eml or Maildir in a zip. Enter the address its mail was sent to above."
+msgstr "For a very large mailbox, or one Yuva cannot sign in to: Google Takeout, mbox, or .eml or Maildir in a zip. Enter the address its mail was sent to above."
 
 #: src/features/setup/NameStep.tsx
 msgid "For automatic messages"
@@ -3423,6 +3505,10 @@ msgstr "For your backends, scripts and bots. A key acts on this workspace only, 
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "Form"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Format"
+msgstr "Format"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
@@ -3514,6 +3600,7 @@ msgid "Full API"
 msgstr "Full API"
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/UploadStep.tsx
 msgid "Full guide"
 msgstr "Full guide"
 
@@ -3544,6 +3631,10 @@ msgstr "Generate a password named “Yuva” and paste it below."
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Get notified on your phone or computer, even when the panel is closed."
 msgstr "Get notified on your phone or computer, even when the panel is closed."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Get the file"
+msgstr "Get the file"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Get the SDK lines"
@@ -3588,6 +3679,10 @@ msgstr "Google mails a confirmation code to that address. It shows up on this pa
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google sent a confirmation code"
 msgstr "Google sent a confirmation code"
+
+#: src/features/migrations/text.ts
+msgid "Google Takeout"
+msgstr "Google Takeout"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -4100,6 +4195,10 @@ msgstr "It stops for good. What was imported stays, and the mailbox's credential
 msgid "It stops within a moment. Subscribers it already added stay on the list."
 msgstr "It stops within a moment. Subscribers it already added stay on the list."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "It was {name} ({total}). Pick it again to send only what is missing."
+msgstr "It was {name} ({total}). Pick it again to send only what is missing."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "It will act as you, <0>{email}</0>, with only the access you allow below."
@@ -4147,6 +4246,10 @@ msgstr "Keep the forwarding, routing or MX as it is: that is how mail reaches Yu
 #: src/features/migrations/MapStep.tsx
 msgid "Keep the name only"
 msgstr "Keep the name only"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
+msgstr "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
@@ -4500,6 +4603,10 @@ msgstr "Mail to your support address, answered from it"
 msgid "Mailbox address"
 msgstr "Mailbox address"
 
+#: src/features/migrations/text.ts
+msgid "Maildir in a zip"
+msgstr "Maildir in a zip"
+
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
@@ -4605,6 +4712,14 @@ msgstr "Marked as the answer"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Marketing content"
 msgstr "Marketing content"
+
+#: src/features/migrations/text.ts
+msgid "mbox files in a zip"
+msgstr "mbox files in a zip"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "mbox options"
+msgstr "mbox options"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
@@ -5078,6 +5193,10 @@ msgstr "Next attempt"
 msgid "next attempt {when}"
 msgstr "next attempt {when}"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Next, choose what to bring. The scan reads the file once."
+msgstr "Next, choose what to bring. The scan reads the file once."
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Next, choose where they go."
@@ -5507,6 +5626,10 @@ msgstr "Not spam"
 msgid "Not there after a minute? Look in your spam or junk folder, or send a new code below."
 msgstr "Not there after a minute? Look in your spam or junk folder, or send a new code below."
 
+#: src/features/migrations/Wizard.tsx
+msgid "Not uploaded yet"
+msgstr "Not uploaded yet"
+
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "Not used yet"
@@ -5562,6 +5685,10 @@ msgstr "Nothing is left out."
 #: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
 msgstr "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: when it continues, copying picks up where it stopped."
+msgstr "Nothing is lost: when it continues, copying picks up where it stopped."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
@@ -5753,6 +5880,10 @@ msgstr "Only DNS could be checked, not how receiving servers judge the mail."
 msgid "Only for a domain or subdomain used for support alone: its MX records decide where all of its mail goes."
 msgstr "Only for a domain or subdomain used for support alone: its MX records decide where all of its mail goes."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Only for mbox files from older programs that escape “From ” lines the old way. Google Takeout and most apps write mboxrd, the default."
+msgstr "Only for mbox files from older programs that escape “From ” lines the old way. Google Takeout and most apps write mboxrd, the default."
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
@@ -5865,6 +5996,14 @@ msgstr "open discussions"
 #: src/features/docs/DocsPages.tsx
 msgid "open feedback"
 msgstr "open feedback"
+
+#: src/features/migrations/text.ts
+msgid "Open Google Takeout"
+msgstr "Open Google Takeout"
+
+#: src/features/migrations/text.ts
+msgid "Open Google Takeout, choose “Deselect all”, then select only Mail."
+msgstr "Open Google Takeout, choose “Deselect all”, then select only Mail."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open Google's confirmation page"
@@ -5986,6 +6125,10 @@ msgstr "Or run <0>/mcp</0> inside a session. On a machine without a browser, add
 msgid "Or run the command below, or put the configuration in <0>.vscode/mcp.json</0> (or run <1>MCP: Add Server</1>):"
 msgstr "Or run the command below, or put the configuration in <0>.vscode/mcp.json</0> (or run <1>MCP: Add Server</1>):"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Or upload an export file"
+msgstr "Or upload an export file"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Original"
 msgstr "Original"
@@ -6018,6 +6161,10 @@ msgstr "Outlook.com and Microsoft 365 accept no app passwords. Their sign-in com
 #: src/components/common/text.ts
 msgid "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
 msgstr "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
+
+#: src/features/migrations/text.ts
+msgid "Outlook's .pst files are not read; convert them to .mbox first."
+msgstr "Outlook's .pst files are not read; convert them to .mbox first."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Outside them the inbox counts as closed"
@@ -6073,6 +6220,14 @@ msgstr "Pages that embed the old key can no longer start chats until you update 
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Panel language"
 msgstr "Panel language"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Part {part} of {totalParts}"
+msgstr "Part {part} of {totalParts}"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Parts in progress"
+msgstr "Parts in progress"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Passed"
@@ -6285,6 +6440,10 @@ msgstr "Pick the column that holds the e-mail addresses."
 msgid "Pick the file to import."
 msgstr "Pick the file to import."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the file, or drop it here"
+msgstr "Pick the file, or drop it here"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be imported; nothing is imported yet."
 msgstr "Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be imported; nothing is imported yet."
@@ -6300,6 +6459,14 @@ msgstr "Pick the other contact. It is merged into this one and then deleted."
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "Pick the platforms; the next step shows the lines to add to each app."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the same file again"
+msgstr "Pick the same file again"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the same file again to send only what is missing."
+msgstr "Pick the same file again to send only what is missing."
 
 #: src/features/migrations/text.ts
 msgid "Pick the server for your address under Server settings: gmx.net, gmx.com or mail.com."
@@ -6435,8 +6602,8 @@ msgid "Progress"
 msgstr "Progress"
 
 #: src/features/migrations/SourceStep.tsx
-msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
-msgstr "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
+msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
+msgstr "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
@@ -6533,6 +6700,26 @@ msgstr "Ratings per day"
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
 msgstr "Read"
+
+#: src/features/migrations/text.ts
+msgid "Read as a Google Takeout file: Gmail's labels and threads come with it."
+msgstr "Read as a Google Takeout file: Gmail's labels and threads come with it."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zip of .eml files: its folders become labels."
+msgstr "Read as a zip of .eml files: its folders become labels."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zip of mbox files: each file becomes a label."
+msgstr "Read as a zip of mbox files: each file becomes a label."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zipped Maildir: its folders become labels."
+msgstr "Read as a zipped Maildir: its folders become labels."
+
+#: src/features/migrations/text.ts
+msgid "Read as an mbox file."
+msgstr "Read as an mbox file."
 
 #: src/components/common/text.ts
 msgid "Read broadcasts and e-mail designs"
@@ -7371,6 +7558,10 @@ msgstr "Send the e-mail after"
 msgid "Send the reply"
 msgstr "Send the reply"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Send this file from the start"
+msgstr "Send this file from the start"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send to"
 msgstr "Send to"
@@ -7389,6 +7580,7 @@ msgstr "Sender identity"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sending"
@@ -7833,6 +8025,10 @@ msgstr "Some links use http: instead of https:."
 msgid "Some of the values are not valid."
 msgstr "Some of the values are not valid."
 
+#: src/components/common/text.ts
+msgid "Some parts of the file did not arrive. Pick the same file again to send them."
+msgstr "Some parts of the file did not arrive. Pick the same file again to send them."
+
 #: src/features/settings/notifications/events.ts
 msgid "Someone mentions me in a note"
 msgstr "Someone mentions me in a note"
@@ -7981,6 +8177,10 @@ msgstr "Step-by-step guide"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Steps"
 msgstr "Steps"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Stop"
+msgstr "Stop"
 
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Stop overriding {name}"
@@ -8213,6 +8413,10 @@ msgstr "Thanks for writing. We usually answer within a day."
 msgid "That was the sixth check this hour. You can check again at {retry}."
 msgstr "That was the sixth check this hour. You can check again at {retry}."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "The .mbox file from Takeout › Mail, unzipped."
+msgstr "The .mbox file from Takeout › Mail, unzipped."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "The address bounced or complained"
@@ -8341,6 +8545,26 @@ msgstr "The endpoint is disabled. Enable it to send deliveries again."
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "The exact words they saw next to the checkbox or signature."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "The file"
+msgstr "The file"
+
+#: src/components/common/text.ts
+msgid "The file holds no messages."
+msgstr "The file holds no messages."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
+msgstr "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is an older mboxo file"
+msgstr "The file is an older mboxo file"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is empty."
+msgstr "The file is empty."
+
 #: src/features/broadcasts/Import.tsx
 msgid "The file is larger than {max}. Split it into smaller files."
 msgstr "The file is larger than {max}. Split it into smaller files."
@@ -8350,8 +8574,20 @@ msgid "The file is larger than 20 MB. Split it into smaller files."
 msgstr "The file is larger than 20 MB. Split it into smaller files."
 
 #: src/components/common/text.ts
+msgid "The file is larger than this server takes for one export file. Split the export, or ask the server's operator."
+msgstr "The file is larger than this server takes for one export file. Split the export, or ask the server's operator."
+
+#: src/components/common/text.ts
 msgid "The file is too large."
 msgstr "The file is too large."
+
+#: src/components/common/text.ts
+msgid "The file was refused."
+msgstr "The file was refused."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file's parts were deleted. Pick a corrected file to upload."
+msgstr "The file's parts were deleted. Pick a corrected file to upload."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "The first line of the mail shows here when there is no preview text."
@@ -8480,6 +8716,10 @@ msgstr "The mailbox lists no folders."
 #: src/features/migrations/text.ts
 msgid "The mailbox refused the sign-in"
 msgstr "The mailbox refused the sign-in"
+
+#: src/components/common/text.ts
+msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
+msgstr "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
 
 #: src/features/migrations/text.ts
 msgid "The message could not be read"
@@ -8699,6 +8939,30 @@ msgstr "The workspace may not send broadcasts for now."
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 
+#: src/components/common/text.ts
+msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
+msgstr "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
+
+#: src/components/common/text.ts
+msgid "The zip has an entry that points outside of it, so it was refused. Make the zip again from the folder."
+msgstr "The zip has an entry that points outside of it, so it was refused. Make the zip again from the folder."
+
+#: src/components/common/text.ts
+msgid "The zip has more than 1,000,000 entries. Split it into smaller zips, one migration each."
+msgstr "The zip has more than 1,000,000 entries. Split it into smaller zips, one migration each."
+
+#: src/components/common/text.ts
+msgid "The zip holds a symbolic link, which Yuva does not follow. Make the zip again without links."
+msgstr "The zip holds a symbolic link, which Yuva does not follow. Make the zip again without links."
+
+#: src/components/common/text.ts
+msgid "The zip is protected with a password. Make it again without one."
+msgstr "The zip is protected with a password. Make it again without one."
+
+#: src/components/common/text.ts
+msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
+msgstr "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Their consent records, for a request about what you hold on them:"
@@ -8845,6 +9109,14 @@ msgstr "This inbox has no e-mail channel. Add one with an SMTP account to send b
 msgid "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 msgstr "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
+msgstr "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
+
+#: src/components/common/text.ts
+msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
+msgstr "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
+
 #: src/components/common/text.ts
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "This is not a CSV file. Save the spreadsheet as CSV and upload that."
@@ -8857,6 +9129,10 @@ msgstr "This is not a JSON object."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "This is not a valid e-mail address."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "This is not the file whose {count} parts are on the server. Pick that file again to continue, or send this one from the start."
+msgstr "This is not the file whose {count} parts are on the server. Pick that file again to continue, or send this one from the start."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "This is the dry run for {address}. Nothing is imported until you start."
@@ -8906,6 +9182,10 @@ msgstr "This mailbox connects with “Sign in with Microsoft”, which comes in 
 #: src/features/team/MemberPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "This member is not in the workspace any more."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "This migration has ended, so nothing more can be uploaded. Start a new one for another file."
+msgstr "This migration has ended, so nothing more can be uploaded. Start a new one for another file."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
@@ -9019,6 +9299,10 @@ msgstr "Through the API"
 msgid "through the support account"
 msgstr "through the support account"
 
+#: src/features/migrations/text.ts
+msgid "Thunderbird, Apple Mail and most mail apps export a folder as an .mbox file: upload that file."
+msgstr "Thunderbird, Apple Mail and most mail apps export a folder as an .mbox file: upload that file."
+
 #: src/components/common/text.ts
 msgid "Thursday"
 msgstr "Thursday"
@@ -9114,9 +9398,14 @@ msgstr "Trust this certificate for this server. Do this only if it is your own s
 
 #: src/app/Gate.tsx
 #: src/features/account/AccountLayout.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Try again"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Trying again"
+msgstr "Trying again"
 
 #: src/components/common/text.ts
 msgid "Tuesday"
@@ -9325,9 +9614,33 @@ msgstr "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish 
 msgid "Updating"
 msgstr "Updating"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
+msgstr "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Upload and check"
 msgstr "Upload and check"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload of {name}"
+msgstr "Upload of {name}"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload the .mbox file from Google Takeout. Yuva needs no access to the Google account."
+msgstr "Upload the .mbox file from Google Takeout. Yuva needs no access to the Google account."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload the export of {address}"
+msgstr "Upload the export of {address}"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Uploaded"
+msgstr "Uploaded"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Uploaded {step}%"
+msgstr "Uploaded {step}%"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Uploading…"
@@ -10208,6 +10521,10 @@ msgstr "Yuva only reads the mailbox. History arrives quietly: no notifications, 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
+
+#: src/features/migrations/Wizard.tsx
+msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
+msgstr "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

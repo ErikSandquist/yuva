@@ -7,12 +7,18 @@ import { ErrorLine, Notice } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useCreateMigration, useDetect, usePresets, useUpdateMigration } from "@/features/migrations/queries"
+import {
+  useCreateMigration,
+  useDetect,
+  usePresets,
+  useReplaceDraft,
+  useUpdateMigration,
+} from "@/features/migrations/queries"
 import { usePresetName } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { Field } from "@/features/settings/ui"
 import { StepHeader } from "@/features/setup/SetupLayout"
-import type { Migration, MigrationDetection, MigrationPresetId } from "@/lib/api"
+import type { Migration, MigrationDetection, MigrationPreset, MigrationPresetId } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -26,12 +32,15 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
   const detect = useDetect()
   const create = useCreateMigration()
   const update = useUpdateMigration(migration?.id ?? "")
+  const replace = useReplaceDraft()
   const [address, setAddress] = useState(migration?.source_address ?? "")
   const [preset, setPreset] = useState<MigrationPresetId | null>(migration?.preset ?? null)
   const [found, setFound] = useState<MigrationDetection | null>(null)
   const clean = address.trim()
   const valid = EMAIL.test(clean)
   const list = presets.data ?? []
+  const mailboxes = list.filter((p) => p.source !== "file")
+  const files = list.filter((p) => p.source === "file")
   const chosen = list.find((p) => p.id === preset)
   const detection = found && found.address === clean ? found : null
 
@@ -48,6 +57,23 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
   const go = () => {
     if (!valid || !chosen?.available) return
     const state: ConnectState = { server: detection?.preset === chosen.id ? detection.server : undefined }
+    const open = (m: Migration) => navigate(`/migrations/${m.id}/connect`, { state })
+    if (migration && migration.source !== chosen.source) {
+      replace.mutate(
+        {
+          draft: migration,
+          body: {
+            source: chosen.source,
+            preset: chosen.id,
+            source_address: clean,
+            ...(migration.inbox_id ? { inbox_id: migration.inbox_id } : {}),
+            ...(migration.channel_id ? { channel_id: migration.channel_id } : {}),
+          },
+        },
+        { onSuccess: open }
+      )
+      return
+    }
     if (migration) {
       update.mutate(
         { preset: chosen.id, source_address: clean },
@@ -56,12 +82,15 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
       return
     }
     create.mutate(
-      { preset: chosen.id, source_address: clean, ...(inboxId ? { inbox_id: inboxId } : {}) },
+      { source: chosen.source, preset: chosen.id, source_address: clean, ...(inboxId ? { inbox_id: inboxId } : {}) },
       { onSuccess: (m) => navigate(`/migrations/${m.id}/connect`, { state }) }
     )
   }
 
-  const pending = create.isPending || update.isPending
+  const pending = create.isPending || update.isPending || replace.isPending
+  const tile = (p: MigrationPreset) => (
+    <PresetTile key={p.id} p={p} on={preset === p.id} onPick={() => setPreset(p.id)} />
+  )
   return (
     <WizardLayout step="source" m={migration} preset={chosen} address={clean}>
       <StepHeader title={<Trans>Where is your mail now?</Trans>}>
@@ -124,39 +153,27 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
           {presets.isPending ? (
             <Skeleton className="h-40 rounded-2xl" />
           ) : (
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {list.map((p) => {
-                const on = preset === p.id
-                return (
-                  <button
-                    key={p.id}
-                    type="button"
-                    disabled={!p.available}
-                    aria-pressed={on}
-                    onClick={() => setPreset(p.id)}
-                    className={cn(
-                      "flex min-h-16 flex-col items-start justify-center gap-0.5 rounded-xl border bg-card px-3 py-2.5 text-start text-body transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-border",
-                      on && "border-primary ring-1 ring-primary"
-                    )}
-                    data-testid={`migration-preset-${p.id}`}
-                  >
-                    <span className="flex w-full items-center gap-1.5 font-medium">
-                      <span className="min-w-0 flex-1">{p.name}</span>
-                      {on && <CheckIcon className="size-4 shrink-0 text-brand" aria-hidden="true" />}
-                    </span>
-                    {!p.available && (
-                      <span className="text-caption text-faint">
-                        <Trans>Coming later</Trans>
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{mailboxes.map(tile)}</div>
           )}
           <ErrorLine error={presets.error} />
         </section>
-        <ErrorLine error={create.error ?? update.error} />
+        {files.length > 0 && (
+          <section className="flex flex-col gap-2.5" aria-labelledby="migration-files">
+            <div>
+              <h2 id="migration-files" className="text-body font-medium">
+                <Trans>Or upload an export file</Trans>
+              </h2>
+              <p className="text-small text-faint">
+                <Trans>
+                  For a very large mailbox, or one Yuva cannot sign in to: Google Takeout, mbox, or .eml or Maildir in a
+                  zip. Enter the address its mail was sent to above.
+                </Trans>
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">{files.map(tile)}</div>
+          </section>
+        )}
+        <ErrorLine error={create.error ?? update.error ?? replace.error} />
         <Button
           type="submit"
           size="lg"
@@ -169,6 +186,32 @@ export function SourceStep({ migration, inboxId }: { migration?: Migration; inbo
         </Button>
       </form>
     </WizardLayout>
+  )
+}
+
+function PresetTile({ p, on, onPick }: { p: MigrationPreset; on: boolean; onPick: () => void }) {
+  return (
+    <button
+      type="button"
+      disabled={!p.available}
+      aria-pressed={on}
+      onClick={onPick}
+      className={cn(
+        "flex min-h-16 flex-col items-start justify-center gap-0.5 rounded-xl border bg-card px-3 py-2.5 text-start text-body transition-colors outline-none hover:border-faint focus-visible:ring-3 focus-visible:ring-ring/30 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-border",
+        on && "border-primary ring-1 ring-primary"
+      )}
+      data-testid={`migration-preset-${p.id}`}
+    >
+      <span className="flex w-full items-center gap-1.5 font-medium">
+        <span className="min-w-0 flex-1">{p.name}</span>
+        {on && <CheckIcon className="size-4 shrink-0 text-brand" aria-hidden="true" />}
+      </span>
+      {!p.available && (
+        <span className="text-caption text-faint">
+          <Trans>Coming later</Trans>
+        </span>
+      )}
+    </button>
   )
 }
 
@@ -204,7 +247,8 @@ function DetectionNote({ d }: { d: MigrationDetection }) {
         <p>
           <Trans>
             Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server
-            cannot reach. Moving exported files comes in a later version.
+            cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as
+            an export file below.
           </Trans>
         </p>
       </Notice>

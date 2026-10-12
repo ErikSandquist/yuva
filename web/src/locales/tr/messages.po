@@ -7,6 +7,10 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/features/migrations/text.ts
+msgid ".eml files in a zip"
+msgstr "Zip içinde .eml dosyaları"
+
 #: src/features/setup/ChannelStep.tsx
 msgid "“Was this page helpful?”, feedback and discussions on your docs"
 msgstr "Dokümanlarınızda “Bu sayfa yararlı oldu mu?”, geri bildirim ve tartışmalar"
@@ -230,6 +234,10 @@ msgstr "{days, plural, one {# gündür bekliyor} other {# gündür bekliyor}}"
 msgid "{done} of {total} rows"
 msgstr "{done} / {total} satır"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "{doneParts} of {totalParts} parts"
+msgstr "{totalParts} parçadan {doneParts} tanesi"
+
 #: src/features/migrations/CopyStep.tsx
 msgid "{doneText} of {total}"
 msgstr "{doneText} / {total}"
@@ -434,6 +442,10 @@ msgstr "{people, plural, one {# aboneliği ve izin kaydı silinir.} other {# abo
 msgid "{percent}%"
 msgstr "%{percent}"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "{percent}% · {sent} of {size}"
+msgstr "%{percent} · {size} içinden {sent}"
+
 #: src/features/migrations/parts.tsx
 msgid "{percent}%, {done} of {total} messages"
 msgstr "%{percent}, {total} mesajın {done} tanesi"
@@ -441,6 +453,10 @@ msgstr "%{percent}, {total} mesajın {done} tanesi"
 #: src/features/migrations/CopyStep.tsx
 msgid "{percent}%, {doneText} of {total}"
 msgstr "%{percent}, {doneText} / {total}"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "{percent}%, {sent} of {size}"
+msgstr "%{percent}, {size} içinden {sent}"
 
 #: src/features/migrations/text.ts
 msgid "{provider} accepts no passwords over IMAP. This mailbox needs “Sign in with Microsoft”, which comes later."
@@ -787,6 +803,14 @@ msgstr "Yuva'nın yeni sürümü hazır."
 msgid "A note for the team… type @ to mention a teammate"
 msgstr "Ekip için bir not… birini çağırmak için @ yaz"
 
+#: src/components/common/text.ts
+msgid "A part of the file arrived damaged several times. Check your connection, then pick the file again to continue."
+msgstr "Dosyanın bir parçası birkaç kez bozuk ulaştı. Bağlantınızı denetleyin, sonra devam etmek için dosyayı yeniden seçin."
+
+#: src/components/common/text.ts
+msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
+msgstr "Dosyanın bir parçası sunucunun kabul ettiğinden büyüktü. Sayfayı yenileyip dosyayı yeniden seçin."
+
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "{name} hakkında bir soru"
@@ -856,6 +880,10 @@ msgstr "Erişim"
 #: src/features/migrations/DoneStep.tsx
 msgid "Access to the mailbox"
 msgstr "Posta kutusuna erişim"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Access to your mailbox: none"
+msgstr "Posta kutunuza erişim: yok"
 
 #: src/features/account/AccountPage.tsx
 msgid "Account"
@@ -1068,6 +1096,10 @@ msgstr "Hepsi okundu olarak işaretlendi"
 msgid "All of its conversations are deleted with it."
 msgstr "Tüm konuşmaları da onunla birlikte silinir."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "All parts arrived. Reading the file…"
+msgstr "Tüm parçalar ulaştı. Dosya okunuyor…"
+
 #: src/features/settings/api-keys/ApiKeysPage.tsx
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "All scopes"
@@ -1136,6 +1168,10 @@ msgstr "Üyelerin iç notları için de message.created gönderilir. İç olayla
 msgid "Amazon SES shows your account’s maximum send rate in its console; new accounts often start at 14. A mailbox account such as Google Workspace or Microsoft 365 is not made for bulk mail: keep it at 1."
 msgstr "Amazon SES, hesabınızın en yüksek gönderim hızını konsolunda gösterir; yeni hesaplar çoğunlukla 14 ile başlar. Google Workspace ya da Microsoft 365 gibi bir posta kutusu hesabı toplu gönderim için yapılmamıştır: 1'de bırakın."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "An .mbox file, or a .zip of .eml files, of a Maildir or of uncompressed .mbox files."
+msgstr "Bir .mbox dosyası ya da .eml dosyalarının, bir Maildir'in veya sıkıştırılmamış .mbox dosyalarının .zip'i."
+
 #: src/features/account/AccountPage.tsx
 msgid "An answer was accepted in <0>{title}</0>"
 msgstr "<0>{title}</0> tartışmasında bir yanıt kabul edildi"
@@ -1164,6 +1200,14 @@ msgstr "Bir e-posta adresi, telefon numarası ya da web adresi"
 msgid "An e-mail goes out only if the conversation is still unread by then."
 msgstr "E-posta yalnızca konuşma o zamana kadar okunmadıysa gönderilir."
 
+#: src/components/common/text.ts
+msgid "An entry in the zip is larger, unpacked, than this server takes for one file."
+msgstr "Zip'teki bir öğe, açıldığında bu sunucunun tek dosya için kabul ettiğinden büyük."
+
+#: src/components/common/text.ts
+msgid "An entry in the zip unpacks to more than 100 times its size, so the file was refused as unsafe."
+msgstr "Zip'teki bir öğe açıldığında boyutunun 100 katından fazlasına çıkıyor; dosya güvenli olmadığı için reddedildi."
+
 #: src/features/settings/api-keys/ApiKeyDialog.tsx
 msgid "An https image URL."
 msgstr "https ile başlayan bir görsel adresi."
@@ -1183,6 +1227,10 @@ msgstr "Bir sahip ya da yönetici, Botlar gönderebilir ayarıyla asistanların 
 #: src/features/settings/channels/email/Deliverability.tsx
 msgid "An owner or admin turns signing on once the record is published."
 msgstr "Kayıt yayımlanınca imzalamayı bir sahip ya da yönetici açar."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "An upload was cut off: {count} parts, {size}, are already on the server."
+msgstr "Bir yükleme yarıda kaldı: {count} parça ({size}) zaten sunucuda."
 
 #: src/components/common/DiscussionAuthor.tsx
 msgid "Anonymous"
@@ -1860,6 +1908,7 @@ msgid "Checked and waiting for an owner or admin to start it."
 msgstr "Denetlendi; bir sahip ya da yöneticinin başlatması bekleniyor."
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/UploadStep.tsx
 msgid "Checking"
 msgstr "Denetleniyor"
 
@@ -1870,6 +1919,14 @@ msgstr "Her adres denetleniyor…"
 #: src/features/broadcasts/Import.tsx
 msgid "Checking the file"
 msgstr "Dosya denetleniyor"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Checking what is already on the server…"
+msgstr "Sunucuda zaten ne olduğu denetleniyor…"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Checking what is on the server"
+msgstr "Sunucuda ne olduğu denetleniyor"
 
 #: src/features/migrations/Wizard.tsx
 msgid "Choose"
@@ -2241,6 +2298,7 @@ msgstr "İçerik"
 #: src/features/migrations/MapStep.tsx
 #: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SourceStep.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/setup/AddChannelStep.tsx
 #: src/features/setup/InstallStep.tsx
 #: src/features/setup/NameStep.tsx
@@ -2832,6 +2890,10 @@ msgstr "Bitti"
 msgid "Download {0}"
 msgstr "{0} dosyasını indir"
 
+#: src/features/migrations/text.ts
+msgid "Download and unzip it, then upload the .mbox file from the Takeout › Mail folder. The .mbox file inside the .zip is compressed and cannot be read from there."
+msgstr "İndirip zip'ten çıkarın, sonra Takeout › Mail klasöründeki .mbox dosyasını yükleyin. .zip içindeki .mbox dosyası sıkıştırılmıştır ve oradan okunamaz."
+
 #: src/components/common/ExportButtons.tsx
 msgid "Download CSV"
 msgstr "CSV indir"
@@ -3083,6 +3145,10 @@ msgstr "Bugün yanıt verdiğiniz posta kutusunun adresini girin. Yuva sağlayı
 msgid "Enter your work e-mail and we send you a code. No password; the same code signs you in later."
 msgstr "İş e-posta adresinizi yazın, size bir kod gönderelim. Parola yok; sonraki girişlerde de aynı şekilde kodla girersiniz."
 
+#: src/components/common/text.ts
+msgid "Entry: {entry}"
+msgstr "Öğe: {entry}"
+
 #: src/features/settings/webhooks/AttemptLog.tsx
 msgid "Error or answer"
 msgstr "Hata veya yanıt"
@@ -3200,6 +3266,10 @@ msgstr "son geçerlilik: {expires}"
 msgid "Export"
 msgstr "Dışa aktar"
 
+#: src/features/migrations/text.ts
+msgid "Export once as a .zip file. Google mails you a link when it is ready; for a large mailbox that can take a day or more."
+msgstr "Bir kez, .zip dosyası olarak dışa aktarın. Hazır olduğunda Google size bir bağlantı gönderir; büyük bir posta kutusu için bu bir gün ya da daha uzun sürebilir."
+
 #: src/features/broadcasts/Import.tsx
 msgid "External id"
 msgstr "Dış kimlik"
@@ -3250,6 +3320,10 @@ msgstr "Bir dokümantasyon sayfasından gönderilen geri bildirim"
 #: src/features/conversation/messages/Thread.tsx
 msgid "Feedback sent from the app"
 msgstr "Uygulamadan gönderilen geri bildirim"
+
+#: src/features/migrations/Wizard.tsx
+msgid "File"
+msgstr "Dosya"
 
 #: src/features/broadcasts/Import.tsx
 msgid "File and consent"
@@ -3354,6 +3428,10 @@ msgstr "Klasörler"
 msgid "Folders not chosen or never read"
 msgstr "Seçilmeyen ya da hiç okunmayan klasörler"
 
+#: src/features/migrations/text.ts
+msgid "Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels."
+msgstr ".eml dosyalarından oluşan klasörler, bir Maildir ya da Proton Mail dışa aktarımı: klasörü .zip yapıp yükleyin. Klasörleri etiket olur."
+
 #: src/app/Palette.tsx
 msgid "Follow the system appearance"
 msgstr "Sistem temasını izle"
@@ -3370,6 +3448,10 @@ msgstr "{0} için, {when} geldi. Gmail'in yönlendirme ayarlarına girin ya da b
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "For a client that only starts local programs, use the <0>yuva mcp stdio</0> bridge from the setup guide."
 msgstr "Yalnızca yerel program başlatabilen bir istemci için kurulum kılavuzundaki <0>yuva mcp stdio</0> köprüsünü kullanın."
+
+#: src/features/migrations/SourceStep.tsx
+msgid "For a very large mailbox, or one Yuva cannot sign in to: Google Takeout, mbox, or .eml or Maildir in a zip. Enter the address its mail was sent to above."
+msgstr "Çok büyük bir posta kutusu ya da Yuva'nın oturum açamadığı bir kutu için: Google Takeout, mbox ya da zip içinde .eml veya Maildir. E-postaların gönderildiği adresi yukarıya yazın."
 
 #: src/features/setup/NameStep.tsx
 msgid "For automatic messages"
@@ -3423,6 +3505,10 @@ msgstr "Sunucularınız, betikleriniz ve botlarınız için. Bir anahtar yalnız
 #: src/features/broadcasts/ListPage.tsx
 msgid "Form"
 msgstr "Form"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Format"
+msgstr "Biçim"
 
 #: src/features/broadcasts/FormSnippets.tsx
 msgid "Forms run on a website chat channel of this inbox, which lists the sites they may be used on. This inbox has none yet."
@@ -3514,6 +3600,7 @@ msgid "Full API"
 msgstr "Tüm API"
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/UploadStep.tsx
 msgid "Full guide"
 msgstr "Rehberin tamamı"
 
@@ -3544,6 +3631,10 @@ msgstr "Adı “Yuva” olan bir şifre oluşturup aşağıya yapıştırın."
 #: src/features/settings/notifications/PushSection.tsx
 msgid "Get notified on your phone or computer, even when the panel is closed."
 msgstr "Panel kapalıyken bile telefonunda ya da bilgisayarında bildirim al."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Get the file"
+msgstr "Dosyayı edinin"
 
 #: src/features/setup/AddChannelStep.tsx
 msgid "Get the SDK lines"
@@ -3588,6 +3679,10 @@ msgstr "Google bu adrese bir onay kodu gönderir. Kod bu sayfada görünür: Gma
 #: src/features/migrations/SwitchStep.tsx
 msgid "Google sent a confirmation code"
 msgstr "Google bir onay kodu gönderdi"
+
+#: src/features/migrations/text.ts
+msgid "Google Takeout"
+msgstr "Google Takeout"
 
 #: src/features/settings/channels/chat/ChatFields.tsx
 #: src/features/settings/inboxes/InboxPage.tsx
@@ -4100,6 +4195,10 @@ msgstr "Kalıcı olarak durur. Aktarılanlar kalır, posta kutusunun erişim bil
 msgid "It stops within a moment. Subscribers it already added stay on the list."
 msgstr "Birkaç saniye içinde durur. Şimdiye kadar eklenen aboneler listede kalır."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "It was {name} ({total}). Pick it again to send only what is missing."
+msgstr "Dosya {name} ({total}) idi. Yalnızca eksikleri göndermek için onu yeniden seçin."
+
 #: src/features/oauth/ConsentPage.tsx
 msgid "It will act as you, <0>{email}</0>, with only the access you allow below."
 msgstr "Sizin adınıza, <0>{email}</0> olarak, yalnızca aşağıda izin verdiğiniz kadarıyla çalışacak."
@@ -4147,6 +4246,10 @@ msgstr "Yönlendirmeyi ya da MX kayıtlarını olduğu gibi bırakın: e-postala
 #: src/features/migrations/MapStep.tsx
 msgid "Keep the name only"
 msgstr "Yalnızca adı koru"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Keep this page open. If the connection drops, the upload goes on when it is back; after a reload, pick the same file and only the missing parts are sent."
+msgstr "Bu sayfayı açık tutun. Bağlantı koparsa yükleme bağlantı geri gelince sürer; sayfa yenilenirse aynı dosyayı seçin, yalnızca eksik parçalar gönderilir."
 
 #: src/features/broadcasts/Import.tsx
 msgid "Kept with every subscription from this file, as the record of their consent."
@@ -4500,6 +4603,10 @@ msgstr "Destek adresinize gelen postalar, aynı adresten yanıtlanır"
 msgid "Mailbox address"
 msgstr "Posta kutusu adresi"
 
+#: src/features/migrations/text.ts
+msgid "Maildir in a zip"
+msgstr "Zip içinde Maildir"
+
 #: src/app/Palette.tsx
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListPage.tsx
@@ -4605,6 +4712,14 @@ msgstr "Yanıt olarak işaretlendi"
 #: src/features/broadcasts/ListForm.tsx
 msgid "Marketing content"
 msgstr "Pazarlama içeriği"
+
+#: src/features/migrations/text.ts
+msgid "mbox files in a zip"
+msgstr "Zip içinde mbox dosyaları"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "mbox options"
+msgstr "mbox seçenekleri"
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "MCP only"
@@ -5078,6 +5193,10 @@ msgstr "Sonraki deneme"
 msgid "next attempt {when}"
 msgstr "sonraki deneme {when}"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Next, choose what to bring. The scan reads the file once."
+msgstr "Şimdi neyin getirileceğini seçin. Tarama dosyayı bir kez okur."
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Next, choose where they go."
 msgstr "Şimdi nereye gideceklerini seçin."
@@ -5507,6 +5626,10 @@ msgstr "Spam değil"
 msgid "Not there after a minute? Look in your spam or junk folder, or send a new code below."
 msgstr "Bir dakika içinde gelmediyse spam ya da gereksiz klasörünüze bakın veya aşağıdan yeni kod isteyin."
 
+#: src/features/migrations/Wizard.tsx
+msgid "Not uploaded yet"
+msgstr "Henüz yüklenmedi"
+
 #: src/features/inbox/SidePanels.tsx
 msgid "Not used yet"
 msgstr "Henüz kullanılmadı"
@@ -5562,6 +5685,10 @@ msgstr "Dışarıda kalan bir şey yok."
 #: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
 msgstr "Hiçbir şey kaybolmaz: posta kutusu yeniden bağlanınca kopyalama kaldığı yerden devam eder."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: when it continues, copying picks up where it stopped."
+msgstr "Hiçbir şey kaybolmaz: kopyalama sürdüğünde kaldığı yerden devam eder."
 
 #: src/features/inbox/ChatList.tsx
 msgid "Nothing is snoozed."
@@ -5753,6 +5880,10 @@ msgstr "Yalnızca DNS denetlenebildi; alan sunucuların e-postayı nasıl değer
 msgid "Only for a domain or subdomain used for support alone: its MX records decide where all of its mail goes."
 msgstr "Yalnızca destek için kullanılan bir alan adı ya da alt alan adı için: MX kayıtları tüm e-postalarının nereye gideceğini belirler."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Only for mbox files from older programs that escape “From ” lines the old way. Google Takeout and most apps write mboxrd, the default."
+msgstr "Yalnızca “From ” satırlarını eski yolla kaçışlayan eski programların mbox dosyaları için. Google Takeout ve çoğu uygulama varsayılan olan mboxrd biçimini yazar."
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Only headers are read: no message is opened or marked. You can close this page; the scan goes on and the list in Settings shows when it is done."
 msgstr "Yalnızca başlıklar okunur: hiçbir mesaj açılmaz ya da işaretlenmez. Bu sayfayı kapatabilirsiniz; tarama sürer ve bittiğinde Ayarlar'daki listede görünür."
@@ -5865,6 +5996,14 @@ msgstr "açık tartışma"
 #: src/features/docs/DocsPages.tsx
 msgid "open feedback"
 msgstr "açık geri bildirim"
+
+#: src/features/migrations/text.ts
+msgid "Open Google Takeout"
+msgstr "Google Takeout'u açın"
+
+#: src/features/migrations/text.ts
+msgid "Open Google Takeout, choose “Deselect all”, then select only Mail."
+msgstr "Google Takeout'u açın, “Tüm seçimleri kaldır”ı seçin, sonra yalnızca Mail'i işaretleyin."
 
 #: src/features/migrations/SwitchStep.tsx
 msgid "Open Google's confirmation page"
@@ -5986,6 +6125,10 @@ msgstr "Ya da bir oturumun içinde <0>/mcp</0> çalıştırın. Tarayıcısı ol
 msgid "Or run the command below, or put the configuration in <0>.vscode/mcp.json</0> (or run <1>MCP: Add Server</1>):"
 msgstr "Ya da aşağıdaki komutu çalıştırın veya yapılandırmayı <0>.vscode/mcp.json</0> dosyasına koyun (ya da <1>MCP: Add Server</1> komutunu çalıştırın):"
 
+#: src/features/migrations/SourceStep.tsx
+msgid "Or upload an export file"
+msgstr "Ya da bir dışa aktarım dosyası yükleyin"
+
 #: src/features/settings/appearance/AppearancePage.tsx
 msgid "Original"
 msgstr "Orijinal"
@@ -6018,6 +6161,10 @@ msgstr "Outlook.com ve Microsoft 365 uygulama şifresi kabul etmiyor. Bunlar iç
 #: src/components/common/text.ts
 msgid "Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet."
 msgstr "Outlook.com ve Microsoft 365, bu sunucunun henüz sunmadığı “Microsoft ile oturum aç” ile bağlanır."
+
+#: src/features/migrations/text.ts
+msgid "Outlook's .pst files are not read; convert them to .mbox first."
+msgstr "Outlook'un .pst dosyaları okunmaz; önce .mbox'a dönüştürün."
 
 #: src/features/settings/inboxes/InboxPage.tsx
 msgid "Outside them the inbox counts as closed"
@@ -6073,6 +6220,14 @@ msgstr "Eski anahtarı kullanan sayfalar, kodu güncelleyene kadar sohbet başla
 #: src/features/settings/profile/ProfileForm.tsx
 msgid "Panel language"
 msgstr "Panel dili"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Part {part} of {totalParts}"
+msgstr "Parça {part} / {totalParts}"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Parts in progress"
+msgstr "Gönderilen parçalar"
 
 #: src/features/migrations/ConnectStep.tsx
 msgid "Passed"
@@ -6285,6 +6440,10 @@ msgstr "E-posta adreslerinin bulunduğu sütunu seçin."
 msgid "Pick the file to import."
 msgstr "İçe aktarılacak dosyayı seçin."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the file, or drop it here"
+msgstr "Dosyayı seçin ya da buraya bırakın"
+
 #: src/features/migrations/ChooseStep.tsx
 msgid "Pick the folders and how far back to go. The scan reads only the headers to show exactly what will be imported; nothing is imported yet."
 msgstr "Klasörleri ve ne kadar geriye gidileceğini seçin. Tarama, tam olarak neyin aktarılacağını göstermek için yalnızca başlıkları okur; henüz hiçbir şey aktarılmaz."
@@ -6300,6 +6459,14 @@ msgstr "Diğer kişiyi seçin. Bu kişiyle birleştirilir ve ardından silinir."
 #: src/features/setup/AddChannelStep.tsx
 msgid "Pick the platforms; the next step shows the lines to add to each app."
 msgstr "Platformları seçin; sonraki adım her uygulamaya eklenecek satırları gösterir."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the same file again"
+msgstr "Aynı dosyayı yeniden seçin"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Pick the same file again to send only what is missing."
+msgstr "Yalnızca eksikleri göndermek için aynı dosyayı yeniden seçin."
 
 #: src/features/migrations/text.ts
 msgid "Pick the server for your address under Server settings: gmx.net, gmx.com or mail.com."
@@ -6435,8 +6602,8 @@ msgid "Progress"
 msgstr "İlerleme"
 
 #: src/features/migrations/SourceStep.tsx
-msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Moving exported files comes in a later version."
-msgstr "Proton Mail'e IMAP ile yalnızca kendi bilgisayarınızdaki Proton Mail Bridge üzerinden ulaşılır; bir sunucu oraya erişemez. Dışa aktarılan dosyalarla taşıma sonraki bir sürümde gelecek."
+msgid "Proton Mail is reachable over IMAP only through Proton Mail Bridge on your own computer, which a server cannot reach. Export the mailbox with Proton Mail's export tool, put the folder in a .zip and upload it as an export file below."
+msgstr "Proton Mail'e IMAP ile yalnızca kendi bilgisayarınızdaki Proton Mail Bridge üzerinden ulaşılır; bir sunucu oraya erişemez. Posta kutusunu Proton Mail'in dışa aktarma aracıyla dışa aktarın, klasörü .zip yapın ve aşağıda dışa aktarım dosyası olarak yükleyin."
 
 #: src/features/broadcasts/BroadcastsColumn.tsx
 #: src/features/broadcasts/ListForm.tsx
@@ -6533,6 +6700,26 @@ msgstr "Günlük değerlendirmeler"
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Read"
 msgstr "Okundu"
+
+#: src/features/migrations/text.ts
+msgid "Read as a Google Takeout file: Gmail's labels and threads come with it."
+msgstr "Google Takeout dosyası olarak okundu: Gmail'in etiketleri ve yazışma dizileri de gelir."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zip of .eml files: its folders become labels."
+msgstr ".eml dosyalarından oluşan bir zip olarak okundu: klasörleri etiket olur."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zip of mbox files: each file becomes a label."
+msgstr "mbox dosyalarından oluşan bir zip olarak okundu: her dosya bir etiket olur."
+
+#: src/features/migrations/text.ts
+msgid "Read as a zipped Maildir: its folders become labels."
+msgstr "Zip'lenmiş bir Maildir olarak okundu: klasörleri etiket olur."
+
+#: src/features/migrations/text.ts
+msgid "Read as an mbox file."
+msgstr "mbox dosyası olarak okundu."
 
 #: src/components/common/text.ts
 msgid "Read broadcasts and e-mail designs"
@@ -7371,6 +7558,10 @@ msgstr "E-postayı gönderme zamanı"
 msgid "Send the reply"
 msgstr "Yanıtı gönder"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Send this file from the start"
+msgstr "Bu dosyayı baştan gönder"
+
 #: src/features/broadcasts/TestSend.tsx
 msgid "Send to"
 msgstr "Alıcılar"
@@ -7389,6 +7580,7 @@ msgstr "Gönderen bilgileri"
 
 #: src/components/common/text.ts
 #: src/features/broadcasts/BroadcastList.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/settings/channels/email/EmailFields.tsx
 #: src/features/settings/workspace/BroadcastsSettings.tsx
 msgid "Sending"
@@ -7833,6 +8025,10 @@ msgstr "Bazı bağlantılar https: yerine http: kullanıyor."
 msgid "Some of the values are not valid."
 msgstr "Girilen değerlerden bazıları geçerli değil."
 
+#: src/components/common/text.ts
+msgid "Some parts of the file did not arrive. Pick the same file again to send them."
+msgstr "Dosyanın bazı parçaları ulaşmadı. Onları göndermek için aynı dosyayı yeniden seçin."
+
 #: src/features/settings/notifications/events.ts
 msgid "Someone mentions me in a note"
 msgstr "Biri beni bir notta andığında"
@@ -7981,6 +8177,10 @@ msgstr "Adım adım rehber"
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Steps"
 msgstr "Adımlar"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Stop"
+msgstr "Durdur"
 
 #: src/features/settings/notifications/InboxOverrides.tsx
 msgid "Stop overriding {name}"
@@ -8213,6 +8413,10 @@ msgstr "Yazdığınız için teşekkürler. Genellikle bir gün içinde yanıt v
 msgid "That was the sixth check this hour. You can check again at {retry}."
 msgstr "Bu saatteki altıncı denetimdi. {retry} itibarıyla yeniden denetleyebilirsiniz."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "The .mbox file from Takeout › Mail, unzipped."
+msgstr "Takeout › Mail klasöründeki, zip'ten çıkarılmış .mbox dosyası."
+
 #: src/components/common/text.ts
 msgid "The address bounced or complained"
 msgstr "Adres geri döndü ya da şikâyet etti"
@@ -8341,6 +8545,26 @@ msgstr "Uç nokta kapalı. Yeniden göndermek için önce açın."
 msgid "The exact words they saw next to the checkbox or signature."
 msgstr "Onay kutusunun ya da imzanın yanında gördükleri metnin aynısı."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "The file"
+msgstr "Dosya"
+
+#: src/components/common/text.ts
+msgid "The file holds no messages."
+msgstr "Dosyada hiç ileti yok."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
+msgstr "Dosya {size}; bu sunucu en çok {max} boyutunda dışa aktarım dosyası kabul ediyor. Dışa aktarımı bölün ya da sunucunun yöneticisine sorun."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is an older mboxo file"
+msgstr "Dosya eski bir mboxo dosyası"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file is empty."
+msgstr "Dosya boş."
+
 #: src/features/broadcasts/Import.tsx
 msgid "The file is larger than {max}. Split it into smaller files."
 msgstr "Dosya {max} boyutundan büyük. Daha küçük dosyalara bölün."
@@ -8350,8 +8574,20 @@ msgid "The file is larger than 20 MB. Split it into smaller files."
 msgstr "Dosya 20 MB'tan büyük. Daha küçük dosyalara bölün."
 
 #: src/components/common/text.ts
+msgid "The file is larger than this server takes for one export file. Split the export, or ask the server's operator."
+msgstr "Dosya, bu sunucunun tek bir dışa aktarım dosyası için kabul ettiğinden büyük. Dışa aktarımı bölün ya da sunucunun yöneticisine sorun."
+
+#: src/components/common/text.ts
 msgid "The file is too large."
 msgstr "Dosya çok büyük."
+
+#: src/components/common/text.ts
+msgid "The file was refused."
+msgstr "Dosya reddedildi."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "The file's parts were deleted. Pick a corrected file to upload."
+msgstr "Dosyanın parçaları silindi. Yüklemek için düzeltilmiş bir dosya seçin."
 
 #: src/features/broadcasts/Composer.tsx
 msgid "The first line of the mail shows here when there is no preview text."
@@ -8480,6 +8716,10 @@ msgstr "Posta kutusu hiç klasör listelemiyor."
 #: src/features/migrations/text.ts
 msgid "The mailbox refused the sign-in"
 msgstr "Posta kutusu oturum açmayı reddetti"
+
+#: src/components/common/text.ts
+msgid "The mbox file is compressed inside the zip. Unzip the Takeout archive and upload the .mbox file."
+msgstr "mbox dosyası zip içinde sıkıştırılmış. Takeout arşivini zip'ten çıkarın ve .mbox dosyasını yükleyin."
 
 #: src/features/migrations/text.ts
 msgid "The message could not be read"
@@ -8699,6 +8939,30 @@ msgstr "Çalışma alanı şimdilik bülten gönderemez."
 msgid "The workspace reached today’s sending limit. Sending continues on {local} ({utc} UTC)."
 msgstr "Çalışma alanı bugünkü gönderim sınırına ulaştı. Gönderim {local} tarihinde ({utc} UTC) sürecek."
 
+#: src/components/common/text.ts
+msgid "The zip cannot be read; it may be damaged or cut off. Make it again and upload it."
+msgstr "Zip okunamıyor; bozuk ya da yarım olabilir. Yeniden oluşturup yükleyin."
+
+#: src/components/common/text.ts
+msgid "The zip has an entry that points outside of it, so it was refused. Make the zip again from the folder."
+msgstr "Zip'te kendi dışını gösteren bir öğe var, bu yüzden reddedildi. Zip'i klasörden yeniden oluşturun."
+
+#: src/components/common/text.ts
+msgid "The zip has more than 1,000,000 entries. Split it into smaller zips, one migration each."
+msgstr "Zip'te 1.000.000'dan fazla öğe var. Daha küçük zip'lere bölün, her biri için ayrı bir taşıma başlatın."
+
+#: src/components/common/text.ts
+msgid "The zip holds a symbolic link, which Yuva does not follow. Make the zip again without links."
+msgstr "Zip'te Yuva'nın izlemediği bir sembolik bağlantı var. Zip'i bağlantılar olmadan yeniden oluşturun."
+
+#: src/components/common/text.ts
+msgid "The zip is protected with a password. Make it again without one."
+msgstr "Zip parolayla korunuyor. Parolasız olarak yeniden oluşturun."
+
+#: src/components/common/text.ts
+msgid "The zip uses a compression method Yuva cannot read. Make it again as an ordinary zip."
+msgstr "Zip, Yuva'nın okuyamadığı bir sıkıştırma yöntemi kullanıyor. Sıradan bir zip olarak yeniden oluşturun."
+
 #: src/features/contact/ContactSubscriptions.tsx
 msgid "Their consent records, for a request about what you hold on them:"
 msgstr "Hakkında ne tuttuğunuzu sorarsa, izin kayıtları:"
@@ -8845,6 +9109,14 @@ msgstr "Bu gelen kutusunun e-posta kanalı yok. Bülten göndermek için SMTP he
 msgid "This inbox has no mailing list yet. A broadcast goes only to people who subscribed to a list."
 msgstr "Bu gelen kutusunun henüz e-posta listesi yok. Bülten yalnızca bir listeye abone olan kişilere gider."
 
+#: src/features/migrations/UploadStep.tsx
+msgid "This is a compressed archive. Unzip the Takeout archive and upload the .mbox file."
+msgstr "Bu sıkıştırılmış bir arşiv. Takeout arşivini açın ve .mbox dosyasını yükleyin."
+
+#: src/components/common/text.ts
+msgid "This is neither an mbox file nor a zip. Upload the .mbox file itself, or a .zip of .eml files or of a Maildir."
+msgstr "Bu ne bir mbox dosyası ne de bir zip. .mbox dosyasının kendisini ya da .eml dosyalarının veya bir Maildir'in .zip'ini yükleyin."
+
 #: src/components/common/text.ts
 msgid "This is not a CSV file. Save the spreadsheet as CSV and upload that."
 msgstr "Bu bir CSV dosyası değil. Tabloyu CSV olarak kaydedip onu yükleyin."
@@ -8857,6 +9129,10 @@ msgstr "Bu bir JSON nesnesi değil."
 #: src/features/broadcasts/AddSubscriberDialog.tsx
 msgid "This is not a valid e-mail address."
 msgstr "Bu geçerli bir e-posta adresi değil."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "This is not the file whose {count} parts are on the server. Pick that file again to continue, or send this one from the start."
+msgstr "Bu, {count} parçası sunucuda olan dosya değil. Devam etmek için o dosyayı yeniden seçin ya da bunu baştan gönderin."
 
 #: src/features/migrations/ReviewStep.tsx
 msgid "This is the dry run for {address}. Nothing is imported until you start."
@@ -8906,6 +9182,10 @@ msgstr "Bu posta kutusu sonraki bir sürümde gelecek olan “Microsoft ile otur
 #: src/features/team/MemberPage.tsx
 msgid "This member is not in the workspace any more."
 msgstr "Bu üye artık çalışma alanında değil."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "This migration has ended, so nothing more can be uploaded. Start a new one for another file."
+msgstr "Bu taşıma sona erdi, artık bir şey yüklenemez. Başka bir dosya için yeni bir taşıma başlatın."
 
 #: src/features/settings/connected-apps/ConnectedAppsPage.tsx
 msgid "This month"
@@ -9019,6 +9299,10 @@ msgstr "API üzerinden"
 msgid "through the support account"
 msgstr "destek hesabından"
 
+#: src/features/migrations/text.ts
+msgid "Thunderbird, Apple Mail and most mail apps export a folder as an .mbox file: upload that file."
+msgstr "Thunderbird, Apple Mail ve çoğu e-posta uygulaması bir klasörü .mbox dosyası olarak dışa aktarır: o dosyayı yükleyin."
+
 #: src/components/common/text.ts
 msgid "Thursday"
 msgstr "Perşembe"
@@ -9114,9 +9398,14 @@ msgstr "Bu sunucu için bu sertifikaya güven. Bunu yalnızca sunucu sizinse ve 
 
 #: src/app/Gate.tsx
 #: src/features/account/AccountLayout.tsx
+#: src/features/migrations/UploadStep.tsx
 #: src/features/oauth/ConsentPage.tsx
 msgid "Try again"
 msgstr "Yeniden dene"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Trying again"
+msgstr "Yeniden deneniyor"
 
 #: src/components/common/text.ts
 msgid "Tuesday"
@@ -9325,9 +9614,33 @@ msgstr "En fazla {max} ve 100.000 satır, bir başlık satırıyla. Türkçe ya 
 msgid "Updating"
 msgstr "Güncelleniyor"
 
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
+msgstr "Bir .mbox dosyası ya da .eml dosyalarının veya bir Maildir'in .zip'ini yükleyin. Yuva'nın posta kutusuna erişmesi gerekmez."
+
 #: src/features/broadcasts/Import.tsx
 msgid "Upload and check"
 msgstr "Yükle ve denetle"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload of {name}"
+msgstr "{name} yüklemesi"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload the .mbox file from Google Takeout. Yuva needs no access to the Google account."
+msgstr "Google Takeout'tan gelen .mbox dosyasını yükleyin. Yuva'nın Google hesabına erişmesi gerekmez."
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Upload the export of {address}"
+msgstr "{address} dışa aktarımını yükleyin"
+
+#: src/features/migrations/Wizard.tsx
+msgid "Uploaded"
+msgstr "Yüklendi"
+
+#: src/features/migrations/UploadStep.tsx
+msgid "Uploaded {step}%"
+msgstr "%{step} yüklendi"
 
 #: src/features/broadcasts/Import.tsx
 msgid "Uploading…"
@@ -10208,6 +10521,10 @@ msgstr "Yuva posta kutusunu yalnızca okur. Geçmiş sessizce gelir: bildirim yo
 #: src/features/migrations/ConnectStep.tsx
 msgid "Yuva only reads. It never deletes, moves, archives or marks anything as read in {provider}, and your mail stays where it is."
 msgstr "Yuva yalnızca okur. {provider} içinde hiçbir şeyi silmez, taşımaz, arşivlemez ya da okundu olarak işaretlemez; e-postalarınız olduğu yerde kalır."
+
+#: src/features/migrations/Wizard.tsx
+msgid "Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no notifications, no auto-replies."
+msgstr "Yuva yalnızca yüklediğiniz dosyayı okur ve taşıma bitince siler. Geçmiş sessizce gelir: bildirim yok, otomatik yanıt yok."
 
 #: src/features/settings/webhooks/WebhookDialog.tsx
 msgid "Yuva sends a signed POST request with a JSON body for every event you pick."

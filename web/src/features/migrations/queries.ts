@@ -6,7 +6,9 @@ import {
   unwrap,
   type Migration,
   type MigrationCredentialsInput,
+  type MigrationMboxFormat,
   type MigrationPresetId,
+  type MigrationSource,
   type MigrationState,
   type MigrationUpdate,
 } from "@/lib/api"
@@ -87,12 +89,42 @@ export function usePutMigration() {
   return (m: Migration) => setMigration(qc, ws, m)
 }
 
+type CreateBody = {
+  source?: MigrationSource
+  preset: MigrationPresetId
+  source_address: string
+  inbox_id?: string
+  channel_id?: string
+}
+
 export function useCreateMigration() {
   const put = usePutMigration()
   return useMutation({
-    mutationFn: (body: { preset: MigrationPresetId; source_address: string; inbox_id?: string; channel_id?: string }) =>
-      unwrap(api.POST("/v1/migrations", { body })),
+    mutationFn: (body: CreateBody) => unwrap(api.POST("/v1/migrations", { body })),
     onSuccess: put,
+  })
+}
+
+export function useReplaceDraft() {
+  const put = usePutMigration()
+  const qc = useQueryClient()
+  const { workspaceId: ws } = useSession()
+  return useMutation({
+    mutationFn: async ({ draft, body }: { draft: Migration; body: CreateBody }) => {
+      const m = await unwrap(api.POST("/v1/migrations", { body }))
+      put(m)
+      if (draft.state === "draft" && draft.actions.includes("delete")) {
+        const gone = await unwrap(
+          api.DELETE("/v1/migrations/{migrationId}", { params: { path: { migrationId: draft.id } } })
+        ).then(
+          () => true,
+          () => false
+        )
+        if (gone) qc.removeQueries({ queryKey: keys.migration(ws, draft.id) })
+      }
+      void qc.invalidateQueries({ queryKey: keys.migrationPages(ws) })
+      return m
+    },
   })
 }
 
@@ -123,6 +155,41 @@ export function useTestConnection(id: string) {
       void qc.invalidateQueries({ queryKey: keys.migrationFolders(ws, id) })
     },
   })
+}
+
+export function useMigrationUpload(id: string, enabled: boolean) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: keys.migrationUpload(ws, id),
+    queryFn: () => unwrap(api.GET("/v1/migrations/{migrationId}/upload", { params: { path: { migrationId: id } } })),
+    enabled,
+    retry: false,
+  })
+}
+
+export function uploadMigrationPart(id: string, part: number, blob: Blob, sha256: string, signal: AbortSignal) {
+  return unwrap(
+    api.POST("/v1/migrations/{migrationId}/upload/parts/{part}", {
+      params: { path: { migrationId: id, part } },
+      body: { file: blob as unknown as string, sha256 },
+      bodySerializer: () => {
+        const form = new FormData()
+        form.append("sha256", sha256)
+        form.append("file", blob, `part-${part}`)
+        return form
+      },
+      signal,
+    })
+  )
+}
+
+export function completeMigrationUpload(
+  id: string,
+  body: { parts: number; size_bytes: number; filename?: string; mbox_format?: MigrationMboxFormat }
+) {
+  return unwrap(
+    api.POST("/v1/migrations/{migrationId}/upload/complete", { params: { path: { migrationId: id } }, body })
+  )
 }
 
 export function useMigrationPreview(m: Migration) {

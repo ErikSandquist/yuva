@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro"
 
 import type {
+  MigrationFileFormat,
   MigrationFolderKind,
   MigrationPresetId,
   MigrationState,
@@ -198,7 +199,47 @@ export function useGuides() {
       link: guideUrl("migrate-imap"),
       linkLabel: t`Read the guide`,
     },
+    takeout: {
+      steps: [
+        t`Open Google Takeout, choose “Deselect all”, then select only Mail.`,
+        t`Export once as a .zip file. Google mails you a link when it is ready; for a large mailbox that can take a day or more.`,
+        t`Download and unzip it, then upload the .mbox file from the Takeout › Mail folder. The .mbox file inside the .zip is compressed and cannot be read from there.`,
+      ],
+      link: "https://takeout.google.com/settings/takeout/custom/gmail",
+      linkLabel: t`Open Google Takeout`,
+    },
+    file: {
+      steps: [
+        t`Thunderbird, Apple Mail and most mail apps export a folder as an .mbox file: upload that file.`,
+        t`Folders of .eml files, a Maildir or Proton Mail's export: put the folder in a .zip and upload it. Its folders become labels.`,
+        t`Outlook's .pst files are not read; convert them to .mbox first.`,
+      ],
+      link: guideUrl("migrate-files"),
+      linkLabel: t`Read the guide`,
+    },
   } satisfies Record<MigrationPresetId, Guide>
+}
+
+export function useFormatText() {
+  const { t } = useLingui()
+  return {
+    takeout: t`Read as a Google Takeout file: Gmail's labels and threads come with it.`,
+    mbox: t`Read as an mbox file.`,
+    mbox_zip: t`Read as a zip of mbox files: each file becomes a label.`,
+    eml_zip: t`Read as a zip of .eml files: its folders become labels.`,
+    maildir_zip: t`Read as a zipped Maildir: its folders become labels.`,
+  } satisfies Record<MigrationFileFormat, string>
+}
+
+export function useFormatName() {
+  const { t } = useLingui()
+  return {
+    takeout: t`Google Takeout`,
+    mbox: "mbox",
+    mbox_zip: t`mbox files in a zip`,
+    eml_zip: t`.eml files in a zip`,
+    maildir_zip: t`Maildir in a zip`,
+  } satisfies Record<MigrationFileFormat, string>
 }
 
 export function useItemErrorText() {

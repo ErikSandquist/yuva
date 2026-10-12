@@ -86,7 +86,11 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
             </p>
             {m.state_reason && <p>{m.state_reason}</p>}
             <p className="text-small text-muted-foreground">
-              <Trans>Nothing is lost: once the mailbox is connected again, copying continues where it stopped.</Trans>
+              {m.source === "file" ? (
+                <Trans>Nothing is lost: when it continues, copying picks up where it stopped.</Trans>
+              ) : (
+                <Trans>Nothing is lost: once the mailbox is connected again, copying continues where it stopped.</Trans>
+              )}
             </p>
             {reconnect && (
               <Button

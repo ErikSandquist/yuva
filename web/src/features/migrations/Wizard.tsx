@@ -15,7 +15,8 @@ import { useMigration, usePresets } from "@/features/migrations/queries"
 import { ReviewStep } from "@/features/migrations/ReviewStep"
 import { SourceStep } from "@/features/migrations/SourceStep"
 import { SwitchStep } from "@/features/migrations/SwitchStep"
-import { useMigrationText } from "@/features/migrations/text"
+import { useFormatName, useMigrationText } from "@/features/migrations/text"
+import { UploadStep } from "@/features/migrations/UploadStep"
 import { PreviewCaption } from "@/features/setup/previews"
 import { SetupLayout } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
@@ -24,6 +25,14 @@ import { useInboxes } from "@/lib/workspace"
 
 export const STEPS = ["source", "connect", "choose", "map", "review", "copy", "switch", "done"] as const
 export type StepKey = (typeof STEPS)[number]
+
+export function stepsFor(file: boolean): readonly StepKey[] {
+  return file ? STEPS.filter((s) => s !== "switch") : STEPS
+}
+
+function isFile(m?: Migration, preset?: MigrationPreset) {
+  return (m?.source ?? preset?.source) === "file"
+}
 
 const EARLY = ["draft", "connected", "scanning", "ready"]
 
@@ -50,7 +59,8 @@ export function currentStep(m: Migration): StepKey {
 }
 
 function reachable(step: StepKey, m: Migration) {
-  if (step === "connect" && m.actions.includes("set_credentials")) return true
+  if (!stepsFor(isFile(m)).includes(step)) return false
+  if (step === "connect" && (m.actions.includes("set_credentials") || m.actions.includes("upload"))) return true
   if (!EARLY.includes(m.state)) return step === currentStep(m)
   if (step === "source") return m.state === "draft"
   if (step === "connect") return true
@@ -87,13 +97,14 @@ export function WizardLayout({
 }) {
   const { t } = useLingui()
   const names = useStepNames()
-  const index = STEPS.indexOf(step)
-  const prev = index > 0 ? STEPS[index - 1] : undefined
+  const steps = stepsFor(isFile(m, preset))
+  const index = steps.indexOf(step)
+  const prev = index > 0 ? steps[index - 1] : undefined
   const back = m && prev && reachable(prev, m) ? `/migrations/${m.id}/${prev}` : undefined
   return (
     <SetupLayout
       step={index + 1}
-      steps={STEPS.map((s) => names[s])}
+      steps={steps.map((s) => names[s])}
       stepsLabel={t`Migration steps`}
       back={back ?? (step === "source" ? "/settings/migrations" : undefined)}
       leave={
@@ -112,15 +123,23 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
   const { t, i18n } = useLingui()
   const num = useNumber()
   const text = useMigrationText()
+  const formatName = useFormatName()
+  const file = isFile(m, preset)
   const inboxes = useInboxes().data ?? []
   const inbox = m?.inbox_id ? inboxes.find((i) => i.id === m.inbox_id) : undefined
   const provider = preset?.name ?? t`Your mail provider`
   const est = m?.estimate
   const since = m?.options.since
   const facts: [string, string][] = []
-  if (m) {
+  if (m && file) {
+    const format = m.upload?.format
+    facts.push([t`File`, m.upload?.completed_at ? (m.upload.filename ?? t`Uploaded`) : t`Not uploaded yet`])
+    if (format) facts.push([t`Format`, formatName[format]])
+  } else if (m) {
     const host = m.credentials?.server.host ?? ""
     facts.push([t`Connection`, host ? t`Connected to ${host}` : t`Not connected yet`])
+  }
+  if (m) {
     facts.push([t`State`, text.state[m.state]])
     facts.push([t`Since`, since ? formatDate(since, i18n.locale) : t`Everything`])
     if (m.started_at) {
@@ -171,11 +190,18 @@ function Journey({ m, preset, address }: { m?: Migration; preset?: MigrationPres
         )}
         <p className="flex items-center gap-2 border-t pt-4 text-small text-muted-foreground">
           <ShieldCheckIcon className="size-4 shrink-0 text-success" />
-          <Trans>Changes made to {provider}: none</Trans>
+          {file ? <Trans>Access to your mailbox: none</Trans> : <Trans>Changes made to {provider}: none</Trans>}
         </p>
       </div>
       <PreviewCaption>
-        <Trans>Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies.</Trans>
+        {file ? (
+          <Trans>
+            Yuva reads only the file you upload and deletes it when the migration ends. History arrives quietly: no
+            notifications, no auto-replies.
+          </Trans>
+        ) : (
+          <Trans>Yuva only reads the mailbox. History arrives quietly: no notifications, no auto-replies.</Trans>
+        )}
       </PreviewCaption>
     </>
   )
@@ -206,7 +232,7 @@ export function MigrationPage() {
       </WizardLayout>
     )
   if (!m || !presets.data) return <div className="min-h-svh bg-background" />
-  const wanted = STEPS.includes(step as StepKey) ? (step as StepKey) : currentStep(m)
+  const wanted = stepsFor(isFile(m)).includes(step as StepKey) ? (step as StepKey) : currentStep(m)
   if (!reachable(wanted, m)) return <Navigate to={`/migrations/${m.id}/${currentStep(m)}`} replace />
   if (!step) return <Navigate to={`/migrations/${m.id}/${wanted}`} replace />
   const preset = presets.data.find((p) => p.id === m.preset)!
@@ -214,7 +240,11 @@ export function MigrationPage() {
     case "source":
       return <SourceStep migration={m} />
     case "connect":
-      return <ConnectStep key={m.id} m={m} preset={preset} />
+      return isFile(m) ? (
+        <UploadStep key={m.id} m={m} preset={preset} />
+      ) : (
+        <ConnectStep key={m.id} m={m} preset={preset} />
+      )
     case "choose":
       return <ChooseStep key={m.id} m={m} preset={preset} />
     case "map":
