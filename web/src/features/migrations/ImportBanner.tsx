@@ -41,7 +41,7 @@ export function ImportBanner() {
         </span>
         {canManage && (
           <Link
-            to="/migrations"
+            to="/settings/migrations"
             className="shrink-0 font-medium text-foreground underline-offset-2 hover:underline"
             data-testid="import-banner-details"
           >
