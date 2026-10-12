@@ -14,7 +14,7 @@ type apiError struct {
 	Code   string
 	Detail string
 	Scope  string
-	Limit oas.HostedLimit
+	Limit  oas.HostedLimit
 	// RetryAfter, in seconds, is sent as the Retry-After header when set.
 	RetryAfter int
 	// Extra members of the problem document, such as a design's validation errors.
