@@ -43,6 +43,8 @@ function useLines(c: DeliverabilityCheck): Line[] {
   const read = c.state === "received"
   const from = c.domain
   const lines: Line[] = []
+  const dnsRead = Boolean(c.mx)
+  const readingDns = t`Reading DNS records…`
 
   const spf = c.spf
   const spfDomain = spf.domain ?? from
@@ -61,6 +63,7 @@ function useLines(c: DeliverabilityCheck): Line[] {
         text: t`SPF fails for ${spfDomain}. Add your SMTP provider to its SPF record, and keep it to one valid record.`,
       }
     }
+    if (!dnsRead) return { tone: "unknown", text: readingDns }
     if (!spf.record)
       return { tone: "warn", text: t`${from} has no SPF record. Publish one that includes your SMTP provider.` }
     return read
@@ -112,7 +115,9 @@ function useLines(c: DeliverabilityCheck): Line[] {
   }
 
   const dmarc = c.dmarc
-  if (!dmarc.record) {
+  if (!dnsRead) {
+    lines.push({ key: "dmarc", title: "DMARC", tone: "unknown", text: readingDns })
+  } else if (!dmarc.record) {
     lines.push({
       key: "dmarc",
       title: "DMARC",
@@ -329,7 +334,7 @@ export function DeliverabilityCard({ channel }: { channel: Channel }) {
                 {c.domain}
               </span>
               <span className="text-small text-faint">
-                <Trans>Checked {when}</Trans>
+                {c.checked_at ? <Trans>Checked {when}</Trans> : <Trans>Started {when}</Trans>}
               </span>
             </div>
             <StateNotice check={c} address={address} />

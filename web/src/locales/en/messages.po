@@ -5514,6 +5514,10 @@ msgstr "Readers' posts wait here until a member approves one of theirs; after th
 msgid "Reading"
 msgstr "Reading"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Reading DNS records…"
+msgstr "Reading DNS records…"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Ready"
 msgstr "Ready"
@@ -6669,6 +6673,10 @@ msgstr "Start with one. You can add the others later in the inbox settings."
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "Started"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Started {when}"
+msgstr "Started {when}"
 
 #: src/features/docs/discussions/parts.tsx
 msgid "Started by {authorName}"

@@ -5514,6 +5514,10 @@ msgstr "Okuyucuların gönderileri, bir üye onlardan birini onaylayana kadar bu
 msgid "Reading"
 msgstr "Okuma"
 
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Reading DNS records…"
+msgstr "DNS kayıtları okunuyor…"
+
 #: src/features/broadcasts/ReviewPanel.tsx
 msgid "Ready"
 msgstr "Hazır"
@@ -6669,6 +6673,10 @@ msgstr "Biriyle başlayın. Diğerlerini sonra gelen kutusu ayarlarından ekleye
 #: src/features/broadcasts/BroadcastPage.tsx
 msgid "Started"
 msgstr "Başladı"
+
+#: src/features/settings/channels/email/Deliverability.tsx
+msgid "Started {when}"
+msgstr "Başlatıldı: {when}"
 
 #: src/features/docs/discussions/parts.tsx
 msgid "Started by {authorName}"
