@@ -1282,7 +1282,9 @@ Decisions:
   when no DKIM signature passed. A channel may have its own DKIM key (RSA 2048, private key sealed under
   the master key, only the DNS record shown; enabling needs that record in DNS, a new sending domain turns
   it off, deleting allows a new key). Yuva then signs broadcasts, tests, probes, confirmation and welcome
-  mail over the list headers; support replies keep their provider's signature.
+  mail over the list headers; support replies keep their provider's signature. The signature covers
+  `From`, `To`, `Subject`, `Date`, `Reply-To`, `MIME-Version`, `Content-Type` and the list headers (absent
+  ones listed too) but not `Message-ID` or `Feedback-ID`, which relays such as Amazon SES replace.
 - **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` and
   opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a
   `broadcast_reply` marker; someone else's reply opens their own conversation; automatic replies are only
