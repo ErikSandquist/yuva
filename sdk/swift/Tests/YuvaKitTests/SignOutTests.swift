@@ -27,6 +27,7 @@ final class FakeServer: @unchecked Sendable {
     private var log: [Recorded] = []
     private var issued = 0
     private var offline = false
+    private var identifiedTokens: Set<String> = []
 
     var requests: [Recorded] { lock.withLock { log } }
 
@@ -41,14 +42,32 @@ final class FakeServer: @unchecked Sendable {
                 return (204, Data())
             case ("POST", "/client/v1/session"):
                 issued += 1
-                return (201, Data(session(token: "t\(issued)", identified: request.body["identity_token"] != nil).utf8))
+                let identified = request.body["identity_token"] != nil
+                if identified { identifiedTokens.insert("t\(issued)") }
+                return (201, Data(session(token: "t\(issued)", identified: identified).utf8))
             case ("GET", "/client/v1/session"):
                 return (200, Data(session(token: nil, identified: false).utf8))
+            case ("GET", "/client/v1/subscriptions"):
+                return (200, Data(Self.subscriptions.utf8))
+            case ("PUT", let path) where path.hasPrefix("/client/v1/subscriptions/"):
+                guard identifiedTokens.contains(request.bearer ?? "") else {
+                    return (403, Data(#"{"status":403,"code":"identity_required","detail":"only signed-in users"}"#.utf8))
+                }
+                let state = path.hasSuffix("/double") ? "pending" : "subscribed"
+                return (200, Data(#"{"state":"\#(state)"}"#.utf8))
+            case ("DELETE", let path) where path.hasPrefix("/client/v1/subscriptions/"):
+                return (204, Data())
             default:
                 return (404, Data())
             }
         }
     }
+
+    private static let subscriptions = """
+        {"items":[\
+        {"list":{"id":"news","name":"News","description":"Monthly","double_opt_in":false},"state":"subscribed"},\
+        {"list":{"id":"double","name":"Beta","description":"","double_opt_in":true}}]}
+        """
 
     private func session(token: String?, identified: Bool) -> String {
         let tokenField = token.map { "\"token\":\"\($0)\"," } ?? ""
@@ -115,14 +134,14 @@ final class StubProtocol: URLProtocol, @unchecked Sendable {
     }
 }
 
-private let identityToken: String = {
+let identityToken: String = {
     let payload = Data(#"{"sub":"u1"}"#.utf8).base64EncodedString()
         .replacingOccurrences(of: "=", with: "").replacingOccurrences(of: "+", with: "-")
         .replacingOccurrences(of: "/", with: "_")
     return "e30.\(payload).sig"
 }()
 
-private func makeClient(
+func makeClient(
     _ server: FakeServer, store: MemoryStore, identity: (@Sendable () async throws -> String?)? = nil,
     maxAttachmentSize: Int = YuvaConfiguration.defaultMaxAttachmentSize
 ) -> YuvaClient {

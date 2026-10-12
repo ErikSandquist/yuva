@@ -54,6 +54,10 @@ struct ContentView: View {
                         .accessibilityIdentifier("example.feedback")
                 }
                 .disabled(client == nil)
+                if identified, !userId.isEmpty, let client {
+                    NewsletterSection(client: client)
+                        .id(ObjectIdentifier(client))
+                }
                 Section("Server") {
                     LabeledContent("URL", value: config.serverURL.absoluteString)
                     LabeledContent("YuvaKit", value: Yuva.version)
@@ -112,6 +116,76 @@ struct ContentView: View {
         }
         return YuvaClient(
             configuration: YuvaConfiguration(serverURL: config.serverURL, channelKey: config.channelKey, identityToken: provider))
+    }
+}
+
+struct NewsletterSection: View {
+    let client: YuvaClient
+    @State private var subscriptions: [YuvaSubscription] = []
+    @State private var busy: Set<String> = []
+    @State private var notice: String?
+
+    var body: some View {
+        Section {
+            ForEach(subscriptions) { subscription in
+                Toggle(isOn: binding(subscription)) {
+                    VStack(alignment: .leading) {
+                        Text(subscription.list.name)
+                        if !subscription.list.description.isEmpty {
+                            Text(subscription.list.description).font(.caption).foregroundStyle(.secondary)
+                        }
+                        if subscription.state == .pending {
+                            Text("Waiting for the confirmation e-mail").font(.caption).foregroundStyle(.orange)
+                        }
+                    }
+                }
+                .disabled(busy.contains(subscription.id))
+                .accessibilityIdentifier("example.newsletter.\(subscription.list.name)")
+            }
+            if subscriptions.isEmpty, notice == nil {
+                Text("No public lists").foregroundStyle(.secondary)
+            }
+        } header: {
+            Text("Newsletter")
+        } footer: {
+            if let notice { Text(notice) }
+        }
+        .task { await load() }
+    }
+
+    private func binding(_ subscription: YuvaSubscription) -> Binding<Bool> {
+        Binding(
+            get: { subscription.state == .subscribed || subscription.state == .pending },
+            set: { on in Task { await toggle(subscription, on: on) } })
+    }
+
+    private func load() async {
+        do {
+            subscriptions = try await client.subscriptions()
+        } catch {
+            notice = error.localizedDescription
+        }
+    }
+
+    private func toggle(_ subscription: YuvaSubscription, on: Bool) async {
+        let list = subscription.list
+        busy.insert(list.id)
+        defer { busy.remove(list.id) }
+        do {
+            if on {
+                let consent = list.description.isEmpty ? list.name : "\(list.name): \(list.description)"
+                let state = try await client.subscribe(listId: list.id, consentText: consent)
+                notice = state == .pending
+                    ? "We sent a confirmation e-mail for \(list.name)."
+                    : "Subscribed to \(list.name)."
+            } else {
+                try await client.unsubscribe(listId: list.id)
+                notice = "Unsubscribed from \(list.name)."
+            }
+        } catch {
+            notice = error.localizedDescription
+        }
+        if let fresh = try? await client.subscriptions() { subscriptions = fresh }
     }
 }
 

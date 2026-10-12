@@ -191,6 +191,28 @@ public struct YuvaUpload: Sendable {
     }
 }
 
+public enum YuvaSubscriptionState: String, Codable, Sendable {
+    case pending, subscribed, unsubscribed
+}
+
+public struct YuvaMailingList: Codable, Sendable, Identifiable, Hashable {
+    public let id: String
+    public let name: String
+    public let description: String
+    public let doubleOptIn: Bool
+}
+
+public struct YuvaSubscription: Codable, Sendable, Identifiable, Hashable {
+    public let list: YuvaMailingList
+    public let state: YuvaSubscriptionState?
+
+    public var id: String { list.id }
+}
+
+struct SubscriptionStatus: Codable, Sendable {
+    let state: YuvaSubscriptionState
+}
+
 public enum YuvaEvent: Sendable {
     case conversationCreated(YuvaConversation)
     case conversationUpdated(conversationId: String, status: YuvaConversationStatus, canRate: Bool, rating: YuvaRating?)

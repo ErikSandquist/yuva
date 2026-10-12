@@ -155,6 +155,22 @@ public actor YuvaClient {
         try await request("PUT", "client/v1/contact/email", body: Body(fields: ["email": email], files: []))
     }
 
+    public func subscriptions() async throws -> [YuvaSubscription] {
+        let page: Page<YuvaSubscription> = try await request("GET", "client/v1/subscriptions")
+        return page.items
+    }
+
+    @discardableResult
+    public func subscribe(listId: String, consentText: String) async throws -> YuvaSubscriptionState {
+        let status: SubscriptionStatus = try await request(
+            "PUT", "client/v1/subscriptions/\(listId)", body: Body(json: ["consent_text": consentText]))
+        return status.state
+    }
+
+    public func unsubscribe(listId: String) async throws {
+        let _: Empty = try await request("DELETE", "client/v1/subscriptions/\(listId)")
+    }
+
     public func attachment(id: String) async throws -> Data {
         try await raw("GET", "client/v1/attachments/\(id)", query: [], body: nil).0
     }
