@@ -88,6 +88,11 @@ export const keys = {
   broadcastAudience: (ws: string, id: string, audience: string) =>
     ["ws", ws, "broadcasts", "audience", id, audience] as const,
   broadcastReport: (ws: string, id: string) => ["ws", ws, "broadcasts", "report", id] as const,
+  migrations: (ws: string) => ["ws", ws, "migrations"] as const,
+  migrationPages: (ws: string) => ["ws", ws, "migrations", "pages"] as const,
+  migration: (ws: string, id: string) => ["ws", ws, "migrations", "one", id] as const,
+  migrationFolders: (ws: string, id: string) => ["ws", ws, "migrations", "folders", id] as const,
+  migrationPresets: (ws: string) => ["ws", ws, "migrations", "presets"] as const,
   broadcastDeliveries: (ws: string, id: string, state: BroadcastDeliveryState | "", q: string, replied: boolean) =>
     ["ws", ws, "broadcasts", "deliveries", id, state, q, replied] as const,
 }

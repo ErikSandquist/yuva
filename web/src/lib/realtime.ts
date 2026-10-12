@@ -125,6 +125,10 @@ export function useRealtime(ws: string, memberId: string) {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
           return
         }
+        if (msg.type === "migration.progress" || msg.type === "migration.forwarding_confirmation") {
+          applyEvent(qc, ctx, { type: msg.type, data: msg.data } as LiveEvent)
+          return
+        }
         if (msg.type === "broadcast.progress") {
           applyEvent(qc, ctx, { type: msg.type, data: msg.data })
           return

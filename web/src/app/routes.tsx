@@ -16,6 +16,7 @@ import { DiscussionsPane } from "@/features/docs/discussions/DiscussionsPane"
 import { QueuePane } from "@/features/docs/discussions/QueuePane"
 import { ThreadPane } from "@/features/docs/discussions/ThreadPane"
 import { ChatsPage } from "@/features/inbox/ChatsPage"
+import { MigrationsPage } from "@/features/migrations/MigrationsPage"
 import { ConsentPage } from "@/features/oauth/ConsentPage"
 import { ApiKeysPage } from "@/features/settings/api-keys/ApiKeysPage"
 import { AppearancePage } from "@/features/settings/appearance/AppearancePage"
@@ -121,6 +122,7 @@ export function AppRoutes() {
               <Route path="connected-apps/:assistant" element={<AssistantPage />} />
               <Route path="webhooks" element={<WebhooksPage />} />
               <Route path="webhooks/:webhookId" element={<WebhookPage />} />
+              <Route path="migrations" element={<MigrationsPage />} />
             </Route>
             <Route path="new/*" element={<Navigate to="/setup" replace />} />
             <Route path="*" element={<Navigate to="/settings" replace />} />

@@ -6,6 +6,7 @@ export { EmptyState } from "@/components/common/EmptyState"
 export { ErrorLine } from "@/components/common/ErrorLine"
 export { Kbd } from "@/components/common/Kbd"
 export { Notice } from "@/components/common/Notice"
+export { ProgressBar } from "@/components/common/ProgressBar"
 export {
   BotAvatar,
   colorFor,

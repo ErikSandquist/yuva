@@ -1,0 +1,321 @@
+import { Trans, useLingui } from "@lingui/react/macro"
+import { ArrowRightLeftIcon, BookOpenIcon, MailIcon, MoreHorizontalIcon, PlusIcon } from "lucide-react"
+import { Link, Navigate } from "react-router"
+
+import { ErrorLine, useConfirm } from "@/components/common"
+import { formatDate } from "@/components/common/text"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useNumber } from "@/features/broadcasts/BroadcastParts"
+import { MigrationBar, MigrationStateTag, useStateAnnouncement, WaitingLine } from "@/features/migrations/parts"
+import {
+  useDeleteMigration,
+  useFinishMigration,
+  useMigrations,
+  useMigrationStep,
+  usePresets,
+  useRemoveHistory,
+} from "@/features/migrations/queries"
+import { guideUrl } from "@/features/migrations/text"
+import { Card, PageHeader, RowIcon, Rows, Section } from "@/features/settings/ui"
+import type { Migration } from "@/lib/api"
+import { useSession } from "@/lib/session"
+import { useInboxes, useMemberMap } from "@/lib/workspace"
+
+const PROGRESS_STATES = ["copying", "paused", "needs_attention", "syncing"]
+
+export function MigrationsPage() {
+  const { canManage } = useSession()
+  const list = useMigrations()
+  const items = list.data?.pages.flatMap((p) => p.items) ?? []
+  const announcement = useStateAnnouncement(items)
+  if (!canManage) return <Navigate to="/settings/profile" replace />
+  return (
+    <>
+      <PageHeader
+        title={<Trans>Move to Yuva</Trans>}
+        description={
+          <Trans>
+            Bring the history of a mailbox you answer from today, then switch its mail over. Yuva only reads the
+            mailbox; nothing there is changed.
+          </Trans>
+        }
+        action={
+          <Button size="sm" render={<Link to="/migrations/new" />} data-testid="migration-new">
+            <PlusIcon />
+            <Trans>New migration</Trans>
+          </Button>
+        }
+      />
+      {announcement}
+      <Section>
+        <Card flush>
+          {list.isPending ? (
+            <Skeleton className="m-5 h-10" />
+          ) : items.length === 0 && !list.error ? (
+            <Empty />
+          ) : (
+            <Rows>
+              {items.map((m) => (
+                <MigrationRow key={m.id} m={m} />
+              ))}
+            </Rows>
+          )}
+          <ErrorLine error={list.error} className="px-5 py-4" />
+          {list.hasNextPage && (
+            <div className="border-t px-4 py-3">
+              <Button variant="ghost" size="sm" onClick={() => list.fetchNextPage()} disabled={list.isFetchingNextPage}>
+                <Trans>Show more</Trans>
+              </Button>
+            </div>
+          )}
+        </Card>
+      </Section>
+    </>
+  )
+}
+
+function Empty() {
+  return (
+    <div className="flex flex-col items-start gap-3 px-4 py-6" data-testid="migrations-empty">
+      <span className="grid size-10 place-items-center rounded-full bg-brand-wash text-brand [&_svg]:size-5">
+        <ArrowRightLeftIcon />
+      </span>
+      <p className="max-w-xl text-body text-muted-foreground">
+        <Trans>
+          Moving from Gmail, Google Workspace, Yandex, iCloud, Zoho, Yahoo, Fastmail, GMX or any IMAP server? Yuva
+          copies the mailbox's history into an inbox, quietly and newest first, while your team keeps working. Then you
+          forward the mailbox here and nothing is lost in between.
+        </Trans>
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" render={<Link to="/migrations/new" />}>
+          <Trans>Start</Trans>
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          render={<a href={guideUrl("migrate")} target="_blank" rel="noreferrer" />}
+          data-testid="migrations-guide"
+        >
+          <BookOpenIcon />
+          <Trans>Read the guide</Trans>
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function MigrationRow({ m }: { m: Migration }) {
+  const { i18n } = useLingui()
+  const num = useNumber()
+  const inboxes = useInboxes().data ?? []
+  const members = useMemberMap()
+  const presets = usePresets().data ?? []
+  const inbox = m.inbox_id ? inboxes.find((i) => i.id === m.inbox_id) : undefined
+  const preset = presets.find((p) => p.id === m.preset)?.name ?? m.preset
+  const creator = m.member_id ? members.get(m.member_id) : undefined
+  const by = creator ? creator.name || creator.email : m.via
+  const date = formatDate(m.created_at, i18n.locale)
+  const c = m.counts
+  const imported = num(c.imported)
+  const skipped = num(c.skipped + c.duplicate)
+  const failed = num(c.failed)
+  const showBar = PROGRESS_STATES.includes(m.state) && c.total > 0
+  const actions = useRowActions(m)
+  return (
+    <li className="flex flex-col gap-2.5 px-4 py-3" data-testid="migration-row" data-id={m.id}>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <RowIcon>
+          <MailIcon />
+        </RowIcon>
+        <div className="min-w-0 flex-1 basis-48">
+          <p className="truncate text-body">{m.source_address}</p>
+          <p className="mt-px truncate text-small text-faint">
+            {preset}
+            {inbox && (
+              <>
+                {" → "}
+                {inbox.name}
+              </>
+            )}
+            {" · "}
+            {by ? (
+              <Trans>
+                {by}, {date}
+              </Trans>
+            ) : (
+              date
+            )}
+          </p>
+        </div>
+        <MigrationStateTag m={m} />
+        {actions.buttons}
+      </div>
+      <ErrorLine error={actions.error} className="text-small" />
+      {actions.dialog}
+      {showBar && <MigrationBar m={m} thin />}
+      <WaitingLine m={m} />
+      {m.state === "needs_attention" && m.state_reason && (
+        <p className="text-small text-destructive">{m.state_reason}</p>
+      )}
+      {(c.imported > 0 || c.failed > 0 || c.skipped > 0) && (
+        <p className="text-small text-faint" data-testid="migration-counts">
+          <Trans>
+            {imported} imported · {skipped} skipped · {failed} failed
+          </Trans>
+        </p>
+      )}
+    </li>
+  )
+}
+
+function useRowActions(m: Migration) {
+  const { t } = useLingui()
+  const num = useNumber()
+  const [confirm, dialog] = useConfirm()
+  const pause = useMigrationStep(m.id, "pause")
+  const resume = useMigrationStep(m.id, "resume")
+  const retry = useMigrationStep(m.id, "retry")
+  const cancel = useMigrationStep(m.id, "cancel")
+  const finish = useFinishMigration(m.id)
+  const remove = useRemoveHistory(m.id)
+  const del = useDeleteMigration(m.id)
+  const can = (a: Migration["actions"][number]) => m.actions.includes(a)
+  const error = pause.error ?? resume.error ?? retry.error ?? cancel.error ?? finish.error ?? remove.error ?? del.error
+  const reconnect = m.state === "needs_attention" && can("set_credentials")
+  const early = ["draft", "connected", "scanning", "ready"].includes(m.state)
+  const removable = m.removable_conversations ?? 0
+  const count = num(removable)
+  const address = m.source_address
+  const menu = [
+    can("pause") && (
+      <DropdownMenuItem key="pause" onClick={() => pause.mutate()} data-testid="migration-pause">
+        <Trans>Pause</Trans>
+      </DropdownMenuItem>
+    ),
+    can("resume") && !reconnect && (
+      <DropdownMenuItem key="resume" onClick={() => resume.mutate()} data-testid="migration-resume">
+        <Trans>Resume</Trans>
+      </DropdownMenuItem>
+    ),
+    can("retry") && (
+      <DropdownMenuItem key="retry" onClick={() => retry.mutate()} data-testid="migration-retry">
+        <Trans>Retry failed items</Trans>
+      </DropdownMenuItem>
+    ),
+    can("finish") && (
+      <DropdownMenuItem
+        key="finish"
+        onClick={() =>
+          confirm({
+            title: t`Finish the migration?`,
+            description: m.verified_at
+              ? t`Sync stops and the mailbox's credentials are deleted. Mail that reaches only the old mailbox from now on is not copied.`
+              : t`No test message has reached Yuva by the new route yet. If you finish now, mail that still goes only to the old mailbox is not copied. The credentials are deleted.`,
+            confirm: m.verified_at ? t`Finish` : t`Finish anyway`,
+            run: () => finish.mutate(!m.verified_at),
+          })
+        }
+        data-testid="migration-finish"
+      >
+        <Trans>Finish</Trans>
+      </DropdownMenuItem>
+    ),
+  ].filter(Boolean)
+  const danger = [
+    can("cancel") && (
+      <DropdownMenuItem
+        key="cancel"
+        variant="destructive"
+        onClick={() =>
+          confirm({
+            title: t`Cancel moving ${address}?`,
+            description: t`It stops for good. What was imported stays, and the mailbox's credentials are deleted. Nothing changes in the mailbox.`,
+            confirm: t`Cancel the migration`,
+            run: () => cancel.mutate(),
+          })
+        }
+        data-testid="migration-cancel"
+      >
+        <Trans>Cancel migration</Trans>
+      </DropdownMenuItem>
+    ),
+    can("remove_history") && (
+      <DropdownMenuItem
+        key="remove"
+        variant="destructive"
+        onClick={() =>
+          confirm({
+            title: t`Remove imported history?`,
+            description:
+              removable === 1
+                ? t`1 imported conversation that nobody wrote in since is deleted with its messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`
+                : t`${count} imported conversations that nobody wrote in since are deleted with their messages and files. Conversations your team wrote in stay. Nothing changes in ${address}.`,
+            confirm: t`Remove history`,
+            run: () => remove.mutate(removable),
+          })
+        }
+        data-testid="migration-remove-history"
+      >
+        <Trans>Remove imported history</Trans>
+      </DropdownMenuItem>
+    ),
+    can("delete") && (
+      <DropdownMenuItem
+        key="delete"
+        variant="destructive"
+        onClick={() =>
+          confirm({
+            title: t`Delete this migration?`,
+            description: t`Its settings, credentials and progress are deleted. Imported conversations stay.`,
+            confirm: t`Delete`,
+            run: () => del.mutate(),
+          })
+        }
+        data-testid="migration-delete"
+      >
+        <Trans>Delete</Trans>
+      </DropdownMenuItem>
+    ),
+  ].filter(Boolean)
+  const buttons = (
+    <div className="flex shrink-0 items-center gap-1.5">
+      {reconnect ? (
+        <Button size="sm" render={<Link to={`/migrations/${m.id}/connect`} />} data-testid="migration-reconnect">
+          <Trans>Reconnect</Trans>
+        </Button>
+      ) : (
+        m.state !== "removed" && (
+          <Button variant="outline" size="sm" render={<Link to={`/migrations/${m.id}`} />} data-testid="migration-open">
+            {early ? <Trans>Continue</Trans> : <Trans>Open</Trans>}
+          </Button>
+        )
+      )}
+      {(menu.length > 0 || danger.length > 0) && (
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={<Button variant="ghost" size="icon-sm" />}
+            aria-label={t`More actions for ${address}`}
+            data-testid="migration-menu"
+          >
+            <MoreHorizontalIcon />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            {menu}
+            {menu.length > 0 && danger.length > 0 && <DropdownMenuSeparator />}
+            {danger}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </div>
+  )
+  return { buttons, error, dialog }
+}

@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useQueries, useQuery } from "@tanstack/react-query"
 import {
+  ArrowRightLeftIcon,
   ArrowUpRightIcon,
   BellIcon,
   BuildingIcon,
@@ -210,6 +211,17 @@ export function SettingsColumn() {
             detail={<Trans>Data retention and deleting the workspace</Trans>}
           />
         </NavRow>
+        {canManage && (
+          <NavRow to="/settings/migrations" testId="settings-migrations">
+            <RowIcon>
+              <ArrowRightLeftIcon />
+            </RowIcon>
+            <RowText
+              title={<Trans>Move to Yuva</Trans>}
+              detail={<Trans>Bring a mailbox's history from Gmail, Yandex or any IMAP server</Trans>}
+            />
+          </NavRow>
+        )}
       </Group>
     </Column>
   )

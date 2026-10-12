@@ -14,6 +14,10 @@ import type {
   ListImportProgress,
   Member,
   Message,
+  Migration,
+  MigrationFolder,
+  MigrationForwardingConfirmationData,
+  MigrationProgress,
   RealtimeMessage,
 } from "@/lib/api"
 import { keys, type ConversationFilters } from "@/lib/keys"
@@ -392,6 +396,56 @@ function applyImportProgress(qc: QueryClient, ws: string, p: ListImportProgress)
   }))
 }
 
+type MigrationPages = InfiniteData<{ items: Migration[]; next_cursor?: string }, string | undefined>
+
+function patchMigration(qc: QueryClient, ws: string, id: string, patch: (m: Migration) => Migration) {
+  qc.setQueryData<Migration>(keys.migration(ws, id), (old) => (old ? patch(old) : old))
+  const pages = qc.getQueryData<MigrationPages>(keys.migrationPages(ws))
+  if (!pages) return
+  if (!pages.pages.some((p) => p.items.some((x) => x.id === id))) {
+    void qc.invalidateQueries({ queryKey: keys.migrationPages(ws) })
+    return
+  }
+  qc.setQueryData<MigrationPages>(keys.migrationPages(ws), {
+    ...pages,
+    pages: pages.pages.map((p) => ({ ...p, items: p.items.map((x) => (x.id === id ? patch(x) : x)) })),
+  })
+}
+
+export function setMigration(qc: QueryClient, ws: string, m: Migration) {
+  const current = qc.getQueryData<Migration>(keys.migration(ws, m.id))
+  if (current && current.updated_at > m.updated_at) return
+  qc.setQueryData(keys.migration(ws, m.id), m)
+  patchMigration(qc, ws, m.id, () => m)
+  void qc.invalidateQueries({ queryKey: keys.migrationFolders(ws, m.id) })
+}
+
+function applyMigrationProgress(qc: QueryClient, ws: string, p: MigrationProgress) {
+  const current = qc.getQueryData<Migration>(keys.migration(ws, p.id))
+  if (current && current.state !== p.state) void qc.invalidateQueries({ queryKey: keys.migration(ws, p.id) })
+  patchMigration(qc, ws, p.id, (m) => ({
+    ...m,
+    state: p.state,
+    counts: p.counts,
+    rate_per_minute: p.rate_per_minute,
+    seconds_left: p.seconds_left,
+    waiting_until: p.waiting_until,
+  }))
+  const byId = new Map(p.folders.map((f) => [f.id, f]))
+  qc.setQueryData<MigrationFolder[]>(keys.migrationFolders(ws, p.id), (old) =>
+    old?.map((f) => {
+      const n = byId.get(f.id)
+      return n
+        ? { ...f, imported: n.imported, duplicate: n.duplicate, skipped: n.skipped, failed: n.failed, bytes: n.bytes }
+        : f
+    })
+  )
+}
+
+function applyForwardingConfirmation(qc: QueryClient, ws: string, d: MigrationForwardingConfirmationData) {
+  patchMigration(qc, ws, d.migration_id, (m) => ({ ...m, forwarding_confirmation: d.confirmation }))
+}
+
 function byName(a: Inbox, b: Inbox) {
   return a.name.localeCompare(b.name) || (a.id < b.id ? -1 : 1)
 }
@@ -569,6 +623,15 @@ export function applyEvent(qc: QueryClient, ctx: LiveContext, event: LiveEvent) 
       return
     case "list_import.progress":
       applyImportProgress(qc, ctx.ws, event.data)
+      return
+    case "migration.updated":
+      setMigration(qc, ctx.ws, event.data.migration)
+      return
+    case "migration.progress":
+      applyMigrationProgress(qc, ctx.ws, event.data)
+      return
+    case "migration.forwarding_confirmation":
+      applyForwardingConfirmation(qc, ctx.ws, event.data)
       return
     case "discussion.created":
     case "discussion.post_created":
