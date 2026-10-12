@@ -1,5 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightLeftIcon, BookOpenIcon, MailIcon, MoreHorizontalIcon, PlusIcon, XIcon } from "lucide-react"
+import {
+  ArrowRightLeftIcon,
+  BookOpenIcon,
+  CheckIcon,
+  MailIcon,
+  MoreHorizontalIcon,
+  PlusIcon,
+  XIcon,
+} from "lucide-react"
 import { Link, Navigate, useSearchParams } from "react-router"
 
 import { ErrorLine, Notice, useConfirm } from "@/components/common"
@@ -62,7 +70,20 @@ export function MigrationsPage() {
           </p>
           <p>
             <Trans>
-              A help-desk sign-in must come back within 10 minutes and works once. Open the migration and sign in again.
+              A sign-in must come back within 10 minutes and works once. Open the migration and sign in again.
+            </Trans>
+          </p>
+        </Notice>
+      )}
+      {params.get("result") === "admin_consented" && (
+        <Notice icon={CheckIcon} className="mb-6" role="status" data-testid="migration-admin-consented">
+          <p className="font-medium text-foreground">
+            <Trans>Consent granted</Trans>
+          </p>
+          <p>
+            <Trans>
+              Yuva may now read your organization's mailboxes over IMAP, each once its owner signs in. Whoever started
+              the migration can open it and sign in with Microsoft again.
             </Trans>
           </p>
         </Notice>
