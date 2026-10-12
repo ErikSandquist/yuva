@@ -64,6 +64,7 @@ func TestAnalyticsLoad(t *testing.T) {
 	h.clock.Set(time.Now().UTC())
 	rep := &loadReport{}
 	rep.add(t, "# Analytics load test, %s, Go %s, %d CPUs", time.Now().UTC().Format(time.DateOnly), runtime.Version(), runtime.NumCPU())
+	loadIngest(t, h, rep)
 	for _, size := range strings.Split(sizes, ",") {
 		size = strings.TrimSpace(size)
 		perMonth, err := strconv.ParseFloat(strings.TrimSuffix(strings.TrimSuffix(size, "M"), "m"), 64)
@@ -72,7 +73,6 @@ func TestAnalyticsLoad(t *testing.T) {
 		}
 		loadQueries(t, h, rep, size, int(perMonth*1_000_000))
 	}
-	loadIngest(t, h, rep)
 	if path := os.Getenv("YUVA_TEST_ANALYTICS_REPORT"); path != "" {
 		if err := os.WriteFile(path, []byte(strings.Join(rep.lines, "\n")+"\n"), 0o644); err != nil {
 			t.Fatal(err)
@@ -139,10 +139,18 @@ var loadAgents = []string{uaMac, uaPixel, uaWindows,
 }
 
 // loadIngest drives the collection endpoint at a steady rate from many addresses while a flusher
-// writes every second, and reports what it took.
+// writes every second, and reports what it took. It runs first, so the memory it reports is its
+// own, and deletes its rows afterwards, so the query views read one property's days as planned.
 func loadIngest(t *testing.T, h *harness, rep *loadReport) {
 	tm := newTeam(t, h)
-	_, key := createProperty(tm.owner, map[string]any{"name": "Load ingest", "domains": []string{"example.com"}})
+	id, key := createProperty(tm.owner, map[string]any{"name": "Load ingest", "domains": []string{"example.com"}})
+	defer func() {
+		for _, table := range []string{analytics.EventsTable, analytics.VisitsTable} {
+			if _, err := h.st.Pool.Exec(context.Background(), "DELETE FROM "+table+" WHERE workspace_id = $1 AND property_id = $2", tm.ws, id); err != nil {
+				t.Error(err)
+			}
+		}
+	}()
 	rate := envInt("YUVA_TEST_ANALYTICS_INGEST", 5000)
 	seconds := envInt("YUVA_TEST_ANALYTICS_INGEST_SECONDS", 60)
 	ctx, cancel := context.WithCancel(context.Background())
