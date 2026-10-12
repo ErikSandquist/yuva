@@ -10,6 +10,13 @@ export const brand: Record<Locale, string> = { en: "/brand/", tr: "/tr/brand/", 
 export const blog: Record<Locale, string> = { en: "/blog/", tr: "/tr/blog/", de: "/de/blog/" }
 export const releases: Record<Locale, string> = { en: "/releases/", tr: "/tr/releases/", de: "/de/releases/" }
 export const contact: Record<Locale, string> = { en: "/contact/", tr: "/tr/contact/", de: "/de/contact/" }
+export const templates: Record<Locale, string> = { en: "/templates/", tr: "/tr/templates/", de: "/de/templates/" }
+export const template = (slug: string): Record<Locale, string> => ({
+  en: `/templates/${slug}/`,
+  tr: `/tr/templates/${slug}/`,
+  de: `/de/templates/${slug}/`,
+})
+export const APP_URL = "https://app.useyuva.com"
 export const post = (slug: string) => `/blog/${slug}/`
 export const docsRoot = (locale: Locale) => (locale === "en" ? "/docs/" : `/${locale}/docs/`)
 export const docsPath = (rel: string): Record<Locale, string> => ({
@@ -51,6 +58,8 @@ export const links = {
   geist: "https://vercel.com/font",
   security: doc("SECURITY.md"),
   contributing: doc("CONTRIBUTING.md"),
+  templatesGuide: doc("templates/email/README.md"),
+  templatesLicense: doc("templates/email/LICENSE"),
   issues: `${REPO}/issues`,
   release: `${REPO}/releases/tag/v${VERSION}`,
   changelog: doc("CHANGELOG.md"),

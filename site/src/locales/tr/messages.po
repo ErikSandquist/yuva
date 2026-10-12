@@ -28,9 +28,17 @@ msgstr "{count} sürüm, en yenisi {version}"
 msgid "{count} sections"
 msgstr "{count} bölüm"
 
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "{name} e-posta önizlemesi"
+
 #: src/copy/docs.ts
 msgid "{name} endpoints of the Yuva API."
 msgstr "Yuva API'sinin {name} uç noktaları."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Ücretsiz bir Yuva e-posta şablonu."
 
 #: src/copy/home.ts
 msgid "A feedback form rendered by your own backend posts to /v1/feedback with a workspace API key. Scripts create inboxes, channels and keys, and host backends look up or delete contacts by their own user id."
@@ -68,6 +76,10 @@ msgstr "Bütün yazılar"
 msgid "All releases on GitHub"
 msgstr "GitHub'daki bütün sürümler"
 
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Tüm şablonlar"
+
 #: src/copy/home.ts
 msgid "All, mine, unassigned, per inbox and per label; open, pending, snoozed and closed."
 msgstr "Tümü, bana atananlar, atanmamışlar, gelen kutusuna ve etikete göre; açık, beklemede, ertelenmiş ve kapalı."
@@ -83,6 +95,10 @@ msgstr "Geri kalan her şey için de bir API"
 #: src/copy/home.ts
 msgid "Android: Kotlin and Compose"
 msgstr "Android: Kotlin ve Compose"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Duyuru"
 
 #: src/copy/home.ts
 msgid "Answer from one panel"
@@ -168,6 +184,7 @@ msgid "Business"
 msgstr "Gelir modeli"
 
 #: src/copy/pages.ts
+#: src/copy/templates.ts
 msgid "By"
 msgstr "Yazan:"
 
@@ -312,6 +329,10 @@ msgstr "Her ürün için bir gelen kutusu açın ve ona kanallar verin: bir dest
 msgid "Custom domain still shows as unverified"
 msgstr "Özel alan adım hâlâ doğrulanmadı görünüyor"
 
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Koyu"
+
 #: src/copy/home.ts
 msgid "Data you can delete"
 msgstr "Silebileceğiniz veriler"
@@ -328,9 +349,17 @@ msgstr "Kullanımdan kalkanlar"
 msgid "Description"
 msgstr "Açıklama"
 
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Masaüstü"
+
 #: src/layouts/Footer.astro
 msgid "Developers"
 msgstr "Geliştiriciler"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Özet"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -387,6 +416,11 @@ msgstr "E-posta, olması gerektiği gibi"
 msgid "E-mail guide"
 msgstr "E-posta rehberi"
 
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "E-posta şablonları"
+
 #: src/copy/contact.ts
 msgid "Early and built in the open"
 msgstr "Erken aşamada ve herkesin gözü önünde"
@@ -398,6 +432,18 @@ msgstr "Bu sayfayı GitHub'da düzenleyin"
 #: src/copy/brand.ts
 msgid "Ember"
 msgstr "Köz"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "http:// veya https:// ile başlayan tam bir adres girin."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Şablonu orada açmak için Yuva sunucunuzun adresini girin. Adres yalnızca bu tarayıcıda saklanır."
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Etkinlik"
 
 #: src/copy/home.ts
 msgid "Every channel, one conversation model."
@@ -459,6 +505,10 @@ msgstr "Yatırımcılar için"
 msgid "For light backgrounds."
 msgstr "Açık renk zeminler için."
 
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Bültenler, ürün güncellemeleri, duyurular ve daha fazlası için ücretsiz başlangıç tasarımları. Burada önizleyin, birini Yuva'nın e-posta tasarımcısında açın."
+
 #: src/copy/pages.ts
 msgid "From the team"
 msgstr "Ekipten"
@@ -506,6 +556,14 @@ msgstr "Nasıl çalışır"
 #: src/copy/contact.ts
 msgid "How the AGPL, the MIT SDKs and the CLA fit together."
 msgstr "AGPL, MIT lisanslı SDK'lar ve CLA'nın birbirine nasıl oturduğu."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "Şablon nasıl eklenir"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
 
 #: src/copy/home.ts
 msgid "I added the CNAME record two days ago, but the dashboard still says “unverified”. Is there anything else I need to do?"
@@ -644,10 +702,18 @@ msgstr "Konuşalım."
 msgid "License"
 msgstr "Lisans"
 
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Lisans ve katkılar"
+
 #: src/copy/contact.ts
 #: src/layouts/Footer.astro
 msgid "Licensing"
 msgstr "Lisanslama"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Açık"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
@@ -661,6 +727,10 @@ msgstr "Canlı sohbetle eşzamansız mesajlaşma arasındaki fark yalnızca ayar
 #: src/copy/home.ts
 msgid "Live chat and embedded threads"
 msgstr "Canlı sohbet ve gömülü konuşmalar"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Canlı önizleme"
 
 #: src/copy/brand.ts
 msgid "Logo"
@@ -750,6 +820,10 @@ msgstr "Bütün ürünleriniz için açık kaynak gelen kutusu Yuva'yı gelişti
 msgid "News, release stories and notes from building Yuva."
 msgstr "Yuva'yı geliştirirken yazdığımız haberler, sürüm hikâyeleri ve notlar."
 
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Bülten"
+
 #: src/copy/docs.ts
 #: src/copy/pages.ts
 msgid "Next"
@@ -816,6 +890,14 @@ msgstr "Pazartesi günü Kâğıt Gemi Destek şunu yazdı: …"
 msgid "On this page"
 msgstr "Bu sayfada"
 
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Kendi sunucunuzda"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Karşılama"
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "Kendi sunucunuzda tek bir Docker imajı ve Postgres."
@@ -848,6 +930,10 @@ msgstr "Konu açın"
 #: src/copy/contact.ts
 msgid "Open an issue on GitHub so others can find the answer too."
 msgstr "Başkaları da yanıtı bulabilsin diye GitHub'da bir konu açın."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Sunucumda aç"
 
 #: src/copy/home.ts
 msgid "Open source · Hosted or self-hosted · Pre-alpha"
@@ -885,6 +971,10 @@ msgstr "Birden çok ürün yöneten ekipler için açık kaynak müşteri mesajl
 msgid "OpenAPI contract"
 msgstr "OpenAPI sözleşmesi"
 
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Yuva'nın e-posta tasarımcısını bu şablonla açar. Henüz giriş yapmadıysanız önce giriş yaparsınız."
+
 #: src/copy/home.ts
 msgid "Or host it yourself"
 msgstr "Ya da kendiniz barındırın"
@@ -912,6 +1002,10 @@ msgstr "İş birliği"
 #: src/copy/docs.ts
 msgid "Payload"
 msgstr "İçerik"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Telefon"
 
 #: src/copy/home.ts
 msgid "Point a support address at Yuva through a Cloudflare Email Worker, any MTA or a signed HTTP request. Replies go out through each channel's own SMTP account: SES, Postmark or your own relay."
@@ -941,10 +1035,27 @@ msgstr "Basın"
 msgid "Press and brand"
 msgstr "Basın ve marka"
 
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Önizle ve kullan"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Önizleme renkleri"
+
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "{name} şablonunun önizlemesi"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Önizleme genişliği"
+
 #: src/copy/docs.ts
 msgid "Previous"
 msgstr "Önceki"
 
+#: src/copy/templates.ts
 #: src/layouts/Footer.astro
 msgid "Product"
 msgstr "Ürün"
@@ -990,6 +1101,10 @@ msgstr "Kodu okuyun, {version} sürümünü kendi makinenizde çalıştırın ve
 #: src/copy/docs.ts
 msgid "Read the English page"
 msgstr "İngilizce sayfayı oku"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Lisansı okuyun"
 
 #: src/copy/pages.ts
 msgid "Read the post"
@@ -1134,6 +1249,10 @@ msgstr "Kendi sunucunuzda"
 msgid "Self-hosting"
 msgstr "Kendi sunucunuzda"
 
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Sunucu adresi"
+
 #: src/copy/home.ts
 msgid "Server and panel"
 msgstr "Sunucu ve panel"
@@ -1186,6 +1305,10 @@ msgstr "GitHub'da kaynak kod"
 msgid "Stage"
 msgstr "Aşama"
 
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "E-posta tasarımcısı için İngilizce, Türkçe ve Almanca başlangıç tasarımları. Birini önizleyin, sonra Yuva'da açıp kendinize göre düzenleyin."
+
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Germeyin ya da sıkıştırmayın"
@@ -1197,6 +1320,15 @@ msgstr "GitHub'daki etiket"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "Ekipler barındırılan hizmetimizi kullanabilir; her katkı bir CLA ile yapıldığı için Yuva ticari lisansla da sunulabilir."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Şablon galerisi"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Şablonlar"
 
 #: src/copy/docs.ts
 msgid "The English page has changed since this translation was last updated."
@@ -1262,6 +1394,14 @@ msgstr "Yuva'nın logosu, renkleri ve yazı tipi; yazılar, entegrasyonlar ve uy
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Yuva mesajlaşma paneli: e-posta, canlı sohbet ve uygulamalardan gelen konuşmalar tek listede; açık bir konuşma sohbet olarak görünüyor, yanında bir ekip notu ve bir asistanın ekip arkadaşı göndersin diye hazırladığı yanıt taslağı var."
 
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Bu şablonlar MIT lisanslıdır: kendi e-postalarınızda kullanabilir, değiştirebilir ve paylaşabilirsiniz."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Bu tarayıcı önizlemeyi koyu moda geçirmiyor. Görmek için sistemin koyu ayarını kullanın ya da şablonu tasarımcıda açıp orada kontrol edin."
+
 #: src/copy/docs.ts
 msgid "This documentation is written in English."
 msgstr "Bu belgeler İngilizce yazılır."
@@ -1318,6 +1458,10 @@ msgstr "logoyu, projenin onayını ima edecek biçimde kullanmak."
 msgid "use the name, unchanged, to refer to the unmodified project;"
 msgstr "değiştirilmemiş projeden söz ederken ismi olduğu gibi kullanmak;"
 
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Bu şablonu kullan"
+
 #: src/copy/home.ts
 msgid "Users write as themselves through a short-lived token signed by your backend; Yuva never sees your user database."
 msgstr "Kullanıcılar, sunucunuzun imzaladığı kısa ömürlü bir jetonla kendi adlarına yazar; Yuva kullanıcı veritabanınızı hiç görmez."
@@ -1337,6 +1481,10 @@ msgstr "Claude Code ile"
 #: src/copy/home.ts
 msgid "View on GitHub"
 msgstr "GitHub'da inceleyin"
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Şablon eklemek mi istiyorsunuz? Pull request gönderin; kılavuz klasörü, kuralları ve önizlemeyi anlatır."
 
 #: src/pages/404.astro
 msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."

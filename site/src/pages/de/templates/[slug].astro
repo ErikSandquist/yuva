@@ -1,0 +1,12 @@
+---
+import TemplateView from "@/views/TemplateView.astro"
+import { available, templates } from "@/lib/templates"
+
+export function getStaticPaths() {
+  return templates()
+    .filter((entry) => available(entry, "de"))
+    .map((entry) => ({ params: { slug: entry.slug }, props: { entry } }))
+}
+---
+
+<TemplateView locale="de" entry={Astro.props.entry} />

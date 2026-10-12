@@ -28,9 +28,17 @@ msgstr "{count} Versionen, aktuell {version}"
 msgid "{count} sections"
 msgstr "{count} Abschnitte"
 
+#: src/copy/templates.ts
+msgid "{name} e-mail preview"
+msgstr "Vorschau der Mail {name}"
+
 #: src/copy/docs.ts
 msgid "{name} endpoints of the Yuva API."
 msgstr "{name}-Endpunkte der Yuva-API."
+
+#: src/copy/templates.ts
+msgid "{name}: {description} A free Yuva e-mail template."
+msgstr "{name}: {description} Eine kostenlose Yuva-Mailvorlage."
 
 #: src/copy/home.ts
 msgid "A feedback form rendered by your own backend posts to /v1/feedback with a workspace API key. Scripts create inboxes, channels and keys, and host backends look up or delete contacts by their own user id."
@@ -68,6 +76,10 @@ msgstr "Alle Beiträge"
 msgid "All releases on GitHub"
 msgstr "Alle Versionen auf GitHub"
 
+#: src/copy/templates.ts
+msgid "All templates"
+msgstr "Alle Vorlagen"
+
 #: src/copy/home.ts
 msgid "All, mine, unassigned, per inbox and per label; open, pending, snoozed and closed."
 msgstr "Alle, meine, nicht zugewiesene, pro Posteingang und pro Label; offen, wartend, zurückgestellt und geschlossen."
@@ -83,6 +95,10 @@ msgstr "Und eine API für alles andere"
 #: src/copy/home.ts
 msgid "Android: Kotlin and Compose"
 msgstr "Android: Kotlin und Compose"
+
+#: src/copy/templates.ts
+msgid "Announcement"
+msgstr "Ankündigung"
 
 #: src/copy/home.ts
 msgid "Answer from one panel"
@@ -168,6 +184,7 @@ msgid "Business"
 msgstr "Geschäftsmodell"
 
 #: src/copy/pages.ts
+#: src/copy/templates.ts
 msgid "By"
 msgstr "Von"
 
@@ -312,6 +329,10 @@ msgstr "Legen Sie pro Produkt einen Posteingang an und geben Sie ihm Kanäle: ei
 msgid "Custom domain still shows as unverified"
 msgstr "Eigene Domain wird weiterhin als nicht verifiziert angezeigt"
 
+#: src/copy/templates.ts
+msgid "Dark"
+msgstr "Dunkel"
+
 #: src/copy/home.ts
 msgid "Data you can delete"
 msgstr "Daten, die Sie löschen können"
@@ -328,9 +349,17 @@ msgstr "Veraltet"
 msgid "Description"
 msgstr "Beschreibung"
 
+#: src/copy/templates.ts
+msgid "Desktop"
+msgstr "Desktop"
+
 #: src/layouts/Footer.astro
 msgid "Developers"
 msgstr "Entwickler"
+
+#: src/copy/templates.ts
+msgid "Digest"
+msgstr "Digest"
 
 #: src/copy/brand.ts
 msgid "Do"
@@ -387,6 +416,11 @@ msgstr "E-Mail, richtig gemacht"
 msgid "E-mail guide"
 msgstr "E-Mail-Anleitung"
 
+#: src/copy/templates.ts
+#: src/layouts/Footer.astro
+msgid "E-mail templates"
+msgstr "Mail-Vorlagen"
+
 #: src/copy/contact.ts
 msgid "Early and built in the open"
 msgstr "Früh und öffentlich entwickelt"
@@ -398,6 +432,18 @@ msgstr "Diese Seite auf GitHub bearbeiten"
 #: src/copy/brand.ts
 msgid "Ember"
 msgstr "Glut"
+
+#: src/copy/templates.ts
+msgid "Enter a full address starting with http:// or https://."
+msgstr "Geben Sie eine vollständige Adresse ein, die mit http:// oder https:// beginnt."
+
+#: src/copy/templates.ts
+msgid "Enter the address of your Yuva server to open the template there. It is kept in this browser only."
+msgstr "Geben Sie die Adresse Ihres Yuva-Servers ein, um die Vorlage dort zu öffnen. Sie wird nur in diesem Browser gespeichert."
+
+#: src/copy/templates.ts
+msgid "Event"
+msgstr "Event"
 
 #: src/copy/home.ts
 msgid "Every channel, one conversation model."
@@ -459,6 +505,10 @@ msgstr "Für Investoren"
 msgid "For light backgrounds."
 msgstr "Für helle Hintergründe."
 
+#: src/copy/templates.ts
+msgid "Free starter designs for newsletters, product updates, announcements and more. Preview them here and open one in Yuva's e-mail designer."
+msgstr "Kostenlose Startdesigns für Newsletter, Produkt-Updates, Ankündigungen und mehr. Sehen Sie sie hier an und öffnen Sie eines im E-Mail-Designer von Yuva."
+
 #: src/copy/pages.ts
 msgid "From the team"
 msgstr "Vom Team"
@@ -506,6 +556,14 @@ msgstr "So funktioniert es"
 #: src/copy/contact.ts
 msgid "How the AGPL, the MIT SDKs and the CLA fit together."
 msgstr "Wie AGPL, die MIT-lizenzierten SDKs und die CLA zusammenpassen."
+
+#: src/copy/templates.ts
+msgid "How to add a template"
+msgstr "So fügen Sie eine Vorlage hinzu"
+
+#: src/copy/templates.ts
+msgid "https://yuva.example.com"
+msgstr "https://yuva.example.com"
 
 #: src/copy/home.ts
 msgid "I added the CNAME record two days ago, but the dashboard still says “unverified”. Is there anything else I need to do?"
@@ -644,10 +702,18 @@ msgstr "Lassen Sie uns reden."
 msgid "License"
 msgstr "Lizenz"
 
+#: src/copy/templates.ts
+msgid "License and contributions"
+msgstr "Lizenz und Beiträge"
+
 #: src/copy/contact.ts
 #: src/layouts/Footer.astro
 msgid "Licensing"
 msgstr "Lizenzierung"
+
+#: src/copy/templates.ts
+msgid "Light"
+msgstr "Hell"
 
 #: src/copy/contact.ts
 #: src/copy/home.ts
@@ -661,6 +727,10 @@ msgstr "Live-Chat und asynchrone Nachrichten unterscheiden sich nur in den Einst
 #: src/copy/home.ts
 msgid "Live chat and embedded threads"
 msgstr "Live-Chat und eingebettete Verläufe"
+
+#: src/copy/templates.ts
+msgid "Live preview"
+msgstr "Live-Vorschau"
 
 #: src/copy/brand.ts
 msgid "Logo"
@@ -750,6 +820,10 @@ msgstr "Neuigkeiten, Release-Geschichten und Notizen aus der Entwicklung von Yuv
 msgid "News, release stories and notes from building Yuva."
 msgstr "Neuigkeiten, Release-Geschichten und Notizen aus der Entwicklung von Yuva."
 
+#: src/copy/templates.ts
+msgid "Newsletter"
+msgstr "Newsletter"
+
 #: src/copy/docs.ts
 #: src/copy/pages.ts
 msgid "Next"
@@ -816,6 +890,14 @@ msgstr "Am Montag schrieb der Paperboat-Support: …"
 msgid "On this page"
 msgstr "Auf dieser Seite"
 
+#: src/copy/templates.ts
+msgid "On your own server"
+msgstr "Auf Ihrem eigenen Server"
+
+#: src/copy/templates.ts
+msgid "Onboarding"
+msgstr "Onboarding"
+
 #: src/copy/home.ts
 msgid "One Docker image and Postgres on your own server."
 msgstr "Ein Docker-Image und Postgres auf Ihrem eigenen Server."
@@ -848,6 +930,10 @@ msgstr "Issue eröffnen"
 #: src/copy/contact.ts
 msgid "Open an issue on GitHub so others can find the answer too."
 msgstr "Eröffnen Sie ein Issue auf GitHub, damit auch andere die Antwort finden."
+
+#: src/copy/templates.ts
+msgid "Open on my server"
+msgstr "Auf meinem Server öffnen"
 
 #: src/copy/home.ts
 msgid "Open source · Hosted or self-hosted · Pre-alpha"
@@ -885,6 +971,10 @@ msgstr "Open-Source-Kundenkommunikation für Teams mit vielen Produkten."
 msgid "OpenAPI contract"
 msgstr "OpenAPI-Vertrag"
 
+#: src/copy/templates.ts
+msgid "Opens Yuva's e-mail designer with this template. You sign in first if you have not."
+msgstr "Öffnet den E-Mail-Designer von Yuva mit dieser Vorlage. Falls Sie noch nicht angemeldet sind, melden Sie sich zuerst an."
+
 #: src/copy/home.ts
 msgid "Or host it yourself"
 msgstr "Oder selbst betreiben"
@@ -912,6 +1002,10 @@ msgstr "Partnerschaft"
 #: src/copy/docs.ts
 msgid "Payload"
 msgstr "Payload"
+
+#: src/copy/templates.ts
+msgid "Phone"
+msgstr "Smartphone"
 
 #: src/copy/home.ts
 msgid "Point a support address at Yuva through a Cloudflare Email Worker, any MTA or a signed HTTP request. Replies go out through each channel's own SMTP account: SES, Postmark or your own relay."
@@ -941,10 +1035,27 @@ msgstr "Presse"
 msgid "Press and brand"
 msgstr "Presse und Marke"
 
+#: src/copy/templates.ts
+msgid "Preview and use"
+msgstr "Ansehen und verwenden"
+
+#: src/copy/templates.ts
+msgid "Preview colours"
+msgstr "Farben der Vorschau"
+
+#: src/copy/templates.ts
+msgid "Preview of the {name} template"
+msgstr "Vorschau der Vorlage {name}"
+
+#: src/copy/templates.ts
+msgid "Preview width"
+msgstr "Breite der Vorschau"
+
 #: src/copy/docs.ts
 msgid "Previous"
 msgstr "Zurück"
 
+#: src/copy/templates.ts
 #: src/layouts/Footer.astro
 msgid "Product"
 msgstr "Produkt"
@@ -990,6 +1101,10 @@ msgstr "Lesen Sie den Code, starten Sie {version} auf Ihrem Rechner und verfolge
 #: src/copy/docs.ts
 msgid "Read the English page"
 msgstr "Englische Seite lesen"
+
+#: src/copy/templates.ts
+msgid "Read the license"
+msgstr "Lizenz lesen"
 
 #: src/copy/pages.ts
 msgid "Read the post"
@@ -1134,6 +1249,10 @@ msgstr "Selbst gehostet"
 msgid "Self-hosting"
 msgstr "Selbst hosten"
 
+#: src/copy/templates.ts
+msgid "Server address"
+msgstr "Serveradresse"
+
 #: src/copy/home.ts
 msgid "Server and panel"
 msgstr "Server und Panel"
@@ -1186,6 +1305,10 @@ msgstr "Quellcode auf GitHub"
 msgid "Stage"
 msgstr "Phase"
 
+#: src/copy/templates.ts
+msgid "Starter designs for the e-mail designer, in English, Turkish and German. Preview one, then open it in Yuva and make it yours."
+msgstr "Startdesigns für den E-Mail-Designer, auf Englisch, Türkisch und Deutsch. Sehen Sie sich eines an, öffnen Sie es in Yuva und machen Sie es zu Ihrem."
+
 #: src/copy/brand.ts
 msgid "Stretch or squash it"
 msgstr "Nicht strecken oder stauchen"
@@ -1197,6 +1320,15 @@ msgstr "Tag auf GitHub"
 #: src/copy/contact.ts
 msgid "Teams can use our hosted service, and because every contribution is made under a CLA, Yuva can also be offered under a commercial license."
 msgstr "Teams können unseren gehosteten Dienst nutzen, und weil jeder Beitrag unter einer CLA erfolgt, kann Yuva auch unter einer kommerziellen Lizenz angeboten werden."
+
+#: src/copy/templates.ts
+msgid "Template gallery"
+msgstr "Vorlagengalerie"
+
+#: src/copy/header.ts
+#: src/copy/templates.ts
+msgid "Templates"
+msgstr "Vorlagen"
 
 #: src/copy/docs.ts
 msgid "The English page has changed since this translation was last updated."
@@ -1262,6 +1394,14 @@ msgstr "Yuvas Logo, Farben und Schrift, bereit für Artikel, Integrationen und A
 msgid "The Yuva messaging panel: conversations from e-mail, live chat and apps in one list, and a conversation open as a chat, with a team note and a reply an assistant drafted for a teammate to send."
 msgstr "Das Nachrichten-Panel von Yuva: Unterhaltungen aus E-Mail, Live-Chat und Apps in einer Liste, daneben eine als Chat geöffnete Unterhaltung mit einer Team-Notiz und einer Antwort, die ein Assistent entworfen hat und ein Teammitglied sendet."
 
+#: src/copy/templates.ts
+msgid "These templates are MIT licensed: use, change and share them in your own mails."
+msgstr "Diese Vorlagen stehen unter der MIT-Lizenz: Sie dürfen sie in Ihren eigenen Mails verwenden, ändern und weitergeben."
+
+#: src/copy/templates.ts
+msgid "This browser does not switch the preview to dark mode. Use your system's dark setting to see it, or open the template to check it in the designer."
+msgstr "Dieser Browser schaltet die Vorschau nicht auf den Dark Mode um. Nutzen Sie die dunkle Einstellung Ihres Systems oder öffnen Sie die Vorlage im Designer, um sie dort zu prüfen."
+
 #: src/copy/docs.ts
 msgid "This documentation is written in English."
 msgstr "Diese Dokumentation ist auf Englisch verfasst."
@@ -1318,6 +1458,10 @@ msgstr "das Logo so verwenden, dass es eine Empfehlung durch das Projekt naheleg
 msgid "use the name, unchanged, to refer to the unmodified project;"
 msgstr "den Namen unverändert verwenden, um auf das unveränderte Projekt zu verweisen;"
 
+#: src/copy/templates.ts
+msgid "Use this template"
+msgstr "Diese Vorlage verwenden"
+
 #: src/copy/home.ts
 msgid "Users write as themselves through a short-lived token signed by your backend; Yuva never sees your user database."
 msgstr "Nutzer schreiben unter eigenem Namen, über ein kurzlebiges Token, das Ihr Backend signiert; Yuva sieht Ihre Nutzerdatenbank nie."
@@ -1337,6 +1481,10 @@ msgstr "über Claude Code"
 #: src/copy/home.ts
 msgid "View on GitHub"
 msgstr "Auf GitHub ansehen"
+
+#: src/copy/templates.ts
+msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
+msgstr "Möchten Sie eine Vorlage hinzufügen? Senden Sie einen Pull Request; die Anleitung erklärt den Ordner, die Regeln und die Vorschau."
 
 #: src/pages/404.astro
 msgid "We looked in every inbox, but this page is not here. It may have moved, or the link may be wrong."
