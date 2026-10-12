@@ -319,9 +319,21 @@ func (s *Server) SendEmails(ctx context.Context, workspaceID uuid.UUID, ids []uu
 			return nil
 		})
 	}
-	sendErr := s.sendQueued(ctx, workspaceID, msgs)
+	relayID, sendErr := s.sendQueued(ctx, workspaceID, msgs)
 	if sendErr == nil {
-		return set(deliverySent, nil)
+		return s.inTx(ctx, workspaceID, func(q *store.Queries, events *eventBatch) error {
+			if relayID != "" {
+				if err := q.SetRelayMessageID(ctx, store.SetRelayMessageIDParams{WorkspaceID: workspaceID, MessageID: msgs[len(msgs)-1].ID, RelayMessageID: &relayID}); err != nil {
+					return err
+				}
+			}
+			for _, m := range msgs {
+				if err := s.setDeliveryTx(ctx, q, events, workspaceID, m.ID, deliverySent, nil); err != nil {
+					return err
+				}
+			}
+			return nil
+		})
 	}
 	if !email.IsPermanent(sendErr) && !lastAttempt {
 		s.log.WarnContext(ctx, "email send failed, retrying", slog.String("message_id", ids[len(ids)-1].String()), slog.Any("error", sendErr))
@@ -331,47 +343,48 @@ func (s *Server) SendEmails(ctx context.Context, workspaceID uuid.UUID, ids []uu
 	return set(deliveryFailed, &detail)
 }
 
-func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []messageRow) error {
+// sendQueued returns the Message-ID the relay put on the mail in place of ours, or "".
+func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []messageRow) (string, error) {
 	msg := msgs[len(msgs)-1]
 	me, err := s.st.GetMessageEmail(ctx, store.GetMessageEmailParams{WorkspaceID: workspaceID, MessageID: msg.ID})
 	if err != nil {
-		return fmt.Errorf("message e-mail: %w", err)
+		return "", fmt.Errorf("message e-mail: %w", err)
 	}
 	if me.ChannelID == nil {
-		return &email.PermanentError{Err: errors.New("the e-mail channel was removed")}
+		return "", &email.PermanentError{Err: errors.New("the e-mail channel was removed")}
 	}
 	ch, err := s.st.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: workspaceID, ChannelID: *me.ChannelID})
 	if store.IsNotFound(err) {
-		return &email.PermanentError{Err: errors.New("the e-mail channel was removed")}
+		return "", &email.PermanentError{Err: errors.New("the e-mail channel was removed")}
 	}
 	if err != nil {
-		return err
+		return "", err
 	}
 	if ch.SmtpHost == "" {
-		return &email.PermanentError{Err: errors.New("the e-mail channel has no SMTP account")}
+		return "", &email.PermanentError{Err: errors.New("the e-mail channel has no SMTP account")}
 	}
 	if len(me.ToAddresses) == 0 {
-		return &email.PermanentError{Err: errors.New("no recipient")}
+		return "", &email.PermanentError{Err: errors.New("no recipient")}
 	}
 	to := me.ToAddresses[0]
 	suppressed, err := s.st.IsEmailSuppressed(ctx, store.IsEmailSuppressedParams{WorkspaceID: workspaceID, Email: to})
 	if err != nil {
-		return err
+		return "", err
 	}
 	if suppressed {
-		return &email.PermanentError{Err: errors.New("the recipient address is undeliverable")}
+		return "", &email.PermanentError{Err: errors.New("the recipient address is undeliverable")}
 	}
 	var password string
 	if len(ch.SmtpPassword) > 0 {
 		plain, err := s.secrets.Open(ch.SmtpPassword, smtpSecretContext(workspaceID, ch.ChannelID))
 		if err != nil {
-			return &email.PermanentError{Err: errors.New("the SMTP password cannot be decrypted with this master key")}
+			return "", &email.PermanentError{Err: errors.New("the SMTP password cannot be decrypted with this master key")}
 		}
 		password = string(plain)
 	}
 	conv, err := s.st.GetConversation(ctx, store.GetConversationParams{WorkspaceID: workspaceID, ID: msg.ConversationID})
 	if err != nil {
-		return err
+		return "", err
 	}
 	toName := ""
 	if names, err := s.st.ListContactSummaries(ctx, store.ListContactSummariesParams{WorkspaceID: workspaceID, Ids: []uuid.UUID{conv.ContactID}}); err == nil && len(names) == 1 {
@@ -411,24 +424,24 @@ func (s *Server) sendQueued(ctx context.Context, workspaceID uuid.UUID, msgs []m
 	for _, m := range msgs {
 		atts, err := s.st.ListAttachmentsOfMessage(ctx, store.ListAttachmentsOfMessageParams{WorkspaceID: workspaceID, MessageID: m.ID})
 		if err != nil {
-			return err
+			return "", err
 		}
 		for _, a := range atts {
 			data, err := s.readObject(ctx, a.StorageKey)
 			if err != nil {
-				return err
+				return "", err
 			}
 			out.Attachments = append(out.Attachments, email.Attachment{Filename: a.Filename, ContentType: a.ContentType, Data: data})
 		}
 	}
 	raw, err := email.Build(out)
 	if err != nil {
-		return &email.PermanentError{Err: err}
+		return "", &email.PermanentError{Err: err}
 	}
 	cfg := email.SMTPConfig{Host: ch.SmtpHost, Port: int(ch.SmtpPort), Username: ch.SmtpUsername, Password: password, TLS: ch.SmtpTls}
 	sendCtx, cancel := context.WithTimeout(ctx, time.Minute)
 	defer cancel()
-	return s.sender.Send(sendCtx, cfg, me.FromAddress, []string{to}, raw)
+	return email.SendRelayed(sendCtx, s.sender, cfg, me.FromAddress, []string{to}, raw)
 }
 
 func batchText(msgs []messageRow) string {

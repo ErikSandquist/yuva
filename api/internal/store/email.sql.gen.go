@@ -410,7 +410,8 @@ func (q *Queries) FindConversationByEmailToken(ctx context.Context, arg FindConv
 const findConversationByHeaders = `-- name: FindConversationByHeaders :one
 SELECT c.id, c.workspace_id, c.inbox_id, c.contact_id, c.channel_id, c.subject, c.status, c.snooze_until, c.priority, c.assignee_id, c.last_message_at, c.last_activity_at, c.created_at, c.updated_at, c.spam, c.email_token, c.related_conversation_id, c.continuity_through, c.continuity_sent_at, c.kind, c.feedback, c.email_address, c.closed_at, c.rating, c.rating_comment, c.rated_at, c.rating_requested_at, c.last_read_by_contact_at, c.page_url, c.page_title, c.channel_kind, c.broadcast_id, c.migration_id, c.imported_at FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
-WHERE e.workspace_id = $1 AND c.inbox_id = $2 AND e.header_message_id = ANY($3::text[])
+WHERE e.workspace_id = $1 AND c.inbox_id = $2
+  AND (e.header_message_id = ANY($3::text[]) OR e.relay_message_id = ANY($3::text[]))
 ORDER BY (c.contact_id = $4) DESC, e.created_at DESC, e.message_id DESC
 LIMIT 1
 `
@@ -665,7 +666,9 @@ func (q *Queries) FindOutboundEmailAnyWorkspace(ctx context.Context, headerMessa
 
 const findOutboundEmailByHeader = `-- name: FindOutboundEmailByHeader :one
 SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
-WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $2
+WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL
+  AND (e.header_message_id = $2 OR e.relay_message_id = $2)
+LIMIT 1
 `
 
 type FindOutboundEmailByHeaderParams struct {
@@ -818,7 +821,7 @@ func (q *Queries) GetIngestChannel(ctx context.Context, arg GetIngestChannelPara
 }
 
 const getMessageEmail = `-- name: GetMessageEmail :one
-SELECT workspace_id, message_id, conversation_id, channel_id, direction, header_message_id, in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers, raw_key, raw_size, authentication_results, dmarc, auto, created_at, imported_at FROM message_emails WHERE workspace_id = $1 AND message_id = $2
+SELECT workspace_id, message_id, conversation_id, channel_id, direction, header_message_id, in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers, raw_key, raw_size, authentication_results, dmarc, auto, created_at, imported_at, relay_message_id FROM message_emails WHERE workspace_id = $1 AND message_id = $2
 `
 
 type GetMessageEmailParams struct {
@@ -853,6 +856,7 @@ func (q *Queries) GetMessageEmail(ctx context.Context, arg GetMessageEmailParams
 		&i.Auto,
 		&i.CreatedAt,
 		&i.ImportedAt,
+		&i.RelayMessageID,
 	)
 	return i, err
 }
@@ -1444,6 +1448,22 @@ func (q *Queries) SetEmailChannelDkimEnabled(ctx context.Context, arg SetEmailCh
 		&i.ForwardToken,
 	)
 	return i, err
+}
+
+const setRelayMessageID = `-- name: SetRelayMessageID :exec
+UPDATE message_emails SET relay_message_id = $1
+WHERE workspace_id = $2 AND message_id = $3 AND direction = 'out'
+`
+
+type SetRelayMessageIDParams struct {
+	RelayMessageID *string
+	WorkspaceID    uuid.UUID
+	MessageID      uuid.UUID
+}
+
+func (q *Queries) SetRelayMessageID(ctx context.Context, arg SetRelayMessageIDParams) error {
+	_, err := q.db.Exec(ctx, setRelayMessageID, arg.RelayMessageID, arg.WorkspaceID, arg.MessageID)
+	return err
 }
 
 const suppressEmail = `-- name: SuppressEmail :exec

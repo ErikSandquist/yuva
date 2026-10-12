@@ -39,9 +39,19 @@ type sentMail struct {
 }
 
 type smtpCapture struct {
-	mu   sync.Mutex
-	sent []sentMail
-	fail error
+	mu    sync.Mutex
+	sent  []sentMail
+	fail  error
+	relay string
+}
+
+func (c *smtpCapture) SendRelayed(ctx context.Context, cfg email.SMTPConfig, from string, to []string, msg []byte) (string, error) {
+	if err := c.Send(ctx, cfg, from, to, msg); err != nil {
+		return "", err
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.relay, nil
 }
 
 func (c *smtpCapture) Send(_ context.Context, cfg email.SMTPConfig, from string, to []string, msg []byte) error {

@@ -110,6 +110,7 @@ type BroadcastDelivery struct {
 	ClickedAt       *time.Time
 	ConversationID  *uuid.UUID
 	CreatedAt       time.Time
+	RelayMessageID  *string
 }
 
 type BroadcastLink struct {
@@ -754,6 +755,7 @@ type MessageEmail struct {
 	Auto                  bool
 	CreatedAt             time.Time
 	ImportedAt            *time.Time
+	RelayMessageID        *string
 }
 
 type Migration struct {

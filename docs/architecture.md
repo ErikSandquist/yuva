@@ -523,7 +523,10 @@ Inbound:
    than 998 bytes dropped, read from at most 64 KiB at each end of the header);
    our outbound Message-IDs are `<token.random@sending domain>` where the token is an opaque random
    value stored on the conversation, so a reply finds its conversation even when the client drops
-   `References` or a relay rewrites the domain. Otherwise a new conversation starts, with the
+   `References` or a relay rewrites the domain. A relay that replaces our Message-ID (Amazon SES writes
+   `<id@region.amazonses.com>`, `email.amazonses.com` in us-east-1, from the id in its reply to `DATA`)
+   has that id stored next to ours as `relay_message_id`, and threading, broadcast replies and delivery
+   reports match either. Otherwise a new conversation starts, with the
    subject of the mail. A closed, pending or snoozed conversation that gets a reply is reopened.
    The sender is matched to a contact by address or becomes a new contact; mail from a blocked
    contact is refused, mail from the channel's own address is dropped. A thread joins only a
@@ -1285,7 +1288,8 @@ Decisions:
   mail over the list headers; support replies keep their provider's signature. The signature covers
   `From`, `To`, `Subject`, `Date`, `Reply-To`, `MIME-Version`, `Content-Type` and the list headers (absent
   ones listed too) but not `Message-ID` or `Feedback-ID`, which relays such as Amazon SES replace.
-- **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` and
+- **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` (or
+  by the relay's Message-ID stored for the delivery) and
   opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a
   `broadcast_reply` marker; someone else's reply opens their own conversation; automatic replies are only
   counted (when they name no conversation). Notifications about replies to one broadcast are grouped per

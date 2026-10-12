@@ -685,6 +685,7 @@ type deliveryResult struct {
 	sentAt   *time.Time
 	bounced  *time.Time
 	next     *time.Time
+	relayID  *string
 	attempts int32
 }
 
@@ -948,7 +949,7 @@ func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Sessio
 			continue
 		}
 		sendCtx, cancel := context.WithTimeout(ctx, time.Minute)
-		err = sess.Send(sendCtx, r.from, []string{d.Email}, raw)
+		relayID, err := sess.Send(sendCtx, r.from, []string{d.Email}, raw)
 		cancel()
 		*sessSent++
 		now := s.now()
@@ -956,6 +957,9 @@ func (s *Server) sendBatch(ctx context.Context, r *bcRenderer, sess email.Sessio
 		switch {
 		case err == nil:
 			res.state, res.sentAt = deliverySent, &now
+			if relayID != "" {
+				res.relayID = &relayID
+			}
 			rejects = 0
 			metrics.BroadcastMessages.WithLabelValues("sent").Inc()
 		case email.BadMailbox(err):
@@ -1003,7 +1007,7 @@ func (s *Server) commitBatch(ctx context.Context, b store.Broadcast, results []d
 		for _, r := range results {
 			if err := q.SaveBroadcastDelivery(ctx, store.SaveBroadcastDeliveryParams{
 				WorkspaceID: ws, ID: r.d.ID, State: r.state, SkipReason: r.skip, Attempts: r.attempts, NextAttemptAt: r.next,
-				Error: r.errText, SentAt: r.sentAt, BouncedAt: r.bounced,
+				Error: r.errText, SentAt: r.sentAt, BouncedAt: r.bounced, RelayMessageID: r.relayID,
 			}); err != nil {
 				return err
 			}

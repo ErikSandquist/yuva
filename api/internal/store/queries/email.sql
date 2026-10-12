@@ -75,7 +75,8 @@ WHERE workspace_id = $1 AND channel_id = $2 AND direction = 'in' AND header_mess
 -- name: FindConversationByHeaders :one
 SELECT c.* FROM message_emails e
 JOIN conversations c ON c.workspace_id = e.workspace_id AND c.id = e.conversation_id
-WHERE e.workspace_id = @workspace_id AND c.inbox_id = @inbox_id AND e.header_message_id = ANY(@ids::text[])
+WHERE e.workspace_id = @workspace_id AND c.inbox_id = @inbox_id
+  AND (e.header_message_id = ANY(@ids::text[]) OR e.relay_message_id = ANY(@ids::text[]))
 ORDER BY (c.contact_id = @contact_id) DESC, e.created_at DESC, e.message_id DESC
 LIMIT 1;
 
@@ -104,9 +105,15 @@ WHERE e.workspace_id = $1 AND e.conversation_id = $2 AND e.direction = 'in'
 ORDER BY e.created_at DESC, e.message_id DESC
 LIMIT 1;
 
+-- name: SetRelayMessageID :exec
+UPDATE message_emails SET relay_message_id = @relay_message_id
+WHERE workspace_id = @workspace_id AND message_id = @message_id AND direction = 'out';
+
 -- name: FindOutboundEmailByHeader :one
 SELECT e.message_id, e.conversation_id, e.to_addresses FROM message_emails e
-WHERE e.workspace_id = $1 AND e.direction = 'out' AND e.imported_at IS NULL AND e.header_message_id = $2;
+WHERE e.workspace_id = @workspace_id AND e.direction = 'out' AND e.imported_at IS NULL
+  AND (e.header_message_id = @header_message_id OR e.relay_message_id = @header_message_id)
+LIMIT 1;
 
 -- SES reports name only our Message-ID, so the message is found before the workspace is known
 -- (see "Hosting for others later" in docs/architecture.md).

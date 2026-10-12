@@ -28,7 +28,21 @@ type broadcastSender struct {
 	sent    []sentMail
 	refuse  func(to string) error
 	onSend  func(n int)
+	relay   func(to string) string
 	sending int
+}
+
+func (b *broadcastSender) SendRelayed(ctx context.Context, cfg email.SMTPConfig, from string, to []string, msg []byte) (string, error) {
+	if err := b.Send(ctx, cfg, from, to, msg); err != nil {
+		return "", err
+	}
+	b.mu.Lock()
+	relay := b.relay
+	b.mu.Unlock()
+	if relay == nil {
+		return "", nil
+	}
+	return relay(to[0]), nil
 }
 
 func (b *broadcastSender) Send(_ context.Context, cfg email.SMTPConfig, from string, to []string, msg []byte) error {

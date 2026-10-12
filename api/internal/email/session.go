@@ -12,9 +12,10 @@ import (
 	"time"
 )
 
-// Session sends several messages over one SMTP connection.
+// Session sends several messages over one SMTP connection. Send returns the Message-ID the relay
+// put on the message in place of ours, or "" (see RelayMessageID).
 type Session interface {
-	Send(ctx context.Context, from string, to []string, msg []byte) error
+	Send(ctx context.Context, from string, to []string, msg []byte) (string, error)
 	Close() error
 }
 
@@ -37,8 +38,8 @@ type oneShot struct {
 	cfg SMTPConfig
 }
 
-func (o *oneShot) Send(ctx context.Context, from string, to []string, msg []byte) error {
-	return o.s.Send(ctx, o.cfg, from, to, msg)
+func (o *oneShot) Send(ctx context.Context, from string, to []string, msg []byte) (string, error) {
+	return SendRelayed(ctx, o.s, o.cfg, from, to, msg)
 }
 
 func (o *oneShot) Close() error { return nil }
@@ -87,7 +88,7 @@ func (s SMTPSender) Open(ctx context.Context, cfg SMTPConfig) (Session, error) {
 			return nil, &SetupError{Err: err, Permanent: code >= 500 || code == 0}
 		}
 	}
-	return &smtpSession{c: c, conn: conn}, nil
+	return &smtpSession{c: c, conn: conn, host: cfg.Host}, nil
 }
 
 func isTLSError(err error) bool {
@@ -99,43 +100,27 @@ func isTLSError(err error) bool {
 type smtpSession struct {
 	c    *smtp.Client
 	conn net.Conn
+	host string
 }
 
-func (s *smtpSession) Send(ctx context.Context, from string, to []string, msg []byte) error {
+func (s *smtpSession) Send(ctx context.Context, from string, to []string, msg []byte) (string, error) {
 	deadline := time.Now().Add(time.Minute)
 	if d, ok := ctx.Deadline(); ok && d.Before(deadline) {
 		deadline = d
 	}
 	_ = s.conn.SetDeadline(deadline)
-	err := func() error {
-		if err := s.c.Mail(from); err != nil {
-			return err
-		}
-		for _, rcpt := range to {
-			if err := s.c.Rcpt(rcpt); err != nil {
-				return err
-			}
-		}
-		w, err := s.c.Data()
-		if err != nil {
-			return err
-		}
-		if _, err := w.Write(msg); err != nil {
-			return err
-		}
-		return w.Close()
-	}()
+	reply, err := transaction(s.c, from, to, msg)
 	if err == nil {
-		return nil
+		return RelayMessageID(s.host, DataReplyID(reply)), nil
 	}
 	var tp *textproto.Error
 	if errors.As(err, &tp) {
 		if rerr := s.c.Reset(); rerr != nil {
-			return &BrokenError{Err: err}
+			return "", &BrokenError{Err: err}
 		}
-		return classify(err)
+		return "", classify(err)
 	}
-	return &BrokenError{Err: err}
+	return "", &BrokenError{Err: err}
 }
 
 func (s *smtpSession) Close() error {

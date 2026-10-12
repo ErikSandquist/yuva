@@ -312,19 +312,20 @@ func (s *Server) noteBroadcastPaused(ctx context.Context, b store.Broadcast, det
 	}
 }
 
-// deliveryOfTokens finds the delivery whose Message-ID a reply names, for a broadcast of the
-// receiving channel's inbox.
+// deliveryOfTokens finds the delivery whose Message-ID a reply names, by the token in ours or by the
+// one its relay put in place of ours, for a broadcast of the receiving channel's inbox.
 func deliveryOfTokens(ctx context.Context, q *store.Queries, ch store.FindEmailChannelByAddressRow, m *email.Message, contactID uuid.UUID) (*store.BroadcastDelivery, error) {
+	ids := slices.Concat(m.InReplyTo, m.References)
+	if len(ids) == 0 {
+		return nil, nil
+	}
 	var tokens []string
-	for _, id := range slices.Concat(m.InReplyTo, m.References) {
+	for _, id := range ids {
 		if t, _, ok := email.TokenFromID(id); ok {
 			tokens = append(tokens, t)
 		}
 	}
-	if len(tokens) == 0 {
-		return nil, nil
-	}
-	d, err := q.FindBroadcastDeliveryByTokens(ctx, store.FindBroadcastDeliveryByTokensParams{WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Tokens: tokens, ContactID: contactID})
+	d, err := q.FindBroadcastDeliveryByTokens(ctx, store.FindBroadcastDeliveryByTokensParams{WorkspaceID: ch.WorkspaceID, InboxID: ch.InboxID, Tokens: tokens, Ids: ids, ContactID: contactID})
 	if store.IsNotFound(err) {
 		return nil, nil
 	}

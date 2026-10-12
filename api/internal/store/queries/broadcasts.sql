@@ -160,7 +160,7 @@ WHERE workspace_id = @workspace_id AND broadcast_id = @broadcast_id AND state = 
 -- name: SaveBroadcastDelivery :exec
 UPDATE broadcast_deliveries SET state = @state, skip_reason = sqlc.narg(skip_reason), attempts = @attempts,
     next_attempt_at = sqlc.narg(next_attempt_at), error = sqlc.narg(error), sent_at = sqlc.narg(sent_at),
-    bounced_at = sqlc.narg(bounced_at)
+    bounced_at = sqlc.narg(bounced_at), relay_message_id = coalesce(sqlc.narg(relay_message_id), relay_message_id)
 WHERE workspace_id = @workspace_id AND id = @id
   AND (state = 'queued' OR (state = 'skipped' AND skip_reason = 'cancelled' AND @state::text <> 'queued'));
 
@@ -193,12 +193,15 @@ JOIN workspaces w ON w.id = d.workspace_id
 WHERE d.header_message_id = @header_message_id AND w.deleted_at IS NULL;
 
 -- name: FindBroadcastDeliveryByHeader :one
-SELECT * FROM broadcast_deliveries WHERE workspace_id = @workspace_id AND header_message_id = @header_message_id;
+SELECT * FROM broadcast_deliveries
+WHERE workspace_id = @workspace_id AND (header_message_id = @header_message_id OR relay_message_id = @header_message_id)
+LIMIT 1;
 
 -- name: FindBroadcastDeliveryByTokens :one
 SELECT d.* FROM broadcast_deliveries d
 JOIN broadcasts b ON b.workspace_id = d.workspace_id AND b.id = d.broadcast_id
-WHERE d.workspace_id = @workspace_id AND b.inbox_id = @inbox_id AND d.email_token = ANY(@tokens::text[])
+WHERE d.workspace_id = @workspace_id AND b.inbox_id = @inbox_id
+  AND (d.email_token = ANY(@tokens::text[]) OR d.relay_message_id = ANY(@ids::text[]))
 ORDER BY (d.contact_id = @contact_id) DESC, d.created_at DESC
 LIMIT 1;
 

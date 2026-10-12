@@ -57,6 +57,7 @@ func TestSMTPReplies(t *testing.T) {
 // addresses starting with "bad".
 type fakeSMTP struct {
 	conns, messages, resets int
+	dataReply               string
 }
 
 func (f *fakeSMTP) serve(t *testing.T, l net.Listener) {
@@ -91,7 +92,11 @@ func (f *fakeSMTP) serve(t *testing.T, l net.Listener) {
 						return
 					}
 					f.messages++
-					_ = tp.PrintfLine("250 2.0.0 queued")
+					reply := f.dataReply
+					if reply == "" {
+						reply = "2.0.0 queued"
+					}
+					_ = tp.PrintfLine("250 %s", reply)
 				case cmd == "RSET":
 					f.resets++
 					_ = tp.PrintfLine("250 2.0.0 reset")
@@ -125,14 +130,14 @@ func TestSessionReusesOneConnection(t *testing.T) {
 		t.Fatal(err)
 	}
 	msg := []byte("Subject: hi\r\n\r\nhello\r\n")
-	if err := s.Send(ctx, "news@example.com", []string{"a@example.org"}, msg); err != nil {
+	if _, err := s.Send(ctx, "news@example.com", []string{"a@example.org"}, msg); err != nil {
 		t.Fatal(err)
 	}
-	err = s.Send(ctx, "news@example.com", []string{"bad@example.org"}, msg)
+	_, err = s.Send(ctx, "news@example.com", []string{"bad@example.org"}, msg)
 	if !email.BadMailbox(err) || !email.IsPermanent(err) {
 		t.Fatalf("refused recipient: %v", err)
 	}
-	if err := s.Send(ctx, "news@example.com", []string{"b@example.org"}, msg); err != nil {
+	if _, err := s.Send(ctx, "news@example.com", []string{"b@example.org"}, msg); err != nil {
 		t.Fatalf("after a refusal: %v", err)
 	}
 	if err := s.Close(); err != nil {

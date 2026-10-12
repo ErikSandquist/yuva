@@ -575,7 +575,7 @@ func (q *Queries) DeleteOldSendingDays(ctx context.Context, arg DeleteOldSending
 }
 
 const dueBroadcastDeliveries = `-- name: DueBroadcastDeliveries :many
-SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at FROM broadcast_deliveries
+SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at, relay_message_id FROM broadcast_deliveries
 WHERE workspace_id = $1 AND broadcast_id = $2 AND state = 'queued'
   AND (next_attempt_at IS NULL OR next_attempt_at <= $3::timestamptz)
 ORDER BY next_attempt_at NULLS FIRST, id
@@ -626,6 +626,7 @@ func (q *Queries) DueBroadcastDeliveries(ctx context.Context, arg DueBroadcastDe
 			&i.ClickedAt,
 			&i.ConversationID,
 			&i.CreatedAt,
+			&i.RelayMessageID,
 		); err != nil {
 			return nil, err
 		}
@@ -638,7 +639,7 @@ func (q *Queries) DueBroadcastDeliveries(ctx context.Context, arg DueBroadcastDe
 }
 
 const findBroadcastDeliveryAnyWorkspace = `-- name: FindBroadcastDeliveryAnyWorkspace :one
-SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at FROM broadcast_deliveries d
+SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at, d.relay_message_id FROM broadcast_deliveries d
 JOIN workspaces w ON w.id = d.workspace_id
 WHERE d.header_message_id = $1 AND w.deleted_at IS NULL
 `
@@ -671,12 +672,15 @@ func (q *Queries) FindBroadcastDeliveryAnyWorkspace(ctx context.Context, headerM
 		&i.ClickedAt,
 		&i.ConversationID,
 		&i.CreatedAt,
+		&i.RelayMessageID,
 	)
 	return i, err
 }
 
 const findBroadcastDeliveryByHeader = `-- name: FindBroadcastDeliveryByHeader :one
-SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at FROM broadcast_deliveries WHERE workspace_id = $1 AND header_message_id = $2
+SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at, relay_message_id FROM broadcast_deliveries
+WHERE workspace_id = $1 AND (header_message_id = $2 OR relay_message_id = $2)
+LIMIT 1
 `
 
 type FindBroadcastDeliveryByHeaderParams struct {
@@ -710,15 +714,17 @@ func (q *Queries) FindBroadcastDeliveryByHeader(ctx context.Context, arg FindBro
 		&i.ClickedAt,
 		&i.ConversationID,
 		&i.CreatedAt,
+		&i.RelayMessageID,
 	)
 	return i, err
 }
 
 const findBroadcastDeliveryByTokens = `-- name: FindBroadcastDeliveryByTokens :one
-SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at FROM broadcast_deliveries d
+SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at, d.relay_message_id FROM broadcast_deliveries d
 JOIN broadcasts b ON b.workspace_id = d.workspace_id AND b.id = d.broadcast_id
-WHERE d.workspace_id = $1 AND b.inbox_id = $2 AND d.email_token = ANY($3::text[])
-ORDER BY (d.contact_id = $4) DESC, d.created_at DESC
+WHERE d.workspace_id = $1 AND b.inbox_id = $2
+  AND (d.email_token = ANY($3::text[]) OR d.relay_message_id = ANY($4::text[]))
+ORDER BY (d.contact_id = $5) DESC, d.created_at DESC
 LIMIT 1
 `
 
@@ -726,6 +732,7 @@ type FindBroadcastDeliveryByTokensParams struct {
 	WorkspaceID uuid.UUID
 	InboxID     uuid.UUID
 	Tokens      []string
+	Ids         []string
 	ContactID   uuid.UUID
 }
 
@@ -734,6 +741,7 @@ func (q *Queries) FindBroadcastDeliveryByTokens(ctx context.Context, arg FindBro
 		arg.WorkspaceID,
 		arg.InboxID,
 		arg.Tokens,
+		arg.Ids,
 		arg.ContactID,
 	)
 	var i BroadcastDelivery
@@ -760,6 +768,7 @@ func (q *Queries) FindBroadcastDeliveryByTokens(ctx context.Context, arg FindBro
 		&i.ClickedAt,
 		&i.ConversationID,
 		&i.CreatedAt,
+		&i.RelayMessageID,
 	)
 	return i, err
 }
@@ -812,7 +821,7 @@ func (q *Queries) GetBroadcast(ctx context.Context, arg GetBroadcastParams) (Bro
 }
 
 const getBroadcastDelivery = `-- name: GetBroadcastDelivery :one
-SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at FROM broadcast_deliveries WHERE workspace_id = $1 AND id = $2
+SELECT id, workspace_id, broadcast_id, contact_id, list_id, email, email_token, header_message_id, state, skip_reason, attempts, next_attempt_at, error, sent_at, bounced_at, complained_at, unsubscribed_at, replied_at, auto_replied_at, clicked_at, conversation_id, created_at, relay_message_id FROM broadcast_deliveries WHERE workspace_id = $1 AND id = $2
 `
 
 type GetBroadcastDeliveryParams struct {
@@ -846,6 +855,7 @@ func (q *Queries) GetBroadcastDelivery(ctx context.Context, arg GetBroadcastDeli
 		&i.ClickedAt,
 		&i.ConversationID,
 		&i.CreatedAt,
+		&i.RelayMessageID,
 	)
 	return i, err
 }
@@ -960,7 +970,7 @@ func (q *Queries) IsContactSubscribed(ctx context.Context, arg IsContactSubscrib
 }
 
 const listBroadcastDeliveries = `-- name: ListBroadcastDeliveries :many
-SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at, c.name AS contact_name FROM broadcast_deliveries d
+SELECT d.id, d.workspace_id, d.broadcast_id, d.contact_id, d.list_id, d.email, d.email_token, d.header_message_id, d.state, d.skip_reason, d.attempts, d.next_attempt_at, d.error, d.sent_at, d.bounced_at, d.complained_at, d.unsubscribed_at, d.replied_at, d.auto_replied_at, d.clicked_at, d.conversation_id, d.created_at, d.relay_message_id, c.name AS contact_name FROM broadcast_deliveries d
 JOIN contacts c ON c.workspace_id = d.workspace_id AND c.id = d.contact_id
 WHERE d.workspace_id = $1 AND d.broadcast_id = $2
   AND ($3::text IS NULL OR d.state = $3::text)
@@ -1005,6 +1015,7 @@ type ListBroadcastDeliveriesRow struct {
 	ClickedAt       *time.Time
 	ConversationID  *uuid.UUID
 	CreatedAt       time.Time
+	RelayMessageID  *string
 	ContactName     string
 }
 
@@ -1048,6 +1059,7 @@ func (q *Queries) ListBroadcastDeliveries(ctx context.Context, arg ListBroadcast
 			&i.ClickedAt,
 			&i.ConversationID,
 			&i.CreatedAt,
+			&i.RelayMessageID,
 			&i.ContactName,
 		); err != nil {
 			return nil, err
@@ -1951,21 +1963,22 @@ func (q *Queries) SaveBroadcast(ctx context.Context, arg SaveBroadcastParams) (B
 const saveBroadcastDelivery = `-- name: SaveBroadcastDelivery :exec
 UPDATE broadcast_deliveries SET state = $1, skip_reason = $2, attempts = $3,
     next_attempt_at = $4, error = $5, sent_at = $6,
-    bounced_at = $7
-WHERE workspace_id = $8 AND id = $9
+    bounced_at = $7, relay_message_id = coalesce($8, relay_message_id)
+WHERE workspace_id = $9 AND id = $10
   AND (state = 'queued' OR (state = 'skipped' AND skip_reason = 'cancelled' AND $1::text <> 'queued'))
 `
 
 type SaveBroadcastDeliveryParams struct {
-	State         string
-	SkipReason    *string
-	Attempts      int32
-	NextAttemptAt *time.Time
-	Error         *string
-	SentAt        *time.Time
-	BouncedAt     *time.Time
-	WorkspaceID   uuid.UUID
-	ID            uuid.UUID
+	State          string
+	SkipReason     *string
+	Attempts       int32
+	NextAttemptAt  *time.Time
+	Error          *string
+	SentAt         *time.Time
+	BouncedAt      *time.Time
+	RelayMessageID *string
+	WorkspaceID    uuid.UUID
+	ID             uuid.UUID
 }
 
 func (q *Queries) SaveBroadcastDelivery(ctx context.Context, arg SaveBroadcastDeliveryParams) error {
@@ -1977,6 +1990,7 @@ func (q *Queries) SaveBroadcastDelivery(ctx context.Context, arg SaveBroadcastDe
 		arg.Error,
 		arg.SentAt,
 		arg.BouncedAt,
+		arg.RelayMessageID,
 		arg.WorkspaceID,
 		arg.ID,
 	)

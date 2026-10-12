@@ -9,6 +9,7 @@ import (
 	"net/netip"
 	"net/smtp"
 	"net/textproto"
+	"regexp"
 	"strings"
 
 	"github.com/productdevbook/yuva/api/internal/webhook"
@@ -24,6 +25,20 @@ type SMTPConfig struct {
 
 type Sender interface {
 	Send(ctx context.Context, cfg SMTPConfig, from string, to []string, msg []byte) error
+}
+
+// RelaySender is a Sender that also reports the Message-ID the relay gives the message in place
+// of ours, or "" when it keeps ours or does not say.
+type RelaySender interface {
+	SendRelayed(ctx context.Context, cfg SMTPConfig, from string, to []string, msg []byte) (string, error)
+}
+
+// SendRelayed sends msg and returns the Message-ID the relay put on it in place of ours, or "".
+func SendRelayed(ctx context.Context, s Sender, cfg SMTPConfig, from string, to []string, msg []byte) (string, error) {
+	if r, ok := s.(RelaySender); ok {
+		return r.SendRelayed(ctx, cfg, from, to, msg)
+	}
+	return "", s.Send(ctx, cfg, from, to, msg)
 }
 
 // PermanentError is a refusal that retrying will not change (an SMTP 5xx reply).
@@ -71,11 +86,20 @@ func CheckSMTPHost(host string, allowPrivate bool) error {
 }
 
 func (s SMTPSender) Send(ctx context.Context, cfg SMTPConfig, from string, to []string, msg []byte) error {
+	_, err := s.SendRelayed(ctx, cfg, from, to, msg)
+	return err
+}
+
+func (s SMTPSender) SendRelayed(ctx context.Context, cfg SMTPConfig, from string, to []string, msg []byte) (string, error) {
 	conn, err := s.dial(ctx, cfg)
 	if err != nil {
-		return err
+		return "", err
 	}
-	return classify(send(ctx, conn, cfg, from, to, msg))
+	reply, err := send(ctx, conn, cfg, from, to, msg)
+	if err != nil {
+		return "", classify(err)
+	}
+	return RelayMessageID(cfg.Host, DataReplyID(reply)), nil
 }
 
 func (s SMTPSender) dial(ctx context.Context, cfg SMTPConfig) (net.Conn, error) {
@@ -113,7 +137,7 @@ func (s SMTPSender) dial(ctx context.Context, cfg SMTPConfig) (net.Conn, error) 
 	return nil, last
 }
 
-func send(ctx context.Context, conn net.Conn, cfg SMTPConfig, from string, to []string, msg []byte) error {
+func send(ctx context.Context, conn net.Conn, cfg SMTPConfig, from string, to []string, msg []byte) (string, error) {
 	if deadline, ok := ctx.Deadline(); ok {
 		_ = conn.SetDeadline(deadline)
 	}
@@ -124,36 +148,96 @@ func send(ctx context.Context, conn net.Conn, cfg SMTPConfig, from string, to []
 	c, err := smtp.NewClient(conn, cfg.Host)
 	if err != nil {
 		conn.Close()
-		return err
+		return "", err
 	}
 	defer c.Close()
 	if cfg.TLS == "starttls" {
 		if err := c.StartTLS(tlsConfig); err != nil {
-			return err
+			return "", err
 		}
 	}
 	if cfg.Username != "" {
 		if err := c.Auth(smtp.PlainAuth("", cfg.Username, cfg.Password, cfg.Host)); err != nil {
-			return err
+			return "", err
 		}
 	}
+	reply, err := transaction(c, from, to, msg)
+	if err != nil {
+		return "", err
+	}
+	return reply, c.Quit()
+}
+
+func transaction(c *smtp.Client, from string, to []string, msg []byte) (string, error) {
 	if err := c.Mail(from); err != nil {
-		return err
+		return "", err
 	}
 	for _, rcpt := range to {
 		if err := c.Rcpt(rcpt); err != nil {
-			return err
+			return "", err
 		}
 	}
-	w, err := c.Data()
+	return data(c, msg)
+}
+
+// data sends DATA through the client's text connection, because net/smtp drops the final reply's
+// text, which is where a relay names the id it gave the message.
+func data(c *smtp.Client, msg []byte) (string, error) {
+	id, err := c.Text.Cmd("DATA")
 	if err != nil {
-		return err
+		return "", err
 	}
+	c.Text.StartResponse(id)
+	_, _, err = c.Text.ReadResponse(354)
+	c.Text.EndResponse(id)
+	if err != nil {
+		return "", err
+	}
+	w := c.Text.DotWriter()
 	if _, err := w.Write(msg); err != nil {
-		return err
+		w.Close()
+		return "", err
 	}
 	if err := w.Close(); err != nil {
-		return err
+		return "", err
 	}
-	return c.Quit()
+	_, reply, err := c.Text.ReadResponse(250)
+	return reply, err
+}
+
+var (
+	queuedAs = regexp.MustCompile(`(?i)\bqueued as ([A-Za-z0-9._-]+)`)
+	okID     = regexp.MustCompile(`(?i)^ok ([A-Za-z0-9._-]+)`)
+	sesHost  = regexp.MustCompile(`^email-smtp(?:-fips)?\.([a-z]{2}(?:-[a-z]+)+-\d)\.amazonaws\.com$`)
+	sesID    = regexp.MustCompile(`^[0-9a-f]{8,32}(?:-[0-9a-f]{4,32}){3,8}$`)
+)
+
+// DataReplyID is the id a relay gives the message in its reply to DATA ("Ok <id>" from Amazon SES,
+// "queued as <id>" from Postfix and others), or "".
+func DataReplyID(reply string) string {
+	reply = strings.TrimSpace(reply)
+	if m := enhancedStatus.FindStringIndex(reply); m != nil {
+		reply = strings.TrimSpace(reply[m[1]:])
+	}
+	if m := okID.FindStringSubmatch(reply); m != nil {
+		return m[1]
+	}
+	if m := queuedAs.FindStringSubmatch(reply); m != nil {
+		return m[1]
+	}
+	return ""
+}
+
+// RelayMessageID is the Message-ID a relay puts on a message in place of ours, given the id it
+// named in its reply to DATA: Amazon SES writes <id>@<region>.amazonses.com (email.amazonses.com
+// in us-east-1). Other relays keep our Message-ID, and "" is returned.
+func RelayMessageID(host, providerID string) string {
+	m := sesHost.FindStringSubmatch(strings.ToLower(strings.TrimSuffix(host, ".")))
+	if m == nil || !sesID.MatchString(providerID) {
+		return ""
+	}
+	if m[1] == "us-east-1" {
+		return providerID + "@email.amazonses.com"
+	}
+	return providerID + "@" + m[1] + ".amazonses.com"
 }
