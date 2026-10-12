@@ -1321,7 +1321,11 @@ msgid "Approved"
 msgstr "Approved"
 
 #: src/features/broadcasts/ListSettings.tsx
+msgid "Archive"
+msgstr "Archive"
+
 #: src/features/migrations/text.ts
+msgctxt "mail folder kind"
 msgid "Archive"
 msgstr "Archive"
 

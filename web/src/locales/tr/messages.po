@@ -1321,9 +1321,13 @@ msgid "Approved"
 msgstr "Onaylandı"
 
 #: src/features/broadcasts/ListSettings.tsx
-#: src/features/migrations/text.ts
 msgid "Archive"
 msgstr "Arşivle"
+
+#: src/features/migrations/text.ts
+msgctxt "mail folder kind"
+msgid "Archive"
+msgstr "Arşiv"
 
 #: src/features/broadcasts/ListPage.tsx
 msgid "Archived"

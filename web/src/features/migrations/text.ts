@@ -63,7 +63,7 @@ export function useMigrationText() {
     folderKind: {
       inbox: t`Inbox`,
       sent: t`Sent mail`,
-      archive: t`Archive`,
+      archive: t({ message: "Archive", context: "mail folder kind" }),
       all: t`All mail`,
       user: t`Your folder`,
       label: t`Label`,
