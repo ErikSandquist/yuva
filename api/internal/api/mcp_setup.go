@@ -22,7 +22,8 @@ var (
 	errNotManager    = problem(http.StatusForbidden, "forbidden", "only owners and admins set up inboxes and channels")
 	errNotChatTool   = errValidation("this tool changes chat channels only; list_channels shows each channel's kind")
 	releasePattern   = regexp.MustCompile(`^\d+\.\d+\.\d+$`)
-	snippetFramework = []any{"html", "react", "nextjs", "nuxt", "vue", "astro", "shadcn", "docs-html", "docs-nuxt", "docs-react"}
+	snippetFramework = []any{"html", "react", "nextjs", "nuxt", "vue", "astro", "shadcn", "docs-html", "docs-nuxt", "docs-react",
+		"subscribe-html", "subscribe-react", "subscribe-nuxt", "subscribe-shadcn"}
 )
 
 func mayManage(p principal) bool { return requireManagerOrKey(p) == nil }
@@ -126,23 +127,25 @@ type updateChatChannelIn struct {
 }
 
 type installSnippetIn struct {
-	ChannelID uuid.UUID `json:"channel_id" jsonschema:"a chat channel from list_channels or create_chat_channel"`
-	Framework string    `json:"framework" jsonschema:"the site's framework; html for plain HTML or anything else; the docs- values are for documentation sites"`
-	Purpose   string    `json:"purpose,omitempty" jsonschema:"chat for the live chat bubble (default), docs for page feedback and discussions under documentation pages"`
+	ChannelID uuid.UUID   `json:"channel_id" jsonschema:"a chat channel from list_channels or create_chat_channel"`
+	Framework string      `json:"framework" jsonschema:"the site's framework; html for plain HTML or anything else; the docs- values are for documentation sites, the subscribe- values for a mailing list's subscribe form"`
+	Purpose   string      `json:"purpose,omitempty" jsonschema:"chat for the live chat bubble (default), docs for page feedback and discussions under documentation pages, subscribe for a mailing list's subscribe form"`
+	ListIDs   []uuid.UUID `json:"list_ids,omitempty" jsonschema:"for subscribe: the public lists of the channel's inbox the form offers, from list_mailing_lists; every public list when empty"`
 }
 
 type installSnippetOut struct {
-	ChannelID      uuid.UUID `json:"channel_id"`
-	Framework      string    `json:"framework"`
-	Purpose        string    `json:"purpose" jsonschema:"chat or docs"`
-	Language       string    `json:"language" jsonschema:"the code's language: html, tsx, ts, vue or astro"`
-	Code           string    `json:"code" jsonschema:"ready to paste, with this server's URL and the channel's public key; lines starting with // or <!-- name the file"`
-	Install        string    `json:"install,omitempty" jsonschema:"run this in the site's project first"`
-	Placement      string    `json:"placement" jsonschema:"where the code goes"`
-	GuideURL       string    `json:"guide_url" jsonschema:"the full guide"`
-	ServerURL      string    `json:"server_url"`
-	PublicKey      string    `json:"public_key"`
-	AllowedOrigins []string  `json:"allowed_origins" jsonschema:"the code works only on pages of these origins; add others with update_chat_channel"`
+	ChannelID      uuid.UUID   `json:"channel_id"`
+	Framework      string      `json:"framework"`
+	Purpose        string      `json:"purpose" jsonschema:"chat, docs or subscribe"`
+	ListIDs        []uuid.UUID `json:"list_ids,omitempty" jsonschema:"the lists a subscribe form offers"`
+	Language       string      `json:"language" jsonschema:"the code's language: html, tsx, ts, vue or astro"`
+	Code           string      `json:"code" jsonschema:"ready to paste, with this server's URL and the channel's public key; lines starting with // or <!-- name the file"`
+	Install        string      `json:"install,omitempty" jsonschema:"run this in the site's project first"`
+	Placement      string      `json:"placement" jsonschema:"where the code goes"`
+	GuideURL       string      `json:"guide_url" jsonschema:"the full guide"`
+	ServerURL      string      `json:"server_url"`
+	PublicKey      string      `json:"public_key"`
+	AllowedOrigins []string    `json:"allowed_origins" jsonschema:"the code works only on pages of these origins; add others with update_chat_channel"`
 }
 
 type snippet struct {
@@ -318,6 +321,113 @@ func installSnippet(framework, purpose, server, key, version string) snippet {
 		)}
 }
 
+// subscribeSnippet holds the subscribe form code; the panel's Form tab shows the same lines.
+func subscribeSnippet(framework, server, key, version string, listIDs []uuid.UUID, nameRequired bool) snippet {
+	guide := docsBaseURL + "/lists.md#3-add-the-form-to-your-site"
+	ids := make([]string, len(listIDs))
+	for i, id := range listIDs {
+		ids[i] = id.String()
+	}
+	quoted := func(q string) string {
+		parts := make([]string, len(ids))
+		for i, id := range ids {
+			parts[i] = q + id + q
+		}
+		return strings.Join(parts, ", ")
+	}
+	var lists, name []string
+	switch strings.TrimPrefix(framework, "subscribe-") {
+	case "react", "nextjs":
+		if len(ids) > 0 {
+			lists = []string{`      lists={[` + quoted(`"`) + `]}`}
+		}
+		if nameRequired {
+			name = []string{`      name="required"`}
+		}
+		code := []string{`"use client"`, `import { YuvaSubscribe } from "useyuva/react"`, ``, `export function Newsletter() {`, `  return (`,
+			`    <YuvaSubscribe`, `      channel="` + key + `"`, `      server="` + server + `"`}
+		code = append(append(append(code, lists...), name...), `    />`, `  )`, `}`)
+		return snippet{language: "tsx", install: npmInstall(version), guide: guide,
+			placement: "Save it as components/newsletter.tsx and render <Newsletter /> where the form should appear.",
+			code:      joinLines(code...)}
+	case "nuxt":
+		attrs := ""
+		if len(ids) > 0 {
+			attrs += ` :lists="[` + quoted(`'`) + `]"`
+		}
+		if nameRequired {
+			attrs += ` name="required"`
+		}
+		return snippet{language: "ts", install: npmInstall(version), guide: guide,
+			placement: "Add the module to nuxt.config.ts (once; it is the same as for the chat) and put <YuvaSubscribe /> where the form should appear.",
+			code: joinLines(
+				`// nuxt.config.ts`,
+				`export default defineNuxtConfig({`,
+				`  modules: ["useyuva/nuxt"],`,
+				`  yuva: {`,
+				`    server: "`+server+`",`,
+				`    channel: "`+key+`",`,
+				`  },`,
+				`})`,
+				``,
+				`<!-- any page or component -->`,
+				`<YuvaSubscribe`+attrs+` />`,
+			)}
+	case "shadcn":
+		if len(ids) > 0 {
+			lists = []string{`  lists={[` + quoted(`"`) + `]}`}
+		}
+		if nameRequired {
+			name = []string{`  name="required"`}
+		}
+		code := []string{`import { YuvaSubscribe } from "@/components/yuva-subscribe"`, ``, `<YuvaSubscribe`, `  server="` + server + `"`, `  channel="` + key + `"`}
+		code = append(append(append(code, lists...), name...), `/>`)
+		return snippet{language: "tsx", guide: guide,
+			install:   "npx shadcn@latest add https://useyuva.com/r/yuva-subscribe.json",
+			placement: "The install copies the component into your project; render it where the form should appear.",
+			code:      joinLines(code...)}
+	}
+	if len(ids) > 0 {
+		lists = []string{`  lists="` + strings.Join(ids, ",") + `"`}
+	}
+	if nameRequired {
+		name = []string{`  name="required"`}
+	}
+	code := []string{`<script src="` + server + `/yuva-subscribe.js" defer></script>`, ``, `<yuva-subscribe`, `  channel="` + key + `"`, `  server="` + server + `"`}
+	code = append(append(append(code, lists...), name...), `></yuva-subscribe>`)
+	return snippet{language: "html", guide: guide,
+		placement: "Paste it where the form should appear; the script tag is needed once per page.",
+		code:      joinLines(code...)}
+}
+
+// subscribeFormChecks refuses lists a form on the channel cannot offer and reports whether the
+// form asks for a name, as it does for an inbox in Turkish.
+func (c *mcpCall) subscribeFormChecks(ctx context.Context, ch oas.Channel, listIDs []uuid.UUID) (bool, error) {
+	if len(listIDs) > 0 {
+		if err := keyMayCall(c.p, "GetMailingList"); err != nil {
+			return false, mcpScopeError(err)
+		}
+	}
+	for _, id := range listIDs {
+		res, err := c.s.GetMailingList(ctx, oas.GetMailingListRequestObject{ListId: id})
+		if err != nil {
+			return false, err
+		}
+		l := res.(oas.GetMailingList200JSONResponse)
+		if l.InboxId != ch.InboxId {
+			return false, errValidation("the list " + id.String() + " belongs to another inbox than the chat channel; use a chat channel of the list's inbox")
+		}
+		if !l.Public {
+			return false, errValidation("the list " + id.String() + " is private and forms do not offer it; make it public first")
+		}
+	}
+	res, err := c.s.GetInbox(ctx, oas.GetInboxRequestObject{InboxId: ch.InboxId})
+	if err != nil {
+		return false, err
+	}
+	return res.(oas.GetInbox200JSONResponse).DefaultLocale == "tr", nil
+}
+
 func (c *mcpCall) getChannel(ctx context.Context, id uuid.UUID) (oas.Channel, error) {
 	res, err := c.s.GetChannel(ctx, oas.GetChannelRequestObject{ChannelId: id})
 	if err != nil {
@@ -458,8 +568,8 @@ var mcpSetupTools = []mcpTool{
 			return c.updateChatChannel(ctx, in)
 		}),
 	defineTool("get_install_snippet", "Get the install code",
-		"Returns the code that adds a chat channel to a site, filled with this server's URL and the channel's public key (not a secret), the install command when one is needed, where the code goes and the guide. purpose chat is the live chat bubble; docs is page feedback and discussions under documentation pages.",
-		readOnly, map[string][]any{"framework": snippetFramework, "purpose": {"chat", "docs"}},
+		"Returns the code that adds a chat channel to a site, filled with this server's URL and the channel's public key (not a secret), the install command when one is needed, where the code goes and the guide. purpose chat is the live chat bubble; docs is page feedback and discussions under documentation pages; subscribe is a <yuva-subscribe> form for the mailing lists in list_ids (html, react, nuxt or shadcn).",
+		readOnly, map[string][]any{"framework": snippetFramework, "purpose": {"chat", "docs", "subscribe"}},
 		mcpTool{ops: []string{"GetChannel"}},
 		func(ctx context.Context, c *mcpCall, in installSnippetIn) (installSnippetOut, error) {
 			ch, err := c.getChannel(ctx, in.ChannelID)
@@ -472,15 +582,29 @@ var mcpSetupTools = []mcpTool{
 			purpose := in.Purpose
 			if strings.HasPrefix(in.Framework, "docs-") {
 				purpose = "docs"
+			} else if strings.HasPrefix(in.Framework, "subscribe-") {
+				purpose = "subscribe"
 			} else if purpose == "" {
 				purpose = "chat"
 			}
 			server := c.s.auth.PublicURL
-			sn := installSnippet(in.Framework, purpose, server, ch.Chat.PublicKey, c.s.version)
+			var sn snippet
+			if purpose == "subscribe" {
+				nameRequired, err := c.subscribeFormChecks(ctx, ch, in.ListIDs)
+				if err != nil {
+					return installSnippetOut{}, err
+				}
+				sn = subscribeSnippet(in.Framework, server, ch.Chat.PublicKey, c.s.version, in.ListIDs, nameRequired)
+			} else {
+				sn = installSnippet(in.Framework, purpose, server, ch.Chat.PublicKey, c.s.version)
+			}
 			out := installSnippetOut{
 				ChannelID: ch.Id, Framework: in.Framework, Purpose: purpose, Language: sn.language, Code: sn.code,
 				Install: sn.install, Placement: sn.placement, GuideURL: sn.guide, ServerURL: server,
 				PublicKey: ch.Chat.PublicKey, AllowedOrigins: channelOut(ch).AllowedOrigins,
+			}
+			if purpose == "subscribe" {
+				out.ListIDs = in.ListIDs
 			}
 			return out, nil
 		}),
