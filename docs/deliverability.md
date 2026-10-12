@@ -58,7 +58,9 @@ Records take a while to spread. Run the check again when your provider says they
 ### Amazon SES
 
 1. In the SES console, create a domain identity for your sending domain with Easy DKIM. SES shows three
-   CNAME records; publish them. Verification can take up to 72 hours. Easy DKIM signs with your domain.
+   CNAME records; publish them. Verification can take up to 72 hours. Easy DKIM signs with your domain,
+   unsubscribe headers included, so an SES channel relies on it and does not use
+   [Yuva DKIM](#4-sign-with-yuva-dkim).
 2. Set up a custom MAIL FROM domain so SPF passes for your own domain too: pick a subdomain of the
    identity that you use for nothing else (such as `bounce.example.com`), then publish one MX record
    (`10 feedback-smtp.<region>.amazonses.com`) and a TXT record (`"v=spf1 include:amazonses.com ~all"`)
@@ -102,6 +104,12 @@ Use it when the check says DKIM passes only for your provider's domain, or the s
 cover the unsubscribe headers, or when your provider cannot sign with your domain at all. Yuva then
 signs the channel's broadcasts, test mails, confirmation and welcome mails itself, over the unsubscribe
 headers. Your provider's signature stays next to it; support replies are not changed.
+
+Yuva DKIM is for relays other than Amazon SES. SES changes `From`, `To`, `Reply-To` and `Date` after
+Yuva has signed, which breaks any signature added before it, and signs every mail with your verified
+domain itself. Yuva therefore refuses to turn its DKIM on for a channel whose broadcasts go through
+SES, and does not sign through SES even if a key was turned on earlier; the channel's sending page says
+why.
 
 1. Open the channel's sending page (above) and find Yuva DKIM. Pick a selector (lowercase letters,
    digits and dashes; `yuva` by default) and press "Create key". The key is RSA 2048; the private key

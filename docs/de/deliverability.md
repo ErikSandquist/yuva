@@ -61,7 +61,8 @@ verifiziert meldet.
 
 1. Legen Sie in der SES-Konsole für Ihre Absenderdomain eine Domain-Identität mit Easy DKIM an. SES zeigt drei
    CNAME-Einträge; veröffentlichen Sie sie. Die Verifizierung kann bis zu 72 Stunden dauern. Easy DKIM
-   signiert mit Ihrer Domain.
+   signiert mit Ihrer Domain, die Abmelde-Header eingeschlossen; ein SES-Kanal verlässt sich darauf und nutzt
+   [Yuva DKIM](#4-mit-yuva-dkim-signieren) nicht.
 2. Richten Sie eine eigene MAIL-FROM-Domain ein, damit SPF auch für Ihre eigene Domain besteht: Wählen Sie eine
    Subdomain der Identität, die Sie für nichts anderes nutzen (etwa `bounce.example.com`), und veröffentlichen
    Sie darauf mit den Werten der Konsole einen MX-Eintrag (`10 feedback-smtp.<Region>.amazonses.com`) und einen
@@ -106,6 +107,12 @@ Nutzen Sie es, wenn die Prüfung sagt, dass DKIM nur für die Domain Ihres Anbie
 Abmelde-Header nicht abdeckt, oder wenn Ihr Anbieter gar nicht mit Ihrer Domain signieren kann. Yuva signiert
 dann Broadcasts, Testmails, Bestätigungs- und Willkommensmails des Kanals selbst, über die Abmelde-Header. Die
 Signatur Ihres Anbieters bleibt daneben bestehen; Support-Antworten ändern sich nicht.
+
+Yuva DKIM ist für andere Relays als Amazon SES gedacht. SES ändert `From`, `To`, `Reply-To` und `Date`, nachdem
+Yuva signiert hat, was jede vorher angebrachte Signatur bricht, und signiert jede Mail selbst mit Ihrer
+verifizierten Domain. Yuva lehnt es deshalb ab, sein DKIM für einen Kanal einzuschalten, dessen Broadcasts über
+SES gehen, und signiert über SES auch dann nicht, wenn ein Schlüssel früher eingeschaltet wurde; die Sendeseite
+des Kanals nennt den Grund.
 
 1. Öffnen Sie die Sendeseite des Kanals (oben) und suchen Sie Yuva DKIM. Wählen Sie einen Selector (Kleinbuchstaben,
    Ziffern und Bindestriche; standardmäßig `yuva`) und klicken Sie „Create key“. Der Schlüssel ist RSA 2048; der

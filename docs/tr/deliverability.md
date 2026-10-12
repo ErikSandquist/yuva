@@ -59,7 +59,9 @@ Kayıtların yayılması zaman alır. Sağlayıcınız doğrulandıklarını sö
 ### Amazon SES
 
 1. SES konsolunda gönderen alan adınız için Easy DKIM ile bir alan adı kimliği oluşturun. SES üç CNAME kaydı
-   gösterir; bunları ekleyin. Doğrulama 72 saate kadar sürebilir. Easy DKIM sizin alan adınızla imzalar.
+   gösterir; bunları ekleyin. Doğrulama 72 saate kadar sürebilir. Easy DKIM sizin alan adınızla,
+   abonelikten çıkma başlıkları dahil imzalar; bu yüzden SES kanalı buna dayanır ve
+   [Yuva DKIM](#4-yuva-dkim-ile-imzalayın) kullanmaz.
 2. SPF'nin kendi alan adınız için de geçmesi adına özel bir MAIL FROM alan adı kurun: kimliğin başka hiçbir şey için
    kullanmadığınız bir alt alan adını seçin (örneğin `bounce.example.com`); üzerine konsolun gösterdiği
    değerlerle bir MX kaydı (`10 feedback-smtp.<bölge>.amazonses.com`) ve bir TXT kaydı
@@ -103,6 +105,12 @@ Denetim DKIM'in yalnızca sağlayıcınızın alan adı için geçtiğini ya da 
 kapsamadığını söylüyorsa ya da sağlayıcınız kendi alan adınızla hiç imzalayamıyorsa kullanın. Yuva o zaman kanalın
 bültenlerini, deneme, onay ve hoş geldin e-postalarını abonelikten çıkma başlıklarını da kapsayacak şekilde
 kendisi imzalar. Sağlayıcınızın imzası yanında kalır; destek yanıtları değişmez.
+
+Yuva DKIM, Amazon SES dışındaki aktarıcılar içindir. SES, Yuva imzaladıktan sonra `From`, `To`, `Reply-To` ve
+`Date` başlıklarını değiştirir; bu, ondan önce eklenen her imzayı bozar. SES ayrıca her e-postayı doğrulanmış
+alan adınızla kendisi imzalar. Bu yüzden Yuva, bültenleri SES üzerinden giden bir kanalda kendi DKIM'ini açmayı
+reddeder ve daha önce açılmış bir anahtar olsa bile SES üzerinden imzalamaz; kanalın gönderim sayfası nedenini
+gösterir.
 
 1. Kanalın gönderim sayfasını açın (yukarıda) ve Yuva DKIM'i bulun. Bir seçici seçin (küçük harf, rakam ve tire;
    varsayılan `yuva`) ve "Anahtar oluştur"a basın. Anahtar RSA 2048'dir; özel anahtar sunucudan hiç çıkmaz.
