@@ -283,7 +283,7 @@ function useRowActions(m: Migration) {
     <div className="flex shrink-0 items-center gap-1.5">
       {reconnect ? (
         <Button size="sm" render={<Link to={`/migrations/${m.id}/connect`} />} data-testid="migration-reconnect">
-          <Trans>Reconnect</Trans>
+          {m.preset === "microsoft" ? <Trans>Sign in again</Trans> : <Trans>Reconnect</Trans>}
         </Button>
       ) : (
         m.state !== "removed" && (

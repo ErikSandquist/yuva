@@ -6066,6 +6066,10 @@ msgid "Nothing is lost: once the mailbox is connected again, copying continues w
 msgstr "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
 
 #: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: once you sign in with Microsoft again, copying continues where it stopped."
+msgstr "Nothing is lost: once you sign in with Microsoft again, copying continues where it stopped."
+
+#: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Nothing is lost: when it continues, copying picks up where it stopped."
 
@@ -8307,6 +8311,8 @@ msgstr "Shown to your team and to customers you reply to"
 msgid "Sign in"
 msgstr "Sign in"
 
+#: src/features/migrations/CopyStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Sign in again"
 msgstr "Sign in again"

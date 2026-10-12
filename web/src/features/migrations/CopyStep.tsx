@@ -91,6 +91,10 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
                 <Trans>Nothing is lost: when it continues, copying picks up where it stopped.</Trans>
               ) : desk ? (
                 <Trans>Nothing is lost: once {provider} is signed in again, copying continues where it stopped.</Trans>
+              ) : m.preset === "microsoft" ? (
+                <Trans>
+                  Nothing is lost: once you sign in with Microsoft again, copying continues where it stopped.
+                </Trans>
               ) : (
                 <Trans>Nothing is lost: once the mailbox is connected again, copying continues where it stopped.</Trans>
               )}
@@ -102,7 +106,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
                 render={<Link to={`/migrations/${m.id}/connect`} />}
                 data-testid="migration-reconnect"
               >
-                <Trans>Reconnect</Trans>
+                {m.preset === "microsoft" ? <Trans>Sign in again</Trans> : <Trans>Reconnect</Trans>}
               </Button>
             )}
           </Notice>

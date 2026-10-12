@@ -6066,6 +6066,10 @@ msgid "Nothing is lost: once the mailbox is connected again, copying continues w
 msgstr "Hiçbir şey kaybolmaz: posta kutusu yeniden bağlanınca kopyalama kaldığı yerden devam eder."
 
 #: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: once you sign in with Microsoft again, copying continues where it stopped."
+msgstr "Hiçbir şey kaybolmaz: Microsoft ile yeniden oturum açtığınızda kopyalama kaldığı yerden devam eder."
+
+#: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: when it continues, copying picks up where it stopped."
 msgstr "Hiçbir şey kaybolmaz: kopyalama sürdüğünde kaldığı yerden devam eder."
 
@@ -8307,6 +8311,8 @@ msgstr "Ekibiniz ve yanıt verdiğiniz müşteriler görür"
 msgid "Sign in"
 msgstr "Giriş yap"
 
+#: src/features/migrations/CopyStep.tsx
+#: src/features/migrations/MigrationsPage.tsx
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Sign in again"
 msgstr "Yeniden oturum aç"
