@@ -1286,8 +1286,13 @@ Decisions:
   the master key, only the DNS record shown; enabling needs that record in DNS, a new sending domain turns
   it off, deleting allows a new key). Yuva then signs broadcasts, tests, probes, confirmation and welcome
   mail over the list headers; support replies keep their provider's signature. The signature covers
-  `From`, `To`, `Subject`, `Date`, `Reply-To`, `MIME-Version`, `Content-Type` and the list headers (absent
-  ones listed too) but not `Message-ID` or `Feedback-ID`, which relays such as Amazon SES replace.
+  `From`, `To`, `Subject`, `Reply-To`, `MIME-Version`, `Content-Type` and the list headers (absent ones
+  listed too) but not `Message-ID`, `Feedback-ID` or `Date`, which relays replace, and address headers
+  are written in the minimal form normalizing relays leave alone (a display name quoted only when RFC
+  5322 needs it, a bare address without angle brackets). Amazon SES channels never get Yuva DKIM
+  (enabling it is refused, an older enabled key is not used): SES rewrites `From`, `To`, `Reply-To` and
+  `Date` after any signature added before it and signs every mail with the customer's domain itself
+  (Easy DKIM), list headers included.
 - **Replies.** A reply to a broadcast finds its delivery by the token in `In-Reply-To`/`References` (or
   by the relay's Message-ID stored for the delivery) and
   opens (or continues) a conversation with that contact in the inbox with `broadcast_id` and a

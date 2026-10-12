@@ -189,7 +189,7 @@ func (s *Server) SendListMail(ctx context.Context, a ListMailArgs, lastAttempt b
 	if err != nil {
 		return err
 	}
-	key, err := s.dkimKey(ch, from)
+	key, err := s.dkimKey(ch, from, ch.SmtpHost)
 	if err != nil {
 		return skip(err.Error())
 	}

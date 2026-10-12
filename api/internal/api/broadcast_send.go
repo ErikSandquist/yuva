@@ -275,7 +275,7 @@ func (s *Server) newBroadcastRenderer(ctx context.Context, q *store.Queries, b s
 			return nil, errSenderNotReady
 		}
 		r.cfg, r.from, r.domain = cfg, from, email.Domain(from)
-		if r.dkim, err = s.dkimKey(*ch, from); err != nil {
+		if r.dkim, err = s.dkimKey(*ch, from, cfg.Host); err != nil {
 			return nil, err
 		}
 		r.fromName = ch.DisplayName

@@ -228,6 +228,11 @@ func DataReplyID(reply string) string {
 	return ""
 }
 
+// IsSESHost reports whether host is an Amazon SES SMTP endpoint.
+func IsSESHost(host string) bool {
+	return sesHost.MatchString(strings.ToLower(strings.TrimSuffix(host, ".")))
+}
+
 // RelayMessageID is the Message-ID a relay puts on a message in place of ours, given the id it
 // named in its reply to DATA: Amazon SES writes <id>@<region>.amazonses.com (email.amazonses.com
 // in us-east-1). Other relays keep our Message-ID, and "" is returned.

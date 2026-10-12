@@ -38,6 +38,7 @@ var (
 	errNotEmailChannel = problem(http.StatusConflict, "email_channel_required", "only an e-mail channel that can send has a deliverability check and a DKIM key")
 	errDkimExists      = problem(http.StatusConflict, "dkim_exists", "the channel has a DKIM key; remove it before creating another")
 	errDkimDNSMissing  = problem(http.StatusConflict, "dkim_dns_missing", "DNS has no TXT record with the channel's DKIM public key at its dns_name yet; publish it and try again")
+	errDkimSES         = problem(http.StatusConflict, "dkim_relay_unsupported", dkimSESReason)
 	errDkimNoKey       = errValidation("email.dkim.enabled: create a key first with POST /v1/channels/{id}/dkim-key")
 	dkimSelector       = regexp.MustCompile(`^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$`)
 )
@@ -67,19 +68,34 @@ func sendingDomain(e store.EmailChannel) string {
 	return email.Domain(e.Address)
 }
 
+const dkimSESReason = "the channel's broadcasts go through Amazon SES, which rewrites From, To, Reply-To and Date after any signature added before it and signs with your verified domain itself; Yuva DKIM is for other relays"
+
+// broadcastsViaSES reports whether the account that sends the channel's broadcasts is Amazon SES.
+func broadcastsViaSES(e store.EmailChannel) bool {
+	if e.BroadcastSmtpHost != nil && *e.BroadcastSmtpHost != "" {
+		return email.IsSESHost(*e.BroadcastSmtpHost)
+	}
+	return email.IsSESHost(e.SmtpHost)
+}
+
 func emailDkimBody(e store.EmailChannel) *oas.EmailDkim {
 	if e.DkimSelector == nil || len(e.DkimPublicKey) == 0 {
 		return nil
 	}
-	return &oas.EmailDkim{
+	out := &oas.EmailDkim{
 		Selector: *e.DkimSelector, Enabled: e.DkimEnabled,
 		DnsName: email.DKIMRecordName(*e.DkimSelector, sendingDomain(e)), DnsValue: email.DKIMRecord(e.DkimPublicKey),
 	}
+	if broadcastsViaSES(e) {
+		out.UnsupportedReason = new(dkimSESReason)
+	}
+	return out
 }
 
-// dkimKey is the key a channel's broadcast mail is signed with; nil when it has none enabled.
-func (s *Server) dkimKey(e store.EmailChannel, from string) (*email.DKIMKey, error) {
-	if !e.DkimEnabled || e.DkimSelector == nil || len(e.DkimPrivateKey) == 0 {
+// dkimKey is the key a channel's mail through the relay at host is signed with; nil when it has
+// none enabled or the relay is Amazon SES.
+func (s *Server) dkimKey(e store.EmailChannel, from, host string) (*email.DKIMKey, error) {
+	if !e.DkimEnabled || e.DkimSelector == nil || len(e.DkimPrivateKey) == 0 || email.IsSESHost(host) {
 		return nil, nil
 	}
 	plain, err := s.secrets.Open(e.DkimPrivateKey, dkimSecretContext(e.WorkspaceID, e.ChannelID))
@@ -125,6 +141,9 @@ func (s *Server) applyDkimInput(ctx context.Context, q *store.Queries, prev *sto
 	case in != nil && in.Enabled:
 		if len(e.DkimPrivateKey) == 0 {
 			return errDkimNoKey
+		}
+		if broadcastsViaSES(e) {
+			return errDkimSES
 		}
 		if !s.dkimPublished(ctx, e) {
 			return errDkimDNSMissing
@@ -472,7 +491,7 @@ func (s *Server) SendDeliverabilityProbe(ctx context.Context, a DeliverabilityPr
 	if err != nil {
 		return err
 	}
-	key, err := s.dkimKey(e, from)
+	key, err := s.dkimKey(e, from, cfg.Host)
 	if err != nil {
 		return fail(err.Error())
 	}
@@ -624,13 +643,17 @@ func (s *Server) deliverabilityReview(ctx context.Context, q *store.Queries, e s
 	case oas.DeliverabilityUnverifiable:
 		warnings = append(warnings, "the receiving server's results could not be read, so only DNS was checked")
 	case oas.DeliverabilityReceived:
+		fix := "turn on Yuva DKIM for the channel"
+		if broadcastsViaSES(e) {
+			fix = "verify the sending domain with Easy DKIM in Amazon SES"
+		}
 		if c.Dkim.Status != oas.AuthPass {
-			return oas.ReviewBlocking, "the last deliverability check found no passing DKIM signature; set up DKIM with the SMTP provider or turn on Yuva DKIM for the channel", nil
+			return oas.ReviewBlocking, "the last deliverability check found no passing DKIM signature; set up DKIM with the SMTP provider or " + fix, nil
 		}
 		if !c.Dkim.Aligned {
 			warnings = append(warnings, "DKIM passes for "+deref(c.Dkim.Domain)+", not for the sending domain "+c.Domain)
 		} else if !c.Dkim.CoversListUnsubscribe {
-			warnings = append(warnings, "the DKIM signature does not cover List-Unsubscribe and List-Unsubscribe-Post; turn on Yuva DKIM for the channel or ask the provider")
+			warnings = append(warnings, "the DKIM signature does not cover List-Unsubscribe and List-Unsubscribe-Post; "+fix+" or ask the provider")
 		}
 	}
 	if c.Dmarc.Record == nil {

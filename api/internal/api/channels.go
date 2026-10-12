@@ -291,17 +291,17 @@ func (s *Server) UpdateChannel(ctx context.Context, req oas.UpdateChannelRequest
 			if err != nil {
 				return err
 			}
-			if err := s.applyDkimInput(ctx, q, prev, saved, req.Body.Email.Dkim); err != nil {
-				return err
-			}
 			bc, err := s.emailBroadcastParams(p.workspaceID, c.ID, req.Body.Email, prev)
 			if err != nil {
 				return err
 			}
 			if bc != nil {
-				if _, err := q.SetEmailChannelBroadcast(ctx, *bc); err != nil {
+				if saved, err = q.SetEmailChannelBroadcast(ctx, *bc); err != nil {
 					return err
 				}
+			}
+			if err := s.applyDkimInput(ctx, q, prev, saved, req.Body.Email.Dkim); err != nil {
+				return err
 			}
 		}
 		if req.Body.Chat != nil {

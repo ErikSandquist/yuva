@@ -6329,7 +6329,8 @@ type EmailChannelInput struct {
 
 	// Dkim Absent keeps the stored state. `enabled: true` needs a key (`POST
 	// /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
-	// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+	// same public key (`409 dkim_dns_missing`), and an account other than Amazon SES sending the
+	// broadcasts (`409 dkim_relay_unsupported`). Changing the sending domain turns signing off
 	// until it is enabled again for the new domain.
 	Dkim *EmailDkimInput `json:"dkim,omitempty"`
 
@@ -6645,11 +6646,17 @@ type EmailDkim struct {
 	// Enabled Mail is signed with the key.
 	Enabled  bool   `json:"enabled"`
 	Selector string `json:"selector"`
+
+	// UnsupportedReason Why Yuva does not sign the channel's mail even when `enabled`: its broadcasts go through
+	// Amazon SES, which rewrites `From`, `To`, `Reply-To` and `Date` after any signature added
+	// before it and signs with the verified domain itself. Absent when Yuva signs.
+	UnsupportedReason *string `json:"unsupported_reason,omitempty"`
 }
 
 // EmailDkimInput Absent keeps the stored state. `enabled: true` needs a key (`POST
 // /v1/channels/{id}/dkim-key`, else `400`) whose record DNS answers at `dns_name` with the
-// same public key (`409 dkim_dns_missing`). Changing the sending domain turns signing off
+// same public key (`409 dkim_dns_missing`), and an account other than Amazon SES sending the
+// broadcasts (`409 dkim_relay_unsupported`). Changing the sending domain turns signing off
 // until it is enabled again for the new domain.
 type EmailDkimInput struct {
 	Enabled bool `json:"enabled"`
