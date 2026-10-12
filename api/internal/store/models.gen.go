@@ -425,7 +425,7 @@ type EmailChannel struct {
 	DkimPrivateKey         []byte
 	DkimEnabled            bool
 	DkimPublicKey          []byte
-	ForwardToken           *string
+	ForwardToken           string
 }
 
 type EmailConfirmation struct {
@@ -786,6 +786,10 @@ type Migration struct {
 	StartedAt              *time.Time
 	FinishedAt             *time.Time
 	CredentialsDeletedAt   *time.Time
+	SyncedAt               *time.Time
+	QuietSince             *time.Time
+	ProbeSentAt            *time.Time
+	ProbeSyncedAt          *time.Time
 }
 
 type MigrationAudit struct {

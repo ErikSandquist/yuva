@@ -134,11 +134,21 @@ func (s *Server) serveIngressEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 // findEmailChannel returns the channel for the envelope recipient and the recipient address itself,
-// normalized: the exact address, then local@ for local+tag@, then the domain's catch-all channel.
-func (s *Server) findEmailChannel(ctx context.Context, to string) (store.FindEmailChannelByAddressRow, string, error) {
-	addr := strings.ToLower(strings.Trim(strings.TrimSpace(to), "<>"))
-	ch, err := s.st.FindEmailChannelByAddress(ctx, addr)
+// normalized: on the forwarding domain the channel whose token is the local part, else the exact
+// address, then local@ for local+tag@, then the domain's catch-all channel. forwarded reports a
+// recipient on the forwarding domain.
+func (s *Server) findEmailChannel(ctx context.Context, to string) (ch store.FindEmailChannelByAddressRow, addr string, forwarded bool, err error) {
+	addr = strings.ToLower(strings.Trim(strings.TrimSpace(to), "<>"))
 	local, domain, ok := strings.Cut(addr, "@")
+	if ok && s.ingress.ForwardingDomain != "" && domain == s.ingress.ForwardingDomain {
+		token, _, _ := strings.Cut(local, "+")
+		row, err := s.st.FindEmailChannelByForwardToken(ctx, token)
+		if store.IsNotFound(err) {
+			return ch, addr, true, errIngestUnknown
+		}
+		return store.FindEmailChannelByAddressRow(row), addr, true, err
+	}
+	ch, err = s.st.FindEmailChannelByAddress(ctx, addr)
 	if store.IsNotFound(err) {
 		if base, _, tagged := strings.Cut(local, "+"); ok && tagged {
 			ch, err = s.st.FindEmailChannelByAddress(ctx, base+"@"+domain)
@@ -148,9 +158,9 @@ func (s *Server) findEmailChannel(ctx context.Context, to string) (store.FindEma
 		ch, err = s.st.FindEmailChannelByAddress(ctx, catchAllLocal+"@"+domain)
 	}
 	if store.IsNotFound(err) {
-		return ch, addr, errIngestUnknown
+		return ch, addr, false, errIngestUnknown
 	}
-	return ch, addr, err
+	return ch, addr, false, err
 }
 
 func (s *Server) ownSender(ctx context.Context, ch store.FindEmailChannelByAddressRow, sender string) (bool, error) {
@@ -296,7 +306,7 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 	if len(raw) > MaxIngressBytes {
 		return IngestResult{}, errIngestTooLarge
 	}
-	ch, recipient, err := s.findEmailChannel(ctx, envelopeTo)
+	ch, recipient, forwarded, err := s.findEmailChannel(ctx, envelopeTo)
 	if err != nil {
 		return IngestResult{}, err
 	}
@@ -309,6 +319,33 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 	} else if probe {
 		return IngestResult{Status: IngestDropped}, nil
 	}
+	route := verifiedDirect
+	if forwarded {
+		route = verifiedForwarding
+	}
+	if probe, err := s.takeMigrationProbe(ctx, ch, m, route); err != nil {
+		return IngestResult{}, err
+	} else if probe {
+		return IngestResult{Status: IngestDropped}, nil
+	}
+	if forwarded {
+		if taken, err := s.takeForwardingConfirmation(ctx, ch, m); err != nil {
+			return IngestResult{}, err
+		} else if taken {
+			return IngestResult{Status: IngestDropped}, nil
+		}
+	}
+	return s.ingestToChannel(ctx, ch, recipient, envelopeFrom, fromTrusted, raw, m, ingestOptions{})
+}
+
+// ingestOptions: noGreeting leaves out the channel's auto-reply, for new mail catch-up sync found
+// in a mailbox whose provider may have answered it already.
+type ingestOptions struct {
+	noGreeting bool
+}
+
+// ingestToChannel stores a parsed inbound message for the channel as live mail.
+func (s *Server) ingestToChannel(ctx context.Context, ch store.FindEmailChannelByAddressRow, recipient, envelopeFrom string, fromTrusted bool, raw []byte, m *email.Message, opts ingestOptions) (IngestResult, error) {
 	sender := m.From.Email
 	if sender == "" {
 		if a, ok := email.ParseAddress(envelopeFrom); ok {
@@ -448,7 +485,7 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 		}
 		events.conversation(realtime.MessageCreated, conv, withEmail(messageBody(messageRow(msg), atts), &summary))
 		res = IngestResult{Status: IngestStored, ConversationID: &conv.ID, MessageID: &msg.ID}
-		if isNew && !auto && !spam && ch.AutoReplyEnabled {
+		if isNew && !auto && !spam && ch.AutoReplyEnabled && !opts.noGreeting {
 			return s.autoReply(ctx, q, events, ch, conv, contact.ID, now)
 		}
 		return nil

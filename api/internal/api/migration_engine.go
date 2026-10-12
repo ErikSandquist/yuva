@@ -60,10 +60,19 @@ func migrationJobOpts() *river.InsertOpts {
 
 func migrationJob(m store.Migration, resume int64) river.JobArgs {
 	a := MigrationJobArgs{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Resume: resume}
-	if m.State == migrationScanning {
+	switch m.State {
+	case migrationScanning:
 		return MigrationScanArgs{a}
+	case migrationSyncing:
+		return MigrationSyncArgs{a}
+	case migrationRemoving:
+		return MigrationRemoveArgs{a}
 	}
 	return MigrationCopyArgs{a}
+}
+
+var migrationJobKinds = []string{
+	MigrationScanArgs{}.Kind(), MigrationCopyArgs{}.Kind(), MigrationSyncArgs{}.Kind(), MigrationRemoveArgs{}.Kind(),
 }
 
 type migrationScanWorker struct {
@@ -154,15 +163,15 @@ type migrationRun struct {
 	lastFlush time.Time
 }
 
-// RunMigrationSlice works on a scanning or copying migration for about budget, under a lease on
-// the migration row so only one job works on it at a time.
+// RunMigrationSlice works on a scanning, copying, syncing or removing migration for about budget,
+// under a lease on the migration row so only one job works on it at a time.
 func (s *Server) RunMigrationSlice(ctx context.Context, a MigrationJobArgs, jobID int64, budget time.Duration) (MigrationSlice, error) {
 	if live, err := s.workspaceLive(ctx, a.WorkspaceID); err != nil || !live {
 		return MigrationSlice{Done: true}, err
 	}
 	now := s.now()
 	m, err := s.st.TakeMigrationLease(ctx, store.TakeMigrationLeaseParams{
-		WorkspaceID: a.WorkspaceID, ID: a.MigrationID, JobID: &jobID, States: []string{migrationScanning, migrationCopying},
+		WorkspaceID: a.WorkspaceID, ID: a.MigrationID, JobID: &jobID, States: []string{migrationScanning, migrationCopying, migrationSyncing, migrationRemoving},
 		Now: &now, Until: new(now.Add(migrationLease)),
 	})
 	if store.IsNotFound(err) {
@@ -179,9 +188,14 @@ func (s *Server) RunMigrationSlice(ctx context.Context, a MigrationJobArgs, jobI
 		throttle: readThrottle(m.Throttle)}
 	defer r.close()
 	var res MigrationSlice
-	if m.State == migrationScanning {
+	switch m.State {
+	case migrationScanning:
 		res, err = r.scan(ctx)
-	} else {
+	case migrationSyncing:
+		res, err = r.sync(ctx)
+	case migrationRemoving:
+		res, err = r.remove(ctx)
+	default:
 		res, err = r.copy(ctx)
 	}
 	if err == nil && res.Done {
@@ -406,7 +420,7 @@ func (r *migrationRun) needsAttention(ctx context.Context, code, detail, reason 
 			return err
 		}
 		r.m = m
-		return migrationChanged(ctx, q, events, m, &cur.State)
+		return r.s.migrationChanged(ctx, q, events, m, &cur.State)
 	})
 }
 
@@ -547,9 +561,9 @@ func (s *Server) migrationProgress(ctx context.Context, m store.Migration) {
 	s.signal(ctx, realtime.Event{Type: eventMigrationProgress, WorkspaceID: m.WorkspaceID, Data: mustJSON(out)})
 }
 
-// RunMigrationWatchdog queues a job for every scanning or copying migration whose lease expired
-// and that has no job waiting to run: its process died, and River would retry it only after an
-// hour.
+// RunMigrationWatchdog queues a job for every scanning, copying, syncing or removing migration
+// whose lease expired and that has no job waiting to run: its process died, and River would retry
+// it only after an hour.
 func (s *Server) RunMigrationWatchdog(ctx context.Context) (int, error) {
 	now := s.now()
 	rows, err := s.st.ListStaleMigrations(ctx, &now)
@@ -559,7 +573,7 @@ func (s *Server) RunMigrationWatchdog(ctx context.Context) (int, error) {
 	queued := 0
 	for _, row := range rows {
 		res, err := s.jobs.JobList(ctx, river.NewJobListParams().
-			Kinds(MigrationScanArgs{}.Kind(), MigrationCopyArgs{}.Kind()).
+			Kinds(migrationJobKinds...).
 			States(rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateScheduled, rivertype.JobStateRetryable).
 			Where("args->>'migration_id' = @id", river.NamedArgs{"id": row.ID.String()}).First(1))
 		if err != nil {

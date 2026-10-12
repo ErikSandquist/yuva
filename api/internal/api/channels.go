@@ -12,7 +12,7 @@ import (
 
 const maxChannelSettingsBytes = 64 << 10
 
-func channelBody(c store.Channel, e *store.EmailChannel, chat *store.ChatChannel) oas.Channel {
+func (s *Server) channelBody(c store.Channel, e *store.EmailChannel, chat *store.ChatChannel) oas.Channel {
 	out := oas.Channel{
 		Id: c.ID, InboxId: c.InboxID, Kind: oas.ChannelKind(c.Kind), Name: c.Name,
 		CreatedAt: c.CreatedAt, UpdatedAt: c.UpdatedAt, Settings: oas.ChannelSettings{},
@@ -20,6 +20,9 @@ func channelBody(c store.Channel, e *store.EmailChannel, chat *store.ChatChannel
 	_ = json.Unmarshal(c.Settings, &out.Settings)
 	if e != nil {
 		out.Email = emailChannelBody(*e)
+		if addr := s.forwardingAddress(*e); addr != "" {
+			out.ForwardingAddress = &addr
+		}
 	}
 	if chat != nil && c.Kind == string(oas.ChannelKindApp) {
 		out.App = appChannelBody(*chat)
@@ -33,24 +36,24 @@ func (s *Server) oneChannelBody(ctx context.Context, q *store.Queries, c store.C
 	if hasPublicKey(c.Kind) {
 		chat, err := q.GetChatChannel(ctx, store.GetChatChannelParams{WorkspaceID: c.WorkspaceID, ChannelID: c.ID})
 		if store.IsNotFound(err) {
-			return channelBody(c, nil, nil), nil
+			return s.channelBody(c, nil, nil), nil
 		}
 		if err != nil {
 			return oas.Channel{}, err
 		}
-		return channelBody(c, nil, &chat), nil
+		return s.channelBody(c, nil, &chat), nil
 	}
 	if c.Kind != string(oas.ChannelKindEmail) {
-		return channelBody(c, nil, nil), nil
+		return s.channelBody(c, nil, nil), nil
 	}
 	e, err := q.GetEmailChannel(ctx, store.GetEmailChannelParams{WorkspaceID: c.WorkspaceID, ChannelID: c.ID})
 	if store.IsNotFound(err) {
-		return channelBody(c, nil, nil), nil
+		return s.channelBody(c, nil, nil), nil
 	}
 	if err != nil {
 		return oas.Channel{}, err
 	}
-	return channelBody(c, &e, nil), nil
+	return s.channelBody(c, &e, nil), nil
 }
 
 func channelSettings(v *oas.ChannelSettings) ([]byte, error) {
@@ -95,7 +98,7 @@ func (s *Server) ListChannels(ctx context.Context, req oas.ListChannelsRequestOb
 		if v, ok := chats[r.ID]; ok {
 			chat = &v
 		}
-		out.Items = append(out.Items, channelBody(r, e, chat))
+		out.Items = append(out.Items, s.channelBody(r, e, chat))
 	}
 	return out, nil
 }
@@ -175,11 +178,11 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 			if err != nil {
 				return err
 			}
-			out = channelBody(c, nil, &chat)
+			out = s.channelBody(c, nil, &chat)
 			return nil
 		}
 		if !isEmail {
-			out = channelBody(c, nil, nil)
+			out = s.channelBody(c, nil, nil)
 			return nil
 		}
 		e, err := saveEmailChannel(ctx, q, emailArg)
@@ -195,7 +198,7 @@ func (s *Server) CreateChannel(ctx context.Context, req oas.CreateChannelRequest
 				return err
 			}
 		}
-		out = channelBody(c, &e, nil)
+		out = s.channelBody(c, &e, nil)
 		return nil
 	})
 	if err != nil {

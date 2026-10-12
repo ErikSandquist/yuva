@@ -34,39 +34,53 @@ func firstOfNextMonth(t time.Time) time.Time {
 }
 
 func (r *migrationRun) copy(ctx context.Context) (MigrationSlice, error) {
+	res, empty, err := r.copyPlanned(ctx)
+	if err != nil || !empty {
+		return res, err
+	}
+	return MigrationSlice{Until: r.s.now()}, r.copied(ctx)
+}
+
+func (r *migrationRun) targetGone(ctx context.Context) error {
+	return r.needsAttention(ctx, "target_gone", "the inbox or e-mail channel was deleted",
+		"The inbox or e-mail channel the history goes to was deleted; choose another and resume.")
+}
+
+// copyPlanned imports planned messages, newest threads first, until none is left (empty) or the
+// slice's time is up; a result that is Done or waits ends the slice.
+func (r *migrationRun) copyPlanned(ctx context.Context) (MigrationSlice, bool, error) {
 	s, m := r.s, r.m
 	if m.ChannelID == nil || m.InboxID == nil {
-		return MigrationSlice{Done: true}, r.needsAttention(ctx, "target_gone", "the inbox or e-mail channel was deleted",
-			"The inbox or e-mail channel the history goes to was deleted; choose another and resume.")
+		return MigrationSlice{Done: true}, false, r.targetGone(ctx)
 	}
 	if wait, err := r.monthlyLimit(ctx); err != nil || !wait.IsZero() {
-		return MigrationSlice{Until: wait}, err
+		return MigrationSlice{Until: wait}, false, err
 	}
 	team, err := s.teamOf(ctx, s.st.Queries, m)
 	if err != nil {
-		return MigrationSlice{}, err
+		return MigrationSlice{}, false, err
 	}
 	folders, err := r.folderMap(ctx)
 	if err != nil {
-		return MigrationSlice{}, err
+		return MigrationSlice{}, false, err
 	}
 	for r.timeLeft() {
 		ok, err := r.renew(ctx)
 		if err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		if !ok {
 			_, _, err := s.refreshMigrationCounts(ctx, s.st.Queries, r.m)
-			return MigrationSlice{Done: true}, err
+			return MigrationSlice{Done: true}, false, err
 		}
 		batch, err := s.st.NextMigrationItems(ctx, store.NextMigrationItemsParams{
 			WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Threads: copyBatchThreads, Lim: copyBatchItems,
 		})
 		if err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		if len(batch) == 0 {
-			return MigrationSlice{Done: true}, r.copied(ctx)
+			return MigrationSlice{}, true, nil
 		}
 		var size int64
 		for i, it := range batch {
@@ -79,9 +93,10 @@ func (r *migrationRun) copy(ctx context.Context) (MigrationSlice, error) {
 		if err := r.budget(size); err != nil {
 			var wait *waitError
 			if errors.As(err, &wait) {
-				return r.waitDaily(ctx, wait.until)
+				res, err := r.waitDaily(ctx, wait.until)
+				return res, false, err
 			}
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		ids := make([]string, len(batch))
 		for i, it := range batch {
@@ -91,47 +106,49 @@ func (r *migrationRun) copy(ctx context.Context) (MigrationSlice, error) {
 		fetched, read, changed, err := r.fetch(ctx, folders, ids)
 		var src *sourceError
 		if errors.As(err, &src) {
-			return r.trouble(ctx, src.err)
+			res, err := r.trouble(ctx, src.err)
+			return res, false, err
 		}
 		if err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		if changed != nil {
 			if err := r.refolder(ctx, *changed, team); err != nil {
 				if errors.As(err, &src) {
-					return r.trouble(ctx, src.err)
+					res, err := r.trouble(ctx, src.err)
+					return res, false, err
 				}
-				return MigrationSlice{}, err
+				return MigrationSlice{}, false, err
 			}
 			if folders, err = r.folderMap(ctx); err != nil {
-				return MigrationSlice{}, err
+				return MigrationSlice{}, false, err
 			}
 			continue
 		}
 		r.throttle.Read(s.now(), read)
 		if err := r.clearWaiting(ctx); err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		if err := r.saveThrottle(ctx); err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		for _, it := range batch {
 			if err := r.copyItem(ctx, team, folders, it, fetched[it.SourceID]); err != nil {
-				return MigrationSlice{}, err
+				return MigrationSlice{}, false, err
 			}
 		}
 		if err := r.flush(ctx, false); err != nil {
-			return MigrationSlice{}, err
+			return MigrationSlice{}, false, err
 		}
 		if d := migrate.Pace(r.preset.Budget, read, time.Since(started)); d > 0 {
 			select {
 			case <-ctx.Done():
-				return MigrationSlice{}, ctx.Err()
+				return MigrationSlice{}, false, ctx.Err()
 			case <-time.After(min(d, time.Until(r.deadline))):
 			}
 		}
 	}
-	return MigrationSlice{}, r.flush(ctx, true)
+	return MigrationSlice{}, false, r.flush(ctx, true)
 }
 
 func (r *migrationRun) folderMap(ctx context.Context) (map[int32]store.MigrationFolder, error) {
@@ -170,7 +187,8 @@ func (r *migrationRun) monthlyLimit(ctx context.Context) (time.Time, error) {
 	return until, err
 }
 
-// copied moves a migration whose every message is done on to syncing.
+// copied moves a migration whose every message is done on to syncing: mail the old mailbox
+// receives from now on is new mail.
 func (r *migrationRun) copied(ctx context.Context) error {
 	if err := r.flush(ctx, true); err != nil {
 		return err
@@ -184,12 +202,12 @@ func (r *migrationRun) copied(ctx context.Context) error {
 		if err != nil || n > 0 {
 			return err
 		}
-		m, err := q.SetMigrationRunState(ctx, store.SetMigrationRunStateParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, State: migrationSyncing, Now: r.s.now()})
+		m, err := q.EnterMigrationSync(ctx, store.EnterMigrationSyncParams{WorkspaceID: cur.WorkspaceID, ID: cur.ID, Now: r.s.now()})
 		if err != nil {
 			return err
 		}
 		r.m = m
-		return migrationChanged(ctx, q, events, m, &cur.State)
+		return r.s.migrationChanged(ctx, q, events, m, &cur.State)
 	})
 }
 
@@ -560,7 +578,6 @@ func (r *migrationRun) refolder(ctx context.Context, f store.MigrationFolder, te
 		}
 	}
 	uv := int64(st.UIDValidity)
-	opts := migrationOptions(m.Options)
 	label, err := labelName(ctx, s.st.Queries, f)
 	if err != nil {
 		return err
@@ -602,61 +619,7 @@ func (r *migrationRun) refolder(ctx context.Context, f store.MigrationFolder, te
 				fresh = append(fresh, it)
 			}
 		}
-		var alone []migrate.Item
-		for _, it := range fresh {
-			thread := ""
-			if len(it.Meta.Refs) > 0 {
-				refs, err := q.ListMigrationItemsByDedupe(ctx, store.ListMigrationItemsByDedupeParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Keys: it.Meta.Refs})
-				if err != nil {
-					return err
-				}
-				for _, ref := range refs {
-					if _, err := q.LockMigrationThread(ctx, store.LockMigrationThreadParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, ThreadKey: ref.ThreadKey}); err == nil {
-						thread = ref.ThreadKey
-						break
-					} else if !store.IsNotFound(err) {
-						return err
-					}
-				}
-			}
-			if thread == "" {
-				alone = append(alone, it)
-				continue
-			}
-			if err := insertPlanned(ctx, q, m, []migrate.Item{it}, map[string]string{it.SourceID: thread}); err != nil {
-				return err
-			}
-			if err := q.AddMigrationThreadItem(ctx, store.AddMigrationThreadItemParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, ThreadKey: thread, At: it.Meta.At}); err != nil {
-				return err
-			}
-		}
-		if len(alone) > 0 {
-			plan := migrate.MakePlan(migrate.PlanInput{
-				Items: alone, Folders: map[int32]migrate.PlanFolder{f.ID: {Kind: f.Kind, Label: label}}, Team: team.addrs, Since: opts.Since,
-				SkipAutomatic: opts.SkipAutomatic, CloseAfterDays: int(opts.CloseAfterDays), Now: now, MaxMessageBytes: s.migrations.MaxMessageBytes,
-			})
-			threads := map[string]string{}
-			var take []migrate.Item
-			for _, it := range alone {
-				if ip := plan.Items[it.SourceID]; ip.State == migrate.StatePlanned {
-					threads[it.SourceID] = ip.ThreadKey
-					take = append(take, it)
-				}
-			}
-			if err := insertPlanned(ctx, q, m, take, threads); err != nil {
-				return err
-			}
-			p := store.InsertMigrationThreadsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}
-			for _, t := range plan.Threads {
-				p.ThreadKeys, p.LastAts, p.Items, p.Plans = append(p.ThreadKeys, t.Key), append(p.LastAts, t.LastAt), append(p.Items, int32(len(t.SourceIDs))), append(p.Plans, mustJSON(t))
-			}
-			if len(p.ThreadKeys) > 0 {
-				if err := q.InsertMigrationThreads(ctx, p); err != nil {
-					return err
-				}
-			}
-		}
-		return nil
+		return s.planFresh(ctx, q, m, f, label, team, fresh, now)
 	})
 	if err != nil {
 		return err
@@ -667,6 +630,67 @@ func (r *migrationRun) refolder(ctx context.Context, f store.MigrationFolder, te
 		return err
 	}
 	s.addMigrationError(ctx, m, "folder_changed", "the folder was recreated in the mailbox and read again", f.Name, nil, "")
+	return nil
+}
+
+// planFresh plans messages a folder gained: each joins the thread its references name, the rest
+// are threaded and planned as the scan plans them.
+func (s *Server) planFresh(ctx context.Context, q *store.Queries, m store.Migration, f store.MigrationFolder, label string, team migrationTeam, fresh []migrate.Item, now time.Time) error {
+	opts := migrationOptions(m.Options)
+	var alone []migrate.Item
+	for _, it := range fresh {
+		thread := ""
+		if len(it.Meta.Refs) > 0 {
+			refs, err := q.ListMigrationItemsByDedupe(ctx, store.ListMigrationItemsByDedupeParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Keys: it.Meta.Refs})
+			if err != nil {
+				return err
+			}
+			for _, ref := range refs {
+				if _, err := q.LockMigrationThread(ctx, store.LockMigrationThreadParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, ThreadKey: ref.ThreadKey}); err == nil {
+					thread = ref.ThreadKey
+					break
+				} else if !store.IsNotFound(err) {
+					return err
+				}
+			}
+		}
+		if thread == "" {
+			alone = append(alone, it)
+			continue
+		}
+		if err := insertPlanned(ctx, q, m, []migrate.Item{it}, map[string]string{it.SourceID: thread}); err != nil {
+			return err
+		}
+		if err := q.AddMigrationThreadItem(ctx, store.AddMigrationThreadItemParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, ThreadKey: thread, At: it.Meta.At}); err != nil {
+			return err
+		}
+	}
+	if len(alone) > 0 {
+		plan := migrate.MakePlan(migrate.PlanInput{
+			Items: alone, Folders: map[int32]migrate.PlanFolder{f.ID: {Kind: f.Kind, Label: label}}, Team: team.addrs, Since: opts.Since,
+			SkipAutomatic: opts.SkipAutomatic, CloseAfterDays: int(opts.CloseAfterDays), Now: now, MaxMessageBytes: s.migrations.MaxMessageBytes,
+		})
+		threads := map[string]string{}
+		var take []migrate.Item
+		for _, it := range alone {
+			if ip := plan.Items[it.SourceID]; ip.State == migrate.StatePlanned {
+				threads[it.SourceID] = ip.ThreadKey
+				take = append(take, it)
+			}
+		}
+		if err := insertPlanned(ctx, q, m, take, threads); err != nil {
+			return err
+		}
+		p := store.InsertMigrationThreadsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}
+		for _, t := range plan.Threads {
+			p.ThreadKeys, p.LastAts, p.Items, p.Plans = append(p.ThreadKeys, t.Key), append(p.LastAts, t.LastAt), append(p.Items, int32(len(t.SourceIDs))), append(p.Plans, mustJSON(t))
+		}
+		if len(p.ThreadKeys) > 0 {
+			if err := q.InsertMigrationThreads(ctx, p); err != nil {
+				return err
+			}
+		}
+	}
 	return nil
 }
 

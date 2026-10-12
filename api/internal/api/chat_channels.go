@@ -209,7 +209,7 @@ func (s *Server) RotateChannelPublicKey(ctx context.Context, req oas.RotateChann
 	if err != nil {
 		return nil, err
 	}
-	return oas.RotateChannelPublicKey200JSONResponse(channelBody(c, nil, &chat)), nil
+	return oas.RotateChannelPublicKey200JSONResponse(s.channelBody(c, nil, &chat)), nil
 }
 
 var errOriginRefused = problem(http.StatusForbidden, "origin_not_allowed", "this origin may not use the channel")

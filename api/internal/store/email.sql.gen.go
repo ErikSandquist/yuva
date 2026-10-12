@@ -500,7 +500,7 @@ type FindEmailChannelByAddressRow struct {
 	DkimPrivateKey         []byte
 	DkimEnabled            bool
 	DkimPublicKey          []byte
-	ForwardToken           *string
+	ForwardToken           string
 	InboxID                uuid.UUID
 	ChannelName            string
 }
@@ -510,6 +510,77 @@ type FindEmailChannelByAddressRow struct {
 func (q *Queries) FindEmailChannelByAddress(ctx context.Context, address string) (FindEmailChannelByAddressRow, error) {
 	row := q.db.QueryRow(ctx, findEmailChannelByAddress, address)
 	var i FindEmailChannelByAddressRow
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ChannelID,
+		&i.Address,
+		&i.DisplayName,
+		&i.FromAddress,
+		&i.SmtpHost,
+		&i.SmtpPort,
+		&i.SmtpUsername,
+		&i.SmtpPassword,
+		&i.SmtpTls,
+		&i.AutoReplyEnabled,
+		&i.AutoReplyText,
+		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
+		&i.DkimPublicKey,
+		&i.ForwardToken,
+		&i.InboxID,
+		&i.ChannelName,
+	)
+	return i, err
+}
+
+const findEmailChannelByForwardToken = `-- name: FindEmailChannelByForwardToken :one
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
+JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
+JOIN workspaces w ON w.id = e.workspace_id
+WHERE e.forward_token = $1 AND w.deleted_at IS NULL
+`
+
+type FindEmailChannelByForwardTokenRow struct {
+	WorkspaceID            uuid.UUID
+	ChannelID              uuid.UUID
+	Address                string
+	DisplayName            string
+	FromAddress            *string
+	SmtpHost               string
+	SmtpPort               int32
+	SmtpUsername           string
+	SmtpPassword           []byte
+	SmtpTls                string
+	AutoReplyEnabled       bool
+	AutoReplyText          string
+	AutoReplyIntervalHours int32
+	BroadcastSmtpHost      *string
+	BroadcastSmtpPort      *int32
+	BroadcastSmtpUsername  *string
+	BroadcastSmtpPassword  []byte
+	BroadcastSmtpTls       *string
+	BroadcastRate          int32
+	DkimSelector           *string
+	DkimPrivateKey         []byte
+	DkimEnabled            bool
+	DkimPublicKey          []byte
+	ForwardToken           string
+	InboxID                uuid.UUID
+	ChannelName            string
+}
+
+// A forwarding address names only its token (see "Hosting for others later" in docs/architecture.md).
+func (q *Queries) FindEmailChannelByForwardToken(ctx context.Context, forwardToken string) (FindEmailChannelByForwardTokenRow, error) {
+	row := q.db.QueryRow(ctx, findEmailChannelByForwardToken, forwardToken)
+	var i FindEmailChannelByForwardTokenRow
 	err := row.Scan(
 		&i.WorkspaceID,
 		&i.ChannelID,
@@ -668,6 +739,80 @@ func (q *Queries) GetEmailChannel(ctx context.Context, arg GetEmailChannelParams
 		&i.DkimEnabled,
 		&i.DkimPublicKey,
 		&i.ForwardToken,
+	)
+	return i, err
+}
+
+const getIngestChannel = `-- name: GetIngestChannel :one
+SELECT e.workspace_id, e.channel_id, e.address, e.display_name, e.from_address, e.smtp_host, e.smtp_port, e.smtp_username, e.smtp_password, e.smtp_tls, e.auto_reply_enabled, e.auto_reply_text, e.auto_reply_interval_hours, e.broadcast_smtp_host, e.broadcast_smtp_port, e.broadcast_smtp_username, e.broadcast_smtp_password, e.broadcast_smtp_tls, e.broadcast_rate, e.dkim_selector, e.dkim_private_key, e.dkim_enabled, e.dkim_public_key, e.forward_token, c.inbox_id, c.name AS channel_name FROM email_channels e
+JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
+WHERE e.workspace_id = $1 AND e.channel_id = $2
+`
+
+type GetIngestChannelParams struct {
+	WorkspaceID uuid.UUID
+	ChannelID   uuid.UUID
+}
+
+type GetIngestChannelRow struct {
+	WorkspaceID            uuid.UUID
+	ChannelID              uuid.UUID
+	Address                string
+	DisplayName            string
+	FromAddress            *string
+	SmtpHost               string
+	SmtpPort               int32
+	SmtpUsername           string
+	SmtpPassword           []byte
+	SmtpTls                string
+	AutoReplyEnabled       bool
+	AutoReplyText          string
+	AutoReplyIntervalHours int32
+	BroadcastSmtpHost      *string
+	BroadcastSmtpPort      *int32
+	BroadcastSmtpUsername  *string
+	BroadcastSmtpPassword  []byte
+	BroadcastSmtpTls       *string
+	BroadcastRate          int32
+	DkimSelector           *string
+	DkimPrivateKey         []byte
+	DkimEnabled            bool
+	DkimPublicKey          []byte
+	ForwardToken           string
+	InboxID                uuid.UUID
+	ChannelName            string
+}
+
+func (q *Queries) GetIngestChannel(ctx context.Context, arg GetIngestChannelParams) (GetIngestChannelRow, error) {
+	row := q.db.QueryRow(ctx, getIngestChannel, arg.WorkspaceID, arg.ChannelID)
+	var i GetIngestChannelRow
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ChannelID,
+		&i.Address,
+		&i.DisplayName,
+		&i.FromAddress,
+		&i.SmtpHost,
+		&i.SmtpPort,
+		&i.SmtpUsername,
+		&i.SmtpPassword,
+		&i.SmtpTls,
+		&i.AutoReplyEnabled,
+		&i.AutoReplyText,
+		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
+		&i.DkimPublicKey,
+		&i.ForwardToken,
+		&i.InboxID,
+		&i.ChannelName,
 	)
 	return i, err
 }
@@ -1119,6 +1264,48 @@ func (q *Queries) ListMessageEmails(ctx context.Context, arg ListMessageEmailsPa
 		return nil, err
 	}
 	return items, nil
+}
+
+const rotateForwardToken = `-- name: RotateForwardToken :one
+UPDATE email_channels SET forward_token = DEFAULT WHERE workspace_id = $1 AND channel_id = $2
+RETURNING workspace_id, channel_id, address, display_name, from_address, smtp_host, smtp_port, smtp_username, smtp_password, smtp_tls, auto_reply_enabled, auto_reply_text, auto_reply_interval_hours, broadcast_smtp_host, broadcast_smtp_port, broadcast_smtp_username, broadcast_smtp_password, broadcast_smtp_tls, broadcast_rate, dkim_selector, dkim_private_key, dkim_enabled, dkim_public_key, forward_token
+`
+
+type RotateForwardTokenParams struct {
+	WorkspaceID uuid.UUID
+	ChannelID   uuid.UUID
+}
+
+func (q *Queries) RotateForwardToken(ctx context.Context, arg RotateForwardTokenParams) (EmailChannel, error) {
+	row := q.db.QueryRow(ctx, rotateForwardToken, arg.WorkspaceID, arg.ChannelID)
+	var i EmailChannel
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.ChannelID,
+		&i.Address,
+		&i.DisplayName,
+		&i.FromAddress,
+		&i.SmtpHost,
+		&i.SmtpPort,
+		&i.SmtpUsername,
+		&i.SmtpPassword,
+		&i.SmtpTls,
+		&i.AutoReplyEnabled,
+		&i.AutoReplyText,
+		&i.AutoReplyIntervalHours,
+		&i.BroadcastSmtpHost,
+		&i.BroadcastSmtpPort,
+		&i.BroadcastSmtpUsername,
+		&i.BroadcastSmtpPassword,
+		&i.BroadcastSmtpTls,
+		&i.BroadcastRate,
+		&i.DkimSelector,
+		&i.DkimPrivateKey,
+		&i.DkimEnabled,
+		&i.DkimPublicKey,
+		&i.ForwardToken,
+	)
+	return i, err
 }
 
 const setConversationEmailToken = `-- name: SetConversationEmailToken :one

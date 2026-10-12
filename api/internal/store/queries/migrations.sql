@@ -84,7 +84,7 @@ RETURNING *;
 
 -- name: StartMigrationCopy :one
 UPDATE migrations SET state = 'copying', state_reason = '', waiting_until = NULL, started_at = coalesce(started_at, @now),
-    live_from = coalesce(live_from, @now), updated_at = @now
+    updated_at = @now
 WHERE workspace_id = @workspace_id AND id = @id
 RETURNING *;
 
@@ -122,7 +122,7 @@ WHERE workspace_id = @workspace_id AND id = @id AND lease_job_id = @job_id;
 -- The watchdog looks across workspaces (see "Hosting for others later" in docs/architecture.md).
 -- name: ListStaleMigrations :many
 SELECT workspace_id, id, state, lease_job_id FROM migrations
-WHERE state IN ('scanning', 'copying') AND (lease_until IS NULL OR lease_until < @now)
+WHERE state IN ('scanning', 'copying', 'syncing', 'removing') AND (lease_until IS NULL OR lease_until < @now)
   AND (waiting_until IS NULL OR waiting_until <= @now)
 ORDER BY lease_until NULLS FIRST
 LIMIT 500;
@@ -368,7 +368,7 @@ ON CONFLICT (workspace_id, name) DO NOTHING;
 -- The cleanup looks across workspaces (see "Hosting for others later" in docs/architecture.md).
 -- name: ListFinishedMigrations :many
 SELECT m.workspace_id, m.id FROM migrations m
-WHERE m.state IN ('completed', 'cancelled') AND m.finished_at < @before
+WHERE m.state IN ('completed', 'cancelled', 'removing', 'removed') AND m.finished_at < @before
   AND EXISTS (SELECT 1 FROM migration_items i WHERE i.workspace_id = m.workspace_id AND i.migration_id = m.id)
 LIMIT 100;
 
@@ -391,3 +391,83 @@ ORDER BY thread_key, received_at, source_id;
 
 -- name: ClearMigrationLease :exec
 UPDATE migrations SET lease_until = NULL, lease_job_id = NULL WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: EnterMigrationSync :one
+UPDATE migrations SET state = 'syncing', state_reason = '', waiting_until = NULL, live_from = coalesce(live_from, @now), updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: SetMigrationSynced :exec
+UPDATE migrations SET synced_at = @now, quiet_since = coalesce(sqlc.narg(quiet_since)::timestamptz, quiet_since)
+WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: SetMigrationProbeSent :one
+UPDATE migrations SET probe_sent_at = @now, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: SetMigrationProbeSynced :exec
+UPDATE migrations SET probe_synced_at = @now WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: GetChannelMigration :one
+SELECT * FROM migrations WHERE workspace_id = @workspace_id AND id = @id AND channel_id = @channel_id;
+
+-- name: VerifyMigrationDelivery :one
+UPDATE migrations SET verified_at = @now, verified_route = @route, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id AND verified_at IS NULL
+RETURNING *;
+
+-- name: FindForwardingMigration :one
+SELECT * FROM migrations
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id
+  AND state IN ('connected', 'scanning', 'ready', 'copying', 'paused', 'needs_attention', 'syncing')
+ORDER BY created_at DESC, id DESC
+LIMIT 1;
+
+-- name: SetMigrationForwardingConfirmation :one
+UPDATE migrations SET forwarding_confirmation = @confirmation, updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: CountMigrationHistory :many
+SELECT c.migration_id::uuid AS migration_id, count(*)::bigint AS conversations,
+       count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM messages m
+           WHERE m.workspace_id = c.workspace_id AND m.conversation_id = c.id AND m.imported_at IS NULL))::bigint AS removable
+FROM conversations c
+WHERE c.workspace_id = @workspace_id AND c.migration_id = ANY(@migration_ids::uuid[])
+GROUP BY c.migration_id;
+
+-- A conversation someone wrote in after the import (any message, note, draft or event not imported) stays.
+-- name: ListRemovableMigrationConversations :many
+SELECT c.id FROM conversations c
+WHERE c.workspace_id = @workspace_id AND c.migration_id = @migration_id
+  AND NOT EXISTS (SELECT 1 FROM messages m WHERE m.workspace_id = c.workspace_id AND m.conversation_id = c.id AND m.imported_at IS NULL)
+ORDER BY c.id
+LIMIT @max_rows;
+
+-- Messages cascade with their author contact, so a contact that wrote anywhere stays.
+-- name: DeleteLeftoverMigrationContacts :execrows
+DELETE FROM contacts ct
+WHERE ct.workspace_id = @workspace_id AND ct.migration_id = @migration_id
+  AND NOT EXISTS (SELECT 1 FROM conversations c WHERE c.workspace_id = ct.workspace_id AND c.contact_id = ct.id)
+  AND NOT EXISTS (SELECT 1 FROM messages m WHERE m.workspace_id = ct.workspace_id AND m.author_contact_id = ct.id);
+
+-- An audit entry is kept while its migration runs and for the audit period after it ended or was deleted.
+-- name: DeleteOldMigrationAudit :execrows
+DELETE FROM migration_audit a
+WHERE a.workspace_id = @workspace_id AND a.created_at < @before
+  AND NOT EXISTS (SELECT 1 FROM migrations m WHERE m.workspace_id = a.workspace_id AND m.id = a.migration_id
+                  AND (m.finished_at IS NULL OR m.finished_at >= @before));
+
+-- name: ListMigrationFolderSeen :many
+SELECT id, name, kind, selected, label_action, label_id, uidvalidity, scanned_uid, seen_uid, delim FROM migration_folders
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+ORDER BY id;
+
+-- name: SetMigrationFolderSeen :exec
+UPDATE migration_folders SET seen_uid = greatest(seen_uid, @seen_uid)
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: ListMigrationDedupeKeysIn :many
+SELECT dedupe_key FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND dedupe_key = ANY(@keys::text[]);

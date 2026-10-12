@@ -1894,6 +1894,38 @@ paths:
           $ref: "#/components/responses/Problem"
         "404":
           $ref: "#/components/responses/Problem"
+  /v1/channels/{channelId}/forwarding-address/rotate:
+    post:
+      operationId: rotateForwardingAddress
+      summary: Give an e-mail channel a new forwarding address
+      description: |
+        Owners, admins and API keys. Every e-mail channel receives mail at
+        `forwarding_address` (`<token>@` the server's forwarding domain) besides its own address,
+        so a mailbox can forward to Yuva without a loop. Rotating gives it a new token; mail to the
+        old forwarding address is refused from then on, so change the forwarding at the provider
+        too. Other kinds, and servers without a forwarding domain, answer `400`.
+
+        Scope: `inboxes:manage`.
+      tags: [channels]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/ChannelId"
+      responses:
+        "200":
+          description: The channel with its new forwarding address.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
   /v1/channels/{channelId}/deliverability-check:
     post:
       operationId: checkDeliverability
@@ -6561,6 +6593,126 @@ paths:
           $ref: "#/components/responses/Problem"
         "409":
           $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/probe:
+    post:
+      operationId: sendMigrationProbe
+      summary: Send a test message to check the switch
+      description: |
+        While a migration is `syncing`, mails the mailbox address a short test message from the
+        server's own mailer (or, without one, the channel's SMTP account) with a `Yuva-Probe`
+        header signed for this migration. When it reaches Yuva at the channel's forwarding address
+        or at the channel's own address, `verified_at` and `verified_route` are set and nothing is
+        stored; when catch-up sync finds it only in the old mailbox, `probe_synced_at` is set,
+        which means mail still reaches the old provider but is not forwarded yet. At most one a
+        minute (`429`); `409 migration_state` in other states.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "202":
+          description: The migration, with `probe_sent_at`; the mail goes out shortly.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "429":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/finish:
+    post:
+      operationId: finishMigration
+      summary: Finish the migration
+      description: |
+        Stops catch-up sync and completes a `syncing` migration (or one that `needs_attention`
+        after its copy ended): it becomes `completed` and its credentials are deleted in the same
+        step. Delivery must be verified first (`verified_at`, see the probe) unless `force` is
+        true; finishing before `quiet_until` is allowed, but mail that reaches only the old
+        mailbox afterwards is not copied. A migration also finishes on its own once delivery is
+        verified and the quiet period passed, and stops syncing after the server's limit
+        (`sync_until`). `completed` answers as is; `409 migration_state` otherwise.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationFinish"
+      responses:
+        "200":
+          description: The migration, `completed`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/remove-history:
+    post:
+      operationId: removeMigrationHistory
+      summary: Remove imported history
+      description: |
+        Deletes the conversations a `completed` or `cancelled` migration imported that nobody
+        wrote in since (no message, note, draft or event added in Yuva), with their messages and
+        files, then the contacts it created that are left without a conversation. Conversations
+        someone wrote in stay. The migration becomes `removing` and then `removed`; `removing` and
+        `removed` answer as is. With `confirm_count`, nothing happens unless it equals the
+        migration's `removable_conversations` (`409 confirm_count_mismatch`). `409
+        migration_state` in other states.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MigrationRemoveHistory"
+      responses:
+        "202":
+          description: The migration, `removing`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
   /v1/migrations/{migrationId}/errors:
     get:
       operationId: listMigrationErrors
@@ -10856,6 +11008,12 @@ components:
           $ref: "#/components/schemas/ChatChannel"
         app:
           $ref: "#/components/schemas/AppChannel"
+        forwarding_address:
+          type: string
+          description: |
+            `email` channels, when the server has a forwarding domain: another address the channel
+            receives mail at, for a mailbox to forward to (its own address would loop).
+            `POST …/forwarding-address/rotate` changes it.
         created_at:
           type: string
           format: date-time
@@ -12974,6 +13132,98 @@ components:
         finished_at:
           type: string
           format: date-time
+        live_from:
+          type: string
+          format: date-time
+          description: |
+            When the copy ended and catch-up sync began. Mail the old mailbox received before is
+            imported quietly as history; mail received after is new mail, with notifications, as
+            if it had reached Yuva directly (without the inbox's greeting).
+        synced_at:
+          type: string
+          format: date-time
+          description: When catch-up sync last read the old mailbox.
+        sync_until:
+          type: string
+          format: date-time
+          description: While `syncing`, when sync stops on its own and the credentials are deleted (`YUVA_MIGRATION_SYNC_MAX_DAYS`).
+        forwarding_address:
+          type: string
+          description: The channel's forwarding address, when the server has a forwarding domain; forward the old mailbox there.
+        forwarding_confirmation:
+          $ref: "#/components/schemas/MigrationForwardingConfirmation"
+        probe_sent_at:
+          type: string
+          format: date-time
+          description: When the last test message was sent.
+        probe_synced_at:
+          type: string
+          format: date-time
+          description: |
+            When catch-up sync found a test message in the old mailbox: mail still reaches the old
+            provider. Without `verified_at` some minutes later, it is not forwarded to Yuva yet.
+        verified_at:
+          type: string
+          format: date-time
+          description: When a test message first reached Yuva by the new route.
+        verified_route:
+          type: string
+          description: "How the test message arrived: `forwarding` at the forwarding address, `direct` at the channel's own address (routing or MX)."
+          enum: [forwarding, direct]
+          x-enum-varnames: [VerifiedForwarding, VerifiedDirect]
+        quiet_until:
+          type: string
+          format: date-time
+          description: |
+            Once delivery is verified: when the quiet period ends, the time after which sync has
+            found no mail that did not also reach Yuva directly for `quiet_period_hours`. Sync
+            finishes the migration then; mail found only by sync moves it later.
+        imported_conversations:
+          type: integer
+          format: int64
+          description: Conversations of this migration still in Yuva.
+        removable_conversations:
+          type: integer
+          format: int64
+          description: Of those, the ones nobody wrote in since the import, which "Remove imported history" deletes.
+    MigrationForwardingConfirmation:
+      type: object
+      description: |
+        A forwarding confirmation the provider mailed to the forwarding address while the
+        migration waited for forwarding; it opened no conversation. Open `link` or enter `code` in
+        the provider's settings. Only Google's is recognised so far.
+      required: [provider, code, received_at]
+      properties:
+        provider:
+          type: string
+          enum: [google]
+          x-enum-varnames: [ForwardingGoogle]
+        code:
+          type: string
+          pattern: "^[0-9]{6,12}$"
+        link:
+          type: string
+          description: The provider's confirmation page; Yuva never opens it.
+        from:
+          type: string
+          description: The mailbox that asked to forward.
+        received_at:
+          type: string
+          format: date-time
+    MigrationFinish:
+      type: object
+      properties:
+        force:
+          type: boolean
+          description: Finish although delivery to Yuva was never verified.
+    MigrationRemoveHistory:
+      type: object
+      properties:
+        confirm_count:
+          type: integer
+          format: int64
+          minimum: 0
+          description: The `removable_conversations` the person confirmed; nothing is removed when it changed.
     MigrationCreate:
       type: object
       required: [preset, source_address]
@@ -13553,6 +13803,35 @@ components:
           format: date-time
         data:
           $ref: "#/components/schemas/MigrationProgress"
+    MigrationForwardingConfirmationData:
+      type: object
+      required: [migration_id, confirmation]
+      properties:
+        migration_id:
+          type: string
+          format: uuid
+        confirmation:
+          $ref: "#/components/schemas/MigrationForwardingConfirmation"
+    MigrationForwardingConfirmationEvent:
+      type: object
+      description: |
+        `migration.forwarding_confirmation`, on `/v1/realtime` only: the provider mailed a
+        forwarding confirmation to the forwarding address of a migration's channel. Not stored,
+        never a webhook; the migration keeps it as `forwarding_confirmation`. Delivered to owners,
+        admins and API keys or tokens holding `migrations:manage`.
+      required: [type, workspace_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [migration.forwarding_confirmation]
+        workspace_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/MigrationForwardingConfirmationData"
     MigrationEventData:
       type: object
       required: [migration]
@@ -13565,8 +13844,9 @@ components:
     MigrationEvent:
       type: object
       description: |
-        `migration.updated`: a migration was created or changed state. Delivered to owners, admins
-        and API keys or tokens holding `migrations:manage`; never a webhook.
+        `migration.updated`: a migration was created or changed state, delivery to Yuva was
+        verified, or a forwarding confirmation arrived. Delivered to owners, admins and API keys
+        or tokens holding `migrations:manage`; never a webhook.
       required: [id, type, workspace_id, created_at, data]
       properties:
         id:
@@ -14114,6 +14394,7 @@ components:
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
         - $ref: "#/components/schemas/MigrationProgressEvent"
+        - $ref: "#/components/schemas/MigrationForwardingConfirmationEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
@@ -14152,6 +14433,7 @@ components:
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
           migration.progress: "#/components/schemas/MigrationProgressEvent"
+          migration.forwarding_confirmation: "#/components/schemas/MigrationForwardingConfirmationEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"

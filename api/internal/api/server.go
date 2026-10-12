@@ -151,6 +151,9 @@ type IngressSettings struct {
 	AuthservID string
 	// MaxConcurrent caps messages processed at once; more are answered 503. 0 means 8.
 	MaxConcurrent int
+	// ForwardingDomain gives every e-mail channel the address <forward token>@ForwardingDomain
+	// (YUVA_FORWARDING_DOMAIN); empty for none.
+	ForwardingDomain string
 }
 
 type AttachmentSettings struct {

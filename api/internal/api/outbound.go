@@ -268,6 +268,9 @@ func (s *Server) AddWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &migrationScanWorker{s: s})
 	river.AddWorker(workers, &migrationCopyWorker{s: s})
 	river.AddWorker(workers, &migrationWatchdogWorker{s: s})
+	river.AddWorker(workers, &migrationSyncWorker{s: s})
+	river.AddWorker(workers, &migrationRemoveWorker{s: s})
+	river.AddWorker(workers, &migrationProbeWorker{s: s})
 }
 
 func truncateRunes(v string, n int) string {

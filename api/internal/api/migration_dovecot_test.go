@@ -290,9 +290,16 @@ type dovecotRun struct {
 }
 
 func newDovecotRun(t *testing.T) *dovecotRun {
+	return newDovecotRunWith(t, nil)
+}
+
+func newDovecotRunWith(t *testing.T, configure func(*api.Deps)) *dovecotRun {
 	host, port, pass, fixtures := dovecotTarget(t)
 	objects := &killableStorage{}
 	h := newHarnessWith(t, func(d *api.Deps) {
+		if configure != nil {
+			defer configure(d)
+		}
 		d.Migrations = api.MigrationSettings{AllowPrivate: true, TestTimeout: 10 * time.Second}
 		d.Webhooks.AllowPrivate = true
 		d.Attachments = api.AttachmentSettings{MaxBytes: 25 << 20, Types: []string{
@@ -344,12 +351,17 @@ func (d *dovecotRun) channelAddress(t *testing.T, channel string) string {
 }
 
 // work runs the workspace's queued migration jobs slice by slice, as River would, until none is
-// left; a slice that ends with an error leaves its job, as a dead process would.
+// left or every one left waits, as a syncing migration's job does between passes; a slice that
+// ends with an error leaves its job, as a dead process would.
 func (d *dovecotRun) work(t *testing.T, ctx context.Context) error {
 	t.Helper()
+	waiting := map[int64]bool{}
 	for range 500 {
-		jobs := append(d.h.jobs("migration_scan", d.tm.ws), d.h.jobs("migration_copy", d.tm.ws)...)
-		jobs = slices.DeleteFunc(jobs, func(j riverJob) bool { return d.jobState(j.id) == "running" })
+		var jobs []riverJob
+		for _, kind := range []string{"migration_scan", "migration_copy", "migration_sync", "migration_remove"} {
+			jobs = append(jobs, d.h.jobs(kind, d.tm.ws)...)
+		}
+		jobs = slices.DeleteFunc(jobs, func(j riverJob) bool { return waiting[j.id] || d.jobState(j.id) == "running" })
 		if len(jobs) == 0 {
 			return nil
 		}
@@ -363,8 +375,11 @@ func (d *dovecotRun) work(t *testing.T, ctx context.Context) error {
 			d.setJobState(j.id, "running")
 			return err
 		}
-		if res.Done {
+		switch {
+		case res.Done:
 			d.h.dropJob(j.id)
+		case res.Until.After(d.h.clock.Now()):
+			waiting[j.id] = true
 		}
 	}
 	t.Fatal("the migration did not finish in 500 slices")

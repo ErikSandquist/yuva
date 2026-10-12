@@ -21,6 +21,7 @@ import (
 
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/config"
+	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/jobs"
 	"github.com/productdevbook/yuva/api/internal/mail"
 	"github.com/productdevbook/yuva/api/internal/metrics"
@@ -241,10 +242,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
 		Imports:             api.ImportSettings{MaxRows: cfg.ImportMaxRows},
-		Migrations: api.MigrationSettings{
-			Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate, MaxActive: cfg.MigrationMaxActive,
-			MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes,
-		},
+		Migrations:          migrationSettings(cfg),
 		Broadcasts: api.BroadcastSettings{
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},
@@ -399,9 +397,23 @@ func ingressSettings(cfg config.Config) api.IngressSettings {
 	out := api.IngressSettings{
 		Secret: cfg.IngressSecret, SESTopicARNs: cfg.SESTopicARNs, SenderHourlyCap: cfg.EmailSenderHourlyCap,
 		AcceptV1: cfg.IngressAcceptV1, AuthservID: cfg.IngressAuthservID, MaxConcurrent: cfg.IngressMaxConcurrent,
+		ForwardingDomain: cfg.ForwardingDomain,
 	}
 	if a, err := netmail.ParseAddress(cfg.SMTP.From); err == nil {
 		out.OwnAddresses = []string{strings.ToLower(a.Address)}
+	}
+	return out
+}
+
+func migrationSettings(cfg config.Config) api.MigrationSettings {
+	out := api.MigrationSettings{
+		Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate, MaxActive: cfg.MigrationMaxActive,
+		MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes,
+		SyncMaxDays: cfg.MigrationSyncMaxDays, AuditDays: cfg.MigrationAuditDays,
+	}
+	if a, err := netmail.ParseAddress(cfg.SMTP.From); err == nil && cfg.SMTP.Enabled() {
+		out.ProbeSMTP = &email.SMTPConfig{Host: cfg.SMTP.Host, Port: cfg.SMTP.Port, Username: cfg.SMTP.Username, Password: cfg.SMTP.Password, TLS: cfg.SMTP.TLS}
+		out.ProbeFrom = strings.ToLower(a.Address)
 	}
 	return out
 }

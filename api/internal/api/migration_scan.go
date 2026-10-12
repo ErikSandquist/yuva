@@ -891,6 +891,6 @@ func (r *migrationRun) scanned(ctx context.Context) error {
 			return err
 		}
 		r.m = m
-		return migrationChanged(ctx, q, events, m, &cur.State)
+		return r.s.migrationChanged(ctx, q, events, m, &cur.State)
 	})
 }

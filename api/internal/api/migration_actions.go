@@ -25,10 +25,10 @@ func (s *Server) migrationStep(ctx context.Context, id uuid.UUID, fn func(q *sto
 		if err != nil {
 			return err
 		}
-		if err := migrationChanged(ctx, q, events, m, &cur.State); err != nil {
+		if err := s.migrationChanged(ctx, q, events, m, &cur.State); err != nil {
 			return err
 		}
-		out, err = oneMigration(ctx, q, m)
+		out, err = s.oneMigration(ctx, q, m)
 		return err
 	})
 	return out, err
@@ -275,7 +275,7 @@ func (s *Server) RetryMigrationItems(ctx context.Context, req oas.RetryMigration
 		if _, err := s.migrationAudit(ctx, q, p, m.ID, "retried", map[string]any{"conversations": n}); err != nil {
 			return m, err
 		}
-		if m.State == migrationCopying {
+		if m.State == migrationCopying && cur.State != migrationSyncing {
 			events.jobOnce(migrationJob(m, 0), migrationJobOpts())
 		}
 		return m, nil

@@ -43,6 +43,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"UpdateChannel":             {oas.InboxesManage},
 	"DeleteChannel":             {oas.InboxesManage},
 	"RotateChannelPublicKey":    {oas.InboxesManage},
+	"RotateForwardingAddress":   {oas.InboxesManage},
 	"CheckDeliverability":       {oas.InboxesManage},
 	"CreateDkimKey":             {oas.InboxesManage},
 	"DeleteDkimKey":             {oas.InboxesManage},
@@ -194,6 +195,9 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"CancelMigration":         {oas.MigrationsManage},
 	"RetryMigrationItems":     {oas.MigrationsManage},
 	"ListMigrationErrors":     {oas.MigrationsManage},
+	"SendMigrationProbe":      {oas.MigrationsManage},
+	"FinishMigration":         {oas.MigrationsManage},
+	"RemoveMigrationHistory":  {oas.MigrationsManage},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

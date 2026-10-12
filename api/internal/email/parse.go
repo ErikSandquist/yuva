@@ -43,6 +43,7 @@ type Message struct {
 
 	DKIMSignatures []string
 	Probe          string
+	MigrationProbe string
 }
 
 const (
@@ -91,6 +92,7 @@ func Parse(raw []byte) (*Message, error) {
 	}
 	m.DKIMSignatures = env.GetHeaderValues("DKIM-Signature")
 	m.Probe = strings.TrimSpace(env.GetHeader(ProbeHeader))
+	m.MigrationProbe = strings.TrimSpace(env.GetHeader(MigrationProbeHeader))
 	m.Auto = Automatic(m.Headers, m.From.Email)
 	m.Attachments = attachments(env)
 	if env.Root != nil {

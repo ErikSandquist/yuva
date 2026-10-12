@@ -26,6 +26,22 @@ JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
 JOIN workspaces w ON w.id = e.workspace_id
 WHERE e.address = $1 AND w.deleted_at IS NULL;
 
+-- A forwarding address names only its token (see "Hosting for others later" in docs/architecture.md).
+-- name: FindEmailChannelByForwardToken :one
+SELECT e.*, c.inbox_id, c.name AS channel_name FROM email_channels e
+JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
+JOIN workspaces w ON w.id = e.workspace_id
+WHERE e.forward_token = $1 AND w.deleted_at IS NULL;
+
+-- name: GetIngestChannel :one
+SELECT e.*, c.inbox_id, c.name AS channel_name FROM email_channels e
+JOIN channels c ON c.workspace_id = e.workspace_id AND c.id = e.channel_id
+WHERE e.workspace_id = $1 AND e.channel_id = $2;
+
+-- name: RotateForwardToken :one
+UPDATE email_channels SET forward_token = DEFAULT WHERE workspace_id = $1 AND channel_id = $2
+RETURNING *;
+
 -- name: CreateMessageEmail :exec
 INSERT INTO message_emails (workspace_id, message_id, conversation_id, channel_id, direction, header_message_id,
                             in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject,

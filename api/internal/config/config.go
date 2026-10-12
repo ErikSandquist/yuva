@@ -7,6 +7,7 @@ import (
 	"net/netip"
 	"net/url"
 	"os"
+	"regexp"
 	"slices"
 	"strconv"
 	"strings"
@@ -84,6 +85,12 @@ type Config struct {
 	MigrationMaxBytes int64
 	// MigrationMaxMessageBytes is the largest message imported; larger ones are skipped.
 	MigrationMaxMessageBytes int64
+	// MigrationSyncMaxDays ends a migration's catch-up sync, and deletes its credentials, after so many days.
+	MigrationSyncMaxDays int
+	// MigrationAuditDays keeps a migration's audit entries so many days after it ended.
+	MigrationAuditDays int
+	// ForwardingDomain gives every e-mail channel the address <token>@ForwardingDomain; empty for none.
+	ForwardingDomain string
 }
 
 type VAPID struct {
@@ -305,6 +312,8 @@ func (c *Config) loadBroadcasts() error {
 
 var migrationSources = []string{"imap", "file", "zendesk", "helpscout"}
 
+var forwardingDomainRe = regexp.MustCompile(`^([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$`)
+
 func (c *Config) loadMigrations() error {
 	var err error
 	if c.MigrationAllowPrivate, err = boolEnv("YUVA_MIGRATION_ALLOW_PRIVATE", false); err != nil {
@@ -321,6 +330,16 @@ func (c *Config) loadMigrations() error {
 	}
 	if c.MigrationMaxMessageBytes, err = strconv.ParseInt(env("YUVA_MIGRATION_MAX_MESSAGE_BYTES", "52428800"), 10, 64); err != nil || c.MigrationMaxMessageBytes < 1 {
 		return errors.New("YUVA_MIGRATION_MAX_MESSAGE_BYTES must be a positive number of bytes")
+	}
+	if c.MigrationSyncMaxDays, err = strconv.Atoi(env("YUVA_MIGRATION_SYNC_MAX_DAYS", "30")); err != nil || c.MigrationSyncMaxDays < 1 || c.MigrationSyncMaxDays > 365 {
+		return errors.New("YUVA_MIGRATION_SYNC_MAX_DAYS must be 1 to 365 days")
+	}
+	if c.MigrationAuditDays, err = strconv.Atoi(env("YUVA_MIGRATION_AUDIT_DAYS", "365")); err != nil || c.MigrationAuditDays < 1 || c.MigrationAuditDays > 36500 {
+		return errors.New("YUVA_MIGRATION_AUDIT_DAYS must be 1 to 36500 days")
+	}
+	c.ForwardingDomain = strings.TrimSuffix(strings.ToLower(strings.TrimSpace(os.Getenv("YUVA_FORWARDING_DOMAIN"))), ".")
+	if c.ForwardingDomain != "" && !forwardingDomainRe.MatchString(c.ForwardingDomain) {
+		return fmt.Errorf("YUVA_FORWARDING_DOMAIN must be a domain name such as forward.example.com, got %q", c.ForwardingDomain)
 	}
 	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); !set {
 		return nil

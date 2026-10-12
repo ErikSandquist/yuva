@@ -12,6 +12,7 @@ import (
 	"time"
 	"uuid"
 
+	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/migrate"
 	"github.com/productdevbook/yuva/api/internal/oas"
 	"github.com/productdevbook/yuva/api/internal/store"
@@ -29,7 +30,10 @@ const (
 	migrationPaused         = string(oas.MigrationPaused)
 	migrationNeedsAttention = string(oas.MigrationNeedsAttention)
 	migrationSyncing        = string(oas.MigrationSyncing)
+	migrationCompleted      = string(oas.MigrationCompleted)
+	migrationCancelled      = string(oas.MigrationCancelled)
 	migrationRemoving       = string(oas.MigrationRemoving)
+	migrationRemoved        = string(oas.MigrationRemoved)
 
 	testsPerMigration   = 10
 	testsPerWorkspace   = 30
@@ -71,6 +75,15 @@ type MigrationSettings struct {
 	HTTP            migrate.HTTPDoer
 	RootCAs         *x509.CertPool
 	TestTimeout     time.Duration
+	// SyncMaxDays and AuditDays are YUVA_MIGRATION_SYNC_MAX_DAYS and YUVA_MIGRATION_AUDIT_DAYS.
+	SyncMaxDays int
+	AuditDays   int
+	// ProbeSMTP and ProbeFrom are the server's own mailer (YUVA_SMTP_*), which sends the test
+	// message of a switch; without it the channel's SMTP account sends it.
+	ProbeSMTP *email.SMTPConfig
+	ProbeFrom string
+	// SyncEvery is how often catch-up sync reads the old mailbox; 0 means two minutes.
+	SyncEvery time.Duration
 }
 
 func migrationSettings(in MigrationSettings) MigrationSettings {
@@ -85,6 +98,15 @@ func migrationSettings(in MigrationSettings) MigrationSettings {
 	}
 	if in.MaxMessageBytes <= 0 {
 		in.MaxMessageBytes = defaultMigrationMaxMessage
+	}
+	if in.SyncMaxDays <= 0 {
+		in.SyncMaxDays = defaultSyncMaxDays
+	}
+	if in.AuditDays <= 0 {
+		in.AuditDays = defaultAuditDays
+	}
+	if in.SyncEvery <= 0 {
+		in.SyncEvery = defaultSyncEvery
 	}
 	return in
 }
@@ -171,6 +193,13 @@ func migrationActions(m store.Migration, hasCreds bool) []oas.MigrationAction {
 		out = append(out, oas.MigrationActionPause)
 	case migrationPaused, migrationNeedsAttention:
 		out = append(out, oas.MigrationActionResume)
+	case migrationSyncing:
+		out = append(out, oas.MigrationActionProbe, oas.MigrationActionFinish)
+	case migrationCompleted, migrationCancelled:
+		out = append(out, oas.MigrationActionRemoveHistory)
+	}
+	if m.State == migrationNeedsAttention && m.LiveFrom != nil {
+		out = append(out, oas.MigrationActionFinish)
 	}
 	if c := migrationCounts(m.Counts); c.Failed > 0 && slices.Contains([]string{migrationCopying, migrationPaused, migrationSyncing}, m.State) {
 		out = append(out, oas.MigrationActionRetry)
@@ -200,7 +229,15 @@ func testableMigration(state string) bool {
 	return false
 }
 
-func migrationBody(m store.Migration, cred *store.ListMigrationCredentialInfosRow) oas.Migration {
+// migrationExtra is what a migration's body shows from other tables.
+type migrationExtra struct {
+	cred       *store.ListMigrationCredentialInfosRow
+	history    store.CountMigrationHistoryRow
+	forwarding string
+}
+
+func (s *Server) migrationBody(m store.Migration, x migrationExtra) oas.Migration {
+	cred := x.cred
 	out := oas.Migration{
 		Id: m.ID, Source: oas.MigrationSource(m.Source), Preset: oas.MigrationPresetId(m.Preset), SourceAddress: m.SourceAddress,
 		InboxId: m.InboxID, ChannelId: m.ChannelID, State: oas.MigrationState(m.State), WaitingUntil: m.WaitingUntil,
@@ -210,6 +247,25 @@ func migrationBody(m store.Migration, cred *store.ListMigrationCredentialInfosRo
 	}
 	if m.StateReason != "" {
 		out.StateReason = &m.StateReason
+	}
+	out.LiveFrom, out.SyncedAt, out.ProbeSentAt, out.ProbeSyncedAt, out.VerifiedAt = m.LiveFrom, m.SyncedAt, m.ProbeSentAt, m.ProbeSyncedAt, m.VerifiedAt
+	if m.VerifiedRoute != nil {
+		out.VerifiedRoute = new(oas.MigrationVerifiedRoute(*m.VerifiedRoute))
+	}
+	if m.State == migrationSyncing && m.LiveFrom != nil {
+		out.SyncUntil = new(m.LiveFrom.AddDate(0, 0, s.migrations.SyncMaxDays))
+	}
+	if m.State == migrationSyncing {
+		out.QuietUntil = quietUntil(m)
+	}
+	if x.forwarding != "" {
+		out.ForwardingAddress = &x.forwarding
+	}
+	if c := readForwardingConfirmation(m.ForwardingConfirmation); c != nil {
+		out.ForwardingConfirmation = c
+	}
+	if m.StartedAt != nil {
+		out.ImportedConversations, out.RemovableConversations = &x.history.Conversations, &x.history.Removable
 	}
 	if doc := readEstimate(m.Estimate); doc != nil {
 		out.Estimate = &doc.DryRun
@@ -231,39 +287,71 @@ func migrationBody(m store.Migration, cred *store.ListMigrationCredentialInfosRo
 	return out
 }
 
-func migrationBodies(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, rows []store.Migration) ([]oas.Migration, error) {
+func (s *Server) migrationBodies(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, rows []store.Migration) ([]oas.Migration, error) {
 	ids := make([]uuid.UUID, len(rows))
+	var channels []uuid.UUID
 	for i, r := range rows {
 		ids[i] = r.ID
+		if r.ChannelID != nil {
+			channels = append(channels, *r.ChannelID)
+		}
 	}
 	creds, err := q.ListMigrationCredentialInfos(ctx, store.ListMigrationCredentialInfosParams{WorkspaceID: workspaceID, MigrationIds: ids})
 	if err != nil {
 		return nil, err
 	}
-	byID := make(map[uuid.UUID]*store.ListMigrationCredentialInfosRow, len(creds))
+	byID := make(map[uuid.UUID]migrationExtra, len(rows))
 	for i := range creds {
-		byID[creds[i].MigrationID] = &creds[i]
+		x := byID[creds[i].MigrationID]
+		x.cred = &creds[i]
+		byID[creds[i].MigrationID] = x
+	}
+	history, err := q.CountMigrationHistory(ctx, store.CountMigrationHistoryParams{WorkspaceID: workspaceID, MigrationIds: ids})
+	if err != nil {
+		return nil, err
+	}
+	for _, h := range history {
+		x := byID[h.MigrationID]
+		x.history = h
+		byID[h.MigrationID] = x
+	}
+	var emails map[uuid.UUID]store.EmailChannel
+	if s.ingress.ForwardingDomain != "" && len(channels) > 0 {
+		if emails, err = emailChannelsByID(ctx, q, workspaceID, channels); err != nil {
+			return nil, err
+		}
 	}
 	out := make([]oas.Migration, len(rows))
 	for i, r := range rows {
-		out[i] = migrationBody(r, byID[r.ID])
+		x := byID[r.ID]
+		if r.ChannelID != nil {
+			if e, ok := emails[*r.ChannelID]; ok {
+				x.forwarding = s.forwardingAddress(e)
+			}
+		}
+		out[i] = s.migrationBody(r, x)
 	}
 	return out, nil
 }
 
-func oneMigration(ctx context.Context, q *store.Queries, m store.Migration) (oas.Migration, error) {
-	out, err := migrationBodies(ctx, q, m.WorkspaceID, []store.Migration{m})
+func (s *Server) oneMigration(ctx context.Context, q *store.Queries, m store.Migration) (oas.Migration, error) {
+	out, err := s.migrationBodies(ctx, q, m.WorkspaceID, []store.Migration{m})
 	if err != nil {
 		return oas.Migration{}, err
 	}
 	return out[0], nil
 }
 
-func migrationChanged(ctx context.Context, q *store.Queries, events *eventBatch, m store.Migration, previous *string) error {
+func (s *Server) migrationChanged(ctx context.Context, q *store.Queries, events *eventBatch, m store.Migration, previous *string) error {
 	if previous != nil && *previous == m.State {
 		return nil
 	}
-	body, err := oneMigration(ctx, q, m)
+	return s.migrationEvent(ctx, q, events, m, previous)
+}
+
+// migrationEvent writes migration.updated with the migration as it is now.
+func (s *Server) migrationEvent(ctx context.Context, q *store.Queries, events *eventBatch, m store.Migration, previous *string) error {
+	body, err := s.oneMigration(ctx, q, m)
 	if err != nil {
 		return err
 	}
@@ -573,7 +661,7 @@ func (s *Server) ListMigrations(ctx context.Context, req oas.ListMigrationsReque
 		c := encodeCursor(rows[lim-1].CreatedAt, rows[lim-1].ID)
 		next = &c
 	}
-	items, err := migrationBodies(ctx, s.st.Queries, p.workspaceID, rows)
+	items, err := s.migrationBodies(ctx, s.st.Queries, p.workspaceID, rows)
 	if err != nil {
 		return nil, err
 	}
@@ -586,7 +674,7 @@ func (s *Server) GetMigration(ctx context.Context, req oas.GetMigrationRequestOb
 	if err != nil {
 		return nil, err
 	}
-	out, err := oneMigration(ctx, s.st.Queries, m)
+	out, err := s.oneMigration(ctx, s.st.Queries, m)
 	if err != nil {
 		return nil, err
 	}
@@ -655,10 +743,10 @@ func (s *Server) CreateMigration(ctx context.Context, req oas.CreateMigrationReq
 		if _, err := s.migrationAudit(ctx, q, p, m.ID, "created", map[string]any{"source": source, "preset": m.Preset}); err != nil {
 			return err
 		}
-		if out, err = oneMigration(ctx, q, m); err != nil {
+		if out, err = s.oneMigration(ctx, q, m); err != nil {
 			return err
 		}
-		return migrationChanged(ctx, q, events, m, nil)
+		return s.migrationChanged(ctx, q, events, m, nil)
 	})
 	if err != nil {
 		return nil, err
@@ -732,10 +820,10 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 		if err != nil {
 			return err
 		}
-		if out, err = oneMigration(ctx, q, m); err != nil {
+		if out, err = s.oneMigration(ctx, q, m); err != nil {
 			return err
 		}
-		return migrationChanged(ctx, q, events, m, &cur.State)
+		return s.migrationChanged(ctx, q, events, m, &cur.State)
 	})
 	if err != nil {
 		return nil, err
@@ -875,7 +963,7 @@ func (s *Server) SetMigrationCredentials(ctx context.Context, req oas.SetMigrati
 		if err != nil {
 			return err
 		}
-		return migrationChanged(ctx, q, events, updated, &m.State)
+		return s.migrationChanged(ctx, q, events, updated, &m.State)
 	})
 	if err != nil {
 		return nil, err
@@ -990,7 +1078,7 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 				if err != nil {
 					return err
 				}
-				if err := migrationChanged(ctx, q, events, updated, &m.State); err != nil {
+				if err := s.migrationChanged(ctx, q, events, updated, &m.State); err != nil {
 					return err
 				}
 				m = updated
@@ -998,7 +1086,7 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 				return err
 			}
 		}
-		out, err = oneMigration(ctx, q, m)
+		out, err = s.oneMigration(ctx, q, m)
 		return err
 	})
 	if err != nil {
