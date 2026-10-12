@@ -111,6 +111,8 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `webhooks:manage` | Webhook'lar, teslimatları ve denemeleri |
 | `workspace:manage` | Çalışma alanı ayarları ve kullanım |
 | `migrations:manage` | [Bir posta kutusunu Yuva'ya taşıma](migrate.md): tespit, oluşturma, bağlama, tarama, başlatma, bitirme, aktarılan geçmişi kaldırma. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
+| `analytics:read` | [Analitik](analytics.md#api): mülkler, rakamlar, canlı, durum |
+| `analytics:manage` | Mülk oluşturma, değiştirme ve silme, anahtarlarını yenileme, verilerini silme. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
 | `feedback:write` | `POST /v1/feedback` |
 
 ### Anahtarlar

@@ -42,7 +42,7 @@ virgülle ayrılır. Boolean değerler `true`/`false`, `1`/`0` ve `t`/`f` kabul 
 | `YUVA_COOKIE_SECURE` | `YUVA_PUBLIC_URL` `https` ise `true` | Oturum çerezini `Secure` olarak işaretler. |
 | `YUVA_MCP` | `on` | `off`, MCP uç noktası `/mcp`'yi kapatır (`404` döner). OAuth açık kalır. |
 | `YUVA_PANEL` | `on` | `off`, panelin ve OAuth onay sayfasının sunulmasını durdurur; API anahtarları çalışmaya devam eder. |
-| `YUVA_WIDGET` | `on` | `off`, `/yuva.js`, `/yuva-chat.js` ve `/yuva-docs.js` dosyalarının sunulmasını durdurur; `/client/v1` kalır. |
+| `YUVA_WIDGET` | `on` | `off`, `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` ve `/yuva-analytics.js` dosyalarının sunulmasını durdurur; `/client/v1` kalır. |
 
 ## Giriş ve geçiş anahtarları
 
@@ -131,6 +131,41 @@ sunucular içindir; birini aşan bir istek adı belirtilerek `422 hosted_limit` 
 | `YUVA_BROADCAST_DAILY_RECIPIENTS` | `0` (sınır yok) | Bir çalışma alanının bültenlerinin UTC günü başına en fazla kaç alıcısı olabileceği. Sınıra ulaşan gönderim ertesi gün devam eder. Operatör çalışma alanı başına daha küçük bir sınır koyabilir ([Operasyon](operations.md#barındırılan-sunucuda-bültenler)). |
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | [Abone içe aktarırken](importing.md) bir CSV dosyasının sahip olabileceği en çok veri satırı. 1 ile 100000 arası; daha yüksek bir değer sunucunun başlamasını engeller. Bu değeri aşan dosya başarısız olur ve hiçbir şey eklenmez. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Liste ve bülten e-postalarındaki abonelikten çıkma, onay, tıklama ve görsel bağlantılarının işaret ettiği kaynak (şema ve alan adı, yol yok), örn. `https://links.example.com`. Bu sunucuya ulaşmalıdır. O alan adı yalnızca bu bağlantılara (`/m/`, `/s/`, `/c/`, `/i/`) yanıt verir, geri kalan her şey için `404` döner; panel ve API ana alan adınızda kalır. |
+
+## Analitik
+
+[Web sitelerinizi sayma](analytics.md).
+
+| Değişken | Varsayılan | Anlamı |
+|---|---|---|
+| `YUVA_ANALYTICS` | `on` | `off` analitiği kaldırır: uç noktaları, toplama uç noktası ve `/yuva-analytics.js` `404` döner. |
+| `YUVA_ANALYTICS_BUFFER` | `50000` | Bir sürecin yazmadan önce bellekte tuttuğu olay sayısı (saniyede bir yazılır). Dolu bir arabellek `503` döner. En az 100. |
+| `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Bir sürecin sürmekte olan ziyaretleri yenilerinden ayırmak için bellekte tuttuğu ziyaret sayısı. En az 1000. |
+| `YUVA_ANALYTICS_SALT_GRACE` | `2h` | Bir günün tuzunun, geç gelen olaylar için gün bittikten sonra ne kadar yaşadığı. En çok `6h`. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `YUVA_SIGNUP=open` ise `1000000`, değilse `0` | Bir çalışma alanının UTC ayı başına sayabileceği olay; fazlası ay bitene kadar atılır. `0` sınırsız demektir. [`yuva workspace analytics-limit`](operations.md#operatör-komutları) bunu çalışma alanı başına değiştirir. |
+| `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Bir web sitesinin dakikada gönderebileceği olay; fazlası atılır. |
+| `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Bir çalışma alanının sahip olabileceği web sitesi; fazlası reddedilir (`403 property_limit`). |
+| `YUVA_ANALYTICS_RAW_DAYS` | `90` | Ayrıntılı ziyaret ve olayların saklandığı gün sayısı, 7 ile 400 arası. Daha eski günlerde yalnızca günlük toplamlar kalır. |
+| `YUVA_ANALYTICS_WORKERS` | `2` | Bir sürecin aynı anda çalıştırdığı analitik işleri (günlük toplamlar, temizlik); `0` bu süreçte hiç çalıştırmaz. |
+| `YUVA_ANALYTICS_ROLLUP_TOP` | `1000` | Bir günün toplamlarında her dökümde tutulan değer sayısı; kalanı `(other)` olarak toplanır. 10 ile 100000 arası. |
+| `YUVA_GEOIP` | `dbip` | Konumların nereden geldiği. `dbip`: sunucunun her ay indirdiği ücretsiz DB-IP Lite şehir veritabanı. `file`: kendi MMDB şehir veritabanınız. `off`: konum veritabanı yok. |
+| `YUVA_GEOIP_DIR` | `data/geoip` | İndirilen `dbip` veritabanının dizini. Yeniden başlatmalarda kalan bir birime koyun; compose kurulumunda örneğin `/data/geoip`. |
+| `YUVA_GEOIP_FILE` | atanmamış | MMDB dosyasının yolu; `YUVA_GEOIP=file` ile zorunlu. |
+
+`dbip` ile veritabanı [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) lisanslıdır ve sunucunuz
+konumların gösterildiği her yerde ona atıf yapmalıdır. Panel bunu yapar (“IP Geolocation by DB-IP”,
+`https://db-ip.com` bağlantısıyla); rakamları başka bir yerde gösterirseniz orada da belirtin. Metin ve
+bağlantı, `GET /v1/analytics/properties/{propertyId}/health` yanıtının `geoip.attribution` ve
+`geoip.attribution_url` alanlarındadır.
+
+Komutlar, [Operatör komutları](operations.md#operatör-komutları) bölümündeki gibi çalıştırılır:
+
+| Komut | Ne yapar |
+|---|---|
+| `analytics property create --workspace <ws> --name <name> --domain <host>... [--inbox <id\|slug>] [--platform web\|ios\|android]... [--timezone <zone>]` | Bir web sitesi oluşturur, kimliğini ve genel anahtarını sekmeyle ayırarak yazdırır. |
+| `analytics property list --workspace <ws>` | Web sitelerini anahtarları, alan adları ve bugünkü ziyaretçileriyle, ayrıca ayın olaylarını sınırıyla birlikte listeler. |
+| `analytics geoip-update` | Bu ayın DB-IP Lite veritabanını, orada değilse `YUVA_GEOIP_DIR` içine indirir ve verilmesi gereken atfı yazdırır. `file` ile dosyanızı denetler. |
+| `workspace analytics-limit --workspace <ws> <events\|0>` | Çalışma alanının aylık olay sayısını belirler; `0` sınırı kaldırır. |
 
 ## Sohbet
 

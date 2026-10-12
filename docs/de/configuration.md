@@ -43,7 +43,7 @@ und `t`/`f`.
 | `YUVA_COOKIE_SECURE` | `true`, wenn `YUVA_PUBLIC_URL` `https` ist | Markiert das Sitzungs-Cookie als `Secure`. |
 | `YUVA_MCP` | `on` | `off` schaltet den MCP-Endpunkt `/mcp` ab (er antwortet mit `404`). OAuth bleibt an. |
 | `YUVA_PANEL` | `on` | `off` liefert das Panel und die OAuth-Zustimmung nicht mehr aus; API-Schlüssel funktionieren weiter. |
-| `YUVA_WIDGET` | `on` | `off` liefert `/yuva.js`, `/yuva-chat.js` und `/yuva-docs.js` nicht mehr aus; `/client/v1` bleibt. |
+| `YUVA_WIDGET` | `on` | `off` liefert `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` und `/yuva-analytics.js` nicht mehr aus; `/client/v1` bleibt. |
 
 ## Anmeldung und Passkeys
 
@@ -132,6 +132,41 @@ Einstellung nennt.
 | `YUVA_BROADCAST_DAILY_RECIPIENTS` | `0` (kein Limit) | Höchstzahl der Empfänger der Broadcasts eines Workspaces pro UTC-Tag. Ein Versand, der es erreicht, geht am nächsten Tag weiter. Der Operator kann pro Workspace ein kleineres Limit setzen ([Betrieb](operations.md#broadcasts-auf-einem-gehosteten-server)). |
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | Höchstzahl der Datenzeilen einer CSV-Datei beim [Importieren von Abonnenten](importing.md). Von 1 bis 100000; ein höherer Wert verhindert den Start des Servers. Eine Datei darüber schlägt fehl, und nichts wird eingetragen. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Ursprung (Schema und Host, kein Pfad), auf den die Abmelde-, Bestätigungs-, Klick- und Bild-Links in Listen- und Broadcast-Mails zeigen, z. B. `https://links.example.com`. Er muss diesen Server erreichen. Dieser Host beantwortet nur diese Links (`/m/`, `/s/`, `/c/`, `/i/`) und liefert für alles andere `404`; Panel und API bleiben auf Ihrem Haupt-Host. |
+
+## Analytics
+
+[Ihre Websites zählen](analytics.md).
+
+| Variable | Standard | Bedeutung |
+|---|---|---|
+| `YUVA_ANALYTICS` | `on` | `off` entfernt Analytics: Seine Endpunkte, der Erfassungs-Endpunkt und `/yuva-analytics.js` antworten mit `404`. |
+| `YUVA_ANALYTICS_BUFFER` | `50000` | Events, die ein Prozess hält, bevor er sie schreibt (geschrieben wird jede Sekunde). Ein voller Puffer antwortet mit `503`. Mindestens 100. |
+| `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Besuche, die ein Prozess im Speicher hält, um laufende von neuen Besuchen zu unterscheiden. Mindestens 1000. |
+| `YUVA_ANALYTICS_SALT_GRACE` | `2h` | Wie lange der Salt eines Tages nach dessen Ende für verspätete Events weiterlebt. Höchstens `6h`. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` bei `YUVA_SIGNUP=open`, sonst `0` | Events, die ein Workspace pro UTC-Monat zählen darf; mehr werden verworfen, bis der Monat endet. `0` heißt kein Limit. [`yuva workspace analytics-limit`](operations.md#operator-befehle) überschreibt es je Workspace. |
+| `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Events, die eine Website pro Minute senden darf; mehr werden verworfen. |
+| `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Websites, die ein Workspace haben darf; weitere werden abgelehnt (`403 property_limit`). |
+| `YUVA_ANALYTICS_RAW_DAYS` | `90` | Tage, die die detaillierten Besuche und Events aufbewahrt werden, von 7 bis 400. Ältere Tage behalten nur ihre Tagessummen. |
+| `YUVA_ANALYTICS_WORKERS` | `2` | Analytics-Jobs (Tagessummen, Aufräumen), die ein Prozess gleichzeitig ausführt; `0` führt in diesem Prozess keine aus. |
+| `YUVA_ANALYTICS_ROLLUP_TOP` | `1000` | Werte je Aufschlüsselung, die in den Summen eines Tages behalten werden; der Rest wird als `(other)` zusammengefasst. Von 10 bis 100000. |
+| `YUVA_GEOIP` | `dbip` | Woher Orte kommen. `dbip`: die kostenlose Städte-Datenbank DB-IP Lite, die der Server jeden Monat herunterlädt. `file`: eine eigene MMDB-Städte-Datenbank. `off`: keine Standortdatenbank. |
+| `YUVA_GEOIP_DIR` | `data/geoip` | Verzeichnis für die heruntergeladene `dbip`-Datenbank. Legen Sie es auf ein Volume, das Neustarts übersteht, etwa `/data/geoip` im Compose-Setup. |
+| `YUVA_GEOIP_FILE` | nicht gesetzt | Pfad der MMDB-Datei, Pflicht bei `YUVA_GEOIP=file`. |
+
+Mit `dbip` steht die Datenbank unter [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), und Ihr
+Server muss sie überall nennen, wo Standorte gezeigt werden. Das Panel tut das („IP Geolocation by DB-IP“,
+mit Link auf `https://db-ip.com`); zeigen Sie die Zahlen anderswo, sagen Sie es auch dort. Text und Link
+stehen in `geoip.attribution` und `geoip.attribution_url` der Antwort von
+`GET /v1/analytics/properties/{propertyId}/health`.
+
+Die Befehle laufen wie unter [Operator-Befehle](operations.md#operator-befehle):
+
+| Befehl | Was er tut |
+|---|---|
+| `analytics property create --workspace <ws> --name <name> --domain <host>... [--inbox <id\|slug>] [--platform web\|ios\|android]... [--timezone <zone>]` | Legt eine Website an und gibt ihre ID und ihren öffentlichen Schlüssel aus, durch einen Tab getrennt. |
+| `analytics property list --workspace <ws>` | Listet Websites mit Schlüsseln, Domains und heutigen Besuchern, dazu die Events des Monats gegen das Limit. |
+| `analytics geoip-update` | Lädt die DB-IP-Lite-Datenbank dieses Monats nach `YUVA_GEOIP_DIR`, sofern sie nicht schon dort liegt, und gibt die zu nennende Quelle aus. Mit `file` prüft er Ihre Datei. |
+| `workspace analytics-limit --workspace <ws> <events\|0>` | Setzt die Events pro Monat des Workspaces; `0` hebt das Limit auf. |
 
 ## Chat
 

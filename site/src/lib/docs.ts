@@ -21,6 +21,7 @@ const groups = [
       "designs",
       "broadcasts",
       "deliverability",
+      "analytics",
       "mobile",
     ],
   },

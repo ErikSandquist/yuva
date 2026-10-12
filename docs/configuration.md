@@ -42,7 +42,7 @@ An empty variable means unset and takes the default, except for `YUVA_METRICS_AD
 | `YUVA_COOKIE_SECURE` | `true` when `YUVA_PUBLIC_URL` is `https` | Marks the session cookie `Secure`. |
 | `YUVA_MCP` | `on` | `off` turns off the MCP endpoint `/mcp` (it answers `404`). OAuth stays on. |
 | `YUVA_PANEL` | `on` | `off` stops serving the panel and OAuth consent; API keys keep working. |
-| `YUVA_WIDGET` | `on` | `off` stops serving `/yuva.js`, `/yuva-chat.js` and `/yuva-docs.js`; `/client/v1` stays. |
+| `YUVA_WIDGET` | `on` | `off` stops serving `/yuva.js`, `/yuva-chat.js`, `/yuva-docs.js` and `/yuva-analytics.js`; `/client/v1` stays. |
 
 ## Sign-in and passkeys
 
@@ -130,6 +130,40 @@ a request over one is refused with `422 hosted_limit` naming it.
 | `YUVA_BROADCAST_DAILY_RECIPIENTS` | `0` (no limit) | Most recipients one workspace's broadcasts may have per UTC day. A send that reaches it continues the next day. The operator can set a smaller limit per workspace ([Operations](operations.md#broadcasts-on-a-hosted-server)). |
 | `YUVA_IMPORT_MAX_ROWS` | `100000` | Most data rows a CSV file may have when [importing subscribers](importing.md). From 1 to 100000; a higher value stops the server from starting. A file over it fails and nothing is added. |
 | `YUVA_MAIL_LINK_URL` | `YUVA_PUBLIC_URL` | Origin (scheme and host, no path) that the unsubscribe, confirmation, click and image links in list and broadcast mail point at, e.g. `https://links.example.com`. It must reach this server. That host answers only those links (`/m/`, `/s/`, `/c/`, `/i/`) and `404` for everything else, so the panel and API stay on your main host. |
+
+## Analytics
+
+[Counting your websites](analytics.md).
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `YUVA_ANALYTICS` | `on` | `off` removes analytics: its endpoints, the collection endpoint and `/yuva-analytics.js` answer `404`. |
+| `YUVA_ANALYTICS_BUFFER` | `50000` | Events one process holds before writing them (they are written every second). A full buffer answers `503`. At least 100. |
+| `YUVA_ANALYTICS_VISIT_CACHE` | `200000` | Visits one process keeps in memory to tell new visits from running ones. At least 1000. |
+| `YUVA_ANALYTICS_SALT_GRACE` | `2h` | How long a day's salt survives after the day ends, for late events. Up to `6h`. |
+| `YUVA_ANALYTICS_MONTHLY_EVENTS` | `1000000` when `YUVA_SIGNUP=open`, else `0` | Events one workspace may count per UTC month; more are dropped until the month ends. `0` is no limit. Per workspace, [`yuva workspace analytics-limit`](operations.md#operator-commands) overrides it. |
+| `YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE` | `60000` | Events one website may send per minute; more are dropped. |
+| `YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE` | `50` | Websites one workspace may have; more are refused (`403 property_limit`). |
+| `YUVA_ANALYTICS_RAW_DAYS` | `90` | Days the detailed visits and events are kept, from 7 to 400. Older days keep only their daily totals. |
+| `YUVA_ANALYTICS_WORKERS` | `2` | Analytics jobs (daily totals, cleanup) one process runs at once; `0` runs none in this process. |
+| `YUVA_ANALYTICS_ROLLUP_TOP` | `1000` | Values per breakdown kept in a day's totals; the rest is added up as `(other)`. From 10 to 100000. |
+| `YUVA_GEOIP` | `dbip` | Where places come from. `dbip`: the free DB-IP Lite city database, downloaded by the server every month. `file`: an MMDB city database of your own. `off`: no location database. |
+| `YUVA_GEOIP_DIR` | `data/geoip` | Directory for the downloaded `dbip` database. Put it on a volume that survives restarts, e.g. `/data/geoip` in the compose setup. |
+| `YUVA_GEOIP_FILE` | unset | Path of the MMDB file, required with `YUVA_GEOIP=file`. |
+
+With `dbip`, the database is licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and your
+server must credit it wherever locations are shown. The panel does this ("IP Geolocation by DB-IP",
+linking to `https://db-ip.com`); if you show the numbers somewhere else, say it there too. The text and
+link are in `geoip.attribution` and `geoip.attribution_url` of `GET /v1/analytics/properties/{propertyId}/health`.
+
+The commands, run as in [Operator commands](operations.md#operator-commands):
+
+| Command | What it does |
+|---|---|
+| `analytics property create --workspace <ws> --name <name> --domain <host>... [--inbox <id\|slug>] [--platform web\|ios\|android]... [--timezone <zone>]` | Creates a website and prints its id and public key, separated by a tab. |
+| `analytics property list --workspace <ws>` | Lists websites with their keys, domains and visitors today, and the month's events against the limit. |
+| `analytics geoip-update` | Downloads this month's DB-IP Lite database into `YUVA_GEOIP_DIR` unless it is there, and prints the credit to give. With `file`, checks your file. |
+| `workspace analytics-limit --workspace <ws> <events\|0>` | Sets the workspace's events per month; `0` removes the limit. |
 
 ## Chat
 
