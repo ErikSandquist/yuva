@@ -23,7 +23,7 @@ export function snippet(tab: Tab, server: string, key: string, optOut: string, o
         `    <html>`,
         `      <body>`,
         `        {children}`,
-        `        <YuvaAnalytics server="${server}" key="${key}" />`,
+        `        <YuvaAnalytics server="${server}" publicKey="${key}" />`,
         `      </body>`,
         `    </html>`,
         `  )`,
