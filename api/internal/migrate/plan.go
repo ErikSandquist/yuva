@@ -53,7 +53,10 @@ type PlanInput struct {
 	MaxMessageBytes int64
 	Blocked         map[string]bool
 	InYuva          map[string]bool
-	AttachmentOK    func(contentType string, size int64) bool
+	// Names, when set, is the name each address goes by across the whole mailbox; otherwise the
+	// names are counted over Items.
+	Names        map[string]string
+	AttachmentOK func(contentType string, size int64) bool
 }
 
 type ItemPlan struct {
@@ -104,6 +107,24 @@ func orderOf(kind string) int {
 	return 9
 }
 
+// PrimaryOrder lists the folders whose messages are imported, in the order MakePlan prefers one
+// copy of a message over another.
+func PrimaryOrder(folders map[int32]PlanFolder) []int32 {
+	var out []int32
+	for id, f := range folders {
+		if !f.LabelsOnly {
+			out = append(out, id)
+		}
+	}
+	slices.SortFunc(out, func(a, b int32) int {
+		if oa, ob := orderOf(folders[a].Kind), orderOf(folders[b].Kind); oa != ob {
+			return oa - ob
+		}
+		return int(a - b)
+	})
+	return out
+}
+
 type unionFind map[string]string
 
 func (u unionFind) find(x string) string {
@@ -149,15 +170,15 @@ func MakePlan(in PlanInput) Plan {
 	p := Plan{Items: map[string]ItemPlan{}, Totals: Totals{
 		Contacts: map[string]bool{}, Labels: map[string]int64{}, Skipped: map[string]int64{},
 	}}
-	names := map[string]map[string]int{}
+	counts := map[string]map[string]int{}
 	seeName := func(a Address) {
 		if a.Email == "" || a.Name == "" {
 			return
 		}
-		if names[a.Email] == nil {
-			names[a.Email] = map[string]int{}
+		if counts[a.Email] == nil {
+			counts[a.Email] = map[string]int{}
 		}
-		names[a.Email][a.Name]++
+		counts[a.Email][a.Name]++
 	}
 	groups := map[string][]*Item{}
 	extraLabels := map[string][]string{}
@@ -179,6 +200,10 @@ func MakePlan(in PlanInput) Plan {
 				seeName(a)
 			}
 		}
+	}
+	names := in.Names
+	if names == nil {
+		names = bestNames(counts)
 	}
 	primaries := map[string]*Item{}
 	labels := map[string][]string{}
@@ -253,7 +278,53 @@ func (p *Plan) skip(items []*Item, key, reason string) {
 	}
 }
 
-func (p *Plan) planThread(in PlanInput, msgs []*Item, labels map[string][]string, names map[string]map[string]int) {
+// bestNames picks for each address the name it goes by most often, the first in byte order on a tie.
+func bestNames(counts map[string]map[string]int) map[string]string {
+	out := make(map[string]string, len(counts))
+	for addr, n := range counts {
+		best, count := "", 0
+		for name, c := range n {
+			if c > count || (c == count && name < best) {
+				best, count = name, c
+			}
+		}
+		if count > 0 {
+			out[addr] = best
+		}
+	}
+	return out
+}
+
+// Add adds the totals of another part of the same plan; Contacts are left to the caller.
+func (t *Totals) Add(o Totals) {
+	t.Conversations += o.Conversations
+	t.In += o.In
+	t.Out += o.Out
+	t.Attachments += o.Attachments
+	t.AttachmentBytes += o.AttachmentBytes
+	t.AttachmentsSkipped += o.AttachmentsSkipped
+	t.Bytes += o.Bytes
+	if t.Labels == nil {
+		t.Labels = map[string]int64{}
+	}
+	for k, v := range o.Labels {
+		t.Labels[k] += v
+	}
+	if t.Skipped == nil {
+		t.Skipped = map[string]int64{}
+	}
+	for k, v := range o.Skipped {
+		t.Skipped[k] += v
+	}
+	if !o.Oldest.IsZero() && (t.Oldest.IsZero() || o.Oldest.Before(t.Oldest)) {
+		t.Oldest = o.Oldest
+	}
+	if o.Newest.After(t.Newest) {
+		t.Newest = o.Newest
+	}
+}
+
+func (p *Plan) planThread(in PlanInput, msgs []*Item, labels map[string][]string, names map[string]string) {
 	sort.SliceStable(msgs, func(a, b int) bool {
 		if !msgs[a].Meta.At.Equal(msgs[b].Meta.At) {
 			return msgs[a].Meta.At.Before(msgs[b].Meta.At)
@@ -316,14 +387,8 @@ func (p *Plan) planThread(in PlanInput, msgs []*Item, labels map[string][]string
 		p.skip(cands, key, ReasonBlocked)
 		return
 	}
-	if n := names[contact.Email]; len(n) > 0 {
-		best, count := contact.Name, 0
-		for name, c := range n {
-			if c > count || (c == count && name < best) {
-				best, count = name, c
-			}
-		}
-		contact.Name = best
+	if name, ok := names[contact.Email]; ok {
+		contact.Name = name
 	}
 	t := ThreadPlan{Key: key, Contact: contact, Subject: BaseSubject(cands[0].Meta.Subject)}
 	var planned []*Item

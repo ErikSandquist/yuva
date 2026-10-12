@@ -133,8 +133,9 @@ type MigrationSlice struct {
 }
 
 type migrationCheckpoint struct {
-	Phase   string     `json:"phase,omitempty"`
-	Samples [][2]int64 `json:"samples,omitempty"`
+	Phase   string        `json:"phase,omitempty"`
+	Plan    *planProgress `json:"plan,omitempty"`
+	Samples [][2]int64    `json:"samples,omitempty"`
 }
 
 func readCheckpoint(raw []byte) migrationCheckpoint {

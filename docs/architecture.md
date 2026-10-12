@@ -1420,7 +1420,11 @@ losing a message and without changing anything at the source. Decisions:
   1,500 MB a day, other servers one connection and 4 MB/s, help desks half their rate limit), kept on
   the migration row; limit answers and `Retry-After` are honoured. Microsoft tokens are refreshed
   before a connection and resealed. Pause stops after the batch in progress (at most 50 messages);
-  any change to a ready migration's options sends it back for a new dry run. Progress reaches owners
+  any change to a ready migration's options sends it back for a new dry run. Memory does not grow
+  with the mailbox: the scan reads headers a page at a time, the plan joins threads in the database
+  (`migration_plan_nodes`, union by size, a page of messages per step) and plans a batch of whole
+  threads at a time, and the copy holds one batch and keeps a folder open across batches instead of
+  opening it again for each. Progress reaches owners
   and admins as `migration.updated` (stored) and `migration.progress` (a signal, at most every two
   seconds); never webhooks.
 - **Cutover.** After the copy, sync runs every two minutes. The migration goes live when the copy ends:

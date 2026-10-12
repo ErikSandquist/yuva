@@ -223,6 +223,39 @@ func (q *Queries) CountMigrationItemAttempt(ctx context.Context, arg CountMigrat
 	return state, err
 }
 
+const countMigrationPlanContacts = `-- name: CountMigrationPlanContacts :one
+WITH c AS (
+    SELECT t.plan->'contact'->>'email' AS email FROM migration_threads t
+    WHERE t.workspace_id = $1 AND t.migration_id = $2
+    UNION
+    SELECT coalesce(i.meta->'from'->>'email', '') FROM migration_items i
+    WHERE i.workspace_id = $1 AND i.migration_id = $2 AND i.state = 'planned'
+      AND NOT coalesce(i.meta->'from'->>'email', '') = ANY($3::text[]))
+SELECT count(*)::bigint AS total,
+    count(*) FILTER (WHERE EXISTS (
+        SELECT 1 FROM contact_emails ce JOIN contacts ct ON ct.workspace_id = ce.workspace_id AND ct.id = ce.contact_id
+        WHERE ce.workspace_id = $1 AND ce.email = c.email))::bigint AS existing
+FROM c
+`
+
+type CountMigrationPlanContactsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Team        []string
+}
+
+type CountMigrationPlanContactsRow struct {
+	Total    int64
+	Existing int64
+}
+
+func (q *Queries) CountMigrationPlanContacts(ctx context.Context, arg CountMigrationPlanContactsParams) (CountMigrationPlanContactsRow, error) {
+	row := q.db.QueryRow(ctx, countMigrationPlanContacts, arg.WorkspaceID, arg.MigrationID, arg.Team)
+	var i CountMigrationPlanContactsRow
+	err := row.Scan(&i.Total, &i.Existing)
+	return i, err
+}
+
 const countMigrationTests = `-- name: CountMigrationTests :one
 SELECT count(*) FILTER (WHERE migration_id = $1)::int AS migration,
        count(*)::int AS workspace,
@@ -529,6 +562,34 @@ type DeleteMigrationItemsParams struct {
 
 func (q *Queries) DeleteMigrationItems(ctx context.Context, arg DeleteMigrationItemsParams) error {
 	_, err := q.db.Exec(ctx, deleteMigrationItems, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const deleteMigrationPlanNames = `-- name: DeleteMigrationPlanNames :exec
+DELETE FROM migration_plan_names WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationPlanNamesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationPlanNames(ctx context.Context, arg DeleteMigrationPlanNamesParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationPlanNames, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const deleteMigrationPlanNodes = `-- name: DeleteMigrationPlanNodes :exec
+DELETE FROM migration_plan_nodes WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationPlanNodesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationPlanNodes(ctx context.Context, arg DeleteMigrationPlanNodesParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationPlanNodes, arg.WorkspaceID, arg.MigrationID)
 	return err
 }
 
@@ -1209,6 +1270,58 @@ func (q *Queries) InsertMigrationItems(ctx context.Context, arg InsertMigrationI
 	return result.RowsAffected(), nil
 }
 
+const insertMigrationPlanNames = `-- name: InsertMigrationPlanNames :exec
+INSERT INTO migration_plan_names (workspace_id, migration_id, email, name)
+SELECT DISTINCT ON (c.email) $1, $2, c.email, c.name FROM (
+    SELECT x.a->>'email' AS email, x.a->>'name' AS name, count(*) AS n
+    FROM migration_items i
+    CROSS JOIN LATERAL (
+        SELECT i.meta->'from' AS a
+        UNION ALL SELECT jsonb_array_elements(coalesce(i.meta->'to', '[]'::jsonb))
+        UNION ALL SELECT jsonb_array_elements(coalesce(i.meta->'cc', '[]'::jsonb))
+    ) x
+    WHERE i.workspace_id = $1 AND i.migration_id = $2 AND i.folder_id = ANY($3::int[])
+      AND length(coalesce(x.a->>'email', '')) BETWEEN 1 AND 998 AND coalesce(x.a->>'name', '') <> ''
+    GROUP BY 1, 2
+) c
+ORDER BY c.email, c.n DESC, c.name COLLATE "C"
+`
+
+type InsertMigrationPlanNamesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	FolderIds   []int32
+}
+
+func (q *Queries) InsertMigrationPlanNames(ctx context.Context, arg InsertMigrationPlanNamesParams) error {
+	_, err := q.db.Exec(ctx, insertMigrationPlanNames, arg.WorkspaceID, arg.MigrationID, arg.FolderIds)
+	return err
+}
+
+const insertMigrationPlanNodes = `-- name: InsertMigrationPlanNodes :exec
+INSERT INTO migration_plan_nodes (workspace_id, migration_id, node, root, size)
+SELECT $1, $2, unnest($3::text[]), unnest($4::text[]), unnest($5::int[])
+`
+
+type InsertMigrationPlanNodesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Nodes       []string
+	Roots       []string
+	Sizes       []int32
+}
+
+func (q *Queries) InsertMigrationPlanNodes(ctx context.Context, arg InsertMigrationPlanNodesParams) error {
+	_, err := q.db.Exec(ctx, insertMigrationPlanNodes,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.Nodes,
+		arg.Roots,
+		arg.Sizes,
+	)
+	return err
+}
+
 const insertMigrationThreads = `-- name: InsertMigrationThreads :exec
 INSERT INTO migration_threads (workspace_id, migration_id, thread_key, last_at, items, plan)
 SELECT $1, $2, unnest($3::text[]), unnest($4::timestamptz[]), unnest($5::int[]),
@@ -1696,18 +1809,20 @@ func (q *Queries) ListMigrationItemsByDedupe(ctx context.Context, arg ListMigrat
 	return items, nil
 }
 
-const listMigrationItemsForPlan = `-- name: ListMigrationItemsForPlan :many
-SELECT source_id, folder_id, dedupe_key, received_at, size_bytes, meta FROM migration_items
-WHERE workspace_id = $1 AND migration_id = $2
-ORDER BY source_id
+const listMigrationPlanItems = `-- name: ListMigrationPlanItems :many
+SELECT i.source_id, i.folder_id, i.dedupe_key, i.received_at, i.size_bytes, i.meta
+FROM migration_plan_nodes n
+JOIN migration_items i ON i.workspace_id = n.workspace_id AND i.migration_id = n.migration_id AND i.dedupe_key = n.node
+WHERE n.workspace_id = $1 AND n.migration_id = $2 AND n.root = ANY($3::text[])
 `
 
-type ListMigrationItemsForPlanParams struct {
+type ListMigrationPlanItemsParams struct {
 	WorkspaceID uuid.UUID
 	MigrationID uuid.UUID
+	Roots       []string
 }
 
-type ListMigrationItemsForPlanRow struct {
+type ListMigrationPlanItemsRow struct {
 	SourceID   string
 	FolderID   *int32
 	DedupeKey  string
@@ -1716,15 +1831,15 @@ type ListMigrationItemsForPlanRow struct {
 	Meta       []byte
 }
 
-func (q *Queries) ListMigrationItemsForPlan(ctx context.Context, arg ListMigrationItemsForPlanParams) ([]ListMigrationItemsForPlanRow, error) {
-	rows, err := q.db.Query(ctx, listMigrationItemsForPlan, arg.WorkspaceID, arg.MigrationID)
+func (q *Queries) ListMigrationPlanItems(ctx context.Context, arg ListMigrationPlanItemsParams) ([]ListMigrationPlanItemsRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationPlanItems, arg.WorkspaceID, arg.MigrationID, arg.Roots)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []ListMigrationItemsForPlanRow
+	var items []ListMigrationPlanItemsRow
 	for rows.Next() {
-		var i ListMigrationItemsForPlanRow
+		var i ListMigrationPlanItemsRow
 		if err := rows.Scan(
 			&i.SourceID,
 			&i.FolderID,
@@ -1733,6 +1848,226 @@ func (q *Queries) ListMigrationItemsForPlan(ctx context.Context, arg ListMigrati
 			&i.SizeBytes,
 			&i.Meta,
 		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationPlanNames = `-- name: ListMigrationPlanNames :many
+SELECT email, name FROM migration_plan_names
+WHERE workspace_id = $1 AND migration_id = $2 AND email = ANY($3::text[])
+`
+
+type ListMigrationPlanNamesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Emails      []string
+}
+
+type ListMigrationPlanNamesRow struct {
+	Email string
+	Name  string
+}
+
+func (q *Queries) ListMigrationPlanNames(ctx context.Context, arg ListMigrationPlanNamesParams) ([]ListMigrationPlanNamesRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationPlanNames, arg.WorkspaceID, arg.MigrationID, arg.Emails)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationPlanNamesRow
+	for rows.Next() {
+		var i ListMigrationPlanNamesRow
+		if err := rows.Scan(&i.Email, &i.Name); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationPlanNodes = `-- name: ListMigrationPlanNodes :many
+SELECT node, root, size FROM migration_plan_nodes
+WHERE workspace_id = $1 AND migration_id = $2 AND node = ANY($3::text[])
+`
+
+type ListMigrationPlanNodesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Nodes       []string
+}
+
+type ListMigrationPlanNodesRow struct {
+	Node string
+	Root string
+	Size int32
+}
+
+func (q *Queries) ListMigrationPlanNodes(ctx context.Context, arg ListMigrationPlanNodesParams) ([]ListMigrationPlanNodesRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationPlanNodes, arg.WorkspaceID, arg.MigrationID, arg.Nodes)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationPlanNodesRow
+	for rows.Next() {
+		var i ListMigrationPlanNodesRow
+		if err := rows.Scan(&i.Node, &i.Root, &i.Size); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationPlanPrimaries = `-- name: ListMigrationPlanPrimaries :many
+SELECT DISTINCT ON (dedupe_key) dedupe_key, coalesce(meta->'refs', '[]'::jsonb)::jsonb AS refs FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND folder_id = ANY($3::int[]) AND dedupe_key > $4
+ORDER BY dedupe_key, array_position($3::int[], folder_id), source_id COLLATE "C"
+LIMIT $5
+`
+
+type ListMigrationPlanPrimariesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	FolderIds   []int32
+	After       string
+	Lim         int32
+}
+
+type ListMigrationPlanPrimariesRow struct {
+	DedupeKey string
+	Refs      []byte
+}
+
+func (q *Queries) ListMigrationPlanPrimaries(ctx context.Context, arg ListMigrationPlanPrimariesParams) ([]ListMigrationPlanPrimariesRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationPlanPrimaries,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.FolderIds,
+		arg.After,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationPlanPrimariesRow
+	for rows.Next() {
+		var i ListMigrationPlanPrimariesRow
+		if err := rows.Scan(&i.DedupeKey, &i.Refs); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationPlanRoots = `-- name: ListMigrationPlanRoots :many
+SELECT node, size FROM migration_plan_nodes
+WHERE workspace_id = $1 AND migration_id = $2 AND node = root AND node > $3
+ORDER BY node
+LIMIT $4
+`
+
+type ListMigrationPlanRootsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	After       string
+	Lim         int32
+}
+
+type ListMigrationPlanRootsRow struct {
+	Node string
+	Size int32
+}
+
+func (q *Queries) ListMigrationPlanRoots(ctx context.Context, arg ListMigrationPlanRootsParams) ([]ListMigrationPlanRootsRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationPlanRoots,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.After,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationPlanRootsRow
+	for rows.Next() {
+		var i ListMigrationPlanRootsRow
+		if err := rows.Scan(&i.Node, &i.Size); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationSentFrom = `-- name: ListMigrationSentFrom :many
+WITH s AS (
+    SELECT DISTINCT ON (dedupe_key) meta->'from'->>'email' AS email, coalesce(meta->'from'->>'name', '') AS name
+    FROM migration_items
+    WHERE workspace_id = $2 AND migration_id = $3 AND folder_id = ANY($4::int[])
+      AND coalesce(meta->'from'->>'email', '') NOT IN ('', $5::text)
+    ORDER BY dedupe_key, source_id),
+n AS (
+    SELECT DISTINCT ON (email) email, name FROM (SELECT email, name, count(*) AS c FROM s WHERE name <> '' GROUP BY email, name) x
+    ORDER BY email, c DESC, name COLLATE "C")
+SELECT s.email::text AS email, coalesce(n.name, '')::text AS name, count(*)::bigint AS messages
+FROM s LEFT JOIN n ON n.email = s.email
+GROUP BY s.email, n.name
+ORDER BY messages DESC, s.email COLLATE "C"
+LIMIT $1
+`
+
+type ListMigrationSentFromParams struct {
+	Lim         int32
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	FolderIds   []int32
+	Mailbox     string
+}
+
+type ListMigrationSentFromRow struct {
+	Email    string
+	Name     string
+	Messages int64
+}
+
+func (q *Queries) ListMigrationSentFrom(ctx context.Context, arg ListMigrationSentFromParams) ([]ListMigrationSentFromRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationSentFrom,
+		arg.Lim,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.FolderIds,
+		arg.Mailbox,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationSentFromRow
+	for rows.Next() {
+		var i ListMigrationSentFromRow
+		if err := rows.Scan(&i.Email, &i.Name, &i.Messages); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -2226,6 +2561,29 @@ func (q *Queries) MigrationCopyCounts(ctx context.Context, arg MigrationCopyCoun
 	return items, nil
 }
 
+const moveMigrationPlanRoots = `-- name: MoveMigrationPlanRoots :exec
+UPDATE migration_plan_nodes n SET root = m.new_root
+FROM (SELECT unnest($3::text[]) AS old_root, unnest($4::text[]) AS new_root) m
+WHERE n.workspace_id = $1 AND n.migration_id = $2 AND n.root = m.old_root
+`
+
+type MoveMigrationPlanRootsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	OldRoots    []string
+	NewRoots    []string
+}
+
+func (q *Queries) MoveMigrationPlanRoots(ctx context.Context, arg MoveMigrationPlanRootsParams) error {
+	_, err := q.db.Exec(ctx, moveMigrationPlanRoots,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.OldRoots,
+		arg.NewRoots,
+	)
+	return err
+}
+
 const nextMigrationItems = `-- name: NextMigrationItems :many
 WITH t AS (
     SELECT thread_key, last_at FROM migration_threads
@@ -2353,18 +2711,28 @@ func (q *Queries) ResetMigrationFolder(ctx context.Context, arg ResetMigrationFo
 	return err
 }
 
-const resetMigrationItemsPlan = `-- name: ResetMigrationItemsPlan :exec
-UPDATE migration_items SET state = 'skipped', reason = 'unplanned', in_copy = false
-WHERE workspace_id = $1 AND migration_id = $2 AND state <> 'imported'
+const resetMigrationPlan = `-- name: ResetMigrationPlan :exec
+UPDATE migration_items SET state = 'skipped', thread_key = dedupe_key, in_copy = false,
+    reason = CASE WHEN folder_id = ANY($1::int[]) THEN 'label_only'
+                  WHEN folder_id = ANY($2::int[]) THEN 'unplanned'
+                  ELSE 'unselected' END
+WHERE workspace_id = $3 AND migration_id = $4 AND state <> 'imported'
 `
 
-type ResetMigrationItemsPlanParams struct {
-	WorkspaceID uuid.UUID
-	MigrationID uuid.UUID
+type ResetMigrationPlanParams struct {
+	LabelFolderIds  []int32
+	ImportFolderIds []int32
+	WorkspaceID     uuid.UUID
+	MigrationID     uuid.UUID
 }
 
-func (q *Queries) ResetMigrationItemsPlan(ctx context.Context, arg ResetMigrationItemsPlanParams) error {
-	_, err := q.db.Exec(ctx, resetMigrationItemsPlan, arg.WorkspaceID, arg.MigrationID)
+func (q *Queries) ResetMigrationPlan(ctx context.Context, arg ResetMigrationPlanParams) error {
+	_, err := q.db.Exec(ctx, resetMigrationPlan,
+		arg.LabelFolderIds,
+		arg.ImportFolderIds,
+		arg.WorkspaceID,
+		arg.MigrationID,
+	)
 	return err
 }
 
@@ -2702,6 +3070,29 @@ func (q *Queries) SetMigrationItemDone(ctx context.Context, arg SetMigrationItem
 		arg.WorkspaceID,
 		arg.MigrationID,
 		arg.SourceID,
+	)
+	return err
+}
+
+const setMigrationPlanSizes = `-- name: SetMigrationPlanSizes :exec
+UPDATE migration_plan_nodes n SET size = s.size
+FROM (SELECT unnest($3::text[]) AS node, unnest($4::int[]) AS size) s
+WHERE n.workspace_id = $1 AND n.migration_id = $2 AND n.node = s.node
+`
+
+type SetMigrationPlanSizesParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Nodes       []string
+	Sizes       []int32
+}
+
+func (q *Queries) SetMigrationPlanSizes(ctx context.Context, arg SetMigrationPlanSizesParams) error {
+	_, err := q.db.Exec(ctx, setMigrationPlanSizes,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.Nodes,
+		arg.Sizes,
 	)
 	return err
 }

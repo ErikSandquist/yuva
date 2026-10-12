@@ -878,6 +878,21 @@ type MigrationItem struct {
 	InCopy      bool
 }
 
+type MigrationPlanName struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Email       string
+	Name        string
+}
+
+type MigrationPlanNode struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Node        string
+	Root        string
+	Size        int32
+}
+
 type MigrationThread struct {
 	WorkspaceID    uuid.UUID
 	MigrationID    uuid.UUID

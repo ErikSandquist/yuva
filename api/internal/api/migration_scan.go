@@ -2,6 +2,8 @@ package api
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"math"
@@ -280,7 +282,8 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 				phase = scanPhasePlan
 			}
 		case scanPhasePlan:
-			if err = r.plan(ctx); err == nil {
+			var more bool
+			if more, err = r.plan(ctx); err == nil && !more {
 				phase = scanPhasePreview
 			}
 		case scanPhasePreview:
@@ -306,7 +309,7 @@ func (r *migrationRun) scan(ctx context.Context) (MigrationSlice, error) {
 			return MigrationSlice{}, err
 		}
 		if phase != cp.Phase {
-			cp.Phase = phase
+			cp.Phase, cp.Plan = phase, nil
 			r.m.Checkpoint = mustJSON(cp)
 			if err := r.s.st.SetMigrationCheckpoint(ctx, store.SetMigrationCheckpointParams{WorkspaceID: r.m.WorkspaceID, ID: r.m.ID, Checkpoint: r.m.Checkpoint}); err != nil {
 				return MigrationSlice{}, err
@@ -528,40 +531,311 @@ func chunks[T any](s []T, n int) [][]T {
 	return out
 }
 
-// plan threads the scanned messages and decides what each becomes; it rewrites the plan as a
-// whole, which only happens before the copy starts.
-func (r *migrationRun) plan(ctx context.Context) error {
+// planProgress is where the plan stands between slices: it joins threads in the database a page of
+// messages at a time (nodes), then plans a batch of whole threads at a time (threads), adding up
+// the dry run's totals as it goes.
+type planProgress struct {
+	Step   string         `json:"step"`
+	After  string         `json:"after,omitempty"`
+	Totals migrate.Totals `json:"totals"`
+}
+
+type planSetup struct {
+	folders []store.MigrationFolder
+	plan    map[int32]migrate.PlanFolder
+	imports []int32
+	labels  []int32
+	sent    []int32
+	team    migrationTeam
+}
+
+func (r *migrationRun) planSetup(ctx context.Context) (planSetup, error) {
 	s, m := r.s, r.m
 	q := s.st.Queries
-	opts := migrationOptions(m.Options)
 	folders, err := q.ListMigrationFolders(ctx, store.ListMigrationFoldersParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID})
 	if err != nil {
-		return err
+		return planSetup{}, err
 	}
-	planFolders := map[int32]migrate.PlanFolder{}
-	sent := map[int32]bool{}
+	ps := planSetup{folders: folders, plan: map[int32]migrate.PlanFolder{}}
 	for _, f := range folders {
 		use := folderUse(f, folders)
 		if use == oas.FolderUseSkip {
 			continue
 		}
-		sent[f.ID] = f.Kind == migrate.KindSent
+		if f.Kind == migrate.KindSent {
+			ps.sent = append(ps.sent, f.ID)
+		}
+		if use == oas.FolderUseLabels {
+			ps.labels = append(ps.labels, f.ID)
+		}
 		label, err := labelName(ctx, q, f)
 		if err != nil {
+			return planSetup{}, err
+		}
+		ps.plan[f.ID] = migrate.PlanFolder{Kind: f.Kind, Label: label, LabelsOnly: use == oas.FolderUseLabels}
+	}
+	ps.imports = migrate.PrimaryOrder(ps.plan)
+	ps.team, err = s.teamOf(ctx, q, m)
+	return ps, err
+}
+
+// plan threads the scanned messages and decides what each becomes, a part per call, and reports
+// whether there is more to do; it rewrites the plan as a whole, which only happens before the copy
+// starts.
+func (r *migrationRun) plan(ctx context.Context) (bool, error) {
+	cp := readCheckpoint(r.m.Checkpoint)
+	ps, err := r.planSetup(ctx)
+	if err != nil {
+		return false, err
+	}
+	switch {
+	case cp.Plan == nil:
+		return true, r.planStart(ctx, cp, ps)
+	case cp.Plan.Step == planStepNodes:
+		return true, r.planNodes(ctx, cp, ps)
+	}
+	return r.planThreads(ctx, cp, ps)
+}
+
+const (
+	planStepNodes   = "nodes"
+	planStepThreads = "threads"
+)
+
+// savePlan stores the checkpoint in the transaction that did the work it records.
+func (r *migrationRun) savePlan(ctx context.Context, work func(q *store.Queries) error, cp migrationCheckpoint) error {
+	raw := mustJSON(cp)
+	err := r.s.st.InTx(ctx, func(q *store.Queries) error {
+		if err := work(q); err != nil {
 			return err
 		}
-		planFolders[f.ID] = migrate.PlanFolder{Kind: f.Kind, Label: label, LabelsOnly: use == oas.FolderUseLabels}
+		return q.SetMigrationCheckpoint(ctx, store.SetMigrationCheckpointParams{WorkspaceID: r.m.WorkspaceID, ID: r.m.ID, Checkpoint: raw})
+	})
+	if err == nil {
+		r.m.Checkpoint = raw
 	}
-	rows, err := q.ListMigrationItemsForPlan(ctx, store.ListMigrationItemsForPlanParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID})
+	return err
+}
+
+func (r *migrationRun) planStart(ctx context.Context, cp migrationCheckpoint, ps planSetup) error {
+	ws, id := r.m.WorkspaceID, r.m.ID
+	cp.Plan = &planProgress{Step: planStepNodes}
+	return r.savePlan(ctx, func(q *store.Queries) error {
+		if err := q.ResetMigrationPlan(ctx, store.ResetMigrationPlanParams{
+			WorkspaceID: ws, MigrationID: id, LabelFolderIds: ps.labels, ImportFolderIds: ps.imports,
+		}); err != nil {
+			return err
+		}
+		if err := q.DeleteMigrationThreads(ctx, store.DeleteMigrationThreadsParams{WorkspaceID: ws, MigrationID: id}); err != nil {
+			return err
+		}
+		if err := q.DeleteMigrationPlanNodes(ctx, store.DeleteMigrationPlanNodesParams{WorkspaceID: ws, MigrationID: id}); err != nil {
+			return err
+		}
+		if err := q.DeleteMigrationPlanNames(ctx, store.DeleteMigrationPlanNamesParams{WorkspaceID: ws, MigrationID: id}); err != nil {
+			return err
+		}
+		return q.InsertMigrationPlanNames(ctx, store.InsertMigrationPlanNamesParams{WorkspaceID: ws, MigrationID: id, FolderIds: ps.imports})
+	}, cp)
+}
+
+// planNode is the node a message id is joined by; an id too long for the index is joined by its
+// hash, which no Message-ID the scan keeps can equal.
+func planNode(id string) string {
+	if len(id) <= 998 {
+		return id
+	}
+	sum := sha256.Sum256([]byte(id))
+	return "#" + hex.EncodeToString(sum[:])
+}
+
+// planNodes joins the threads of a page of messages: each message's id and the ids it refers to
+// become one component, the smaller of two components joining the larger.
+func (r *migrationRun) planNodes(ctx context.Context, cp migrationCheckpoint, ps planSetup) error {
+	s, ws, id := r.s, r.m.WorkspaceID, r.m.ID
+	rows, err := s.st.ListMigrationPlanPrimaries(ctx, store.ListMigrationPlanPrimariesParams{
+		WorkspaceID: ws, MigrationID: id, FolderIds: ps.imports, After: cp.Plan.After, Lim: planBatch,
+	})
 	if err != nil {
 		return err
 	}
-	team, err := s.teamOf(ctx, q, m)
+	if len(rows) == 0 {
+		cp.Plan = &planProgress{Step: planStepThreads}
+		return r.savePlan(ctx, func(*store.Queries) error { return nil }, cp)
+	}
+	type edge struct{ from, to string }
+	var edges []edge
+	nodes := map[string]bool{}
+	for _, row := range rows {
+		var refs []string
+		_ = json.Unmarshal(row.Refs, &refs)
+		nodes[row.DedupeKey] = true
+		for _, ref := range refs {
+			n := planNode(ref)
+			nodes[n] = true
+			edges = append(edges, edge{row.DedupeKey, n})
+		}
+	}
+	known, err := s.st.ListMigrationPlanNodes(ctx, store.ListMigrationPlanNodesParams{WorkspaceID: ws, MigrationID: id, Nodes: sortedKeys(nodes)})
 	if err != nil {
 		return err
+	}
+	rootOf := map[string]string{}
+	roots := map[string]bool{}
+	for _, k := range known {
+		rootOf[k.Node] = k.Root
+		roots[k.Root] = true
+	}
+	sizes := map[string]int32{}
+	rootRows, err := s.st.ListMigrationPlanNodes(ctx, store.ListMigrationPlanNodesParams{WorkspaceID: ws, MigrationID: id, Nodes: sortedKeys(roots)})
+	if err != nil {
+		return err
+	}
+	for _, k := range rootRows {
+		sizes[k.Node] = k.Size
+	}
+	canon := func(n string) string {
+		if root, ok := rootOf[n]; ok {
+			return root
+		}
+		return n
+	}
+	uf := planUnion{}
+	for n := range nodes {
+		uf.find(canon(n))
+	}
+	for _, e := range edges {
+		uf.union(canon(e.from), canon(e.to))
+	}
+	type component struct {
+		known []string
+		fresh []string
+	}
+	comps := map[string]*component{}
+	for _, c := range sortedKeys(uf.members()) {
+		top := uf.find(c)
+		if comps[top] == nil {
+			comps[top] = &component{}
+		}
+		if roots[c] {
+			comps[top].known = append(comps[top].known, c)
+		} else {
+			comps[top].fresh = append(comps[top].fresh, c)
+		}
+	}
+	var oldRoots, newRoots, freshNodes, freshRoots, sizeNodes []string
+	var freshSizes, sizeValues []int32
+	for _, c := range comps {
+		final := ""
+		total := int32(len(c.fresh))
+		for _, k := range c.known {
+			total += sizes[k]
+			if final == "" || sizes[k] > sizes[final] {
+				final = k
+			}
+		}
+		if final == "" {
+			final = c.fresh[0]
+		} else {
+			sizeNodes, sizeValues = append(sizeNodes, final), append(sizeValues, total)
+		}
+		for _, k := range c.known {
+			if k != final {
+				oldRoots, newRoots = append(oldRoots, k), append(newRoots, final)
+			}
+		}
+		for _, n := range c.fresh {
+			size := int32(0)
+			if n == final {
+				size = total
+			}
+			freshNodes, freshRoots, freshSizes = append(freshNodes, n), append(freshRoots, final), append(freshSizes, size)
+		}
+	}
+	cp.Plan.After = rows[len(rows)-1].DedupeKey
+	return r.savePlan(ctx, func(q *store.Queries) error {
+		if len(oldRoots) > 0 {
+			if err := q.MoveMigrationPlanRoots(ctx, store.MoveMigrationPlanRootsParams{WorkspaceID: ws, MigrationID: id, OldRoots: oldRoots, NewRoots: newRoots}); err != nil {
+				return err
+			}
+		}
+		if len(freshNodes) > 0 {
+			if err := q.InsertMigrationPlanNodes(ctx, store.InsertMigrationPlanNodesParams{
+				WorkspaceID: ws, MigrationID: id, Nodes: freshNodes, Roots: freshRoots, Sizes: freshSizes,
+			}); err != nil {
+				return err
+			}
+		}
+		if len(sizeNodes) > 0 {
+			return q.SetMigrationPlanSizes(ctx, store.SetMigrationPlanSizesParams{WorkspaceID: ws, MigrationID: id, Nodes: sizeNodes, Sizes: sizeValues})
+		}
+		return nil
+	}, cp)
+}
+
+type planUnion map[string]string
+
+func (u planUnion) find(x string) string {
+	root := x
+	for {
+		p, ok := u[root]
+		if !ok {
+			u[root] = root
+			break
+		}
+		if p == root {
+			break
+		}
+		root = p
+	}
+	for x != root {
+		next := u[x]
+		u[x] = root
+		x = next
+	}
+	return root
+}
+
+func (u planUnion) union(a, b string) {
+	if ra, rb := u.find(a), u.find(b); ra != rb {
+		u[rb] = ra
+	}
+}
+
+func (u planUnion) members() map[string]bool {
+	out := make(map[string]bool, len(u))
+	for k := range u {
+		out[k] = true
+	}
+	return out
+}
+
+// planThreads plans the next batch of whole threads with the totals so far; when no thread is
+// left it writes the dry run.
+func (r *migrationRun) planThreads(ctx context.Context, cp migrationCheckpoint, ps planSetup) (bool, error) {
+	s, m := r.s, r.m
+	q := s.st.Queries
+	roots, err := q.ListMigrationPlanRoots(ctx, store.ListMigrationPlanRootsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, After: cp.Plan.After, Lim: planBatch})
+	if err != nil {
+		return false, err
+	}
+	if len(roots) == 0 {
+		return false, r.planFinish(ctx, cp, ps)
+	}
+	var take []string
+	var nodes int32
+	for _, root := range roots {
+		if len(take) > 0 && nodes+root.Size > planBatch {
+			break
+		}
+		take, nodes = append(take, root.Node), nodes+root.Size
+	}
+	rows, err := q.ListMigrationPlanItems(ctx, store.ListMigrationPlanItemsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Roots: take})
+	if err != nil {
+		return false, err
 	}
 	items := make([]migrate.Item, 0, len(rows))
-	addrs := map[string]bool{}
+	addrs, others := map[string]bool{}, map[string]bool{}
 	var keys []string
 	for _, row := range rows {
 		it := migrate.Item{SourceID: row.SourceID, DedupeKey: row.DedupeKey, Received: row.ReceivedAt, Size: row.SizeBytes}
@@ -572,19 +846,30 @@ func (r *migrationRun) plan(ctx context.Context) error {
 		items = append(items, it)
 		keys = append(keys, row.DedupeKey)
 		for _, a := range slices.Concat([]migrate.Address{it.Meta.From}, it.Meta.To, it.Meta.Cc) {
-			if a.Email != "" && !team.addrs[a.Email] {
-				addrs[a.Email] = true
+			if a.Email == "" {
+				continue
+			}
+			addrs[a.Email] = true
+			if !ps.team.addrs[a.Email] {
+				others[a.Email] = true
 			}
 		}
 	}
-	known, blocked := map[string]bool{}, map[string]bool{}
-	for _, part := range chunks(sortedKeys(addrs), planBatch) {
+	names := map[string]string{}
+	found, err := q.ListMigrationPlanNames(ctx, store.ListMigrationPlanNamesParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Emails: sortedKeys(addrs)})
+	if err != nil {
+		return false, err
+	}
+	for _, n := range found {
+		names[n.Email] = n.Name
+	}
+	blocked := map[string]bool{}
+	for _, part := range chunks(sortedKeys(others), planBatch) {
 		found, err := q.ListContactEmailsIn(ctx, store.ListContactEmailsInParams{WorkspaceID: m.WorkspaceID, Emails: part})
 		if err != nil {
-			return err
+			return false, err
 		}
 		for _, f := range found {
-			known[f.Email] = true
 			blocked[f.Email] = f.Blocked
 		}
 	}
@@ -593,34 +878,22 @@ func (r *migrationRun) plan(ctx context.Context) error {
 		for _, part := range chunks(keys, planBatch) {
 			found, err := q.ListChannelHeaderIDsIn(ctx, store.ListChannelHeaderIDsInParams{WorkspaceID: m.WorkspaceID, ChannelID: m.ChannelID, Ids: part})
 			if err != nil {
-				return err
+				return false, err
 			}
 			for _, id := range found {
 				inYuva[id] = true
 			}
 		}
 	}
+	opts := migrationOptions(m.Options)
 	plan := migrate.MakePlan(migrate.PlanInput{
-		Items: items, Folders: planFolders, Team: team.addrs, Since: opts.Since, SkipAutomatic: opts.SkipAutomatic,
+		Items: items, Folders: ps.plan, Team: ps.team.addrs, Since: opts.Since, SkipAutomatic: opts.SkipAutomatic,
 		CloseAfterDays: int(opts.CloseAfterDays), Now: s.now(), MaxMessageBytes: s.migrations.MaxMessageBytes, Blocked: blocked, InYuva: inYuva,
-		AttachmentOK: func(ct string, size int64) bool { return size <= s.attach.MaxBytes && s.typeAllowed(ct) },
+		Names: names, AttachmentOK: func(ct string, size int64) bool { return size <= s.attach.MaxBytes && s.typeAllowed(ct) },
 	})
-	est, err := s.dryRun(ctx, q, m, folders, plan, known)
-	if err != nil {
-		return err
-	}
-	suggestions := []oas.MigrationTeamSuggestion{}
-	for _, f := range migrate.SentFrom(items, sent, m.SourceAddress, teamSuggestions) {
-		sg := oas.MigrationTeamSuggestion{Address: f.Address, Messages: f.Messages}
-		if f.Name != "" {
-			sg.Name = &f.Name
-		}
-		suggestions = append(suggestions, sg)
-	}
-	return s.st.InTx(ctx, func(q *store.Queries) error {
-		if err := q.ResetMigrationItemsPlan(ctx, store.ResetMigrationItemsPlanParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}); err != nil {
-			return err
-		}
+	cp.Plan.Totals.Add(plan.Totals)
+	cp.Plan.After = take[len(take)-1]
+	return true, r.savePlan(ctx, func(q *store.Queries) error {
 		ids := make([]string, 0, len(plan.Items))
 		for id := range plan.Items {
 			ids = append(ids, id)
@@ -636,9 +909,6 @@ func (r *migrationRun) plan(ctx context.Context) error {
 				return err
 			}
 		}
-		if err := q.DeleteMigrationThreads(ctx, store.DeleteMigrationThreadsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}); err != nil {
-			return err
-		}
 		for _, part := range chunks(plan.Threads, planBatch) {
 			p := store.InsertMigrationThreadsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}
 			for _, t := range part {
@@ -648,8 +918,46 @@ func (r *migrationRun) plan(ctx context.Context) error {
 				return err
 			}
 		}
-		return q.SetMigrationEstimate(ctx, store.SetMigrationEstimateParams{WorkspaceID: m.WorkspaceID, ID: m.ID, Estimate: mustJSON(migrationEstimateDoc{DryRun: est, TeamSuggestions: suggestions})})
+		return nil
+	}, cp)
+}
+
+// planFinish writes the dry run and the team suggestions and drops the plan's working rows.
+func (r *migrationRun) planFinish(ctx context.Context, cp migrationCheckpoint, ps planSetup) error {
+	s, m := r.s, r.m
+	q := s.st.Queries
+	contacts, err := q.CountMigrationPlanContacts(ctx, store.CountMigrationPlanContactsParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID, Team: sortedKeys(ps.team.addrs)})
+	if err != nil {
+		return err
+	}
+	est, err := s.dryRun(ctx, q, m, ps.folders, cp.Plan.Totals, contacts.Existing, contacts.Total-contacts.Existing)
+	if err != nil {
+		return err
+	}
+	senders, err := q.ListMigrationSentFrom(ctx, store.ListMigrationSentFromParams{
+		WorkspaceID: m.WorkspaceID, MigrationID: m.ID, FolderIds: ps.sent, Mailbox: strings.ToLower(strings.TrimSpace(m.SourceAddress)), Lim: teamSuggestions,
 	})
+	if err != nil {
+		return err
+	}
+	suggestions := []oas.MigrationTeamSuggestion{}
+	for _, f := range senders {
+		sg := oas.MigrationTeamSuggestion{Address: f.Email, Messages: f.Messages}
+		if f.Name != "" {
+			sg.Name = &f.Name
+		}
+		suggestions = append(suggestions, sg)
+	}
+	cp.Phase, cp.Plan = scanPhasePreview, nil
+	return r.savePlan(ctx, func(q *store.Queries) error {
+		if err := q.DeleteMigrationPlanNodes(ctx, store.DeleteMigrationPlanNodesParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}); err != nil {
+			return err
+		}
+		if err := q.DeleteMigrationPlanNames(ctx, store.DeleteMigrationPlanNamesParams{WorkspaceID: m.WorkspaceID, MigrationID: m.ID}); err != nil {
+			return err
+		}
+		return q.SetMigrationEstimate(ctx, store.SetMigrationEstimateParams{WorkspaceID: m.WorkspaceID, ID: m.ID, Estimate: mustJSON(migrationEstimateDoc{DryRun: est, TeamSuggestions: suggestions})})
+	}, cp)
 }
 
 func sortedKeys(m map[string]bool) []string {
@@ -661,8 +969,7 @@ func sortedKeys(m map[string]bool) []string {
 	return out
 }
 
-func (s *Server) dryRun(ctx context.Context, q *store.Queries, m store.Migration, folders []store.MigrationFolder, plan migrate.Plan, known map[string]bool) (oas.MigrationEstimate, error) {
-	t := plan.Totals
+func (s *Server) dryRun(ctx context.Context, q *store.Queries, m store.Migration, folders []store.MigrationFolder, t migrate.Totals, contactsExisting, contactsNew int64) (oas.MigrationEstimate, error) {
 	opts := migrationOptions(m.Options)
 	est := oas.MigrationEstimate{
 		ScannedAt: s.now(), Conversations: t.Conversations, Messages: t.In + t.Out, MessagesIn: t.In, MessagesOut: t.Out,
@@ -680,13 +987,7 @@ func (s *Server) dryRun(ctx context.Context, q *store.Queries, m store.Migration
 	if opts.KeepOriginals {
 		est.StorageBytes += t.Bytes
 	}
-	for addr := range t.Contacts {
-		if known[addr] {
-			est.ContactsExisting++
-		} else {
-			est.ContactsNew++
-		}
-	}
+	est.ContactsExisting, est.ContactsNew = contactsExisting, contactsNew
 	for _, f := range folders {
 		switch {
 		case f.Kind == migrate.KindSpam:

@@ -181,15 +181,6 @@ SELECT @workspace_id, @migration_id, unnest(@source_ids::text[]), unnest(@folder
     @state, @reason, @in_copy
 ON CONFLICT (workspace_id, migration_id, source_id) DO NOTHING;
 
--- name: ListMigrationItemsForPlan :many
-SELECT source_id, folder_id, dedupe_key, received_at, size_bytes, meta FROM migration_items
-WHERE workspace_id = @workspace_id AND migration_id = @migration_id
-ORDER BY source_id;
-
--- name: ResetMigrationItemsPlan :exec
-UPDATE migration_items SET state = 'skipped', reason = 'unplanned', in_copy = false
-WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state <> 'imported';
-
 -- name: ApplyMigrationItemsPlan :exec
 UPDATE migration_items i SET state = p.state, reason = p.reason, thread_key = p.thread_key
 FROM (SELECT unnest(@source_ids::text[]) AS source_id, unnest(@states::text[]) AS state, unnest(@reasons::text[]) AS reason,
@@ -478,3 +469,102 @@ SELECT DISTINCT ON (inbox_id) inbox_id::uuid AS inbox_id, source_address, state,
 WHERE workspace_id = @workspace_id AND inbox_id = ANY(@inbox_ids::uuid[])
   AND (state IN ('scanning', 'copying', 'syncing') OR (state IN ('paused', 'needs_attention') AND started_at IS NOT NULL))
 ORDER BY inbox_id, created_at DESC, id DESC;
+
+-- name: ResetMigrationPlan :exec
+UPDATE migration_items SET state = 'skipped', thread_key = dedupe_key, in_copy = false,
+    reason = CASE WHEN folder_id = ANY(@label_folder_ids::int[]) THEN 'label_only'
+                  WHEN folder_id = ANY(@import_folder_ids::int[]) THEN 'unplanned'
+                  ELSE 'unselected' END
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state <> 'imported';
+
+-- name: DeleteMigrationPlanNodes :exec
+DELETE FROM migration_plan_nodes WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: DeleteMigrationPlanNames :exec
+DELETE FROM migration_plan_names WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: InsertMigrationPlanNames :exec
+INSERT INTO migration_plan_names (workspace_id, migration_id, email, name)
+SELECT DISTINCT ON (c.email) @workspace_id, @migration_id, c.email, c.name FROM (
+    SELECT x.a->>'email' AS email, x.a->>'name' AS name, count(*) AS n
+    FROM migration_items i
+    CROSS JOIN LATERAL (
+        SELECT i.meta->'from' AS a
+        UNION ALL SELECT jsonb_array_elements(coalesce(i.meta->'to', '[]'::jsonb))
+        UNION ALL SELECT jsonb_array_elements(coalesce(i.meta->'cc', '[]'::jsonb))
+    ) x
+    WHERE i.workspace_id = @workspace_id AND i.migration_id = @migration_id AND i.folder_id = ANY(@folder_ids::int[])
+      AND length(coalesce(x.a->>'email', '')) BETWEEN 1 AND 998 AND coalesce(x.a->>'name', '') <> ''
+    GROUP BY 1, 2
+) c
+ORDER BY c.email, c.n DESC, c.name COLLATE "C";
+
+-- name: ListMigrationPlanNames :many
+SELECT email, name FROM migration_plan_names
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND email = ANY(@emails::text[]);
+
+-- name: ListMigrationPlanPrimaries :many
+SELECT DISTINCT ON (dedupe_key) dedupe_key, coalesce(meta->'refs', '[]'::jsonb)::jsonb AS refs FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND folder_id = ANY(@folder_ids::int[]) AND dedupe_key > @after
+ORDER BY dedupe_key, array_position(@folder_ids::int[], folder_id), source_id COLLATE "C"
+LIMIT @lim;
+
+-- name: ListMigrationPlanNodes :many
+SELECT node, root, size FROM migration_plan_nodes
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND node = ANY(@nodes::text[]);
+
+-- name: MoveMigrationPlanRoots :exec
+UPDATE migration_plan_nodes n SET root = m.new_root
+FROM (SELECT unnest(@old_roots::text[]) AS old_root, unnest(@new_roots::text[]) AS new_root) m
+WHERE n.workspace_id = @workspace_id AND n.migration_id = @migration_id AND n.root = m.old_root;
+
+-- name: InsertMigrationPlanNodes :exec
+INSERT INTO migration_plan_nodes (workspace_id, migration_id, node, root, size)
+SELECT @workspace_id, @migration_id, unnest(@nodes::text[]), unnest(@roots::text[]), unnest(@sizes::int[]);
+
+-- name: SetMigrationPlanSizes :exec
+UPDATE migration_plan_nodes n SET size = s.size
+FROM (SELECT unnest(@nodes::text[]) AS node, unnest(@sizes::int[]) AS size) s
+WHERE n.workspace_id = @workspace_id AND n.migration_id = @migration_id AND n.node = s.node;
+
+-- name: ListMigrationPlanRoots :many
+SELECT node, size FROM migration_plan_nodes
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND node = root AND node > @after
+ORDER BY node
+LIMIT @lim;
+
+-- name: ListMigrationPlanItems :many
+SELECT i.source_id, i.folder_id, i.dedupe_key, i.received_at, i.size_bytes, i.meta
+FROM migration_plan_nodes n
+JOIN migration_items i ON i.workspace_id = n.workspace_id AND i.migration_id = n.migration_id AND i.dedupe_key = n.node
+WHERE n.workspace_id = @workspace_id AND n.migration_id = @migration_id AND n.root = ANY(@roots::text[]);
+
+-- name: CountMigrationPlanContacts :one
+WITH c AS (
+    SELECT t.plan->'contact'->>'email' AS email FROM migration_threads t
+    WHERE t.workspace_id = @workspace_id AND t.migration_id = @migration_id
+    UNION
+    SELECT coalesce(i.meta->'from'->>'email', '') FROM migration_items i
+    WHERE i.workspace_id = @workspace_id AND i.migration_id = @migration_id AND i.state = 'planned'
+      AND NOT coalesce(i.meta->'from'->>'email', '') = ANY(@team::text[]))
+SELECT count(*)::bigint AS total,
+    count(*) FILTER (WHERE EXISTS (
+        SELECT 1 FROM contact_emails ce JOIN contacts ct ON ct.workspace_id = ce.workspace_id AND ct.id = ce.contact_id
+        WHERE ce.workspace_id = @workspace_id AND ce.email = c.email))::bigint AS existing
+FROM c;
+
+-- name: ListMigrationSentFrom :many
+WITH s AS (
+    SELECT DISTINCT ON (dedupe_key) meta->'from'->>'email' AS email, coalesce(meta->'from'->>'name', '') AS name
+    FROM migration_items
+    WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND folder_id = ANY(@folder_ids::int[])
+      AND coalesce(meta->'from'->>'email', '') NOT IN ('', @mailbox::text)
+    ORDER BY dedupe_key, source_id),
+n AS (
+    SELECT DISTINCT ON (email) email, name FROM (SELECT email, name, count(*) AS c FROM s WHERE name <> '' GROUP BY email, name) x
+    ORDER BY email, c DESC, name COLLATE "C")
+SELECT s.email::text AS email, coalesce(n.name, '')::text AS name, count(*)::bigint AS messages
+FROM s LEFT JOIN n ON n.email = s.email
+GROUP BY s.email, n.name
+ORDER BY messages DESC, s.email COLLATE "C"
+LIMIT @lim;
