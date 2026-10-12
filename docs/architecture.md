@@ -1379,7 +1379,9 @@ losing a message and without changing anything at the source. Decisions:
   files (Google Takeout mbox, mbox, .eml or Maildir in a zip; no PST, for want of a permissively
   licensed reader) need no access to the account and are the fast way for very large Gmail
   mailboxes: Takeout first, then IMAP for newer mail and the cutover. Help desks: Zendesk with OAuth
-  `read`, Help Scout. Detection from the address and the domain's MX picks the preset; autoconfig is
+  `read`, Help Scout; each team creates the OAuth client in its own help desk with Yuva's redirect URL
+  and enters its id and secret on the panel's connect page (there is no operator-wide client), and a
+  help-desk migration goes through the same cutover as a mailbox. Detection from the address and the domain's MX picks the preset; autoconfig is
   read only from the team's own domain. Provider mail APIs and other sign-ins were considered and
   rejected for one IMAP path.
 - **Read-only, enforced three times.** No credential a mailbox accepts is read-only (Microsoft's
@@ -1389,7 +1391,9 @@ losing a message and without changing anything at the source. Decisions:
   through only `CAPABILITY`, `NOOP`, `LOGOUT`, `STARTTLS`, `LOGIN`, `AUTHENTICATE`, `LIST`, `STATUS`,
   `EXAMINE`, `UNSELECT`, `SEARCH` and `FETCH` of non-marking items; anything else closes the
   connection before it is sent. Help-desk sources use a transport that refuses every method but `GET`
-  and every host not on the source's list. A sign-in must grant exactly the requested scopes. Tests
+  (the token exchange and refresh `POST` to the provider's token endpoint aside) and every host not on
+  the source's list; attachments the provider keeps on other public hosts are fetched by a separate
+  client without the token. A sign-in must grant exactly the requested scopes. Tests
   fail the build if a write command or method could be sent, and an integration test proves a Dovecot
   mailbox byte-identical after a migration.
 - **Two phases.** A scan reads headers only (the whole message only when it has no Message-ID, to take
@@ -1445,8 +1449,9 @@ losing a message and without changing anything at the source. Decisions:
 - **Credentials.** Sealed under the master key (context `migration:`+workspace+migration) in
   `migration_credentials`, never in job arguments, events, logs or answers; deleted in the transaction
   that completes or cancels the migration, after `YUVA_MIGRATION_SYNC_MAX_DAYS` (30) of sync, and with
-  the workspace; tokens revoked where the provider allows (Zendesk), otherwise the completion screen
-  says where to remove the app or the app password. Sign-in uses PKCE, refuses a grant whose scopes
+  the workspace. Tokens are not revoked at the provider (that would take a method other than `GET`);
+  the completion screen and the guides say where to remove the OAuth client, the app or the app
+  password. Sign-in uses PKCE, refuses a grant whose scopes
   differ from the requested set and, for Microsoft, a sign-in to another address than the mailbox.
   Assistants never handle a password: MCP tools return a panel link where the person connects.
 - **Who.** Owners, admins, and keys without an inbox limit or owner/admin tokens with
