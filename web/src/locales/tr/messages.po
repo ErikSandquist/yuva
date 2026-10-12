@@ -3469,6 +3469,10 @@ msgstr "Alan adının e-posta sunucularından bulundu."
 msgid "Found in the domain's mail settings file."
 msgstr "Alan adının e-posta ayar dosyasında bulundu."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Found in your Sent folders"
+msgstr "Gönderilenler klasörlerinizde bulunan adresler"
+
 #: src/components/common/text.ts
 msgid "Friday"
 msgstr "Cuma"
@@ -7448,9 +7452,17 @@ msgctxt "delivery state"
 msgid "Sent"
 msgstr "Gönderildi"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Sent {count} messages from this address"
+msgstr "Bu adresten {count} mesaj gönderilmiş"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
 msgstr "Gönderildi: {sentAt}. Ulaşması bekleniyor…"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Sent 1 message from this address"
+msgstr "Bu adresten 1 mesaj gönderilmiş"
 
 #: src/lib/alerts.ts
 msgid "Sent an attachment"
@@ -8998,6 +9010,10 @@ msgstr "destek hesabından"
 #: src/components/common/text.ts
 msgid "Thursday"
 msgstr "Perşembe"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
+msgstr "Ekibinizin yazdığı adresleri işaretleyin; böylece bu adreslerden gelen e-postalar müşteri e-postası olarak aktarılmaz."
 
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx

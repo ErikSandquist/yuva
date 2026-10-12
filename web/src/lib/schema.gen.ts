@@ -7862,7 +7862,8 @@ export interface components {
         MigrationCounts: {
             /**
              * Format: int64
-             * @description Messages planned.
+             * @description Messages read from the chosen folders: those to import and those the dry run already set
+             *     aside as duplicates or skipped. Each ends as imported, duplicate, skipped or failed.
              */
             total: number;
             /** Format: int64 */
@@ -7872,7 +7873,11 @@ export interface components {
              * @description Already in Yuva, or a second copy of the same message.
              */
             duplicate: number;
-            /** Format: int64 */
+            /**
+             * Format: int64
+             * @description Not imported: automatic or internal mail, outside the date range, from a blocked contact,
+             *     too large, or gone from the mailbox.
+             */
             skipped: number;
             /** Format: int64 */
             failed: number;
@@ -8066,6 +8071,24 @@ export interface components {
              * @description Of those, the ones nobody wrote in since the import, which "Remove imported history" deletes.
              */
             removable_conversations?: number;
+            /**
+             * @description Once a scan finished: the `From` addresses of the messages in the scanned Sent folders,
+             *     other than the mailbox address, most messages first. They are the team's aliases and
+             *     colleagues the Map step offers as `options.team_addresses`, whether or not they are
+             *     already team addresses.
+             */
+            team_suggestions?: components["schemas"]["MigrationTeamSuggestion"][];
+        };
+        MigrationTeamSuggestion: {
+            /** @description Lowercased. */
+            address: string;
+            /** @description The display name it sent with most often. */
+            name?: string;
+            /**
+             * Format: int64
+             * @description Messages from it in the Sent folders, each message once.
+             */
+            messages: number;
         };
         /**
          * @description A forwarding confirmation the provider mailed to the forwarding address while the
@@ -8266,7 +8289,8 @@ export interface components {
             label_id?: string;
             /**
              * Format: int64
-             * @description Messages in the folder at the last count.
+             * @description Messages in the folder at the last count: the connection test's, then the scan's. Every
+             *     folder is counted, including those `kind` and `use` show are never imported.
              */
             messages: number;
             /**

@@ -4,13 +4,14 @@ import { ArrowRightIcon, CheckIcon, InfoIcon, PlusIcon, XIcon } from "lucide-rea
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
-import { ErrorLine, Notice, Segmented } from "@/components/common"
+import { CheckItem, CheckList, ErrorLine, Notice, Segmented } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { emailForm, emailInput } from "@/features/settings/channels/email/form"
 import { slugify } from "@/features/settings/inboxes/slugify"
+import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { ChoiceSelect, Field } from "@/features/settings/ui"
 import { useMigrationFolders, useMigrationStep, useUpdateMigration } from "@/features/migrations/queries"
 import { WizardLayout } from "@/features/migrations/Wizard"
@@ -43,6 +44,7 @@ function labelValue(l: Pick<MigrationLabelMapping, "action" | "label_id">) {
 
 export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }) {
   const { t } = useLingui()
+  const num = useNumber()
   const qc = useQueryClient()
   const navigate = useNavigate()
   const { workspaceId: ws } = useSession()
@@ -151,6 +153,11 @@ export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }
     setTeam([...team, a])
     setAdding("")
   }
+
+  const suggestions = m.team_suggestions ?? []
+  const isTeam = (a: string) => team.some((x) => sameAddress(x, a))
+  const toggleTeam = (a: string, on: boolean) =>
+    setTeam(on ? (isTeam(a) ? team : [...team, a]) : team.filter((x) => !sameAddress(x, a)))
 
   const save = useMutation({
     mutationFn: async () => {
@@ -307,6 +314,49 @@ export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }
               Mail from these addresses is imported as sent by your team. Your members' sign-in addresses count too.
             </Trans>
           </p>
+          {suggestions.length > 0 && (
+            <CheckList
+              labelId="migration-team-suggestions"
+              label={<Trans>Found in your Sent folders</Trans>}
+              hint={
+                <p className="text-small text-faint">
+                  <Trans>
+                    Tick the addresses your team writes from, so their mail is not imported as mail from customers.
+                  </Trans>
+                </p>
+              }
+            >
+              {suggestions.map((s) => {
+                const count = num(s.messages)
+                return (
+                  <CheckItem
+                    key={s.address}
+                    checked={isTeam(s.address)}
+                    disabled={!canEdit}
+                    onChange={(on) => toggleTeam(s.address, on)}
+                    testId="migration-team-suggestion"
+                  >
+                    <span className="truncate">
+                      {s.name ? (
+                        <>
+                          {s.name} <span className="text-faint">{s.address}</span>
+                        </>
+                      ) : (
+                        s.address
+                      )}
+                    </span>
+                    <span className="text-small text-faint">
+                      {s.messages === 1 ? (
+                        <Trans>Sent 1 message from this address</Trans>
+                      ) : (
+                        <Trans>Sent {count} messages from this address</Trans>
+                      )}
+                    </span>
+                  </CheckItem>
+                )
+              })}
+            </CheckList>
+          )}
           <ul className="flex flex-col divide-y rounded-xl border" aria-label={t`Team addresses`}>
             {senders.map((sender) => (
               <li key={sender} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-3.5 py-2.5">
@@ -326,7 +376,7 @@ export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }
                     type="button"
                     variant="ghost"
                     size="icon-sm"
-                    onClick={() => setTeam(team.filter((x) => x !== sender))}
+                    onClick={() => toggleTeam(sender, false)}
                     aria-label={t`Remove ${sender}`}
                   >
                     <XIcon />

@@ -3469,6 +3469,10 @@ msgstr "Found from the domain's mail servers."
 msgid "Found in the domain's mail settings file."
 msgstr "Found in the domain's mail settings file."
 
+#: src/features/migrations/MapStep.tsx
+msgid "Found in your Sent folders"
+msgstr "Found in your Sent folders"
+
 #: src/components/common/text.ts
 msgid "Friday"
 msgstr "Friday"
@@ -7448,9 +7452,17 @@ msgctxt "delivery state"
 msgid "Sent"
 msgstr "Sent"
 
+#: src/features/migrations/MapStep.tsx
+msgid "Sent {count} messages from this address"
+msgstr "Sent {count} messages from this address"
+
 #: src/features/migrations/SwitchStep.tsx
 msgid "Sent {sentAt}. Waiting for it to arrive…"
 msgstr "Sent {sentAt}. Waiting for it to arrive…"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Sent 1 message from this address"
+msgstr "Sent 1 message from this address"
 
 #: src/lib/alerts.ts
 msgid "Sent an attachment"
@@ -8998,6 +9010,10 @@ msgstr "through the support account"
 #: src/components/common/text.ts
 msgid "Thursday"
 msgstr "Thursday"
+
+#: src/features/migrations/MapStep.tsx
+msgid "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
+msgstr "Tick the addresses your team writes from, so their mail is not imported as mail from customers."
 
 #: src/features/migrations/ReviewStep.tsx
 #: src/features/settings/webhooks/AttemptLog.tsx
