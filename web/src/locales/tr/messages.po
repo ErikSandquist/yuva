@@ -6707,12 +6707,9 @@ msgid "Stay under your provider’s sending rate. Support replies are never slow
 msgstr "Sağlayıcınızın gönderim hızının altında kalın. Destek yanıtları bir bülten yüzünden hiç yavaşlamaz."
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/setup/SetupLayout.tsx
 msgid "Step {step} of {count}"
 msgstr "Adım {step} / {count}"
-
-#: src/features/setup/SetupLayout.tsx
-msgid "Step {step} of {STEP_COUNT}"
-msgstr "Adım {step} / {STEP_COUNT}"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Step-by-step guide"

@@ -6707,12 +6707,9 @@ msgid "Stay under your provider’s sending rate. Support replies are never slow
 msgstr "Stay under your provider’s sending rate. Support replies are never slowed down by a broadcast."
 
 #: src/features/broadcasts/Import.tsx
+#: src/features/setup/SetupLayout.tsx
 msgid "Step {step} of {count}"
 msgstr "Step {step} of {count}"
-
-#: src/features/setup/SetupLayout.tsx
-msgid "Step {step} of {STEP_COUNT}"
-msgstr "Step {step} of {STEP_COUNT}"
 
 #: src/features/setup/InstallStep.tsx
 msgid "Step-by-step guide"

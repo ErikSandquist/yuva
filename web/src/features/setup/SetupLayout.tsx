@@ -11,14 +11,16 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
-export const STEP_COUNT = 5
-
-function Progress({ step }: { step: number }) {
+function useSetupSteps() {
   const { t } = useLingui()
-  const names = [t`Name`, t`Channel`, t`Install`, t`First message`, t`Done`]
+  return [t`Name`, t`Channel`, t`Install`, t`First message`, t`Done`]
+}
+
+function Progress({ step, names, label }: { step: number; names: string[]; label: string }) {
+  const count = names.length
   return (
     <div className="mb-8">
-      <ol className="flex gap-1.5" aria-label={t`Setup steps`}>
+      <ol className="flex gap-1.5" aria-label={label}>
         {names.map((name, i) => (
           <li
             key={name}
@@ -31,7 +33,7 @@ function Progress({ step }: { step: number }) {
       </ol>
       <p className="mt-3 text-small text-faint" data-testid="setup-step">
         <Trans>
-          Step {step} of {STEP_COUNT}
+          Step {step} of {count}
         </Trans>
         <span aria-hidden="true"> · </span>
         {names[step - 1]}
@@ -42,18 +44,26 @@ function Progress({ step }: { step: number }) {
 
 export function SetupLayout({
   step,
+  steps,
+  stepsLabel,
+  leave,
   preview,
   previewOpen,
   back,
   children,
 }: {
   step: number
+  steps?: string[]
+  stepsLabel?: string
+  leave?: React.ReactNode
   preview: React.ReactNode
   previewOpen?: boolean
   back?: string
   children: React.ReactNode
 }) {
   const { t } = useLingui()
+  const setupSteps = useSetupSteps()
+  const names = steps ?? setupSteps
   const navigate = useNavigate()
   const location = useLocation()
   const state = (location.state ?? {}) as SetupState
@@ -74,11 +84,13 @@ export function SetupLayout({
           </span>
           <span className="flex shrink-0 items-center gap-1">
             <LanguageMenu />
-            {step < STEP_COUNT && (
-              <Button variant="ghost" size="sm" onClick={later} data-testid="setup-later">
-                {state.back ? <Trans>Cancel</Trans> : <Trans>Do this later</Trans>}
-              </Button>
-            )}
+            {leave !== undefined
+              ? leave
+              : step < names.length && (
+                  <Button variant="ghost" size="sm" onClick={later} data-testid="setup-later">
+                    {state.back ? <Trans>Cancel</Trans> : <Trans>Do this later</Trans>}
+                  </Button>
+                )}
           </span>
         </header>
         <main className="flex flex-1 justify-center pt-[5vh] pb-10 lg:pt-[12vh] lg:pb-16">
@@ -94,7 +106,7 @@ export function SetupLayout({
                 <Trans>Back</Trans>
               </Link>
             )}
-            <Progress step={step} />
+            <Progress step={step} names={names} label={stepsLabel ?? t`Setup steps`} />
             {children}
             {!wide && (
               <section className="mt-10 border-t pt-4" aria-label={t`Preview`}>
