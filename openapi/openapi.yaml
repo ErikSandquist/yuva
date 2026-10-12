@@ -13523,7 +13523,9 @@ components:
         messages:
           type: integer
           format: int64
-          description: Messages in the folder at the last count.
+          description: |
+            Messages in the folder at the last count: the connection test's, then the scan's. Every
+            folder is counted, including those `kind` and `use` show are never imported.
         size_bytes:
           type: integer
           format: int64

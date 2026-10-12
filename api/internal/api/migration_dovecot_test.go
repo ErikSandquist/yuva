@@ -453,6 +453,16 @@ func TestDovecotMigrationDryRunsMatchExpected(t *testing.T) {
 		if len(folders) != len(want.Folders) {
 			t.Fatalf("%s: %d folders listed after the test, want %d", user, len(folders), len(want.Folders))
 		}
+		tested := map[string]map[string]any{}
+		for _, f := range folders {
+			tested[f.(map[string]any)["name"].(string)] = f.(map[string]any)
+		}
+		for _, f := range want.Folders {
+			got := tested[f.Name]
+			if got == nil || got["kind"] != f.Kind || num(got["messages"]) != f.Messages || (got["use"] == "import") != f.Read {
+				t.Errorf("%s folder %s after the test: %v, want %+v", user, f.Name, got, f)
+			}
+		}
 		d.tm.owner.expectProblem(http.StatusConflict, "migration_state", "POST", "/v1/migrations/"+id+"/start", nil)
 		d.tm.owner.expectProblem(http.StatusConflict, "migration_state", "GET", "/v1/migrations/"+id+"/preview", nil)
 		if s := d.tm.owner.expect(http.StatusOK, "POST", "/v1/migrations/"+id+"/scan", nil).str("state"); s != "scanning" {

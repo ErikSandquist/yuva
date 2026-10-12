@@ -8697,7 +8697,8 @@ type MigrationFolder struct {
 	// LabelId The label, once it exists.
 	LabelId *uuid.UUID `json:"label_id,omitempty"`
 
-	// Messages Messages in the folder at the last count.
+	// Messages Messages in the folder at the last count: the connection test's, then the scan's. Every
+	// folder is counted, including those `kind` and `use` show are never imported.
 	Messages int64      `json:"messages"`
 	Name     string     `json:"name"`
 	NewestAt *time.Time `json:"newest_at,omitempty"`
