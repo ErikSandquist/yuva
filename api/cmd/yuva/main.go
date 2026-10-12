@@ -57,6 +57,7 @@ const usageText = `usage:
   yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]
       (prints the property id and its public key, tab-separated)
   yuva analytics property list --workspace <id|name>
+  yuva analytics geoip-update   (downloads this month's DB-IP Lite database into YUVA_GEOIP_DIR)
   yuva person delete --email <address> --yes
   yuva vapid-keys                (prints a new Web Push key pair)
   yuva templates render [--dir templates/email]   (writes each gallery template's preview.<locale>.html)
@@ -103,7 +104,13 @@ func main() {
 			err = bootstrap(ctx, cfg, log, os.Args[2:])
 		case "api-key":
 			err = apiKeyCLI(ctx, cfg, os.Args[2:])
-		case "inbox", "channel", "workspace", "person", "analytics":
+		case "analytics":
+			if len(os.Args) > 2 && os.Args[2] == "geoip-update" {
+				err = geoipUpdate(ctx, cfg, os.Args[3:], os.Stdout)
+				break
+			}
+			err = operatorCLI(ctx, cfg, os.Args[1], os.Args[2:])
+		case "inbox", "channel", "workspace", "person":
 			err = operatorCLI(ctx, cfg, os.Args[1], os.Args[2:])
 		case "ingest-email":
 			os.Exit(ingestEmail(ctx, cfg, log, os.Args[2:]))
@@ -273,7 +280,11 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.IngressSecret != "" && cfg.IngressAuthservID == "" {
 		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC results of inbound mail are stored but not used")
 	}
-	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, srv.AddWorkers)
+	analyticsWorkers := 0
+	if cfg.Analytics.On {
+		analyticsWorkers = cfg.Analytics.Workers
+	}
+	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, analyticsWorkers, srv.AddWorkers)
 	if err != nil {
 		return fmt.Errorf("job queue: %w", err)
 	}
@@ -319,6 +330,7 @@ func analyticsSettings(cfg config.Config) api.AnalyticsSettings {
 	return api.AnalyticsSettings{
 		Off: !a.On, Buffer: a.Buffer, VisitCache: a.VisitCache, SaltGrace: a.SaltGrace, MonthlyEvents: a.MonthlyEvents,
 		PropertyEventsPerMinute: a.PropertyEventsPerMinute, PropertiesPerWorkspace: a.PropertiesPerWorkspace,
+		RawDays: a.RawDays, RollupTop: a.RollupTop, GeoIP: a.GeoIP, GeoIPDir: a.GeoIPDir, GeoIPFile: a.GeoIPFile,
 	}
 }
 

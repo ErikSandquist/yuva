@@ -49,8 +49,20 @@ const MigrationQueue = "migrations"
 
 const MigrationWatchdogInterval = time.Minute
 
-// New starts no migration workers when migrationWorkers is 0.
-func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+// AnalyticsQueue holds the analytics maintenance and rollup jobs, so they never delay e-mail,
+// webhooks or migrations.
+const AnalyticsQueue = "analytics"
+
+const (
+	AnalyticsPartitionsInterval = time.Hour
+	AnalyticsRollupScanInterval = 5 * time.Minute
+	AnalyticsSaltsInterval      = 15 * time.Minute
+	AnalyticsGeoIPInterval      = 24 * time.Hour
+)
+
+// New starts no migration workers when migrationWorkers is 0, and no analytics workers or analytics
+// periodic jobs when analyticsWorkers is 0.
+func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers, analyticsWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
 	}
@@ -58,37 +70,81 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 	if migrationWorkers > 0 {
 		queues[MigrationQueue] = river.QueueConfig{MaxWorkers: migrationWorkers}
 	}
+	if analyticsWorkers > 0 {
+		queues[AnalyticsQueue] = river.QueueConfig{MaxWorkers: analyticsWorkers}
+	}
 	workers := river.NewWorkers()
 	river.AddWorker(workers, &EventCleanupWorker{Queries: q, Now: time.Now})
 	for _, r := range register {
 		r(workers)
 	}
+	periodic := []*river.PeriodicJob{
+		river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
+			return EventCleanupArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "event_cleanup", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
+			return RetentionArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "retention", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(PresenceSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return PresenceSweepArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "presence_sweep"}),
+		river.NewPeriodicJob(river.PeriodicInterval(OperatorDigestInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return OperatorDigestArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "operator_digest", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(BroadcastSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return BroadcastSweepArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "broadcast_sweep", RunOnStart: true}),
+		river.NewPeriodicJob(river.PeriodicInterval(MigrationWatchdogInterval), func() (river.JobArgs, *river.InsertOpts) {
+			return MigrationWatchdogArgs{}, nil
+		}, &river.PeriodicJobOpts{ID: "migration_watchdog", RunOnStart: true}),
+	}
+	if analyticsWorkers > 0 {
+		onAnalytics := &river.InsertOpts{Queue: AnalyticsQueue}
+		periodic = append(periodic,
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsPartitionsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsPartitionsArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_partitions", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsRollupScanInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsRollupScanArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_rollup_scan", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsSaltsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsSaltsArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_salts", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsGeoIPInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsGeoIPArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_geoip"}),
+		)
+	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
-		Logger:  log,
-		Queues:  queues,
-		Workers: workers,
-		PeriodicJobs: []*river.PeriodicJob{
-			river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
-				return EventCleanupArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "event_cleanup", RunOnStart: true}),
-			river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
-				return RetentionArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "retention", RunOnStart: true}),
-			river.NewPeriodicJob(river.PeriodicInterval(PresenceSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
-				return PresenceSweepArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "presence_sweep"}),
-			river.NewPeriodicJob(river.PeriodicInterval(OperatorDigestInterval), func() (river.JobArgs, *river.InsertOpts) {
-				return OperatorDigestArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "operator_digest", RunOnStart: true}),
-			river.NewPeriodicJob(river.PeriodicInterval(BroadcastSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
-				return BroadcastSweepArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "broadcast_sweep", RunOnStart: true}),
-			river.NewPeriodicJob(river.PeriodicInterval(MigrationWatchdogInterval), func() (river.JobArgs, *river.InsertOpts) {
-				return MigrationWatchdogArgs{}, nil
-			}, &river.PeriodicJobOpts{ID: "migration_watchdog", RunOnStart: true}),
-		},
+		Logger:       log,
+		Queues:       queues,
+		Workers:      workers,
+		PeriodicJobs: periodic,
 	})
 }
+
+// AnalyticsPartitionsArgs is worked by the api package: raw partitions ahead and past the raw
+// window, rollups past their property's retention, old ingest counts.
+type AnalyticsPartitionsArgs struct{}
+
+func (AnalyticsPartitionsArgs) Kind() string { return "analytics_partitions" }
+
+// AnalyticsRollupScanArgs is worked by the api package: it queues a rollup for every finished or
+// dirty day.
+type AnalyticsRollupScanArgs struct{}
+
+func (AnalyticsRollupScanArgs) Kind() string { return "analytics_rollup_scan" }
+
+// AnalyticsSaltsArgs is worked by the api package: it deletes the salts past their grace.
+type AnalyticsSaltsArgs struct{}
+
+func (AnalyticsSaltsArgs) Kind() string { return "analytics_salts" }
+
+// AnalyticsGeoIPArgs is worked by the api package: it tells every process to fetch the month's
+// GeoIP database if it has not got it yet.
+type AnalyticsGeoIPArgs struct{}
+
+func (AnalyticsGeoIPArgs) Kind() string { return "analytics_geoip" }
 
 // RetentionArgs is worked by the api package, which owns object storage.
 type RetentionArgs struct{}

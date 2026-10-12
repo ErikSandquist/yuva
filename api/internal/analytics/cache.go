@@ -67,7 +67,14 @@ func (s *Salts) Forget(propertyID uuid.UUID) {
 	}
 }
 
-const VisitGap = 30 * time.Minute
+const (
+	VisitGap = 30 * time.Minute
+	// A visitor with more events in a day, or more page views in a burst, is a bot for the rest of
+	// the day.
+	BotDailyEvents = 1000
+	BotBurstViews  = 200
+	BotBurstWindow = 10 * time.Minute
+)
 
 type visitKey struct {
 	property uuid.UUID
@@ -79,6 +86,11 @@ type visitEntry struct {
 	day   time.Time
 	visit int64
 	last  time.Time
+
+	events     int32
+	burstStart time.Time
+	burstViews int32
+	bot        bool
 }
 
 // Visits remembers each visitor's current visit, least recently used first out, so most events
@@ -120,6 +132,9 @@ func (v *Visits) Put(property uuid.UUID, visitor int64, day time.Time, visit int
 		if e.visit == visit && last.Before(e.last) {
 			last = e.last
 		}
+		if !e.day.Equal(day) {
+			e.events, e.burstViews, e.bot = 0, 0, false
+		}
 		e.day, e.visit, e.last = day, visit, last
 		v.order.MoveToFront(el)
 		return
@@ -129,6 +144,44 @@ func (v *Visits) Put(property uuid.UUID, visitor int64, day time.Time, visit int
 		old := v.order.Back()
 		v.order.Remove(old)
 		delete(v.m, old.Value.(*visitEntry).key)
+	}
+}
+
+// Tally counts an event of the visitor's day and reports whether the visitor is a bot from now on;
+// first is true for the event that made it one. A visitor not in the cache is not counted.
+func (v *Visits) Tally(property uuid.UUID, visitor int64, day, now time.Time, view bool) (bot, first bool) {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	el, ok := v.m[visitKey{property, visitor}]
+	if !ok {
+		return false, false
+	}
+	e := el.Value.(*visitEntry)
+	if !e.day.Equal(day) {
+		return false, false
+	}
+	if e.bot {
+		return true, false
+	}
+	e.events++
+	if view {
+		if now.Sub(e.burstStart) >= BotBurstWindow || now.Before(e.burstStart) {
+			e.burstStart, e.burstViews = now, 0
+		}
+		e.burstViews++
+	}
+	e.bot = e.events > BotDailyEvents || e.burstViews > BotBurstViews
+	return e.bot, e.bot
+}
+
+// MarkBot remembers that the visitor is a bot for the rest of the day.
+func (v *Visits) MarkBot(property uuid.UUID, visitor int64, day time.Time) {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if el, ok := v.m[visitKey{property, visitor}]; ok {
+		if e := el.Value.(*visitEntry); e.day.Equal(day) {
+			e.bot = true
+		}
 	}
 }
 

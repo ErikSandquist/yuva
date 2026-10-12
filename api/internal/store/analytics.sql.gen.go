@@ -24,6 +24,23 @@ func (q *Queries) CountAnalyticsProperties(ctx context.Context, workspaceID uuid
 	return count, err
 }
 
+const countPendingAnalyticsRollups = `-- name: CountPendingAnalyticsRollups :one
+SELECT count(*) FROM analytics_rollup_days
+WHERE workspace_id = $1 AND property_id = $2 AND (built_at IS NULL OR dirty)
+`
+
+type CountPendingAnalyticsRollupsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+}
+
+func (q *Queries) CountPendingAnalyticsRollups(ctx context.Context, arg CountPendingAnalyticsRollupsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countPendingAnalyticsRollups, arg.WorkspaceID, arg.PropertyID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createAnalyticsProperty = `-- name: CreateAnalyticsProperty :one
 INSERT INTO analytics_properties (id, workspace_id, inbox_id, name, public_key, domains, platforms, timezone, currency, collection,
     consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, created_by,
@@ -144,6 +161,40 @@ type DeleteAnalyticsRollupsParams struct {
 func (q *Queries) DeleteAnalyticsRollups(ctx context.Context, arg DeleteAnalyticsRollupsParams) error {
 	_, err := q.db.Exec(ctx, deleteAnalyticsRollups, arg.WorkspaceID, arg.PropertyID)
 	return err
+}
+
+const deleteExpiredAnalyticsSalts = `-- name: DeleteExpiredAnalyticsSalts :execrows
+DELETE FROM analytics_salts WHERE workspace_id = $1 AND expires_at <= $2
+`
+
+type DeleteExpiredAnalyticsSaltsParams struct {
+	WorkspaceID uuid.UUID
+	Now         time.Time
+}
+
+func (q *Queries) DeleteExpiredAnalyticsSalts(ctx context.Context, arg DeleteExpiredAnalyticsSaltsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteExpiredAnalyticsSalts, arg.WorkspaceID, arg.Now)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const deleteOldAnalyticsIngestStats = `-- name: DeleteOldAnalyticsIngestStats :execrows
+DELETE FROM analytics_ingest_stats WHERE workspace_id = $1 AND day < $2
+`
+
+type DeleteOldAnalyticsIngestStatsParams struct {
+	WorkspaceID uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) DeleteOldAnalyticsIngestStats(ctx context.Context, arg DeleteOldAnalyticsIngestStatsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteOldAnalyticsIngestStats, arg.WorkspaceID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
 }
 
 const findAnalyticsPropertyByKey = `-- name: FindAnalyticsPropertyByKey :one
@@ -308,6 +359,44 @@ func (q *Queries) GetDeletedAnalyticsProperty(ctx context.Context, arg GetDelete
 	return i, err
 }
 
+const listAnalyticsIngestStats = `-- name: ListAnalyticsIngestStats :many
+SELECT day, reason, events FROM analytics_ingest_stats
+WHERE workspace_id = $1 AND property_id = $2 AND day >= $3
+ORDER BY day, reason
+`
+
+type ListAnalyticsIngestStatsParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	FromDay     time.Time
+}
+
+type ListAnalyticsIngestStatsRow struct {
+	Day    time.Time
+	Reason string
+	Events int64
+}
+
+func (q *Queries) ListAnalyticsIngestStats(ctx context.Context, arg ListAnalyticsIngestStatsParams) ([]ListAnalyticsIngestStatsRow, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsIngestStats, arg.WorkspaceID, arg.PropertyID, arg.FromDay)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListAnalyticsIngestStatsRow
+	for rows.Next() {
+		var i ListAnalyticsIngestStatsRow
+		if err := rows.Scan(&i.Day, &i.Reason, &i.Events); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listAnalyticsProperties = `-- name: ListAnalyticsProperties :many
 SELECT id, workspace_id, inbox_id, name, public_key, previous_key, previous_key_until, domains, platforms, timezone, currency, collection, consent_features, audience, excluded_paths, excluded_ips, path_rules, tracked_props, retention_months, visitor_key, rollup_version, first_event_at, last_event_at, created_by, created_at, updated_at, deleted_at FROM analytics_properties p
 WHERE p.workspace_id = $1 AND p.deleted_at IS NULL
@@ -404,6 +493,101 @@ func (q *Queries) ListAnalyticsPropertyDays(ctx context.Context, arg ListAnalyti
 			return nil, err
 		}
 		items = append(items, day)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsRetention = `-- name: ListAnalyticsRetention :many
+SELECT id, retention_months, timezone FROM analytics_properties
+WHERE workspace_id = $1 AND retention_months IS NOT NULL AND deleted_at IS NULL
+ORDER BY id
+`
+
+type ListAnalyticsRetentionRow struct {
+	ID              uuid.UUID
+	RetentionMonths *int32
+	Timezone        string
+}
+
+func (q *Queries) ListAnalyticsRetention(ctx context.Context, workspaceID uuid.UUID) ([]ListAnalyticsRetentionRow, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsRetention, workspaceID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListAnalyticsRetentionRow
+	for rows.Next() {
+		var i ListAnalyticsRetentionRow
+		if err := rows.Scan(&i.ID, &i.RetentionMonths, &i.Timezone); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsRollupTodo = `-- name: ListAnalyticsRollupTodo :many
+SELECT d.property_id, d.day, p.timezone FROM analytics_rollup_days d
+JOIN analytics_properties p ON p.workspace_id = d.workspace_id AND p.id = d.property_id
+WHERE d.workspace_id = $1 AND (d.built_at IS NULL OR d.dirty) AND p.deleted_at IS NULL AND d.day >= $2
+ORDER BY d.property_id, d.day
+`
+
+type ListAnalyticsRollupTodoParams struct {
+	WorkspaceID uuid.UUID
+	Oldest      time.Time
+}
+
+type ListAnalyticsRollupTodoRow struct {
+	PropertyID uuid.UUID
+	Day        time.Time
+	Timezone   string
+}
+
+func (q *Queries) ListAnalyticsRollupTodo(ctx context.Context, arg ListAnalyticsRollupTodoParams) ([]ListAnalyticsRollupTodoRow, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsRollupTodo, arg.WorkspaceID, arg.Oldest)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListAnalyticsRollupTodoRow
+	for rows.Next() {
+		var i ListAnalyticsRollupTodoRow
+		if err := rows.Scan(&i.PropertyID, &i.Day, &i.Timezone); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listAnalyticsWorkspaceIDs = `-- name: ListAnalyticsWorkspaceIDs :many
+SELECT DISTINCT workspace_id FROM analytics_properties ORDER BY workspace_id
+`
+
+// Maintenance finds the workspaces that have properties; everything after it is scoped by workspace.
+func (q *Queries) ListAnalyticsWorkspaceIDs(ctx context.Context) ([]uuid.UUID, error) {
+	rows, err := q.db.Query(ctx, listAnalyticsWorkspaceIDs)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []uuid.UUID
+	for rows.Next() {
+		var workspace_id uuid.UUID
+		if err := rows.Scan(&workspace_id); err != nil {
+			return nil, err
+		}
+		items = append(items, workspace_id)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -640,6 +824,66 @@ type SetWorkspaceAnalyticsLimitParams struct {
 
 func (q *Queries) SetWorkspaceAnalyticsLimit(ctx context.Context, arg SetWorkspaceAnalyticsLimitParams) (int64, error) {
 	result, err := q.db.Exec(ctx, setWorkspaceAnalyticsLimit, arg.MonthlyEvents, arg.ID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const trimAnalyticsDaily = `-- name: TrimAnalyticsDaily :execrows
+DELETE FROM analytics_daily WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily t
+    WHERE t.workspace_id = $1 AND t.property_id = $2 AND t.day < $3 LIMIT 1000))
+`
+
+type TrimAnalyticsDailyParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) TrimAnalyticsDaily(ctx context.Context, arg TrimAnalyticsDailyParams) (int64, error) {
+	result, err := q.db.Exec(ctx, trimAnalyticsDaily, arg.WorkspaceID, arg.PropertyID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const trimAnalyticsHourly = `-- name: TrimAnalyticsHourly :execrows
+DELETE FROM analytics_hourly WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_hourly t
+    WHERE t.workspace_id = $1 AND t.property_id = $2 AND t.day < $3 LIMIT 1000))
+`
+
+type TrimAnalyticsHourlyParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) TrimAnalyticsHourly(ctx context.Context, arg TrimAnalyticsHourlyParams) (int64, error) {
+	result, err := q.db.Exec(ctx, trimAnalyticsHourly, arg.WorkspaceID, arg.PropertyID, arg.Before)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const trimAnalyticsRollupDays = `-- name: TrimAnalyticsRollupDays :execrows
+DELETE FROM analytics_rollup_days WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_rollup_days t
+    WHERE t.workspace_id = $1 AND t.property_id = $2 AND t.day < $3 LIMIT 1000))
+`
+
+type TrimAnalyticsRollupDaysParams struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Before      time.Time
+}
+
+func (q *Queries) TrimAnalyticsRollupDays(ctx context.Context, arg TrimAnalyticsRollupDaysParams) (int64, error) {
+	result, err := q.db.Exec(ctx, trimAnalyticsRollupDays, arg.WorkspaceID, arg.PropertyID, arg.Before)
 	if err != nil {
 		return 0, err
 	}

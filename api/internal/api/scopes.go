@@ -211,6 +211,9 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteAnalyticsProperty": {oas.AnalyticsManage},
 	"RotateAnalyticsKey":      {oas.AnalyticsManage},
 	"DeleteAnalyticsData":     {oas.AnalyticsManage},
+	"QueryAnalytics":          {oas.AnalyticsRead},
+	"GetAnalyticsRealtime":    {oas.AnalyticsRead},
+	"GetAnalyticsHealth":      {oas.AnalyticsRead},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

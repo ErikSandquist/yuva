@@ -1,0 +1,909 @@
+# https://github.com/matomo-org/searchengine-and-social-list at 4254b8d3182b23b4a4708902ff68631d8ec925ae, CC0-1.0: kind, name, host (with {} for any label) and an optional path.
+ai	Baidu AI	ai.baidu.com
+ai	Baidu AI	yiyan.baidu.com
+ai	Chat+	chat-gpt.org
+ai	Chat+	chatplus.com
+ai	ChatGLM	chatglm.cn
+ai	ChatGPT	chat.openai.com
+ai	ChatGPT	chatgpt.com
+ai	ChatGPT	labs.openai.com
+ai	Claude	claude.ai
+ai	Copilot	copilot.microsoft.com
+ai	Deepseek	chat.deepseek.com
+ai	Duck.ai	duck.ai
+ai	Gemini	bard.google.com
+ai	Gemini	gemini.google.com
+ai	Grok	grok.com
+ai	Grok	x.com/i/grok
+ai	Jasper	app.jasper.ai
+ai	Le Chat	chat.mistral.ai
+ai	Meta AI	meta.ai
+ai	NotebookLM	notebooklm.google.com
+ai	Perplexity	perplexity.ai
+ai	Qwen	chat.qwen.ai
+ai	Writesonic	app.writesonic.com
+ai	You	you.com
+ai	iAsk	iask.ai
+search	1.cz	1.cz
+search	118 700	foretag.118700.se
+search	118 700	webben.118700.se
+search	118 700	www.118700.se
+search	123people	123people.{}
+search	123people	www.123people.com
+search	360search	m.so.com
+search	360search	so.360.cn
+search	360search	www.so.com
+search	360search	www.sou.com
+search	ABCsøk	abcsok.no
+search	ABCsøk	verden.abcsok.no
+search	AOL	aim.search.aol.com
+search	AOL	alicesuche.aol.de
+search	AOL	alicesuchet.aol.de
+search	AOL	aolbusqueda.aol.com.mx
+search	AOL	aolrecherche.aol.fr
+search	AOL	aolsearch.aol.co.uk
+search	AOL	aolsearch.aol.com
+search	AOL	de.aolsearch.com
+search	AOL	find.web.aol.com
+search	AOL	o2suche.aol.de
+search	AOL	recherche.aol.ca
+search	AOL	recherche.aol.fr
+search	AOL	search-intl.netscape.com
+search	AOL	search.aol.co.uk
+search	AOL	search.aol.com
+search	AOL	search.aol.it
+search	AOL	search.hp.my.aol.com.au
+search	AOL	search.hp.my.aol.de
+search	AOL	search.hp.my.aol.it
+search	AOL	suche.aol.de
+search	AOL	suche.aolsvc.de
+search	AOL	sucheaol.aol.de
+search	AOL	suchet2.aol.de
+search	AOL	www.aolimages.aol.fr
+search	AOL	www.aolrecherche.aol.fr
+search	AOL	www.aolrecherches.aol.fr
+search	AOL	www.recherche.aol.fr
+search	Abacho	www.abacho.at
+search	Abacho	www.abacho.ch
+search	Abacho	www.abacho.co.uk
+search	Abacho	www.abacho.com
+search	Abacho	www.abacho.de
+search	Abacho	www.abacho.es
+search	Abacho	www.abacho.fr
+search	Abacho	www.abacho.it
+search	Abacho	www.se.abacho.com
+search	Abacho	www.tr.abacho.com
+search	Acoon	www.acoon.de
+search	Aguea	chercherfr.aguea.com
+search	Alexa	alexa.com
+search	Alexa	search.toolbars.alexa.com
+search	Alice Adsl	rechercher.aliceadsl.fr
+search	All.by	all.by
+search	AllTheInternet	www.alltheinternet.com
+search	AllTheWeb	www.alltheweb.com
+search	Allaverksamheter	www.allaverksamheter.se
+search	Allesklar	www.allesklar.at
+search	Allesklar	www.allesklar.ch
+search	Allesklar	www.allesklar.de
+search	AlohaFind	alohafind.com
+search	AltaVista	altavista.de
+search	AltaVista	altavista.fr
+search	AltaVista	be-fr.altavista.com
+search	AltaVista	be-nl.altavista.com
+search	AltaVista	listings.altavista.com
+search	AltaVista	search.altavista.com
+search	AltaVista	www.altavista.com
+search	AltaVista	{}.altavista.com
+search	Apollo lv	apollo.lv/portal/search/
+search	Apollo7	apollo7.de
+search	Aport	sm.aport.ru
+search	Arama	arama.com
+search	Arcor	www.arcor.de
+search	Arianna	arianna.libero.it
+search	Arianna	www.arianna.com
+search	Ask	ask.com
+search	Ask	ask.reference.com
+search	Ask	avira-int.ask.com
+search	Ask	avira.search.ask.com
+search	Ask	images.ask.com
+search	Ask	images.{}.ask.com
+search	Ask	int.ask.com
+search	Ask	int.search-results.com
+search	Ask	int.search.tb.ask.com
+search	Ask	iwon.ask.com
+search	Ask	mws.ask.com
+search	Ask	nortonsafe.search.ask.com
+search	Ask	search.ask.com
+search	Ask	search.tb.ask.com
+search	Ask	searchqu.com
+search	Ask	web.ask.com
+search	Ask	www.ask.co.uk
+search	Ask	www.askkids.com
+search	Ask	www.qbyrd.com
+search	Ask	www.search-results.com
+search	Ask	www1.search-results.com
+search	Ask	{}.ask.com
+search	Ask	{}.qbyrd.com
+search	Ask	{}.search-results.com
+search	Ask	{}.search.ask.com
+search	Atlas	searchatlas.centrum.cz
+search	Austronaut	www1.austronaut.at
+search	Austronaut	www2.austronaut.at
+search	Avira SafeSearch	safesearch.avira.com
+search	Avira SafeSearch	search.avira.com
+search	Avira SafeSearch	search.avira.net
+search	Babylon	search.babylon.com
+search	Babylon	searchassist.babylon.com
+search	Baidu	baidu.com
+search	Baidu	m.baidu.com
+search	Baidu	news.baidu.com
+search	Baidu	tieba.baidu.com
+search	Baidu	www.baidu.co.th
+search	Baidu	www.baidu.com
+search	Baidu	www1.baidu.com
+search	Baidu	zhidao.baidu.com
+search	Biglobe	cgi.search.biglobe.ne.jp
+search	Biglobe Images	images.search.biglobe.ne.jp
+search	Bing	bing.com
+search	Bing	cc.bingj.com
+search	Bing	dizionario.it.msn.com
+search	Bing	enciclopedia.it.msn.com
+search	Bing	global.bing.com
+search	Bing	msnbc.msn.com
+search	Bing	{}.bing.com
+search	Bing Images	bing.com/images/search
+search	Bing Images	{}.bing.com/images/search
+search	Blogdigger	www.blogdigger.com
+search	Blogpulse	www.blogpulse.com
+search	Bluewin	search.bluewin.ch
+search	Brave	search.brave.com
+search	Canoe.ca	web.canoe.ca
+search	Centrum	morfeo.centrum.cz
+search	Centrum	search.centrum.cz
+search	Charter	www.charter.net
+search	ChatGPT	chat.openai.com
+search	ChatGPT	chatgpt.com
+search	Claro Search	claro-search.com
+search	Clix	pesquisa.clix.pt
+search	Comcast	search.comcast.net
+search	Compuserve.com (Enhanced by Google)	websearch.cs.com
+search	Conduit.com	images.search.conduit.com
+search	Conduit.com	search.conduit.com
+search	Crawler	www.crawler.com
+search	Cuil	www.cuil.com
+search	Cốc Cốc	coccoc.com
+search	Daemon search	daemon-search.com
+search	Daemon search	my.daemon-search.com
+search	DasOertliche	www.dasoertliche.de
+search	DasOertliche	www2.dasoertliche.de
+search	DasTelefonbuch	www1.dastelefonbuch.de
+search	Daum	search.daum.net
+search	Delfi EE	otsing.delfi.ee
+search	Delfi lv	smart.delfi.lv
+search	Digg	digg.com
+search	DisconnectSearch	search.disconnect.me
+search	DuckDuckGo	duckduckgo.com
+search	DuckDuckGo	duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion
+search	DuckDuckGo	noai.duckduckgo.com
+search	DuckDuckGo	r.duckduckgo.com
+search	Earthlink	search.earthlink.net
+search	Ecosia	ecosia.org
+search	Ecosia	www.ecosia.org
+search	El Mundo	ariadna.elmundo.es
+search	Eniro	www.eniro.se
+search	Entireweb	www.entireweb.com
+search	EpicSearch.in	epicsearch.in
+search	EpicSearch.in	www.epicsearch.in
+search	Eurip	www.eurip.com
+search	Euroseek	www.euroseek.com
+search	Everyclick	www.everyclick.com
+search	Exalead	www.exalead.com
+search	Exalead	www.exalead.fr
+search	Excite	msxml.excite.com
+search	Excite	search.excite.co.uk
+search	Excite	search.excite.de
+search	Excite	search.excite.es
+search	Excite	search.excite.fr
+search	Excite	search.excite.it
+search	Excite	search.excite.nl
+search	Excite	www.excite.co.jp
+search	Facebook	www.facebook.com
+search	Fast Browser Search	www.fastbrowsersearch.com
+search	Findhurtig	www.findhurtig.dk
+search	Fireball	fireball.com
+search	Fireball	www.fireball.de
+search	Firstsfind	www.firstsfind.com
+search	Fixsuche	www.fixsuche.de
+search	Flix.de	www.flix.de
+search	Fooooo	search.fooooo.com
+search	Forestle	forestle.mobi
+search	Forestle	forestle.org
+search	Forestle	{}.forestle.org
+search	Francite	recherche.francite.com
+search	Free	search.free.fr
+search	Free	search1-1.free.fr
+search	Free	search1-2.free.fr
+search	FreeCause	search.freecause.com
+search	Freenet	suche.freenet.de
+search	Freespoke	freespoke.com
+search	FriendFeed	friendfeed.com
+search	Frontier	search.frontier.com
+search	GAIS	gais.cs.ccu.edu.tw
+search	Genieo	search.genieo.com
+search	Geona	geona.net
+search	Gibiru	gibiru.com
+search	Gibiru	www.gibiru.com
+search	Gigablast	www.gigablast.com
+search	Gigablast (Directory)	dir.gigablast.com
+search	Gnadenmeer	www.gnadenmeer.de
+search	GoYellow.de	www.goyellow.de
+search	Gomeo	www.gomeo.com
+search	Google	android-app//com.google.android.googlequicksearchbox/https/www.google.com
+search	Google	cgi2.nintendo.co.jp
+search	Google	com.google.android.googlequicksearchbox
+search	Google	darkoogle.com
+search	Google	encrypted.google.com
+search	Google	find.tdc.dk
+search	Google	gfsoso.com
+search	Google	go.google.com
+search	Google	gogole.com
+search	Google	gogole.{}
+search	Google	googel.com
+search	Google	googel.{}
+search	Google	google.com
+search	Google	google.{}
+search	Google	gppgle.com
+search	Google	gppgle.{}
+search	Google	image.search.smt.docomo.ne.jp
+search	Google	ipv6.google.com
+search	Google	isearch.avg.com
+search	Google	it.luna.tv
+search	Google	monumentbrowser.com
+search	Google	netlavis.azione.jp
+search	Google	search.1und1.de
+search	Google	search.abv.bg
+search	Google	search.alot.com
+search	Google	search.avg.com
+search	Google	search.bt.com
+search	Google	search.chedot.com
+search	Google	search.darkoogle.com
+search	Google	search.dolphin-browser.jp
+search	Google	search.f-secure.com
+search	Google	search.foxtab.com
+search	Google	search.gmx.com
+search	Google	search.hiyo.com
+search	Google	search.incredibar.com
+search	Google	search.incredimail.com
+search	Google	search.juno.com
+search	Google	search.leonardo.it
+search	Google	search.nan.so
+search	Google	search.smt.docomo.ne.jp
+search	Google	search.sweetim.com
+search	Google	search.walla.co.il
+search	Google	search.xfinity.com
+search	Google	search.zonealarm.com
+search	Google	search.zum.com
+search	Google	search1.incredimail.com
+search	Google	search2.incredimail.com
+search	Google	search3.incredimail.com
+search	Google	search4.incredimail.com
+search	Google	searches.f-secure.com
+search	Google	searches.safehomepage.com
+search	Google	searchresults.verizon.com
+search	Google	start.lenovo.com
+search	Google	startab.me
+search	Google	suche.1und1.de
+search	Google	suche.gmx.net
+search	Google	webcache.googleusercontent.com
+search	Google	wow.com
+search	Google	www.cnn.com
+search	Google	www.delta-search.com
+search	Google	www.fastweb.it
+search	Google	www.gooofullsearch.com
+search	Google	www.kadaza.com
+search	Google	www.optuszoo.com.au
+search	Google	www1.delta-search.com
+search	Google	www2.google.com
+search	Google	wwwgoogle.com
+search	Google	wwwgoogle.{}
+search	Google	{}.wow.com
+search	Google Blogsearch	blogsearch.google.com
+search	Google Blogsearch	blogsearch.google.{}
+search	Google Custom Search	cse.google.com
+search	Google Custom Search	cse.google.{}
+search	Google Custom Search	google.com/cse
+search	Google Custom Search	google.com/custom
+search	Google Custom Search	google.{}/cse
+search	Google Custom Search	google.{}/custom
+search	Google Images	google.com/imgres
+search	Google Images	google.{}/imgres
+search	Google Images	images.google.com
+search	Google Images	images.google.{}
+search	Google Maps	maps.google.com
+search	Google Maps	maps.google.{}
+search	Google News	news.google.com
+search	Google News	news.google.{}
+search	Google Scholar	scholar.google.com
+search	Google Scholar	scholar.google.{}
+search	Google Shopping	google.com/products
+search	Google Shopping	google.{}/products
+search	Google Translations	translate.google.com
+search	Google Video	video.google.com
+search	Google syndicated search	googlesyndicatedsearch.com
+search	Gule Sider	www.gulesider.no
+search	Haosou	www.haosou.com
+search	HighBeam	www.highbeam.com
+search	Hit-Parade	class.hit-parade.com
+search	Hit-Parade	req.hit-parade.com
+search	Hit-Parade	www.hit-parade.com
+search	Holmes	holmes.ge
+search	Hooseek	www.hooseek.com
+search	Hotbot	www.hotbot.com
+search	I-play	start.iplay.com
+search	ICQ	search.icq.com
+search	ICQ	www.icq.com
+search	Icerocket	blogs.icerocket.com
+search	Ilse NL	www.ilse.nl
+search	Inbox	www2.inbox.com
+search	InfoSpace	dogpile.com
+search	InfoSpace	govome.inspsearch.com
+search	InfoSpace	home.speedbit.com
+search	InfoSpace	infospace.com
+search	InfoSpace	isearch.babylon.com
+search	InfoSpace	isearch.glarysoft.com
+search	InfoSpace	metacrawler.com
+search	InfoSpace	search.avast.com
+search	InfoSpace	search.b1.org
+search	InfoSpace	search.chatzum.com
+search	InfoSpace	search.fbdownloader.com
+search	InfoSpace	search.handycafe.com
+search	InfoSpace	search.iminent.com
+search	InfoSpace	search.kiwee.com
+search	InfoSpace	search.magentic.com
+search	InfoSpace	search.searchcompletion.com
+search	InfoSpace	search.v9.com
+search	InfoSpace	search.webssearches.com
+search	InfoSpace	searches.vi-view.com
+search	InfoSpace	searches3.globososo.com
+search	InfoSpace	searchya.com
+search	InfoSpace	start.facemoods.com
+search	InfoSpace	start.funmoods.com
+search	InfoSpace	tattoodle.com
+search	InfoSpace	utorrent.inspsearch.com
+search	InfoSpace	webcrawler.com
+search	InfoSpace	webfetch.com
+search	InfoSpace	wsdsold.infospace.com
+search	InfoSpace	www.searchmobileonline.com
+search	Interia	www.google.interia.pl
+search	Isodelen	www.isodelen.se
+search	IxQuick	eu.ixquick.com
+search	IxQuick	ixquick.com
+search	IxQuick	ixquick.de
+search	IxQuick	s1-eu.ixquick.de
+search	IxQuick	s1.us.ixquick.com
+search	IxQuick	s2-eu4.ixquick.com
+search	IxQuick	s2.us.ixquick.com
+search	IxQuick	s3.us.ixquick.com
+search	IxQuick	s4.us.ixquick.com
+search	IxQuick	s5-eu4.ixquick.com
+search	IxQuick	s5.us.ixquick.com
+search	IxQuick	s8-eu.ixquick.com
+search	IxQuick	us.ixquick.com
+search	IxQuick	www.eu.ixquick.com
+search	IxQuick	www.ixquick.de
+search	Jungle Key	junglekey.com
+search	Jungle Key	junglekey.fr
+search	Jungle Spider	www.jungle-spider.de
+search	Junior Safe Search	www.juniorsafesearch.com
+search	Jyxo	jyxo.1188.cz
+search	K9 Safe Search	k9safesearch.com
+search	KARMA	karmasearch.org
+search	Kagi	kagi.com
+search	Kataweb	www.kataweb.it
+search	Kensaq	www.kensaq.com
+search	Kvasir	kvasir.no
+search	Kvasir	www.kvasir.no
+search	La Toile Du Québec (Google)	web.toile.com
+search	La Toile Du Québec (Google)	www.toile.com
+search	Laban	laban.vn
+search	Latne	www.latne.lv
+search	Lilo	search.lilo.org
+search	Lo.st	lo.st
+search	Local Moxie	www.localmoxie.com
+search	LookAny	www.lookany.com
+search	Lookseek	search.lookseek.com
+search	Looksmart	www.looksmart.com
+search	Lycos	lycos.{}
+search	Lycos	search.lycos.com
+search	Mailru	go.mail.ru
+search	Mamma	mamma75.mamma.com
+search	Mamma	www.mamma.com
+search	Meinestadt.de	www.meinestadt.de
+search	Meta.ua	meta.ua
+search	MetaCrawler DE	s1.metacrawler.de
+search	MetaCrawler DE	s2.metacrawler.de
+search	MetaCrawler DE	s3.metacrawler.de
+search	Metager	meta.rrzn.uni-hannover.de
+search	Metager	metager.de
+search	Metager	www.metager.de
+search	Metager2	metager2.de
+search	Mister Wong	www.mister-wong.com
+search	Mister Wong	www.mister-wong.de
+search	Mojeek	www.mojeek.com
+search	Monstercrawler	www.monstercrawler.com
+search	MyPrivateSearch	www.myprivatesearch.com
+search	MySpace	searchservice.myspace.com
+search	MyWebSearch	kf.mysearch.myway.com
+search	MyWebSearch	ki.mysearch.myway.com
+search	MyWebSearch	ms114.mysearch.com
+search	MyWebSearch	ms146.mysearch.com
+search	MyWebSearch	search.myway.com
+search	MyWebSearch	search.mywebsearch.com
+search	MyWebSearch	www.mysearch.com
+search	Najdi.si	www.najdi.si
+search	Nate	search.nate.com
+search	Naver	search.naver.com
+search	Needtofind	ko.search.need2find.com
+search	Neti	www.neti.ee
+search	Nifty	search.azby.fmworld.net
+search	Nifty	search.nifty.com
+search	Nifty Videos	videosearch.nifty.com
+search	Nigma	nigma.ru
+search	OceanHero	oceanhero.today
+search	Onet.pl	szukaj.onet.pl
+search	Online.no	online.no
+search	OnlySearch	www.only-search.com
+search	Opplysningen 1881	www.1881.no
+search	Orange	busca.orange.es
+search	Orange	lemoteur.ke.voila.fr
+search	Orange	lemoteur.orange.fr
+search	Paperball	www.paperball.de
+search	PeopleCheck	extern.peoplecheck.de
+search	PeoplePC	search.peoplepc.com
+search	Perplexity	www.perplexity.ai
+search	Picsearch	www.picsearch.com
+search	Plazoo	www.plazoo.com
+search	PlusNetwork	plusnetwork.com
+search	Poisk.Ru	poisk.ru
+search	Presearch	presearch.com
+search	PrivacyWall	www.privacywall.org
+search	Qualigo	www.qualigo.at
+search	Qualigo	www.qualigo.ch
+search	Qualigo	www.qualigo.de
+search	Qualigo	www.qualigo.nl
+search	Quendu	www.quendu.com
+search	Qwant	lite.qwant.com
+search	Qwant	www.qwant.com
+search	Rakuten	websearch.rakuten.co.jp
+search	Rambler	nova.rambler.ru
+search	Riksdelen	www.riksdelen.se
+search	Road Runner	search.rr.com
+search	Sapo	pesquisa.sapo.pt
+search	Scour.com	scour.com
+search	Search.ch	www.search.ch
+search	Search.com	www.search.com
+search	SearchCanvas	www.searchcanvas.com
+search	SearchLock	results.searchlock.com
+search	SearchLock	searchlock.com
+search	Searchalot	searchalot.com
+search	Searchy	www.searchy.co.uk
+search	SeeSaa	search.seesaa.jp
+search	Setooz	bg.setooz.com
+search	Setooz	da.setooz.com
+search	Setooz	el.setooz.com
+search	Setooz	fa.setooz.com
+search	Setooz	ur.setooz.com
+search	Setooz	{}.setooz.com
+search	Seznam	search.seznam.cz
+search	Seznam Videa	videa.seznam.cz
+search	Sharelook	www.sharelook.fr
+search	Skynet	www.skynet.be
+search	SmartAddressbar	search.smartaddressbar.com
+search	SmartShopping	search.smartshopping.com
+search	Snap.do	search.snap.do
+search	So-net	www.so-net.ne.jp
+search	So-net Videos	video.so-net.ne.jp
+search	Softonic	search.softonic.com
+search	Sogou	english.sogou.com
+search	Sogou	m.sogou.com
+search	Sogou	sogou.com
+search	Sogou	wap.sogou.com
+search	Sogou	www.sogou.com
+search	Soso	www.soso.com
+search	Sputnik	www.sputnik.ru
+search	StartPage	classic.startpage.com
+search	StartPage	eu.startpage.com
+search	StartPage	s1-eu5.startpage.com
+search	StartPage	s10-eu5.startpage.com
+search	StartPage	s11-eu5.startpage.com
+search	StartPage	s12-eu5.startpage.com
+search	StartPage	s13-eu5.startpage.com
+search	StartPage	s14-eu5.startpage.com
+search	StartPage	s2-eu4.startpage.com
+search	StartPage	s2-eu5.startpage.com
+search	StartPage	s4-eu5.startpage.com
+search	StartPage	s5-eu5.startpage.com
+search	StartPage	s6-eu4.startpage.com
+search	StartPage	s6-eu5.ixquick.com
+search	StartPage	s6-eu5.startpage.com
+search	StartPage	s7-eu4.startpage.com
+search	StartPage	s7-eu5.startpage.com
+search	StartPage	s8-eu5.startpage.com
+search	StartPage	startpage.com
+search	StartPage	startpagel6srwcjlue4zgq3zevrujfaow726kjytqbbjyrswwmjzcqd.onion
+search	StartPage	www.startpage.com
+search	Startpagina (Google)	startgoogle.startpagina.nl
+search	Startsiden	startsiden.no
+search	Startsiden	www.startsiden.no
+search	Stract	stract.com
+search	Suche.info	suche.info
+search	Suchmaschine.com	www.suchmaschine.com
+search	Suchnase	www.suchnase.de
+search	Surf Canyon	surfcanyon.com
+search	Swiggle	swiggle.org.uk
+search	Swisscows	swisscows.com
+search	T-Online	brisbane.t-online.de
+search	T-Online	navigationshilfe.t-online.de
+search	T-Online	suche.t-online.de
+search	TUSK Search	tusksearch.com
+search	TalkTalk	www.talktalk.co.uk
+search	Tarmot	tarmot.com
+search	Technorati	technorati.com
+search	Teoma	www.teoma.com
+search	Terra	buscador.terra.cl
+search	Terra	buscador.terra.com.br
+search	Terra	buscador.terra.es
+search	Tiscali	hledani.tiscali.cz
+search	Tiscali	search-dyn.tiscali.it
+search	Tiscali	search.tiscali.it
+search	Tixuma	www.tixuma.de
+search	Toolbarhome	vshare.toolbarhome.com
+search	Toolbarhome	www.toolbarhome.com
+search	Toppreise.ch	de.toppreise.ch
+search	Toppreise.ch	en.toppreise.ch
+search	Toppreise.ch	fr.toppreise.ch
+search	Toppreise.ch	toppreise.ch
+search	Toppreise.ch	www.toppreise.ch
+search	Torry	www.torry.io
+search	Trouvez.com	www.trouvez.com
+search	TrovaRapido	www.trovarapido.com
+search	Trusted Search	www.trusted-search.com
+search	Trustnav	search.trustnav.com
+search	Twingly	www.twingly.com
+search	URL.ORGanzier	www.url.org
+search	Vinden	www.vinden.nl
+search	Vindex	search.vindex.nl
+search	Vindex	www.vindex.nl
+search	Virgilio	mobile.virgilio.it
+search	Virgilio	ricerca.virgilio.it
+search	Virgilio	ricercaimmagini.virgilio.it
+search	Virgilio	ricercanews.virgilio.it
+search	Virgilio	ricercavideo.virgilio.it
+search	Voila	search.ke.voila.fr
+search	Voila	www.lemoteur.fr
+search	Volny	web.volny.cz
+search	Vuhuv	vuhuv.com
+search	Walhello	www.walhello.com
+search	Walhello	www.walhello.de
+search	Walhello	www.walhello.info
+search	Walhello	www.walhello.nl
+search	Web.de	m.suche.web.de
+search	Web.de	suche.web.de
+search	Web.nl	www.web.nl
+search	WebSearch	www.websearch.com
+search	Wedoo	en.wedoo.com
+search	Wedoo	es.wedoo.com
+search	Wedoo	fr.wedoo.com
+search	Winamp	search.winamp.com
+search	Wirtualna Polska	szukaj.wp.pl
+search	Witch	www.witch.de
+search	Woopie	www.woopie.jp
+search	X-Recherche	www.x-recherche.com
+search	Yahoo!	cade.yahoo.com
+search	Yahoo!	espanol.search.yahoo.com
+search	Yahoo!	malaysia.search.yahoo.com
+search	Yahoo!	one.cn.yahoo.com
+search	Yahoo!	qc.search.yahoo.com
+search	Yahoo!	r.search.yahoo.com
+search	Yahoo!	search.offerbox.com
+search	Yahoo!	search.yahoo.com
+search	Yahoo!	www.benefind.de
+search	Yahoo!	www.cercato.it
+search	Yahoo!	ys.mirostart.com
+search	Yahoo!	{}.search.yahoo.com
+search	Yahoo! Directory	search.yahoo.com/search/dir
+search	Yahoo! Images	cade.images.yahoo.com
+search	Yahoo! Images	espanol.images.yahoo.com
+search	Yahoo! Images	images.search.yahoo.com
+search	Yahoo! Images	qc.images.yahoo.com
+search	Yahoo! Images	{}.images.yahoo.com
+search	Yahoo! Japan	home.kingsoft.jp
+search	Yahoo! Japan	jp.hao123.com
+search	Yahoo! Japan	jwsearch.jword.jp
+search	Yahoo! Japan	search.yahoo.co.jp
+search	Yahoo! Japan Images	image.search.yahoo.co.jp
+search	Yahoo! Japan Videos	video.search.yahoo.co.jp
+search	Yam	search.yam.com
+search	Yandex	clck.yandex.{}
+search	Yandex	m.yandex.{}
+search	Yandex	www.yandex.{}
+search	Yandex	ya.ru
+search	Yandex	yabs.yandex.{}
+search	Yandex	yandex.com
+search	Yandex	yandex.ru
+search	Yandex	yandex.{}
+search	Yandex Images	images.yandex.com
+search	Yandex Images	images.yandex.ru
+search	Yandex Images	images.yandex.{}
+search	Yasni	www.yasni.at
+search	Yasni	www.yasni.ch
+search	Yasni	www.yasni.co.uk
+search	Yasni	www.yasni.com
+search	Yasni	www.yasni.de
+search	Yatedo	www.yatedo.com
+search	Yatedo	www.yatedo.fr
+search	Yellowmap	yellowmap.de
+search	Yep	yep.com
+search	Yippy	search.yippy.com
+search	Yongzin	www.yongzin.com
+search	You	you.com
+search	YouGoo	www.yougoo.fr
+search	ZapMeta	www.zapmeta.com
+search	ZapMeta	www.zapmetasearch.{}
+search	ZapMeta	zapmeta.{}
+search	ZapMeta	{}.zapmeta.com
+search	Zhongsou	p.zhongsou.com
+search	Zoek	www3.zoek.nl
+search	Zoeken	www.zoeken.nl
+search	Zoohoo	zoohoo.cz
+search	Zoznam	www.zoznam.sk
+search	Zxuso	www.zxuso.com
+search	auone	search.auone.jp
+search	auone	sp-search.auone.jp
+search	auone	sp-web.search.auone.jp
+search	auone Images	sp-image.search.auone.jp
+search	blekko	blekko.com
+search	dir.com	fr.dir.com
+search	dmoz	dmoz.org
+search	dmoz	editors.dmoz.org
+search	eo	eo.st
+search	goo	ocnsearch.goo.ne.jp
+search	goo	search.goo.ne.jp
+search	iMesh	search.imesh.com
+search	info.com	www.info.com
+search	maailm.com	www.maailm.com
+search	mozbot	www.mozbot.co.uk
+search	mozbot	www.mozbot.com
+search	mozbot	www.mozbot.fr
+search	qip.ru	search.qip.ru
+search	rpmfind	fr2.rpmfind.net
+search	rpmfind	rpmfind.net
+search	sm.cn	m.sm.cn
+search	sm.cn	m.sp.sm.cn
+search	sm.cn	quark.sm.cn
+search	sm.cn	so.m.sm.cn
+search	sm.cn	yz.m.sm.cn
+search	sm.de	www.sm.de
+search	talimba	www.talimba.com
+search	uol.com.br	busca.uol.com.br
+search	weborama	www.weborama.fr
+search	www värav	search.www.ee
+search	묻지마 검색	kwzf.net
+social	Badoo	badoo.com
+social	Bebo	bebo.com
+social	BlackPlanet	blackplanet.com
+social	Bluesky	bsky.app
+social	Bluesky	skyfeed.app
+social	Buzznet	buzznet.com
+social	Classmates.com	classmates.com
+social	Cyworld	global.cyworld.com
+social	Discord	discord.com
+social	Discord	discord.gg
+social	Discord	discordapp.com
+social	Douban	douban.com
+social	Douyin	douyin.com
+social	Douyu	douyu.com
+social	Dribbble	dribbble.com
+social	Facebook	facebook.com
+social	Facebook	fb.me
+social	Facebook	l.facebook.com
+social	Facebook	m.facebook.com
+social	Fetlife	fetlife.com
+social	Flickr	flickr.com
+social	Flixster	flixster.com
+social	Fotolog	fotolog.com
+social	Foursquare	foursquare.com
+social	Friends Reunited	friendsreunited.com
+social	Friendster	friendster.com
+social	Gaia Online	gaiaonline.com
+social	Geni.com	geni.com
+social	GitHub	github.com
+social	Google%2B	com.google.android.apps.plus
+social	Google%2B	plus.google.com
+social	Google%2B	url.google.com
+social	Haboo	habbo.com
+social	Hacker News	news.ycombinator.com
+social	Huya	huya.com
+social	Hyves	hyves.nl
+social	Instagram	instagram.com
+social	Instagram	l.instagram.com
+social	Last.fm	last.fm
+social	Last.fm	lastfm.com.br
+social	Last.fm	lastfm.com.tr
+social	Last.fm	lastfm.de
+social	Last.fm	lastfm.es
+social	Last.fm	lastfm.fr
+social	Last.fm	lastfm.it
+social	Last.fm	lastfm.jp
+social	Last.fm	lastfm.pl
+social	Last.fm	lastfm.ru
+social	Last.fm	lastfm.se
+social	LinkedIn	linkedin.android
+social	LinkedIn	linkedin.com
+social	LinkedIn	lnkd.in
+social	LiveJournal	livejournal.com
+social	LiveJournal	livejournal.ru
+social	Mastodon	bitcoinhackers.org
+social	Mastodon	botsin.space
+social	Mastodon	c.im
+social	Mastodon	chaos.social
+social	Mastodon	cybre.space
+social	Mastodon	fosstodon.org
+social	Mastodon	friends.nico
+social	Mastodon	front-end.social
+social	Mastodon	graphics.social
+social	Mastodon	hachyderm.io
+social	Mastodon	indieweb.social
+social	Mastodon	knzk.me
+social	Mastodon	mamot.fr
+social	Mastodon	mas.to
+social	Mastodon	masto.ai
+social	Mastodon	mastodon.art
+social	Mastodon	mastodon.at
+social	Mastodon	mastodon.cloud
+social	Mastodon	mastodon.eus
+social	Mastodon	mastodon.jalgi.eus
+social	Mastodon	mastodon.nz
+social	Mastodon	mastodon.online
+social	Mastodon	mastodon.scot
+social	Mastodon	mastodon.social
+social	Mastodon	mastodon.technology
+social	Mastodon	mastodon.world
+social	Mastodon	mastodon.xyz
+social	Mastodon	mastodonapp.uk
+social	Mastodon	mastodont.cat
+social	Mastodon	mstdn.io
+social	Mastodon	mstdn.jp
+social	Mastodon	mstdn.party
+social	Mastodon	mstdn.social
+social	Mastodon	newsie.social
+social	Mastodon	ohai.social
+social	Mastodon	org.joinmastodon.android
+social	Mastodon	pawoo.net
+social	Mastodon	quey.org
+social	Mastodon	ro-mastodon.puyo.jp
+social	Mastodon	sfba.social
+social	Mastodon	social.tchncs.de
+social	Mastodon	social.vivaldi.net
+social	Mastodon	tkm.eus
+social	Mastodon	toot.community
+social	Mastodon	typo.social
+social	Mastodon	universeodon.com
+social	Mastodon	vis.social
+social	MeinVZ	meinvz.net
+social	MissEvan	missevan.com
+social	Mixi	mixi.jp
+social	MoiKrug.ru	moikrug.ru
+social	Multiply	multiply.com
+social	MyHeritage	myheritage.com
+social	MyLife	mylife.ru
+social	Myspace	myspace.com
+social	Nasza-klasa.pl	nk.pl
+social	Netlog	netlog.com
+social	Niconico	nicovideo.jp
+social	Odnoklassniki	odnoklassniki.ru
+social	Orkut	orkut.com
+social	Ozone	qzone.qq.com
+social	Peepeth	peepeth.com
+social	Pinterest	at.pinterest.com
+social	Pinterest	ch.pinterest.com
+social	Pinterest	cl.pinterest.com
+social	Pinterest	co.pinterest.com
+social	Pinterest	dk.pinterest.com
+social	Pinterest	es.pinterest.com
+social	Pinterest	hu.pinterest.com
+social	Pinterest	id.pinterest.com
+social	Pinterest	ie.pinterest.com
+social	Pinterest	in.pinterest.com
+social	Pinterest	it.pinterest.com
+social	Pinterest	kr.pinterest.com
+social	Pinterest	mx.pinterest.com
+social	Pinterest	nl.pinterest.com
+social	Pinterest	nz.pinterest.com
+social	Pinterest	ph.pinterest.com
+social	Pinterest	pinterest.ca
+social	Pinterest	pinterest.ch
+social	Pinterest	pinterest.co.uk
+social	Pinterest	pinterest.com
+social	Pinterest	pinterest.com.au
+social	Pinterest	pinterest.de
+social	Pinterest	pinterest.dk
+social	Pinterest	pinterest.es
+social	Pinterest	pinterest.fr
+social	Pinterest	pinterest.ie
+social	Pinterest	pinterest.info
+social	Pinterest	pinterest.jp
+social	Pinterest	pinterest.nz
+social	Pinterest	pinterest.pt
+social	Pinterest	pinterest.se
+social	Pinterest	pt.pinterest.com
+social	Pinterest	ru.pinterest.com
+social	Pinterest	se.pinterest.com
+social	Pixelfed	metapixl.com
+social	Pixelfed	pix.toot.wales
+social	Pixelfed	pixelfed.de
+social	Pixelfed	pixelfed.social
+social	Pixelfed	pixelfed.uno
+social	Pixelfed	pixey.org
+social	Pixelfed	pxlmo.com
+social	Plaxo	plaxo.com
+social	Renren	renren.com
+social	Skyrock	skyrock.com
+social	Snapchat	com.snapchat.android
+social	Snapchat	snapchat.com
+social	Sonico.com	sonico.com
+social	SoundCloud	gate.sc
+social	SoundCloud	soundcloud.com
+social	Sourceforge	sourceforge.net
+social	StackOverflow	stackoverflow.com
+social	StudiVZ	studivz.net
+social	StumbleUpon	stumbleupon.com
+social	Tagged	login.tagged.com
+social	Taringa!	taringa.net
+social	Telegram	org.telegram.messenger
+social	Telegram	web.telegram.org
+social	Threads	l.threads.com
+social	Threads	l.threads.net
+social	Threads	threads.com
+social	Threads	threads.net
+social	TikTok	tiktok.com
+social	Tuenti	tuenti.com
+social	Twitcast	twitcasting.tv
+social	Twitter	t.co
+social	Twitter	twitter.com
+social	Twitter	x.com
+social	V2EX	v2ex.com
+social	Viadeo	viadeo.com
+social	Vimeo	vimeo.com
+social	Vkontakte	vk.com
+social	Vkontakte	vkontakte.ru
+social	WAYN	wayn.com
+social	WeChat	channels.weixin.qq.com
+social	WeChat	mp.weixin.qq.com
+social	WeChat	open.weixin.qq.com
+social	WeChat	wechat.com
+social	WeeWorld	weeworld.com
+social	Weibo	t.cn
+social	Weibo	weibo.com
+social	Windows Live Spaces	login.live.com
+social	Workplace	l.workplace.com
+social	Workplace	lm.workplace.com
+social	Workplace	workplace.com
+social	XING	xing.com
+social	Xanga	xanga.com
+social	YouTube	youtu.be
+social	YouTube	youtube.com
+social	bilibili	bilibili.com
+social	gree	gree.jp
+social	hi5	hi5.com
+social	identi.ca	identi.ca
+social	lang-8	lang-8.com
+social	my.mail.ru	my.mail.ru
+social	myYearbook	myyearbook.com
+social	reddit	com.reddit.frontpage
+social	reddit	np.reddit.com
+social	reddit	pay.reddit.com
+social	reddit	reddit.com
+social	tumblr	t.umblr.com
+social	tumblr	tumblr.com
+social	vkrugudruzei.ru	vkrugudruzei.ru

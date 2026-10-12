@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 	"uuid"
 
@@ -37,6 +38,8 @@ const (
 	defaultSaltGrace         = 2 * time.Hour
 	defaultPropertyPerMinute = 60_000
 	defaultPropertiesPerWS   = 50
+	defaultRawDays           = 90
+	defaultRollupTop         = 1000
 	noticeAnalyticsLimit     = "analytics_limit"
 	analyticsPropertyKey     = ctxKey(200)
 )
@@ -58,6 +61,17 @@ type AnalyticsSettings struct {
 	MonthlyEvents           int64
 	PropertyEventsPerMinute int
 	PropertiesPerWorkspace  int
+	// RawDays is how long raw visits and events are kept; RollupTop how many values of a dimension a
+	// day's rollup keeps before the rest is (other).
+	RawDays   int
+	RollupTop int
+	// GeoIP is dbip, file or off (the default when empty); GeoIPDir holds the DB-IP downloads and
+	// GeoIPFile is the operator's MMDB file.
+	GeoIP     string
+	GeoIPDir  string
+	GeoIPFile string
+	// GeoIPURL replaces DB-IP's download address, for tests.
+	GeoIPURL func(month time.Time) string
 }
 
 func analyticsSettings(a AnalyticsSettings) AnalyticsSettings {
@@ -76,18 +90,31 @@ func analyticsSettings(a AnalyticsSettings) AnalyticsSettings {
 	if a.PropertiesPerWorkspace <= 0 {
 		a.PropertiesPerWorkspace = defaultPropertiesPerWS
 	}
+	if a.RawDays <= 0 {
+		a.RawDays = defaultRawDays
+	}
+	if a.RollupTop <= 0 {
+		a.RollupTop = defaultRollupTop
+	}
+	if a.GeoIP == "" {
+		a.GeoIP = analytics.GeoOff
+	}
 	return a
 }
 
 type analyticsState struct {
-	settings AnalyticsSettings
-	store    analytics.Store
-	buffer   *analytics.Buffer
-	flusher  *analytics.Flusher
-	resolver *analytics.Resolver
-	props    *propertyCache
-	usage    *usageCache
-	limits   *rateLimiter
+	settings    AnalyticsSettings
+	geo         *analytics.GeoIP
+	geoUpdating atomic.Bool
+	answers     answerCache
+	slots       querySlots
+	store       analytics.Store
+	buffer      *analytics.Buffer
+	flusher     *analytics.Flusher
+	resolver    *analytics.Resolver
+	props       *propertyCache
+	usage       *usageCache
+	limits      *rateLimiter
 }
 
 func (s *Server) newAnalytics(d Deps) *analyticsState {
@@ -98,6 +125,9 @@ func (s *Server) newAnalytics(d Deps) *analyticsState {
 		usage: &usageCache{m: map[uuid.UUID]*usageEntry{}}, limits: newRateLimiter(),
 		resolver: &analytics.Resolver{Store: st, Salts: analytics.NewSalts(st), Visits: analytics.NewVisits(set.VisitCache), Grace: set.SaltGrace},
 	}
+	if set.GeoIP != analytics.GeoOff {
+		a.geo = &analytics.GeoIP{Mode: set.GeoIP, Dir: set.GeoIPDir, File: set.GeoIPFile, URL: set.GeoIPURL, Now: s.now}
+	}
 	a.flusher = &analytics.Flusher{Store: st, Buffer: a.buffer, Log: s.log, Now: s.now, AfterFlush: s.afterAnalyticsFlush}
 	if d.Hub != nil {
 		d.Hub.OnInvalidate(a.invalidated)
@@ -107,6 +137,7 @@ func (s *Server) newAnalytics(d Deps) *analyticsState {
 
 func (a *analyticsState) forget(propertyID uuid.UUID) {
 	a.props.forget(propertyID)
+	a.answers.forget(propertyID)
 	a.resolver.Salts.Forget(propertyID)
 	a.resolver.Visits.Forget(propertyID)
 }
@@ -125,8 +156,19 @@ func notifyAnalyticsChanged(ctx context.Context, q *store.Queries, ws uuid.UUID,
 }
 
 func (a *analyticsState) invalidated(payload string) {
-	if payload == realtime.InvalidateAll {
+	switch payload {
+	case realtime.InvalidateAll:
 		a.props.forgetAll()
+		return
+	case analyticsGeoIPNotice:
+		if a.geo != nil && a.geoUpdating.CompareAndSwap(false, true) {
+			go func() {
+				defer a.geoUpdating.Store(false)
+				ctx, cancel := context.WithTimeout(context.Background(), geoipUpdateTimeout)
+				defer cancel()
+				_, _ = a.geo.Update(ctx)
+			}()
+		}
 		return
 	}
 	rest, ok := strings.CutPrefix(payload, analyticsInvalidation)
@@ -153,6 +195,15 @@ func (s *Server) RunAnalytics(ctx context.Context) {
 	}
 	if err := s.analytics.flusher.Prepare(ctx); err != nil {
 		s.log.ErrorContext(ctx, "analytics partitions", slog.Any("error", err))
+	}
+	if g := s.analytics.geo; g != nil {
+		_ = g.Load()
+		if s.analytics.geoUpdating.CompareAndSwap(false, true) {
+			go func() {
+				defer s.analytics.geoUpdating.Store(false)
+				_, _ = s.UpdateGeoIP(context.WithoutCancel(ctx))
+			}()
+		}
 	}
 	s.analytics.flusher.Run(ctx)
 }
@@ -566,6 +617,12 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusAccepted)
 		return
 	}
+	agent := analytics.ParseAgent(r.UserAgent(), r.Header.Get("Sec-CH-UA-Platform"), r.Header.Get("Sec-CH-UA-Mobile"))
+	if agent.Bot || (r.Header.Get("Sec-Fetch-Site") == "" && r.Header.Get("Accept-Language") == "") {
+		drop(analytics.ReasonBot, len(keep))
+		w.WriteHeader(http.StatusAccepted)
+		return
+	}
 	addr, err := netip.ParseAddr(s.clientIP(r))
 	if err != nil {
 		drop(analytics.ReasonInvalid, len(keep))
@@ -607,9 +664,8 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ua := r.UserAgent() + "\x00" + r.Header.Get("Sec-CH-UA-Platform") + "\x00" + r.Header.Get("Sec-CH-UA-Mobile")
-	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
 	language := ""
-	if !children {
+	if prop.Audience != string(oas.AnalyticsAudienceChildren) {
 		language = analytics.Language(r.Header.Get("Accept-Language"))
 	}
 	var own string
@@ -626,6 +682,14 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		}
 		path := analytics.ApplyRules(cp.rules, pg.Path)
 		engagement := e.N == "engagement"
+		var refHost, refPath string
+		if !engagement {
+			refHost, refPath = analytics.ParseReferrer(e.R, pg.Host, own)
+			if refHost != "" && analytics.SpamReferrer(refHost) {
+				drop(analytics.ReasonBot, 1)
+				continue
+			}
+		}
 		v, ok, err := a.resolver.Resolve(ctx, prop.WorkspaceID, prop.ID, cp.loc, now, short, ua, engagement)
 		if err != nil {
 			s.log.ErrorContext(ctx, "analytics visit", slog.Any("error", err))
@@ -633,6 +697,13 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if !ok {
+			continue
+		}
+		if v.Bot {
+			if v.NewBot {
+				a.buffer.MarkBot(analytics.BotVisitor{WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Day: v.Day, Visitor: v.Visitor})
+			}
+			drop(analytics.ReasonBot, 1)
 			continue
 		}
 		if pg.Scrubbed {
@@ -646,21 +717,8 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			ev.Kind, ev.Interactive = analytics.KindEngagement, false
 			ev.EngagedMS = new(int32(min(max(e.MS, 0), maxEngagedMS)))
 			ev.Scroll = new(int16(min(max(e.SD, 0), 100)))
-		} else {
-			refHost, refPath := analytics.ParseReferrer(e.R, pg.Host, own)
-			source := pg.Acquisition.Source
-			if source == "" {
-				source = refHost
-			}
-			info := &analytics.VisitInfo{
-				Hostname: pg.Host, ReferrerHost: refHost, ReferrerPath: refPath, Acquisition: pg.Acquisition, Source: source,
-				Channel:  analytics.ClassifyChannel(refHost, pg.Acquisition, refHost != "" && analytics.DomainAllowed(prop.Domains, matchHost(refHost))),
-				Language: language, Platform: analytics.PlatformWeb,
-			}
-			if !children {
-				info.Screen = analytics.ScreenClass(e.W)
-			}
-			ev.Info = info
+		} else if v.NewVisit {
+			ev.Info = s.visitInfo(r, prop, short, agent, pg, refHost, refPath, e.W, language)
 		}
 		out = append(out, ev)
 	}
@@ -673,4 +731,26 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		a.buffer.Count(prop.WorkspaceID, prop.ID, day, analytics.ReasonScrubbed, int64(scrubbed))
 	}
 	w.WriteHeader(http.StatusAccepted)
+}
+
+// visitInfo describes a new visit: its source and channel, its location from the shortened address
+// (the country only for a children's property), its browser and device.
+func (s *Server) visitInfo(r *http.Request, prop store.AnalyticsProperty, short analytics.ShortIP, agent analytics.Agent, pg analytics.Page,
+	refHost, refPath string, width int, language string) *analytics.VisitInfo {
+	source, channel := analytics.Classify(refHost, refPath, pg.Acquisition, refHost != "" && analytics.DomainAllowed(prop.Domains, matchHost(refHost)))
+	info := &analytics.VisitInfo{
+		Hostname: pg.Host, ReferrerHost: refHost, ReferrerPath: refPath, Acquisition: pg.Acquisition, Source: analytics.Clean(source, 300),
+		Channel: channel, Language: language, Platform: analytics.PlatformWeb,
+		Device: agent.Device, Browser: agent.Browser, BrowserMajor: agent.BrowserMajor, OS: agent.OS, OSMajor: agent.OSMajor,
+	}
+	loc := s.analytics.geo.Lookup(short)
+	if loc.Country == "" {
+		loc = analytics.Location{Country: s.requestCountry(r)}
+	}
+	info.Country = loc.Country
+	if prop.Audience != string(oas.AnalyticsAudienceChildren) {
+		info.Region, info.City = loc.Region, loc.City
+		info.Screen = analytics.ScreenClass(width)
+	}
+	return info
 }

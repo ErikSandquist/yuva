@@ -1,0 +1,45 @@
+name: Analytics load
+
+on:
+  schedule:
+    - cron: "41 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  analytics-load:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: yuva
+          POSTGRES_PASSWORD: yuva
+          POSTGRES_DB: yuva_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U yuva -d yuva_test"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+          --shm-size 1g
+    env:
+      YUVA_TEST_DATABASE_URL: postgres://yuva:yuva@localhost:5432/yuva_test?sslmode=disable
+      YUVA_TEST_ANALYTICS_LOAD: 1M,10M
+      YUVA_TEST_ANALYTICS_REPORT: ${{ github.workspace }}/analytics-load.md
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: api/go.mod
+          cache-dependency-path: api/go.sum
+      - name: ingest at 5,000 events a second, then 90 days at 1M and 10M events a month; report flush and query times and peak memory
+        working-directory: api
+        run: go test ./internal/api/ -run '^TestAnalyticsLoad$' -count=1 -timeout 140m -v
+      - name: report
+        if: always()
+        run: test -f analytics-load.md && cat analytics-load.md >> "$GITHUB_STEP_SUMMARY" || true

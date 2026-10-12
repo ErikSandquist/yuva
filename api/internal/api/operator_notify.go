@@ -78,6 +78,7 @@ var broadcastNoticeTitles = map[string]string{
 	noticeBroadcastSuspended: "Workspace suspended from broadcasts",
 	noticeBroadcastPaused:    "Broadcast paused",
 	noticeAnalyticsLimit:     "Analytics monthly limit reached",
+	noticeAnalyticsDropped:   "Analytics events mostly dropped",
 }
 
 func oneLine(s string) string {
@@ -134,7 +135,7 @@ func (s *Server) SendOperatorDigest(ctx context.Context) error {
 			if n.Detail != nil {
 				it.Detail = oneLine(*n.Detail)
 			}
-			if n.Kind == noticeAnalyticsLimit {
+			if n.Kind == noticeAnalyticsLimit || n.Kind == noticeAnalyticsDropped {
 				analyticsNotices++
 			} else {
 				broadcasts++

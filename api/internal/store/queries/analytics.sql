@@ -93,3 +93,48 @@ UPDATE workspaces SET analytics_monthly_events = sqlc.narg(monthly_events) WHERE
 SELECT p.email, p.locale FROM members m JOIN people p ON p.id = m.person_id
 WHERE m.workspace_id = @workspace_id AND m.role = 'owner'
 ORDER BY m.created_at, m.id;
+
+-- name: ListAnalyticsWorkspaceIDs :many
+-- Maintenance finds the workspaces that have properties; everything after it is scoped by workspace.
+SELECT DISTINCT workspace_id FROM analytics_properties ORDER BY workspace_id;
+
+-- name: ListAnalyticsRollupTodo :many
+SELECT d.property_id, d.day, p.timezone FROM analytics_rollup_days d
+JOIN analytics_properties p ON p.workspace_id = d.workspace_id AND p.id = d.property_id
+WHERE d.workspace_id = @workspace_id AND (d.built_at IS NULL OR d.dirty) AND p.deleted_at IS NULL AND d.day >= @oldest
+ORDER BY d.property_id, d.day;
+
+-- name: DeleteExpiredAnalyticsSalts :execrows
+DELETE FROM analytics_salts WHERE workspace_id = @workspace_id AND expires_at <= @now;
+
+-- name: ListAnalyticsRetention :many
+SELECT id, retention_months, timezone FROM analytics_properties
+WHERE workspace_id = @workspace_id AND retention_months IS NOT NULL AND deleted_at IS NULL
+ORDER BY id;
+
+-- name: TrimAnalyticsDaily :execrows
+DELETE FROM analytics_daily WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_daily t
+    WHERE t.workspace_id = @workspace_id AND t.property_id = @property_id AND t.day < @before LIMIT 1000));
+
+-- name: TrimAnalyticsHourly :execrows
+DELETE FROM analytics_hourly WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_hourly t
+    WHERE t.workspace_id = @workspace_id AND t.property_id = @property_id AND t.day < @before LIMIT 1000));
+
+-- name: TrimAnalyticsRollupDays :execrows
+DELETE FROM analytics_rollup_days WHERE ctid = ANY(ARRAY(
+    SELECT t.ctid FROM analytics_rollup_days t
+    WHERE t.workspace_id = @workspace_id AND t.property_id = @property_id AND t.day < @before LIMIT 1000));
+
+-- name: DeleteOldAnalyticsIngestStats :execrows
+DELETE FROM analytics_ingest_stats WHERE workspace_id = @workspace_id AND day < @before;
+
+-- name: ListAnalyticsIngestStats :many
+SELECT day, reason, events FROM analytics_ingest_stats
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND day >= @from_day
+ORDER BY day, reason;
+
+-- name: CountPendingAnalyticsRollups :one
+SELECT count(*) FROM analytics_rollup_days
+WHERE workspace_id = @workspace_id AND property_id = @property_id AND (built_at IS NULL OR dirty);

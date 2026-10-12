@@ -7,8 +7,11 @@ import (
 	"uuid"
 
 	"github.com/riverqueue/river"
+	"github.com/riverqueue/river/rivertype"
 
 	"github.com/productdevbook/yuva/api/internal/analytics"
+	"github.com/productdevbook/yuva/api/internal/jobs"
+	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
 )
 
@@ -160,4 +163,265 @@ func (s *Server) purgeWorkspaceAnalytics(ctx context.Context, ws uuid.UUID, dead
 		}
 	}
 	return true, nil
+}
+
+const (
+	analyticsRollupTimeout = 5 * time.Minute
+	analyticsStatsDays     = 90
+	partitionsBehind       = 4
+	partitionsAhead        = 7
+	// A day's drops reach the operator digest when they are more than half of its events and at
+	// least this many, so a quiet day's few refusals do not.
+	analyticsDropNoticeMin = 100
+	noticeAnalyticsDropped = "analytics_dropped"
+	geoipUpdateTimeout     = 15 * time.Minute
+	analyticsGeoIPNotice   = analyticsInvalidation + "geoip"
+)
+
+var analyticsRollupStates = []rivertype.JobState{
+	rivertype.JobStateAvailable, rivertype.JobStatePending, rivertype.JobStateRunning, rivertype.JobStateScheduled, rivertype.JobStateRetryable,
+}
+
+// AnalyticsRollupArgs rolls up one local day of a property.
+type AnalyticsRollupArgs struct {
+	WorkspaceID uuid.UUID `json:"workspace_id"`
+	PropertyID  uuid.UUID `json:"property_id"`
+	Day         string    `json:"day"`
+}
+
+func (AnalyticsRollupArgs) Kind() string { return "analytics_rollup" }
+
+func (AnalyticsRollupArgs) InsertOpts() river.InsertOpts {
+	return river.InsertOpts{Queue: jobs.AnalyticsQueue, UniqueOpts: river.UniqueOpts{ByArgs: true, ByState: analyticsRollupStates}}
+}
+
+type analyticsRollupWorker struct {
+	river.WorkerDefaults[AnalyticsRollupArgs]
+	s *Server
+}
+
+func (w *analyticsRollupWorker) Timeout(*river.Job[AnalyticsRollupArgs]) time.Duration {
+	return analyticsRollupTimeout
+}
+
+func (w *analyticsRollupWorker) Work(ctx context.Context, job *river.Job[AnalyticsRollupArgs]) error {
+	day, err := time.Parse(time.DateOnly, job.Args.Day)
+	if err != nil {
+		return err
+	}
+	return w.s.RollupAnalyticsDay(ctx, job.Args.WorkspaceID, job.Args.PropertyID, day)
+}
+
+type analyticsPartitionsWorker struct {
+	river.WorkerDefaults[jobs.AnalyticsPartitionsArgs]
+	s *Server
+}
+
+func (w *analyticsPartitionsWorker) Work(ctx context.Context, _ *river.Job[jobs.AnalyticsPartitionsArgs]) error {
+	return w.s.MaintainAnalytics(ctx)
+}
+
+type analyticsRollupScanWorker struct {
+	river.WorkerDefaults[jobs.AnalyticsRollupScanArgs]
+	s *Server
+}
+
+func (w *analyticsRollupScanWorker) Work(ctx context.Context, _ *river.Job[jobs.AnalyticsRollupScanArgs]) error {
+	_, err := w.s.ScanAnalyticsRollups(ctx)
+	return err
+}
+
+type analyticsSaltsWorker struct {
+	river.WorkerDefaults[jobs.AnalyticsSaltsArgs]
+	s *Server
+}
+
+func (w *analyticsSaltsWorker) Work(ctx context.Context, _ *river.Job[jobs.AnalyticsSaltsArgs]) error {
+	_, err := w.s.DeleteExpiredAnalyticsSalts(ctx)
+	return err
+}
+
+type analyticsGeoIPWorker struct {
+	river.WorkerDefaults[jobs.AnalyticsGeoIPArgs]
+	s *Server
+}
+
+// Work asks every process to fetch the month's database; each downloads it only if its own
+// directory does not have it yet.
+func (w *analyticsGeoIPWorker) Work(ctx context.Context, _ *river.Job[jobs.AnalyticsGeoIPArgs]) error {
+	if w.s.analytics == nil || w.s.analytics.geo == nil {
+		return nil
+	}
+	return w.s.st.NotifySignal(ctx, store.NotifySignalParams{Channel: realtime.InvalidateChannel, Payload: analyticsGeoIPNotice})
+}
+
+func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
+	river.AddWorker(workers, &analyticsDeleteWorker{s: s})
+	river.AddWorker(workers, &analyticsRollupWorker{s: s})
+	river.AddWorker(workers, &analyticsPartitionsWorker{s: s})
+	river.AddWorker(workers, &analyticsRollupScanWorker{s: s})
+	river.AddWorker(workers, &analyticsSaltsWorker{s: s})
+	river.AddWorker(workers, &analyticsGeoIPWorker{s: s})
+}
+
+// rawFrom is the oldest day whose raw rows the partitions job keeps.
+func (s *Server) rawFrom() time.Time {
+	return analytics.LocalDay(s.now(), time.UTC).AddDate(0, 0, 1-s.analytics.settings.RawDays)
+}
+
+// MaintainAnalytics keeps raw partitions from four days back to a week ahead, drops those past the
+// raw window, and deletes rollups past each property's retention and ingest counts past 90 days.
+func (s *Server) MaintainAnalytics(ctx context.Context) error {
+	if s.analytics == nil {
+		return nil
+	}
+	today := analytics.LocalDay(s.now(), time.UTC)
+	if err := s.analytics.store.EnsurePartitions(ctx, today.AddDate(0, 0, -partitionsBehind), today.AddDate(0, 0, partitionsAhead)); err != nil {
+		return err
+	}
+	pg := &analytics.PGStore{Pool: s.st.Pool}
+	dropped, err := pg.DropPartitionsBefore(ctx, s.rawFrom().AddDate(0, 0, -1))
+	if err != nil {
+		return err
+	}
+	if len(dropped) > 0 {
+		s.log.InfoContext(ctx, "analytics partitions dropped", slog.Int("count", len(dropped)))
+	}
+	ids, err := s.st.ListAnalyticsWorkspaceIDs(ctx)
+	if err != nil {
+		return err
+	}
+	for _, ws := range ids {
+		props, err := s.st.ListAnalyticsRetention(ctx, ws)
+		if err != nil {
+			return err
+		}
+		for _, p := range props {
+			before := analytics.LocalDay(s.now(), propertyLocation(p.Timezone)).AddDate(0, -int(*p.RetentionMonths), 0)
+			arg := store.TrimAnalyticsDailyParams{WorkspaceID: ws, PropertyID: p.ID, Before: before}
+			for _, trim := range []func(context.Context, store.TrimAnalyticsDailyParams) (int64, error){
+				s.st.TrimAnalyticsDaily,
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsHourly(ctx, store.TrimAnalyticsHourlyParams(a))
+				},
+				func(ctx context.Context, a store.TrimAnalyticsDailyParams) (int64, error) {
+					return s.st.TrimAnalyticsRollupDays(ctx, store.TrimAnalyticsRollupDaysParams(a))
+				},
+			} {
+				for {
+					n, err := trim(ctx, arg)
+					if err != nil {
+						return err
+					}
+					if n < 1000 {
+						break
+					}
+				}
+			}
+		}
+		if _, err := s.st.DeleteOldAnalyticsIngestStats(ctx, store.DeleteOldAnalyticsIngestStatsParams{WorkspaceID: ws, Before: today.AddDate(0, 0, -analyticsStatsDays)}); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// ScanAnalyticsRollups queues a rollup for every day that ended more than the salt grace ago
+// without one, and for every dirty day; it returns how many it queued.
+func (s *Server) ScanAnalyticsRollups(ctx context.Context) (int, error) {
+	if s.analytics == nil {
+		return 0, nil
+	}
+	ids, err := s.st.ListAnalyticsWorkspaceIDs(ctx)
+	if err != nil {
+		return 0, err
+	}
+	now, queued := s.now(), 0
+	for _, ws := range ids {
+		todo, err := s.st.ListAnalyticsRollupTodo(ctx, store.ListAnalyticsRollupTodoParams{WorkspaceID: ws, Oldest: s.rawFrom()})
+		if err != nil {
+			return queued, err
+		}
+		var batch []river.InsertManyParams
+		for _, t := range todo {
+			if now.Before(analytics.DayEnd(t.Day, propertyLocation(t.Timezone)).Add(s.analytics.settings.SaltGrace)) {
+				continue
+			}
+			batch = append(batch, river.InsertManyParams{Args: AnalyticsRollupArgs{WorkspaceID: ws, PropertyID: t.PropertyID, Day: t.Day.Format(time.DateOnly)}})
+		}
+		if len(batch) > 0 {
+			if _, err := s.jobs.InsertMany(ctx, batch); err != nil {
+				return queued, err
+			}
+			queued += len(batch)
+		}
+	}
+	return queued, nil
+}
+
+// RollupAnalyticsDay builds a property's rollups of one local day. The first time a day is built,
+// a day whose events were mostly dropped goes into the operator digest.
+func (s *Server) RollupAnalyticsDay(ctx context.Context, ws, propertyID uuid.UUID, day time.Time) error {
+	if s.analytics == nil {
+		return nil
+	}
+	prop, err := s.st.GetAnalyticsProperty(ctx, store.GetAnalyticsPropertyParams{WorkspaceID: ws, ID: propertyID})
+	if store.IsNotFound(err) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	pg := &analytics.PGStore{Pool: s.st.Pool}
+	res, err := pg.RollupDay(ctx, ws, propertyID, day, prop.Timezone, s.analytics.settings.RollupTop)
+	if err != nil {
+		return err
+	}
+	if !res.First || len(s.operator) == 0 || res.Dropped < analyticsDropNoticeMin || res.Dropped <= res.Accepted {
+		return nil
+	}
+	w, err := s.st.GetWorkspace(ctx, ws)
+	if err != nil {
+		return err
+	}
+	return s.st.CreateOperatorNotice(ctx, store.CreateOperatorNoticeParams{
+		ID: uuid.New(), Kind: noticeAnalyticsDropped, WorkspaceName: &w.Name, CreatedAt: s.now(),
+		Detail: new(formatCount(res.Dropped) + " of " + formatCount(res.Dropped+res.Accepted) + " analytics events on " + day.Format(time.DateOnly) + " were dropped"),
+	})
+}
+
+// DeleteExpiredAnalyticsSalts deletes every salt whose day ended more than the grace ago; without
+// it a day's visitors can never be recomputed.
+func (s *Server) DeleteExpiredAnalyticsSalts(ctx context.Context) (int64, error) {
+	if s.analytics == nil {
+		return 0, nil
+	}
+	ids, err := s.st.ListAnalyticsWorkspaceIDs(ctx)
+	if err != nil {
+		return 0, err
+	}
+	var total int64
+	for _, ws := range ids {
+		n, err := s.st.DeleteExpiredAnalyticsSalts(ctx, store.DeleteExpiredAnalyticsSaltsParams{WorkspaceID: ws, Now: s.now()})
+		if err != nil {
+			return total, err
+		}
+		total += n
+	}
+	return total, nil
+}
+
+// UpdateGeoIP fetches the month's GeoIP database when this process does not have it yet, once at
+// a time.
+func (s *Server) UpdateGeoIP(ctx context.Context) (string, error) {
+	if s.analytics == nil || s.analytics.geo == nil {
+		return "", nil
+	}
+	ctx, cancel := context.WithTimeout(ctx, geoipUpdateTimeout)
+	defer cancel()
+	path, err := s.analytics.geo.Update(ctx)
+	if err != nil {
+		s.log.WarnContext(ctx, "analytics geoip", slog.Any("error", err))
+	}
+	return path, err
 }

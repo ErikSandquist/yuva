@@ -116,6 +116,15 @@ type Analytics struct {
 	MonthlyEvents           int64
 	PropertyEventsPerMinute int
 	PropertiesPerWorkspace  int
+	// RawDays is how long raw visits and events are kept; Workers how many analytics jobs run at
+	// once in this process; RollupTop how many values a dimension keeps per day.
+	RawDays   int
+	Workers   int
+	RollupTop int
+	// GeoIP is dbip (DB-IP Lite downloaded monthly into GeoIPDir), file (GeoIPFile) or off.
+	GeoIP     string
+	GeoIPDir  string
+	GeoIPFile string
 }
 
 type VAPID struct {
@@ -365,6 +374,27 @@ func (c *Config) loadAnalytics() error {
 	}
 	if a.PropertiesPerWorkspace, err = strconv.Atoi(env("YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE", "50")); err != nil || a.PropertiesPerWorkspace < 1 {
 		return errors.New("YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE must be a positive number of properties")
+	}
+	if a.RawDays, err = strconv.Atoi(env("YUVA_ANALYTICS_RAW_DAYS", "90")); err != nil || a.RawDays < 7 || a.RawDays > 400 {
+		return errors.New("YUVA_ANALYTICS_RAW_DAYS must be 7 to 400 days")
+	}
+	if a.Workers, err = strconv.Atoi(env("YUVA_ANALYTICS_WORKERS", "2")); err != nil || a.Workers < 0 {
+		return errors.New("YUVA_ANALYTICS_WORKERS must be a number of workers, 0 for none in this process")
+	}
+	if a.RollupTop, err = strconv.Atoi(env("YUVA_ANALYTICS_ROLLUP_TOP", "1000")); err != nil || a.RollupTop < 10 || a.RollupTop > 100000 {
+		return errors.New("YUVA_ANALYTICS_ROLLUP_TOP must be 10 to 100000 values")
+	}
+	a.GeoIP = strings.ToLower(env("YUVA_GEOIP", "dbip"))
+	a.GeoIPDir = env("YUVA_GEOIP_DIR", "data/geoip")
+	a.GeoIPFile = env("YUVA_GEOIP_FILE", "")
+	switch a.GeoIP {
+	case "dbip", "off":
+	case "file":
+		if a.GeoIPFile == "" {
+			return errors.New("YUVA_GEOIP=file needs YUVA_GEOIP_FILE, the path of an MMDB city database")
+		}
+	default:
+		return errors.New("YUVA_GEOIP must be dbip, file or off")
 	}
 	return nil
 }

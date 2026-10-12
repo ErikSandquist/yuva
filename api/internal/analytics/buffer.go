@@ -30,6 +30,7 @@ type Buffer struct {
 	max    int
 	events []Event
 	drops  map[countKey]int64
+	bots   []BotVisitor
 	full   chan struct{}
 }
 
@@ -72,6 +73,13 @@ func (b *Buffer) Count(workspaceID, propertyID uuid.UUID, day time.Time, reason 
 	b.drops[countKey{workspaceID, propertyID, day, reason}] += n
 }
 
+// MarkBot leaves a visitor's visits of the day out of the rollups.
+func (b *Buffer) MarkBot(v BotVisitor) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.bots = append(b.bots, v)
+}
+
 func (b *Buffer) Len() int {
 	b.mu.Lock()
 	defer b.mu.Unlock()
@@ -81,11 +89,11 @@ func (b *Buffer) Len() int {
 func (b *Buffer) take() Batch {
 	b.mu.Lock()
 	defer b.mu.Unlock()
-	out := Batch{Events: b.events}
+	out := Batch{Events: b.events, Bots: b.bots}
 	for k, n := range b.drops {
 		out.Drops = append(out.Drops, Count{WorkspaceID: k.workspace, PropertyID: k.property, Day: k.day, Reason: k.reason, N: n})
 	}
-	b.events, b.drops = nil, map[countKey]int64{}
+	b.events, b.drops, b.bots = nil, map[countKey]int64{}, nil
 	metrics.AnalyticsBufferEvents.Set(0)
 	return out
 }
@@ -104,6 +112,7 @@ func (b *Buffer) putBack(batch Batch) {
 	for _, c := range batch.Drops {
 		b.drops[countKey{c.WorkspaceID, c.PropertyID, c.Day, c.Reason}] += c.N
 	}
+	b.bots = append(batch.Bots, b.bots...)
 	metrics.AnalyticsBufferEvents.Set(float64(len(b.events)))
 }
 
@@ -148,7 +157,7 @@ func (f *Flusher) ensure(ctx context.Context, days []time.Time) error {
 // Flush writes what the buffer holds; on failure the events go back into the buffer.
 func (f *Flusher) Flush(ctx context.Context) error {
 	batch := f.Buffer.take()
-	if len(batch.Events) == 0 && len(batch.Drops) == 0 {
+	if len(batch.Events) == 0 && len(batch.Drops) == 0 && len(batch.Bots) == 0 {
 		return nil
 	}
 	start := time.Now()

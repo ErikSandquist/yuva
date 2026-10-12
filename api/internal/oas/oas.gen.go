@@ -59,6 +59,27 @@ func (e AnalyticsCollection) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsCompareWith.
+const (
+	AnalyticsComparePrevious AnalyticsCompareWith = "previous"
+	AnalyticsCompareRange    AnalyticsCompareWith = "range"
+	AnalyticsCompareYear     AnalyticsCompareWith = "year"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsCompareWith enum.
+func (e AnalyticsCompareWith) Valid() bool {
+	switch e {
+	case AnalyticsComparePrevious:
+		return true
+	case AnalyticsCompareRange:
+		return true
+	case AnalyticsCompareYear:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsConsentA.
 const (
 	N0 AnalyticsConsentA = 0
@@ -95,6 +116,102 @@ func (e AnalyticsConsentFeature) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsDimension.
+const (
+	AnalyticsByAppVersion     AnalyticsDimension = "app_version"
+	AnalyticsByBrowser        AnalyticsDimension = "browser"
+	AnalyticsByBrowserVersion AnalyticsDimension = "browser_version"
+	AnalyticsByChannel        AnalyticsDimension = "channel"
+	AnalyticsByCity           AnalyticsDimension = "city"
+	AnalyticsByCountry        AnalyticsDimension = "country"
+	AnalyticsByDay            AnalyticsDimension = "time:day"
+	AnalyticsByDevice         AnalyticsDimension = "device"
+	AnalyticsByEntryPage      AnalyticsDimension = "entry_page"
+	AnalyticsByExitPage       AnalyticsDimension = "exit_page"
+	AnalyticsByHostname       AnalyticsDimension = "hostname"
+	AnalyticsByHour           AnalyticsDimension = "time:hour"
+	AnalyticsByLanguage       AnalyticsDimension = "language"
+	AnalyticsByMonth          AnalyticsDimension = "time:month"
+	AnalyticsByOs             AnalyticsDimension = "os"
+	AnalyticsByOsVersion      AnalyticsDimension = "os_version"
+	AnalyticsByPage           AnalyticsDimension = "page"
+	AnalyticsByPlatform       AnalyticsDimension = "platform"
+	AnalyticsByReferrer       AnalyticsDimension = "referrer"
+	AnalyticsByRegion         AnalyticsDimension = "region"
+	AnalyticsByScreenSize     AnalyticsDimension = "screen_size"
+	AnalyticsBySource         AnalyticsDimension = "source"
+	AnalyticsByUtmCampaign    AnalyticsDimension = "utm_campaign"
+	AnalyticsByUtmContent     AnalyticsDimension = "utm_content"
+	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
+	AnalyticsByUtmSource      AnalyticsDimension = "utm_source"
+	AnalyticsByUtmTerm        AnalyticsDimension = "utm_term"
+	AnalyticsByWeek           AnalyticsDimension = "time:week"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsDimension enum.
+func (e AnalyticsDimension) Valid() bool {
+	switch e {
+	case AnalyticsByAppVersion:
+		return true
+	case AnalyticsByBrowser:
+		return true
+	case AnalyticsByBrowserVersion:
+		return true
+	case AnalyticsByChannel:
+		return true
+	case AnalyticsByCity:
+		return true
+	case AnalyticsByCountry:
+		return true
+	case AnalyticsByDay:
+		return true
+	case AnalyticsByDevice:
+		return true
+	case AnalyticsByEntryPage:
+		return true
+	case AnalyticsByExitPage:
+		return true
+	case AnalyticsByHostname:
+		return true
+	case AnalyticsByHour:
+		return true
+	case AnalyticsByLanguage:
+		return true
+	case AnalyticsByMonth:
+		return true
+	case AnalyticsByOs:
+		return true
+	case AnalyticsByOsVersion:
+		return true
+	case AnalyticsByPage:
+		return true
+	case AnalyticsByPlatform:
+		return true
+	case AnalyticsByReferrer:
+		return true
+	case AnalyticsByRegion:
+		return true
+	case AnalyticsByScreenSize:
+		return true
+	case AnalyticsBySource:
+		return true
+	case AnalyticsByUtmCampaign:
+		return true
+	case AnalyticsByUtmContent:
+		return true
+	case AnalyticsByUtmMedium:
+		return true
+	case AnalyticsByUtmSource:
+		return true
+	case AnalyticsByUtmTerm:
+		return true
+	case AnalyticsByWeek:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsEventN.
 const (
 	Engagement AnalyticsEventN = "engagement"
@@ -107,6 +224,195 @@ func (e AnalyticsEventN) Valid() bool {
 	case Engagement:
 		return true
 	case Pageview:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsFilterOp.
+const (
+	AnalyticsFilterContains    AnalyticsFilterOp = "contains"
+	AnalyticsFilterIs          AnalyticsFilterOp = "is"
+	AnalyticsFilterIsNot       AnalyticsFilterOp = "is_not"
+	AnalyticsFilterMatches     AnalyticsFilterOp = "matches"
+	AnalyticsFilterNotContains AnalyticsFilterOp = "not_contains"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsFilterOp enum.
+func (e AnalyticsFilterOp) Valid() bool {
+	switch e {
+	case AnalyticsFilterContains:
+		return true
+	case AnalyticsFilterIs:
+		return true
+	case AnalyticsFilterIsNot:
+		return true
+	case AnalyticsFilterMatches:
+		return true
+	case AnalyticsFilterNotContains:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsFilterDimension.
+const (
+	AnalyticsDimAppVersion     AnalyticsFilterDimension = "app_version"
+	AnalyticsDimBrowser        AnalyticsFilterDimension = "browser"
+	AnalyticsDimBrowserVersion AnalyticsFilterDimension = "browser_version"
+	AnalyticsDimChannel        AnalyticsFilterDimension = "channel"
+	AnalyticsDimCity           AnalyticsFilterDimension = "city"
+	AnalyticsDimCountry        AnalyticsFilterDimension = "country"
+	AnalyticsDimDevice         AnalyticsFilterDimension = "device"
+	AnalyticsDimEntryPage      AnalyticsFilterDimension = "entry_page"
+	AnalyticsDimExitPage       AnalyticsFilterDimension = "exit_page"
+	AnalyticsDimHostname       AnalyticsFilterDimension = "hostname"
+	AnalyticsDimLanguage       AnalyticsFilterDimension = "language"
+	AnalyticsDimOs             AnalyticsFilterDimension = "os"
+	AnalyticsDimOsVersion      AnalyticsFilterDimension = "os_version"
+	AnalyticsDimPage           AnalyticsFilterDimension = "page"
+	AnalyticsDimPlatform       AnalyticsFilterDimension = "platform"
+	AnalyticsDimReferrer       AnalyticsFilterDimension = "referrer"
+	AnalyticsDimRegion         AnalyticsFilterDimension = "region"
+	AnalyticsDimScreenSize     AnalyticsFilterDimension = "screen_size"
+	AnalyticsDimSource         AnalyticsFilterDimension = "source"
+	AnalyticsDimUtmCampaign    AnalyticsFilterDimension = "utm_campaign"
+	AnalyticsDimUtmContent     AnalyticsFilterDimension = "utm_content"
+	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
+	AnalyticsDimUtmSource      AnalyticsFilterDimension = "utm_source"
+	AnalyticsDimUtmTerm        AnalyticsFilterDimension = "utm_term"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsFilterDimension enum.
+func (e AnalyticsFilterDimension) Valid() bool {
+	switch e {
+	case AnalyticsDimAppVersion:
+		return true
+	case AnalyticsDimBrowser:
+		return true
+	case AnalyticsDimBrowserVersion:
+		return true
+	case AnalyticsDimChannel:
+		return true
+	case AnalyticsDimCity:
+		return true
+	case AnalyticsDimCountry:
+		return true
+	case AnalyticsDimDevice:
+		return true
+	case AnalyticsDimEntryPage:
+		return true
+	case AnalyticsDimExitPage:
+		return true
+	case AnalyticsDimHostname:
+		return true
+	case AnalyticsDimLanguage:
+		return true
+	case AnalyticsDimOs:
+		return true
+	case AnalyticsDimOsVersion:
+		return true
+	case AnalyticsDimPage:
+		return true
+	case AnalyticsDimPlatform:
+		return true
+	case AnalyticsDimReferrer:
+		return true
+	case AnalyticsDimRegion:
+		return true
+	case AnalyticsDimScreenSize:
+		return true
+	case AnalyticsDimSource:
+		return true
+	case AnalyticsDimUtmCampaign:
+		return true
+	case AnalyticsDimUtmContent:
+		return true
+	case AnalyticsDimUtmMedium:
+		return true
+	case AnalyticsDimUtmSource:
+		return true
+	case AnalyticsDimUtmTerm:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsGeoIPSource.
+const (
+	AnalyticsGeoIPDBIP AnalyticsGeoIPSource = "dbip"
+	AnalyticsGeoIPFile AnalyticsGeoIPSource = "file"
+	AnalyticsGeoIPOff  AnalyticsGeoIPSource = "off"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsGeoIPSource enum.
+func (e AnalyticsGeoIPSource) Valid() bool {
+	switch e {
+	case AnalyticsGeoIPDBIP:
+		return true
+	case AnalyticsGeoIPFile:
+		return true
+	case AnalyticsGeoIPOff:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsMetric.
+const (
+	AnalyticsMetricBounceRate    AnalyticsMetric = "bounce_rate"
+	AnalyticsMetricEvents        AnalyticsMetric = "events"
+	AnalyticsMetricPageviews     AnalyticsMetric = "pageviews"
+	AnalyticsMetricScrollDepth   AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricTimeOnPage    AnalyticsMetric = "time_on_page"
+	AnalyticsMetricViewsPerVisit AnalyticsMetric = "views_per_visit"
+	AnalyticsMetricVisitDuration AnalyticsMetric = "visit_duration"
+	AnalyticsMetricVisitors      AnalyticsMetric = "visitors"
+	AnalyticsMetricVisits        AnalyticsMetric = "visits"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsMetric enum.
+func (e AnalyticsMetric) Valid() bool {
+	switch e {
+	case AnalyticsMetricBounceRate:
+		return true
+	case AnalyticsMetricEvents:
+		return true
+	case AnalyticsMetricPageviews:
+		return true
+	case AnalyticsMetricScrollDepth:
+		return true
+	case AnalyticsMetricTimeOnPage:
+		return true
+	case AnalyticsMetricViewsPerVisit:
+		return true
+	case AnalyticsMetricVisitDuration:
+		return true
+	case AnalyticsMetricVisitors:
+		return true
+	case AnalyticsMetricVisits:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsOrderDir.
+const (
+	AnalyticsAsc  AnalyticsOrderDir = "asc"
+	AnalyticsDesc AnalyticsOrderDir = "desc"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsOrderDir enum.
+func (e AnalyticsOrderDir) Valid() bool {
+	switch e {
+	case AnalyticsAsc:
+		return true
+	case AnalyticsDesc:
 		return true
 	default:
 		return false
@@ -128,6 +434,72 @@ func (e AnalyticsPlatform) Valid() bool {
 	case AnalyticsPlatformIos:
 		return true
 	case AnalyticsPlatformWeb:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsRangePeriod.
+const (
+	AnalyticsLast12Months AnalyticsRangePeriod = "12mo"
+	AnalyticsLast28Days   AnalyticsRangePeriod = "28d"
+	AnalyticsLast30Days   AnalyticsRangePeriod = "30d"
+	AnalyticsLast6Months  AnalyticsRangePeriod = "6mo"
+	AnalyticsLast7Days    AnalyticsRangePeriod = "7d"
+	AnalyticsLast90Days   AnalyticsRangePeriod = "90d"
+	AnalyticsLastMonth    AnalyticsRangePeriod = "last_month"
+	AnalyticsThisMonth    AnalyticsRangePeriod = "month"
+	AnalyticsThisYear     AnalyticsRangePeriod = "year"
+	AnalyticsToday        AnalyticsRangePeriod = "today"
+	AnalyticsYesterday    AnalyticsRangePeriod = "yesterday"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRangePeriod enum.
+func (e AnalyticsRangePeriod) Valid() bool {
+	switch e {
+	case AnalyticsLast12Months:
+		return true
+	case AnalyticsLast28Days:
+		return true
+	case AnalyticsLast30Days:
+		return true
+	case AnalyticsLast6Months:
+		return true
+	case AnalyticsLast7Days:
+		return true
+	case AnalyticsLast90Days:
+		return true
+	case AnalyticsLastMonth:
+		return true
+	case AnalyticsThisMonth:
+		return true
+	case AnalyticsThisYear:
+		return true
+	case AnalyticsToday:
+		return true
+	case AnalyticsYesterday:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsResultMetaServedFrom.
+const (
+	AnalyticsServedMixed   AnalyticsResultMetaServedFrom = "mixed"
+	AnalyticsServedRaw     AnalyticsResultMetaServedFrom = "raw"
+	AnalyticsServedRollups AnalyticsResultMetaServedFrom = "rollups"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsResultMetaServedFrom enum.
+func (e AnalyticsResultMetaServedFrom) Valid() bool {
+	switch e {
+	case AnalyticsServedMixed:
+		return true
+	case AnalyticsServedRaw:
+		return true
+	case AnalyticsServedRollups:
 		return true
 	default:
 		return false
@@ -3704,6 +4076,24 @@ func (e ListClientMessagesParamsOrder) Valid() bool {
 	}
 }
 
+// Defines values for QueryAnalyticsParamsFormat.
+const (
+	AnalyticsFormatCSV  QueryAnalyticsParamsFormat = "csv"
+	AnalyticsFormatJSON QueryAnalyticsParamsFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the QueryAnalyticsParamsFormat enum.
+func (e QueryAnalyticsParamsFormat) Valid() bool {
+	switch e {
+	case AnalyticsFormatCSV:
+		return true
+	case AnalyticsFormatJSON:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -3834,6 +4224,29 @@ type AnalyticsBatch struct {
 // script sends after `yuva.consent({analytics: true})`.
 type AnalyticsCollection string
 
+// AnalyticsCompare `previous` is the range of the same length just before, `year` the same days a year
+// earlier, `range` the days `from` to `to`.
+type AnalyticsCompare struct {
+	From *openapi_types.Date  `json:"from,omitempty"`
+	To   *openapi_types.Date  `json:"to,omitempty"`
+	With AnalyticsCompareWith `json:"with"`
+}
+
+// AnalyticsCompareWith defines model for AnalyticsCompare.With.
+type AnalyticsCompareWith string
+
+// AnalyticsComparison defines model for AnalyticsComparison.
+type AnalyticsComparison struct {
+	From openapi_types.Date `json:"from"`
+
+	// Rows The comparison range's rows with the same dimension values as `rows` (time buckets by position).
+	Rows []AnalyticsRow     `json:"rows"`
+	To   openapi_types.Date `json:"to"`
+
+	// Totals The metrics the query asked for.
+	Totals AnalyticsMetrics `json:"totals"`
+}
+
 // AnalyticsConsent defines model for AnalyticsConsent.
 type AnalyticsConsent struct {
 	// A `1` when the visitor agreed to analytics.
@@ -3854,12 +4267,42 @@ type AnalyticsDataDeletion struct {
 	To   *openapi_types.Date `json:"to,omitempty"`
 }
 
+// AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
+// of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
+// `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
+// values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
+// range is present.
+type AnalyticsDimension string
+
 // AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
 // `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
 // `localhost`, `127.0.0.1` and `[::1]` count only when listed.
 //
 // Examples: www.example.com, *.example.com
 type AnalyticsDomain = string
+
+// AnalyticsDropCounts defines model for AnalyticsDropCounts.
+type AnalyticsDropCounts struct {
+	// Bot Crawlers, headless browsers, scripts without browser headers, referrer spam and visitors over the day's volume limits.
+	Bot int64 `json:"bot"`
+
+	// Buffer The server's buffer was full.
+	Buffer int64 `json:"buffer"`
+
+	// Excluded From an excluded address or path.
+	Excluded int64 `json:"excluded"`
+	Invalid  int64 `json:"invalid"`
+	Late     int64 `json:"late"`
+
+	// Origin From an origin or page host that is not one of the property's domains.
+	Origin int64 `json:"origin"`
+
+	// OverLimit Over the workspace's monthly cap.
+	OverLimit int64 `json:"over_limit"`
+
+	// Rate Over the per-address or per-property rate limit.
+	Rate int64 `json:"rate"`
+}
 
 // AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
 // older servers.
@@ -3903,6 +4346,129 @@ type AnalyticsEventBatch struct {
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
 type AnalyticsExcludedAddress = string
+
+// AnalyticsFilter `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
+// does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
+// them, elsewhere `*` is any text. Several values are alternatives. A `page` filter keeps the
+// visits that viewed a matching page and, in a page breakdown, only matching pages.
+type AnalyticsFilter struct {
+	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+	// code. Unknown values are empty strings.
+	Dimension AnalyticsFilterDimension `json:"dimension"`
+	Op        AnalyticsFilterOp        `json:"op"`
+	Values    []string                 `json:"values"`
+}
+
+// AnalyticsFilterOp defines model for AnalyticsFilter.Op.
+type AnalyticsFilterOp string
+
+// AnalyticsFilterDimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+// code. Unknown values are empty strings.
+type AnalyticsFilterDimension string
+
+// AnalyticsGeoIP defines model for AnalyticsGeoIP.
+type AnalyticsGeoIP struct {
+	// Attribution The credit the database's license asks for, such as "IP Geolocation by DB-IP".
+	Attribution    *string `json:"attribution,omitempty"`
+	AttributionUrl *string `json:"attribution_url,omitempty"`
+
+	// BuiltAt When the database in use was built; absent when none is loaded on the process that answered.
+	BuiltAt *time.Time `json:"built_at,omitempty"`
+
+	// Error Why no database is loaded, or why the last update failed.
+	Error *string `json:"error,omitempty"`
+
+	// Source `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
+	Source AnalyticsGeoIPSource `json:"source"`
+}
+
+// AnalyticsGeoIPSource `dbip` (DB-IP Lite, downloaded monthly), `file` (the operator's MMDB file) or `off` (country from the CDN only, if any).
+type AnalyticsGeoIPSource string
+
+// AnalyticsHealth defines model for AnalyticsHealth.
+type AnalyticsHealth struct {
+	// Days The asked days, newest first, every day present.
+	Days         []AnalyticsHealthDay `json:"days"`
+	FirstEventAt *time.Time           `json:"first_event_at,omitempty"`
+	Geoip        AnalyticsGeoIP       `json:"geoip"`
+	LastEventAt  *time.Time           `json:"last_event_at,omitempty"`
+
+	// PendingRollupDays Days with raw rows that are not rolled up yet or changed since.
+	PendingRollupDays int64              `json:"pending_rollup_days"`
+	RawWindowFrom     openapi_types.Date `json:"raw_window_from"`
+
+	// Totals The asked days added up.
+	Totals AnalyticsIngestCounts `json:"totals"`
+}
+
+// AnalyticsHealthDay defines model for AnalyticsHealthDay.
+type AnalyticsHealthDay struct {
+	Accepted int64               `json:"accepted"`
+	Day      openapi_types.Date  `json:"day"`
+	Dropped  AnalyticsDropCounts `json:"dropped"`
+
+	// Scrubbed Accepted events that had an e-mail-shaped part removed.
+	Scrubbed int64 `json:"scrubbed"`
+}
+
+// AnalyticsIngestCounts The asked days added up.
+type AnalyticsIngestCounts struct {
+	Accepted int64               `json:"accepted"`
+	Dropped  AnalyticsDropCounts `json:"dropped"`
+	Scrubbed int64               `json:"scrubbed"`
+}
+
+// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+// page view that reported it), `events` (custom events).
+type AnalyticsMetric string
+
+// AnalyticsMetrics The metrics the query asked for.
+type AnalyticsMetrics struct {
+	BounceRate    *float64 `json:"bounce_rate,omitempty"`
+	Events        *float64 `json:"events,omitempty"`
+	Pageviews     *float64 `json:"pageviews,omitempty"`
+	ScrollDepth   *float64 `json:"scroll_depth,omitempty"`
+	TimeOnPage    *float64 `json:"time_on_page,omitempty"`
+	ViewsPerVisit *float64 `json:"views_per_visit,omitempty"`
+	VisitDuration *float64 `json:"visit_duration,omitempty"`
+	Visitors      *float64 `json:"visitors,omitempty"`
+	Visits        *float64 `json:"visits,omitempty"`
+}
+
+// AnalyticsMinute defines model for AnalyticsMinute.
+type AnalyticsMinute struct {
+	At        time.Time `json:"at"`
+	Pageviews int64     `json:"pageviews"`
+	Visitors  int64     `json:"visitors"`
+}
+
+// AnalyticsOrder defines model for AnalyticsOrder.
+type AnalyticsOrder struct {
+	Dir *AnalyticsOrderDir `json:"dir,omitempty"`
+
+	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+	// page view that reported it), `events` (custom events).
+	Metric AnalyticsMetric `json:"metric"`
+}
+
+// AnalyticsOrderDir defines model for AnalyticsOrder.Dir.
+type AnalyticsOrderDir string
 
 // AnalyticsPathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
 //
@@ -4042,6 +4608,139 @@ type AnalyticsPropertyUpdate struct {
 	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
 	Timezone        *string                  `json:"timezone,omitempty"`
 	TrackedProps    *[]AnalyticsTrackedProp  `json:"tracked_props,omitempty"`
+}
+
+// AnalyticsQuery defines model for AnalyticsQuery.
+type AnalyticsQuery struct {
+	// Compare `previous` is the range of the same length just before, `year` the same days a year
+	// earlier, `range` the days `from` to `to`.
+	Compare *AnalyticsCompare `json:"compare,omitempty"`
+
+	// Cursor `next_cursor` of the previous page.
+	Cursor     *string               `json:"cursor,omitempty"`
+	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
+	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
+
+	// Limit Rows per page; time series are never cut.
+	Limit   *int              `json:"limit,omitempty"`
+	Metrics []AnalyticsMetric `json:"metrics"`
+
+	// OrderBy Time series come in time order; breakdowns by `visitors`, most first, unless this says otherwise.
+	OrderBy *[]AnalyticsOrder `json:"order_by,omitempty"`
+
+	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+	// `year` are the current calendar month and year to date; `last_month` the one before), or
+	// `from` and `to` (inclusive, at most 400 days apart).
+	Range AnalyticsRange `json:"range"`
+}
+
+// AnalyticsRange Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+// `year` are the current calendar month and year to date; `last_month` the one before), or
+// `from` and `to` (inclusive, at most 400 days apart).
+type AnalyticsRange struct {
+	From   *openapi_types.Date   `json:"from,omitempty"`
+	Period *AnalyticsRangePeriod `json:"period,omitempty"`
+	To     *openapi_types.Date   `json:"to,omitempty"`
+}
+
+// AnalyticsRangePeriod defines model for AnalyticsRange.Period.
+type AnalyticsRangePeriod string
+
+// AnalyticsRangeProblem defines model for AnalyticsRangeProblem.
+type AnalyticsRangeProblem struct {
+	// Code A stable, machine-readable error code.
+	//
+	// Examples: not_found
+	Code   string  `json:"code"`
+	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows; `YUVA_MIGRATION_UPLOAD_MAX_BYTES`: the export file is larger than the server takes.
+	Limit         *HostedLimit        `json:"limit,omitempty"`
+	RawWindowFrom *openapi_types.Date `json:"raw_window_from,omitempty"`
+
+	// Scope `insufficient_scope` only: the scope the API key lacks.
+	//
+	// Examples: messages:write
+	Scope  *string `json:"scope,omitempty"`
+	Status int32   `json:"status"`
+	Title  string  `json:"title"`
+
+	// Type A URI that identifies the problem type.
+	Type string `json:"type"`
+}
+
+// AnalyticsRealtime defines model for AnalyticsRealtime.
+type AnalyticsRealtime struct {
+	Countries []AnalyticsTopValue `json:"countries"`
+
+	// Minutes The last 30 minutes, oldest first, every minute present.
+	Minutes []AnalyticsMinute `json:"minutes"`
+
+	// Pages The ten paths with the most visitors.
+	Pages     []AnalyticsTopValue `json:"pages"`
+	Pageviews int64               `json:"pageviews"`
+
+	// Sources The ten sources with the most visitors (empty is direct).
+	Sources []AnalyticsTopValue `json:"sources"`
+
+	// Visitors Distinct visitors with an event in the last 30 minutes.
+	Visitors int64 `json:"visitors"`
+}
+
+// AnalyticsResult defines model for AnalyticsResult.
+type AnalyticsResult struct {
+	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
+	Meta       AnalyticsResultMeta  `json:"meta"`
+
+	// NextCursor Present when there are more rows.
+	NextCursor *string `json:"next_cursor,omitempty"`
+
+	// Rows Empty when the query has no dimensions.
+	Rows []AnalyticsRow `json:"rows"`
+
+	// Totals The metrics the query asked for.
+	Totals AnalyticsMetrics `json:"totals"`
+}
+
+// AnalyticsResultMeta defines model for AnalyticsResultMeta.
+type AnalyticsResultMeta struct {
+	From openapi_types.Date `json:"from"`
+
+	// RawWindowFrom The first day raw rows are kept for, which filters and breakdowns the rollups cannot answer need.
+	RawWindowFrom openapi_types.Date            `json:"raw_window_from"`
+	ServedFrom    AnalyticsResultMetaServedFrom `json:"served_from"`
+	Timezone      string                        `json:"timezone"`
+	To            openapi_types.Date            `json:"to"`
+}
+
+// AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
+type AnalyticsResultMetaServedFrom string
+
+// AnalyticsRow defines model for AnalyticsRow.
+type AnalyticsRow struct {
+	// Country With a `region` or `city` dimension, the place's country.
+	Country *string `json:"country,omitempty"`
+
+	// Dimensions One value per dimension of the query, in its order.
+	Dimensions []string `json:"dimensions"`
+
+	// Metrics The metrics the query asked for.
+	Metrics AnalyticsMetrics `json:"metrics"`
+
+	// Region With a `city` dimension, the city's region.
+	Region *string `json:"region,omitempty"`
+}
+
+// AnalyticsTopValue defines model for AnalyticsTopValue.
+type AnalyticsTopValue struct {
+	Value    string `json:"value"`
+	Visitors int64  `json:"visitors"`
 }
 
 // AnalyticsTrackedProp defines model for AnalyticsTrackedProp.
@@ -11720,6 +12419,33 @@ type DeleteAnalyticsDataParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetAnalyticsHealthParams defines parameters for GetAnalyticsHealth.
+type GetAnalyticsHealthParams struct {
+	// Days How many days back, today included.
+	Days *int `form:"days,omitempty" json:"days,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryAnalyticsParams defines parameters for QueryAnalytics.
+type QueryAnalyticsParams struct {
+	// Format `json` (the default) or `csv`.
+	Format *QueryAnalyticsParamsFormat `form:"format,omitempty" json:"format,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// QueryAnalyticsParamsFormat defines parameters for QueryAnalytics.
+type QueryAnalyticsParamsFormat string
+
+// GetAnalyticsRealtimeParams defines parameters for GetAnalyticsRealtime.
+type GetAnalyticsRealtimeParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // RotateAnalyticsKeyParams defines parameters for RotateAnalyticsKey.
 type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -13701,6 +14427,9 @@ type UpdateAnalyticsPropertyJSONRequestBody = AnalyticsPropertyUpdate
 
 // DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
 type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
+
+// QueryAnalyticsJSONRequestBody defines body for QueryAnalytics for application/json ContentType.
+type QueryAnalyticsJSONRequestBody = AnalyticsQuery
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -16933,6 +17662,15 @@ type ServerInterface interface {
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsDataParams)
+	// GetAnalyticsHealth How a property's collection is doing
+	// (GET /v1/analytics/properties/{propertyId}/health)
+	GetAnalyticsHealth(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsHealthParams)
+	// QueryAnalytics Query a property's numbers
+	// (POST /v1/analytics/properties/{propertyId}/query)
+	QueryAnalytics(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params QueryAnalyticsParams)
+	// GetAnalyticsRealtime The last 30 minutes
+	// (GET /v1/analytics/properties/{propertyId}/realtime)
+	GetAnalyticsRealtime(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRealtimeParams)
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams)
@@ -19270,6 +20008,182 @@ func (siw *ServerInterfaceWrapper) DeleteAnalyticsData(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.DeleteAnalyticsData(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetAnalyticsHealth operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsHealth(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsHealthParams
+
+	// ------------- Optional query parameter "days" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "days", r.URL.Query(), &params.Days, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "days"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "days", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsHealth(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QueryAnalytics operation middleware
+func (siw *ServerInterfaceWrapper) QueryAnalytics(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params QueryAnalyticsParams
+
+	// ------------- Optional query parameter "format" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "format", r.URL.Query(), &params.Format, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "format"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "format", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QueryAnalytics(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetAnalyticsRealtime operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsRealtime(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsRealtimeParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsRealtime(w, r, propertyId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -32028,6 +32942,9 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}", wrapper.UpdateAnalyticsProperty)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/rotate-key", wrapper.RotateAnalyticsKey)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/delete-data", wrapper.DeleteAnalyticsData)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/query", wrapper.QueryAnalytics)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/realtime", wrapper.GetAnalyticsRealtime)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -37286,6 +38203,312 @@ func (response DeleteAnalyticsData404ApplicationProblemPlusJSONResponse) VisitDe
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsHealthRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     GetAnalyticsHealthParams
+}
+
+type GetAnalyticsHealthResponseObject interface {
+	VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsHealth200JSONResponse AnalyticsHealth
+
+func (response GetAnalyticsHealth200JSONResponse) VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsHealth400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsHealth400ApplicationProblemPlusJSONResponse) VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsHealth401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsHealth401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsHealth403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsHealth403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsHealth404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsHealth404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsHealthResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalyticsRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     QueryAnalyticsParams
+	Body       *QueryAnalyticsJSONRequestBody
+}
+
+type QueryAnalyticsResponseObject interface {
+	VisitQueryAnalyticsResponse(w http.ResponseWriter) error
+}
+
+type QueryAnalytics200ResponseHeaders struct {
+	ContentDisposition *string
+}
+
+type QueryAnalytics200JSONResponse struct {
+	Body    AnalyticsResult
+	Headers QueryAnalytics200ResponseHeaders
+}
+
+func (response QueryAnalytics200JSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response.Body); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics200TextcsvResponse struct {
+	Body          io.Reader
+	Headers       QueryAnalytics200ResponseHeaders
+	ContentLength int64
+}
+
+func (response QueryAnalytics200TextcsvResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/csv")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type QueryAnalytics400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response QueryAnalytics400ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics401ApplicationProblemPlusJSONResponse Problem
+
+func (response QueryAnalytics401ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics403ApplicationProblemPlusJSONResponse Problem
+
+func (response QueryAnalytics403ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics404ApplicationProblemPlusJSONResponse Problem
+
+func (response QueryAnalytics404ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics422ApplicationProblemPlusJSONResponse AnalyticsRangeProblem
+
+func (response QueryAnalytics422ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QueryAnalytics429ApplicationProblemPlusJSONResponse Problem
+
+func (response QueryAnalytics429ApplicationProblemPlusJSONResponse) VisitQueryAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRealtimeRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     GetAnalyticsRealtimeParams
+}
+
+type GetAnalyticsRealtimeResponseObject interface {
+	VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsRealtime200JSONResponse AnalyticsRealtime
+
+func (response GetAnalyticsRealtime200JSONResponse) VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRealtime401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsRealtime401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRealtime403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRealtime403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRealtime404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRealtime404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRealtime429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRealtime429ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -54037,6 +55260,15 @@ type StrictServerInterface interface {
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(ctx context.Context, request DeleteAnalyticsDataRequestObject) (DeleteAnalyticsDataResponseObject, error)
+	// GetAnalyticsHealth How a property's collection is doing
+	// (GET /v1/analytics/properties/{propertyId}/health)
+	GetAnalyticsHealth(ctx context.Context, request GetAnalyticsHealthRequestObject) (GetAnalyticsHealthResponseObject, error)
+	// QueryAnalytics Query a property's numbers
+	// (POST /v1/analytics/properties/{propertyId}/query)
+	QueryAnalytics(ctx context.Context, request QueryAnalyticsRequestObject) (QueryAnalyticsResponseObject, error)
+	// GetAnalyticsRealtime The last 30 minutes
+	// (GET /v1/analytics/properties/{propertyId}/realtime)
+	GetAnalyticsRealtime(ctx context.Context, request GetAnalyticsRealtimeRequestObject) (GetAnalyticsRealtimeResponseObject, error)
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(ctx context.Context, request RotateAnalyticsKeyRequestObject) (RotateAnalyticsKeyResponseObject, error)
@@ -56203,6 +57435,94 @@ func (sh *strictHandler) DeleteAnalyticsData(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(DeleteAnalyticsDataResponseObject); ok {
 		if err := validResponse.VisitDeleteAnalyticsDataResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetAnalyticsHealth operation middleware
+func (sh *strictHandler) GetAnalyticsHealth(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsHealthParams) {
+	var request GetAnalyticsHealthRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsHealth(ctx, request.(GetAnalyticsHealthRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsHealth")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsHealthResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsHealthResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// QueryAnalytics operation middleware
+func (sh *strictHandler) QueryAnalytics(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params QueryAnalyticsParams) {
+	var request QueryAnalyticsRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body QueryAnalyticsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.QueryAnalytics(ctx, request.(QueryAnalyticsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "QueryAnalytics")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(QueryAnalyticsResponseObject); ok {
+		if err := validResponse.VisitQueryAnalyticsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetAnalyticsRealtime operation middleware
+func (sh *strictHandler) GetAnalyticsRealtime(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRealtimeParams) {
+	var request GetAnalyticsRealtimeRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsRealtime(ctx, request.(GetAnalyticsRealtimeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsRealtime")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsRealtimeResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsRealtimeResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

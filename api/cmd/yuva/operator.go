@@ -11,8 +11,10 @@ import (
 	"strconv"
 	"strings"
 	"text/tabwriter"
+	"time"
 	"uuid"
 
+	"github.com/productdevbook/yuva/api/internal/analytics"
 	"github.com/productdevbook/yuva/api/internal/api"
 	"github.com/productdevbook/yuva/api/internal/config"
 	"github.com/productdevbook/yuva/api/internal/mail"
@@ -34,7 +36,8 @@ const (
 		"       yuva workspace broadcasts show --workspace <id|name>\n" +
 		"       yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)"
 	analyticsUsage = "usage: yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]\n" +
-		"       yuva analytics property list --workspace <id|name>"
+		"       yuva analytics property list --workspace <id|name>\n" +
+		"       yuva analytics geoip-update"
 	personUsage = "usage: yuva person delete --email <address> --yes"
 )
 
@@ -595,4 +598,28 @@ func analyticsCommand(ctx context.Context, st *store.Store, srv *api.Server, arg
 	default:
 		return errors.New(analyticsUsage)
 	}
+}
+
+// geoipUpdate downloads this month's DB-IP Lite database into YUVA_GEOIP_DIR unless it is there,
+// or checks the operator's file with YUVA_GEOIP=file.
+func geoipUpdate(ctx context.Context, cfg config.Config, args []string, stdout io.Writer) error {
+	if len(args) != 0 {
+		return errors.New(analyticsUsage)
+	}
+	a := cfg.Analytics
+	if a.GeoIP == analytics.GeoOff {
+		return errors.New("YUVA_GEOIP is off; set it to dbip (the default) or file")
+	}
+	g := &analytics.GeoIP{Mode: a.GeoIP, Dir: a.GeoIPDir, File: a.GeoIPFile}
+	defer g.Close()
+	path, err := g.Update(ctx)
+	if err != nil {
+		return err
+	}
+	info := g.Info()
+	_, err = fmt.Fprintf(stdout, "%s\tbuilt %s\n", path, info.BuiltAt.Format(time.DateOnly))
+	if err == nil && a.GeoIP == analytics.GeoDBIP {
+		_, err = fmt.Fprintf(stdout, "%s (%s), CC BY 4.0\n", analytics.DBIPAttribution, analytics.DBIPAttributionURL)
+	}
+	return err
 }

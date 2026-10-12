@@ -206,6 +206,9 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 		if err := upsertVisits(ctx, tx, visits); err != nil {
 			return err
 		}
+		if err := markBots(ctx, tx, b.Bots); err != nil {
+			return err
+		}
 		if err := addCounts(ctx, tx, accepted, drops); err != nil {
 			return err
 		}
@@ -312,6 +315,26 @@ WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.da
 	return nil
 }
 
+func markBots(ctx context.Context, tx pgx.Tx, bots []BotVisitor) error {
+	if len(bots) == 0 {
+		return nil
+	}
+	n := len(bots)
+	ws, props, days, visitors := make([]uuid.UUID, n), make([]uuid.UUID, n), make([]time.Time, n), make([]int64, n)
+	for i, b := range bots {
+		ws[i], props[i], days[i], visitors[i] = b.WorkspaceID, b.PropertyID, b.Day, b.Visitor
+	}
+	_, err := tx.Exec(ctx, `
+UPDATE analytics_visits v SET bot = true
+FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[]) AS u(workspace_id, property_id, day, visitor)
+WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visitor = u.visitor AND NOT v.bot`,
+		ws, props, days, visitors)
+	if err != nil {
+		return fmt.Errorf("mark bots: %w", err)
+	}
+	return nil
+}
+
 func addCounts(ctx context.Context, tx pgx.Tx, accepted map[dayKey]int64, drops []Count) error {
 	counts := slices.Clone(drops)
 	for k, n := range accepted {
@@ -406,16 +429,15 @@ func (s *PGStore) Salt(ctx context.Context, workspaceID, propertyID uuid.UUID, d
 	return salt, exp, err
 }
 
-func (s *PGStore) LatestVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64) (int64, time.Time, bool, error) {
-	var visit int64
-	var ended time.Time
-	err := s.Pool.QueryRow(ctx, `SELECT visit, ended_at FROM analytics_visits
+func (s *PGStore) LatestVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64) (LatestVisit, bool, error) {
+	var out LatestVisit
+	err := s.Pool.QueryRow(ctx, `SELECT visit, ended_at, bot FROM analytics_visits
 		WHERE workspace_id = $1 AND property_id = $2 AND day = $3 AND visitor = $4 ORDER BY ended_at DESC LIMIT 1`,
-		workspaceID, propertyID, day, visitor).Scan(&visit, &ended)
+		workspaceID, propertyID, day, visitor).Scan(&out.Visit, &out.Ended, &out.Bot)
 	if errors.Is(err, pgx.ErrNoRows) {
-		return 0, time.Time{}, false, nil
+		return LatestVisit{}, false, nil
 	}
-	return visit, ended, err == nil, err
+	return out, err == nil, err
 }
 
 func (s *PGStore) VisitorsToday(ctx context.Context, workspaceID uuid.UUID, days map[uuid.UUID]time.Time) (map[uuid.UUID]int64, error) {

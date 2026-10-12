@@ -4,7 +4,6 @@ package analytics
 
 import (
 	"context"
-	"strings"
 	"time"
 	"uuid"
 )
@@ -107,6 +106,22 @@ type Count struct {
 type Batch struct {
 	Events []Event
 	Drops  []Count
+	Bots   []BotVisitor
+}
+
+// BotVisitor is a visitor of a property's day whose visits are left out of the rollups.
+type BotVisitor struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Visitor     int64
+}
+
+// LatestVisit is a visitor's last visit of a day.
+type LatestVisit struct {
+	Visit int64
+	Ended time.Time
+	Bot   bool
 }
 
 // IngestResult is each workspace's analytics events of the month after the batch.
@@ -126,10 +141,14 @@ type Store interface {
 	// Salt returns the salt of a property's day, storing fresh when the day has none yet.
 	Salt(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, fresh []byte, expires time.Time) ([]byte, time.Time, error)
 	// LatestVisit is the visitor's last visit of the day, if any.
-	LatestVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64) (visit int64, ended time.Time, ok bool, err error)
+	LatestVisit(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, visitor int64) (LatestVisit, bool, error)
 	VisitorsToday(ctx context.Context, workspaceID uuid.UUID, days map[uuid.UUID]time.Time) (map[uuid.UUID]int64, error)
 	// DeleteRaw deletes up to limit rows of each raw table of a property's day and says how many went.
 	DeleteRaw(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, limit int) (int64, error)
+	// Query answers one query over a property's days.
+	Query(ctx context.Context, q Query) (Result, error)
+	// Realtime is a property's last 30 minutes.
+	Realtime(ctx context.Context, workspaceID, propertyID uuid.UUID, loc *time.Location, now time.Time) (Realtime, error)
 }
 
 // LocalDay is the date of t in loc, as midnight UTC, the form days are stored and compared in.
@@ -141,32 +160,4 @@ func LocalDay(t time.Time, loc *time.Location) time.Time {
 // DayEnd is when a local day ends.
 func DayEnd(day time.Time, loc *time.Location) time.Time {
 	return time.Date(day.Year(), day.Month(), day.Day()+1, 0, 0, 0, 0, loc)
-}
-
-var emailMediums = []string{"email", "e-mail", "newsletter"}
-
-// ClassifyChannel picks a visit's channel from its referrer and acquisition. internal reports a
-// referrer on another of the property's domains.
-func ClassifyChannel(referrerHost string, a Acquisition, internal bool) Channel {
-	medium := strings.ToLower(a.Medium)
-	switch {
-	case medium == "cpc" || medium == "ppc" || strings.HasPrefix(medium, "paid"):
-		return ChannelPaidSearch
-	case containsFold(emailMediums, medium):
-		return ChannelEmail
-	case internal:
-		return ChannelInternal
-	case referrerHost != "" || a.Source != "":
-		return ChannelReferral
-	}
-	return ChannelDirect
-}
-
-func containsFold(list []string, s string) bool {
-	for _, v := range list {
-		if strings.EqualFold(v, s) {
-			return true
-		}
-	}
-	return false
 }
