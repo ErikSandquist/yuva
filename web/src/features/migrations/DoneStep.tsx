@@ -1,6 +1,6 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowUpRightIcon, CircleCheckIcon, InboxIcon, ShieldCheckIcon } from "lucide-react"
-import { useNavigate } from "react-router"
+import { ArrowRightIcon, ArrowUpRightIcon, CircleCheckIcon, InboxIcon, LoaderIcon, ShieldCheckIcon } from "lucide-react"
+import { Link, useNavigate } from "react-router"
 
 import { ErrorLine, ProgressBar } from "@/components/common"
 import { formatDateTime } from "@/components/common/text"
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Figure, SkippedList, useMigrationConfirms, useStateAnnouncement } from "@/features/migrations/parts"
+import { useCreateMigration, useMigrations } from "@/features/migrations/queries"
 import { useGuides } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
@@ -89,6 +90,8 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
           </section>
         )}
 
+        {completed && m.preset === "takeout" && <NewerMail m={m} />}
+
         <section className="flex flex-col gap-3" aria-labelledby="migration-access">
           <h2 id="migration-access" className="text-title">
             <Trans>Access to the mailbox</Trans>
@@ -166,5 +169,64 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
         {ask.dialog}
       </div>
     </WizardLayout>
+  )
+}
+
+function NewerMail({ m }: { m: Migration }) {
+  const navigate = useNavigate()
+  const create = useCreateMigration()
+  const list = useMigrations()
+  const next = list.data?.pages.flatMap((p) => p.items).find((x) => x.follows_migration_id === m.id)
+  const address = m.source_address
+  const domain = address.split("@")[1]?.toLowerCase() ?? ""
+  const preset = domain === "gmail.com" || domain === "googlemail.com" ? "gmail" : "google_workspace"
+  const start = () =>
+    create.mutate(
+      {
+        preset,
+        source_address: address,
+        ...(m.inbox_id ? { inbox_id: m.inbox_id } : {}),
+        ...(m.channel_id ? { channel_id: m.channel_id } : {}),
+      },
+      { onSuccess: (n) => navigate(`/migrations/${n.id}/connect`) }
+    )
+  return (
+    <section
+      className="flex flex-col gap-3 rounded-2xl border bg-card p-4"
+      aria-labelledby="migration-newer"
+      data-testid="migration-newer-mail"
+    >
+      <h2 id="migration-newer" className="text-title">
+        <Trans>Newer mail and the switch</Trans>
+      </h2>
+      <p className="text-body text-muted-foreground">
+        <Trans>
+          The file holds the mail up to the day you exported it. Connect {address} with an app password: Yuva reads only
+          the mail since then, then helps you switch the mailbox's mail over to Yuva.
+        </Trans>
+      </p>
+      <ErrorLine error={create.error} />
+      {next ? (
+        <Button
+          className="self-start"
+          render={<Link to={`/migrations/${next.id}`} />}
+          data-testid="migration-newer-open"
+        >
+          <Trans>Continue with the newer mail</Trans>
+          <ArrowRightIcon className="rtl:rotate-180" />
+        </Button>
+      ) : (
+        <Button
+          className="self-start"
+          onClick={start}
+          disabled={create.isPending || list.isPending}
+          data-testid="migration-newer-start"
+        >
+          {create.isPending && <LoaderIcon className="animate-spin" />}
+          <Trans>Connect {address}</Trans>
+          <ArrowRightIcon className="rtl:rotate-180" />
+        </Button>
+      )}
+    </section>
   )
 }

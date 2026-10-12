@@ -2166,6 +2166,7 @@ msgid "Connect"
 msgstr "Bağla"
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/DoneStep.tsx
 msgid "Connect {address}"
 msgstr "{address} adresini bağlayın"
 
@@ -2304,6 +2305,10 @@ msgstr "İçerik"
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
 msgstr "Devam"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Continue with the newer mail"
+msgstr "Yeni e-postalarla devam edin"
 
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
@@ -3655,6 +3660,10 @@ msgstr "Kanala yeni bir yönlendirme adresi verilsin mi?"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "Gmail yalnızca spam olmayan yeni e-postaları yönlendirir. Bir Workspace yöneticisi yönlendirmeyi kapattıysa yönetici yönlendirmesini kullanın."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
+msgstr "Gmail, diğer uygulamaların IMAP ile günde yaklaşık 1,5 GB okumasına izin verir; bu yüzden birkaç gigabaytlık bir posta kutusu günler sürer. Google Takeout kutuyu tek bir dosya olarak dışa aktarır ve bu dosya bağlantınızın izin verdiği hızda yüklenir. Önce onu içe aktarın, sonra yeni e-postalar ve geçiş için bir uygulama şifresiyle buraya dönün."
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5157,6 +5166,10 @@ msgstr "Yeni imzalama anahtarı"
 msgid "New subscribers added"
 msgstr "Eklenecek yeni aboneler"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Newer mail and the switch"
+msgstr "Yeni e-postalar ve geçiş"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match"
 msgstr "Sonraki eşleşme"
@@ -5767,6 +5780,10 @@ msgstr "Abonelik formlarında ve tercih sayfasında sunulur. Özel listeleri eki
 msgid "Offline"
 msgstr "Çevrimdışı"
 
+#: src/features/migrations/parts.tsx
+msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
+msgstr "Daha eski e-postalar içe aktardığınız dışa aktarım dosyasından geldi; burada yalnızca daha yeni e-postalar okunur, ikisinde de olan e-postalar iki kez aktarılmaz. Kopyalamadan sonra her zamanki geçiş gelir."
+
 #: src/features/conversation/ChatView.tsx
 msgid "Older match"
 msgstr "Önceki eşleşme"
@@ -5891,6 +5908,10 @@ msgstr "Yalnızca başlıklar okunur: hiçbir mesaj açılmaz ya da işaretlenme
 #: src/features/conversation/Feedback.tsx
 msgid "Only in the app"
 msgstr "Yalnızca uygulamada"
+
+#: src/features/migrations/parts.tsx
+msgid "Only mail since {date}"
+msgstr "Yalnızca {date} sonrasındaki e-postalar"
 
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Only owners can change this."
@@ -8553,6 +8574,10 @@ msgstr "Dosya"
 msgid "The file holds no messages."
 msgstr "Dosyada hiç ileti yok."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "The file holds the mail up to the day you exported it. Connect {address} with an app password: Yuva reads only the mail since then, then helps you switch the mailbox's mail over to Yuva."
+msgstr "Dosya, dışa aktardığınız güne kadarki e-postaları içerir. {address} adresini bir uygulama şifresiyle bağlayın: Yuva yalnızca o günden sonraki e-postaları okur, sonra posta kutusunun e-postalarını Yuva'ya geçirmenize yardım eder."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
 msgstr "Dosya {size}; bu sunucu en çok {max} boyutunda dışa aktarım dosyası kabul ediyor. Dışa aktarımı bölün ya da sunucunun yöneticisine sorun."
@@ -9614,6 +9639,10 @@ msgstr "En fazla {max} ve 100.000 satır, bir başlık satırıyla. Türkçe ya 
 msgid "Updating"
 msgstr "Güncelleniyor"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Upload a Takeout file instead"
+msgstr "Bunun yerine Takeout dosyası yükleyin"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
 msgstr "Bir .mbox dosyası ya da .eml dosyalarının veya bir Maildir'in .zip'ini yükleyin. Yuva'nın posta kutusuna erişmesi gerekmez."
@@ -9778,6 +9807,10 @@ msgstr "Her isteğe güvenmeden önce doğrulayın: <0>webhook-signature</0> ba�
 #: src/components/common/ShortcutSheet.tsx
 msgid "Versions"
 msgstr "Sürümler"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Very large mailbox? Start with a Google Takeout file"
+msgstr "Posta kutunuz çok mu büyük? Bir Google Takeout dosyasıyla başlayın"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx

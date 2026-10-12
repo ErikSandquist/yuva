@@ -8,11 +8,12 @@ import {
   CircleIcon,
   KeyRoundIcon,
   LoaderIcon,
+  PackageOpenIcon,
   ShieldCheckIcon,
   XIcon,
 } from "lucide-react"
 import { Fragment, useState } from "react"
-import { Link, useLocation } from "react-router"
+import { Link, useLocation, useNavigate } from "react-router"
 
 import { ErrorLine, Notice } from "@/components/common"
 import { Button } from "@/components/ui/button"
@@ -20,7 +21,14 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
-import { useMigrationStep, useSetCredentials, useTestConnection } from "@/features/migrations/queries"
+import { FollowsNotice } from "@/features/migrations/parts"
+import {
+  useMigrationStep,
+  usePresets,
+  useReplaceDraft,
+  useSetCredentials,
+  useTestConnection,
+} from "@/features/migrations/queries"
 import type { ConnectState } from "@/features/migrations/SourceStep"
 import { guideUrl, TEST_STEPS, useGuides, useMigrationText, useTestCodeText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
@@ -106,6 +114,12 @@ export function ConnectStep({ m, preset }: { m: Migration; preset: MigrationPres
           <Trans>Sign in with the mailbox's user name and password.</Trans>
         )}
       </StepHeader>
+
+      {!reconnecting && <FollowsNotice m={m} className="mb-6" />}
+
+      {m.state === "draft" && !m.follows_migration_id && (m.preset === "gmail" || m.preset === "google_workspace") && (
+        <TakeoutOffer m={m} />
+      )}
 
       {reconnecting && m.state_reason && (
         <Notice tone="danger" icon={XIcon} className="mb-6">
@@ -335,6 +349,53 @@ export function ConnectStep({ m, preset }: { m: Migration; preset: MigrationPres
         </form>
       )}
     </WizardLayout>
+  )
+}
+
+function TakeoutOffer({ m }: { m: Migration }) {
+  const navigate = useNavigate()
+  const takeout = usePresets().data?.find((p) => p.id === "takeout")
+  const replace = useReplaceDraft()
+  if (!takeout?.available) return null
+  const start = () =>
+    replace.mutate(
+      {
+        draft: m,
+        body: {
+          source: "file",
+          preset: "takeout",
+          source_address: m.source_address,
+          ...(m.inbox_id ? { inbox_id: m.inbox_id } : {}),
+          ...(m.channel_id ? { channel_id: m.channel_id } : {}),
+        },
+      },
+      { onSuccess: (next) => navigate(`/migrations/${next.id}/connect`) }
+    )
+  return (
+    <Notice icon={PackageOpenIcon} className="mb-6" data-testid="migration-takeout-offer">
+      <p className="font-medium text-foreground">
+        <Trans>Very large mailbox? Start with a Google Takeout file</Trans>
+      </p>
+      <p>
+        <Trans>
+          Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google
+          Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come
+          back here with an app password for the newer mail and the switch.
+        </Trans>
+      </p>
+      <ErrorLine error={replace.error} />
+      <Button
+        variant="outline"
+        size="sm"
+        className="self-start"
+        onClick={start}
+        disabled={replace.isPending}
+        data-testid="migration-takeout-start"
+      >
+        {replace.isPending && <LoaderIcon className="animate-spin" />}
+        <Trans>Upload a Takeout file instead</Trans>
+      </Button>
+    </Notice>
   )
 }
 

@@ -1,8 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro"
+import { HistoryIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
-import { ProgressBar, useConfirm } from "@/components/common"
-import { formatDateTime } from "@/components/common/text"
+import { Notice, ProgressBar, useConfirm } from "@/components/common"
+import { formatDate, formatDateTime } from "@/components/common/text"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { percentOf, useFinishMigration, useMigrationStep, useRemoveHistory } from "@/features/migrations/queries"
 import { stateTones, useMigrationText } from "@/features/migrations/text"
@@ -55,6 +56,25 @@ export function WaitingLine({ m }: { m: Migration }) {
     <p className="text-small text-warning" data-testid="migration-waiting">
       <Trans>Waiting for the provider's limit; continues at {time}.</Trans>
     </p>
+  )
+}
+
+export function FollowsNotice({ m, className }: { m: Migration; className?: string }) {
+  const { i18n } = useLingui()
+  if (!m.follows_migration_id || !m.options.since) return null
+  const date = formatDate(m.options.since, i18n.locale)
+  return (
+    <Notice icon={HistoryIcon} className={className} data-testid="migration-follows">
+      <p className="font-medium text-foreground">
+        <Trans>Only mail since {date}</Trans>
+      </p>
+      <p>
+        <Trans>
+          Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is
+          not imported twice. After the copy, the usual switch follows.
+        </Trans>
+      </p>
+    </Notice>
   )
 }
 

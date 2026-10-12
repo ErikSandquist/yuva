@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
-import { WaitingLine } from "@/features/migrations/parts"
+import { FollowsNotice, WaitingLine } from "@/features/migrations/parts"
 import { useMigrationFolders, useMigrationStep, useUpdateMigration } from "@/features/migrations/queries"
 import { NEVER_READ, useMigrationText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
@@ -164,6 +164,8 @@ export function ChooseStep({ m, preset }: { m: Migration; preset: MigrationPrese
           </CheckList>
         )}
         <ErrorLine error={folders.error} />
+
+        <FollowsNotice m={m} />
 
         <fieldset className="flex min-w-0 flex-col gap-2.5" disabled={!canEdit}>
           <legend className="mb-2.5 text-body font-medium">

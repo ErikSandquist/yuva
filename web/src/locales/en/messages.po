@@ -2166,6 +2166,7 @@ msgid "Connect"
 msgstr "Connect"
 
 #: src/features/migrations/ConnectStep.tsx
+#: src/features/migrations/DoneStep.tsx
 msgid "Connect {address}"
 msgstr "Connect {address}"
 
@@ -2304,6 +2305,10 @@ msgstr "Content"
 #: src/features/setup/NameStep.tsx
 msgid "Continue"
 msgstr "Continue"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Continue with the newer mail"
+msgstr "Continue with the newer mail"
 
 #: src/features/conversation/actions.ts
 msgid "Conversation closed"
@@ -3655,6 +3660,10 @@ msgstr "Give the channel a new forwarding address?"
 #: src/features/migrations/SwitchStep.tsx
 msgid "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
 msgstr "Gmail forwards only new mail that is not spam. If a Workspace admin turned forwarding off, use the admin's routing."
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
+msgstr "Gmail lets other apps read about 1.5 GB a day over IMAP, so a mailbox of many gigabytes takes days. Google Takeout exports it as one file that uploads as fast as your connection allows. Import that first, then come back here with an app password for the newer mail and the switch."
 
 #: src/app/Palette.tsx
 msgid "Go to"
@@ -5157,6 +5166,10 @@ msgstr "New signing secret"
 msgid "New subscribers added"
 msgstr "New subscribers added"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Newer mail and the switch"
+msgstr "Newer mail and the switch"
+
 #: src/features/conversation/ChatView.tsx
 msgid "Newer match"
 msgstr "Newer match"
@@ -5767,6 +5780,10 @@ msgstr "Offered on subscribe forms and the preference page. Private lists are fi
 msgid "Offline"
 msgstr "Offline"
 
+#: src/features/migrations/parts.tsx
+msgid "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
+msgstr "Older mail came from the export file you imported, so only newer mail is read here; mail that is in both is not imported twice. After the copy, the usual switch follows."
+
 #: src/features/conversation/ChatView.tsx
 msgid "Older match"
 msgstr "Older match"
@@ -5891,6 +5908,10 @@ msgstr "Only headers are read: no message is opened or marked. You can close thi
 #: src/features/conversation/Feedback.tsx
 msgid "Only in the app"
 msgstr "Only in the app"
+
+#: src/features/migrations/parts.tsx
+msgid "Only mail since {date}"
+msgstr "Only mail since {date}"
 
 #: src/features/settings/workspace/RetentionForm.tsx
 msgid "Only owners can change this."
@@ -8553,6 +8574,10 @@ msgstr "The file"
 msgid "The file holds no messages."
 msgstr "The file holds no messages."
 
+#: src/features/migrations/DoneStep.tsx
+msgid "The file holds the mail up to the day you exported it. Connect {address} with an app password: Yuva reads only the mail since then, then helps you switch the mailbox's mail over to Yuva."
+msgstr "The file holds the mail up to the day you exported it. Connect {address} with an app password: Yuva reads only the mail since then, then helps you switch the mailbox's mail over to Yuva."
+
 #: src/features/migrations/UploadStep.tsx
 msgid "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
 msgstr "The file is {size}; this server takes export files of up to {max}. Split the export, or ask the server's operator."
@@ -9614,6 +9639,10 @@ msgstr "Up to {max} and 100,000 rows, with a header row. Excel files in Turkish 
 msgid "Updating"
 msgstr "Updating"
 
+#: src/features/migrations/ConnectStep.tsx
+msgid "Upload a Takeout file instead"
+msgstr "Upload a Takeout file instead"
+
 #: src/features/migrations/UploadStep.tsx
 msgid "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
 msgstr "Upload an .mbox file, or a .zip of .eml files or of a Maildir. Yuva needs no access to the mailbox."
@@ -9778,6 +9807,10 @@ msgstr "Verify every request before trusting it: the <0>webhook-signature</0> he
 #: src/components/common/ShortcutSheet.tsx
 msgid "Versions"
 msgstr "Versions"
+
+#: src/features/migrations/ConnectStep.tsx
+msgid "Very large mailbox? Start with a Google Takeout file"
+msgstr "Very large mailbox? Start with a Google Takeout file"
 
 #: src/components/common/Source.tsx
 #: src/features/contact/ContactsColumn.tsx
