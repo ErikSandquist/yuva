@@ -382,7 +382,7 @@ export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }
                     value={labelFor(name)}
                     onChange={(v) => setLabelMap({ ...labelMap, [name]: v })}
                     options={labelOptions(name)}
-                    className="h-9 w-48 rounded-lg"
+                    className="h-9 w-auto min-w-48 rounded-lg"
                   />
                 </li>
               ))}
