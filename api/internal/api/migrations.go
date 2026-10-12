@@ -59,14 +59,18 @@ func errHostedLimit(detail string) *apiError {
 
 // MigrationSettings: Sources are the sources the operator allows (YUVA_MIGRATION_SOURCES);
 // AllowPrivate lets mailboxes and autoconfig live on private addresses (YUVA_MIGRATION_ALLOW_PRIVATE).
-// Resolver, HTTP and RootCAs replace the system's, for tests.
+// MaxActive, MaxBytes and MaxMessageBytes are YUVA_MIGRATION_MAX_ACTIVE, _MAX_BYTES and
+// _MAX_MESSAGE_BYTES. Resolver, HTTP and RootCAs replace the system's, for tests.
 type MigrationSettings struct {
-	Sources      []string
-	AllowPrivate bool
-	Resolver     migrate.Resolver
-	HTTP         migrate.HTTPDoer
-	RootCAs      *x509.CertPool
-	TestTimeout  time.Duration
+	Sources         []string
+	AllowPrivate    bool
+	MaxActive       int
+	MaxBytes        int64
+	MaxMessageBytes int64
+	Resolver        migrate.Resolver
+	HTTP            migrate.HTTPDoer
+	RootCAs         *x509.CertPool
+	TestTimeout     time.Duration
 }
 
 func migrationSettings(in MigrationSettings) MigrationSettings {
@@ -78,6 +82,9 @@ func migrationSettings(in MigrationSettings) MigrationSettings {
 	}
 	if in.HTTP == nil {
 		in.HTTP = webhook.NewClient(in.AllowPrivate, in.Resolver)
+	}
+	if in.MaxMessageBytes <= 0 {
+		in.MaxMessageBytes = defaultMigrationMaxMessage
 	}
 	return in
 }
@@ -153,10 +160,36 @@ func migrationActions(m store.Migration, hasCreds bool) []oas.MigrationAction {
 	if hasCreds && testableMigration(m.State) {
 		out = append(out, oas.MigrationActionTestConnection)
 	}
+	switch m.State {
+	case migrationConnected:
+		if hasCreds {
+			out = append(out, oas.MigrationActionScan)
+		}
+	case migrationReady:
+		out = append(out, oas.MigrationActionScan, oas.MigrationActionStart)
+	case migrationCopying:
+		out = append(out, oas.MigrationActionPause)
+	case migrationPaused, migrationNeedsAttention:
+		out = append(out, oas.MigrationActionResume)
+	}
+	if c := migrationCounts(m.Counts); c.Failed > 0 && slices.Contains([]string{migrationCopying, migrationPaused, migrationSyncing}, m.State) {
+		out = append(out, oas.MigrationActionRetry)
+	}
+	if cancellableMigration(m.State) {
+		out = append(out, oas.MigrationActionCancel)
+	}
 	if !slices.Contains(runningMigrationStates, m.State) {
 		out = append(out, oas.MigrationActionDelete)
 	}
 	return out
+}
+
+func cancellableMigration(state string) bool {
+	switch state {
+	case migrationConnected, migrationScanning, migrationReady, migrationCopying, migrationPaused, migrationNeedsAttention, migrationSyncing:
+		return true
+	}
+	return false
 }
 
 func testableMigration(state string) bool {
@@ -177,6 +210,12 @@ func migrationBody(m store.Migration, cred *store.ListMigrationCredentialInfosRo
 	}
 	if m.StateReason != "" {
 		out.StateReason = &m.StateReason
+	}
+	if doc := readEstimate(m.Estimate); doc != nil {
+		out.Estimate = &doc.DryRun
+	}
+	if m.State == migrationCopying {
+		out.RatePerMinute, out.SecondsLeft = migrationRate(readCheckpoint(m.Checkpoint), out.Counts)
 	}
 	if cred != nil {
 		c := oas.MigrationCredentials{
@@ -683,7 +722,7 @@ func (s *Server) UpdateMigration(ctx context.Context, req oas.UpdateMigrationReq
 			return err
 		}
 		state := cur.State
-		if readChanged && state == migrationReady {
+		if state == migrationReady && (readChanged || b.Options != nil || b.InboxId.IsSpecified() || b.ChannelId.IsSpecified()) {
 			state = migrationConnected
 		}
 		m, err := q.UpdateMigration(ctx, store.UpdateMigrationParams{
@@ -934,6 +973,15 @@ func (s *Server) TestMigrationConnection(ctx context.Context, req oas.TestMigrat
 		m, err := visibleMigration(ctx, q, p, req.MigrationId, true)
 		if err != nil {
 			return err
+		}
+		if res.OK && (m.State == migrationDraft || m.State == migrationConnected) {
+			listed := make([]listedFolder, len(res.List))
+			for i, f := range res.List {
+				listed[i] = listedFolder{Name: f.Name, Delim: f.Delim, Kind: f.Kind, Messages: f.Messages}
+			}
+			if err := s.recordFolders(ctx, q, m, listed); err != nil {
+				return err
+			}
 		}
 		if res.OK && m.State == migrationDraft {
 			cred, err := q.GetMigrationCredentials(ctx, store.GetMigrationCredentialsParams{WorkspaceID: p.workspaceID, MigrationID: m.ID})

@@ -6161,9 +6161,8 @@ paths:
       description: |
         Target inbox and channel, and the options: folders, date range, automatic mail, the status
         rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-        `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-        to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-        `connected`.
+        `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+        sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 
         Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
       tags: [migrations]
@@ -6304,6 +6303,294 @@ paths:
         "409":
           $ref: "#/components/responses/Problem"
         "429":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/folders:
+    get:
+      operationId: listMigrationFolders
+      summary: The mailbox's folders
+      description: |
+        Every folder the mailbox lists, from the last passing connection test or scan: what it
+        holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+        becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+        what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The folders, in the mailbox's order.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationFolderList"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/scan:
+    post:
+      operationId: scanMigration
+      summary: Read the mailbox's headers for the dry run
+      description: |
+        Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+        reads the headers of the selected ones (never a body, never a flag), joins the threads,
+        and fetches the five newest threads for the preview. The migration then becomes `ready`
+        with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+        labels, storage and time. Nothing is written outside the migration until `start`. A
+        second scan reads only what is new and plans again with the current options.
+
+        `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+        as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration, `scanning`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/preview:
+    get:
+      operationId: getMigrationPreview
+      summary: The newest threads as they will look
+      description: |
+        The five newest threads the scan will import, as conversations: subject, contact,
+        status, labels and their messages with direction, author and the visible text. `409
+        migration_state` before the first scan finished.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The preview.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationPreview"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/start:
+    post:
+      operationId: startMigration
+      summary: Start copying
+      description: |
+        Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+        message in a transaction of its own, so a restart never duplicates one. Imported history
+        is quiet: it keeps its original times, writes no conversation or message events, sends no
+        webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+        counts in the `imported_*` usage columns. A message the channel already has, in either
+        direction, is not imported again. When every thread is done the migration is `syncing`.
+
+        Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+        other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+        running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+        (`YUVA_MIGRATION_MAX_BYTES`).
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration, `copying`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/pause:
+    post:
+      operationId: pauseMigration
+      summary: Pause copying
+      description: |
+        A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+        its place; `paused` answers as is. `409 migration_state` otherwise.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration, `paused`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/resume:
+    post:
+      operationId: resumeMigration
+      summary: Resume copying
+      description: |
+        A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+        continues where it stopped: copying when the copy had started, else back to `connected`
+        for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+        hosted_limit` at the server's limit on running migrations.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+        "422":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/cancel:
+    post:
+      operationId: cancelMigration
+      summary: Cancel the migration
+      description: |
+        Stops for good. What was imported stays; the credentials are deleted in the same step.
+        `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+        finished migration.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration, `cancelled`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/retry:
+    post:
+      operationId: retryMigrationItems
+      summary: Retry failed messages
+      description: |
+        Puts the messages that failed five times back in line; a `syncing` migration copies them
+        before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+        states other than `copying`, `paused` and `syncing`.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/IdempotencyKey"
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+      responses:
+        "200":
+          description: The migration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Migration"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
+          $ref: "#/components/responses/Problem"
+        "409":
+          $ref: "#/components/responses/Problem"
+  /v1/migrations/{migrationId}/errors:
+    get:
+      operationId: listMigrationErrors
+      summary: What went wrong
+      description: |
+        Newest first: messages that were skipped or failed and problems with the source, each with
+        a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+        per migration; `counts` on the migration are always complete.
+
+        Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+      tags: [migrations]
+      parameters:
+        - $ref: "#/components/parameters/WorkspaceHeader"
+        - $ref: "#/components/parameters/MigrationId"
+        - $ref: "#/components/parameters/Cursor"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of errors.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MigrationErrorPage"
+        "400":
+          $ref: "#/components/responses/Problem"
+        "401":
+          $ref: "#/components/responses/Problem"
+        "403":
+          $ref: "#/components/responses/Problem"
+        "404":
           $ref: "#/components/responses/Problem"
   /v1/usage:
     get:
@@ -12649,6 +12936,17 @@ components:
           type: string
           format: date-time
           description: When the credentials were deleted because the migration ended.
+        estimate:
+          $ref: "#/components/schemas/MigrationEstimate"
+          description: The dry run, once a scan finished.
+        rate_per_minute:
+          type: integer
+          format: int64
+          description: While copying, messages done per minute over the last five minutes.
+        seconds_left:
+          type: integer
+          format: int64
+          description: While copying, how long the rest takes at that rate.
         actions:
           type: array
           items:
@@ -12898,6 +13196,363 @@ components:
           description: "`tls_failed`: the SHA-256 of the certificate the server sent."
         migration:
           $ref: "#/components/schemas/Migration"
+    MigrationFolderKind:
+      type: string
+      description: |
+        What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+        All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+        `drafts` and `other` (outbox, chats, notes), which are never read.
+      enum: [inbox, sent, archive, all, user, label, spam, trash, drafts, other]
+      x-enum-varnames: [FolderKindInbox, FolderKindSent, FolderKindArchive, FolderKindAll, FolderKindUser, FolderKindLabel, FolderKindSpam, FolderKindTrash, FolderKindDrafts, FolderKindOther]
+    MigrationFolder:
+      type: object
+      required: [id, name, kind, selected, use, label_action, messages, size_bytes, imported, duplicate, skipped, failed, bytes]
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        kind:
+          $ref: "#/components/schemas/MigrationFolderKind"
+        selected:
+          type: boolean
+          description: Its messages are read (`options.folders`, else the preset's default).
+        use:
+          type: string
+          description: |
+            `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
+            label whose mail comes from All Mail). `skip`: not read.
+          enum: [import, labels, skip]
+          x-enum-varnames: [FolderUseImport, FolderUseLabels, FolderUseSkip]
+        label_action:
+          type: string
+          description: What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+          enum: [create, existing, none]
+          x-enum-varnames: [FolderLabelCreate, FolderLabelExisting, FolderLabelNone]
+        label_id:
+          type: string
+          format: uuid
+          description: The label, once it exists.
+        messages:
+          type: integer
+          format: int64
+          description: Messages in the folder at the last count.
+        size_bytes:
+          type: integer
+          format: int64
+          description: Their size, once scanned.
+        oldest_at:
+          type: string
+          format: date-time
+        newest_at:
+          type: string
+          format: date-time
+        imported:
+          type: integer
+          format: int64
+        duplicate:
+          type: integer
+          format: int64
+        skipped:
+          type: integer
+          format: int64
+        failed:
+          type: integer
+          format: int64
+        bytes:
+          type: integer
+          format: int64
+          description: Bytes copied from this folder.
+    MigrationFolderList:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationFolder"
+    MigrationSkipped:
+      type: object
+      description: Messages that will not be imported, by reason.
+      required: [spam, trash, drafts, other_folders, internal, automatic, outside_range, already_in_yuva, blocked, too_large, duplicate_copies]
+      properties:
+        spam:
+          type: integer
+          format: int64
+        trash:
+          type: integer
+          format: int64
+        drafts:
+          type: integer
+          format: int64
+        other_folders:
+          type: integer
+          format: int64
+          description: In folders that are never read (outbox, chats, notes) or that were not chosen.
+        internal:
+          type: integer
+          format: int64
+          description: In threads of only the team's own mail.
+        automatic:
+          type: integer
+          format: int64
+          description: In threads of only automatic mail, with `skip_automatic`.
+        outside_range:
+          type: integer
+          format: int64
+          description: In threads whose last message is older than `since`.
+        already_in_yuva:
+          type: integer
+          format: int64
+          description: Already stored for the channel, by an earlier migration or live mail.
+        blocked:
+          type: integer
+          format: int64
+          description: From blocked contacts.
+        too_large:
+          type: integer
+          format: int64
+          description: Larger than the server's limit for one message.
+        duplicate_copies:
+          type: integer
+          format: int64
+          description: Further copies of a message found in several folders; their folders still label it.
+    MigrationEstimateLabel:
+      type: object
+      required: [name, action, conversations]
+      properties:
+        name:
+          type: string
+        action:
+          type: string
+          enum: [create, existing]
+          x-enum-varnames: [EstimateLabelCreate, EstimateLabelExisting]
+        label_id:
+          type: string
+          format: uuid
+        conversations:
+          type: integer
+          format: int64
+    MigrationEstimate:
+      type: object
+      description: The dry run of the last scan, with the options it was planned with.
+      required: [scanned_at, conversations, messages, messages_in, messages_out, contacts_new, contacts_existing, labels, skipped, attachments, attachment_bytes, attachments_skipped, bytes, storage_bytes, seconds_min, seconds_max]
+      properties:
+        scanned_at:
+          type: string
+          format: date-time
+        conversations:
+          type: integer
+          format: int64
+        messages:
+          type: integer
+          format: int64
+        messages_in:
+          type: integer
+          format: int64
+        messages_out:
+          type: integer
+          format: int64
+        contacts_new:
+          type: integer
+          format: int64
+        contacts_existing:
+          type: integer
+          format: int64
+        labels:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationEstimateLabel"
+        skipped:
+          $ref: "#/components/schemas/MigrationSkipped"
+        attachments:
+          type: integer
+          format: int64
+          description: Attachments of the messages to import.
+        attachment_bytes:
+          type: integer
+          format: int64
+        attachments_skipped:
+          type: integer
+          format: int64
+          description: Attachments over the server's size limit or of a type it does not keep; they stay in the original message.
+        bytes:
+          type: integer
+          format: int64
+          description: Bytes to read from the source.
+        storage_bytes:
+          type: integer
+          format: int64
+          description: Storage the imported history needs, originals included when kept.
+        oldest_at:
+          type: string
+          format: date-time
+        newest_at:
+          type: string
+          format: date-time
+        seconds_min:
+          type: integer
+          format: int64
+          description: How long the copy takes at the provider's pace, at the least.
+        seconds_max:
+          type: integer
+          format: int64
+    MigrationPreviewMessage:
+      type: object
+      required: [direction, from, at, text, attachments]
+      properties:
+        direction:
+          $ref: "#/components/schemas/Direction"
+        from:
+          $ref: "#/components/schemas/ImportedAuthor"
+        member_id:
+          type: string
+          format: uuid
+          description: The member an outgoing message is imported as.
+        at:
+          type: string
+          format: date-time
+        text:
+          type: string
+          description: The visible text, quotes removed, at most 1,000 characters.
+        attachments:
+          type: integer
+          format: int32
+    MigrationPreviewThread:
+      type: object
+      required: [subject, contact, status, labels, messages_total, messages]
+      properties:
+        subject:
+          type: string
+        contact:
+          $ref: "#/components/schemas/ImportedAuthor"
+        status:
+          $ref: "#/components/schemas/ConversationStatus"
+        labels:
+          type: array
+          items:
+            type: string
+        messages_total:
+          type: integer
+          format: int32
+        messages:
+          type: array
+          description: The thread's messages, oldest first, at most 20.
+          items:
+            $ref: "#/components/schemas/MigrationPreviewMessage"
+    MigrationPreview:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationPreviewThread"
+    MigrationError:
+      type: object
+      required: [id, code, detail, folder, subject, created_at]
+      properties:
+        id:
+          type: integer
+          format: int64
+        code:
+          type: string
+          description: |
+            `too_large` (over the message limit), `unparseable`, `gone` (no longer in the mailbox),
+            `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
+            `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
+            again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
+            a bug).
+        detail:
+          type: string
+        folder:
+          type: string
+        item_date:
+          type: string
+          format: date-time
+        subject:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    MigrationErrorPage:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationError"
+        next_cursor:
+          type: string
+    MigrationFolderProgress:
+      type: object
+      required: [id, imported, duplicate, skipped, failed, bytes]
+      properties:
+        id:
+          type: integer
+          format: int32
+        imported:
+          type: integer
+          format: int64
+        duplicate:
+          type: integer
+          format: int64
+        skipped:
+          type: integer
+          format: int64
+        failed:
+          type: integer
+          format: int64
+        bytes:
+          type: integer
+          format: int64
+    MigrationProgress:
+      type: object
+      required: [id, state, counts, folders]
+      properties:
+        id:
+          type: string
+          format: uuid
+        state:
+          $ref: "#/components/schemas/MigrationState"
+        counts:
+          $ref: "#/components/schemas/MigrationCounts"
+        folders:
+          type: array
+          items:
+            $ref: "#/components/schemas/MigrationFolderProgress"
+        rate_per_minute:
+          type: integer
+          format: int64
+          description: Messages done per minute over the last five minutes.
+        seconds_left:
+          type: integer
+          format: int64
+        waiting_until:
+          type: string
+          format: date-time
+    MigrationProgressEvent:
+      type: object
+      description: |
+        `migration.progress`, on `/v1/realtime` only: the counts of a copying migration, at most
+        every 2 seconds, and when it starts or stops waiting for the provider. Not stored, no id, never replayed, never a webhook;
+        reload the migration after a reconnect. Delivered to owners, admins and API keys or
+        tokens holding `migrations:manage`.
+      required: [type, workspace_id, created_at, data]
+      properties:
+        type:
+          type: string
+          enum: [migration.progress]
+        workspace_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        data:
+          $ref: "#/components/schemas/MigrationProgress"
     MigrationEventData:
       type: object
       required: [migration]
@@ -13458,6 +14113,7 @@ components:
         - $ref: "#/components/schemas/SubscriptionEvent"
         - $ref: "#/components/schemas/BroadcastEvent"
         - $ref: "#/components/schemas/MigrationEvent"
+        - $ref: "#/components/schemas/MigrationProgressEvent"
         - $ref: "#/components/schemas/BroadcastProgressEvent"
         - $ref: "#/components/schemas/ListImportEvent"
         - $ref: "#/components/schemas/ListImportProgressEvent"
@@ -13495,6 +14151,7 @@ components:
           subscription.updated: "#/components/schemas/SubscriptionEvent"
           broadcast.updated: "#/components/schemas/BroadcastEvent"
           migration.updated: "#/components/schemas/MigrationEvent"
+          migration.progress: "#/components/schemas/MigrationProgressEvent"
           broadcast.progress: "#/components/schemas/BroadcastProgressEvent"
           list_import.updated: "#/components/schemas/ListImportEvent"
           list_import.progress: "#/components/schemas/ListImportProgressEvent"

@@ -2235,6 +2235,24 @@ func (e MigrationDetectionNote) Valid() bool {
 	}
 }
 
+// Defines values for MigrationEstimateLabelAction.
+const (
+	EstimateLabelCreate   MigrationEstimateLabelAction = "create"
+	EstimateLabelExisting MigrationEstimateLabelAction = "existing"
+)
+
+// Valid indicates whether the value is a known member of the MigrationEstimateLabelAction enum.
+func (e MigrationEstimateLabelAction) Valid() bool {
+	switch e {
+	case EstimateLabelCreate:
+		return true
+	case EstimateLabelExisting:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MigrationEventType.
 const (
 	MigrationUpdated MigrationEventType = "migration.updated"
@@ -2244,6 +2262,90 @@ const (
 func (e MigrationEventType) Valid() bool {
 	switch e {
 	case MigrationUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderLabelAction.
+const (
+	FolderLabelCreate   MigrationFolderLabelAction = "create"
+	FolderLabelExisting MigrationFolderLabelAction = "existing"
+	FolderLabelNone     MigrationFolderLabelAction = "none"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderLabelAction enum.
+func (e MigrationFolderLabelAction) Valid() bool {
+	switch e {
+	case FolderLabelCreate:
+		return true
+	case FolderLabelExisting:
+		return true
+	case FolderLabelNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderUse.
+const (
+	FolderUseImport MigrationFolderUse = "import"
+	FolderUseLabels MigrationFolderUse = "labels"
+	FolderUseSkip   MigrationFolderUse = "skip"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderUse enum.
+func (e MigrationFolderUse) Valid() bool {
+	switch e {
+	case FolderUseImport:
+		return true
+	case FolderUseLabels:
+		return true
+	case FolderUseSkip:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderKind.
+const (
+	FolderKindAll     MigrationFolderKind = "all"
+	FolderKindArchive MigrationFolderKind = "archive"
+	FolderKindDrafts  MigrationFolderKind = "drafts"
+	FolderKindInbox   MigrationFolderKind = "inbox"
+	FolderKindLabel   MigrationFolderKind = "label"
+	FolderKindOther   MigrationFolderKind = "other"
+	FolderKindSent    MigrationFolderKind = "sent"
+	FolderKindSpam    MigrationFolderKind = "spam"
+	FolderKindTrash   MigrationFolderKind = "trash"
+	FolderKindUser    MigrationFolderKind = "user"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderKind enum.
+func (e MigrationFolderKind) Valid() bool {
+	switch e {
+	case FolderKindAll:
+		return true
+	case FolderKindArchive:
+		return true
+	case FolderKindDrafts:
+		return true
+	case FolderKindInbox:
+		return true
+	case FolderKindLabel:
+		return true
+	case FolderKindOther:
+		return true
+	case FolderKindSent:
+		return true
+	case FolderKindSpam:
+		return true
+	case FolderKindTrash:
+		return true
+	case FolderKindUser:
 		return true
 	default:
 		return false
@@ -2325,6 +2427,21 @@ func (e MigrationPresetId) Valid() bool {
 	case PresetYandex:
 		return true
 	case PresetZoho:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationProgressEventType.
+const (
+	MigrationProgressEventTypeMigrationProgress MigrationProgressEventType = "migration.progress"
+)
+
+// Valid indicates whether the value is a known member of the MigrationProgressEventType enum.
+func (e MigrationProgressEventType) Valid() bool {
+	switch e {
+	case MigrationProgressEventTypeMigrationProgress:
 		return true
 	default:
 		return false
@@ -8058,8 +8175,11 @@ type Migration struct {
 
 	// CredentialsDeletedAt When the credentials were deleted because the migration ended.
 	CredentialsDeletedAt *time.Time `json:"credentials_deleted_at,omitempty"`
-	FinishedAt           *time.Time `json:"finished_at,omitempty"`
-	Id                   uuid.UUID  `json:"id"`
+
+	// Estimate The dry run, once a scan finished.
+	Estimate   *MigrationEstimate `json:"estimate,omitempty"`
+	FinishedAt *time.Time         `json:"finished_at,omitempty"`
+	Id         uuid.UUID          `json:"id"`
 
 	// InboxId The inbox the history goes to; absent until chosen or when deleted.
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
@@ -8072,6 +8192,12 @@ type Migration struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server.
 	Preset MigrationPresetId `json:"preset"`
+
+	// RatePerMinute While copying, messages done per minute over the last five minutes.
+	RatePerMinute *int64 `json:"rate_per_minute,omitempty"`
+
+	// SecondsLeft While copying, how long the rest takes at that rate.
+	SecondsLeft *int64 `json:"seconds_left,omitempty"`
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
@@ -8241,6 +8367,73 @@ type MigrationDetectionFoundBy string
 // Cloudflare Email Routing; connect the mailbox it ends up in.
 type MigrationDetectionNote string
 
+// MigrationError defines model for MigrationError.
+type MigrationError struct {
+	// Code `too_large` (over the message limit), `unparseable`, `gone` (no longer in the mailbox),
+	// `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
+	// `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
+	// again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
+	// a bug).
+	Code      string     `json:"code"`
+	CreatedAt time.Time  `json:"created_at"`
+	Detail    string     `json:"detail"`
+	Folder    string     `json:"folder"`
+	Id        int64      `json:"id"`
+	ItemDate  *time.Time `json:"item_date,omitempty"`
+	Subject   string     `json:"subject"`
+}
+
+// MigrationErrorPage defines model for MigrationErrorPage.
+type MigrationErrorPage struct {
+	Items      []MigrationError `json:"items"`
+	NextCursor *string          `json:"next_cursor,omitempty"`
+}
+
+// MigrationEstimate The dry run of the last scan, with the options it was planned with.
+type MigrationEstimate struct {
+	AttachmentBytes int64 `json:"attachment_bytes"`
+
+	// Attachments Attachments of the messages to import.
+	Attachments int64 `json:"attachments"`
+
+	// AttachmentsSkipped Attachments over the server's size limit or of a type it does not keep; they stay in the original message.
+	AttachmentsSkipped int64 `json:"attachments_skipped"`
+
+	// Bytes Bytes to read from the source.
+	Bytes            int64                    `json:"bytes"`
+	ContactsExisting int64                    `json:"contacts_existing"`
+	ContactsNew      int64                    `json:"contacts_new"`
+	Conversations    int64                    `json:"conversations"`
+	Labels           []MigrationEstimateLabel `json:"labels"`
+	Messages         int64                    `json:"messages"`
+	MessagesIn       int64                    `json:"messages_in"`
+	MessagesOut      int64                    `json:"messages_out"`
+	NewestAt         *time.Time               `json:"newest_at,omitempty"`
+	OldestAt         *time.Time               `json:"oldest_at,omitempty"`
+	ScannedAt        time.Time                `json:"scanned_at"`
+	SecondsMax       int64                    `json:"seconds_max"`
+
+	// SecondsMin How long the copy takes at the provider's pace, at the least.
+	SecondsMin int64 `json:"seconds_min"`
+
+	// Skipped Messages that will not be imported, by reason.
+	Skipped MigrationSkipped `json:"skipped"`
+
+	// StorageBytes Storage the imported history needs, originals included when kept.
+	StorageBytes int64 `json:"storage_bytes"`
+}
+
+// MigrationEstimateLabel defines model for MigrationEstimateLabel.
+type MigrationEstimateLabel struct {
+	Action        MigrationEstimateLabelAction `json:"action"`
+	Conversations int64                        `json:"conversations"`
+	LabelId       *uuid.UUID                   `json:"label_id,omitempty"`
+	Name          string                       `json:"name"`
+}
+
+// MigrationEstimateLabelAction defines model for MigrationEstimateLabel.Action.
+type MigrationEstimateLabelAction string
+
 // MigrationEvent `migration.updated`: a migration was created or changed state. Delivered to owners, admins
 // and API keys or tokens holding `migrations:manage`; never a webhook.
 type MigrationEvent struct {
@@ -8260,6 +8453,71 @@ type MigrationEventData struct {
 
 	// PreviousState Absent when the migration was just created.
 	PreviousState *MigrationState `json:"previous_state,omitempty"`
+}
+
+// MigrationFolder defines model for MigrationFolder.
+type MigrationFolder struct {
+	// Bytes Bytes copied from this folder.
+	Bytes     int64 `json:"bytes"`
+	Duplicate int64 `json:"duplicate"`
+	Failed    int64 `json:"failed"`
+	Id        int32 `json:"id"`
+	Imported  int64 `json:"imported"`
+
+	// Kind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+	// All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+	// `drafts` and `other` (outbox, chats, notes), which are never read.
+	Kind MigrationFolderKind `json:"kind"`
+
+	// LabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+	LabelAction MigrationFolderLabelAction `json:"label_action"`
+
+	// LabelId The label, once it exists.
+	LabelId *uuid.UUID `json:"label_id,omitempty"`
+
+	// Messages Messages in the folder at the last count.
+	Messages int64      `json:"messages"`
+	Name     string     `json:"name"`
+	NewestAt *time.Time `json:"newest_at,omitempty"`
+	OldestAt *time.Time `json:"oldest_at,omitempty"`
+
+	// Selected Its messages are read (`options.folders`, else the preset's default).
+	Selected bool `json:"selected"`
+
+	// SizeBytes Their size, once scanned.
+	SizeBytes int64 `json:"size_bytes"`
+	Skipped   int64 `json:"skipped"`
+
+	// Use `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
+	// label whose mail comes from All Mail). `skip`: not read.
+	Use MigrationFolderUse `json:"use"`
+}
+
+// MigrationFolderLabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+type MigrationFolderLabelAction string
+
+// MigrationFolderUse `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
+// label whose mail comes from All Mail). `skip`: not read.
+type MigrationFolderUse string
+
+// MigrationFolderKind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+// All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+// `drafts` and `other` (outbox, chats, notes), which are never read.
+type MigrationFolderKind string
+
+// MigrationFolderList defines model for MigrationFolderList.
+type MigrationFolderList struct {
+	Items []MigrationFolder `json:"items"`
+}
+
+// MigrationFolderProgress defines model for MigrationFolderProgress.
+type MigrationFolderProgress struct {
+	Bytes     int64 `json:"bytes"`
+	Duplicate int64 `json:"duplicate"`
+	Failed    int64 `json:"failed"`
+	Id        int32 `json:"id"`
+	Imported  int64 `json:"imported"`
+	Skipped   int64 `json:"skipped"`
 }
 
 // MigrationLabelMapping What a folder or Gmail label becomes: `create` a label of the same name, an `existing`
@@ -8377,6 +8635,81 @@ type MigrationPresetList struct {
 	Items []MigrationPreset `json:"items"`
 }
 
+// MigrationPreview defines model for MigrationPreview.
+type MigrationPreview struct {
+	Items []MigrationPreviewThread `json:"items"`
+}
+
+// MigrationPreviewMessage defines model for MigrationPreviewMessage.
+type MigrationPreviewMessage struct {
+	At          time.Time `json:"at"`
+	Attachments int32     `json:"attachments"`
+	Direction   Direction `json:"direction"`
+
+	// From An imported message's sender from the team who is not mapped to a member.
+	From ImportedAuthor `json:"from"`
+
+	// MemberId The member an outgoing message is imported as.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Text The visible text, quotes removed, at most 1,000 characters.
+	Text string `json:"text"`
+}
+
+// MigrationPreviewThread defines model for MigrationPreviewThread.
+type MigrationPreviewThread struct {
+	// Contact An imported message's sender from the team who is not mapped to a member.
+	Contact ImportedAuthor `json:"contact"`
+	Labels  []string       `json:"labels"`
+
+	// Messages The thread's messages, oldest first, at most 20.
+	Messages      []MigrationPreviewMessage `json:"messages"`
+	MessagesTotal int32                     `json:"messages_total"`
+	Status        ConversationStatus        `json:"status"`
+	Subject       string                    `json:"subject"`
+}
+
+// MigrationProgress defines model for MigrationProgress.
+type MigrationProgress struct {
+	Counts  MigrationCounts           `json:"counts"`
+	Folders []MigrationFolderProgress `json:"folders"`
+	Id      uuid.UUID                 `json:"id"`
+
+	// RatePerMinute Messages done per minute over the last five minutes.
+	RatePerMinute *int64 `json:"rate_per_minute,omitempty"`
+	SecondsLeft   *int64 `json:"seconds_left,omitempty"`
+
+	// State - `draft`: created; not connected yet.
+	// - `connected`: the connection test passed; choose what to read.
+	// - `scanning`: reading message headers for the dry run.
+	// - `ready`: the dry run is ready; nothing is imported yet.
+	// - `copying`: importing history, newest threads first.
+	// - `paused`: stopped by a member; resumes where it was.
+	// - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
+	//   revoked app password; reconnect to continue.
+	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
+	//   while the team switches its mail over.
+	// - `completed`: finished; the credentials are deleted.
+	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
+	// - `removing`, `removed`: imported history is being, or was, removed.
+	State        MigrationState `json:"state"`
+	WaitingUntil *time.Time     `json:"waiting_until,omitempty"`
+}
+
+// MigrationProgressEvent `migration.progress`, on `/v1/realtime` only: the counts of a copying migration, at most
+// every 2 seconds, and when it starts or stops waiting for the provider. Not stored, no id, never replayed, never a webhook;
+// reload the migration after a reconnect. Delivered to owners, admins and API keys or
+// tokens holding `migrations:manage`.
+type MigrationProgressEvent struct {
+	CreatedAt   time.Time                  `json:"created_at"`
+	Data        MigrationProgress          `json:"data"`
+	Type        MigrationProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                  `json:"workspace_id"`
+}
+
+// MigrationProgressEventType defines model for MigrationProgressEvent.Type.
+type MigrationProgressEventType string
+
 // MigrationServer defines model for MigrationServer.
 type MigrationServer struct {
 	Host string `json:"host"`
@@ -8384,6 +8717,36 @@ type MigrationServer struct {
 
 	// Tls `tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143).
 	Tls MigrationTls `json:"tls"`
+}
+
+// MigrationSkipped Messages that will not be imported, by reason.
+type MigrationSkipped struct {
+	// AlreadyInYuva Already stored for the channel, by an earlier migration or live mail.
+	AlreadyInYuva int64 `json:"already_in_yuva"`
+
+	// Automatic In threads of only automatic mail, with `skip_automatic`.
+	Automatic int64 `json:"automatic"`
+
+	// Blocked From blocked contacts.
+	Blocked int64 `json:"blocked"`
+	Drafts  int64 `json:"drafts"`
+
+	// DuplicateCopies Further copies of a message found in several folders; their folders still label it.
+	DuplicateCopies int64 `json:"duplicate_copies"`
+
+	// Internal In threads of only the team's own mail.
+	Internal int64 `json:"internal"`
+
+	// OtherFolders In folders that are never read (outbox, chats, notes) or that were not chosen.
+	OtherFolders int64 `json:"other_folders"`
+
+	// OutsideRange In threads whose last message is older than `since`.
+	OutsideRange int64 `json:"outside_range"`
+	Spam         int64 `json:"spam"`
+
+	// TooLarge Larger than the server's limit for one message.
+	TooLarge int64 `json:"too_large"`
+	Trash    int64 `json:"trash"`
 }
 
 // MigrationSource Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
@@ -11475,8 +11838,86 @@ type UpdateMigrationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// CancelMigrationParams defines parameters for CancelMigration.
+type CancelMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // SetMigrationCredentialsParams defines parameters for SetMigrationCredentials.
 type SetMigrationCredentialsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMigrationErrorsParams defines parameters for ListMigrationErrors.
+type ListMigrationErrorsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMigrationFoldersParams defines parameters for ListMigrationFolders.
+type ListMigrationFoldersParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PauseMigrationParams defines parameters for PauseMigration.
+type PauseMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMigrationPreviewParams defines parameters for GetMigrationPreview.
+type GetMigrationPreviewParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResumeMigrationParams defines parameters for ResumeMigration.
+type ResumeMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RetryMigrationItemsParams defines parameters for RetryMigrationItems.
+type RetryMigrationItemsParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScanMigrationParams defines parameters for ScanMigration.
+type ScanMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// StartMigrationParams defines parameters for StartMigration.
+type StartMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -14001,6 +14442,32 @@ func (t *RealtimeMessage) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
+func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
+	var body MigrationProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMigrationProgressEvent overwrites any union data inside the RealtimeMessage as the provided MigrationProgressEvent
+func (t *RealtimeMessage) FromMigrationProgressEvent(v MigrationProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMigrationProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided MigrationProgressEvent
+func (t *RealtimeMessage) MergeMigrationProgressEvent(v MigrationProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsBroadcastProgressEvent returns the union data inside the RealtimeMessage as a BroadcastProgressEvent
 func (t RealtimeMessage) AsBroadcastProgressEvent() (BroadcastProgressEvent, error) {
 	var body BroadcastProgressEvent
@@ -14303,6 +14770,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageCreatedEvent()
 	case "message.updated":
 		return t.AsMessageUpdatedEvent()
+	case "migration.progress":
+		return t.AsMigrationProgressEvent()
 	case "migration.updated":
 		return t.AsMigrationEvent()
 	case "ready":
@@ -18656,9 +19125,8 @@ type ClientInterface interface {
 	//
 	// Target inbox and channel, and the options: folders, date range, automatic mail, the status
 	// rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-	// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-	// `connected`.
+	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+	// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -18671,9 +19139,8 @@ type ClientInterface interface {
 	//
 	// Target inbox and channel, and the options: folders, date range, automatic mail, the status
 	// rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-	// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-	// `connected`.
+	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+	// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -18681,6 +19148,17 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /v1/migrations/{migrationId} (the `UpdateMigration` operationId).
 	UpdateMigration(ctx context.Context, migrationId MigrationId, params *UpdateMigrationParams, body UpdateMigrationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CancelMigration Cancel the migration
+	//
+	// Stops for good. What was imported stays; the credentials are deleted in the same step.
+	// `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+	// finished migration.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/cancel (the `CancelMigration` operationId).
+	CancelMigration(ctx context.Context, migrationId MigrationId, params *CancelMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SetMigrationCredentialsWithBody Connect the mailbox with a password
 	//
@@ -18723,6 +19201,109 @@ type ClientInterface interface {
 	//
 	// Corresponds with PUT /v1/migrations/{migrationId}/credentials (the `SetMigrationCredentials` operationId).
 	SetMigrationCredentials(ctx context.Context, migrationId MigrationId, params *SetMigrationCredentialsParams, body SetMigrationCredentialsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListMigrationErrors What went wrong
+	//
+	// Newest first: messages that were skipped or failed and problems with the source, each with
+	// a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+	// per migration; `counts` on the migration are always complete.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/errors (the `ListMigrationErrors` operationId).
+	ListMigrationErrors(ctx context.Context, migrationId MigrationId, params *ListMigrationErrorsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListMigrationFolders The mailbox's folders
+	//
+	// Every folder the mailbox lists, from the last passing connection test or scan: what it
+	// holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+	// becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+	// what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/folders (the `ListMigrationFolders` operationId).
+	ListMigrationFolders(ctx context.Context, migrationId MigrationId, params *ListMigrationFoldersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PauseMigration Pause copying
+	//
+	// A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+	// its place; `paused` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/pause (the `PauseMigration` operationId).
+	PauseMigration(ctx context.Context, migrationId MigrationId, params *PauseMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetMigrationPreview The newest threads as they will look
+	//
+	// The five newest threads the scan will import, as conversations: subject, contact,
+	// status, labels and their messages with direction, author and the visible text. `409
+	// migration_state` before the first scan finished.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/preview (the `GetMigrationPreview` operationId).
+	GetMigrationPreview(ctx context.Context, migrationId MigrationId, params *GetMigrationPreviewParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ResumeMigration Resume copying
+	//
+	// A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+	// continues where it stopped: copying when the copy had started, else back to `connected`
+	// for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+	// hosted_limit` at the server's limit on running migrations.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/resume (the `ResumeMigration` operationId).
+	ResumeMigration(ctx context.Context, migrationId MigrationId, params *ResumeMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// RetryMigrationItems Retry failed messages
+	//
+	// Puts the messages that failed five times back in line; a `syncing` migration copies them
+	// before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+	// states other than `copying`, `paused` and `syncing`.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/retry (the `RetryMigrationItems` operationId).
+	RetryMigrationItems(ctx context.Context, migrationId MigrationId, params *RetryMigrationItemsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ScanMigration Read the mailbox's headers for the dry run
+	//
+	// Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+	// reads the headers of the selected ones (never a body, never a flag), joins the threads,
+	// and fetches the five newest threads for the preview. The migration then becomes `ready`
+	// with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+	// labels, storage and time. Nothing is written outside the migration until `start`. A
+	// second scan reads only what is new and plans again with the current options.
+	//
+	// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+	// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
+	ScanMigration(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StartMigration Start copying
+	//
+	// Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+	// message in a transaction of its own, so a restart never duplicates one. Imported history
+	// is quiet: it keeps its original times, writes no conversation or message events, sends no
+	// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+	// counts in the `imported_*` usage columns. A message the channel already has, in either
+	// direction, is not imported again. When every thread is done the migration is `syncing`.
+	//
+	// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+	// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+	// running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+	// (`YUVA_MIGRATION_MAX_BYTES`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/start (the `StartMigration` operationId).
+	StartMigration(ctx context.Context, migrationId MigrationId, params *StartMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// TestMigrationConnection Test the connection to the mailbox
 	//
@@ -25733,9 +26314,8 @@ func (c *Client) GetMigration(ctx context.Context, migrationId MigrationId, para
 //
 // Target inbox and channel, and the options: folders, date range, automatic mail, the status
 // rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-// `connected`.
+// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -25758,9 +26338,8 @@ func (c *Client) UpdateMigrationWithBody(ctx context.Context, migrationId Migrat
 //
 // Target inbox and channel, and the options: folders, date range, automatic mail, the status
 // rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-// `connected`.
+// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -25769,6 +26348,27 @@ func (c *Client) UpdateMigrationWithBody(ctx context.Context, migrationId Migrat
 // Corresponds with PATCH /v1/migrations/{migrationId} (the `UpdateMigration` operationId).
 func (c *Client) UpdateMigration(ctx context.Context, migrationId MigrationId, params *UpdateMigrationParams, body UpdateMigrationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateMigrationRequest(c.Server, migrationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// CancelMigration Cancel the migration
+//
+// Stops for good. What was imported stays; the credentials are deleted in the same step.
+// `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+// finished migration.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/cancel (the `CancelMigration` operationId).
+func (c *Client) CancelMigration(ctx context.Context, migrationId MigrationId, params *CancelMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCancelMigrationRequest(c.Server, migrationId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -25831,6 +26431,189 @@ func (c *Client) SetMigrationCredentialsWithBody(ctx context.Context, migrationI
 // Corresponds with PUT /v1/migrations/{migrationId}/credentials (the `SetMigrationCredentials` operationId).
 func (c *Client) SetMigrationCredentials(ctx context.Context, migrationId MigrationId, params *SetMigrationCredentialsParams, body SetMigrationCredentialsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSetMigrationCredentialsRequest(c.Server, migrationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMigrationErrors What went wrong
+//
+// Newest first: messages that were skipped or failed and problems with the source, each with
+// a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+// per migration; `counts` on the migration are always complete.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with GET /v1/migrations/{migrationId}/errors (the `ListMigrationErrors` operationId).
+func (c *Client) ListMigrationErrors(ctx context.Context, migrationId MigrationId, params *ListMigrationErrorsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMigrationErrorsRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListMigrationFolders The mailbox's folders
+//
+// Every folder the mailbox lists, from the last passing connection test or scan: what it
+// holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+// becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+// what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with GET /v1/migrations/{migrationId}/folders (the `ListMigrationFolders` operationId).
+func (c *Client) ListMigrationFolders(ctx context.Context, migrationId MigrationId, params *ListMigrationFoldersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListMigrationFoldersRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// PauseMigration Pause copying
+//
+// A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+// its place; `paused` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/pause (the `PauseMigration` operationId).
+func (c *Client) PauseMigration(ctx context.Context, migrationId MigrationId, params *PauseMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPauseMigrationRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetMigrationPreview The newest threads as they will look
+//
+// The five newest threads the scan will import, as conversations: subject, contact,
+// status, labels and their messages with direction, author and the visible text. `409
+// migration_state` before the first scan finished.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with GET /v1/migrations/{migrationId}/preview (the `GetMigrationPreview` operationId).
+func (c *Client) GetMigrationPreview(ctx context.Context, migrationId MigrationId, params *GetMigrationPreviewParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetMigrationPreviewRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ResumeMigration Resume copying
+//
+// A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+// continues where it stopped: copying when the copy had started, else back to `connected`
+// for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+// hosted_limit` at the server's limit on running migrations.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/resume (the `ResumeMigration` operationId).
+func (c *Client) ResumeMigration(ctx context.Context, migrationId MigrationId, params *ResumeMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewResumeMigrationRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// RetryMigrationItems Retry failed messages
+//
+// Puts the messages that failed five times back in line; a `syncing` migration copies them
+// before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+// states other than `copying`, `paused` and `syncing`.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/retry (the `RetryMigrationItems` operationId).
+func (c *Client) RetryMigrationItems(ctx context.Context, migrationId MigrationId, params *RetryMigrationItemsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewRetryMigrationItemsRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ScanMigration Read the mailbox's headers for the dry run
+//
+// Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+// reads the headers of the selected ones (never a body, never a flag), joins the threads,
+// and fetches the five newest threads for the preview. The migration then becomes `ready`
+// with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+// labels, storage and time. Nothing is written outside the migration until `start`. A
+// second scan reads only what is new and plans again with the current options.
+//
+// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
+func (c *Client) ScanMigration(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewScanMigrationRequest(c.Server, migrationId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// StartMigration Start copying
+//
+// Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+// message in a transaction of its own, so a restart never duplicates one. Imported history
+// is quiet: it keeps its original times, writes no conversation or message events, sends no
+// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+// counts in the `imported_*` usage columns. A message the channel already has, in either
+// direction, is not imported again. When every thread is done the migration is `syncing`.
+//
+// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+// running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+// (`YUVA_MIGRATION_MAX_BYTES`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Corresponds with POST /v1/migrations/{migrationId}/start (the `StartMigration` operationId).
+func (c *Client) StartMigration(ctx context.Context, migrationId MigrationId, params *StartMigrationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStartMigrationRequest(c.Server, migrationId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -39404,6 +40187,66 @@ func NewUpdateMigrationRequestWithBody(server string, migrationId MigrationId, p
 	return req, nil
 }
 
+// NewCancelMigrationRequest constructs an http.Request for the CancelMigration method
+func NewCancelMigrationRequest(server string, migrationId MigrationId, params *CancelMigrationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/cancel", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewSetMigrationCredentialsRequest calls the generic SetMigrationCredentials builder with application/json body
 func NewSetMigrationCredentialsRequest(server string, migrationId MigrationId, params *SetMigrationCredentialsParams, body SetMigrationCredentialsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -39459,6 +40302,492 @@ func NewSetMigrationCredentialsRequestWithBody(server string, migrationId Migrat
 			}
 
 			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListMigrationErrorsRequest constructs an http.Request for the ListMigrationErrors method
+func NewListMigrationErrorsRequest(server string, migrationId MigrationId, params *ListMigrationErrorsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/errors", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListMigrationFoldersRequest constructs an http.Request for the ListMigrationFolders method
+func NewListMigrationFoldersRequest(server string, migrationId MigrationId, params *ListMigrationFoldersParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/folders", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewPauseMigrationRequest constructs an http.Request for the PauseMigration method
+func NewPauseMigrationRequest(server string, migrationId MigrationId, params *PauseMigrationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/pause", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetMigrationPreviewRequest constructs an http.Request for the GetMigrationPreview method
+func NewGetMigrationPreviewRequest(server string, migrationId MigrationId, params *GetMigrationPreviewParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/preview", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewResumeMigrationRequest constructs an http.Request for the ResumeMigration method
+func NewResumeMigrationRequest(server string, migrationId MigrationId, params *ResumeMigrationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/resume", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewRetryMigrationItemsRequest constructs an http.Request for the RetryMigrationItems method
+func NewRetryMigrationItemsRequest(server string, migrationId MigrationId, params *RetryMigrationItemsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/retry", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewScanMigrationRequest constructs an http.Request for the ScanMigration method
+func NewScanMigrationRequest(server string, migrationId MigrationId, params *ScanMigrationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/scan", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewStartMigrationRequest constructs an http.Request for the StartMigration method
+func NewStartMigrationRequest(server string, migrationId MigrationId, params *StartMigrationParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "migrationId", migrationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/migrations/%s/start", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.IdempotencyKey != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.YuvaWorkspace != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam1)
 		}
 
 	}
@@ -44858,9 +46187,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Target inbox and channel, and the options: folders, date range, automatic mail, the status
 	// rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-	// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-	// `connected`.
+	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+	// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -44873,9 +46201,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Target inbox and channel, and the options: folders, date range, automatic mail, the status
 	// rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-	// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-	// `connected`.
+	// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+	// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 	//
 	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 	//
@@ -44883,6 +46210,19 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /v1/migrations/{migrationId} (the `UpdateMigration` operationId).
 	UpdateMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *UpdateMigrationParams, body UpdateMigrationJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateMigrationResponse, error)
+
+	// CancelMigrationWithResponse Cancel the migration
+	//
+	// Stops for good. What was imported stays; the credentials are deleted in the same step.
+	// `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+	// finished migration.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/cancel (the `CancelMigration` operationId).
+	CancelMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *CancelMigrationParams, reqEditors ...RequestEditorFn) (*CancelMigrationResponse, error)
 
 	// SetMigrationCredentialsWithBodyWithResponse Connect the mailbox with a password
 	//
@@ -44925,6 +46265,125 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PUT /v1/migrations/{migrationId}/credentials (the `SetMigrationCredentials` operationId).
 	SetMigrationCredentialsWithResponse(ctx context.Context, migrationId MigrationId, params *SetMigrationCredentialsParams, body SetMigrationCredentialsJSONRequestBody, reqEditors ...RequestEditorFn) (*SetMigrationCredentialsResponse, error)
+
+	// ListMigrationErrorsWithResponse What went wrong
+	//
+	// Newest first: messages that were skipped or failed and problems with the source, each with
+	// a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+	// per migration; `counts` on the migration are always complete.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/errors (the `ListMigrationErrors` operationId).
+	ListMigrationErrorsWithResponse(ctx context.Context, migrationId MigrationId, params *ListMigrationErrorsParams, reqEditors ...RequestEditorFn) (*ListMigrationErrorsResponse, error)
+
+	// ListMigrationFoldersWithResponse The mailbox's folders
+	//
+	// Every folder the mailbox lists, from the last passing connection test or scan: what it
+	// holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+	// becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+	// what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/folders (the `ListMigrationFolders` operationId).
+	ListMigrationFoldersWithResponse(ctx context.Context, migrationId MigrationId, params *ListMigrationFoldersParams, reqEditors ...RequestEditorFn) (*ListMigrationFoldersResponse, error)
+
+	// PauseMigrationWithResponse Pause copying
+	//
+	// A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+	// its place; `paused` answers as is. `409 migration_state` otherwise.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/pause (the `PauseMigration` operationId).
+	PauseMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *PauseMigrationParams, reqEditors ...RequestEditorFn) (*PauseMigrationResponse, error)
+
+	// GetMigrationPreviewWithResponse The newest threads as they will look
+	//
+	// The five newest threads the scan will import, as conversations: subject, contact,
+	// status, labels and their messages with direction, author and the visible text. `409
+	// migration_state` before the first scan finished.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/migrations/{migrationId}/preview (the `GetMigrationPreview` operationId).
+	GetMigrationPreviewWithResponse(ctx context.Context, migrationId MigrationId, params *GetMigrationPreviewParams, reqEditors ...RequestEditorFn) (*GetMigrationPreviewResponse, error)
+
+	// ResumeMigrationWithResponse Resume copying
+	//
+	// A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+	// continues where it stopped: copying when the copy had started, else back to `connected`
+	// for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+	// hosted_limit` at the server's limit on running migrations.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/resume (the `ResumeMigration` operationId).
+	ResumeMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *ResumeMigrationParams, reqEditors ...RequestEditorFn) (*ResumeMigrationResponse, error)
+
+	// RetryMigrationItemsWithResponse Retry failed messages
+	//
+	// Puts the messages that failed five times back in line; a `syncing` migration copies them
+	// before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+	// states other than `copying`, `paused` and `syncing`.
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/retry (the `RetryMigrationItems` operationId).
+	RetryMigrationItemsWithResponse(ctx context.Context, migrationId MigrationId, params *RetryMigrationItemsParams, reqEditors ...RequestEditorFn) (*RetryMigrationItemsResponse, error)
+
+	// ScanMigrationWithResponse Read the mailbox's headers for the dry run
+	//
+	// Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+	// reads the headers of the selected ones (never a body, never a flag), joins the threads,
+	// and fetches the five newest threads for the preview. The migration then becomes `ready`
+	// with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+	// labels, storage and time. Nothing is written outside the migration until `start`. A
+	// second scan reads only what is new and plans again with the current options.
+	//
+	// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+	// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
+	ScanMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*ScanMigrationResponse, error)
+
+	// StartMigrationWithResponse Start copying
+	//
+	// Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+	// message in a transaction of its own, so a restart never duplicates one. Imported history
+	// is quiet: it keeps its original times, writes no conversation or message events, sends no
+	// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+	// counts in the `imported_*` usage columns. A message the channel already has, in either
+	// direction, is not imported again. When every thread is done the migration is `syncing`.
+	//
+	// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+	// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+	// running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+	// (`YUVA_MIGRATION_MAX_BYTES`).
+	//
+	// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/migrations/{migrationId}/start (the `StartMigration` operationId).
+	StartMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *StartMigrationParams, reqEditors ...RequestEditorFn) (*StartMigrationResponse, error)
 
 	// TestMigrationConnectionWithResponse Test the connection to the mailbox
 	//
@@ -59522,6 +60981,75 @@ func (r UpdateMigrationResponse) ContentType() string {
 	return ""
 }
 
+type CancelMigrationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r CancelMigrationResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r CancelMigrationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r CancelMigrationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r CancelMigrationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r CancelMigrationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r CancelMigrationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r CancelMigrationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CancelMigrationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CancelMigrationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type SetMigrationCredentialsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -59592,6 +61120,572 @@ func (r SetMigrationCredentialsResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SetMigrationCredentialsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListMigrationErrorsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MigrationErrorPage
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMigrationErrorsResponse) GetJSON200() *MigrationErrorPage {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListMigrationErrorsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMigrationErrorsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMigrationErrorsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMigrationErrorsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMigrationErrorsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMigrationErrorsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMigrationErrorsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMigrationErrorsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListMigrationFoldersResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MigrationFolderList
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListMigrationFoldersResponse) GetJSON200() *MigrationFolderList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListMigrationFoldersResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListMigrationFoldersResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListMigrationFoldersResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListMigrationFoldersResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListMigrationFoldersResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListMigrationFoldersResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListMigrationFoldersResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PauseMigrationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r PauseMigrationResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r PauseMigrationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r PauseMigrationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r PauseMigrationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r PauseMigrationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r PauseMigrationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r PauseMigrationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PauseMigrationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PauseMigrationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetMigrationPreviewResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *MigrationPreview
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetMigrationPreviewResponse) GetJSON200() *MigrationPreview {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetMigrationPreviewResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetMigrationPreviewResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetMigrationPreviewResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r GetMigrationPreviewResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r GetMigrationPreviewResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetMigrationPreviewResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetMigrationPreviewResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetMigrationPreviewResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ResumeMigrationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ResumeMigrationResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ResumeMigrationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ResumeMigrationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ResumeMigrationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ResumeMigrationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r ResumeMigrationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r ResumeMigrationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ResumeMigrationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ResumeMigrationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ResumeMigrationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type RetryMigrationItemsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r RetryMigrationItemsResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r RetryMigrationItemsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r RetryMigrationItemsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r RetryMigrationItemsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r RetryMigrationItemsResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetBody returns the raw response body bytes
+func (r RetryMigrationItemsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r RetryMigrationItemsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r RetryMigrationItemsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r RetryMigrationItemsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ScanMigrationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ScanMigrationResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ScanMigrationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ScanMigrationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ScanMigrationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r ScanMigrationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r ScanMigrationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r ScanMigrationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ScanMigrationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ScanMigrationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ScanMigrationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StartMigrationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *Migration
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON409 the response for an HTTP 409 `application/problem+json` response
+	ApplicationproblemJSON409 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r StartMigrationResponse) GetJSON200() *Migration {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r StartMigrationResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r StartMigrationResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r StartMigrationResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON409 returns the response for an HTTP 409 `application/problem+json` response
+func (r StartMigrationResponse) GetApplicationproblemJSON409() *Problem {
+	return r.ApplicationproblemJSON409
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r StartMigrationResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r StartMigrationResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r StartMigrationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StartMigrationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StartMigrationResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -66882,9 +68976,8 @@ func (c *ClientWithResponses) GetMigrationWithResponse(ctx context.Context, migr
 //
 // Target inbox and channel, and the options: folders, date range, automatic mail, the status
 // rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-// `connected`.
+// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -66903,9 +68996,8 @@ func (c *ClientWithResponses) UpdateMigrationWithBodyWithResponse(ctx context.Co
 //
 // Target inbox and channel, and the options: folders, date range, automatic mail, the status
 // rule, originals, team addresses, people and labels. Only in `draft`, `connected` and
-// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. A change
-// to what is read (folders, `since`, `skip_automatic`) sends a `ready` migration back to
-// `connected`.
+// `ready` (`409 migration_state`); `source_address` and `preset` only in `draft`. Any change
+// sends a `ready` migration back to `connected`: scan again for a dry run of the new choice.
 //
 // Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
 //
@@ -66918,6 +69010,25 @@ func (c *ClientWithResponses) UpdateMigrationWithResponse(ctx context.Context, m
 		return nil, err
 	}
 	return ParseUpdateMigrationResponse(rsp)
+}
+
+// CancelMigrationWithResponse Cancel the migration
+//
+// Stops for good. What was imported stays; the credentials are deleted in the same step.
+// `cancelled` answers as is; `409 migration_state` for a `draft` (delete it instead) and a
+// finished migration.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/cancel (the `CancelMigration` operationId).
+func (c *ClientWithResponses) CancelMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *CancelMigrationParams, reqEditors ...RequestEditorFn) (*CancelMigrationResponse, error) {
+	rsp, err := c.CancelMigration(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCancelMigrationResponse(rsp)
 }
 
 // SetMigrationCredentialsWithBodyWithResponse Connect the mailbox with a password
@@ -66972,6 +69083,173 @@ func (c *ClientWithResponses) SetMigrationCredentialsWithResponse(ctx context.Co
 		return nil, err
 	}
 	return ParseSetMigrationCredentialsResponse(rsp)
+}
+
+// ListMigrationErrorsWithResponse What went wrong
+//
+// Newest first: messages that were skipped or failed and problems with the source, each with
+// a `code`, a short text and the message's folder, date and subject. At most 1,000 are kept
+// per migration; `counts` on the migration are always complete.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/migrations/{migrationId}/errors (the `ListMigrationErrors` operationId).
+func (c *ClientWithResponses) ListMigrationErrorsWithResponse(ctx context.Context, migrationId MigrationId, params *ListMigrationErrorsParams, reqEditors ...RequestEditorFn) (*ListMigrationErrorsResponse, error) {
+	rsp, err := c.ListMigrationErrors(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMigrationErrorsResponse(rsp)
+}
+
+// ListMigrationFoldersWithResponse The mailbox's folders
+//
+// Every folder the mailbox lists, from the last passing connection test or scan: what it
+// holds (`kind`), whether it is read (`selected`; change with `options.folders`), what it
+// becomes (`use` and `label`; change with `options.labels`), its size and, once copying,
+// what happened to its messages. Spam, trash, drafts and the like are listed but never read.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/migrations/{migrationId}/folders (the `ListMigrationFolders` operationId).
+func (c *ClientWithResponses) ListMigrationFoldersWithResponse(ctx context.Context, migrationId MigrationId, params *ListMigrationFoldersParams, reqEditors ...RequestEditorFn) (*ListMigrationFoldersResponse, error) {
+	rsp, err := c.ListMigrationFolders(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListMigrationFoldersResponse(rsp)
+}
+
+// PauseMigrationWithResponse Pause copying
+//
+// A `copying` migration stops within the batch in progress (at most 50 messages) and keeps
+// its place; `paused` answers as is. `409 migration_state` otherwise.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/pause (the `PauseMigration` operationId).
+func (c *ClientWithResponses) PauseMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *PauseMigrationParams, reqEditors ...RequestEditorFn) (*PauseMigrationResponse, error) {
+	rsp, err := c.PauseMigration(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePauseMigrationResponse(rsp)
+}
+
+// GetMigrationPreviewWithResponse The newest threads as they will look
+//
+// The five newest threads the scan will import, as conversations: subject, contact,
+// status, labels and their messages with direction, author and the visible text. `409
+// migration_state` before the first scan finished.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/migrations/{migrationId}/preview (the `GetMigrationPreview` operationId).
+func (c *ClientWithResponses) GetMigrationPreviewWithResponse(ctx context.Context, migrationId MigrationId, params *GetMigrationPreviewParams, reqEditors ...RequestEditorFn) (*GetMigrationPreviewResponse, error) {
+	rsp, err := c.GetMigrationPreview(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetMigrationPreviewResponse(rsp)
+}
+
+// ResumeMigrationWithResponse Resume copying
+//
+// A `paused` migration, or one that `needs_attention` after the mailbox was reconnected,
+// continues where it stopped: copying when the copy had started, else back to `connected`
+// for a new scan. `copying` answers as is; `409 migration_state` otherwise, `422
+// hosted_limit` at the server's limit on running migrations.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/resume (the `ResumeMigration` operationId).
+func (c *ClientWithResponses) ResumeMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *ResumeMigrationParams, reqEditors ...RequestEditorFn) (*ResumeMigrationResponse, error) {
+	rsp, err := c.ResumeMigration(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseResumeMigrationResponse(rsp)
+}
+
+// RetryMigrationItemsWithResponse Retry failed messages
+//
+// Puts the messages that failed five times back in line; a `syncing` migration copies them
+// before it syncs again. Without failed messages it answers as is. `409 migration_state` in
+// states other than `copying`, `paused` and `syncing`.
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/retry (the `RetryMigrationItems` operationId).
+func (c *ClientWithResponses) RetryMigrationItemsWithResponse(ctx context.Context, migrationId MigrationId, params *RetryMigrationItemsParams, reqEditors ...RequestEditorFn) (*RetryMigrationItemsResponse, error) {
+	rsp, err := c.RetryMigrationItems(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseRetryMigrationItemsResponse(rsp)
+}
+
+// ScanMigrationWithResponse Read the mailbox's headers for the dry run
+//
+// Moves a `connected` or `ready` migration to `scanning`: the server lists the folders,
+// reads the headers of the selected ones (never a body, never a flag), joins the threads,
+// and fetches the five newest threads for the preview. The migration then becomes `ready`
+// with `estimate`, the dry run: what will be imported, what is skipped and why, contacts,
+// labels, storage and time. Nothing is written outside the migration until `start`. A
+// second scan reads only what is new and plans again with the current options.
+//
+// `409 migration_state` in other states; `422 hosted_limit` when the workspace already runs
+// as many migrations as the server allows (`YUVA_MIGRATION_MAX_ACTIVE`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/scan (the `ScanMigration` operationId).
+func (c *ClientWithResponses) ScanMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *ScanMigrationParams, reqEditors ...RequestEditorFn) (*ScanMigrationResponse, error) {
+	rsp, err := c.ScanMigration(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseScanMigrationResponse(rsp)
+}
+
+// StartMigrationWithResponse Start copying
+//
+// Moves a `ready` migration to `copying`. Whole threads are imported, newest first, each
+// message in a transaction of its own, so a restart never duplicates one. Imported history
+// is quiet: it keeps its original times, writes no conversation or message events, sends no
+// webhook, push, notification or auto-reply, is never unread, stays out of `/v1/stats` and
+// counts in the `imported_*` usage columns. A message the channel already has, in either
+// direction, is not imported again. When every thread is done the migration is `syncing`.
+//
+// Needs the target inbox and e-mail channel (`409 migration_state` otherwise, as in states
+// other than `ready`; `copying` answers as is). `422 hosted_limit` at the server's limits on
+// running migrations (`YUVA_MIGRATION_MAX_ACTIVE`) or imported bytes this month
+// (`YUVA_MIGRATION_MAX_BYTES`).
+//
+// Owners, admins and API keys without an inbox limit. Scope: `migrations:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/migrations/{migrationId}/start (the `StartMigration` operationId).
+func (c *ClientWithResponses) StartMigrationWithResponse(ctx context.Context, migrationId MigrationId, params *StartMigrationParams, reqEditors ...RequestEditorFn) (*StartMigrationResponse, error) {
+	rsp, err := c.StartMigration(ctx, migrationId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStartMigrationResponse(rsp)
 }
 
 // TestMigrationConnectionWithResponse Test the connection to the mailbox
@@ -78728,6 +81006,60 @@ func ParseUpdateMigrationResponse(rsp *http.Response) (*UpdateMigrationResponse,
 	return response, nil
 }
 
+// ParseCancelMigrationResponse parses an HTTP response from a CancelMigrationWithResponse call
+func ParseCancelMigrationResponse(rsp *http.Response) (*CancelMigrationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CancelMigrationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseSetMigrationCredentialsResponse parses an HTTP response from a SetMigrationCredentialsWithResponse call
 func ParseSetMigrationCredentialsResponse(rsp *http.Response) (*SetMigrationCredentialsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -78751,6 +81083,452 @@ func ParseSetMigrationCredentialsResponse(rsp *http.Response) (*SetMigrationCred
 			return nil, err
 		}
 		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListMigrationErrorsResponse parses an HTTP response from a ListMigrationErrorsWithResponse call
+func ParseListMigrationErrorsResponse(rsp *http.Response) (*ListMigrationErrorsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMigrationErrorsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MigrationErrorPage
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListMigrationFoldersResponse parses an HTTP response from a ListMigrationFoldersWithResponse call
+func ParseListMigrationFoldersResponse(rsp *http.Response) (*ListMigrationFoldersResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListMigrationFoldersResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MigrationFolderList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePauseMigrationResponse parses an HTTP response from a PauseMigrationWithResponse call
+func ParsePauseMigrationResponse(rsp *http.Response) (*PauseMigrationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PauseMigrationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetMigrationPreviewResponse parses an HTTP response from a GetMigrationPreviewWithResponse call
+func ParseGetMigrationPreviewResponse(rsp *http.Response) (*GetMigrationPreviewResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetMigrationPreviewResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest MigrationPreview
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseResumeMigrationResponse parses an HTTP response from a ResumeMigrationWithResponse call
+func ParseResumeMigrationResponse(rsp *http.Response) (*ResumeMigrationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ResumeMigrationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseRetryMigrationItemsResponse parses an HTTP response from a RetryMigrationItemsWithResponse call
+func ParseRetryMigrationItemsResponse(rsp *http.Response) (*RetryMigrationItemsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &RetryMigrationItemsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseScanMigrationResponse parses an HTTP response from a ScanMigrationWithResponse call
+func ParseScanMigrationResponse(rsp *http.Response) (*ScanMigrationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ScanMigrationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 409:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON409 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStartMigrationResponse parses an HTTP response from a StartMigrationWithResponse call
+func ParseStartMigrationResponse(rsp *http.Response) (*StartMigrationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StartMigrationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest Migration
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem

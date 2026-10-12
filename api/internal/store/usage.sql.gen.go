@@ -12,6 +12,34 @@ import (
 	"uuid"
 )
 
+const addImportedUsage = `-- name: AddImportedUsage :exec
+INSERT INTO usage_counters (workspace_id, month, imported_conversations, imported_messages, imported_bytes)
+VALUES ($1, $2, $3, $4, $5)
+ON CONFLICT (workspace_id, month) DO UPDATE SET
+    imported_conversations = usage_counters.imported_conversations + EXCLUDED.imported_conversations,
+    imported_messages = usage_counters.imported_messages + EXCLUDED.imported_messages,
+    imported_bytes = usage_counters.imported_bytes + EXCLUDED.imported_bytes
+`
+
+type AddImportedUsageParams struct {
+	WorkspaceID   uuid.UUID
+	Month         time.Time
+	Conversations int64
+	Messages      int64
+	Bytes         int64
+}
+
+func (q *Queries) AddImportedUsage(ctx context.Context, arg AddImportedUsageParams) error {
+	_, err := q.db.Exec(ctx, addImportedUsage,
+		arg.WorkspaceID,
+		arg.Month,
+		arg.Conversations,
+		arg.Messages,
+		arg.Bytes,
+	)
+	return err
+}
+
 const addUsage = `-- name: AddUsage :exec
 INSERT INTO usage_counters (workspace_id, month, conversations, messages, attachment_bytes)
 VALUES ($1, $2, $3, $4, $5)

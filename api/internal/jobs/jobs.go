@@ -44,9 +44,19 @@ const (
 // notifications or webhooks on the default queue.
 const BroadcastQueue = "broadcast"
 
-func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
+// MigrationQueue holds the jobs that move mailboxes into Yuva, for the same reason.
+const MigrationQueue = "migrations"
+
+const MigrationWatchdogInterval = time.Minute
+
+// New starts no migration workers when migrationWorkers is 0.
+func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorkers, migrationWorkers int, register ...func(*river.Workers)) (*river.Client[pgx.Tx], error) {
 	if broadcastWorkers < 1 {
 		broadcastWorkers = 2
+	}
+	queues := map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}}
+	if migrationWorkers > 0 {
+		queues[MigrationQueue] = river.QueueConfig{MaxWorkers: migrationWorkers}
 	}
 	workers := river.NewWorkers()
 	river.AddWorker(workers, &EventCleanupWorker{Queries: q, Now: time.Now})
@@ -55,7 +65,7 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 	}
 	return river.NewClient(riverpgxv5.New(pool), &river.Config{
 		Logger:  log,
-		Queues:  map[string]river.QueueConfig{river.QueueDefault: {MaxWorkers: 10}, BroadcastQueue: {MaxWorkers: broadcastWorkers}},
+		Queues:  queues,
 		Workers: workers,
 		PeriodicJobs: []*river.PeriodicJob{
 			river.NewPeriodicJob(river.PeriodicInterval(time.Hour), func() (river.JobArgs, *river.InsertOpts) {
@@ -73,6 +83,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 			river.NewPeriodicJob(river.PeriodicInterval(BroadcastSweepInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return BroadcastSweepArgs{}, nil
 			}, &river.PeriodicJobOpts{ID: "broadcast_sweep", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(MigrationWatchdogInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return MigrationWatchdogArgs{}, nil
+			}, &river.PeriodicJobOpts{ID: "migration_watchdog", RunOnStart: true}),
 		},
 	})
 }
@@ -96,6 +109,11 @@ func (OperatorDigestArgs) Kind() string { return "operator_digest" }
 type BroadcastSweepArgs struct{}
 
 func (BroadcastSweepArgs) Kind() string { return "broadcast_sweep" }
+
+// MigrationWatchdogArgs is worked by the api package, which owns migrations.
+type MigrationWatchdogArgs struct{}
+
+func (MigrationWatchdogArgs) Kind() string { return "migration_watchdog" }
 
 type EventCleanupArgs struct{}
 

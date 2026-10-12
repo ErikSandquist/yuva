@@ -57,6 +57,15 @@ type TestResult struct {
 	Folders     int
 	Messages    int64
 	Certificate string
+	List        []FolderInfo
+}
+
+// FolderInfo is a folder the test saw; Messages is known for the folders read by default.
+type FolderInfo struct {
+	Name     string
+	Delim    string
+	Kind     string
+	Messages int64
 }
 
 func (r TestResult) Failed() TestStep {
@@ -178,16 +187,17 @@ func (t Tester) Run(ctx context.Context, target Target) TestResult {
 	res.Folders = len(folders)
 	gmail := target.Preset.ID == PresetGmail || target.Preset.ID == PresetGoogleWorkspace
 	for _, f := range folders {
-		if !f.Selectable() || !DefaultSelected(target.Preset, FolderKind(f, gmail)) {
+		if !f.Selectable() {
 			continue
 		}
-		if d, ok := ctx.Deadline(); ok && time.Until(d) < 2*time.Second {
-			break
+		info := FolderInfo{Name: f.Name, Delim: f.Delim, Kind: FolderKind(f, gmail)}
+		if d, ok := ctx.Deadline(); DefaultSelected(target.Preset, info.Kind) && (!ok || time.Until(d) >= 2*time.Second) {
+			if st, err := r.Status(ctx, f.Name); err == nil {
+				info.Messages = int64(st.Messages)
+				res.Messages += info.Messages
+			}
 		}
-		st, err := r.Status(ctx, f.Name)
-		if err == nil {
-			res.Messages += int64(st.Messages)
-		}
+		res.List = append(res.List, info)
 	}
 	pass(StepFolders)
 	res.OK = true

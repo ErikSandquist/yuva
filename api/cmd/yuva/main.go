@@ -241,7 +241,10 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 
 		EmailImagesMaxBytes: cfg.EmailImagesMaxBytes,
 		Imports:             api.ImportSettings{MaxRows: cfg.ImportMaxRows},
-		Migrations:          api.MigrationSettings{Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate},
+		Migrations: api.MigrationSettings{
+			Sources: cfg.MigrationSources, AllowPrivate: cfg.MigrationAllowPrivate, MaxActive: cfg.MigrationMaxActive,
+			MaxBytes: cfg.MigrationMaxBytes, MaxMessageBytes: cfg.MigrationMaxMessageBytes,
+		},
 		Broadcasts: api.BroadcastSettings{
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},
@@ -264,7 +267,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	if cfg.IngressSecret != "" && cfg.IngressAuthservID == "" {
 		log.Warn("YUVA_INGRESS_AUTHSERV_ID is not set; DMARC results of inbound mail are stored but not used")
 	}
-	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, srv.AddWorkers)
+	queue, err := jobs.New(st.Pool, st.Queries, log, cfg.BroadcastWorkers, cfg.MigrationWorkers, srv.AddWorkers)
 	if err != nil {
 		return fmt.Errorf("job queue: %w", err)
 	}

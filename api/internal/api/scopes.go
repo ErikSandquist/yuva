@@ -185,6 +185,15 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"DeleteMigration":         {oas.MigrationsManage},
 	"SetMigrationCredentials": {oas.MigrationsManage},
 	"TestMigrationConnection": {oas.MigrationsManage},
+	"ListMigrationFolders":    {oas.MigrationsManage},
+	"ScanMigration":           {oas.MigrationsManage},
+	"GetMigrationPreview":     {oas.MigrationsManage},
+	"StartMigration":          {oas.MigrationsManage},
+	"PauseMigration":          {oas.MigrationsManage},
+	"ResumeMigration":         {oas.MigrationsManage},
+	"CancelMigration":         {oas.MigrationsManage},
+	"RetryMigrationItems":     {oas.MigrationsManage},
+	"ListMigrationErrors":     {oas.MigrationsManage},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

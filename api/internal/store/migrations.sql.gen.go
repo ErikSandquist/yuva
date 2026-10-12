@@ -45,6 +45,144 @@ func (q *Queries) AddMigrationAudit(ctx context.Context, arg AddMigrationAuditPa
 	return id, err
 }
 
+const addMigrationError = `-- name: AddMigrationError :exec
+INSERT INTO migration_errors (workspace_id, migration_id, code, detail, folder, item_date, item_subject, created_at)
+SELECT $1, $2, $3, $4, $5, $6, $7, $8
+WHERE (SELECT count(*) FROM migration_errors WHERE workspace_id = $1 AND migration_id = $2) < 1000
+`
+
+type AddMigrationErrorParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Code        string
+	Detail      string
+	Folder      string
+	ItemDate    *time.Time
+	ItemSubject string
+	Now         time.Time
+}
+
+func (q *Queries) AddMigrationError(ctx context.Context, arg AddMigrationErrorParams) error {
+	_, err := q.db.Exec(ctx, addMigrationError,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.Code,
+		arg.Detail,
+		arg.Folder,
+		arg.ItemDate,
+		arg.ItemSubject,
+		arg.Now,
+	)
+	return err
+}
+
+const addMigrationThreadDone = `-- name: AddMigrationThreadDone :exec
+UPDATE migration_threads SET done = done + 1
+WHERE workspace_id = $1 AND migration_id = $2 AND thread_key = $3
+`
+
+type AddMigrationThreadDoneParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ThreadKey   string
+}
+
+func (q *Queries) AddMigrationThreadDone(ctx context.Context, arg AddMigrationThreadDoneParams) error {
+	_, err := q.db.Exec(ctx, addMigrationThreadDone, arg.WorkspaceID, arg.MigrationID, arg.ThreadKey)
+	return err
+}
+
+const addMigrationThreadItem = `-- name: AddMigrationThreadItem :exec
+UPDATE migration_threads SET items = items + 1, last_at = greatest(last_at, $1)
+WHERE workspace_id = $2 AND migration_id = $3 AND thread_key = $4
+`
+
+type AddMigrationThreadItemParams struct {
+	At          time.Time
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ThreadKey   string
+}
+
+func (q *Queries) AddMigrationThreadItem(ctx context.Context, arg AddMigrationThreadItemParams) error {
+	_, err := q.db.Exec(ctx, addMigrationThreadItem,
+		arg.At,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ThreadKey,
+	)
+	return err
+}
+
+const applyMigrationItemsPlan = `-- name: ApplyMigrationItemsPlan :exec
+UPDATE migration_items i SET state = p.state, reason = p.reason, thread_key = p.thread_key
+FROM (SELECT unnest($3::text[]) AS source_id, unnest($4::text[]) AS state, unnest($5::text[]) AS reason,
+             unnest($6::text[]) AS thread_key) p
+WHERE i.workspace_id = $1 AND i.migration_id = $2 AND i.source_id = p.source_id
+`
+
+type ApplyMigrationItemsPlanParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceIds   []string
+	States      []string
+	Reasons     []string
+	ThreadKeys  []string
+}
+
+func (q *Queries) ApplyMigrationItemsPlan(ctx context.Context, arg ApplyMigrationItemsPlanParams) error {
+	_, err := q.db.Exec(ctx, applyMigrationItemsPlan,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.SourceIds,
+		arg.States,
+		arg.Reasons,
+		arg.ThreadKeys,
+	)
+	return err
+}
+
+const clearMigrationLease = `-- name: ClearMigrationLease :exec
+UPDATE migrations SET lease_until = NULL, lease_job_id = NULL WHERE workspace_id = $1 AND id = $2
+`
+
+type ClearMigrationLeaseParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) ClearMigrationLease(ctx context.Context, arg ClearMigrationLeaseParams) error {
+	_, err := q.db.Exec(ctx, clearMigrationLease, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const countMigrationItemAttempt = `-- name: CountMigrationItemAttempt :one
+UPDATE migration_items SET attempts = attempts + 1,
+    state = CASE WHEN attempts + 1 >= $1::int THEN 'failed' ELSE state END,
+    reason = CASE WHEN attempts + 1 >= $1::int THEN 'failed' ELSE reason END
+WHERE workspace_id = $2 AND migration_id = $3 AND source_id = $4 AND state = 'planned'
+RETURNING state
+`
+
+type CountMigrationItemAttemptParams struct {
+	MaxAttempts int32
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+}
+
+func (q *Queries) CountMigrationItemAttempt(ctx context.Context, arg CountMigrationItemAttemptParams) (string, error) {
+	row := q.db.QueryRow(ctx, countMigrationItemAttempt,
+		arg.MaxAttempts,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.SourceID,
+	)
+	var state string
+	err := row.Scan(&state)
+	return state, err
+}
+
 const countMigrationTests = `-- name: CountMigrationTests :one
 SELECT count(*) FILTER (WHERE migration_id = $1)::int AS migration,
        count(*)::int AS workspace,
@@ -77,6 +215,91 @@ func (q *Queries) CountMigrationTests(ctx context.Context, arg CountMigrationTes
 		&i.WorkspaceOldest,
 	)
 	return i, err
+}
+
+const countPlannedMigrationItems = `-- name: CountPlannedMigrationItems :one
+SELECT count(*)::bigint FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND state = 'planned' AND in_copy
+`
+
+type CountPlannedMigrationItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) CountPlannedMigrationItems(ctx context.Context, arg CountPlannedMigrationItemsParams) (int64, error) {
+	row := q.db.QueryRow(ctx, countPlannedMigrationItems, arg.WorkspaceID, arg.MigrationID)
+	var column_1 int64
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const countRunningMigrations = `-- name: CountRunningMigrations :one
+SELECT count(*)::int FROM migrations
+WHERE workspace_id = $1 AND state IN ('scanning', 'copying', 'syncing') AND id <> $2
+`
+
+type CountRunningMigrationsParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) CountRunningMigrations(ctx context.Context, arg CountRunningMigrationsParams) (int32, error) {
+	row := q.db.QueryRow(ctx, countRunningMigrations, arg.WorkspaceID, arg.ID)
+	var column_1 int32
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const createImportedContact = `-- name: CreateImportedContact :one
+INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_at, updated_at, migration_id)
+VALUES ($1, $2, $3, '{}', false, $4, $4, $5)
+RETURNING id
+`
+
+type CreateImportedContactParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	Name        string
+	Now         time.Time
+	MigrationID *uuid.UUID
+}
+
+func (q *Queries) CreateImportedContact(ctx context.Context, arg CreateImportedContactParams) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, createImportedContact,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.Name,
+		arg.Now,
+		arg.MigrationID,
+	)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
+
+const createLabelIfMissing = `-- name: CreateLabelIfMissing :exec
+INSERT INTO labels (id, workspace_id, name, color, created_at) VALUES ($1, $2, $3, $4, $5)
+ON CONFLICT (workspace_id, name) DO NOTHING
+`
+
+type CreateLabelIfMissingParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	Name        string
+	Color       string
+	Now         time.Time
+}
+
+func (q *Queries) CreateLabelIfMissing(ctx context.Context, arg CreateLabelIfMissingParams) error {
+	_, err := q.db.Exec(ctx, createLabelIfMissing,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.Name,
+		arg.Color,
+		arg.Now,
+	)
+	return err
 }
 
 const createMigration = `-- name: CreateMigration :one
@@ -169,6 +392,214 @@ func (q *Queries) DeleteMigration(ctx context.Context, arg DeleteMigrationParams
 	return result.RowsAffected(), nil
 }
 
+const deleteMigrationCredentials = `-- name: DeleteMigrationCredentials :execrows
+DELETE FROM migration_credentials WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationCredentialsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationCredentials(ctx context.Context, arg DeleteMigrationCredentialsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, deleteMigrationCredentials, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const deleteMigrationErrors = `-- name: DeleteMigrationErrors :exec
+DELETE FROM migration_errors WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationErrorsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationErrors(ctx context.Context, arg DeleteMigrationErrorsParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationErrors, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const deleteMigrationFolder = `-- name: DeleteMigrationFolder :exec
+DELETE FROM migration_folders WHERE workspace_id = $1 AND migration_id = $2 AND id = $3
+`
+
+type DeleteMigrationFolderParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) DeleteMigrationFolder(ctx context.Context, arg DeleteMigrationFolderParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationFolder, arg.WorkspaceID, arg.MigrationID, arg.ID)
+	return err
+}
+
+const deleteMigrationFolderItems = `-- name: DeleteMigrationFolderItems :exec
+DELETE FROM migration_items WHERE workspace_id = $1 AND migration_id = $2 AND folder_id = $3
+`
+
+type DeleteMigrationFolderItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	FolderID    *int32
+}
+
+func (q *Queries) DeleteMigrationFolderItems(ctx context.Context, arg DeleteMigrationFolderItemsParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationFolderItems, arg.WorkspaceID, arg.MigrationID, arg.FolderID)
+	return err
+}
+
+const deleteMigrationItems = `-- name: DeleteMigrationItems :exec
+DELETE FROM migration_items WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationItems(ctx context.Context, arg DeleteMigrationItemsParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationItems, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const deleteMigrationThreads = `-- name: DeleteMigrationThreads :exec
+DELETE FROM migration_threads WHERE workspace_id = $1 AND migration_id = $2
+`
+
+type DeleteMigrationThreadsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) DeleteMigrationThreads(ctx context.Context, arg DeleteMigrationThreadsParams) error {
+	_, err := q.db.Exec(ctx, deleteMigrationThreads, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const fillContactName = `-- name: FillContactName :exec
+UPDATE contacts SET name = $1 WHERE workspace_id = $2 AND id = $3 AND name = ''
+`
+
+type FillContactNameParams struct {
+	Name        string
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) FillContactName(ctx context.Context, arg FillContactNameParams) error {
+	_, err := q.db.Exec(ctx, fillContactName, arg.Name, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const findChannelEmailByHeader = `-- name: FindChannelEmailByHeader :one
+SELECT message_id, conversation_id FROM message_emails
+WHERE workspace_id = $1 AND channel_id = $2 AND header_message_id = $3
+LIMIT 1
+`
+
+type FindChannelEmailByHeaderParams struct {
+	WorkspaceID     uuid.UUID
+	ChannelID       *uuid.UUID
+	HeaderMessageID string
+}
+
+type FindChannelEmailByHeaderRow struct {
+	MessageID      uuid.UUID
+	ConversationID uuid.UUID
+}
+
+func (q *Queries) FindChannelEmailByHeader(ctx context.Context, arg FindChannelEmailByHeaderParams) (FindChannelEmailByHeaderRow, error) {
+	row := q.db.QueryRow(ctx, findChannelEmailByHeader, arg.WorkspaceID, arg.ChannelID, arg.HeaderMessageID)
+	var i FindChannelEmailByHeaderRow
+	err := row.Scan(&i.MessageID, &i.ConversationID)
+	return i, err
+}
+
+const finishMigration = `-- name: FinishMigration :one
+UPDATE migrations SET state = $1, state_reason = $2, waiting_until = NULL, lease_until = NULL, lease_job_id = NULL,
+    finished_at = $3, credentials_deleted_at = coalesce(credentials_deleted_at, $3), updated_at = $3
+WHERE workspace_id = $4 AND id = $5
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at
+`
+
+type FinishMigrationParams struct {
+	State       string
+	StateReason string
+	Now         *time.Time
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) FinishMigration(ctx context.Context, arg FinishMigrationParams) (Migration, error) {
+	row := q.db.QueryRow(ctx, finishMigration,
+		arg.State,
+		arg.StateReason,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.ID,
+	)
+	var i Migration
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.Source,
+		&i.Preset,
+		&i.SourceAddress,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.State,
+		&i.StateReason,
+		&i.WaitingUntil,
+		&i.Options,
+		&i.Estimate,
+		&i.Counts,
+		&i.Throttle,
+		&i.Checkpoint,
+		&i.LiveFrom,
+		&i.VerifiedAt,
+		&i.VerifiedRoute,
+		&i.ForwardingConfirmation,
+		&i.LeaseUntil,
+		&i.LeaseJobID,
+		&i.CreatedByMemberID,
+		&i.CreatedByApiKeyID,
+		&i.CreatedVia,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CredentialsDeletedAt,
+	)
+	return i, err
+}
+
+const getLabelByName = `-- name: GetLabelByName :one
+SELECT id, workspace_id, name, color, created_at FROM labels WHERE workspace_id = $1 AND name = $2
+`
+
+type GetLabelByNameParams struct {
+	WorkspaceID uuid.UUID
+	Name        string
+}
+
+func (q *Queries) GetLabelByName(ctx context.Context, arg GetLabelByNameParams) (Label, error) {
+	row := q.db.QueryRow(ctx, getLabelByName, arg.WorkspaceID, arg.Name)
+	var i Label
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.Name,
+		&i.Color,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const getMigration = `-- name: GetMigration :one
 SELECT id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at FROM migrations WHERE workspace_id = $1 AND id = $2
 `
@@ -244,6 +675,452 @@ func (q *Queries) GetMigrationCredentials(ctx context.Context, arg GetMigrationC
 	return i, err
 }
 
+const getMigrationItemState = `-- name: GetMigrationItemState :one
+SELECT state FROM migration_items WHERE workspace_id = $1 AND migration_id = $2 AND source_id = $3
+`
+
+type GetMigrationItemStateParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+}
+
+func (q *Queries) GetMigrationItemState(ctx context.Context, arg GetMigrationItemStateParams) (string, error) {
+	row := q.db.QueryRow(ctx, getMigrationItemState, arg.WorkspaceID, arg.MigrationID, arg.SourceID)
+	var state string
+	err := row.Scan(&state)
+	return state, err
+}
+
+const importConversation = `-- name: ImportConversation :one
+INSERT INTO conversations (id, workspace_id, inbox_id, contact_id, channel_id, subject, status, priority, spam, channel_kind,
+    last_message_at, last_activity_at, closed_at, created_at, updated_at, migration_id, imported_at)
+VALUES ($1, $2, $3, $4, $5, $6, $7, 'normal', false,
+    (SELECT ch.kind FROM channels ch WHERE ch.workspace_id = $2 AND ch.id = $5),
+    $8, $8, $9, $8, $10, $11, $10)
+RETURNING id, workspace_id, inbox_id, contact_id, channel_id, subject, status, snooze_until, priority, assignee_id, last_message_at, last_activity_at, created_at, updated_at, spam, email_token, related_conversation_id, continuity_through, continuity_sent_at, kind, feedback, email_address, closed_at, rating, rating_comment, rated_at, rating_requested_at, last_read_by_contact_at, page_url, page_title, channel_kind, broadcast_id, migration_id, imported_at
+`
+
+type ImportConversationParams struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	InboxID     uuid.UUID
+	ContactID   uuid.UUID
+	ChannelID   *uuid.UUID
+	Subject     string
+	Status      string
+	At          *time.Time
+	ClosedAt    *time.Time
+	Now         time.Time
+	MigrationID *uuid.UUID
+}
+
+func (q *Queries) ImportConversation(ctx context.Context, arg ImportConversationParams) (Conversation, error) {
+	row := q.db.QueryRow(ctx, importConversation,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.InboxID,
+		arg.ContactID,
+		arg.ChannelID,
+		arg.Subject,
+		arg.Status,
+		arg.At,
+		arg.ClosedAt,
+		arg.Now,
+		arg.MigrationID,
+	)
+	var i Conversation
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.InboxID,
+		&i.ContactID,
+		&i.ChannelID,
+		&i.Subject,
+		&i.Status,
+		&i.SnoozeUntil,
+		&i.Priority,
+		&i.AssigneeID,
+		&i.LastMessageAt,
+		&i.LastActivityAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Spam,
+		&i.EmailToken,
+		&i.RelatedConversationID,
+		&i.ContinuityThrough,
+		&i.ContinuitySentAt,
+		&i.Kind,
+		&i.Feedback,
+		&i.EmailAddress,
+		&i.ClosedAt,
+		&i.Rating,
+		&i.RatingComment,
+		&i.RatedAt,
+		&i.RatingRequestedAt,
+		&i.LastReadByContactAt,
+		&i.PageUrl,
+		&i.PageTitle,
+		&i.ChannelKind,
+		&i.BroadcastID,
+		&i.MigrationID,
+		&i.ImportedAt,
+	)
+	return i, err
+}
+
+const importMessage = `-- name: ImportMessage :exec
+WITH m AS (
+    INSERT INTO messages (id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id,
+        body, html, created_at, delivery_state, delivery_updated_at, imported_at, imported_author)
+    VALUES ($1, $2, $3, 'message', $4, $5, $6,
+        $7, $8, $9, $10, $11,
+        CASE WHEN $11::text IS NULL THEN NULL ELSE $10::timestamptz END, $12,
+        $13)
+    RETURNING workspace_id, author_contact_id, created_at)
+UPDATE contacts SET last_active_at = greatest(coalesce(contacts.last_active_at, m.created_at), m.created_at)
+FROM m WHERE contacts.workspace_id = m.workspace_id AND contacts.id = m.author_contact_id
+`
+
+type ImportMessageParams struct {
+	ID              uuid.UUID
+	WorkspaceID     uuid.UUID
+	ConversationID  uuid.UUID
+	Direction       *string
+	AuthorType      string
+	AuthorMemberID  *uuid.UUID
+	AuthorContactID *uuid.UUID
+	Body            string
+	Html            *string
+	CreatedAt       time.Time
+	DeliveryState   *string
+	ImportedAt      *time.Time
+	ImportedAuthor  []byte
+}
+
+func (q *Queries) ImportMessage(ctx context.Context, arg ImportMessageParams) error {
+	_, err := q.db.Exec(ctx, importMessage,
+		arg.ID,
+		arg.WorkspaceID,
+		arg.ConversationID,
+		arg.Direction,
+		arg.AuthorType,
+		arg.AuthorMemberID,
+		arg.AuthorContactID,
+		arg.Body,
+		arg.Html,
+		arg.CreatedAt,
+		arg.DeliveryState,
+		arg.ImportedAt,
+		arg.ImportedAuthor,
+	)
+	return err
+}
+
+const importMessageEmail = `-- name: ImportMessageEmail :exec
+INSERT INTO message_emails (workspace_id, message_id, conversation_id, channel_id, direction, header_message_id,
+    in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers,
+    raw_key, raw_size, authentication_results, dmarc, auto, created_at, imported_at)
+VALUES ($1, $2, $3, $4, $5, $6,
+    $7, $8, $9, $10, $11, $12, $13, $14,
+    $15, $16, $17, $18, $19, 'unknown', $20, $21, $22)
+`
+
+type ImportMessageEmailParams struct {
+	WorkspaceID           uuid.UUID
+	MessageID             uuid.UUID
+	ConversationID        uuid.UUID
+	ChannelID             *uuid.UUID
+	Direction             string
+	HeaderMessageID       string
+	InReplyTo             *string
+	ReferencesIds         []string
+	FromAddress           string
+	ToAddresses           []string
+	CcAddresses           []string
+	Subject               string
+	FullText              string
+	FullHtml              *string
+	Quoted                bool
+	Headers               []byte
+	RawKey                *string
+	RawSize               *int64
+	AuthenticationResults *string
+	Auto                  bool
+	CreatedAt             time.Time
+	ImportedAt            *time.Time
+}
+
+func (q *Queries) ImportMessageEmail(ctx context.Context, arg ImportMessageEmailParams) error {
+	_, err := q.db.Exec(ctx, importMessageEmail,
+		arg.WorkspaceID,
+		arg.MessageID,
+		arg.ConversationID,
+		arg.ChannelID,
+		arg.Direction,
+		arg.HeaderMessageID,
+		arg.InReplyTo,
+		arg.ReferencesIds,
+		arg.FromAddress,
+		arg.ToAddresses,
+		arg.CcAddresses,
+		arg.Subject,
+		arg.FullText,
+		arg.FullHtml,
+		arg.Quoted,
+		arg.Headers,
+		arg.RawKey,
+		arg.RawSize,
+		arg.AuthenticationResults,
+		arg.Auto,
+		arg.CreatedAt,
+		arg.ImportedAt,
+	)
+	return err
+}
+
+const importTouchConversation = `-- name: ImportTouchConversation :exec
+UPDATE conversations SET
+    created_at = least(created_at, $1::timestamptz),
+    last_message_at = greatest(coalesce(last_message_at, $1::timestamptz), $1::timestamptz),
+    last_activity_at = greatest(last_activity_at, $1::timestamptz)
+WHERE workspace_id = $2 AND id = $3
+`
+
+type ImportTouchConversationParams struct {
+	At          time.Time
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) ImportTouchConversation(ctx context.Context, arg ImportTouchConversationParams) error {
+	_, err := q.db.Exec(ctx, importTouchConversation, arg.At, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const importedBytesThisMonth = `-- name: ImportedBytesThisMonth :one
+SELECT coalesce((SELECT imported_bytes FROM usage_counters WHERE workspace_id = $1 AND month = $2), 0)::bigint
+`
+
+type ImportedBytesThisMonthParams struct {
+	WorkspaceID uuid.UUID
+	Month       time.Time
+}
+
+func (q *Queries) ImportedBytesThisMonth(ctx context.Context, arg ImportedBytesThisMonthParams) (int64, error) {
+	row := q.db.QueryRow(ctx, importedBytesThisMonth, arg.WorkspaceID, arg.Month)
+	var column_1 int64
+	err := row.Scan(&column_1)
+	return column_1, err
+}
+
+const insertMigrationItems = `-- name: InsertMigrationItems :execrows
+INSERT INTO migration_items (workspace_id, migration_id, source_id, folder_id, thread_key, dedupe_key, received_at, size_bytes,
+    meta, state, reason, in_copy)
+SELECT $1, $2, unnest($3::text[]), unnest($4::int[]), unnest($5::text[]),
+    unnest($5::text[]), unnest($6::timestamptz[]), unnest($7::bigint[]), unnest($8::jsonb[]),
+    $9, $10, $11
+ON CONFLICT (workspace_id, migration_id, source_id) DO NOTHING
+`
+
+type InsertMigrationItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceIds   []string
+	FolderIds   []int32
+	DedupeKeys  []string
+	ReceivedAts []time.Time
+	Sizes       []int64
+	Metas       [][]byte
+	State       string
+	Reason      string
+	InCopy      bool
+}
+
+func (q *Queries) InsertMigrationItems(ctx context.Context, arg InsertMigrationItemsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, insertMigrationItems,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.SourceIds,
+		arg.FolderIds,
+		arg.DedupeKeys,
+		arg.ReceivedAts,
+		arg.Sizes,
+		arg.Metas,
+		arg.State,
+		arg.Reason,
+		arg.InCopy,
+	)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const insertMigrationThreads = `-- name: InsertMigrationThreads :exec
+INSERT INTO migration_threads (workspace_id, migration_id, thread_key, last_at, items, plan)
+SELECT $1, $2, unnest($3::text[]), unnest($4::timestamptz[]), unnest($5::int[]),
+    unnest($6::jsonb[])
+`
+
+type InsertMigrationThreadsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ThreadKeys  []string
+	LastAts     []time.Time
+	Items       []int32
+	Plans       [][]byte
+}
+
+func (q *Queries) InsertMigrationThreads(ctx context.Context, arg InsertMigrationThreadsParams) error {
+	_, err := q.db.Exec(ctx, insertMigrationThreads,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ThreadKeys,
+		arg.LastAts,
+		arg.Items,
+		arg.Plans,
+	)
+	return err
+}
+
+const listChannelHeaderIDsIn = `-- name: ListChannelHeaderIDsIn :many
+SELECT DISTINCT header_message_id FROM message_emails
+WHERE workspace_id = $1 AND channel_id = $2 AND header_message_id = ANY($3::text[])
+`
+
+type ListChannelHeaderIDsInParams struct {
+	WorkspaceID uuid.UUID
+	ChannelID   *uuid.UUID
+	Ids         []string
+}
+
+func (q *Queries) ListChannelHeaderIDsIn(ctx context.Context, arg ListChannelHeaderIDsInParams) ([]string, error) {
+	rows, err := q.db.Query(ctx, listChannelHeaderIDsIn, arg.WorkspaceID, arg.ChannelID, arg.Ids)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []string
+	for rows.Next() {
+		var header_message_id string
+		if err := rows.Scan(&header_message_id); err != nil {
+			return nil, err
+		}
+		items = append(items, header_message_id)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listContactEmailsIn = `-- name: ListContactEmailsIn :many
+SELECT ce.email, c.blocked FROM contact_emails ce
+JOIN contacts c ON c.workspace_id = ce.workspace_id AND c.id = ce.contact_id
+WHERE ce.workspace_id = $1 AND ce.email = ANY($2::text[])
+`
+
+type ListContactEmailsInParams struct {
+	WorkspaceID uuid.UUID
+	Emails      []string
+}
+
+type ListContactEmailsInRow struct {
+	Email   string
+	Blocked bool
+}
+
+func (q *Queries) ListContactEmailsIn(ctx context.Context, arg ListContactEmailsInParams) ([]ListContactEmailsInRow, error) {
+	rows, err := q.db.Query(ctx, listContactEmailsIn, arg.WorkspaceID, arg.Emails)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListContactEmailsInRow
+	for rows.Next() {
+		var i ListContactEmailsInRow
+		if err := rows.Scan(&i.Email, &i.Blocked); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listFinishedMigrations = `-- name: ListFinishedMigrations :many
+SELECT m.workspace_id, m.id FROM migrations m
+WHERE m.state IN ('completed', 'cancelled') AND m.finished_at < $1
+  AND EXISTS (SELECT 1 FROM migration_items i WHERE i.workspace_id = m.workspace_id AND i.migration_id = m.id)
+LIMIT 100
+`
+
+type ListFinishedMigrationsRow struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+// The cleanup looks across workspaces (see "Hosting for others later" in docs/architecture.md).
+func (q *Queries) ListFinishedMigrations(ctx context.Context, before *time.Time) ([]ListFinishedMigrationsRow, error) {
+	rows, err := q.db.Query(ctx, listFinishedMigrations, before)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListFinishedMigrationsRow
+	for rows.Next() {
+		var i ListFinishedMigrationsRow
+		if err := rows.Scan(&i.WorkspaceID, &i.ID); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listFolderPlannedItems = `-- name: ListFolderPlannedItems :many
+SELECT source_id, dedupe_key, thread_key FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND folder_id = $3 AND state = 'planned'
+`
+
+type ListFolderPlannedItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	FolderID    *int32
+}
+
+type ListFolderPlannedItemsRow struct {
+	SourceID  string
+	DedupeKey string
+	ThreadKey string
+}
+
+func (q *Queries) ListFolderPlannedItems(ctx context.Context, arg ListFolderPlannedItemsParams) ([]ListFolderPlannedItemsRow, error) {
+	rows, err := q.db.Query(ctx, listFolderPlannedItems, arg.WorkspaceID, arg.MigrationID, arg.FolderID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListFolderPlannedItemsRow
+	for rows.Next() {
+		var i ListFolderPlannedItemsRow
+		if err := rows.Scan(&i.SourceID, &i.DedupeKey, &i.ThreadKey); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listMigrationCredentialInfos = `-- name: ListMigrationCredentialInfos :many
 SELECT migration_id, kind, host, port, tls, certificate_sha256, scopes, expires_at, updated_at
 FROM migration_credentials
@@ -297,6 +1174,193 @@ func (q *Queries) ListMigrationCredentialInfos(ctx context.Context, arg ListMigr
 	return items, nil
 }
 
+const listMigrationErrors = `-- name: ListMigrationErrors :many
+SELECT id, workspace_id, migration_id, code, detail, folder, item_date, item_subject, created_at FROM migration_errors
+WHERE workspace_id = $1 AND migration_id = $2
+  AND ($3::bigint IS NULL OR id < $3::bigint)
+ORDER BY id DESC
+LIMIT $4
+`
+
+type ListMigrationErrorsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	BeforeID    *int64
+	Lim         int32
+}
+
+func (q *Queries) ListMigrationErrors(ctx context.Context, arg ListMigrationErrorsParams) ([]MigrationError, error) {
+	rows, err := q.db.Query(ctx, listMigrationErrors,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.BeforeID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []MigrationError
+	for rows.Next() {
+		var i MigrationError
+		if err := rows.Scan(
+			&i.ID,
+			&i.WorkspaceID,
+			&i.MigrationID,
+			&i.Code,
+			&i.Detail,
+			&i.Folder,
+			&i.ItemDate,
+			&i.ItemSubject,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationFolders = `-- name: ListMigrationFolders :many
+SELECT workspace_id, migration_id, id, name, kind, selected, label_action, label_id, uidvalidity, scanned_uid, seen_uid, cursor, total, imported, duplicate, skipped, failed, bytes, delim, uidnext, size_bytes, oldest_at, newest_at FROM migration_folders WHERE workspace_id = $1 AND migration_id = $2 ORDER BY id
+`
+
+type ListMigrationFoldersParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) ListMigrationFolders(ctx context.Context, arg ListMigrationFoldersParams) ([]MigrationFolder, error) {
+	rows, err := q.db.Query(ctx, listMigrationFolders, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []MigrationFolder
+	for rows.Next() {
+		var i MigrationFolder
+		if err := rows.Scan(
+			&i.WorkspaceID,
+			&i.MigrationID,
+			&i.ID,
+			&i.Name,
+			&i.Kind,
+			&i.Selected,
+			&i.LabelAction,
+			&i.LabelID,
+			&i.Uidvalidity,
+			&i.ScannedUid,
+			&i.SeenUid,
+			&i.Cursor,
+			&i.Total,
+			&i.Imported,
+			&i.Duplicate,
+			&i.Skipped,
+			&i.Failed,
+			&i.Bytes,
+			&i.Delim,
+			&i.Uidnext,
+			&i.SizeBytes,
+			&i.OldestAt,
+			&i.NewestAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationItemsByDedupe = `-- name: ListMigrationItemsByDedupe :many
+SELECT dedupe_key, thread_key, state FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND dedupe_key = ANY($3::text[])
+`
+
+type ListMigrationItemsByDedupeParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Keys        []string
+}
+
+type ListMigrationItemsByDedupeRow struct {
+	DedupeKey string
+	ThreadKey string
+	State     string
+}
+
+func (q *Queries) ListMigrationItemsByDedupe(ctx context.Context, arg ListMigrationItemsByDedupeParams) ([]ListMigrationItemsByDedupeRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationItemsByDedupe, arg.WorkspaceID, arg.MigrationID, arg.Keys)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationItemsByDedupeRow
+	for rows.Next() {
+		var i ListMigrationItemsByDedupeRow
+		if err := rows.Scan(&i.DedupeKey, &i.ThreadKey, &i.State); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationItemsForPlan = `-- name: ListMigrationItemsForPlan :many
+SELECT source_id, folder_id, dedupe_key, received_at, size_bytes, meta FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2
+ORDER BY source_id
+`
+
+type ListMigrationItemsForPlanParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+type ListMigrationItemsForPlanRow struct {
+	SourceID   string
+	FolderID   *int32
+	DedupeKey  string
+	ReceivedAt time.Time
+	SizeBytes  int64
+	Meta       []byte
+}
+
+func (q *Queries) ListMigrationItemsForPlan(ctx context.Context, arg ListMigrationItemsForPlanParams) ([]ListMigrationItemsForPlanRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationItemsForPlan, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationItemsForPlanRow
+	for rows.Next() {
+		var i ListMigrationItemsForPlanRow
+		if err := rows.Scan(
+			&i.SourceID,
+			&i.FolderID,
+			&i.DedupeKey,
+			&i.ReceivedAt,
+			&i.SizeBytes,
+			&i.Meta,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listMigrationSources = `-- name: ListMigrationSources :many
 SELECT id, source, preset FROM migrations WHERE workspace_id = $1 AND id = ANY($2::uuid[])
 `
@@ -322,6 +1386,50 @@ func (q *Queries) ListMigrationSources(ctx context.Context, arg ListMigrationSou
 	for rows.Next() {
 		var i ListMigrationSourcesRow
 		if err := rows.Scan(&i.ID, &i.Source, &i.Preset); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listMigrationThreadItems = `-- name: ListMigrationThreadItems :many
+SELECT source_id, folder_id, thread_key, meta FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND thread_key = ANY($3::text[]) AND state = 'planned'
+ORDER BY thread_key, received_at, source_id
+`
+
+type ListMigrationThreadItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ThreadKeys  []string
+}
+
+type ListMigrationThreadItemsRow struct {
+	SourceID  string
+	FolderID  *int32
+	ThreadKey string
+	Meta      []byte
+}
+
+func (q *Queries) ListMigrationThreadItems(ctx context.Context, arg ListMigrationThreadItemsParams) ([]ListMigrationThreadItemsRow, error) {
+	rows, err := q.db.Query(ctx, listMigrationThreadItems, arg.WorkspaceID, arg.MigrationID, arg.ThreadKeys)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListMigrationThreadItemsRow
+	for rows.Next() {
+		var i ListMigrationThreadItemsRow
+		if err := rows.Scan(
+			&i.SourceID,
+			&i.FolderID,
+			&i.ThreadKey,
+			&i.Meta,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -406,6 +1514,44 @@ func (q *Queries) ListMigrations(ctx context.Context, arg ListMigrationsParams) 
 	return items, nil
 }
 
+const listNewestMigrationThreads = `-- name: ListNewestMigrationThreads :many
+SELECT thread_key, plan FROM migration_threads
+WHERE workspace_id = $1 AND migration_id = $2
+ORDER BY last_at DESC, thread_key
+LIMIT $3
+`
+
+type ListNewestMigrationThreadsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Lim         int32
+}
+
+type ListNewestMigrationThreadsRow struct {
+	ThreadKey string
+	Plan      []byte
+}
+
+func (q *Queries) ListNewestMigrationThreads(ctx context.Context, arg ListNewestMigrationThreadsParams) ([]ListNewestMigrationThreadsRow, error) {
+	rows, err := q.db.Query(ctx, listNewestMigrationThreads, arg.WorkspaceID, arg.MigrationID, arg.Lim)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListNewestMigrationThreadsRow
+	for rows.Next() {
+		var i ListNewestMigrationThreadsRow
+		if err := rows.Scan(&i.ThreadKey, &i.Plan); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listRecentMigrationTests = `-- name: ListRecentMigrationTests :many
 SELECT coalesce(detail->>'code', '')::text AS code, created_at FROM migration_audit
 WHERE workspace_id = $1 AND migration_id = $2 AND action = 'tested'
@@ -434,6 +1580,47 @@ func (q *Queries) ListRecentMigrationTests(ctx context.Context, arg ListRecentMi
 	for rows.Next() {
 		var i ListRecentMigrationTestsRow
 		if err := rows.Scan(&i.Code, &i.CreatedAt); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listStaleMigrations = `-- name: ListStaleMigrations :many
+SELECT workspace_id, id, state, lease_job_id FROM migrations
+WHERE state IN ('scanning', 'copying') AND (lease_until IS NULL OR lease_until < $1)
+  AND (waiting_until IS NULL OR waiting_until <= $1)
+ORDER BY lease_until NULLS FIRST
+LIMIT 500
+`
+
+type ListStaleMigrationsRow struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	State       string
+	LeaseJobID  *int64
+}
+
+// The watchdog looks across workspaces (see "Hosting for others later" in docs/architecture.md).
+func (q *Queries) ListStaleMigrations(ctx context.Context, now *time.Time) ([]ListStaleMigrationsRow, error) {
+	rows, err := q.db.Query(ctx, listStaleMigrations, now)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListStaleMigrationsRow
+	for rows.Next() {
+		var i ListStaleMigrationsRow
+		if err := rows.Scan(
+			&i.WorkspaceID,
+			&i.ID,
+			&i.State,
+			&i.LeaseJobID,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
@@ -490,6 +1677,294 @@ func (q *Queries) LockMigration(ctx context.Context, arg LockMigrationParams) (M
 	return i, err
 }
 
+const lockMigrationChannel = `-- name: LockMigrationChannel :exec
+SELECT pg_advisory_xact_lock(hashtextextended('yuva_migration_channel:' || $1::uuid::text, 0))
+`
+
+func (q *Queries) LockMigrationChannel(ctx context.Context, channelID uuid.UUID) error {
+	_, err := q.db.Exec(ctx, lockMigrationChannel, channelID)
+	return err
+}
+
+const lockMigrationItem = `-- name: LockMigrationItem :one
+SELECT state, attempts, message_id FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND source_id = $3
+FOR UPDATE
+`
+
+type LockMigrationItemParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+}
+
+type LockMigrationItemRow struct {
+	State     string
+	Attempts  int16
+	MessageID *uuid.UUID
+}
+
+func (q *Queries) LockMigrationItem(ctx context.Context, arg LockMigrationItemParams) (LockMigrationItemRow, error) {
+	row := q.db.QueryRow(ctx, lockMigrationItem, arg.WorkspaceID, arg.MigrationID, arg.SourceID)
+	var i LockMigrationItemRow
+	err := row.Scan(&i.State, &i.Attempts, &i.MessageID)
+	return i, err
+}
+
+const lockMigrationThread = `-- name: LockMigrationThread :one
+SELECT workspace_id, migration_id, thread_key, conversation_id, last_at, items, done, plan FROM migration_threads
+WHERE workspace_id = $1 AND migration_id = $2 AND thread_key = $3
+FOR UPDATE
+`
+
+type LockMigrationThreadParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ThreadKey   string
+}
+
+func (q *Queries) LockMigrationThread(ctx context.Context, arg LockMigrationThreadParams) (MigrationThread, error) {
+	row := q.db.QueryRow(ctx, lockMigrationThread, arg.WorkspaceID, arg.MigrationID, arg.ThreadKey)
+	var i MigrationThread
+	err := row.Scan(
+		&i.WorkspaceID,
+		&i.MigrationID,
+		&i.ThreadKey,
+		&i.ConversationID,
+		&i.LastAt,
+		&i.Items,
+		&i.Done,
+		&i.Plan,
+	)
+	return i, err
+}
+
+const markMigrationItemsInCopy = `-- name: MarkMigrationItemsInCopy :execrows
+UPDATE migration_items SET in_copy = true
+WHERE workspace_id = $1 AND migration_id = $2 AND state = 'planned'
+`
+
+type MarkMigrationItemsInCopyParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) MarkMigrationItemsInCopy(ctx context.Context, arg MarkMigrationItemsInCopyParams) (int64, error) {
+	result, err := q.db.Exec(ctx, markMigrationItemsInCopy, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
+const migrationCopyCounts = `-- name: MigrationCopyCounts :many
+SELECT folder_id, state, count(*)::bigint AS n, coalesce(sum(size_bytes), 0)::bigint AS bytes FROM migration_items
+WHERE workspace_id = $1 AND migration_id = $2 AND in_copy
+GROUP BY folder_id, state
+`
+
+type MigrationCopyCountsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+type MigrationCopyCountsRow struct {
+	FolderID *int32
+	State    string
+	N        int64
+	Bytes    int64
+}
+
+func (q *Queries) MigrationCopyCounts(ctx context.Context, arg MigrationCopyCountsParams) ([]MigrationCopyCountsRow, error) {
+	rows, err := q.db.Query(ctx, migrationCopyCounts, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []MigrationCopyCountsRow
+	for rows.Next() {
+		var i MigrationCopyCountsRow
+		if err := rows.Scan(
+			&i.FolderID,
+			&i.State,
+			&i.N,
+			&i.Bytes,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const nextMigrationItems = `-- name: NextMigrationItems :many
+WITH t AS (
+    SELECT thread_key, last_at FROM migration_threads
+    WHERE workspace_id = $1 AND migration_id = $2 AND done < items
+    ORDER BY last_at DESC, thread_key
+    LIMIT $4)
+SELECT i.source_id, i.folder_id, i.thread_key, i.dedupe_key, i.received_at, i.size_bytes, i.meta, i.attempts
+FROM migration_items i JOIN t ON t.thread_key = i.thread_key
+WHERE i.workspace_id = $1 AND i.migration_id = $2 AND i.state = 'planned' AND i.in_copy
+ORDER BY t.last_at DESC, t.thread_key, i.received_at, i.source_id
+LIMIT $3
+`
+
+type NextMigrationItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Lim         int32
+	Threads     int32
+}
+
+type NextMigrationItemsRow struct {
+	SourceID   string
+	FolderID   *int32
+	ThreadKey  string
+	DedupeKey  string
+	ReceivedAt time.Time
+	SizeBytes  int64
+	Meta       []byte
+	Attempts   int16
+}
+
+func (q *Queries) NextMigrationItems(ctx context.Context, arg NextMigrationItemsParams) ([]NextMigrationItemsRow, error) {
+	rows, err := q.db.Query(ctx, nextMigrationItems,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.Lim,
+		arg.Threads,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []NextMigrationItemsRow
+	for rows.Next() {
+		var i NextMigrationItemsRow
+		if err := rows.Scan(
+			&i.SourceID,
+			&i.FolderID,
+			&i.ThreadKey,
+			&i.DedupeKey,
+			&i.ReceivedAt,
+			&i.SizeBytes,
+			&i.Meta,
+			&i.Attempts,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const releaseMigrationLease = `-- name: ReleaseMigrationLease :exec
+UPDATE migrations SET lease_until = NULL, lease_job_id = NULL
+WHERE workspace_id = $1 AND id = $2 AND lease_job_id = $3
+`
+
+type ReleaseMigrationLeaseParams struct {
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	JobID       *int64
+}
+
+func (q *Queries) ReleaseMigrationLease(ctx context.Context, arg ReleaseMigrationLeaseParams) error {
+	_, err := q.db.Exec(ctx, releaseMigrationLease, arg.WorkspaceID, arg.ID, arg.JobID)
+	return err
+}
+
+const renameMigrationItem = `-- name: RenameMigrationItem :exec
+UPDATE migration_items SET source_id = $1, received_at = $2
+WHERE workspace_id = $3 AND migration_id = $4 AND source_id = $5 AND state = 'planned'
+`
+
+type RenameMigrationItemParams struct {
+	NewSourceID string
+	ReceivedAt  time.Time
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+}
+
+func (q *Queries) RenameMigrationItem(ctx context.Context, arg RenameMigrationItemParams) error {
+	_, err := q.db.Exec(ctx, renameMigrationItem,
+		arg.NewSourceID,
+		arg.ReceivedAt,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.SourceID,
+	)
+	return err
+}
+
+const resetMigrationFolder = `-- name: ResetMigrationFolder :exec
+UPDATE migration_folders SET uidvalidity = $1, scanned_uid = 0, size_bytes = 0, oldest_at = NULL, newest_at = NULL
+WHERE workspace_id = $2 AND migration_id = $3 AND id = $4
+`
+
+type ResetMigrationFolderParams struct {
+	Uidvalidity *int64
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) ResetMigrationFolder(ctx context.Context, arg ResetMigrationFolderParams) error {
+	_, err := q.db.Exec(ctx, resetMigrationFolder,
+		arg.Uidvalidity,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ID,
+	)
+	return err
+}
+
+const resetMigrationItemsPlan = `-- name: ResetMigrationItemsPlan :exec
+UPDATE migration_items SET state = 'skipped', reason = 'unplanned', in_copy = false
+WHERE workspace_id = $1 AND migration_id = $2 AND state <> 'imported'
+`
+
+type ResetMigrationItemsPlanParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) ResetMigrationItemsPlan(ctx context.Context, arg ResetMigrationItemsPlanParams) error {
+	_, err := q.db.Exec(ctx, resetMigrationItemsPlan, arg.WorkspaceID, arg.MigrationID)
+	return err
+}
+
+const retryFailedMigrationItems = `-- name: RetryFailedMigrationItems :execrows
+WITH r AS (
+    UPDATE migration_items SET state = 'planned', reason = '', attempts = 0
+    WHERE workspace_id = $1 AND migration_id = $2 AND state = 'failed'
+    RETURNING thread_key),
+c AS (SELECT thread_key, count(*)::int AS n FROM r GROUP BY thread_key)
+UPDATE migration_threads t SET done = t.done - c.n FROM c
+WHERE t.workspace_id = $1 AND t.migration_id = $2 AND t.thread_key = c.thread_key
+`
+
+type RetryFailedMigrationItemsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+}
+
+func (q *Queries) RetryFailedMigrationItems(ctx context.Context, arg RetryFailedMigrationItemsParams) (int64, error) {
+	result, err := q.db.Exec(ctx, retryFailedMigrationItems, arg.WorkspaceID, arg.MigrationID)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}
+
 const setMigrationAuditDetail = `-- name: SetMigrationAuditDetail :exec
 UPDATE migration_audit SET detail = $1 WHERE workspace_id = $2 AND id = $3
 `
@@ -502,6 +1977,36 @@ type SetMigrationAuditDetailParams struct {
 
 func (q *Queries) SetMigrationAuditDetail(ctx context.Context, arg SetMigrationAuditDetailParams) error {
 	_, err := q.db.Exec(ctx, setMigrationAuditDetail, arg.Detail, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const setMigrationCheckpoint = `-- name: SetMigrationCheckpoint :exec
+UPDATE migrations SET checkpoint = $1 WHERE workspace_id = $2 AND id = $3
+`
+
+type SetMigrationCheckpointParams struct {
+	Checkpoint  []byte
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetMigrationCheckpoint(ctx context.Context, arg SetMigrationCheckpointParams) error {
+	_, err := q.db.Exec(ctx, setMigrationCheckpoint, arg.Checkpoint, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const setMigrationCounts = `-- name: SetMigrationCounts :exec
+UPDATE migrations SET counts = $1 WHERE workspace_id = $2 AND id = $3
+`
+
+type SetMigrationCountsParams struct {
+	Counts      []byte
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetMigrationCounts(ctx context.Context, arg SetMigrationCountsParams) error {
+	_, err := q.db.Exec(ctx, setMigrationCounts, arg.Counts, arg.WorkspaceID, arg.ID)
 	return err
 }
 
@@ -547,6 +2052,212 @@ func (q *Queries) SetMigrationCredentials(ctx context.Context, arg SetMigrationC
 	return err
 }
 
+const setMigrationEstimate = `-- name: SetMigrationEstimate :exec
+UPDATE migrations SET estimate = $1 WHERE workspace_id = $2 AND id = $3
+`
+
+type SetMigrationEstimateParams struct {
+	Estimate    []byte
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetMigrationEstimate(ctx context.Context, arg SetMigrationEstimateParams) error {
+	_, err := q.db.Exec(ctx, setMigrationEstimate, arg.Estimate, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const setMigrationFolderCounts = `-- name: SetMigrationFolderCounts :exec
+UPDATE migration_folders f SET imported = c.imported, duplicate = c.duplicate, skipped = c.skipped, failed = c.failed, bytes = c.bytes
+FROM (SELECT unnest($3::int[]) AS id, unnest($4::int[]) AS imported, unnest($5::int[]) AS duplicate,
+             unnest($6::int[]) AS skipped, unnest($7::int[]) AS failed, unnest($8::bigint[]) AS bytes) c
+WHERE f.workspace_id = $1 AND f.migration_id = $2 AND f.id = c.id
+`
+
+type SetMigrationFolderCountsParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	Ids         []int32
+	Imported    []int32
+	Duplicate   []int32
+	Skipped     []int32
+	Failed      []int32
+	Bytes       []int64
+}
+
+func (q *Queries) SetMigrationFolderCounts(ctx context.Context, arg SetMigrationFolderCountsParams) error {
+	_, err := q.db.Exec(ctx, setMigrationFolderCounts,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.Ids,
+		arg.Imported,
+		arg.Duplicate,
+		arg.Skipped,
+		arg.Failed,
+		arg.Bytes,
+	)
+	return err
+}
+
+const setMigrationFolderLabel = `-- name: SetMigrationFolderLabel :exec
+UPDATE migration_folders SET label_id = $1 WHERE workspace_id = $2 AND migration_id = $3 AND id = $4
+`
+
+type SetMigrationFolderLabelParams struct {
+	LabelID     *uuid.UUID
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) SetMigrationFolderLabel(ctx context.Context, arg SetMigrationFolderLabelParams) error {
+	_, err := q.db.Exec(ctx, setMigrationFolderLabel,
+		arg.LabelID,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ID,
+	)
+	return err
+}
+
+const setMigrationFolderScanned = `-- name: SetMigrationFolderScanned :exec
+UPDATE migration_folders SET scanned_uid = greatest(scanned_uid, $1), size_bytes = size_bytes + $2,
+    oldest_at = least(oldest_at, $3::timestamptz), newest_at = greatest(newest_at, $4::timestamptz)
+WHERE workspace_id = $5 AND migration_id = $6 AND id = $7
+`
+
+type SetMigrationFolderScannedParams struct {
+	ScannedUid  int64
+	SizeBytes   int64
+	OldestAt    *time.Time
+	NewestAt    *time.Time
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) SetMigrationFolderScanned(ctx context.Context, arg SetMigrationFolderScannedParams) error {
+	_, err := q.db.Exec(ctx, setMigrationFolderScanned,
+		arg.ScannedUid,
+		arg.SizeBytes,
+		arg.OldestAt,
+		arg.NewestAt,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ID,
+	)
+	return err
+}
+
+const setMigrationFolderUIDValidity = `-- name: SetMigrationFolderUIDValidity :exec
+UPDATE migration_folders SET uidvalidity = $1, scanned_uid = greatest(scanned_uid, $2)
+WHERE workspace_id = $3 AND migration_id = $4 AND id = $5
+`
+
+type SetMigrationFolderUIDValidityParams struct {
+	Uidvalidity *int64
+	ScannedUid  int64
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+}
+
+func (q *Queries) SetMigrationFolderUIDValidity(ctx context.Context, arg SetMigrationFolderUIDValidityParams) error {
+	_, err := q.db.Exec(ctx, setMigrationFolderUIDValidity,
+		arg.Uidvalidity,
+		arg.ScannedUid,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ID,
+	)
+	return err
+}
+
+const setMigrationItemDone = `-- name: SetMigrationItemDone :exec
+UPDATE migration_items SET state = $1, reason = $2, message_id = $3
+WHERE workspace_id = $4 AND migration_id = $5 AND source_id = $6
+`
+
+type SetMigrationItemDoneParams struct {
+	State       string
+	Reason      string
+	MessageID   *uuid.UUID
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	SourceID    string
+}
+
+func (q *Queries) SetMigrationItemDone(ctx context.Context, arg SetMigrationItemDoneParams) error {
+	_, err := q.db.Exec(ctx, setMigrationItemDone,
+		arg.State,
+		arg.Reason,
+		arg.MessageID,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.SourceID,
+	)
+	return err
+}
+
+const setMigrationRunState = `-- name: SetMigrationRunState :one
+UPDATE migrations SET state = $1, state_reason = $2, waiting_until = $3, updated_at = $4
+WHERE workspace_id = $5 AND id = $6
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at
+`
+
+type SetMigrationRunStateParams struct {
+	State        string
+	StateReason  string
+	WaitingUntil *time.Time
+	Now          time.Time
+	WorkspaceID  uuid.UUID
+	ID           uuid.UUID
+}
+
+func (q *Queries) SetMigrationRunState(ctx context.Context, arg SetMigrationRunStateParams) (Migration, error) {
+	row := q.db.QueryRow(ctx, setMigrationRunState,
+		arg.State,
+		arg.StateReason,
+		arg.WaitingUntil,
+		arg.Now,
+		arg.WorkspaceID,
+		arg.ID,
+	)
+	var i Migration
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.Source,
+		&i.Preset,
+		&i.SourceAddress,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.State,
+		&i.StateReason,
+		&i.WaitingUntil,
+		&i.Options,
+		&i.Estimate,
+		&i.Counts,
+		&i.Throttle,
+		&i.Checkpoint,
+		&i.LiveFrom,
+		&i.VerifiedAt,
+		&i.VerifiedRoute,
+		&i.ForwardingConfirmation,
+		&i.LeaseUntil,
+		&i.LeaseJobID,
+		&i.CreatedByMemberID,
+		&i.CreatedByApiKeyID,
+		&i.CreatedVia,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CredentialsDeletedAt,
+	)
+	return i, err
+}
+
 const setMigrationState = `-- name: SetMigrationState :one
 UPDATE migrations SET state = $1, state_reason = $2, updated_at = $3
 WHERE workspace_id = $4 AND id = $5
@@ -568,6 +2279,153 @@ func (q *Queries) SetMigrationState(ctx context.Context, arg SetMigrationStatePa
 		arg.Now,
 		arg.WorkspaceID,
 		arg.ID,
+	)
+	var i Migration
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.Source,
+		&i.Preset,
+		&i.SourceAddress,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.State,
+		&i.StateReason,
+		&i.WaitingUntil,
+		&i.Options,
+		&i.Estimate,
+		&i.Counts,
+		&i.Throttle,
+		&i.Checkpoint,
+		&i.LiveFrom,
+		&i.VerifiedAt,
+		&i.VerifiedRoute,
+		&i.ForwardingConfirmation,
+		&i.LeaseUntil,
+		&i.LeaseJobID,
+		&i.CreatedByMemberID,
+		&i.CreatedByApiKeyID,
+		&i.CreatedVia,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CredentialsDeletedAt,
+	)
+	return i, err
+}
+
+const setMigrationThreadConversation = `-- name: SetMigrationThreadConversation :exec
+UPDATE migration_threads SET conversation_id = $1
+WHERE workspace_id = $2 AND migration_id = $3 AND thread_key = $4
+`
+
+type SetMigrationThreadConversationParams struct {
+	ConversationID *uuid.UUID
+	WorkspaceID    uuid.UUID
+	MigrationID    uuid.UUID
+	ThreadKey      string
+}
+
+func (q *Queries) SetMigrationThreadConversation(ctx context.Context, arg SetMigrationThreadConversationParams) error {
+	_, err := q.db.Exec(ctx, setMigrationThreadConversation,
+		arg.ConversationID,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ThreadKey,
+	)
+	return err
+}
+
+const setMigrationThrottle = `-- name: SetMigrationThrottle :exec
+UPDATE migrations SET throttle = $1 WHERE workspace_id = $2 AND id = $3
+`
+
+type SetMigrationThrottleParams struct {
+	Throttle    []byte
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) SetMigrationThrottle(ctx context.Context, arg SetMigrationThrottleParams) error {
+	_, err := q.db.Exec(ctx, setMigrationThrottle, arg.Throttle, arg.WorkspaceID, arg.ID)
+	return err
+}
+
+const startMigrationCopy = `-- name: StartMigrationCopy :one
+UPDATE migrations SET state = 'copying', state_reason = '', waiting_until = NULL, started_at = coalesce(started_at, $1),
+    live_from = coalesce(live_from, $1), updated_at = $1
+WHERE workspace_id = $2 AND id = $3
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at
+`
+
+type StartMigrationCopyParams struct {
+	Now         time.Time
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+}
+
+func (q *Queries) StartMigrationCopy(ctx context.Context, arg StartMigrationCopyParams) (Migration, error) {
+	row := q.db.QueryRow(ctx, startMigrationCopy, arg.Now, arg.WorkspaceID, arg.ID)
+	var i Migration
+	err := row.Scan(
+		&i.ID,
+		&i.WorkspaceID,
+		&i.Source,
+		&i.Preset,
+		&i.SourceAddress,
+		&i.InboxID,
+		&i.ChannelID,
+		&i.State,
+		&i.StateReason,
+		&i.WaitingUntil,
+		&i.Options,
+		&i.Estimate,
+		&i.Counts,
+		&i.Throttle,
+		&i.Checkpoint,
+		&i.LiveFrom,
+		&i.VerifiedAt,
+		&i.VerifiedRoute,
+		&i.ForwardingConfirmation,
+		&i.LeaseUntil,
+		&i.LeaseJobID,
+		&i.CreatedByMemberID,
+		&i.CreatedByApiKeyID,
+		&i.CreatedVia,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.StartedAt,
+		&i.FinishedAt,
+		&i.CredentialsDeletedAt,
+	)
+	return i, err
+}
+
+const takeMigrationLease = `-- name: TakeMigrationLease :one
+UPDATE migrations SET lease_until = $1, lease_job_id = $2
+WHERE workspace_id = $3 AND id = $4 AND state = ANY($5::text[])
+  AND (lease_until IS NULL OR lease_until < $6 OR lease_job_id = $2)
+RETURNING id, workspace_id, source, preset, source_address, inbox_id, channel_id, state, state_reason, waiting_until, options, estimate, counts, throttle, checkpoint, live_from, verified_at, verified_route, forwarding_confirmation, lease_until, lease_job_id, created_by_member_id, created_by_api_key_id, created_via, created_at, updated_at, started_at, finished_at, credentials_deleted_at
+`
+
+type TakeMigrationLeaseParams struct {
+	Until       *time.Time
+	JobID       *int64
+	WorkspaceID uuid.UUID
+	ID          uuid.UUID
+	States      []string
+	Now         *time.Time
+}
+
+func (q *Queries) TakeMigrationLease(ctx context.Context, arg TakeMigrationLeaseParams) (Migration, error) {
+	row := q.db.QueryRow(ctx, takeMigrationLease,
+		arg.Until,
+		arg.JobID,
+		arg.WorkspaceID,
+		arg.ID,
+		arg.States,
+		arg.Now,
 	)
 	var i Migration
 	err := row.Scan(
@@ -668,4 +2526,46 @@ func (q *Queries) UpdateMigration(ctx context.Context, arg UpdateMigrationParams
 		&i.CredentialsDeletedAt,
 	)
 	return i, err
+}
+
+const upsertMigrationFolder = `-- name: UpsertMigrationFolder :exec
+INSERT INTO migration_folders (workspace_id, migration_id, id, name, kind, selected, label_action, label_id, uidvalidity, uidnext, total, delim)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+ON CONFLICT (workspace_id, migration_id, id) DO UPDATE SET
+    name = excluded.name, kind = excluded.kind, selected = excluded.selected, label_action = excluded.label_action,
+    label_id = excluded.label_id, uidvalidity = coalesce(excluded.uidvalidity, migration_folders.uidvalidity),
+    uidnext = excluded.uidnext, total = excluded.total, delim = excluded.delim
+`
+
+type UpsertMigrationFolderParams struct {
+	WorkspaceID uuid.UUID
+	MigrationID uuid.UUID
+	ID          int32
+	Name        string
+	Kind        string
+	Selected    bool
+	LabelAction string
+	LabelID     *uuid.UUID
+	Uidvalidity *int64
+	Uidnext     int64
+	Total       int32
+	Delim       string
+}
+
+func (q *Queries) UpsertMigrationFolder(ctx context.Context, arg UpsertMigrationFolderParams) error {
+	_, err := q.db.Exec(ctx, upsertMigrationFolder,
+		arg.WorkspaceID,
+		arg.MigrationID,
+		arg.ID,
+		arg.Name,
+		arg.Kind,
+		arg.Selected,
+		arg.LabelAction,
+		arg.LabelID,
+		arg.Uidvalidity,
+		arg.Uidnext,
+		arg.Total,
+		arg.Delim,
+	)
+	return err
 }

@@ -2,7 +2,9 @@ package email
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
 	"encoding/base32"
+	"encoding/hex"
 	"regexp"
 	"strings"
 )
@@ -47,4 +49,10 @@ func ReplySubject(subject string) string {
 		return ""
 	}
 	return "Re: " + strings.TrimSpace(replyPrefix.ReplaceAllString(subject, ""))
+}
+
+// SynthesizedID is the Message-ID stored for a message that has none: a hash of the message.
+func SynthesizedID(raw []byte) string {
+	sum := sha256.Sum256(raw)
+	return "sha256-" + hex.EncodeToString(sum[:20]) + "@yuva.invalid"
 }

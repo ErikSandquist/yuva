@@ -76,3 +76,318 @@ SELECT coalesce(detail->>'code', '')::text AS code, created_at FROM migration_au
 WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND action = 'tested'
 ORDER BY id DESC
 LIMIT @lim;
+
+-- name: SetMigrationRunState :one
+UPDATE migrations SET state = @state, state_reason = @state_reason, waiting_until = sqlc.narg(waiting_until), updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: StartMigrationCopy :one
+UPDATE migrations SET state = 'copying', state_reason = '', waiting_until = NULL, started_at = coalesce(started_at, @now),
+    live_from = coalesce(live_from, @now), updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: FinishMigration :one
+UPDATE migrations SET state = @state, state_reason = @state_reason, waiting_until = NULL, lease_until = NULL, lease_job_id = NULL,
+    finished_at = @now, credentials_deleted_at = coalesce(credentials_deleted_at, @now), updated_at = @now
+WHERE workspace_id = @workspace_id AND id = @id
+RETURNING *;
+
+-- name: DeleteMigrationCredentials :execrows
+DELETE FROM migration_credentials WHERE workspace_id = $1 AND migration_id = $2;
+
+-- name: SetMigrationCheckpoint :exec
+UPDATE migrations SET checkpoint = @checkpoint WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: SetMigrationEstimate :exec
+UPDATE migrations SET estimate = @estimate WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: SetMigrationThrottle :exec
+UPDATE migrations SET throttle = @throttle WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: SetMigrationCounts :exec
+UPDATE migrations SET counts = @counts WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: TakeMigrationLease :one
+UPDATE migrations SET lease_until = @until, lease_job_id = @job_id
+WHERE workspace_id = @workspace_id AND id = @id AND state = ANY(@states::text[])
+  AND (lease_until IS NULL OR lease_until < @now OR lease_job_id = @job_id)
+RETURNING *;
+
+-- name: ReleaseMigrationLease :exec
+UPDATE migrations SET lease_until = NULL, lease_job_id = NULL
+WHERE workspace_id = @workspace_id AND id = @id AND lease_job_id = @job_id;
+
+-- The watchdog looks across workspaces (see "Hosting for others later" in docs/architecture.md).
+-- name: ListStaleMigrations :many
+SELECT workspace_id, id, state, lease_job_id FROM migrations
+WHERE state IN ('scanning', 'copying') AND (lease_until IS NULL OR lease_until < @now)
+  AND (waiting_until IS NULL OR waiting_until <= @now)
+ORDER BY lease_until NULLS FIRST
+LIMIT 500;
+
+-- name: CountRunningMigrations :one
+SELECT count(*)::int FROM migrations
+WHERE workspace_id = @workspace_id AND state IN ('scanning', 'copying', 'syncing') AND id <> @id;
+
+-- name: ImportedBytesThisMonth :one
+SELECT coalesce((SELECT imported_bytes FROM usage_counters WHERE workspace_id = @workspace_id AND month = @month), 0)::bigint;
+
+-- name: ListMigrationFolders :many
+SELECT * FROM migration_folders WHERE workspace_id = $1 AND migration_id = $2 ORDER BY id;
+
+-- name: UpsertMigrationFolder :exec
+INSERT INTO migration_folders (workspace_id, migration_id, id, name, kind, selected, label_action, label_id, uidvalidity, uidnext, total, delim)
+VALUES (@workspace_id, @migration_id, @id, @name, @kind, @selected, @label_action, sqlc.narg(label_id), sqlc.narg(uidvalidity), @uidnext, @total, @delim)
+ON CONFLICT (workspace_id, migration_id, id) DO UPDATE SET
+    name = excluded.name, kind = excluded.kind, selected = excluded.selected, label_action = excluded.label_action,
+    label_id = excluded.label_id, uidvalidity = coalesce(excluded.uidvalidity, migration_folders.uidvalidity),
+    uidnext = excluded.uidnext, total = excluded.total, delim = excluded.delim;
+
+-- name: DeleteMigrationFolder :exec
+DELETE FROM migration_folders WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: ResetMigrationFolder :exec
+UPDATE migration_folders SET uidvalidity = @uidvalidity, scanned_uid = 0, size_bytes = 0, oldest_at = NULL, newest_at = NULL
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: DeleteMigrationFolderItems :exec
+DELETE FROM migration_items WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND folder_id = @folder_id;
+
+-- name: SetMigrationFolderScanned :exec
+UPDATE migration_folders SET scanned_uid = greatest(scanned_uid, @scanned_uid), size_bytes = size_bytes + @size_bytes,
+    oldest_at = least(oldest_at, sqlc.narg(oldest_at)::timestamptz), newest_at = greatest(newest_at, sqlc.narg(newest_at)::timestamptz)
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: SetMigrationFolderUIDValidity :exec
+UPDATE migration_folders SET uidvalidity = @uidvalidity, scanned_uid = greatest(scanned_uid, @scanned_uid)
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: SetMigrationFolderLabel :exec
+UPDATE migration_folders SET label_id = @label_id WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id;
+
+-- name: SetMigrationFolderCounts :exec
+UPDATE migration_folders f SET imported = c.imported, duplicate = c.duplicate, skipped = c.skipped, failed = c.failed, bytes = c.bytes
+FROM (SELECT unnest(@ids::int[]) AS id, unnest(@imported::int[]) AS imported, unnest(@duplicate::int[]) AS duplicate,
+             unnest(@skipped::int[]) AS skipped, unnest(@failed::int[]) AS failed, unnest(@bytes::bigint[]) AS bytes) c
+WHERE f.workspace_id = @workspace_id AND f.migration_id = @migration_id AND f.id = c.id;
+
+-- name: InsertMigrationItems :execrows
+INSERT INTO migration_items (workspace_id, migration_id, source_id, folder_id, thread_key, dedupe_key, received_at, size_bytes,
+    meta, state, reason, in_copy)
+SELECT @workspace_id, @migration_id, unnest(@source_ids::text[]), unnest(@folder_ids::int[]), unnest(@dedupe_keys::text[]),
+    unnest(@dedupe_keys::text[]), unnest(@received_ats::timestamptz[]), unnest(@sizes::bigint[]), unnest(@metas::jsonb[]),
+    @state, @reason, @in_copy
+ON CONFLICT (workspace_id, migration_id, source_id) DO NOTHING;
+
+-- name: ListMigrationItemsForPlan :many
+SELECT source_id, folder_id, dedupe_key, received_at, size_bytes, meta FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+ORDER BY source_id;
+
+-- name: ResetMigrationItemsPlan :exec
+UPDATE migration_items SET state = 'skipped', reason = 'unplanned', in_copy = false
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state <> 'imported';
+
+-- name: ApplyMigrationItemsPlan :exec
+UPDATE migration_items i SET state = p.state, reason = p.reason, thread_key = p.thread_key
+FROM (SELECT unnest(@source_ids::text[]) AS source_id, unnest(@states::text[]) AS state, unnest(@reasons::text[]) AS reason,
+             unnest(@thread_keys::text[]) AS thread_key) p
+WHERE i.workspace_id = @workspace_id AND i.migration_id = @migration_id AND i.source_id = p.source_id;
+
+-- name: DeleteMigrationThreads :exec
+DELETE FROM migration_threads WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: InsertMigrationThreads :exec
+INSERT INTO migration_threads (workspace_id, migration_id, thread_key, last_at, items, plan)
+SELECT @workspace_id, @migration_id, unnest(@thread_keys::text[]), unnest(@last_ats::timestamptz[]), unnest(@items::int[]),
+    unnest(@plans::jsonb[]);
+
+-- name: MarkMigrationItemsInCopy :execrows
+UPDATE migration_items SET in_copy = true
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state = 'planned';
+
+-- name: ListContactEmailsIn :many
+SELECT ce.email, c.blocked FROM contact_emails ce
+JOIN contacts c ON c.workspace_id = ce.workspace_id AND c.id = ce.contact_id
+WHERE ce.workspace_id = @workspace_id AND ce.email = ANY(@emails::text[]);
+
+-- name: ListChannelHeaderIDsIn :many
+SELECT DISTINCT header_message_id FROM message_emails
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id AND header_message_id = ANY(@ids::text[]);
+
+-- name: NextMigrationItems :many
+WITH t AS (
+    SELECT thread_key, last_at FROM migration_threads
+    WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND done < items
+    ORDER BY last_at DESC, thread_key
+    LIMIT @threads)
+SELECT i.source_id, i.folder_id, i.thread_key, i.dedupe_key, i.received_at, i.size_bytes, i.meta, i.attempts
+FROM migration_items i JOIN t ON t.thread_key = i.thread_key
+WHERE i.workspace_id = @workspace_id AND i.migration_id = @migration_id AND i.state = 'planned' AND i.in_copy
+ORDER BY t.last_at DESC, t.thread_key, i.received_at, i.source_id
+LIMIT @lim;
+
+-- name: CountPlannedMigrationItems :one
+SELECT count(*)::bigint FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state = 'planned' AND in_copy;
+
+-- name: GetMigrationItemState :one
+SELECT state FROM migration_items WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND source_id = @source_id;
+
+-- name: LockMigrationItem :one
+SELECT state, attempts, message_id FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND source_id = @source_id
+FOR UPDATE;
+
+-- name: SetMigrationItemDone :exec
+UPDATE migration_items SET state = @state, reason = @reason, message_id = sqlc.narg(message_id)
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND source_id = @source_id;
+
+-- name: CountMigrationItemAttempt :one
+UPDATE migration_items SET attempts = attempts + 1,
+    state = CASE WHEN attempts + 1 >= @max_attempts::int THEN 'failed' ELSE state END,
+    reason = CASE WHEN attempts + 1 >= @max_attempts::int THEN 'failed' ELSE reason END
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND source_id = @source_id AND state = 'planned'
+RETURNING state;
+
+-- name: AddMigrationThreadDone :exec
+UPDATE migration_threads SET done = done + 1
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND thread_key = @thread_key;
+
+-- name: LockMigrationThread :one
+SELECT * FROM migration_threads
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND thread_key = @thread_key
+FOR UPDATE;
+
+-- name: SetMigrationThreadConversation :exec
+UPDATE migration_threads SET conversation_id = @conversation_id
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND thread_key = @thread_key;
+
+-- name: AddMigrationThreadItem :exec
+UPDATE migration_threads SET items = items + 1, last_at = greatest(last_at, @at)
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND thread_key = @thread_key;
+
+-- name: ListFolderPlannedItems :many
+SELECT source_id, dedupe_key, thread_key FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND folder_id = @folder_id AND state = 'planned';
+
+-- name: RenameMigrationItem :exec
+UPDATE migration_items SET source_id = @new_source_id, received_at = @received_at
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND source_id = @source_id AND state = 'planned';
+
+-- name: ListMigrationItemsByDedupe :many
+SELECT dedupe_key, thread_key, state FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND dedupe_key = ANY(@keys::text[]);
+
+-- name: MigrationCopyCounts :many
+SELECT folder_id, state, count(*)::bigint AS n, coalesce(sum(size_bytes), 0)::bigint AS bytes FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND in_copy
+GROUP BY folder_id, state;
+
+-- name: RetryFailedMigrationItems :execrows
+WITH r AS (
+    UPDATE migration_items SET state = 'planned', reason = '', attempts = 0
+    WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND state = 'failed'
+    RETURNING thread_key),
+c AS (SELECT thread_key, count(*)::int AS n FROM r GROUP BY thread_key)
+UPDATE migration_threads t SET done = t.done - c.n FROM c
+WHERE t.workspace_id = @workspace_id AND t.migration_id = @migration_id AND t.thread_key = c.thread_key;
+
+-- name: AddMigrationError :exec
+INSERT INTO migration_errors (workspace_id, migration_id, code, detail, folder, item_date, item_subject, created_at)
+SELECT @workspace_id, @migration_id, @code, @detail, @folder, sqlc.narg(item_date), @item_subject, @now
+WHERE (SELECT count(*) FROM migration_errors WHERE workspace_id = @workspace_id AND migration_id = @migration_id) < 1000;
+
+-- name: ListMigrationErrors :many
+SELECT * FROM migration_errors
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+  AND (sqlc.narg(before_id)::bigint IS NULL OR id < sqlc.narg(before_id)::bigint)
+ORDER BY id DESC
+LIMIT @lim;
+
+-- name: LockMigrationChannel :exec
+SELECT pg_advisory_xact_lock(hashtextextended('yuva_migration_channel:' || sqlc.arg(channel_id)::uuid::text, 0));
+
+-- name: FindChannelEmailByHeader :one
+SELECT message_id, conversation_id FROM message_emails
+WHERE workspace_id = @workspace_id AND channel_id = @channel_id AND header_message_id = @header_message_id
+LIMIT 1;
+
+-- name: ImportConversation :one
+INSERT INTO conversations (id, workspace_id, inbox_id, contact_id, channel_id, subject, status, priority, spam, channel_kind,
+    last_message_at, last_activity_at, closed_at, created_at, updated_at, migration_id, imported_at)
+VALUES (@id, @workspace_id, @inbox_id, @contact_id, @channel_id, @subject, @status, 'normal', false,
+    (SELECT ch.kind FROM channels ch WHERE ch.workspace_id = @workspace_id AND ch.id = @channel_id),
+    @at, @at, sqlc.narg(closed_at), @at, @now, @migration_id, @now)
+RETURNING *;
+
+-- name: ImportTouchConversation :exec
+UPDATE conversations SET
+    created_at = least(created_at, @at::timestamptz),
+    last_message_at = greatest(coalesce(last_message_at, @at::timestamptz), @at::timestamptz),
+    last_activity_at = greatest(last_activity_at, @at::timestamptz)
+WHERE workspace_id = @workspace_id AND id = @id;
+
+-- name: CreateImportedContact :one
+INSERT INTO contacts (id, workspace_id, name, attributes, blocked, created_at, updated_at, migration_id)
+VALUES (@id, @workspace_id, @name, '{}', false, @now, @now, @migration_id)
+RETURNING id;
+
+-- name: FillContactName :exec
+UPDATE contacts SET name = @name WHERE workspace_id = @workspace_id AND id = @id AND name = '';
+
+-- name: ImportMessage :exec
+WITH m AS (
+    INSERT INTO messages (id, workspace_id, conversation_id, kind, direction, author_type, author_member_id, author_contact_id,
+        body, html, created_at, delivery_state, delivery_updated_at, imported_at, imported_author)
+    VALUES (@id, @workspace_id, @conversation_id, 'message', @direction, @author_type, sqlc.narg(author_member_id),
+        sqlc.narg(author_contact_id), @body, sqlc.narg(html), @created_at, sqlc.narg(delivery_state),
+        CASE WHEN sqlc.narg(delivery_state)::text IS NULL THEN NULL ELSE @created_at::timestamptz END, @imported_at,
+        sqlc.narg(imported_author))
+    RETURNING workspace_id, author_contact_id, created_at)
+UPDATE contacts SET last_active_at = greatest(coalesce(contacts.last_active_at, m.created_at), m.created_at)
+FROM m WHERE contacts.workspace_id = m.workspace_id AND contacts.id = m.author_contact_id;
+
+-- name: ImportMessageEmail :exec
+INSERT INTO message_emails (workspace_id, message_id, conversation_id, channel_id, direction, header_message_id,
+    in_reply_to, references_ids, from_address, to_addresses, cc_addresses, subject, full_text, full_html, quoted, headers,
+    raw_key, raw_size, authentication_results, dmarc, auto, created_at, imported_at)
+VALUES (@workspace_id, @message_id, @conversation_id, @channel_id, @direction, @header_message_id,
+    sqlc.narg(in_reply_to), @references_ids, @from_address, @to_addresses, @cc_addresses, @subject, @full_text, sqlc.narg(full_html),
+    @quoted, @headers, sqlc.narg(raw_key), sqlc.narg(raw_size), sqlc.narg(authentication_results), 'unknown', @auto, @created_at, @imported_at);
+
+-- name: GetLabelByName :one
+SELECT * FROM labels WHERE workspace_id = $1 AND name = $2;
+
+-- name: CreateLabelIfMissing :exec
+INSERT INTO labels (id, workspace_id, name, color, created_at) VALUES (@id, @workspace_id, @name, @color, @now)
+ON CONFLICT (workspace_id, name) DO NOTHING;
+
+-- The cleanup looks across workspaces (see "Hosting for others later" in docs/architecture.md).
+-- name: ListFinishedMigrations :many
+SELECT m.workspace_id, m.id FROM migrations m
+WHERE m.state IN ('completed', 'cancelled') AND m.finished_at < @before
+  AND EXISTS (SELECT 1 FROM migration_items i WHERE i.workspace_id = m.workspace_id AND i.migration_id = m.id)
+LIMIT 100;
+
+-- name: DeleteMigrationItems :exec
+DELETE FROM migration_items WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: DeleteMigrationErrors :exec
+DELETE FROM migration_errors WHERE workspace_id = @workspace_id AND migration_id = @migration_id;
+
+-- name: ListNewestMigrationThreads :many
+SELECT thread_key, plan FROM migration_threads
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id
+ORDER BY last_at DESC, thread_key
+LIMIT @lim;
+
+-- name: ListMigrationThreadItems :many
+SELECT source_id, folder_id, thread_key, meta FROM migration_items
+WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND thread_key = ANY(@thread_keys::text[]) AND state = 'planned'
+ORDER BY thread_key, received_at, source_id;
+
+-- name: ClearMigrationLease :exec
+UPDATE migrations SET lease_until = NULL, lease_job_id = NULL WHERE workspace_id = @workspace_id AND id = @id;

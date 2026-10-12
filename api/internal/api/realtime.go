@@ -315,7 +315,7 @@ func (f *eventFilter) allows(ctx context.Context, q *store.Queries, e realtime.E
 		if requireScope(f.p, oas.BroadcastsRead) != nil {
 			return false, nil
 		}
-	case eventMigrationUpdated:
+	case eventMigrationUpdated, eventMigrationProgress:
 		return requireMigrationManager(f.p) == nil && requireScope(f.p, oas.MigrationsManage) == nil, nil
 	case realtime.Typing:
 		var ty oas.Typing

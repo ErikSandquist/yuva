@@ -3,8 +3,6 @@ package api
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"io"
@@ -194,22 +192,36 @@ type storedFile struct {
 }
 
 func (s *Server) inboundAttachments(ctx context.Context, workspaceID uuid.UUID, atts []email.Attachment) ([]storedFile, error) {
+	out, _, err := s.keepAttachments(ctx, workspaceID, atts, func(int) uuid.UUID { return newID() })
+	return out, err
+}
+
+// keepAttachments stores the attachments the server keeps, at most 50, under the ids idFor
+// gives by position, and reports how many it left out by size or type.
+func (s *Server) keepAttachments(ctx context.Context, workspaceID uuid.UUID, atts []email.Attachment, idFor func(int) uuid.UUID) ([]storedFile, int, error) {
 	var out []storedFile
+	skipped := 0
 	for i, a := range atts {
 		if len(out) == 50 {
+			skipped += len(atts) - i
 			break
 		}
 		size := int64(len(a.Data))
-		if size == 0 || size > s.attach.MaxBytes {
+		if size == 0 {
+			continue
+		}
+		if size > s.attach.MaxBytes {
+			skipped++
 			continue
 		}
 		ct, err := s.contentType(a.ContentType, bytes.NewReader(a.Data))
 		if err != nil {
 			var apiErr *apiError
 			if errors.As(err, &apiErr) {
+				skipped++
 				continue
 			}
-			return out, err
+			return out, skipped, err
 		}
 		name := a.Filename
 		if name == "" {
@@ -218,22 +230,51 @@ func (s *Server) inboundAttachments(ctx context.Context, workspaceID uuid.UUID, 
 				name += exts[0]
 			}
 		}
-		f := storedFile{id: newID(), filename: cleanFilename(name), contentType: ct, size: size, inline: a.Inline}
+		f := storedFile{id: idFor(i), filename: cleanFilename(name), contentType: ct, size: size, inline: a.Inline}
 		if cid := truncateRunes(a.ContentID, 998); cid != "" {
 			f.contentID = &cid
 		}
 		f.key = workspaceID.String() + "/attachments/" + f.id.String()
 		if err := s.objects.Put(ctx, f.key, bytes.NewReader(a.Data), size, ct); err != nil {
-			return out, err
+			return out, skipped, err
 		}
 		out = append(out, f)
 	}
-	return out, nil
+	return out, skipped, nil
 }
 
-func synthesizedID(raw []byte) string {
-	sum := sha256.Sum256(raw)
-	return "sha256-" + hex.EncodeToString(sum[:20]) + "@yuva.invalid"
+// mailContent is what ingest stores of a parsed message besides its addresses: the visible
+// text and HTML with quotes removed and sanitised, and the full message.
+type mailContent struct {
+	visible   string
+	html      *string
+	fullHTML  *string
+	quoted    bool
+	subject   string
+	headers   []byte
+	inReplyTo *string
+	refs      []string
+}
+
+func (s *Server) mailContent(m *email.Message) mailContent {
+	visible, textQuoted := reply.Strip(m.Text)
+	out := mailContent{visible: truncateRunes(visible, maxMessageBodyRunes), quoted: textQuoted}
+	if m.HTML != "" {
+		stripped, removed := email.StripHTMLQuotes(m.HTML)
+		out.quoted = out.quoted || removed
+		out.html = s.sanitizeHTML(stripped, maxMessageHTMLBytes)
+	}
+	out.fullHTML = s.sanitizeHTML(m.HTML, maxFullHTMLBytes)
+	out.subject = truncateRunes(strings.Join(strings.Fields(m.Subject), " "), 500)
+	out.headers, _ = json.Marshal(m.Headers)
+	if len(m.InReplyTo) > 0 {
+		out.inReplyTo = &m.InReplyTo[0]
+	}
+	out.refs = m.References
+	if out.refs == nil {
+		out.refs = []string{}
+	}
+	return out
 }
 
 func (s *Server) sanitizeHTML(v string, limit int) *string {
@@ -310,7 +351,7 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 	ws := ch.WorkspaceID
 	headerID := m.MessageID
 	if headerID == "" {
-		headerID = synthesizedID(raw)
+		headerID = email.SynthesizedID(raw)
 	}
 	if prev, err := s.st.FindInboundEmailByHeader(ctx, store.FindInboundEmailByHeaderParams{WorkspaceID: ws, ChannelID: &ch.ChannelID, HeaderMessageID: headerID}); err == nil {
 		return IngestResult{Status: IngestDuplicate, ConversationID: &prev.ConversationID, MessageID: &prev.MessageID}, nil
@@ -332,17 +373,8 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 		return IngestResult{}, err
 	}
 
-	visible, textQuoted := reply.Strip(m.Text)
-	visible = truncateRunes(visible, maxMessageBodyRunes)
-	var html *string
-	htmlQuoted := false
-	if m.HTML != "" {
-		stripped, removed := email.StripHTMLQuotes(m.HTML)
-		htmlQuoted = removed
-		html = s.sanitizeHTML(stripped, maxMessageHTMLBytes)
-	}
-	subject := truncateRunes(strings.Join(strings.Fields(m.Subject), " "), 500)
-	headers, _ := json.Marshal(m.Headers)
+	content := s.mailContent(m)
+	subject := content.subject
 	var authResults *string
 	if m.AuthResults != "" {
 		authResults = &m.AuthResults
@@ -372,29 +404,21 @@ func (s *Server) IngestEmail(ctx context.Context, envelopeTo, envelopeFrom strin
 		direction := string(oas.In)
 		msg, err := q.CreateMessage(ctx, store.CreateMessageParams{
 			ID: newID(), WorkspaceID: ws, ConversationID: conv.ID, Kind: string(oas.MessageKindMessage), Direction: &direction,
-			AuthorType: string(oas.AuthorTypeContact), AuthorContactID: &contact.ID, Body: visible, Html: html, CreatedAt: now,
+			AuthorType: string(oas.AuthorTypeContact), AuthorContactID: &contact.ID, Body: content.visible, Html: content.html, CreatedAt: now,
 		})
 		if err != nil {
 			return err
 		}
-		var inReplyTo *string
-		if len(m.InReplyTo) > 0 {
-			inReplyTo = &m.InReplyTo[0]
-		}
-		refs := m.References
-		if refs == nil {
-			refs = []string{}
-		}
 		summary := store.ListMessageEmailsRow{
 			MessageID: msg.ID, Direction: direction, HeaderMessageID: headerID, FromAddress: sender,
 			ToAddresses: normalizedAddressList(m.To), CcAddresses: normalizedAddressList(m.Cc), Subject: subject,
-			Quoted: textQuoted || htmlQuoted, HasRaw: true, Auto: auto, Dmarc: dmarc, UnverifiedSender: unverified,
+			Quoted: content.quoted, HasRaw: true, Auto: auto, Dmarc: dmarc, UnverifiedSender: unverified,
 		}
 		if err := q.CreateMessageEmail(ctx, store.CreateMessageEmailParams{
 			WorkspaceID: ws, MessageID: msg.ID, ConversationID: conv.ID, ChannelID: &ch.ChannelID, Direction: direction,
-			HeaderMessageID: headerID, InReplyTo: inReplyTo, ReferencesIds: refs, FromAddress: sender,
+			HeaderMessageID: headerID, InReplyTo: content.inReplyTo, ReferencesIds: content.refs, FromAddress: sender,
 			ToAddresses: summary.ToAddresses, CcAddresses: summary.CcAddresses, Subject: subject, FullText: m.Text,
-			FullHtml: s.sanitizeHTML(m.HTML, maxFullHTMLBytes), Quoted: summary.Quoted, Headers: headers, RawKey: &rawKey,
+			FullHtml: content.fullHTML, Quoted: summary.Quoted, Headers: content.headers, RawKey: &rawKey,
 			RawSize: &rawSize, AuthenticationResults: authResults, Dmarc: dmarc, Auto: auto, CreatedAt: now,
 		}); err != nil {
 			return err

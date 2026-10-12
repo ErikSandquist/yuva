@@ -2237,6 +2237,24 @@ func (e MigrationDetectionNote) Valid() bool {
 	}
 }
 
+// Defines values for MigrationEstimateLabelAction.
+const (
+	EstimateLabelCreate   MigrationEstimateLabelAction = "create"
+	EstimateLabelExisting MigrationEstimateLabelAction = "existing"
+)
+
+// Valid indicates whether the value is a known member of the MigrationEstimateLabelAction enum.
+func (e MigrationEstimateLabelAction) Valid() bool {
+	switch e {
+	case EstimateLabelCreate:
+		return true
+	case EstimateLabelExisting:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for MigrationEventType.
 const (
 	MigrationUpdated MigrationEventType = "migration.updated"
@@ -2246,6 +2264,90 @@ const (
 func (e MigrationEventType) Valid() bool {
 	switch e {
 	case MigrationUpdated:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderLabelAction.
+const (
+	FolderLabelCreate   MigrationFolderLabelAction = "create"
+	FolderLabelExisting MigrationFolderLabelAction = "existing"
+	FolderLabelNone     MigrationFolderLabelAction = "none"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderLabelAction enum.
+func (e MigrationFolderLabelAction) Valid() bool {
+	switch e {
+	case FolderLabelCreate:
+		return true
+	case FolderLabelExisting:
+		return true
+	case FolderLabelNone:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderUse.
+const (
+	FolderUseImport MigrationFolderUse = "import"
+	FolderUseLabels MigrationFolderUse = "labels"
+	FolderUseSkip   MigrationFolderUse = "skip"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderUse enum.
+func (e MigrationFolderUse) Valid() bool {
+	switch e {
+	case FolderUseImport:
+		return true
+	case FolderUseLabels:
+		return true
+	case FolderUseSkip:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationFolderKind.
+const (
+	FolderKindAll     MigrationFolderKind = "all"
+	FolderKindArchive MigrationFolderKind = "archive"
+	FolderKindDrafts  MigrationFolderKind = "drafts"
+	FolderKindInbox   MigrationFolderKind = "inbox"
+	FolderKindLabel   MigrationFolderKind = "label"
+	FolderKindOther   MigrationFolderKind = "other"
+	FolderKindSent    MigrationFolderKind = "sent"
+	FolderKindSpam    MigrationFolderKind = "spam"
+	FolderKindTrash   MigrationFolderKind = "trash"
+	FolderKindUser    MigrationFolderKind = "user"
+)
+
+// Valid indicates whether the value is a known member of the MigrationFolderKind enum.
+func (e MigrationFolderKind) Valid() bool {
+	switch e {
+	case FolderKindAll:
+		return true
+	case FolderKindArchive:
+		return true
+	case FolderKindDrafts:
+		return true
+	case FolderKindInbox:
+		return true
+	case FolderKindLabel:
+		return true
+	case FolderKindOther:
+		return true
+	case FolderKindSent:
+		return true
+	case FolderKindSpam:
+		return true
+	case FolderKindTrash:
+		return true
+	case FolderKindUser:
 		return true
 	default:
 		return false
@@ -2327,6 +2429,21 @@ func (e MigrationPresetId) Valid() bool {
 	case PresetYandex:
 		return true
 	case PresetZoho:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for MigrationProgressEventType.
+const (
+	MigrationProgressEventTypeMigrationProgress MigrationProgressEventType = "migration.progress"
+)
+
+// Valid indicates whether the value is a known member of the MigrationProgressEventType enum.
+func (e MigrationProgressEventType) Valid() bool {
+	switch e {
+	case MigrationProgressEventTypeMigrationProgress:
 		return true
 	default:
 		return false
@@ -8060,8 +8177,11 @@ type Migration struct {
 
 	// CredentialsDeletedAt When the credentials were deleted because the migration ended.
 	CredentialsDeletedAt *time.Time `json:"credentials_deleted_at,omitempty"`
-	FinishedAt           *time.Time `json:"finished_at,omitempty"`
-	Id                   uuid.UUID  `json:"id"`
+
+	// Estimate The dry run, once a scan finished.
+	Estimate   *MigrationEstimate `json:"estimate,omitempty"`
+	FinishedAt *time.Time         `json:"finished_at,omitempty"`
+	Id         uuid.UUID          `json:"id"`
 
 	// InboxId The inbox the history goes to; absent until chosen or when deleted.
 	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
@@ -8074,6 +8194,12 @@ type Migration struct {
 	// and Microsoft 365, through "Sign in with Microsoft"), `yandex`, `icloud`, `zoho`, `yahoo`,
 	// `fastmail`, `gmx`, or `imap` for any other server.
 	Preset MigrationPresetId `json:"preset"`
+
+	// RatePerMinute While copying, messages done per minute over the last five minutes.
+	RatePerMinute *int64 `json:"rate_per_minute,omitempty"`
+
+	// SecondsLeft While copying, how long the rest takes at that rate.
+	SecondsLeft *int64 `json:"seconds_left,omitempty"`
 
 	// Source Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
 	// `zendesk` and `helpscout`, help desks. A server offers the sources its operator allows
@@ -8243,6 +8369,73 @@ type MigrationDetectionFoundBy string
 // Cloudflare Email Routing; connect the mailbox it ends up in.
 type MigrationDetectionNote string
 
+// MigrationError defines model for MigrationError.
+type MigrationError struct {
+	// Code `too_large` (over the message limit), `unparseable`, `gone` (no longer in the mailbox),
+	// `failed` (five failed attempts), `blocked` (from a blocked contact), `auth_failed`,
+	// `source_unreachable`, `throttled`, `folder_changed` (the folder was recreated and read
+	// again), `hosted_limit`, `source_write_refused` (Yuva kept a command from the mailbox;
+	// a bug).
+	Code      string     `json:"code"`
+	CreatedAt time.Time  `json:"created_at"`
+	Detail    string     `json:"detail"`
+	Folder    string     `json:"folder"`
+	Id        int64      `json:"id"`
+	ItemDate  *time.Time `json:"item_date,omitempty"`
+	Subject   string     `json:"subject"`
+}
+
+// MigrationErrorPage defines model for MigrationErrorPage.
+type MigrationErrorPage struct {
+	Items      []MigrationError `json:"items"`
+	NextCursor *string          `json:"next_cursor,omitempty"`
+}
+
+// MigrationEstimate The dry run of the last scan, with the options it was planned with.
+type MigrationEstimate struct {
+	AttachmentBytes int64 `json:"attachment_bytes"`
+
+	// Attachments Attachments of the messages to import.
+	Attachments int64 `json:"attachments"`
+
+	// AttachmentsSkipped Attachments over the server's size limit or of a type it does not keep; they stay in the original message.
+	AttachmentsSkipped int64 `json:"attachments_skipped"`
+
+	// Bytes Bytes to read from the source.
+	Bytes            int64                    `json:"bytes"`
+	ContactsExisting int64                    `json:"contacts_existing"`
+	ContactsNew      int64                    `json:"contacts_new"`
+	Conversations    int64                    `json:"conversations"`
+	Labels           []MigrationEstimateLabel `json:"labels"`
+	Messages         int64                    `json:"messages"`
+	MessagesIn       int64                    `json:"messages_in"`
+	MessagesOut      int64                    `json:"messages_out"`
+	NewestAt         *time.Time               `json:"newest_at,omitempty"`
+	OldestAt         *time.Time               `json:"oldest_at,omitempty"`
+	ScannedAt        time.Time                `json:"scanned_at"`
+	SecondsMax       int64                    `json:"seconds_max"`
+
+	// SecondsMin How long the copy takes at the provider's pace, at the least.
+	SecondsMin int64 `json:"seconds_min"`
+
+	// Skipped Messages that will not be imported, by reason.
+	Skipped MigrationSkipped `json:"skipped"`
+
+	// StorageBytes Storage the imported history needs, originals included when kept.
+	StorageBytes int64 `json:"storage_bytes"`
+}
+
+// MigrationEstimateLabel defines model for MigrationEstimateLabel.
+type MigrationEstimateLabel struct {
+	Action        MigrationEstimateLabelAction `json:"action"`
+	Conversations int64                        `json:"conversations"`
+	LabelId       *uuid.UUID                   `json:"label_id,omitempty"`
+	Name          string                       `json:"name"`
+}
+
+// MigrationEstimateLabelAction defines model for MigrationEstimateLabel.Action.
+type MigrationEstimateLabelAction string
+
 // MigrationEvent `migration.updated`: a migration was created or changed state. Delivered to owners, admins
 // and API keys or tokens holding `migrations:manage`; never a webhook.
 type MigrationEvent struct {
@@ -8262,6 +8455,71 @@ type MigrationEventData struct {
 
 	// PreviousState Absent when the migration was just created.
 	PreviousState *MigrationState `json:"previous_state,omitempty"`
+}
+
+// MigrationFolder defines model for MigrationFolder.
+type MigrationFolder struct {
+	// Bytes Bytes copied from this folder.
+	Bytes     int64 `json:"bytes"`
+	Duplicate int64 `json:"duplicate"`
+	Failed    int64 `json:"failed"`
+	Id        int32 `json:"id"`
+	Imported  int64 `json:"imported"`
+
+	// Kind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+	// All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+	// `drafts` and `other` (outbox, chats, notes), which are never read.
+	Kind MigrationFolderKind `json:"kind"`
+
+	// LabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+	LabelAction MigrationFolderLabelAction `json:"label_action"`
+
+	// LabelId The label, once it exists.
+	LabelId *uuid.UUID `json:"label_id,omitempty"`
+
+	// Messages Messages in the folder at the last count.
+	Messages int64      `json:"messages"`
+	Name     string     `json:"name"`
+	NewestAt *time.Time `json:"newest_at,omitempty"`
+	OldestAt *time.Time `json:"oldest_at,omitempty"`
+
+	// Selected Its messages are read (`options.folders`, else the preset's default).
+	Selected bool `json:"selected"`
+
+	// SizeBytes Their size, once scanned.
+	SizeBytes int64 `json:"size_bytes"`
+	Skipped   int64 `json:"skipped"`
+
+	// Use `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
+	// label whose mail comes from All Mail). `skip`: not read.
+	Use MigrationFolderUse `json:"use"`
+}
+
+// MigrationFolderLabelAction What its conversations get, from `options.labels` or by default a label of the folder's name for user folders and Gmail labels.
+type MigrationFolderLabelAction string
+
+// MigrationFolderUse `import`: its messages are imported. `labels`: only read to label conversations (a Gmail
+// label whose mail comes from All Mail). `skip`: not read.
+type MigrationFolderUse string
+
+// MigrationFolderKind What a folder holds, by its special use or name: `inbox`, `sent`, `archive`, `all` (Gmail's
+// All Mail), `user` (the user's own folder), `label` (a Gmail label), and `spam`, `trash`,
+// `drafts` and `other` (outbox, chats, notes), which are never read.
+type MigrationFolderKind string
+
+// MigrationFolderList defines model for MigrationFolderList.
+type MigrationFolderList struct {
+	Items []MigrationFolder `json:"items"`
+}
+
+// MigrationFolderProgress defines model for MigrationFolderProgress.
+type MigrationFolderProgress struct {
+	Bytes     int64 `json:"bytes"`
+	Duplicate int64 `json:"duplicate"`
+	Failed    int64 `json:"failed"`
+	Id        int32 `json:"id"`
+	Imported  int64 `json:"imported"`
+	Skipped   int64 `json:"skipped"`
 }
 
 // MigrationLabelMapping What a folder or Gmail label becomes: `create` a label of the same name, an `existing`
@@ -8379,6 +8637,81 @@ type MigrationPresetList struct {
 	Items []MigrationPreset `json:"items"`
 }
 
+// MigrationPreview defines model for MigrationPreview.
+type MigrationPreview struct {
+	Items []MigrationPreviewThread `json:"items"`
+}
+
+// MigrationPreviewMessage defines model for MigrationPreviewMessage.
+type MigrationPreviewMessage struct {
+	At          time.Time `json:"at"`
+	Attachments int32     `json:"attachments"`
+	Direction   Direction `json:"direction"`
+
+	// From An imported message's sender from the team who is not mapped to a member.
+	From ImportedAuthor `json:"from"`
+
+	// MemberId The member an outgoing message is imported as.
+	MemberId *uuid.UUID `json:"member_id,omitempty"`
+
+	// Text The visible text, quotes removed, at most 1,000 characters.
+	Text string `json:"text"`
+}
+
+// MigrationPreviewThread defines model for MigrationPreviewThread.
+type MigrationPreviewThread struct {
+	// Contact An imported message's sender from the team who is not mapped to a member.
+	Contact ImportedAuthor `json:"contact"`
+	Labels  []string       `json:"labels"`
+
+	// Messages The thread's messages, oldest first, at most 20.
+	Messages      []MigrationPreviewMessage `json:"messages"`
+	MessagesTotal int32                     `json:"messages_total"`
+	Status        ConversationStatus        `json:"status"`
+	Subject       string                    `json:"subject"`
+}
+
+// MigrationProgress defines model for MigrationProgress.
+type MigrationProgress struct {
+	Counts  MigrationCounts           `json:"counts"`
+	Folders []MigrationFolderProgress `json:"folders"`
+	Id      uuid.UUID                 `json:"id"`
+
+	// RatePerMinute Messages done per minute over the last five minutes.
+	RatePerMinute *int64 `json:"rate_per_minute,omitempty"`
+	SecondsLeft   *int64 `json:"seconds_left,omitempty"`
+
+	// State - `draft`: created; not connected yet.
+	// - `connected`: the connection test passed; choose what to read.
+	// - `scanning`: reading message headers for the dry run.
+	// - `ready`: the dry run is ready; nothing is imported yet.
+	// - `copying`: importing history, newest threads first.
+	// - `paused`: stopped by a member; resumes where it was.
+	// - `needs_attention`: stopped by a problem with the source (`state_reason`), such as a
+	//   revoked app password; reconnect to continue.
+	// - `syncing`: history copied; new mail in the old mailbox is fetched every two minutes
+	//   while the team switches its mail over.
+	// - `completed`: finished; the credentials are deleted.
+	// - `cancelled`: stopped for good; what was imported stays and the credentials are deleted.
+	// - `removing`, `removed`: imported history is being, or was, removed.
+	State        MigrationState `json:"state"`
+	WaitingUntil *time.Time     `json:"waiting_until,omitempty"`
+}
+
+// MigrationProgressEvent `migration.progress`, on `/v1/realtime` only: the counts of a copying migration, at most
+// every 2 seconds, and when it starts or stops waiting for the provider. Not stored, no id, never replayed, never a webhook;
+// reload the migration after a reconnect. Delivered to owners, admins and API keys or
+// tokens holding `migrations:manage`.
+type MigrationProgressEvent struct {
+	CreatedAt   time.Time                  `json:"created_at"`
+	Data        MigrationProgress          `json:"data"`
+	Type        MigrationProgressEventType `json:"type"`
+	WorkspaceId uuid.UUID                  `json:"workspace_id"`
+}
+
+// MigrationProgressEventType defines model for MigrationProgressEvent.Type.
+type MigrationProgressEventType string
+
 // MigrationServer defines model for MigrationServer.
 type MigrationServer struct {
 	Host string `json:"host"`
@@ -8386,6 +8719,36 @@ type MigrationServer struct {
 
 	// Tls `tls`: TLS from the start (port 993). `starttls`: plain connection upgraded with `STARTTLS` (port 143).
 	Tls MigrationTls `json:"tls"`
+}
+
+// MigrationSkipped Messages that will not be imported, by reason.
+type MigrationSkipped struct {
+	// AlreadyInYuva Already stored for the channel, by an earlier migration or live mail.
+	AlreadyInYuva int64 `json:"already_in_yuva"`
+
+	// Automatic In threads of only automatic mail, with `skip_automatic`.
+	Automatic int64 `json:"automatic"`
+
+	// Blocked From blocked contacts.
+	Blocked int64 `json:"blocked"`
+	Drafts  int64 `json:"drafts"`
+
+	// DuplicateCopies Further copies of a message found in several folders; their folders still label it.
+	DuplicateCopies int64 `json:"duplicate_copies"`
+
+	// Internal In threads of only the team's own mail.
+	Internal int64 `json:"internal"`
+
+	// OtherFolders In folders that are never read (outbox, chats, notes) or that were not chosen.
+	OtherFolders int64 `json:"other_folders"`
+
+	// OutsideRange In threads whose last message is older than `since`.
+	OutsideRange int64 `json:"outside_range"`
+	Spam         int64 `json:"spam"`
+
+	// TooLarge Larger than the server's limit for one message.
+	TooLarge int64 `json:"too_large"`
+	Trash    int64 `json:"trash"`
 }
 
 // MigrationSource Where the history comes from: `imap`, a mailbox read over IMAP; `file`, export files;
@@ -11477,8 +11840,86 @@ type UpdateMigrationParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// CancelMigrationParams defines parameters for CancelMigration.
+type CancelMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // SetMigrationCredentialsParams defines parameters for SetMigrationCredentials.
 type SetMigrationCredentialsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMigrationErrorsParams defines parameters for ListMigrationErrors.
+type ListMigrationErrorsParams struct {
+	// Cursor The `next_cursor` of the previous page.
+	Cursor *Cursor `form:"cursor,omitempty" json:"cursor,omitempty"`
+
+	// Limit Page size, 1 to 100; 25 by default.
+	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListMigrationFoldersParams defines parameters for ListMigrationFolders.
+type ListMigrationFoldersParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// PauseMigrationParams defines parameters for PauseMigration.
+type PauseMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetMigrationPreviewParams defines parameters for GetMigrationPreview.
+type GetMigrationPreviewParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ResumeMigrationParams defines parameters for ResumeMigration.
+type ResumeMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RetryMigrationItemsParams defines parameters for RetryMigrationItems.
+type RetryMigrationItemsParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ScanMigrationParams defines parameters for ScanMigration.
+type ScanMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// StartMigrationParams defines parameters for StartMigration.
+type StartMigrationParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -14003,6 +14444,32 @@ func (t *RealtimeMessage) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
+func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
+	var body MigrationProgressEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromMigrationProgressEvent overwrites any union data inside the RealtimeMessage as the provided MigrationProgressEvent
+func (t *RealtimeMessage) FromMigrationProgressEvent(v MigrationProgressEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeMigrationProgressEvent performs a merge with any union data inside the RealtimeMessage, using the provided MigrationProgressEvent
+func (t *RealtimeMessage) MergeMigrationProgressEvent(v MigrationProgressEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsBroadcastProgressEvent returns the union data inside the RealtimeMessage as a BroadcastProgressEvent
 func (t RealtimeMessage) AsBroadcastProgressEvent() (BroadcastProgressEvent, error) {
 	var body BroadcastProgressEvent
@@ -14305,6 +14772,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return t.AsMessageCreatedEvent()
 	case "message.updated":
 		return t.AsMessageUpdatedEvent()
+	case "migration.progress":
+		return t.AsMigrationProgressEvent()
 	case "migration.updated":
 		return t.AsMigrationEvent()
 	case "ready":
@@ -15534,9 +16003,36 @@ type ServerInterface interface {
 	// UpdateMigration Change a migration
 	// (PATCH /v1/migrations/{migrationId})
 	UpdateMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params UpdateMigrationParams)
+	// CancelMigration Cancel the migration
+	// (POST /v1/migrations/{migrationId}/cancel)
+	CancelMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params CancelMigrationParams)
 	// SetMigrationCredentials Connect the mailbox with a password
 	// (PUT /v1/migrations/{migrationId}/credentials)
 	SetMigrationCredentials(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params SetMigrationCredentialsParams)
+	// ListMigrationErrors What went wrong
+	// (GET /v1/migrations/{migrationId}/errors)
+	ListMigrationErrors(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ListMigrationErrorsParams)
+	// ListMigrationFolders The mailbox's folders
+	// (GET /v1/migrations/{migrationId}/folders)
+	ListMigrationFolders(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ListMigrationFoldersParams)
+	// PauseMigration Pause copying
+	// (POST /v1/migrations/{migrationId}/pause)
+	PauseMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params PauseMigrationParams)
+	// GetMigrationPreview The newest threads as they will look
+	// (GET /v1/migrations/{migrationId}/preview)
+	GetMigrationPreview(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params GetMigrationPreviewParams)
+	// ResumeMigration Resume copying
+	// (POST /v1/migrations/{migrationId}/resume)
+	ResumeMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ResumeMigrationParams)
+	// RetryMigrationItems Retry failed messages
+	// (POST /v1/migrations/{migrationId}/retry)
+	RetryMigrationItems(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params RetryMigrationItemsParams)
+	// ScanMigration Read the mailbox's headers for the dry run
+	// (POST /v1/migrations/{migrationId}/scan)
+	ScanMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ScanMigrationParams)
+	// StartMigration Start copying
+	// (POST /v1/migrations/{migrationId}/start)
+	StartMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationParams)
 	// TestMigrationConnection Test the connection to the mailbox
 	// (POST /v1/migrations/{migrationId}/test)
 	TestMigrationConnection(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params TestMigrationConnectionParams)
@@ -26964,6 +27460,75 @@ func (siw *ServerInterfaceWrapper) UpdateMigration(w http.ResponseWriter, r *htt
 	handler.ServeHTTP(w, r)
 }
 
+// CancelMigration operation middleware
+func (siw *ServerInterfaceWrapper) CancelMigration(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CancelMigrationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CancelMigration(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // SetMigrationCredentials operation middleware
 func (siw *ServerInterfaceWrapper) SetMigrationCredentials(w http.ResponseWriter, r *http.Request) {
 
@@ -27005,6 +27570,527 @@ func (siw *ServerInterfaceWrapper) SetMigrationCredentials(w http.ResponseWriter
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.SetMigrationCredentials(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMigrationErrors operation middleware
+func (siw *ServerInterfaceWrapper) ListMigrationErrors(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMigrationErrorsParams
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: "int32"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMigrationErrors(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListMigrationFolders operation middleware
+func (siw *ServerInterfaceWrapper) ListMigrationFolders(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListMigrationFoldersParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListMigrationFolders(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// PauseMigration operation middleware
+func (siw *ServerInterfaceWrapper) PauseMigration(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params PauseMigrationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.PauseMigration(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetMigrationPreview operation middleware
+func (siw *ServerInterfaceWrapper) GetMigrationPreview(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetMigrationPreviewParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetMigrationPreview(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ResumeMigration operation middleware
+func (siw *ServerInterfaceWrapper) ResumeMigration(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ResumeMigrationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ResumeMigration(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RetryMigrationItems operation middleware
+func (siw *ServerInterfaceWrapper) RetryMigrationItems(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RetryMigrationItemsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RetryMigrationItems(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ScanMigration operation middleware
+func (siw *ServerInterfaceWrapper) ScanMigration(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ScanMigrationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ScanMigration(w, r, migrationId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// StartMigration operation middleware
+func (siw *ServerInterfaceWrapper) StartMigration(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "migrationId" -------------
+	var migrationId MigrationId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "migrationId", r.PathValue("migrationId"), &migrationId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "migrationId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params StartMigrationParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.StartMigration(w, r, migrationId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -28530,6 +29616,15 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/migrations/{migrationId}", wrapper.UpdateMigration)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/v1/migrations/{migrationId}/credentials", wrapper.SetMigrationCredentials)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/test", wrapper.TestMigrationConnection)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/folders", wrapper.ListMigrationFolders)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/scan", wrapper.ScanMigration)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/preview", wrapper.GetMigrationPreview)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/start", wrapper.StartMigration)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/pause", wrapper.PauseMigration)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/resume", wrapper.ResumeMigration)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/cancel", wrapper.CancelMigration)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/migrations/{migrationId}/retry", wrapper.RetryMigrationItems)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/migrations/{migrationId}/errors", wrapper.ListMigrationErrors)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/usage", wrapper.GetUsage)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/feedback", wrapper.CreateFeedback)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/webhooks", wrapper.ListWebhooks)
@@ -46544,6 +47639,87 @@ func (response UpdateMigration422ApplicationProblemPlusJSONResponse) VisitUpdate
 	return err
 }
 
+type CancelMigrationRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      CancelMigrationParams
+}
+
+type CancelMigrationResponseObject interface {
+	VisitCancelMigrationResponse(w http.ResponseWriter) error
+}
+
+type CancelMigration200JSONResponse Migration
+
+func (response CancelMigration200JSONResponse) VisitCancelMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelMigration401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CancelMigration401ApplicationProblemPlusJSONResponse) VisitCancelMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelMigration403ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelMigration403ApplicationProblemPlusJSONResponse) VisitCancelMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelMigration404ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelMigration404ApplicationProblemPlusJSONResponse) VisitCancelMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CancelMigration409ApplicationProblemPlusJSONResponse Problem
+
+func (response CancelMigration409ApplicationProblemPlusJSONResponse) VisitCancelMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type SetMigrationCredentialsRequestObject struct {
 	MigrationId MigrationId `json:"migrationId"`
 	Params      SetMigrationCredentialsParams
@@ -46637,6 +47813,682 @@ func (response SetMigrationCredentials409ApplicationProblemPlusJSONResponse) Vis
 type SetMigrationCredentials422ApplicationProblemPlusJSONResponse Problem
 
 func (response SetMigrationCredentials422ApplicationProblemPlusJSONResponse) VisitSetMigrationCredentialsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationErrorsRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      ListMigrationErrorsParams
+}
+
+type ListMigrationErrorsResponseObject interface {
+	VisitListMigrationErrorsResponse(w http.ResponseWriter) error
+}
+
+type ListMigrationErrors200JSONResponse MigrationErrorPage
+
+func (response ListMigrationErrors200JSONResponse) VisitListMigrationErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationErrors400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMigrationErrors400ApplicationProblemPlusJSONResponse) VisitListMigrationErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationErrors401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMigrationErrors401ApplicationProblemPlusJSONResponse) VisitListMigrationErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationErrors403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMigrationErrors403ApplicationProblemPlusJSONResponse) VisitListMigrationErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationErrors404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMigrationErrors404ApplicationProblemPlusJSONResponse) VisitListMigrationErrorsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationFoldersRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      ListMigrationFoldersParams
+}
+
+type ListMigrationFoldersResponseObject interface {
+	VisitListMigrationFoldersResponse(w http.ResponseWriter) error
+}
+
+type ListMigrationFolders200JSONResponse MigrationFolderList
+
+func (response ListMigrationFolders200JSONResponse) VisitListMigrationFoldersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationFolders401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListMigrationFolders401ApplicationProblemPlusJSONResponse) VisitListMigrationFoldersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationFolders403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMigrationFolders403ApplicationProblemPlusJSONResponse) VisitListMigrationFoldersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListMigrationFolders404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListMigrationFolders404ApplicationProblemPlusJSONResponse) VisitListMigrationFoldersResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseMigrationRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      PauseMigrationParams
+}
+
+type PauseMigrationResponseObject interface {
+	VisitPauseMigrationResponse(w http.ResponseWriter) error
+}
+
+type PauseMigration200JSONResponse Migration
+
+func (response PauseMigration200JSONResponse) VisitPauseMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseMigration401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response PauseMigration401ApplicationProblemPlusJSONResponse) VisitPauseMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseMigration403ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseMigration403ApplicationProblemPlusJSONResponse) VisitPauseMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseMigration404ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseMigration404ApplicationProblemPlusJSONResponse) VisitPauseMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type PauseMigration409ApplicationProblemPlusJSONResponse Problem
+
+func (response PauseMigration409ApplicationProblemPlusJSONResponse) VisitPauseMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationPreviewRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      GetMigrationPreviewParams
+}
+
+type GetMigrationPreviewResponseObject interface {
+	VisitGetMigrationPreviewResponse(w http.ResponseWriter) error
+}
+
+type GetMigrationPreview200JSONResponse MigrationPreview
+
+func (response GetMigrationPreview200JSONResponse) VisitGetMigrationPreviewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationPreview401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetMigrationPreview401ApplicationProblemPlusJSONResponse) VisitGetMigrationPreviewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationPreview403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationPreview403ApplicationProblemPlusJSONResponse) VisitGetMigrationPreviewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationPreview404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationPreview404ApplicationProblemPlusJSONResponse) VisitGetMigrationPreviewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetMigrationPreview409ApplicationProblemPlusJSONResponse Problem
+
+func (response GetMigrationPreview409ApplicationProblemPlusJSONResponse) VisitGetMigrationPreviewResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigrationRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      ResumeMigrationParams
+}
+
+type ResumeMigrationResponseObject interface {
+	VisitResumeMigrationResponse(w http.ResponseWriter) error
+}
+
+type ResumeMigration200JSONResponse Migration
+
+func (response ResumeMigration200JSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigration401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ResumeMigration401ApplicationProblemPlusJSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigration403ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeMigration403ApplicationProblemPlusJSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigration404ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeMigration404ApplicationProblemPlusJSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigration409ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeMigration409ApplicationProblemPlusJSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ResumeMigration422ApplicationProblemPlusJSONResponse Problem
+
+func (response ResumeMigration422ApplicationProblemPlusJSONResponse) VisitResumeMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RetryMigrationItemsRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      RetryMigrationItemsParams
+}
+
+type RetryMigrationItemsResponseObject interface {
+	VisitRetryMigrationItemsResponse(w http.ResponseWriter) error
+}
+
+type RetryMigrationItems200JSONResponse Migration
+
+func (response RetryMigrationItems200JSONResponse) VisitRetryMigrationItemsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RetryMigrationItems401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RetryMigrationItems401ApplicationProblemPlusJSONResponse) VisitRetryMigrationItemsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RetryMigrationItems403ApplicationProblemPlusJSONResponse Problem
+
+func (response RetryMigrationItems403ApplicationProblemPlusJSONResponse) VisitRetryMigrationItemsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RetryMigrationItems404ApplicationProblemPlusJSONResponse Problem
+
+func (response RetryMigrationItems404ApplicationProblemPlusJSONResponse) VisitRetryMigrationItemsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RetryMigrationItems409ApplicationProblemPlusJSONResponse Problem
+
+func (response RetryMigrationItems409ApplicationProblemPlusJSONResponse) VisitRetryMigrationItemsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigrationRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      ScanMigrationParams
+}
+
+type ScanMigrationResponseObject interface {
+	VisitScanMigrationResponse(w http.ResponseWriter) error
+}
+
+type ScanMigration200JSONResponse Migration
+
+func (response ScanMigration200JSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigration401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ScanMigration401ApplicationProblemPlusJSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigration403ApplicationProblemPlusJSONResponse Problem
+
+func (response ScanMigration403ApplicationProblemPlusJSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigration404ApplicationProblemPlusJSONResponse Problem
+
+func (response ScanMigration404ApplicationProblemPlusJSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigration409ApplicationProblemPlusJSONResponse Problem
+
+func (response ScanMigration409ApplicationProblemPlusJSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ScanMigration422ApplicationProblemPlusJSONResponse Problem
+
+func (response ScanMigration422ApplicationProblemPlusJSONResponse) VisitScanMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigrationRequestObject struct {
+	MigrationId MigrationId `json:"migrationId"`
+	Params      StartMigrationParams
+}
+
+type StartMigrationResponseObject interface {
+	VisitStartMigrationResponse(w http.ResponseWriter) error
+}
+
+type StartMigration200JSONResponse Migration
+
+func (response StartMigration200JSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigration401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response StartMigration401ApplicationProblemPlusJSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigration403ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigration403ApplicationProblemPlusJSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigration404ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigration404ApplicationProblemPlusJSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigration409ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigration409ApplicationProblemPlusJSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type StartMigration422ApplicationProblemPlusJSONResponse Problem
+
+func (response StartMigration422ApplicationProblemPlusJSONResponse) VisitStartMigrationResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -49003,9 +50855,36 @@ type StrictServerInterface interface {
 	// UpdateMigration Change a migration
 	// (PATCH /v1/migrations/{migrationId})
 	UpdateMigration(ctx context.Context, request UpdateMigrationRequestObject) (UpdateMigrationResponseObject, error)
+	// CancelMigration Cancel the migration
+	// (POST /v1/migrations/{migrationId}/cancel)
+	CancelMigration(ctx context.Context, request CancelMigrationRequestObject) (CancelMigrationResponseObject, error)
 	// SetMigrationCredentials Connect the mailbox with a password
 	// (PUT /v1/migrations/{migrationId}/credentials)
 	SetMigrationCredentials(ctx context.Context, request SetMigrationCredentialsRequestObject) (SetMigrationCredentialsResponseObject, error)
+	// ListMigrationErrors What went wrong
+	// (GET /v1/migrations/{migrationId}/errors)
+	ListMigrationErrors(ctx context.Context, request ListMigrationErrorsRequestObject) (ListMigrationErrorsResponseObject, error)
+	// ListMigrationFolders The mailbox's folders
+	// (GET /v1/migrations/{migrationId}/folders)
+	ListMigrationFolders(ctx context.Context, request ListMigrationFoldersRequestObject) (ListMigrationFoldersResponseObject, error)
+	// PauseMigration Pause copying
+	// (POST /v1/migrations/{migrationId}/pause)
+	PauseMigration(ctx context.Context, request PauseMigrationRequestObject) (PauseMigrationResponseObject, error)
+	// GetMigrationPreview The newest threads as they will look
+	// (GET /v1/migrations/{migrationId}/preview)
+	GetMigrationPreview(ctx context.Context, request GetMigrationPreviewRequestObject) (GetMigrationPreviewResponseObject, error)
+	// ResumeMigration Resume copying
+	// (POST /v1/migrations/{migrationId}/resume)
+	ResumeMigration(ctx context.Context, request ResumeMigrationRequestObject) (ResumeMigrationResponseObject, error)
+	// RetryMigrationItems Retry failed messages
+	// (POST /v1/migrations/{migrationId}/retry)
+	RetryMigrationItems(ctx context.Context, request RetryMigrationItemsRequestObject) (RetryMigrationItemsResponseObject, error)
+	// ScanMigration Read the mailbox's headers for the dry run
+	// (POST /v1/migrations/{migrationId}/scan)
+	ScanMigration(ctx context.Context, request ScanMigrationRequestObject) (ScanMigrationResponseObject, error)
+	// StartMigration Start copying
+	// (POST /v1/migrations/{migrationId}/start)
+	StartMigration(ctx context.Context, request StartMigrationRequestObject) (StartMigrationResponseObject, error)
 	// TestMigrationConnection Test the connection to the mailbox
 	// (POST /v1/migrations/{migrationId}/test)
 	TestMigrationConnection(ctx context.Context, request TestMigrationConnectionRequestObject) (TestMigrationConnectionResponseObject, error)
@@ -55457,6 +57336,33 @@ func (sh *strictHandler) UpdateMigration(w http.ResponseWriter, r *http.Request,
 	}
 }
 
+// CancelMigration operation middleware
+func (sh *strictHandler) CancelMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params CancelMigrationParams) {
+	var request CancelMigrationRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CancelMigration(ctx, request.(CancelMigrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CancelMigration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CancelMigrationResponseObject); ok {
+		if err := validResponse.VisitCancelMigrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // SetMigrationCredentials operation middleware
 func (sh *strictHandler) SetMigrationCredentials(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params SetMigrationCredentialsParams) {
 	var request SetMigrationCredentialsRequestObject
@@ -55484,6 +57390,222 @@ func (sh *strictHandler) SetMigrationCredentials(w http.ResponseWriter, r *http.
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(SetMigrationCredentialsResponseObject); ok {
 		if err := validResponse.VisitSetMigrationCredentialsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMigrationErrors operation middleware
+func (sh *strictHandler) ListMigrationErrors(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ListMigrationErrorsParams) {
+	var request ListMigrationErrorsRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMigrationErrors(ctx, request.(ListMigrationErrorsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMigrationErrors")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMigrationErrorsResponseObject); ok {
+		if err := validResponse.VisitListMigrationErrorsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListMigrationFolders operation middleware
+func (sh *strictHandler) ListMigrationFolders(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ListMigrationFoldersParams) {
+	var request ListMigrationFoldersRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListMigrationFolders(ctx, request.(ListMigrationFoldersRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListMigrationFolders")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListMigrationFoldersResponseObject); ok {
+		if err := validResponse.VisitListMigrationFoldersResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// PauseMigration operation middleware
+func (sh *strictHandler) PauseMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params PauseMigrationParams) {
+	var request PauseMigrationRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.PauseMigration(ctx, request.(PauseMigrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "PauseMigration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(PauseMigrationResponseObject); ok {
+		if err := validResponse.VisitPauseMigrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetMigrationPreview operation middleware
+func (sh *strictHandler) GetMigrationPreview(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params GetMigrationPreviewParams) {
+	var request GetMigrationPreviewRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetMigrationPreview(ctx, request.(GetMigrationPreviewRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetMigrationPreview")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetMigrationPreviewResponseObject); ok {
+		if err := validResponse.VisitGetMigrationPreviewResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ResumeMigration operation middleware
+func (sh *strictHandler) ResumeMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ResumeMigrationParams) {
+	var request ResumeMigrationRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ResumeMigration(ctx, request.(ResumeMigrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ResumeMigration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ResumeMigrationResponseObject); ok {
+		if err := validResponse.VisitResumeMigrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RetryMigrationItems operation middleware
+func (sh *strictHandler) RetryMigrationItems(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params RetryMigrationItemsParams) {
+	var request RetryMigrationItemsRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RetryMigrationItems(ctx, request.(RetryMigrationItemsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RetryMigrationItems")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RetryMigrationItemsResponseObject); ok {
+		if err := validResponse.VisitRetryMigrationItemsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ScanMigration operation middleware
+func (sh *strictHandler) ScanMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params ScanMigrationParams) {
+	var request ScanMigrationRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ScanMigration(ctx, request.(ScanMigrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ScanMigration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ScanMigrationResponseObject); ok {
+		if err := validResponse.VisitScanMigrationResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// StartMigration operation middleware
+func (sh *strictHandler) StartMigration(w http.ResponseWriter, r *http.Request, migrationId MigrationId, params StartMigrationParams) {
+	var request StartMigrationRequestObject
+
+	request.MigrationId = migrationId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.StartMigration(ctx, request.(StartMigrationRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "StartMigration")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(StartMigrationResponseObject); ok {
+		if err := validResponse.VisitStartMigrationResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

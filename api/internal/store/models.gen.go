@@ -846,6 +846,11 @@ type MigrationFolder struct {
 	Skipped     int32
 	Failed      int32
 	Bytes       int64
+	Delim       string
+	Uidnext     int64
+	SizeBytes   int64
+	OldestAt    *time.Time
+	NewestAt    *time.Time
 }
 
 type MigrationItem struct {
@@ -863,6 +868,8 @@ type MigrationItem struct {
 	Reason      string
 	Attempts    int16
 	MessageID   *uuid.UUID
+	Meta        []byte
+	InCopy      bool
 }
 
 type MigrationThread struct {
@@ -873,6 +880,7 @@ type MigrationThread struct {
 	LastAt         time.Time
 	Items          int32
 	Done           int32
+	Plan           []byte
 }
 
 type NotificationEmail struct {

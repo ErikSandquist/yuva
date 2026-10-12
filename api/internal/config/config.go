@@ -76,6 +76,14 @@ type Config struct {
 	// source the server has.
 	MigrationSources      []string
 	MigrationAllowPrivate bool
+	// MigrationWorkers is the migrations queue's workers in this process; 0 runs none here.
+	MigrationWorkers int
+	// MigrationMaxActive caps a workspace's scanning, copying and syncing migrations; 0 is no limit.
+	MigrationMaxActive int
+	// MigrationMaxBytes caps the bytes a workspace imports a month; 0 is no limit.
+	MigrationMaxBytes int64
+	// MigrationMaxMessageBytes is the largest message imported; larger ones are skipped.
+	MigrationMaxMessageBytes int64
 }
 
 type VAPID struct {
@@ -301,6 +309,18 @@ func (c *Config) loadMigrations() error {
 	var err error
 	if c.MigrationAllowPrivate, err = boolEnv("YUVA_MIGRATION_ALLOW_PRIVATE", false); err != nil {
 		return err
+	}
+	if c.MigrationWorkers, err = strconv.Atoi(env("YUVA_MIGRATION_WORKERS", "2")); err != nil || c.MigrationWorkers < 0 {
+		return errors.New("YUVA_MIGRATION_WORKERS must be a number of workers, 0 for none in this process")
+	}
+	if c.MigrationMaxActive, err = strconv.Atoi(env("YUVA_MIGRATION_MAX_ACTIVE", "0")); err != nil || c.MigrationMaxActive < 0 {
+		return errors.New("YUVA_MIGRATION_MAX_ACTIVE must be a number of migrations, 0 for no limit")
+	}
+	if c.MigrationMaxBytes, err = strconv.ParseInt(env("YUVA_MIGRATION_MAX_BYTES", "0"), 10, 64); err != nil || c.MigrationMaxBytes < 0 {
+		return errors.New("YUVA_MIGRATION_MAX_BYTES must be a number of bytes, 0 for no limit")
+	}
+	if c.MigrationMaxMessageBytes, err = strconv.ParseInt(env("YUVA_MIGRATION_MAX_MESSAGE_BYTES", "52428800"), 10, 64); err != nil || c.MigrationMaxMessageBytes < 1 {
+		return errors.New("YUVA_MIGRATION_MAX_MESSAGE_BYTES must be a positive number of bytes")
 	}
 	if _, set := os.LookupEnv("YUVA_MIGRATION_SOURCES"); !set {
 		return nil

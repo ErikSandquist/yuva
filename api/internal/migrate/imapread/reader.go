@@ -124,6 +124,17 @@ type Header struct {
 	Size         int64
 	Flags        []string
 	Header       []byte
+	Parts        []Part
+}
+
+// Part is a leaf of a message's structure, as the server describes it; Size is encoded.
+type Part struct {
+	Type     string
+	Size     int64
+	Encoding string
+	Filename string
+	ID       string
+	Inline   bool
 }
 
 type Message struct {
@@ -434,14 +445,14 @@ func uidSet(uids []uint32) imap.UIDSet {
 }
 
 // FetchHeaders reads the named header fields of messages of the open folder, with their date,
-// size and flags, without marking anything.
+// size, flags and structure, without marking anything.
 func (r *Reader) FetchHeaders(ctx context.Context, uids []uint32, fields []string, each func(Header) error) error {
 	if len(uids) == 0 {
 		return nil
 	}
 	defer r.bind(ctx)()
 	opts := &imap.FetchOptions{
-		UID: true, InternalDate: true, RFC822Size: true, Flags: true,
+		UID: true, InternalDate: true, RFC822Size: true, Flags: true, BodyStructure: &imap.FetchItemBodyStructure{Extended: true},
 		BodySection: []*imap.FetchItemBodySection{{Specifier: imap.PartSpecifierHeader, HeaderFields: fields, Peek: true}},
 	}
 	cmd := r.client.Fetch(uidSet(uids), opts)
@@ -458,6 +469,7 @@ func (r *Reader) FetchHeaders(ctx context.Context, uids []uint32, fields []strin
 		for _, b := range buf.BodySection {
 			h.Header = b.Bytes
 		}
+		h.Parts = leafParts(buf.BodyStructure)
 		if err := each(h); err != nil {
 			return err
 		}
@@ -466,6 +478,27 @@ func (r *Reader) FetchHeaders(ctx context.Context, uids []uint32, fields []strin
 		return r.fail(StepRead, err)
 	}
 	return nil
+}
+
+func leafParts(bs imap.BodyStructure) []Part {
+	if bs == nil {
+		return nil
+	}
+	var out []Part
+	bs.Walk(func(_ []int, p imap.BodyStructure) bool {
+		single, ok := p.(*imap.BodyStructureSinglePart)
+		if !ok {
+			return true
+		}
+		part := Part{Type: single.MediaType(), Size: int64(single.Size), Encoding: strings.ToLower(single.Encoding),
+			Filename: single.Filename(), ID: strings.Trim(single.ID, "<> ")}
+		if d := single.Disposition(); d != nil {
+			part.Inline = strings.EqualFold(d.Value, "inline")
+		}
+		out = append(out, part)
+		return true
+	})
+	return out
 }
 
 // FetchRaw reads whole messages of the open folder without marking them as seen. A message
