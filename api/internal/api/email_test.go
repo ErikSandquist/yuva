@@ -439,8 +439,8 @@ func TestReplyThreading(t *testing.T) {
 		"In-Reply-To": "<" + first + ">",
 		"References":  "<" + first + ">",
 		"Subject":     "Re: Invoice",
-		"From":        `"Acme Support" <` + et.address + ">",
-		"Reply-To":    `"Acme Support" <` + et.address + ">",
+		"From":        "Acme Support <" + et.address + ">",
+		"Reply-To":    "Acme Support <" + et.address + ">",
 	}
 	for k, want := range checks {
 		if got := hdr.Get(k); got != want {
@@ -715,7 +715,7 @@ func TestCatchAllChannel(t *testing.T) {
 	if sent.from != want || sent.to[0] != "buyer@example.net" {
 		t.Fatalf("envelope: %+v", sent)
 	}
-	if parsed.Header.Get("From") != `"Shop" <`+want+">" || parsed.Header.Get("Reply-To") != `"Shop" <`+want+">" {
+	if parsed.Header.Get("From") != "Shop <"+want+">" || parsed.Header.Get("Reply-To") != "Shop <"+want+">" {
 		t.Fatalf("From %q Reply-To %q", parsed.Header.Get("From"), parsed.Header.Get("Reply-To"))
 	}
 	if _, d, ok := email.TokenFromID(email.NormalizeID(parsed.Header.Get("Message-ID"))); !ok || d != domain {

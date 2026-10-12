@@ -3,9 +3,11 @@ package email_test
 import (
 	"encoding/base64"
 	"errors"
+	"regexp"
 	"slices"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/emersion/go-msgauth/dkim"
 
@@ -35,7 +37,7 @@ func TestTrustedAuthPrefersMailFromSPF(t *testing.T) {
 }
 
 func TestDKIMSurvivesRelayRewrites(t *testing.T) {
-	want := []string{"From", "To", "Subject", "Date", "Reply-To", "MIME-Version", "Content-Type", "List-Unsubscribe", "List-Unsubscribe-Post", "List-Id"}
+	want := []string{"From", "To", "Subject", "Reply-To", "MIME-Version", "Content-Type", "List-Unsubscribe", "List-Unsubscribe-Post", "List-Id"}
 	if !slices.Equal(email.DKIMHeaders, want) {
 		t.Fatalf("DKIMHeaders %v", email.DKIMHeaders)
 	}
@@ -72,6 +74,92 @@ func TestDKIMSurvivesRelayRewrites(t *testing.T) {
 	for _, h := range verifications[0].HeaderKeys {
 		if strings.EqualFold(h, "Message-ID") || strings.EqualFold(h, "Feedback-ID") {
 			t.Fatalf("signed %s", h)
+		}
+	}
+}
+
+func TestDKIMSurvivesAddressNormalizing(t *testing.T) {
+	private, public, err := email.NewDKIMKey()
+	if err != nil {
+		t.Fatal(err)
+	}
+	signer, err := email.ParseDKIMKey(private)
+	if err != nil {
+		t.Fatal(err)
+	}
+	from := email.Address{Name: "Yuva header check", Email: "yuva-ar-check@example.com"}
+	raw, err := email.Build(email.Outgoing{
+		From: from, ReplyTo: from, To: email.Address{Email: "deliv-e29c2d18@example.com"},
+		Subject: "Header check", Text: "hello", MessageID: "abc.def@example.com",
+		Date: time.Date(2026, 10, 12, 13, 0, 0, 0, time.FixedZone("", 3*3600)),
+		Headers: []email.Header{
+			{Name: "List-Unsubscribe", Value: "<https://example.com/m>"},
+			{Name: "List-Unsubscribe-Post", Value: "List-Unsubscribe=One-Click"},
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	signed, err := email.SignDKIM(raw, email.DKIMKey{Domain: "example.com", Selector: "yuva", Signer: signer})
+	if err != nil {
+		t.Fatal(err)
+	}
+	msg := string(signed)
+	for _, h := range []string{
+		"\r\nFrom: Yuva header check <yuva-ar-check@example.com>\r\n",
+		"\r\nReply-To: Yuva header check <yuva-ar-check@example.com>\r\n",
+		"\r\nTo: deliv-e29c2d18@example.com\r\n",
+		"\r\nDate: Mon, 12 Oct 2026 13:00:00 +0300\r\n",
+	} {
+		if !strings.Contains(msg, h) {
+			t.Fatalf("missing %q in\n%s", h, msg)
+		}
+	}
+	relay := regexp.MustCompile(`(?m)^(From|Reply-To|To|Date): .*$`)
+	relayed := relay.ReplaceAllStringFunc(msg, func(line string) string {
+		name, v, _ := strings.Cut(line, ": ")
+		switch name {
+		case "Date":
+			return "Date: Mon, 12 Oct 2026 10:00:07 +0000\r"
+		case "To":
+			return "To: " + strings.Trim(strings.TrimSuffix(v, "\r"), "<>") + "\r"
+		}
+		return name + ": " + strings.Replace(v, `"`, "", 2)
+	})
+	if relayed == msg {
+		t.Fatal("relay changed nothing")
+	}
+	verifications, err := dkim.VerifyWithOptions(strings.NewReader(relayed), &dkim.VerifyOptions{
+		LookupTXT: func(domain string) ([]string, error) {
+			if domain != "yuva._domainkey.example.com" {
+				return nil, errors.New("no record")
+			}
+			return []string{"v=DKIM1; k=rsa; p=" + base64.StdEncoding.EncodeToString(public)}, nil
+		},
+	})
+	if err != nil || len(verifications) != 1 || verifications[0].Err != nil {
+		t.Fatalf("verify: %v %+v", err, verifications)
+	}
+}
+
+func TestFormatAddress(t *testing.T) {
+	for _, tc := range []struct {
+		in   email.Address
+		want string
+	}{
+		{email.Address{Email: "a@example.com"}, "a@example.com"},
+		{email.Address{Name: "Yuva header check", Email: "a@example.com"}, "Yuva header check <a@example.com>"},
+		{email.Address{Name: "O'Brien & Co", Email: "a@example.com"}, "O'Brien & Co <a@example.com>"},
+		{email.Address{Name: "Acme, Inc.", Email: "a@example.com"}, `"Acme, Inc." <a@example.com>`},
+		{email.Address{Name: "Dr. Who", Email: "a@example.com"}, `"Dr. Who" <a@example.com>`},
+		{email.Address{Name: `Say "hi"`, Email: "a@example.com"}, `"Say \"hi\"" <a@example.com>`},
+		{email.Address{Name: "two  spaces", Email: "a@example.com"}, `"two  spaces" <a@example.com>`},
+		{email.Address{Name: "=?utf-8?q?x?=", Email: "a@example.com"}, `"=?utf-8?q?x?=" <a@example.com>`},
+		{email.Address{Name: "Çağrı Destek", Email: "a@example.com"}, "=?utf-8?q?=C3=87a=C4=9Fr=C4=B1_Destek?= <a@example.com>"},
+		{email.Address{Name: "Müller, GmbH", Email: "a@example.com"}, "=?utf-8?b?TcO8bGxlciwgR21iSA==?= <a@example.com>"},
+	} {
+		if got := email.FormatAddress(tc.in); got != tc.want {
+			t.Errorf("FormatAddress(%+v) = %s, want %s", tc.in, got, tc.want)
 		}
 	}
 }

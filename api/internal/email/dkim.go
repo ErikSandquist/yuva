@@ -21,10 +21,10 @@ import (
 const ProbeHeader = "X-Yuva-Probe"
 
 // DKIMHeaders are the header fields Yuva's DKIM signature covers. Fields a mail lacks are still
-// listed, so nobody can add them later without breaking the signature. Message-ID and Feedback-ID
-// are left out because relays such as Amazon SES replace them.
+// listed, so nobody can add them later without breaking the signature. Message-ID, Feedback-ID and
+// Date are left out because relays replace them.
 var DKIMHeaders = []string{
-	"From", "To", "Subject", "Date", "Reply-To", "MIME-Version", "Content-Type",
+	"From", "To", "Subject", "Reply-To", "MIME-Version", "Content-Type",
 	"List-Unsubscribe", "List-Unsubscribe-Post", "List-Id",
 }
 

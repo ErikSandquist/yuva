@@ -3,6 +3,7 @@ package email
 import (
 	"bytes"
 	"html"
+	"net/mail"
 	"strings"
 	"time"
 
@@ -52,6 +53,45 @@ func TextToHTML(text string) string {
 	return b.String()
 }
 
+// FormatAddress writes an address the way normalizing relays such as Amazon SES rewrite it, so a
+// DKIM signature over it survives them: a bare address without angle brackets, and a display name
+// quoted only when it is not a plain phrase. Non-ASCII names are encoded as net/mail does.
+func FormatAddress(a Address) string {
+	full := (&mail.Address{Name: a.Name, Address: a.Email}).String()
+	if a.Name == "" {
+		return strings.TrimSuffix(strings.TrimPrefix(full, "<"), ">")
+	}
+	if !plainPhrase(a.Name) {
+		return full
+	}
+	return a.Name + " " + full[strings.LastIndex(full, " <")+1:]
+}
+
+func plainPhrase(s string) bool {
+	if s == "" || strings.HasPrefix(s, "=?") {
+		return false
+	}
+	for _, word := range strings.Split(s, " ") {
+		if word == "" {
+			return false
+		}
+		for _, r := range word {
+			if !atext(r) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func atext(r rune) bool {
+	switch {
+	case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9':
+		return true
+	}
+	return strings.ContainsRune("!#$%&'*+-/=?^_`{|}~", r)
+}
+
 func Build(o Outgoing) ([]byte, error) {
 	date := o.Date
 	if date.IsZero() {
@@ -95,6 +135,11 @@ func Build(o Outgoing) ([]byte, error) {
 	root, err := b.Build()
 	if err != nil {
 		return nil, err
+	}
+	root.Header.Set("From", FormatAddress(o.From))
+	root.Header.Set("To", FormatAddress(o.To))
+	if o.ReplyTo.Email != "" {
+		root.Header.Set("Reply-To", FormatAddress(o.ReplyTo))
 	}
 	var buf bytes.Buffer
 	if err := root.Encode(&buf); err != nil {
