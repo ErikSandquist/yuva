@@ -48,7 +48,7 @@ Return `null` for anonymous visitors. Call it again after sign-in, and `signOut(
 | `channel` | The chat channel's public key. Required. |
 | `server` | Yuva server URL. Defaults to where `yuva.js` came from. |
 | `layout` | `launcher` (default) or `embedded`, for a thread inside your page; give it a height. |
-| `locale` | `en` or `tr`. Defaults to the browser's language, then English. |
+| `locale` | `en`, `tr` or `de`. Defaults to the browser's language, then English. |
 | `dir` | `ltr` or `rtl`. Defaults to the locale's direction. |
 | `identity-token` | A token string; `setIdentityToken` is usually better. |
 | `open` | Present: the panel is open. |

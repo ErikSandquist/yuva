@@ -165,7 +165,7 @@ gönderen listeleri kaydedin. Bu sayfa hukuki tavsiye değildir.
 | `button-text` | Düğmenin etiketi. |
 | `consent` | Kendi izin cümleniz. Gösterildiği gibi saklanır. |
 | `privacy-url` | Kutunun yanında gösterilen gizlilik bildirimi bağlantısı. |
-| `locale`, `dir` | `en` ya da `tr`; `ltr` ya da `rtl`. |
+| `locale`, `dir` | `en`, `tr` ya da `de`; `ltr` ya da `rtl`. |
 | `identity-token` | Bir belirteç dizesi; genelde `setIdentityToken` daha iyidir. |
 
 `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` ve

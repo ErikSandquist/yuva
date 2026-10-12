@@ -53,7 +53,7 @@ nach der Abmeldung `signOut()`.
 | `channel` | Der öffentliche Schlüssel des Chat-Kanals. Pflicht. |
 | `server` | URL des Yuva-Servers. Standard ist die Herkunft von `yuva.js`. |
 | `layout` | `launcher` (Standard) oder `embedded` für einen Verlauf in Ihrer Seite; geben Sie ihm eine Höhe. |
-| `locale` | `en` oder `tr`. Standard ist die Sprache des Browsers, sonst Englisch. |
+| `locale` | `en`, `tr` oder `de`. Standard ist die Sprache des Browsers, sonst Englisch. |
 | `dir` | `ltr` oder `rtl`. Standard ist die Schreibrichtung der Sprache. |
 | `identity-token` | Ein Token als String; `setIdentityToken` ist meist besser. |
 | `open` | Vorhanden: Das Fenster ist offen. |

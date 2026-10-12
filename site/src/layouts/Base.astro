@@ -103,10 +103,6 @@ const preload = locale === "tr" ? [geistLatin, geistLatinExt] : [geistLatin]
     </main>
     {!bare && <Footer locale={locale} paths={paths} wide={wide} />}
     <script is:inline src="https://app.useyuva.com/yuva.js" async></script>
-    <yuva-chat
-      channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS"
-      server="https://app.useyuva.com"
-      locale={locale === "de" ? undefined : locale}
-    ></yuva-chat>
+    <yuva-chat channel="yuva_pk_OZ33Z-rvQRImHtjRS8PbtBQS" server="https://app.useyuva.com" locale={locale}></yuva-chat>
   </body>
 </html>

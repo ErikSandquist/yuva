@@ -163,7 +163,7 @@ register only the lists that send commercial mail. This page is not legal advice
 | `button-text` | The button's label. |
 | `consent` | Your own consent sentence. It is stored exactly as shown. |
 | `privacy-url` | Link to your privacy notice, shown next to the box. |
-| `locale`, `dir` | `en` or `tr`, and `ltr` or `rtl`. |
+| `locale`, `dir` | `en`, `tr` or `de`, and `ltr` or `rtl`. |
 | `identity-token` | A token string; `setIdentityToken` is usually better. |
 
 Style it with `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` and

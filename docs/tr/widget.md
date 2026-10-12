@@ -50,7 +50,7 @@ sonra `signOut()` çağırın.
 | `channel` | Sohbet kanalının genel anahtarı. Zorunlu. |
 | `server` | Yuva sunucusunun adresi. Varsayılan, `yuva.js`'nin yüklendiği yer. |
 | `layout` | `launcher` (varsayılan) ya da sayfanızın içinde bir akış için `embedded`; ona bir yükseklik verin. |
-| `locale` | `en` ya da `tr`. Varsayılan tarayıcının dili, o da yoksa İngilizce. |
+| `locale` | `en`, `tr` ya da `de`. Varsayılan tarayıcının dili, o da yoksa İngilizce. |
 | `dir` | `ltr` ya da `rtl`. Varsayılan, dilin yazım yönü. |
 | `identity-token` | Bir token metni; genellikle `setIdentityToken` daha iyidir. |
 | `open` | Varsa panel açıktır. |
