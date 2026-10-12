@@ -6375,9 +6375,14 @@ msgstr "Uygulama şifrelerini aç"
 msgid "Open App passwords in the Google account, name the password “Yuva” and create it."
 msgstr "Google hesabında Uygulama şifreleri'ni açın, şifreye “Yuva” adını verip oluşturun."
 
+#: src/features/migrations/DoneStep.tsx
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Open App registrations"
 msgstr "App registrations sayfasını aç"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Open Apps and services"
+msgstr "Uygulamalar ve hizmetler sayfasını aç"
 
 #: src/features/settings/connected-apps/AssistantPage.tsx
 msgid "Open ChatGPT plugins"
@@ -6400,6 +6405,10 @@ msgstr "Atanmış açık konuşmalar"
 msgid "open discussions"
 msgstr "açık tartışma"
 
+#: src/features/migrations/DoneStep.tsx
+msgid "Open Enterprise applications"
+msgstr "Enterprise applications sayfasını aç"
+
 #: src/features/docs/DocsPages.tsx
 msgid "open feedback"
 msgstr "açık geri bildirim"
@@ -6419,6 +6428,10 @@ msgstr "Google'ın onay sayfasını aç"
 #: src/features/account/ConnectPage.tsx
 msgid "Open it from the sign-in button of a documentation page."
 msgstr "Bir dokümantasyon sayfasındaki oturum açma düğmesinden açın."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Open My Apps"
+msgstr "Uygulamalarım sayfasını aç"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/docs/discussions/ThreadPane.tsx
@@ -7383,6 +7396,10 @@ msgstr "Bu uç nokta kaldırılsın mı?"
 #: src/features/settings/profile/Passkeys.tsx
 msgid "Remove this passkey?"
 msgstr "Bu geçiş anahtarı kaldırılsın mı?"
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Remove Yuva's access in Microsoft"
+msgstr "Yuva'nın Microsoft'taki erişimini kaldırın"
 
 #: src/features/settings/profile/ProfilePage.tsx
 msgid "Removes you from every workspace. Messages you wrote stay, shown as from a deleted member."
@@ -8975,6 +8992,10 @@ msgstr "Müşterilerinizin yazdığı adres. Eşleştirme adımında bir marka y
 #: src/features/setup/previews.tsx
 msgid "The app logs me out after the update."
 msgstr "Güncellemeden sonra uygulama oturumumu kapatıyor."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "The app registration you created for Yuva is not needed any more either: delete it in Microsoft Entra › App registrations."
+msgstr "Yuva için oluşturduğunuz uygulama kaydına da artık gerek yok: Microsoft Entra › App registrations bölümünden silin."
 
 #: src/components/common/text.ts
 msgid "The broadcast changed in the meantime. Look at its state and try again."
@@ -11189,6 +11210,14 @@ msgstr "Yuva kendi belirtecini sildi ({deletedAt}) ve artık {provider} hesabın
 #: src/features/migrations/DoneStep.tsx
 msgid "Yuva deleted its token and can no longer read {provider}."
 msgstr "Yuva kendi belirtecini sildi ve artık {provider} hesabını okuyamaz."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token but cannot revoke it at Microsoft. In your Microsoft account, open Privacy › Apps and services, choose Yuva and remove its permissions."
+msgstr "Yuva kendi belirtecini sildi ama onu Microsoft'ta iptal edemez. Microsoft hesabınızda Gizlilik › Uygulamalar ve hizmetler bölümünü açın, Yuva'yı seçin ve izinlerini kaldırın."
+
+#: src/features/migrations/DoneStep.tsx
+msgid "Yuva deleted its token but cannot revoke it at Microsoft. Remove Yuva from your work account in My Apps; an admin removes it for everyone in the Microsoft Entra admin center › Enterprise applications."
+msgstr "Yuva kendi belirtecini sildi ama onu Microsoft'ta iptal edemez. Yuva'yı iş hesabınızdan Uygulamalarım (My Apps) sayfasında kaldırın; bir yönetici onu herkes için Microsoft Entra yönetim merkezi › Enterprise applications bölümünden kaldırır."
 
 #: src/features/migrations/DoneStep.tsx
 msgid "Yuva deleted its token but cannot revoke it in Help Scout. Delete the app in Your Profile › My Apps; Yuva does not need it any more."

@@ -17,7 +17,7 @@ import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { useInboxFilter } from "@/features/inbox/inboxFilter"
 import { Figure, SkippedList, useMigrationConfirms, useStateAnnouncement } from "@/features/migrations/parts"
 import { useCreateMigration, useMigrations } from "@/features/migrations/queries"
-import { isHelpdesk, useGuides } from "@/features/migrations/text"
+import { isHelpdesk, isPersonalMicrosoft, useGuides } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationPreset } from "@/lib/api"
@@ -206,23 +206,29 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
                 )}
               </span>
             </p>
-            <p className="text-body text-muted-foreground">
-              {preset.app_password ? (
-                <Trans>Remove the app password you made for Yuva in {provider}; it is not needed any more.</Trans>
-              ) : (
-                <Trans>If you made a password just for Yuva, remove it in {provider}.</Trans>
-              )}
-            </p>
-            <Button
-              variant="outline"
-              size="sm"
-              className="self-start"
-              render={<a href={guide.link} target="_blank" rel="noreferrer" />}
-              data-testid="migration-revoke"
-            >
-              {guide.linkLabel}
-              <ArrowUpRightIcon className="rtl:-scale-x-100" />
-            </Button>
+            {m.preset === "microsoft" ? (
+              <MicrosoftAccess address={address} team={preset.team_client === true} />
+            ) : (
+              <>
+                <p className="text-body text-muted-foreground">
+                  {preset.app_password ? (
+                    <Trans>Remove the app password you made for Yuva in {provider}; it is not needed any more.</Trans>
+                  ) : (
+                    <Trans>If you made a password just for Yuva, remove it in {provider}.</Trans>
+                  )}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="self-start"
+                  render={<a href={guide.link} target="_blank" rel="noreferrer" />}
+                  data-testid="migration-revoke"
+                >
+                  {guide.linkLabel}
+                  <ArrowUpRightIcon className="rtl:-scale-x-100" />
+                </Button>
+              </>
+            )}
             {completed && (
               <ul className="flex list-disc flex-col gap-1 ps-5 text-body text-muted-foreground">
                 <li>
@@ -268,6 +274,68 @@ export function DoneStep({ m, preset }: { m: Migration; preset: MigrationPreset 
         {ask.dialog}
       </div>
     </WizardLayout>
+  )
+}
+
+function MicrosoftAccess({ address, team }: { address: string; team: boolean }) {
+  const personal = isPersonalMicrosoft(address)
+  const link = (href: string, label: React.ReactNode, testId?: string) => (
+    <Button
+      variant="outline"
+      size="sm"
+      render={<a href={href} target="_blank" rel="noreferrer" />}
+      data-testid={testId}
+    >
+      {label}
+      <ArrowUpRightIcon className="rtl:-scale-x-100" />
+    </Button>
+  )
+  return (
+    <Notice icon={KeyRoundIcon} data-testid="migration-revoke-note">
+      <p className="font-medium text-foreground">
+        <Trans>Remove Yuva's access in Microsoft</Trans>
+      </p>
+      <p>
+        {personal ? (
+          <Trans>
+            Yuva deleted its token but cannot revoke it at Microsoft. In your Microsoft account, open Privacy › Apps and
+            services, choose Yuva and remove its permissions.
+          </Trans>
+        ) : (
+          <Trans>
+            Yuva deleted its token but cannot revoke it at Microsoft. Remove Yuva from your work account in My Apps; an
+            admin removes it for everyone in the Microsoft Entra admin center › Enterprise applications.
+          </Trans>
+        )}
+      </p>
+      {team && (
+        <p>
+          <Trans>
+            The app registration you created for Yuva is not needed any more either: delete it in Microsoft Entra › App
+            registrations.
+          </Trans>
+        </p>
+      )}
+      <div className="flex flex-wrap gap-2">
+        {personal
+          ? link(
+              "https://account.microsoft.com/privacy/app-access",
+              <Trans>Open Apps and services</Trans>,
+              "migration-revoke"
+            )
+          : link("https://myapps.microsoft.com", <Trans>Open My Apps</Trans>, "migration-revoke")}
+        {!personal &&
+          link(
+            "https://entra.microsoft.com/#view/Microsoft_AAD_IAM/StartboardApplicationsMenuBlade/~/AppAppsPreview",
+            <Trans>Open Enterprise applications</Trans>
+          )}
+        {team &&
+          link(
+            "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+            <Trans>Open App registrations</Trans>
+          )}
+      </div>
+    </Notice>
   )
 }
 
