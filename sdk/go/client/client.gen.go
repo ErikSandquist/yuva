@@ -2718,6 +2718,27 @@ func (e ConsentFormat) Valid() bool {
 	}
 }
 
+// Defines values for ListConsentFormat.
+const (
+	ListConsentFormatCsv  ListConsentFormat = "csv"
+	ListConsentFormatIys  ListConsentFormat = "iys"
+	ListConsentFormatJson ListConsentFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ListConsentFormat enum.
+func (e ListConsentFormat) Valid() bool {
+	switch e {
+	case ListConsentFormatCsv:
+		return true
+	case ListConsentFormatIys:
+		return true
+	case ListConsentFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListClientMessagesParamsOrder.
 const (
 	ListClientMessagesParamsOrderAsc  ListClientMessagesParamsOrder = "asc"
@@ -2811,6 +2832,7 @@ func (e ListMessagesParamsOrder) Valid() bool {
 // Defines values for ExportListConsentParamsFormat.
 const (
 	ExportListConsentParamsFormatCsv  ExportListConsentParamsFormat = "csv"
+	ExportListConsentParamsFormatIys  ExportListConsentParamsFormat = "iys"
 	ExportListConsentParamsFormatJson ExportListConsentParamsFormat = "json"
 )
 
@@ -2818,6 +2840,8 @@ const (
 func (e ExportListConsentParamsFormat) Valid() bool {
 	switch e {
 	case ExportListConsentParamsFormatCsv:
+		return true
+	case ExportListConsentParamsFormatIys:
 		return true
 	case ExportListConsentParamsFormatJson:
 		return true
@@ -8995,6 +9019,9 @@ type LabelId = uuid.UUID
 // Limit defines model for Limit.
 type Limit = int32
 
+// ListConsentFormat defines model for ListConsentFormat.
+type ListConsentFormat string
+
 // ListId defines model for ListId.
 type ListId = uuid.UUID
 
@@ -10249,7 +10276,7 @@ type UpdateMailingListParams struct {
 
 // ExportListConsentParams defines parameters for ExportListConsent.
 type ExportListConsentParams struct {
-	// Format `csv` (the default) or `json`.
+	// Format `csv` (the default), `json`, or `iys` for İYS's consent fields.
 	Format *ExportListConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
 	Since  *time.Time                     `form:"since,omitempty" json:"since,omitempty"`
 
@@ -16853,6 +16880,15 @@ type ClientInterface interface {
 	// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
 	// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
 	//
+	// `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+	// CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+	// (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+	// (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+	// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+	// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+	// your own records before uploading; only commercial lists need registering.
+	//
 	// Scope: `lists:read`.
 	//
 	// Corresponds with GET /v1/lists/{listId}/consent-export (the `ExportListConsent` operationId).
@@ -23117,6 +23153,15 @@ func (c *Client) UpdateMailingList(ctx context.Context, listId ListId, params *U
 // records or an upload to a registry such as İYS. `since` keeps the events from then on.
 // `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
 // `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+//
+// `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+// CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+// (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+// (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+// your own records before uploading; only commercial lists need registering.
 //
 // Scope: `lists:read`.
 //
@@ -41867,6 +41912,15 @@ type ClientWithResponsesInterface interface {
 	// records or an upload to a registry such as İYS. `since` keeps the events from then on.
 	// `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
 	// `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+	//
+	// `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+	// CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+	// (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+	// (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+	// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+	// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+	// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+	// your own records before uploading; only commercial lists need registering.
 	//
 	// Scope: `lists:read`.
 	//
@@ -62684,6 +62738,15 @@ func (c *ClientWithResponses) UpdateMailingListWithResponse(ctx context.Context,
 // records or an upload to a registry such as İYS. `since` keeps the events from then on.
 // `format=csv` (the default) quotes every cell and prefixes cells starting with `=`, `+`,
 // `-`, `@`, tab or carriage return with `'`, so spreadsheets do not run them as formulas.
+//
+// `format=iys` is a helper for registering the list's consents in Türkiye's İYS yourself: a
+// CSV with one row per subscription that is `subscribed` (status `ONAY`) or `unsubscribed`
+// (status `RET`), in the fields of İYS's consent model: `recipient` (the address), `type`
+// (`EPOSTA`), `source` (`HS_WEB` for forms and the preference page, `HS_EORTAM` for the
+// rest), `status`, `consentDate` (when the person agreed or refused, `YYYY-MM-DD HH:MM:SS`
+// in Türkiye's time) and `recipientType` (`BIREYSEL`). `since` keeps the subscriptions that
+// agreed or refused from then on. Pending subscriptions are left out. Check the rows against
+// your own records before uploading; only commercial lists need registering.
 //
 // Scope: `lists:read`.
 //

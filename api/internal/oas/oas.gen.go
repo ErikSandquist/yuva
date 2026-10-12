@@ -2720,6 +2720,27 @@ func (e ConsentFormat) Valid() bool {
 	}
 }
 
+// Defines values for ListConsentFormat.
+const (
+	ListConsentFormatCsv  ListConsentFormat = "csv"
+	ListConsentFormatIys  ListConsentFormat = "iys"
+	ListConsentFormatJson ListConsentFormat = "json"
+)
+
+// Valid indicates whether the value is a known member of the ListConsentFormat enum.
+func (e ListConsentFormat) Valid() bool {
+	switch e {
+	case ListConsentFormatCsv:
+		return true
+	case ListConsentFormatIys:
+		return true
+	case ListConsentFormatJson:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListClientMessagesParamsOrder.
 const (
 	ListClientMessagesParamsOrderAsc  ListClientMessagesParamsOrder = "asc"
@@ -2813,6 +2834,7 @@ func (e ListMessagesParamsOrder) Valid() bool {
 // Defines values for ExportListConsentParamsFormat.
 const (
 	ExportListConsentParamsFormatCsv  ExportListConsentParamsFormat = "csv"
+	ExportListConsentParamsFormatIys  ExportListConsentParamsFormat = "iys"
 	ExportListConsentParamsFormatJson ExportListConsentParamsFormat = "json"
 )
 
@@ -2820,6 +2842,8 @@ const (
 func (e ExportListConsentParamsFormat) Valid() bool {
 	switch e {
 	case ExportListConsentParamsFormatCsv:
+		return true
+	case ExportListConsentParamsFormatIys:
 		return true
 	case ExportListConsentParamsFormatJson:
 		return true
@@ -8997,6 +9021,9 @@ type LabelId = uuid.UUID
 // Limit defines model for Limit.
 type Limit = int32
 
+// ListConsentFormat defines model for ListConsentFormat.
+type ListConsentFormat string
+
 // ListId defines model for ListId.
 type ListId = uuid.UUID
 
@@ -10251,7 +10278,7 @@ type UpdateMailingListParams struct {
 
 // ExportListConsentParams defines parameters for ExportListConsent.
 type ExportListConsentParams struct {
-	// Format `csv` (the default) or `json`.
+	// Format `csv` (the default), `json`, or `iys` for İYS's consent fields.
 	Format *ExportListConsentParamsFormat `form:"format,omitempty" json:"format,omitempty"`
 	Since  *time.Time                     `form:"since,omitempty" json:"since,omitempty"`
 

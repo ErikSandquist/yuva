@@ -713,6 +713,72 @@ func (q *Queries) ListExpiredUnsubscribed(ctx context.Context, arg ListExpiredUn
 	return items, nil
 }
 
+const listIYSRecords = `-- name: ListIYSRecords :many
+SELECT s.id, s.email, s.state, s.source, s.consent_at, s.unsubscribed_at, s.created_at
+FROM list_subscriptions s
+WHERE s.workspace_id = $1 AND s.list_id = $2 AND s.state IN ('subscribed', 'unsubscribed')
+  AND ($3::timestamptz IS NULL
+       OR (CASE WHEN s.state = 'subscribed' THEN s.consent_at ELSE s.unsubscribed_at END) >= $3::timestamptz)
+  AND ($4::timestamptz IS NULL
+       OR (s.created_at, s.id) > ($4::timestamptz, $5::uuid))
+ORDER BY s.created_at, s.id
+LIMIT $6
+`
+
+type ListIYSRecordsParams struct {
+	WorkspaceID uuid.UUID
+	ListID      uuid.UUID
+	Since       *time.Time
+	AfterAt     *time.Time
+	AfterID     *uuid.UUID
+	Lim         int32
+}
+
+type ListIYSRecordsRow struct {
+	ID             uuid.UUID
+	Email          string
+	State          string
+	Source         string
+	ConsentAt      *time.Time
+	UnsubscribedAt *time.Time
+	CreatedAt      time.Time
+}
+
+func (q *Queries) ListIYSRecords(ctx context.Context, arg ListIYSRecordsParams) ([]ListIYSRecordsRow, error) {
+	rows, err := q.db.Query(ctx, listIYSRecords,
+		arg.WorkspaceID,
+		arg.ListID,
+		arg.Since,
+		arg.AfterAt,
+		arg.AfterID,
+		arg.Lim,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListIYSRecordsRow
+	for rows.Next() {
+		var i ListIYSRecordsRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Email,
+			&i.State,
+			&i.Source,
+			&i.ConsentAt,
+			&i.UnsubscribedAt,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listInboxMailingLists = `-- name: ListInboxMailingLists :many
 SELECT id, workspace_id, inbox_id, channel_id, name, description, double_opt_in, public, commercial, welcome, archived_at, created_at, updated_at FROM mailing_lists WHERE workspace_id = $1 AND inbox_id = $2 ORDER BY name, id
 `

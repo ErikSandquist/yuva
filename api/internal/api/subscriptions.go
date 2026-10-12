@@ -882,6 +882,15 @@ func (s *Server) ExportListConsent(ctx context.Context, req oas.ExportListConsen
 	if err != nil {
 		return nil, err
 	}
+	if req.Params.Format != nil && !req.Params.Format.Valid() {
+		return nil, errValidation("format must be csv, json or iys")
+	}
+	if req.Params.Format != nil && *req.Params.Format == oas.ExportListConsentParamsFormatIys {
+		return iysStream{
+			s: s, ctx: ctx, name: "iys-" + list.ID.String(),
+			arg: store.ListIYSRecordsParams{WorkspaceID: p.workspaceID, ListID: list.ID, Since: req.Params.Since},
+		}, nil
+	}
 	format, err := consentFormat((*string)(req.Params.Format))
 	if err != nil {
 		return nil, err

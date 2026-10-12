@@ -162,6 +162,17 @@ WHERE e.workspace_id = @workspace_id
 ORDER BY e.created_at, e.id
 LIMIT @lim;
 
+-- name: ListIYSRecords :many
+SELECT s.id, s.email, s.state, s.source, s.consent_at, s.unsubscribed_at, s.created_at
+FROM list_subscriptions s
+WHERE s.workspace_id = @workspace_id AND s.list_id = @list_id AND s.state IN ('subscribed', 'unsubscribed')
+  AND (sqlc.narg(since)::timestamptz IS NULL
+       OR (CASE WHEN s.state = 'subscribed' THEN s.consent_at ELSE s.unsubscribed_at END) >= sqlc.narg(since)::timestamptz)
+  AND (sqlc.narg(after_at)::timestamptz IS NULL
+       OR (s.created_at, s.id) > (sqlc.narg(after_at)::timestamptz, sqlc.narg(after_id)::uuid))
+ORDER BY s.created_at, s.id
+LIMIT @lim;
+
 -- name: AddOptOut :exec
 INSERT INTO email_optouts (workspace_id, email_hash, reason, created_at) VALUES (@workspace_id, @email_hash, @reason, @now)
 ON CONFLICT (workspace_id, email_hash) DO NOTHING;

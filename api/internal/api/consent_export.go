@@ -155,3 +155,75 @@ func (c consentStream) write(w http.ResponseWriter) error {
 	}
 	return nil
 }
+
+var iysColumns = []string{"recipient", "type", "source", "status", "consentDate", "recipientType"}
+
+// iysZone is Türkiye's time, which İYS dates are written in; it has been UTC+3 all year since 2016.
+var iysZone = func() *time.Location {
+	if loc, err := time.LoadLocation("Europe/Istanbul"); err == nil {
+		return loc
+	}
+	return time.FixedZone("TRT", 3*60*60)
+}()
+
+func iysSource(source string) string {
+	switch source {
+	case string(oas.SubscriptionSourceForm), string(oas.SubscriptionSourcePreferences):
+		return "HS_WEB"
+	}
+	return "HS_EORTAM"
+}
+
+func iysRow(r store.ListIYSRecordsRow) string {
+	status, at := "ONAY", r.ConsentAt
+	if r.State == subUnsubscribed {
+		status, at = "RET", r.UnsubscribedAt
+	}
+	if at == nil {
+		at = &r.CreatedAt
+	}
+	cells := []string{r.Email, "EPOSTA", iysSource(r.Source), status, at.In(iysZone).Format(time.DateTime), "BIREYSEL"}
+	for i, c := range cells {
+		cells[i] = csvCell(c)
+	}
+	return strings.Join(cells, ",") + "\r\n"
+}
+
+// iysStream writes a list's subscriptions in İYS's consent fields, page by page.
+type iysStream struct {
+	s    *Server
+	ctx  context.Context
+	name string
+	arg  store.ListIYSRecordsParams
+}
+
+func (c iysStream) VisitExportListConsentResponse(w http.ResponseWriter) error {
+	h := w.Header()
+	h.Set("Content-Type", "text/csv; charset=utf-8")
+	h.Set("Content-Disposition", `attachment; filename="`+c.name+`.csv"`)
+	h.Set("Cache-Control", "no-store")
+	arg := c.arg
+	arg.Lim = consentExportPage
+	for page := 0; ; page++ {
+		rows, err := c.s.st.ListIYSRecords(c.ctx, arg)
+		if err != nil {
+			if page == 0 {
+				writeProblem(w, errInternal)
+			}
+			c.s.log.ErrorContext(c.ctx, "iys export", slog.Any("error", err))
+			return nil
+		}
+		if page == 0 {
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte(strings.Join(iysColumns, ",") + "\r\n"))
+		}
+		for _, r := range rows {
+			_, _ = w.Write([]byte(iysRow(r)))
+		}
+		if len(rows) < consentExportPage {
+			return nil
+		}
+		last := rows[len(rows)-1]
+		arg.AfterAt, arg.AfterID = &last.CreatedAt, &last.ID
+	}
+}
