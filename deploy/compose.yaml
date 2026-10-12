@@ -57,6 +57,23 @@ services:
       - "127.0.0.1:51025:1025"
     restart: unless-stopped
 
+  # IMAP server the migration tests read from: generate the mailboxes with
+  # `go run ./internal/migrate/testdata/gen -out /tmp/yuva-migrate-fixtures` in api/ (or another
+  # directory named by YUVA_MIGRATE_FIXTURES), then `docker compose --profile migrate-test up -d dovecot`
+  # and set YUVA_TEST_IMAP_URL=imaps://:migrate-test-only@127.0.0.1:59993 (imap://...:59143 for STARTTLS).
+  # Any user name signs in with the password; every session is written to <dir>/<user>/rawlog.
+  dovecot:
+    image: dovecot/dovecot:2.4.4
+    profiles: [migrate-test]
+    environment:
+      USER_PASSWORD: ${YUVA_MIGRATE_TEST_PASSWORD:-migrate-test-only}
+    volumes:
+      - ./dovecot/migrate-test.conf:/etc/dovecot/dovecot.conf:ro
+      - ${YUVA_MIGRATE_FIXTURES:-/tmp/yuva-migrate-fixtures}:/srv/vmail
+    ports:
+      - "127.0.0.1:59993:31993"
+      - "127.0.0.1:59143:31143"
+
 volumes:
   db:
   attachments:
