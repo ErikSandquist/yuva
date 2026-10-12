@@ -68,6 +68,7 @@ type Server struct {
 	push     *push.Sender
 
 	imagesMax  int64
+	analytics  *analyticsState
 	broadcasts BroadcastSettings
 	imports    ImportSettings
 	migrations MigrationSettings
@@ -119,6 +120,7 @@ type Deps struct {
 	Broadcasts          BroadcastSettings
 	Imports             ImportSettings
 	Migrations          MigrationSettings
+	Analytics           AnalyticsSettings
 }
 
 // PushSettings holds the VAPID keys; push is off without them.
@@ -230,6 +232,9 @@ func New(d Deps) *Server {
 	if !d.DisableMCP {
 		srv.mcp, srv.mcpSchemas = newMCPHandler(), mcp.NewSchemaCache()
 	}
+	if !d.Analytics.Off {
+		srv.analytics = srv.newAnalytics(d)
+	}
 	return srv
 }
 
@@ -315,6 +320,9 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /v1/realtime", s.serveRealtime)
 	mux.HandleFunc("GET "+signInCallbackPath, s.serveMigrationSignIn)
 	mux.HandleFunc("GET /client/v1/realtime", s.serveClientRealtime)
+	if s.analytics != nil {
+		mux.HandleFunc("POST "+analyticsPrefix+"{key}", s.serveAnalyticsCollect)
+	}
 	mux.HandleFunc("POST /ingress/email", s.serveIngressEmail)
 	mux.HandleFunc("POST /ingress/ses", s.serveIngressSES)
 	mux.HandleFunc("GET "+emailConfirmPath, s.serveEmailConfirm)
@@ -344,6 +352,9 @@ func (s *Server) Handler() http.Handler {
 	}
 	if !s.noWidget {
 		for _, name := range widget.Files {
+			if name == widget.AnalyticsScript && s.analytics == nil {
+				continue
+			}
 			mux.Handle("GET /"+name, widget.Handler(name))
 		}
 		mux.Handle("GET /widget/{file}", widget.Chunks())

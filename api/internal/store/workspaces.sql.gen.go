@@ -64,7 +64,7 @@ func (q *Queries) CountWorkspacesCreatedFromIP(ctx context.Context, arg CountWor
 const createWorkspace = `-- name: CreateWorkspace :one
 INSERT INTO workspaces (id, name, created_by, created_ip)
 VALUES ($1, $2, $3, $4)
-RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys
+RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
 `
 
 type CreateWorkspaceParams struct {
@@ -96,6 +96,7 @@ func (q *Queries) CreateWorkspace(ctx context.Context, arg CreateWorkspaceParams
 		&i.BroadcastsStatusAt,
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
+		&i.AnalyticsMonthlyEvents,
 	)
 	return i, err
 }
@@ -150,7 +151,7 @@ func (q *Queries) DeleteWorkspaceWebhookEndpoints(ctx context.Context, workspace
 }
 
 const getDeletedWorkspace = `-- name: GetDeletedWorkspace :one
-SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys FROM workspaces WHERE id = $1 AND deleted_at IS NOT NULL
+SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events FROM workspaces WHERE id = $1 AND deleted_at IS NOT NULL
 `
 
 func (q *Queries) GetDeletedWorkspace(ctx context.Context, id uuid.UUID) (Workspace, error) {
@@ -170,12 +171,13 @@ func (q *Queries) GetDeletedWorkspace(ctx context.Context, id uuid.UUID) (Worksp
 		&i.BroadcastsStatusAt,
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
+		&i.AnalyticsMonthlyEvents,
 	)
 	return i, err
 }
 
 const getWorkspace = `-- name: GetWorkspace :one
-SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys FROM workspaces WHERE id = $1
+SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events FROM workspaces WHERE id = $1
 `
 
 func (q *Queries) GetWorkspace(ctx context.Context, id uuid.UUID) (Workspace, error) {
@@ -195,6 +197,7 @@ func (q *Queries) GetWorkspace(ctx context.Context, id uuid.UUID) (Workspace, er
 		&i.BroadcastsStatusAt,
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
+		&i.AnalyticsMonthlyEvents,
 	)
 	return i, err
 }
@@ -348,7 +351,7 @@ func (q *Queries) ListWorkspaceRetention(ctx context.Context) ([]ListWorkspaceRe
 }
 
 const listWorkspacesByName = `-- name: ListWorkspacesByName :many
-SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys FROM workspaces WHERE name = $1 AND deleted_at IS NULL ORDER BY created_at, id
+SELECT id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events FROM workspaces WHERE name = $1 AND deleted_at IS NULL ORDER BY created_at, id
 `
 
 func (q *Queries) ListWorkspacesByName(ctx context.Context, name string) ([]Workspace, error) {
@@ -374,6 +377,7 @@ func (q *Queries) ListWorkspacesByName(ctx context.Context, name string) ([]Work
 			&i.BroadcastsStatusAt,
 			&i.BroadcastDailyLimit,
 			&i.BroadcastsByKeys,
+			&i.AnalyticsMonthlyEvents,
 		); err != nil {
 			return nil, err
 		}
@@ -437,7 +441,7 @@ func (q *Queries) PurgeWorkspace(ctx context.Context, id uuid.UUID) (int64, erro
 const setWorkspaceBotsMaySend = `-- name: SetWorkspaceBotsMaySend :one
 UPDATE workspaces SET bots_may_send = $1
 WHERE id = $2
-RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys
+RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
 `
 
 type SetWorkspaceBotsMaySendParams struct {
@@ -462,6 +466,7 @@ func (q *Queries) SetWorkspaceBotsMaySend(ctx context.Context, arg SetWorkspaceB
 		&i.BroadcastsStatusAt,
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
+		&i.AnalyticsMonthlyEvents,
 	)
 	return i, err
 }
@@ -469,7 +474,7 @@ func (q *Queries) SetWorkspaceBotsMaySend(ctx context.Context, arg SetWorkspaceB
 const setWorkspaceRetention = `-- name: SetWorkspaceRetention :one
 UPDATE workspaces SET retention_days = $1
 WHERE id = $2
-RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys
+RETURNING id, name, created_at, retention_days, deleted_at, bots_may_send, created_by, created_ip, broadcasts_status, broadcasts_status_reason, broadcasts_status_at, broadcast_daily_limit, broadcasts_by_keys, analytics_monthly_events
 `
 
 type SetWorkspaceRetentionParams struct {
@@ -494,6 +499,7 @@ func (q *Queries) SetWorkspaceRetention(ctx context.Context, arg SetWorkspaceRet
 		&i.BroadcastsStatusAt,
 		&i.BroadcastDailyLimit,
 		&i.BroadcastsByKeys,
+		&i.AnalyticsMonthlyEvents,
 	)
 	return i, err
 }

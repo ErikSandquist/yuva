@@ -229,7 +229,7 @@ func (s *Server) GetUsage(ctx context.Context, _ oas.GetUsageRequestObject) (oas
 		out.Items[i] = oas.UsageMonth{
 			Month: r.Month.Format("2006-01"), Conversations: r.Conversations, Messages: r.Messages, AttachmentBytes: r.AttachmentBytes,
 			BroadcastRecipients: r.BroadcastRecipients, ImportedConversations: r.ImportedConversations, ImportedMessages: r.ImportedMessages,
-			ImportedBytes: r.ImportedBytes,
+			ImportedBytes: r.ImportedBytes, AnalyticsEvents: r.AnalyticsEvents,
 		}
 	}
 	return out, nil

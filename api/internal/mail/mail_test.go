@@ -40,8 +40,9 @@ func TestContinuitySubjectByLocale(t *testing.T) {
 
 func samples(inbox, text string) map[string]map[string]any {
 	return map[string]map[string]any{
-		"sign_in_code":   {"Code": "482913", "Minutes": 10},
-		"sign_in_locked": {"Failures": 10, "Hours": 24},
+		"sign_in_code":    {"Code": "482913", "Minutes": 10},
+		"sign_in_locked":  {"Failures": 10, "Hours": 24},
+		"analytics_limit": {"Workspace": inbox, "Limit": "1,000,000", "Month": "2026-10", "URL": "https://yuva.example.com/analytics"},
 		"invite": {"Workspace": inbox, "Inviter": "Ayşe Yılmaz", "Role": "admin",
 			"URL": "https://yuva.example.com", "Days": 7},
 		"confirm_email": {"Inbox": inbox, "URL": "https://yuva.example.com/email/confirm?token=abc", "Hours": 24},
@@ -69,7 +70,7 @@ func samples(inbox, text string) map[string]map[string]any {
 	}
 }
 
-var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome"}
+var htmlMails = []string{"sign_in_code", "sign_in_locked", "invite", "confirm_email", "notification", "discussion_digest", "rating_request", "list_confirm", "list_welcome", "analytics_limit"}
 
 // englishMails go only to the server's operator.
 var englishMails = []string{"operator_digest"}

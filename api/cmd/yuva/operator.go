@@ -8,6 +8,7 @@ import (
 	"io"
 	"log/slog"
 	"os"
+	"strconv"
 	"strings"
 	"text/tabwriter"
 	"uuid"
@@ -30,7 +31,10 @@ const (
 	workspaceUsage = "usage: yuva workspace delete --workspace <id|name> --yes\n" +
 		"       yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]\n" +
 		"       yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)\n" +
-		"       yuva workspace broadcasts show --workspace <id|name>"
+		"       yuva workspace broadcasts show --workspace <id|name>\n" +
+		"       yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)"
+	analyticsUsage = "usage: yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]\n" +
+		"       yuva analytics property list --workspace <id|name>"
 	personUsage = "usage: yuva person delete --email <address> --yes"
 )
 
@@ -49,7 +53,8 @@ func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []stri
 	defer st.Close()
 	log := slog.Default()
 	srv := api.New(api.Deps{Log: log, Store: st, Version: cfg.Version, Mailer: mail.Log{Log: log}, Secrets: masterKey,
-		Broadcasts: api.BroadcastSettings{Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL}})
+		Broadcasts: api.BroadcastSettings{Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL},
+		Analytics:  analyticsSettings(cfg)})
 	switch cmd {
 	case "inbox":
 		return inboxCommand(ctx, st, srv, args, os.Stdout, os.Stderr)
@@ -57,9 +62,14 @@ func operatorCLI(ctx context.Context, cfg config.Config, cmd string, args []stri
 		if len(args) > 0 && args[0] == "broadcasts" {
 			return broadcastsCommand(ctx, st, srv, args[1:], os.Stdout, os.Stderr)
 		}
+		if len(args) > 0 && args[0] == "analytics-limit" {
+			return analyticsLimitCommand(ctx, st, srv, args[1:], os.Stderr)
+		}
 		return workspaceCommand(ctx, st, srv, args, os.Stderr)
 	case "person":
 		return personCommand(ctx, srv, args, os.Stderr)
+	case "analytics":
+		return analyticsCommand(ctx, st, srv, args, os.Stdout, os.Stderr)
 	}
 	return channelCommand(ctx, st, srv, args, os.Stdin, os.Stdout, os.Stderr)
 }
@@ -472,4 +482,117 @@ func showBroadcasts(ctx context.Context, srv *api.Server, ws store.Workspace, st
 			b.Bounced, b.Complained, b.Name, b.Subject)
 	}
 	return tw.Flush()
+}
+
+func analyticsLimitCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stderr io.Writer) error {
+	fs := flag.NewFlagSet("workspace analytics-limit", flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	workspace := fs.String("workspace", "", "workspace id or exact name")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if fs.NArg() != 1 {
+		return errors.New(workspaceUsage)
+	}
+	events, err := strconv.ParseInt(fs.Arg(0), 10, 64)
+	if err != nil || events < 0 {
+		return errors.New("the limit must be a number of events, 0 for no limit")
+	}
+	ws, err := api.FindWorkspace(ctx, st, *workspace)
+	if err != nil {
+		return err
+	}
+	if err := srv.OperatorLimitAnalytics(ctx, ws.ID, events); err != nil {
+		return err
+	}
+	if events == 0 {
+		fmt.Fprintf(stderr, "workspace %q (%s): analytics events are not limited\n", ws.Name, ws.ID)
+		return nil
+	}
+	fmt.Fprintf(stderr, "workspace %q (%s): at most %d analytics events a month\n", ws.Name, ws.ID, events)
+	return nil
+}
+
+func analyticsCommand(ctx context.Context, st *store.Store, srv *api.Server, args []string, stdout, stderr io.Writer) error {
+	if len(args) < 2 || args[0] != "property" {
+		return errors.New(analyticsUsage)
+	}
+	fs := flag.NewFlagSet("analytics property "+args[1], flag.ContinueOnError)
+	fs.SetOutput(stderr)
+	workspace := fs.String("workspace", "", "workspace id or exact name")
+	switch args[1] {
+	case "create":
+		name := fs.String("name", "", "name of the property")
+		var domains, platforms repeated
+		fs.Var(&domains, "domain", "a host name whose pages may send events, such as www.example.com or *.example.com (repeatable)")
+		fs.Var(&platforms, "platform", "web, ios or android (repeatable; web when absent)")
+		inbox := fs.String("inbox", "", "inbox id or slug whose agents may read the property")
+		timezone := fs.String("timezone", "", "IANA time zone of the property's day; the inbox's, else UTC, when empty")
+		if err := fs.Parse(args[2:]); err != nil {
+			return err
+		}
+		if fs.NArg() != 0 {
+			return errors.New(analyticsUsage)
+		}
+		ws, err := api.FindWorkspace(ctx, st, *workspace)
+		if err != nil {
+			return err
+		}
+		body := oas.AnalyticsPropertyCreate{Name: *name, Domains: domains}
+		if *inbox != "" {
+			_, in, err := findInbox(ctx, st, srv, ws.ID.String(), *inbox)
+			if err != nil {
+				return err
+			}
+			body.InboxId = &in.Id
+		}
+		if len(platforms) > 0 {
+			ps := make([]oas.AnalyticsPlatform, len(platforms))
+			for i, p := range platforms {
+				ps[i] = oas.AnalyticsPlatform(p)
+			}
+			body.Platforms = &ps
+		}
+		if *timezone != "" {
+			body.Timezone = timezone
+		}
+		p, err := srv.OperatorCreateAnalyticsProperty(ctx, ws.ID, body)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(stderr, "analytics property %q for %s created in workspace %s\n", p.Name, strings.Join(p.Domains, ","), ws.ID)
+		_, err = fmt.Fprintf(stdout, "%s\t%s\n", p.Id, p.PublicKey)
+		return err
+	case "list":
+		if err := fs.Parse(args[2:]); err != nil {
+			return err
+		}
+		if fs.NArg() != 0 {
+			return errors.New(analyticsUsage)
+		}
+		ws, err := api.FindWorkspace(ctx, st, *workspace)
+		if err != nil {
+			return err
+		}
+		list, err := srv.OperatorListAnalyticsProperties(ctx, ws.ID)
+		if err != nil {
+			return err
+		}
+		tw := tabwriter.NewWriter(stdout, 0, 0, 2, ' ', 0)
+		fmt.Fprintln(tw, "ID\tNAME\tPUBLIC KEY\tDOMAINS\tTIMEZONE\tCOLLECTION\tVISITORS TODAY")
+		for _, p := range list.Items {
+			fmt.Fprintf(tw, "%s\t%s\t%s\t%s\t%s\t%s\t%d\n", p.Id, p.Name, p.PublicKey, strings.Join(p.Domains, ","), p.Timezone, p.Collection, p.VisitorsToday)
+		}
+		if err := tw.Flush(); err != nil {
+			return err
+		}
+		limit := "none"
+		if list.Usage.Limit != nil {
+			limit = strconv.FormatInt(*list.Usage.Limit, 10)
+		}
+		_, err = fmt.Fprintf(stdout, "\nevents in %s: %d, limit %s\n", list.Usage.Month, list.Usage.Events, limit)
+		return err
+	default:
+		return errors.New(analyticsUsage)
+	}
 }

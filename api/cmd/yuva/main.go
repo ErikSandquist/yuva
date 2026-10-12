@@ -53,6 +53,10 @@ const usageText = `usage:
   yuva workspace broadcasts approve|deny|suspend --workspace <id|name> [--reason <text>]
   yuva workspace broadcasts limit --workspace <id|name> --daily <n>   (0 removes the limit)
   yuva workspace broadcasts show --workspace <id|name>
+  yuva workspace analytics-limit --workspace <id|name> <events|0>   (0 removes the limit)
+  yuva analytics property create --workspace <id|name> --name <name> --domain <host>... [--inbox <id|slug>] [--platform web|ios|android]... [--timezone <zone>]
+      (prints the property id and its public key, tab-separated)
+  yuva analytics property list --workspace <id|name>
   yuva person delete --email <address> --yes
   yuva vapid-keys                (prints a new Web Push key pair)
   yuva templates render [--dir templates/email]   (writes each gallery template's preview.<locale>.html)
@@ -99,7 +103,7 @@ func main() {
 			err = bootstrap(ctx, cfg, log, os.Args[2:])
 		case "api-key":
 			err = apiKeyCLI(ctx, cfg, os.Args[2:])
-		case "inbox", "channel", "workspace", "person":
+		case "inbox", "channel", "workspace", "person", "analytics":
 			err = operatorCLI(ctx, cfg, os.Args[1], os.Args[2:])
 		case "ingest-email":
 			os.Exit(ingestEmail(ctx, cfg, log, os.Args[2:]))
@@ -246,6 +250,7 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		Broadcasts: api.BroadcastSettings{
 			Mode: cfg.Broadcasts, DailyRecipients: cfg.BroadcastDailyRecipients, LinkURL: cfg.MailLinkURL,
 		},
+		Analytics: analyticsSettings(cfg),
 	})
 	if cfg.SMTPAllowPrivate {
 		log.Warn("YUVA_SMTP_ALLOW_PRIVATE is set; e-mail channels may send through SMTP servers on private and loopback addresses")
@@ -258,6 +263,9 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 	}
 	if cfg.IngressSecret == "" {
 		log.Warn("YUVA_INGRESS_SECRET is not set; /ingress/email refuses all mail")
+	}
+	if !cfg.Analytics.On {
+		log.Info("YUVA_ANALYTICS is off; analytics endpoints, the script and collection are not served")
 	}
 	if cfg.IngressAcceptV1 {
 		log.Warn("YUVA_INGRESS_ACCEPT_V1 is set; /ingress/email accepts v1 signatures, which do not cover the envelope sender")
@@ -283,18 +291,35 @@ func serve(ctx context.Context, cfg config.Config, log *slog.Logger, args []stri
 		ReadHeaderTimeout: 10 * time.Second,
 		IdleTimeout:       2 * time.Minute,
 	}
+	flushCtx, stopFlush := context.WithCancel(context.WithoutCancel(ctx))
+	defer stopFlush()
+	flushed := make(chan struct{})
+	go func() {
+		srv.RunAnalytics(flushCtx)
+		close(flushed)
+	}()
 	go func() {
 		<-ctx.Done()
 		hub.StopAll(realtime.ReasonRestart)
 		shutdown, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		defer cancel()
 		_ = httpSrv.Shutdown(shutdown)
+		stopFlush()
 	}()
 	log.Info("listening", slog.String("addr", cfg.ListenAddr), slog.String("version", cfg.Version))
 	if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		return err
 	}
+	<-flushed
 	return nil
+}
+
+func analyticsSettings(cfg config.Config) api.AnalyticsSettings {
+	a := cfg.Analytics
+	return api.AnalyticsSettings{
+		Off: !a.On, Buffer: a.Buffer, VisitCache: a.VisitCache, SaltGrace: a.SaltGrace, MonthlyEvents: a.MonthlyEvents,
+		PropertyEventsPerMinute: a.PropertyEventsPerMinute, PropertiesPerWorkspace: a.PropertiesPerWorkspace,
+	}
 }
 
 func vapidKeys() error {

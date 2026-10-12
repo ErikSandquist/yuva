@@ -1,0 +1,9 @@
+Acme Support hat das Analytics-Limit dieses Monats erreicht
+
+Die Websites und Apps von Acme Support haben diesen Monat 1,000,000 Analytics-Ereignisse
+gesendet, so viele, wie dieser Server von einem Arbeitsbereich im Monat annimmt. Neue Ereignisse
+werden bis zum Monatsende nicht gezählt; alles bisher Gezählte bleibt erhalten.
+
+Der Betreiber des Servers kann das Limit für Ihren Arbeitsbereich erhöhen.
+
+https://yuva.example.com/analytics

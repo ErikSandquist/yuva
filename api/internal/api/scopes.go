@@ -12,12 +12,13 @@ var allScopes = []oas.ApiKeyScope{
 	oas.ContactsRead, oas.ContactsWrite, oas.InboxesRead, oas.InboxesManage, oas.LabelsWrite,
 	oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.FeedbackWrite, oas.ListsRead, oas.ListsWrite,
 	oas.BroadcastsRead, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage,
+	oas.AnalyticsRead, oas.AnalyticsWrite, oas.AnalyticsManage,
 }
 
 // notImpliedScopes are left out of a key made without naming its scopes.
 var notImpliedScopes = []oas.ApiKeyScope{oas.BroadcastsSend}
 
-var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage}
+var unlimitedOnlyScopes = []oas.ApiKeyScope{oas.InboxesManage, oas.WebhooksManage, oas.WorkspaceManage, oas.MigrationsManage, oas.AnalyticsManage}
 
 // operationScopes lists every operation an API key may call with the scopes it needs. An operation
 // missing here needs a member session.
@@ -202,6 +203,14 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"SendMigrationProbe":      {oas.MigrationsManage},
 	"FinishMigration":         {oas.MigrationsManage},
 	"RemoveMigrationHistory":  {oas.MigrationsManage},
+
+	"ListAnalyticsProperties": {oas.AnalyticsRead},
+	"GetAnalyticsProperty":    {oas.AnalyticsRead},
+	"CreateAnalyticsProperty": {oas.AnalyticsManage},
+	"UpdateAnalyticsProperty": {oas.AnalyticsManage},
+	"DeleteAnalyticsProperty": {oas.AnalyticsManage},
+	"RotateAnalyticsKey":      {oas.AnalyticsManage},
+	"DeleteAnalyticsData":     {oas.AnalyticsManage},
 }
 
 func errInsufficientScope(scope oas.ApiKeyScope) *apiError {

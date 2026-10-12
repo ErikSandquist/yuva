@@ -89,6 +89,9 @@ func (s *Server) OperatorDeleteWorkspace(ctx context.Context, workspaceID uuid.U
 // workspace) and queues the job that deletes the rest.
 func (s *Server) closeWorkspace(ctx context.Context, workspaceID uuid.UUID) error {
 	now := s.now()
+	if s.analytics != nil {
+		defer s.analytics.props.forgetWorkspace(workspaceID)
+	}
 	return s.st.InTxRaw(ctx, func(tx pgx.Tx, q *store.Queries) error {
 		if _, err := q.LockWorkspace(ctx, workspaceID); err != nil {
 			return err
@@ -187,6 +190,9 @@ func (s *Server) PurgeWorkspace(ctx context.Context, workspaceID uuid.UUID, budg
 		if time.Now().After(deadline) {
 			return out, nil
 		}
+	}
+	if done, err := s.purgeWorkspaceAnalytics(ctx, workspaceID, deadline); err != nil || !done {
+		return out, err
 	}
 	uploads, err := s.st.ListImportStorageKeys(ctx, store.ListImportStorageKeysParams{WorkspaceID: workspaceID})
 	if err != nil {

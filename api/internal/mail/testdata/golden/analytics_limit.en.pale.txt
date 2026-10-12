@@ -1,0 +1,9 @@
+Acme Support reached its analytics limit for this month
+
+The websites and apps of Acme Support sent 1,000,000 analytics events this month, as many as
+this server takes from a workspace in a month. New events are not counted until the month ends;
+everything counted so far stays.
+
+The server's operator can raise the limit for your workspace.
+
+https://yuva.example.com/analytics

@@ -1,0 +1,9 @@
+Acme Support bu ayki analitik sınırına ulaştı
+
+Acme Support çalışma alanının siteleri ve uygulamaları bu ay 1,000,000 analitik olayı gönderdi;
+bu sunucunun bir çalışma alanından bir ayda aldığı en fazla olay sayısı bu. Ay bitene kadar yeni
+olaylar sayılmaz; şimdiye kadar sayılanlar kalır.
+
+Sunucunun yöneticisi çalışma alanınız için sınırı yükseltebilir.
+
+https://yuva.example.com/analytics

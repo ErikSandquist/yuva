@@ -100,6 +100,22 @@ type Config struct {
 	MicrosoftClientID     string
 	MicrosoftClientSecret string
 	MicrosoftTenant       string
+
+	Analytics Analytics
+}
+
+type Analytics struct {
+	// On is YUVA_ANALYTICS; off removes analytics from the server.
+	On     bool
+	Buffer int
+	// VisitCache is how many visitors' current visits are kept in memory.
+	VisitCache int
+	SaltGrace  time.Duration
+	// MonthlyEvents caps each workspace's events a month; 0 is no limit. A server with open
+	// sign-up defaults to 1,000,000.
+	MonthlyEvents           int64
+	PropertyEventsPerMinute int
+	PropertiesPerWorkspace  int
 }
 
 type VAPID struct {
@@ -287,6 +303,9 @@ func Load(version string) (Config, error) {
 	if err := c.loadBroadcasts(); err != nil {
 		return c, err
 	}
+	if err := c.loadAnalytics(); err != nil {
+		return c, err
+	}
 	if c.SMTP.Enabled() && c.SMTP.From == "" {
 		return c, errors.New("YUVA_SMTP_FROM is required when YUVA_SMTP_HOST is set")
 	}
@@ -315,6 +334,37 @@ func (c *Config) loadBroadcasts() error {
 	u, err := url.Parse(c.MailLinkURL)
 	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" || (u.Path != "" && u.Path != "/") {
 		return fmt.Errorf("YUVA_MAIL_LINK_URL must be an absolute http(s) URL without a path, got %q", c.MailLinkURL)
+	}
+	return nil
+}
+
+func (c *Config) loadAnalytics() error {
+	a := &c.Analytics
+	var err error
+	if a.On, err = switchEnv("YUVA_ANALYTICS", true); err != nil {
+		return err
+	}
+	if a.Buffer, err = strconv.Atoi(env("YUVA_ANALYTICS_BUFFER", "50000")); err != nil || a.Buffer < 100 {
+		return errors.New("YUVA_ANALYTICS_BUFFER must be a number of events, at least 100")
+	}
+	if a.VisitCache, err = strconv.Atoi(env("YUVA_ANALYTICS_VISIT_CACHE", "200000")); err != nil || a.VisitCache < 1000 {
+		return errors.New("YUVA_ANALYTICS_VISIT_CACHE must be a number of visits, at least 1000")
+	}
+	if a.SaltGrace, err = time.ParseDuration(env("YUVA_ANALYTICS_SALT_GRACE", "2h")); err != nil || a.SaltGrace <= 0 || a.SaltGrace > 6*time.Hour {
+		return errors.New("YUVA_ANALYTICS_SALT_GRACE must be a positive duration of at most 6h, such as 2h")
+	}
+	def := "0"
+	if c.SignupOpen {
+		def = "1000000"
+	}
+	if a.MonthlyEvents, err = strconv.ParseInt(env("YUVA_ANALYTICS_MONTHLY_EVENTS", def), 10, 64); err != nil || a.MonthlyEvents < 0 {
+		return errors.New("YUVA_ANALYTICS_MONTHLY_EVENTS must be a number of events, 0 for no limit")
+	}
+	if a.PropertyEventsPerMinute, err = strconv.Atoi(env("YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE", "60000")); err != nil || a.PropertyEventsPerMinute < 1 {
+		return errors.New("YUVA_ANALYTICS_PROPERTY_EVENTS_PER_MINUTE must be a positive number of events")
+	}
+	if a.PropertiesPerWorkspace, err = strconv.Atoi(env("YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE", "50")); err != nil || a.PropertiesPerWorkspace < 1 {
+		return errors.New("YUVA_ANALYTICS_PROPERTIES_PER_WORKSPACE must be a positive number of properties")
 	}
 	return nil
 }

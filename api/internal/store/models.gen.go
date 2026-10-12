@@ -5,10 +5,154 @@
 package store
 
 import (
+	"net/netip"
 	"time"
 
 	"uuid"
 )
+
+type AnalyticsDaily struct {
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Day          time.Time
+	Dim          int16
+	Value        string
+	Visitors     int64
+	Visits       int64
+	Views        int64
+	Bounces      int64
+	DurationS    int64
+	Events       int64
+	EngagedMs    int64
+	EngagedViews int64
+	ScrollSum    int64
+	ScrollViews  int64
+}
+
+type AnalyticsEvent struct {
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Day          time.Time
+	Ts           time.Time
+	Visit        int64
+	Visitor      int64
+	Kind         int16
+	Name         string
+	Hostname     string
+	Path         string
+	Props        []byte
+	RevenueMinor *int64
+	Currency     *string
+	EngagedMs    *int32
+	Scroll       *int16
+	Interactive  bool
+}
+
+type AnalyticsHourly struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Hour        int16
+	Visitors    int64
+	Visits      int64
+	Views       int64
+	Events      int64
+}
+
+type AnalyticsIngestStat struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Reason      string
+	Events      int64
+}
+
+type AnalyticsProperty struct {
+	ID               uuid.UUID
+	WorkspaceID      uuid.UUID
+	InboxID          *uuid.UUID
+	Name             string
+	PublicKey        string
+	PreviousKey      *string
+	PreviousKeyUntil *time.Time
+	Domains          []string
+	Platforms        []string
+	Timezone         string
+	Currency         string
+	Collection       string
+	ConsentFeatures  []string
+	Audience         string
+	ExcludedPaths    []string
+	ExcludedIps      []netip.Prefix
+	PathRules        []byte
+	TrackedProps     []string
+	RetentionMonths  *int32
+	VisitorKey       []byte
+	RollupVersion    int32
+	FirstEventAt     *time.Time
+	LastEventAt      *time.Time
+	CreatedBy        *uuid.UUID
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
+	DeletedAt        *time.Time
+}
+
+type AnalyticsRollupDay struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	BuiltAt     *time.Time
+	Dirty       bool
+}
+
+type AnalyticsSalt struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Day         time.Time
+	Salt        []byte
+	ExpiresAt   time.Time
+}
+
+type AnalyticsVisit struct {
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Day          time.Time
+	Visit        int64
+	Visitor      int64
+	StartedAt    time.Time
+	EndedAt      time.Time
+	Hostname     string
+	EntryPath    string
+	ExitPath     string
+	Views        int32
+	Events       int32
+	Interactive  bool
+	EngagedMs    int64
+	Channel      int16
+	Source       string
+	ReferrerHost string
+	ReferrerPath string
+	UtmSource    string
+	UtmMedium    string
+	UtmCampaign  string
+	UtmTerm      string
+	UtmContent   string
+	Country      string
+	Region       string
+	City         string
+	Device       int16
+	Browser      string
+	BrowserMajor int16
+	Os           string
+	OsMajor      int16
+	Screen       int16
+	Language     string
+	Platform     int16
+	AppVersion   string
+	Persistent   bool
+	ContactID    *uuid.UUID
+	Bot          bool
+}
 
 type ApiKey struct {
 	ID           uuid.UUID
@@ -1103,15 +1247,17 @@ type Session struct {
 }
 
 type UsageCounter struct {
-	WorkspaceID           uuid.UUID
-	Month                 time.Time
-	Conversations         int64
-	Messages              int64
-	AttachmentBytes       int64
-	BroadcastRecipients   int64
-	ImportedConversations int64
-	ImportedMessages      int64
-	ImportedBytes         int64
+	WorkspaceID             uuid.UUID
+	Month                   time.Time
+	Conversations           int64
+	Messages                int64
+	AttachmentBytes         int64
+	BroadcastRecipients     int64
+	ImportedConversations   int64
+	ImportedMessages        int64
+	ImportedBytes           int64
+	AnalyticsEvents         int64
+	AnalyticsLimitReachedAt *time.Time
 }
 
 type WebauthnCeremony struct {
@@ -1184,4 +1330,5 @@ type Workspace struct {
 	BroadcastsStatusAt     *time.Time
 	BroadcastDailyLimit    *int32
 	BroadcastsByKeys       bool
+	AnalyticsMonthlyEvents *int64
 }

@@ -25,6 +25,21 @@ var (
 	BroadcastComplaints = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "yuva_broadcast_complaints_total", Help: "Spam complaints about broadcast mails.",
 	})
+	AnalyticsEvents = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "yuva_analytics_events_total", Help: "Analytics events by result: accepted (buffered), stored, dropped.",
+	}, []string{"result"})
+	AnalyticsDropped = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: "yuva_analytics_dropped_total", Help: "Analytics events not stored, by reason.",
+	}, []string{"reason"})
+	AnalyticsFlushSeconds = promauto.NewHistogram(prometheus.HistogramOpts{
+		Name: "yuva_analytics_flush_seconds", Help: "Time to write one batch of analytics events.", Buckets: prometheus.DefBuckets,
+	})
+	AnalyticsBufferEvents = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "yuva_analytics_buffer_events", Help: "Analytics events waiting to be written.",
+	})
+	AnalyticsLateEvents = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "yuva_analytics_late_events_total", Help: "Analytics events written to a day that was already rolled up.",
+	})
 )
 
 func Serve(ctx context.Context, addr string, log *slog.Logger) {

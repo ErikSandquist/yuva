@@ -1650,10 +1650,11 @@ now; per-channel limits can narrow them later.
   - Analytics collection names only a property's public key: `POST /client/v1/analytics/{key}` finds
     the property by `analytics_properties.public_key` (or its `previous_key` during a rotation), unique
     across the server, and a share link finds its share by `analytics_shares.token_hash`; everything
-    after those lookups is scoped by the workspace they returned. The `analytics_partitions` job creates
-    and drops whole day partitions of `analytics_visits` and `analytics_events`, which hold every
-    workspace's rows of that day; every other read, write and delete of those tables filters by
-    `workspace_id`.
+    after those lookups is scoped by the workspace they returned. Whole day partitions of
+    `analytics_visits` and `analytics_events`, which hold every workspace's rows of that day, are
+    created by the flusher (yesterday to the day after tomorrow in UTC when it starts, and any day it
+    is about to write that has none) and by the `analytics_partitions` job, which also drops them;
+    every other read, write and delete of those tables filters by `workspace_id`.
   - A forwarding address names only its token: ingress finds the channel by
     `email_channels.forward_token` (unique across the server), like an address. A migration probe is
     recognised by its HMAC before the channel's workspace matters.

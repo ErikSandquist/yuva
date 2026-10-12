@@ -50,10 +50,10 @@ var (
 )
 
 // managerScopes need an owner or admin; tokens of agents are never offered them. feedback:write
-// is for API keys only and offered to nobody.
+// and analytics:write are for API keys only and offered to nobody.
 var (
-	managerScopes  = []oas.ApiKeyScope{oas.InboxesManage, oas.LabelsWrite, oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.ListsWrite, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage}
-	keyOnlyScopes  = []oas.ApiKeyScope{oas.FeedbackWrite}
+	managerScopes  = []oas.ApiKeyScope{oas.InboxesManage, oas.LabelsWrite, oas.CannedRepliesWrite, oas.WebhooksManage, oas.WorkspaceManage, oas.ListsWrite, oas.BroadcastsWrite, oas.BroadcastsSend, oas.MigrationsManage, oas.AnalyticsManage}
+	keyOnlyScopes  = []oas.ApiKeyScope{oas.FeedbackWrite, oas.AnalyticsWrite}
 	privateSchemeR = regexp.MustCompile(`^[a-z][a-z0-9+.-]*$`)
 	refusedSchemes = []string{"javascript", "data", "file", "vbscript", "about", "blob", "ftp", "ws", "wss", "mailto", "tel", "http", "https"}
 )

@@ -1,0 +1,9 @@
+{{.Workspace}} hat das Analytics-Limit dieses Monats erreicht
+
+Die Websites und Apps von {{.Workspace}} haben diesen Monat {{.Limit}} Analytics-Ereignisse
+gesendet, so viele, wie dieser Server von einem Arbeitsbereich im Monat annimmt. Neue Ereignisse
+werden bis zum Monatsende nicht gezählt; alles bisher Gezählte bleibt erhalten.
+
+Der Betreiber des Servers kann das Limit für Ihren Arbeitsbereich erhöhen.
+
+{{.URL}}

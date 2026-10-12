@@ -23,8 +23,122 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AnalyticsAudience.
+const (
+	AnalyticsAudienceChildren AnalyticsAudience = "children"
+	AnalyticsAudienceGeneral  AnalyticsAudience = "general"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAudience enum.
+func (e AnalyticsAudience) Valid() bool {
+	switch e {
+	case AnalyticsAudienceChildren:
+		return true
+	case AnalyticsAudienceGeneral:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsCollection.
+const (
+	AnalyticsCollectionAnonymous AnalyticsCollection = "anonymous"
+	AnalyticsCollectionConsent   AnalyticsCollection = "consent"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsCollection enum.
+func (e AnalyticsCollection) Valid() bool {
+	switch e {
+	case AnalyticsCollectionAnonymous:
+		return true
+	case AnalyticsCollectionConsent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsConsentA.
+const (
+	N0 AnalyticsConsentA = 0
+	N1 AnalyticsConsentA = 1
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsConsentA enum.
+func (e AnalyticsConsentA) Valid() bool {
+	switch e {
+	case N0:
+		return true
+	case N1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsConsentFeature.
+const (
+	AnalyticsConsentIdentify   AnalyticsConsentFeature = "identify"
+	AnalyticsConsentPersistent AnalyticsConsentFeature = "persistent"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsConsentFeature enum.
+func (e AnalyticsConsentFeature) Valid() bool {
+	switch e {
+	case AnalyticsConsentIdentify:
+		return true
+	case AnalyticsConsentPersistent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsEventN.
+const (
+	Engagement AnalyticsEventN = "engagement"
+	Pageview   AnalyticsEventN = "pageview"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsEventN enum.
+func (e AnalyticsEventN) Valid() bool {
+	switch e {
+	case Engagement:
+		return true
+	case Pageview:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsPlatform.
+const (
+	AnalyticsPlatformAndroid AnalyticsPlatform = "android"
+	AnalyticsPlatformIos     AnalyticsPlatform = "ios"
+	AnalyticsPlatformWeb     AnalyticsPlatform = "web"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsPlatform enum.
+func (e AnalyticsPlatform) Valid() bool {
+	switch e {
+	case AnalyticsPlatformAndroid:
+		return true
+	case AnalyticsPlatformIos:
+		return true
+	case AnalyticsPlatformWeb:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ApiKeyScope.
 const (
+	AnalyticsManage    ApiKeyScope = "analytics:manage"
+	AnalyticsRead      ApiKeyScope = "analytics:read"
+	AnalyticsWrite     ApiKeyScope = "analytics:write"
 	BroadcastsRead     ApiKeyScope = "broadcasts:read"
 	BroadcastsSend     ApiKeyScope = "broadcasts:send"
 	BroadcastsWrite    ApiKeyScope = "broadcasts:write"
@@ -50,6 +164,12 @@ const (
 // Valid indicates whether the value is a known member of the ApiKeyScope enum.
 func (e ApiKeyScope) Valid() bool {
 	switch e {
+	case AnalyticsManage:
+		return true
+	case AnalyticsRead:
+		return true
+	case AnalyticsWrite:
+		return true
 	case BroadcastsRead:
 		return true
 	case BroadcastsSend:
@@ -3701,6 +3821,247 @@ type AccountDeletion struct {
 	Email string `json:"email"`
 }
 
+// AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
+type AnalyticsAudience string
+
+// AnalyticsBatch One event, or up to 100 in `e`.
+type AnalyticsBatch struct {
+	union json.RawMessage
+}
+
+// AnalyticsCollection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+// script sends after `yuva.consent({analytics: true})`.
+type AnalyticsCollection string
+
+// AnalyticsConsent defines model for AnalyticsConsent.
+type AnalyticsConsent struct {
+	// A `1` when the visitor agreed to analytics.
+	A *AnalyticsConsentA `json:"a,omitempty"`
+}
+
+// AnalyticsConsentA `1` when the visitor agreed to analytics.
+type AnalyticsConsentA int
+
+// AnalyticsConsentFeature Offered only to visitors who consented: `persistent` keeps a random id on the device for at
+// most 13 months, `identify` links a verified user's visits to their contact.
+type AnalyticsConsentFeature string
+
+// AnalyticsDataDeletion Either `from` and `to`, or `all: true`.
+type AnalyticsDataDeletion struct {
+	All  *bool               `json:"all,omitempty"`
+	From *openapi_types.Date `json:"from,omitempty"`
+	To   *openapi_types.Date `json:"to,omitempty"`
+}
+
+// AnalyticsDomain A host name whose pages may send events, without scheme or port: `example.com`,
+// `docs.example.com`, or `*.example.com` for every subdomain (not the domain itself).
+// `localhost`, `127.0.0.1` and `[::1]` count only when listed.
+//
+// Examples: www.example.com, *.example.com
+type AnalyticsDomain = string
+
+// AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
+// older servers.
+type AnalyticsEvent struct {
+	C *AnalyticsConsent `json:"c,omitempty"`
+
+	// H The page uses hash routing, so the fragment is part of the path.
+	H *bool `json:"h,omitempty"`
+
+	// Ms `engagement` only: milliseconds the page was visible and focused, at most 30 minutes.
+	Ms *int `json:"ms,omitempty"`
+
+	// N `pageview`, or `engagement` (sent once per view when the page is hidden or left).
+	N AnalyticsEventN `json:"n"`
+
+	// R `document.referrer`; only its host and path are kept, and none when it is the page's own host.
+	R *string `json:"r,omitempty"`
+
+	// Sd `engagement` only: the deepest scroll position reached, in percent.
+	Sd *int `json:"sd,omitempty"`
+
+	// U The page URL. Only the host and the path are kept; of the query, only `utm_source`,
+	// `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
+	// the visit's acquisition. Path segments shaped like e-mail addresses are stored as
+	// `:email`.
+	U string `json:"u"`
+
+	// W Viewport width in CSS pixels, turned into a screen size class and not stored.
+	W *int `json:"w,omitempty"`
+}
+
+// AnalyticsEventN `pageview`, or `engagement` (sent once per view when the page is hidden or left).
+type AnalyticsEventN string
+
+// AnalyticsEventBatch defines model for AnalyticsEventBatch.
+type AnalyticsEventBatch struct {
+	E []AnalyticsEvent `json:"e"`
+}
+
+// AnalyticsExcludedAddress An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
+//
+// Examples: 203.0.113.7, 198.51.100.0/24
+type AnalyticsExcludedAddress = string
+
+// AnalyticsPathPattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
+//
+// Examples: /admin/**, /preview/*
+type AnalyticsPathPattern = string
+
+// AnalyticsPathRule Pages whose path matches `pattern` are stored as `replacement`, so `/orders/*` can count as `/orders/:id`.
+type AnalyticsPathRule struct {
+	// Pattern A path starting with `/`, where `*` matches one segment and `**` any number of them.
+	//
+	// Examples: /admin/**, /preview/*
+	Pattern AnalyticsPathPattern `json:"pattern"`
+
+	// Replacement Examples: /orders/:id
+	Replacement string `json:"replacement"`
+}
+
+// AnalyticsPlatform Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+type AnalyticsPlatform string
+
+// AnalyticsProperty A website or app the workspace measures.
+type AnalyticsProperty struct {
+	// Audience `children` keeps location at country level and allows no consent features or tracked props.
+	Audience AnalyticsAudience `json:"audience"`
+
+	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+	// script sends after `yuva.consent({analytics: true})`.
+	Collection      AnalyticsCollection       `json:"collection"`
+	ConsentFeatures []AnalyticsConsentFeature `json:"consent_features"`
+	CreatedAt       time.Time                 `json:"created_at"`
+
+	// Currency ISO 4217 code revenue is reported in.
+	Currency      string                     `json:"currency"`
+	Domains       []AnalyticsDomain          `json:"domains"`
+	ExcludedIps   []AnalyticsExcludedAddress `json:"excluded_ips"`
+	ExcludedPaths []AnalyticsPathPattern     `json:"excluded_paths"`
+
+	// FirstEventAt When the first event was stored; absent until then.
+	FirstEventAt *time.Time `json:"first_event_at,omitempty"`
+	Id           uuid.UUID  `json:"id"`
+
+	// InboxId The linked inbox, whose agents can read the property; absent when none.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// LastEventAt When an event was last stored, to the minute.
+	LastEventAt *time.Time          `json:"last_event_at,omitempty"`
+	Name        string              `json:"name"`
+	PathRules   []AnalyticsPathRule `json:"path_rules"`
+	Platforms   []AnalyticsPlatform `json:"platforms"`
+
+	// PreviousKeyExpiresAt After a rotation, when the previous key stops working; absent when there is none.
+	PreviousKeyExpiresAt *time.Time `json:"previous_key_expires_at,omitempty"`
+
+	// PublicKey Sent by pages and apps, `yuva_ak_…`. Public like a chat channel's key.
+	//
+	// Examples: yuva_ak_3kq9TzWb0xY1aB2cD3eF4gH5
+	PublicKey string `json:"public_key"`
+
+	// RetentionMonths Rollups older than this are deleted; absent when they are kept forever.
+	RetentionMonths *int32 `json:"retention_months,omitempty"`
+
+	// Timezone IANA time zone that defines the property's day.
+	Timezone     string                 `json:"timezone"`
+	TrackedProps []AnalyticsTrackedProp `json:"tracked_props"`
+	UpdatedAt    time.Time              `json:"updated_at"`
+
+	// VisitorsToday Distinct visitors so far today, in the property's time zone.
+	VisitorsToday int64 `json:"visitors_today"`
+}
+
+// AnalyticsPropertyCreate defines model for AnalyticsPropertyCreate.
+type AnalyticsPropertyCreate struct {
+	// Audience `children` keeps location at country level and allows no consent features or tracked props.
+	Audience *AnalyticsAudience `json:"audience,omitempty"`
+
+	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+	// script sends after `yuva.consent({analytics: true})`.
+	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
+	Currency        *string                     `json:"currency,omitempty"`
+	Domains         []AnalyticsDomain           `json:"domains"`
+	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+	InboxId         *uuid.UUID                  `json:"inbox_id,omitempty"`
+	Name            string                      `json:"name"`
+	PathRules       *[]AnalyticsPathRule        `json:"path_rules,omitempty"`
+
+	// Platforms `[web]` when absent.
+	Platforms *[]AnalyticsPlatform `json:"platforms,omitempty"`
+
+	// RetentionMonths 25 when absent; `null` keeps rollups forever.
+	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
+
+	// Timezone The linked inbox's time zone when absent, else `UTC`.
+	Timezone     *string                 `json:"timezone,omitempty"`
+	TrackedProps *[]AnalyticsTrackedProp `json:"tracked_props,omitempty"`
+}
+
+// AnalyticsPropertyDeletion defines model for AnalyticsPropertyDeletion.
+type AnalyticsPropertyDeletion struct {
+	// Name The property's name, exactly.
+	Name string `json:"name"`
+}
+
+// AnalyticsPropertyList defines model for AnalyticsPropertyList.
+type AnalyticsPropertyList struct {
+	Items []AnalyticsProperty `json:"items"`
+
+	// Usage The workspace's analytics events this calendar month (UTC).
+	Usage AnalyticsUsage `json:"usage"`
+}
+
+// AnalyticsPropertyUpdate defines model for AnalyticsPropertyUpdate.
+type AnalyticsPropertyUpdate struct {
+	// Audience `children` keeps location at country level and allows no consent features or tracked props.
+	Audience *AnalyticsAudience `json:"audience,omitempty"`
+
+	// Collection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
+	// address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
+	// script sends after `yuva.consent({analytics: true})`.
+	Collection      *AnalyticsCollection        `json:"collection,omitempty"`
+	ConsentFeatures *[]AnalyticsConsentFeature  `json:"consent_features,omitempty"`
+	Currency        *string                     `json:"currency,omitempty"`
+	Domains         *[]AnalyticsDomain          `json:"domains,omitempty"`
+	ExcludedIps     *[]AnalyticsExcludedAddress `json:"excluded_ips,omitempty"`
+	ExcludedPaths   *[]AnalyticsPathPattern     `json:"excluded_paths,omitempty"`
+
+	// InboxId `null` unlinks the property from its inbox.
+	InboxId   nullable.Nullable[uuid.UUID] `json:"inbox_id,omitempty"`
+	Name      *string                      `json:"name,omitempty"`
+	PathRules *[]AnalyticsPathRule         `json:"path_rules,omitempty"`
+	Platforms *[]AnalyticsPlatform         `json:"platforms,omitempty"`
+
+	// RetentionMonths `null` keeps rollups forever.
+	RetentionMonths nullable.Nullable[int32] `json:"retention_months,omitempty"`
+	Timezone        *string                  `json:"timezone,omitempty"`
+	TrackedProps    *[]AnalyticsTrackedProp  `json:"tracked_props,omitempty"`
+}
+
+// AnalyticsTrackedProp defines model for AnalyticsTrackedProp.
+type AnalyticsTrackedProp = string
+
+// AnalyticsUsage The workspace's analytics events this calendar month (UTC).
+type AnalyticsUsage struct {
+	// Events Events stored this month.
+	Events int64 `json:"events"`
+
+	// Limit The monthly event cap; absent when there is none.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// LimitReachedAt When this month's events reached the cap; later events are dropped until the month ends.
+	LimitReachedAt *time.Time `json:"limit_reached_at,omitempty"`
+
+	// Month Examples: 2026-10
+	Month string `json:"month"`
+}
+
 // ApiKey defines model for ApiKey.
 type ApiKey struct {
 	// BotAvatarUrl An `https` image URL.
@@ -3793,8 +4154,13 @@ type ApiKeyList struct {
 //	  - `migrations:manage`: detect, create, change, connect, test and delete migrations into
 //	    Yuva. Owners and admins only; never offered to agents' tokens, refused for keys limited
 //	    to inboxes.
+//	  - `analytics:read`: analytics properties.
+//	  - `analytics:write`: server-side analytics events; for API keys only, never offered to
+//	    OAuth clients.
+//	  - `analytics:manage`: create, change and delete analytics properties, rotate their keys,
+//	    delete their data. Never offered to agents' tokens, refused for keys limited to inboxes.
 //
-// `lists:*`, `broadcasts:*` and `migrations:manage` are never added to keys made before they existed.
+// `lists:*`, `broadcasts:*`, `migrations:manage` and `analytics:*` are never added to keys made before they existed.
 type ApiKeyScope string
 
 // ApiKeyUpdate Only the fields sent change. Scopes, inbox limit and expiry cannot change.
@@ -10592,6 +10958,8 @@ type UsageList struct {
 
 // UsageMonth defines model for UsageMonth.
 type UsageMonth struct {
+	// AnalyticsEvents Analytics events stored.
+	AnalyticsEvents int64 `json:"analytics_events"`
 	AttachmentBytes int64 `json:"attachment_bytes"`
 
 	// BroadcastRecipients Broadcast mails accepted by the SMTP server.
@@ -11064,6 +11432,9 @@ type WorkspaceUpdate struct {
 	RetentionDays nullable.Nullable[int32] `json:"retention_days,omitempty"`
 }
 
+// AnalyticsPropertyId defines model for AnalyticsPropertyId.
+type AnalyticsPropertyId = uuid.UUID
+
 // ApiKeyId defines model for ApiKeyId.
 type ApiKeyId = uuid.UUID
 
@@ -11305,6 +11676,57 @@ type ListReaderNotificationsParams struct {
 
 	// Limit Page size, 1 to 100; 25 by default.
 	Limit *Limit `form:"limit,omitempty" json:"limit,omitempty"`
+}
+
+// ListAnalyticsPropertiesParams defines parameters for ListAnalyticsProperties.
+type ListAnalyticsPropertiesParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsPropertyParams defines parameters for CreateAnalyticsProperty.
+type CreateAnalyticsPropertyParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsPropertyParams defines parameters for DeleteAnalyticsProperty.
+type DeleteAnalyticsPropertyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsPropertyParams defines parameters for GetAnalyticsProperty.
+type GetAnalyticsPropertyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsPropertyParams defines parameters for UpdateAnalyticsProperty.
+type UpdateAnalyticsPropertyParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsDataParams defines parameters for DeleteAnalyticsData.
+type DeleteAnalyticsDataParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RotateAnalyticsKeyParams defines parameters for RotateAnalyticsKey.
+type RotateAnalyticsKeyParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
 // ListApiKeysParams defines parameters for ListApiKeys.
@@ -13268,6 +13690,18 @@ type MarkReaderNotificationsReadJSONRequestBody = ReaderNotificationsRead
 // CreateReaderTokenJSONRequestBody defines body for CreateReaderToken for application/json ContentType.
 type CreateReaderTokenJSONRequestBody = ReaderTokenCreate
 
+// CreateAnalyticsPropertyJSONRequestBody defines body for CreateAnalyticsProperty for application/json ContentType.
+type CreateAnalyticsPropertyJSONRequestBody = AnalyticsPropertyCreate
+
+// DeleteAnalyticsPropertyJSONRequestBody defines body for DeleteAnalyticsProperty for application/json ContentType.
+type DeleteAnalyticsPropertyJSONRequestBody = AnalyticsPropertyDeletion
+
+// UpdateAnalyticsPropertyJSONRequestBody defines body for UpdateAnalyticsProperty for application/json ContentType.
+type UpdateAnalyticsPropertyJSONRequestBody = AnalyticsPropertyUpdate
+
+// DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
+type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
+
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
 
@@ -13540,6 +13974,68 @@ type WebhookSubscriptionCreatedJSONRequestBody = WebhookSubscriptionPayload
 
 // WebhookSubscriptionUpdatedJSONRequestBody defines body for WebhookSubscriptionUpdated for application/json ContentType.
 type WebhookSubscriptionUpdatedJSONRequestBody = WebhookSubscriptionPayload
+
+// AsAnalyticsEvent returns the union data inside the AnalyticsBatch as a AnalyticsEvent
+func (t AnalyticsBatch) AsAnalyticsEvent() (AnalyticsEvent, error) {
+	var body AnalyticsEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEvent overwrites any union data inside the AnalyticsBatch as the provided AnalyticsEvent
+func (t *AnalyticsBatch) FromAnalyticsEvent(v AnalyticsEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEvent performs a merge with any union data inside the AnalyticsBatch, using the provided AnalyticsEvent
+func (t *AnalyticsBatch) MergeAnalyticsEvent(v AnalyticsEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsEventBatch returns the union data inside the AnalyticsBatch as a AnalyticsEventBatch
+func (t AnalyticsBatch) AsAnalyticsEventBatch() (AnalyticsEventBatch, error) {
+	var body AnalyticsEventBatch
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsEventBatch overwrites any union data inside the AnalyticsBatch as the provided AnalyticsEventBatch
+func (t *AnalyticsBatch) FromAnalyticsEventBatch(v AnalyticsEventBatch) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsEventBatch performs a merge with any union data inside the AnalyticsBatch, using the provided AnalyticsEventBatch
+func (t *AnalyticsBatch) MergeAnalyticsEventBatch(v AnalyticsEventBatch) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t AnalyticsBatch) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *AnalyticsBatch) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
 
 // AsClientConversationCreatedEvent returns the union data inside the ClientRealtimeMessage as a ClientConversationCreatedEvent
 func (t ClientRealtimeMessage) AsClientConversationCreatedEvent() (ClientConversationCreatedEvent, error) {
@@ -16419,6 +16915,27 @@ type ServerInterface interface {
 	// CreateReaderToken Hand a reader token to a documentation site
 	// (POST /v1/account/reader-tokens)
 	CreateReaderToken(w http.ResponseWriter, r *http.Request)
+	// ListAnalyticsProperties List analytics properties
+	// (GET /v1/analytics/properties)
+	ListAnalyticsProperties(w http.ResponseWriter, r *http.Request, params ListAnalyticsPropertiesParams)
+	// CreateAnalyticsProperty Create an analytics property
+	// (POST /v1/analytics/properties)
+	CreateAnalyticsProperty(w http.ResponseWriter, r *http.Request, params CreateAnalyticsPropertyParams)
+	// DeleteAnalyticsProperty Delete an analytics property
+	// (DELETE /v1/analytics/properties/{propertyId})
+	DeleteAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsPropertyParams)
+	// GetAnalyticsProperty An analytics property
+	// (GET /v1/analytics/properties/{propertyId})
+	GetAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsPropertyParams)
+	// UpdateAnalyticsProperty Update an analytics property
+	// (PATCH /v1/analytics/properties/{propertyId})
+	UpdateAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params UpdateAnalyticsPropertyParams)
+	// DeleteAnalyticsData Delete a property's collected data
+	// (POST /v1/analytics/properties/{propertyId}/delete-data)
+	DeleteAnalyticsData(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsDataParams)
+	// RotateAnalyticsKey Give an analytics property a new public key
+	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
+	RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(w http.ResponseWriter, r *http.Request, params ListApiKeysParams)
@@ -18433,6 +18950,395 @@ func (siw *ServerInterfaceWrapper) CreateReaderToken(w http.ResponseWriter, r *h
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.CreateReaderToken(w, r)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListAnalyticsProperties operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsProperties(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsPropertiesParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsProperties(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateAnalyticsProperty operation middleware
+func (siw *ServerInterfaceWrapper) CreateAnalyticsProperty(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateAnalyticsPropertyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateAnalyticsProperty(w, r, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsProperty operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsProperty(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsPropertyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsProperty(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetAnalyticsProperty operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsProperty(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsPropertyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsProperty(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateAnalyticsProperty operation middleware
+func (siw *ServerInterfaceWrapper) UpdateAnalyticsProperty(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateAnalyticsPropertyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateAnalyticsProperty(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsData operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsData(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsDataParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsData(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RotateAnalyticsKey operation middleware
+func (siw *ServerInterfaceWrapper) RotateAnalyticsKey(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RotateAnalyticsKeyParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RotateAnalyticsKey(w, r, propertyId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -31115,6 +32021,13 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/oauth/grants/{oauthGrantId}", wrapper.RevokeOAuthGrant)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/events", wrapper.ListEvents)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/events/latest", wrapper.GetLatestEvent)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties", wrapper.ListAnalyticsProperties)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties", wrapper.CreateAnalyticsProperty)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}", wrapper.DeleteAnalyticsProperty)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}", wrapper.GetAnalyticsProperty)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}", wrapper.UpdateAnalyticsProperty)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/rotate-key", wrapper.RotateAnalyticsKey)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/delete-data", wrapper.DeleteAnalyticsData)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -35918,6 +36831,521 @@ func (response CreateReaderToken403ApplicationProblemPlusJSONResponse) VisitCrea
 type CreateReaderToken404ApplicationProblemPlusJSONResponse Problem
 
 func (response CreateReaderToken404ApplicationProblemPlusJSONResponse) VisitCreateReaderTokenResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsPropertiesRequestObject struct {
+	Params ListAnalyticsPropertiesParams
+}
+
+type ListAnalyticsPropertiesResponseObject interface {
+	VisitListAnalyticsPropertiesResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsProperties200JSONResponse AnalyticsPropertyList
+
+func (response ListAnalyticsProperties200JSONResponse) VisitListAnalyticsPropertiesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsProperties401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsProperties401ApplicationProblemPlusJSONResponse) VisitListAnalyticsPropertiesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsProperties403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsProperties403ApplicationProblemPlusJSONResponse) VisitListAnalyticsPropertiesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsProperties404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsProperties404ApplicationProblemPlusJSONResponse) VisitListAnalyticsPropertiesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsPropertyRequestObject struct {
+	Params CreateAnalyticsPropertyParams
+	Body   *CreateAnalyticsPropertyJSONRequestBody
+}
+
+type CreateAnalyticsPropertyResponseObject interface {
+	VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error
+}
+
+type CreateAnalyticsProperty201JSONResponse AnalyticsProperty
+
+func (response CreateAnalyticsProperty201JSONResponse) VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsProperty400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateAnalyticsProperty400ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsProperty401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsProperty401ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsProperty403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsProperty403ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsProperty404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsProperty404ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsPropertyRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     DeleteAnalyticsPropertyParams
+	Body       *DeleteAnalyticsPropertyJSONRequestBody
+}
+
+type DeleteAnalyticsPropertyResponseObject interface {
+	VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsProperty202Response struct {
+}
+
+func (response DeleteAnalyticsProperty202Response) VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error {
+	w.WriteHeader(202)
+	return nil
+}
+
+type DeleteAnalyticsProperty400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsProperty400ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsProperty401ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsProperty401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsProperty403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsProperty403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsProperty404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsProperty404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsPropertyRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     GetAnalyticsPropertyParams
+}
+
+type GetAnalyticsPropertyResponseObject interface {
+	VisitGetAnalyticsPropertyResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsProperty200JSONResponse AnalyticsProperty
+
+func (response GetAnalyticsProperty200JSONResponse) VisitGetAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsProperty401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsProperty401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsProperty403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsProperty403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsProperty404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsProperty404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsPropertyRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     UpdateAnalyticsPropertyParams
+	Body       *UpdateAnalyticsPropertyJSONRequestBody
+}
+
+type UpdateAnalyticsPropertyResponseObject interface {
+	VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error
+}
+
+type UpdateAnalyticsProperty200JSONResponse AnalyticsProperty
+
+func (response UpdateAnalyticsProperty200JSONResponse) VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsProperty400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateAnalyticsProperty400ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsProperty401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsProperty401ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsProperty403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsProperty403ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsProperty404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsProperty404ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsPropertyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsDataRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     DeleteAnalyticsDataParams
+	Body       *DeleteAnalyticsDataJSONRequestBody
+}
+
+type DeleteAnalyticsDataResponseObject interface {
+	VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsData202Response struct {
+}
+
+func (response DeleteAnalyticsData202Response) VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error {
+	w.WriteHeader(202)
+	return nil
+}
+
+type DeleteAnalyticsData400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsData400ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsData401ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsData401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsData403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsData403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsData404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsData404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsDataResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateAnalyticsKeyRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     RotateAnalyticsKeyParams
+}
+
+type RotateAnalyticsKeyResponseObject interface {
+	VisitRotateAnalyticsKeyResponse(w http.ResponseWriter) error
+}
+
+type RotateAnalyticsKey200JSONResponse AnalyticsProperty
+
+func (response RotateAnalyticsKey200JSONResponse) VisitRotateAnalyticsKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateAnalyticsKey401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RotateAnalyticsKey401ApplicationProblemPlusJSONResponse) VisitRotateAnalyticsKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateAnalyticsKey403ApplicationProblemPlusJSONResponse Problem
+
+func (response RotateAnalyticsKey403ApplicationProblemPlusJSONResponse) VisitRotateAnalyticsKeyResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RotateAnalyticsKey404ApplicationProblemPlusJSONResponse Problem
+
+func (response RotateAnalyticsKey404ApplicationProblemPlusJSONResponse) VisitRotateAnalyticsKeyResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -52591,6 +54019,27 @@ type StrictServerInterface interface {
 	// CreateReaderToken Hand a reader token to a documentation site
 	// (POST /v1/account/reader-tokens)
 	CreateReaderToken(ctx context.Context, request CreateReaderTokenRequestObject) (CreateReaderTokenResponseObject, error)
+	// ListAnalyticsProperties List analytics properties
+	// (GET /v1/analytics/properties)
+	ListAnalyticsProperties(ctx context.Context, request ListAnalyticsPropertiesRequestObject) (ListAnalyticsPropertiesResponseObject, error)
+	// CreateAnalyticsProperty Create an analytics property
+	// (POST /v1/analytics/properties)
+	CreateAnalyticsProperty(ctx context.Context, request CreateAnalyticsPropertyRequestObject) (CreateAnalyticsPropertyResponseObject, error)
+	// DeleteAnalyticsProperty Delete an analytics property
+	// (DELETE /v1/analytics/properties/{propertyId})
+	DeleteAnalyticsProperty(ctx context.Context, request DeleteAnalyticsPropertyRequestObject) (DeleteAnalyticsPropertyResponseObject, error)
+	// GetAnalyticsProperty An analytics property
+	// (GET /v1/analytics/properties/{propertyId})
+	GetAnalyticsProperty(ctx context.Context, request GetAnalyticsPropertyRequestObject) (GetAnalyticsPropertyResponseObject, error)
+	// UpdateAnalyticsProperty Update an analytics property
+	// (PATCH /v1/analytics/properties/{propertyId})
+	UpdateAnalyticsProperty(ctx context.Context, request UpdateAnalyticsPropertyRequestObject) (UpdateAnalyticsPropertyResponseObject, error)
+	// DeleteAnalyticsData Delete a property's collected data
+	// (POST /v1/analytics/properties/{propertyId}/delete-data)
+	DeleteAnalyticsData(ctx context.Context, request DeleteAnalyticsDataRequestObject) (DeleteAnalyticsDataResponseObject, error)
+	// RotateAnalyticsKey Give an analytics property a new public key
+	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
+	RotateAnalyticsKey(ctx context.Context, request RotateAnalyticsKeyRequestObject) (RotateAnalyticsKeyResponseObject, error)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(ctx context.Context, request ListApiKeysRequestObject) (ListApiKeysResponseObject, error)
@@ -54566,6 +56015,221 @@ func (sh *strictHandler) CreateReaderToken(w http.ResponseWriter, r *http.Reques
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(CreateReaderTokenResponseObject); ok {
 		if err := validResponse.VisitCreateReaderTokenResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListAnalyticsProperties operation middleware
+func (sh *strictHandler) ListAnalyticsProperties(w http.ResponseWriter, r *http.Request, params ListAnalyticsPropertiesParams) {
+	var request ListAnalyticsPropertiesRequestObject
+
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsProperties(ctx, request.(ListAnalyticsPropertiesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsProperties")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsPropertiesResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsPropertiesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateAnalyticsProperty operation middleware
+func (sh *strictHandler) CreateAnalyticsProperty(w http.ResponseWriter, r *http.Request, params CreateAnalyticsPropertyParams) {
+	var request CreateAnalyticsPropertyRequestObject
+
+	request.Params = params
+
+	var body CreateAnalyticsPropertyJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateAnalyticsProperty(ctx, request.(CreateAnalyticsPropertyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateAnalyticsProperty")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateAnalyticsPropertyResponseObject); ok {
+		if err := validResponse.VisitCreateAnalyticsPropertyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsProperty operation middleware
+func (sh *strictHandler) DeleteAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsPropertyParams) {
+	var request DeleteAnalyticsPropertyRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body DeleteAnalyticsPropertyJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsProperty(ctx, request.(DeleteAnalyticsPropertyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsProperty")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsPropertyResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsPropertyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetAnalyticsProperty operation middleware
+func (sh *strictHandler) GetAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsPropertyParams) {
+	var request GetAnalyticsPropertyRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsProperty(ctx, request.(GetAnalyticsPropertyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsProperty")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsPropertyResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsPropertyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateAnalyticsProperty operation middleware
+func (sh *strictHandler) UpdateAnalyticsProperty(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params UpdateAnalyticsPropertyParams) {
+	var request UpdateAnalyticsPropertyRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body UpdateAnalyticsPropertyJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateAnalyticsProperty(ctx, request.(UpdateAnalyticsPropertyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateAnalyticsProperty")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateAnalyticsPropertyResponseObject); ok {
+		if err := validResponse.VisitUpdateAnalyticsPropertyResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsData operation middleware
+func (sh *strictHandler) DeleteAnalyticsData(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsDataParams) {
+	var request DeleteAnalyticsDataRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body DeleteAnalyticsDataJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsData(ctx, request.(DeleteAnalyticsDataRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsData")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsDataResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsDataResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RotateAnalyticsKey operation middleware
+func (sh *strictHandler) RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams) {
+	var request RotateAnalyticsKeyRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RotateAnalyticsKey(ctx, request.(RotateAnalyticsKeyRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RotateAnalyticsKey")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RotateAnalyticsKeyResponseObject); ok {
+		if err := validResponse.VisitRotateAnalyticsKeyResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

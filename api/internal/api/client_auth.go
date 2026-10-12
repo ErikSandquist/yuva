@@ -65,6 +65,10 @@ func (s *Server) clientCORS(next http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 			return
 		}
+		if strings.HasPrefix(r.URL.Path, analyticsPrefix) {
+			s.analyticsCORS(w, r, next)
+			return
+		}
 		raw := r.Header.Get("Origin")
 		if raw == "" {
 			if r.Header.Get("Sec-Fetch-Site") == "same-origin" {
