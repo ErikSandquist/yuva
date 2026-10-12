@@ -136,6 +136,8 @@ Ist in einer Unterhaltung Ihr Entwurf offen, antwortet `send_reply` dort mit `dr
 
 Kein Umzugs-Tool nimmt ein Passwort entgegen: `create_migration` liefert eine Yuva-Seite (`connect_url`), auf der Sie das App-Passwort eingeben. `remove_migration_history` ist als destruktiv markiert und braucht `confirm_count`, die Zahl der Unterhaltungen, die Sie bestätigt haben.
 
+Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kanal des Posteingangs für die Postfachadresse oder legt einen an (zusätzlich `inboxes:manage`). Ein neuer Kanal hat kein SMTP-Konto; die Antwort enthält daher `channel_created`, `channel_setup` (was im Panel einzustellen ist, bevor Antworten gesendet werden können) und `channel_settings_url`; der Prompt `move_to_yuva` gibt sie an Sie weiter.
+
 ### Ressourcen und Prompts
 
 | Art | Einträge |

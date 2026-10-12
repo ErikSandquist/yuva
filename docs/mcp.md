@@ -132,6 +132,8 @@ With your draft open in a conversation, `send_reply` there answers `draft_pendin
 
 No migration tool takes a password: `create_migration` returns a Yuva page (`connect_url`) where you enter the app password. `remove_migration_history` is marked destructive and needs `confirm_count`, the number of conversations you confirmed.
 
+With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail channel for the mailbox address, or creates one (needs `inboxes:manage` too). A new channel has no SMTP account, so the answer carries `channel_created`, `channel_setup` (what to set in the panel before replies can be sent) and `channel_settings_url`; the `move_to_yuva` prompt passes these on to you.
+
 ### Resources and prompts
 
 | Kind | Items |

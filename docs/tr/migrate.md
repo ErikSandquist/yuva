@@ -68,7 +68,7 @@ yoksa özgün adın ve adresin gönderdiği olarak görünür.
    adresinin hangi üyeye ait olduğunu, klasörlerin nasıl etikete dönüşeceğini, eski konuşmaların ne zaman
    kapatılacağını ve otomatik e-postaların atlanıp atlanmayacağını ya da özgün mesajların saklanıp
    saklanmayacağını seçin.
-5. **Gözden geçir.** Deneme sonucu klasör başına sayıları, nelerin neden atlandığını, kişileri, etiketleri,
+5. **Gözden geçir.** Deneme sonucu klasör başına sayıları (toplam, seçilen klasörlerdeki tüm iletilerdir; yinelenenler ve atlananlar sayılır), nelerin neden atlandığını, kişileri, etiketleri,
    depolamayı ve süreyi listeler, en yeni konuşmaların nasıl görüneceğini gösterir. "Taşımayı başlat"a
    basana kadar hiçbir şey aktarılmaz. Buradaki bir seçimi değiştirmek kopyalamayı yeniden planlar.
 6. **Kopyala.** Önce en yeni konuşmalar, canlı ilerlemeyle. Sayfayı kapatabilir, duraklatabilir, sürdürebilir
@@ -139,6 +139,11 @@ e-postasını gönderir ve taşımayı bitirir.
 
 Asistan şifreyi asla sormaz. Size bir Yuva sayfası verir; uygulama şifresini orada girersiniz ve hiçbir araç
 şifre almaz. Asistanlar şifreyi ya da girileni göremez.
+
+Bir gelen kutusu belirtip kanal belirtmezseniz asistan, adres için gelen kutusunun e-posta kanalını kullanır
+ya da yeni bir kanal oluşturur. Yeni kanalın SMTP hesabı yoktur: Yuva bu kanaldan yanıt gönderebilmeden önce
+asistan size panelde kanalın ayarlarında nelerin girileceğini (posta kutusunun SMTP sunucusu, kullanıcı adı ve
+şifresi) söyler.
 
 ## Verileriniz
 

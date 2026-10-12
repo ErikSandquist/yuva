@@ -73,7 +73,7 @@ Namen und ihrer Adresse.
 4. **Map.** Wählen Sie den Posteingang und den E-Mail-Kanal für die Adresse (Yuva bietet an, sie anzulegen),
    welchem Mitglied jede Teamadresse gehört, wie Ordner zu Labels werden, wann alte Unterhaltungen
    geschlossen werden und ob automatische E-Mails übersprungen oder Originale behalten werden.
-5. **Review.** Der Probelauf listet die Zahlen je Ordner, was übersprungen wird und warum, Kontakte, Labels,
+5. **Review.** Der Probelauf listet die Zahlen je Ordner (die Summe ist jede Nachricht der gewählten Ordner, Duplikate und übersprungene eingeschlossen), was übersprungen wird und warum, Kontakte, Labels,
    Speicher und Zeit und zeigt, wie die neuesten Unterhaltungen aussehen. Bis Sie „Start migration“ drücken,
    wird nichts importiert. Eine Änderung hier plant das Kopieren neu.
 6. **Copy.** Neueste Unterhaltungen zuerst, mit Live-Fortschritt. Sie können die Seite schließen, pausieren,
@@ -147,6 +147,11 @@ Testnachricht und schließt den Umzug ab.
 
 Der Assistent fragt nie nach dem Passwort. Er gibt Ihnen eine Yuva-Seite; dort geben Sie das App-Passwort
 ein, und kein Tool nimmt eines entgegen. Assistenten sehen weder das Passwort noch das Eingegebene.
+
+Nennen Sie einen Posteingang, aber keinen Kanal, verwendet der Assistent den E-Mail-Kanal des Posteingangs für
+die Adresse oder legt einen an. Ein neuer Kanal hat kein SMTP-Konto: Der Assistent sagt Ihnen, was Sie in den
+Einstellungen des Kanals im Panel eintragen müssen (SMTP-Server, Benutzername und Passwort des Postfachs),
+bevor Yuva von dort Antworten senden kann.
 
 ## Ihre Daten
 

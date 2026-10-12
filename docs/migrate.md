@@ -67,7 +67,7 @@ map it to or, without one, by its original name and address.
 4. **Map.** Pick the inbox and its e-mail channel for the address (Yuva offers to create them), which
    member each team address belongs to, how folders become labels, when to close old conversations and
    whether to skip automatic mail or keep originals.
-5. **Review.** The dry run lists the counts per folder, what is skipped and why, contacts, labels, storage
+5. **Review.** The dry run lists the counts per folder (the total is every message in the chosen folders, with duplicates and skipped messages counted), what is skipped and why, contacts, labels, storage
    and time, and shows how the newest conversations will look. Nothing is imported until you press
    "Start migration". Changing a choice here plans the copy again.
 6. **Copy.** Newest conversations first, with live progress. You can close the page, pause, resume or
@@ -136,6 +136,10 @@ finishes the migration.
 
 The assistant never asks for the password. It gives you a Yuva page; you enter the app password there,
 and no tool takes one. Assistants cannot see the password or what was entered.
+
+If you name an inbox but no channel, the assistant uses the inbox's e-mail channel for the address or creates
+one. A new channel has no SMTP account: the assistant tells you what to set in the channel's settings in the
+panel (the mailbox's SMTP server, user name and password) before Yuva can send replies from it.
 
 ## Your data
 

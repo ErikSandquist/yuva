@@ -134,6 +134,8 @@ Bir konuşmada açık taslağınız varken oradaki `send_reply` `draft_pending` 
 
 Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini girdiğiniz bir Yuva sayfası (`connect_url`) döndürür. `remove_migration_history` yıkıcı olarak işaretlidir ve `confirm_count` ister; bu, onayladığınız konuşma sayısıdır.
 
+`create_migration`, `inbox_id` ile ve `channel_id` olmadan çağrıldığında, posta kutusu adresi için gelen kutusunun e-posta kanalını kullanır ya da yeni bir kanal oluşturur (ayrıca `inboxes:manage` gerekir). Yeni kanalın SMTP hesabı yoktur; bu yüzden yanıtta `channel_created`, `channel_setup` (yanıtlar gönderilebilmeden önce panelde nelerin ayarlanacağı) ve `channel_settings_url` bulunur; `move_to_yuva` prompt'u bunları size iletir.
+
 ### Kaynaklar ve prompt'lar
 
 | Tür | Öğeler |
