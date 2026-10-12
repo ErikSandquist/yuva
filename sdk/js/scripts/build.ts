@@ -40,6 +40,7 @@ const scripts = [
   { entry: "src/yuva-chat.ts", format: "esm" },
   { entry: "src/yuva-docs.ts", format: "iife" },
   { entry: "src/yuva-subscribe.ts", format: "iife" },
+  { entry: "src/yuva-analytics.ts", format: "iife" },
 ] as const
 
 for (const { entry, format } of scripts) {
@@ -56,7 +57,15 @@ for (const { entry, format } of scripts) {
   )
 }
 
-const entries = ["src/index.ts", "src/chat.ts", "src/docs.ts", "src/subscribe.ts", "src/react.ts", "src/api.ts"]
+const entries = [
+  "src/index.ts",
+  "src/chat.ts",
+  "src/docs.ts",
+  "src/subscribe.ts",
+  "src/analytics.ts",
+  "src/react.ts",
+  "src/api.ts",
+]
 check(
   await Bun.build({
     entrypoints: entries,
@@ -73,8 +82,11 @@ check(
   })
 )
 
+// Bun drops module directives; Next.js needs this one to render the React components from server layouts.
+await Bun.write("dist/esm/react.js", `"use client";\n${await Bun.file("dist/esm/react.js").text()}`)
+
 const transpiler = new Bun.Transpiler({ loader: "ts", target: "node" })
-for (const name of ["nuxt/module", "nuxt/runtime/components"]) {
+for (const name of ["nuxt/module", "nuxt/runtime/components", "nuxt/runtime/analytics", "nuxt/runtime/plugin"]) {
   const code = transpiler.transformSync(await Bun.file(`src/${name}.ts`).text())
   await Bun.write(`dist/esm/${name}.js`, code.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
@@ -88,23 +100,35 @@ for await (const path of new Bun.Glob("dist/types/**/*.d.ts").scan()) {
   await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
 
+const budgets: Record<string, number> = { "yuva-analytics.js": 1536, "esm/analytics.js": 1536 }
+let over = false
 for (const name of [
   "yuva.js",
   "yuva-chat.js",
   "yuva-docs.js",
   "yuva-subscribe.js",
+  "yuva-analytics.js",
   thread,
   subscribeClient,
   "esm/index.js",
   "esm/chat.js",
   "esm/docs.js",
   "esm/subscribe.js",
+  "esm/analytics.js",
   "esm/react.js",
   "esm/api.js",
   "esm/nuxt/module.js",
   "esm/nuxt/runtime/components.js",
+  "esm/nuxt/runtime/analytics.js",
+  "esm/nuxt/runtime/plugin.js",
 ]) {
   const bytes = await Bun.file(`dist/${name}`).bytes()
   const gzip = Bun.gzipSync(bytes, { level: 9 }).length
-  console.log(`dist/${name}  ${bytes.length} B  gzip ${gzip} B`)
+  const budget = budgets[name]
+  console.log(`dist/${name}  ${bytes.length} B  gzip ${gzip} B${budget ? ` (budget ${budget} B)` : ""}`)
+  if (budget && gzip > budget) over = true
+}
+if (over) {
+  console.error("A script is over its gzip budget.")
+  process.exit(1)
 }

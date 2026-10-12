@@ -8,7 +8,8 @@ JavaScript SDK for [Yuva](https://github.com/productdevbook/yuva), open-source c
 | `useyuva/chat` | The `<yuva-chat>` web component, built on that client. Browser only. |
 | `useyuva/docs` | `<yuva-page-feedback>` and `<yuva-discussions>` for documentation pages. Registers in the browser only, so it is safe to import during SSR. |
 | `useyuva/subscribe` | `<yuva-subscribe>`, a mailing list sign-up form. Registers in the browser only. |
-| `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`. React 18+ is an optional peer. |
+| `useyuva/analytics` | `createAnalytics()`: cookieless pageviews and engagement for an analytics property. Does nothing during SSR. |
+| `useyuva/react` | `YuvaProvider`, `useConversations`, `useMessages`, `YuvaAnalytics`, `useYuvaAnalytics`. React 18+ is an optional peer. |
 | `useyuva/nuxt` | A Nuxt module: `YuvaChat`, `YuvaPageFeedback`, `YuvaDiscussions` and `YuvaSubscribe` components, configured once in `nuxt.config`. |
 | `useyuva/api` | A typed `/v1` client for backends (API key), generated from the OpenAPI contract. |
 
@@ -18,7 +19,8 @@ npm install useyuva
 
 Without a bundler, the server hosts the widget itself: `<script src="https://<your-yuva>/yuva.js" defer></script>`,
 the documentation page elements without the chat: `<script src="https://<your-yuva>/yuva-docs.js" defer></script>`,
-and the subscribe form: `<script src="https://<your-yuva>/yuva-subscribe.js" defer></script>`.
+the subscribe form: `<script src="https://<your-yuva>/yuva-subscribe.js" defer></script>`,
+and analytics: `<script src="https://<your-yuva>/yuva-analytics.js" data-key="yuva_ak_…" defer></script>`.
 
 ## Client
 
@@ -175,18 +177,63 @@ with `--yuva-accent`, `--yuva-on-accent`, `--yuva-radius`, `--yuva-font` and
 `yuva-subscribe-error` (`{ code }`); `YuvaSubscribe` in `useyuva/react` (`onSubscribe`, `onError`)
 and Nuxt (`@subscribe`, `@error`).
 
+## Analytics
+
+```html
+<script defer data-key="yuva_ak_…" src="https://support.example.com/yuva-analytics.js"></script>
+```
+
+```ts
+import { createAnalytics } from "useyuva/analytics";
+
+const analytics = createAnalytics({ server: "https://support.example.com", key: "yuva_ak_…" });
+```
+
+Counts a pageview on load and on every History API navigation (`pushState`, back and forward; not
+`replaceState`, not a query change), and one `engagement` per view with the visible and focused
+time and the deepest scroll when the page is hidden or left. Events go out as `text/plain`, so the
+browser sends no preflight; events of one moment share a request, and the last one is sent with
+`sendBeacon`. A `403` from the server stops sending for the page.
+
+Nothing is put on the device and no cookie is read: the only storage access is reading
+`localStorage.yuva_optout`, written by `optOut()`. With `navigator.globalPrivacyControl`, Do Not
+Track or `navigator.webdriver` nothing is sent at all.
+
+| Attribute | Option | |
+|---|---|---|
+| `data-key` | `key` | The property's public key. |
+| `data-api` | `server` | The Yuva server; the script defaults to the origin it was loaded from. Set it when you serve the endpoint from your own domain. |
+| `data-hash` | `hash: true` | Hash routing: the fragment is part of the page. |
+| `data-consent="required"` | `consent: "required"` | Send nothing until `consent({ analytics: true })`. |
+| `data-manual` | `manual: true` | No automatic pageviews; call `pageview()`. |
+
+Methods (`window.yuva` for the script): `pageview({ url?, referrer? })`, `consent({ analytics })`
+(or `consent(false)`), `optOut()`, `optIn()`, and `destroy()` on `createAnalytics`. Calls made
+before the script loads go to `(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true }])`.
+Links to `#yuva-optout` and `#yuva-optin` opt the visitor out and back in.
+
+In React, render `<YuvaAnalytics server="…" key="…" />` once (it renders nothing) and call
+`useYuvaAnalytics()` anywhere for `pageview`, `consent`, `optOut` and `optIn`; calls before it has
+loaded wait for it. In Nuxt, set `yuva.analytics` (below) and use `useYuvaAnalytics()`.
+
 ## Nuxt
 
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: ["useyuva/nuxt"],
-  yuva: { server: "https://support.example.com", channel: "yuva_pk_…" },
+  yuva: {
+    server: "https://support.example.com",
+    channel: "yuva_pk_…",
+    analytics: { key: "yuva_ak_…" },
+  },
 });
 ```
 
-`NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL` and `NUXT_PUBLIC_YUVA_LOCALE` override the
-options at runtime. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
+`NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL`, `NUXT_PUBLIC_YUVA_LOCALE` and, when
+`analytics` is set, `NUXT_PUBLIC_YUVA_ANALYTICS_KEY` override the options at runtime. `analytics`
+takes `key`, `server` (defaults to `yuva.server`), `hash`, `consent` and `manual`, adds a client
+plugin and auto-imports `useYuvaAnalytics()`. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
 auto-imported, render on the server and load their element in the browser when they mount. Props
 are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);
 events are `@rating`, `@feedback`, `@discussion`, `@post`, `@reader` and `@unread`. `yuva-*` tags are custom elements in

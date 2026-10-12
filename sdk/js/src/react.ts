@@ -15,6 +15,8 @@ import type { IdentityTokenSource, MessageInput, YuvaClient } from "./client/cli
 import type { DiscussionDetailEvent, DiscussionPostDetail, PageFeedbackDetail, PageRatingDetail } from "./docs"
 import type { SubscribeDetail, SubscribeErrorDetail } from "./subscribe"
 import type { ReaderProfile } from "./client/api"
+import type { Analytics, AnalyticsMethods, AnalyticsOptions } from "./analytics"
+import { analytics, attachAnalytics } from "./analytics/handle"
 
 const YuvaContext = createContext<YuvaClient | null>(null)
 
@@ -384,4 +386,28 @@ export function YuvaSubscribe({ onSubscribe, onError, ...props }: YuvaSubscribeP
     },
     { "yuva-subscribe": onSubscribe, "yuva-subscribe-error": onError }
   )
+}
+
+export type YuvaAnalyticsProps = AnalyticsOptions
+
+export function YuvaAnalytics({ server, key, hash, consent, manual }: YuvaAnalyticsProps): null {
+  useEffect(() => {
+    let instance: Analytics | undefined
+    let mounted = true
+    void import("./analytics").then(({ createAnalytics }) => {
+      if (!mounted) return
+      instance = createAnalytics({ server, key, hash, consent, manual })
+      attachAnalytics(instance)
+    })
+    return () => {
+      mounted = false
+      instance?.destroy()
+      attachAnalytics(undefined)
+    }
+  }, [server, key, hash, consent, manual])
+  return null
+}
+
+export function useYuvaAnalytics(): AnalyticsMethods {
+  return analytics
 }
