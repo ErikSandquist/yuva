@@ -329,6 +329,10 @@ msgid "{imported} conversations"
 msgstr "{imported} conversations"
 
 #: src/features/migrations/CopyStep.tsx
+msgid "{imported} conversations imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
+msgstr "{imported} conversations imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
+
+#: src/features/migrations/CopyStep.tsx
 msgid "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
 msgstr "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
 
@@ -1532,6 +1536,14 @@ msgstr "Assign to me"
 msgid "Assigned to {0}"
 msgstr "Assigned to {0}"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Assigned to {assignee}"
+msgstr "Assigned to {assignee}"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Assigned to {assignee}, kept by name"
+msgstr "Assigned to {assignee}, kept by name"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/SidePanels.tsx
@@ -1742,6 +1754,7 @@ msgid "Bounced or reported as spam before"
 msgstr "Bounced or reported as spam before"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
 msgid "Brands"
 msgstr "Brands"
@@ -2524,6 +2537,10 @@ msgstr "Copying {address}"
 msgid "Copying {percent}%"
 msgstr "Copying {percent}%"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "Copying {provider}"
+msgstr "Copying {provider}"
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Could not copy"
 msgstr "Could not copy"
@@ -3178,6 +3195,10 @@ msgstr "Each new e-mail starts a conversation; replies continue it."
 #: src/features/broadcasts/Report.tsx
 msgid "Each reply is a conversation in the inbox. The first 50 are listed here."
 msgstr "Each reply is a conversation in the inbox. The first 50 are listed here."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Each with all its messages and notes"
+msgstr "Each with all its messages and notes"
 
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -4770,6 +4791,7 @@ msgid "Mailbox address"
 msgstr "Mailbox address"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
 msgid "Mailboxes"
 msgstr "Mailboxes"
@@ -5837,6 +5859,10 @@ msgstr "Note about this contact"
 msgid "Note for the teammate"
 msgstr "Note for the teammate"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Note, only the team sees it"
+msgstr "Note, only the team sees it"
+
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "Notes"
@@ -5876,6 +5902,10 @@ msgstr "Nothing is done yet."
 #: src/features/migrations/parts.tsx
 msgid "Nothing is left out."
 msgstr "Nothing is left out."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: once {provider} is signed in again, copying continues where it stopped."
+msgstr "Nothing is lost: once {provider} is signed in again, copying continues where it stopped."
 
 #: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
@@ -6515,6 +6545,10 @@ msgstr "Paused on its own: the SMTP server refused the account, its encryption o
 #: src/features/migrations/CopyStep.tsx
 msgid "Paused. Nothing is read from {address} until you resume."
 msgstr "Paused. Nothing is read from {address} until you resume."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Paused. Nothing is read from {provider} until you resume."
+msgstr "Paused. Nothing is read from {provider} until you resume."
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
@@ -9482,6 +9516,10 @@ msgstr "This is not the file whose {count} parts are on the server. Pick that fi
 #: src/features/migrations/ReviewStep.tsx
 msgid "This is the dry run for {address}. Nothing is imported until you start."
 msgstr "This is the dry run for {address}. Nothing is imported until you start."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "This is the dry run for {provider}. Nothing is imported until you start."
+msgstr "This is the dry run for {provider}. Nothing is imported until you start."
 
 #: src/features/setup/InstallStep.tsx
 msgid "This is the live chat, as it looks on your site. You can try it here."

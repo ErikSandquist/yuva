@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
-import { ArrowRightIcon, PaperclipIcon, ScanSearchIcon } from "lucide-react"
+import { ArrowRightIcon, LockIcon, PaperclipIcon, ScanSearchIcon, UserRoundIcon } from "lucide-react"
 import { Link, useNavigate } from "react-router"
 
 import { ContactAvatar, ErrorLine, MemberAvatar, PersonAvatar, ProgressBar } from "@/components/common"
@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useNumber } from "@/features/broadcasts/BroadcastParts"
 import { Figure, SkippedList, WaitingLine } from "@/features/migrations/parts"
 import { useMigrationPreview, useMigrationStep } from "@/features/migrations/queries"
+import { isHelpdesk } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StatusTag } from "@/features/settings/ui"
 import { StepHeader } from "@/features/setup/SetupLayout"
@@ -32,10 +33,16 @@ export function ReviewStep({ m, preset }: { m: Migration; preset: MigrationPrese
   const est = m.estimate
   const scanning = m.state === "scanning"
   const address = m.source_address
+  const desk = isHelpdesk(m.source)
+  const provider = preset.name
   return (
     <WizardLayout step="review" m={m} preset={preset}>
       <StepHeader title={<Trans>Check before anything is copied</Trans>}>
-        <Trans>This is the dry run for {address}. Nothing is imported until you start.</Trans>
+        {desk ? (
+          <Trans>This is the dry run for {provider}. Nothing is imported until you start.</Trans>
+        ) : (
+          <Trans>This is the dry run for {address}. Nothing is imported until you start.</Trans>
+        )}
       </StepHeader>
 
       <div className="flex flex-col gap-8">
@@ -50,7 +57,7 @@ export function ReviewStep({ m, preset }: { m: Migration; preset: MigrationPrese
           </div>
         )}
 
-        {est ? <DryRun est={est} /> : !scanning && <Skeleton className="h-48 rounded-xl" />}
+        {est ? <DryRun est={est} desk={desk} /> : !scanning && <Skeleton className="h-48 rounded-xl" />}
 
         {est && <Preview m={m} />}
 
@@ -82,7 +89,7 @@ export function ReviewStep({ m, preset }: { m: Migration; preset: MigrationPrese
   )
 }
 
-function DryRun({ est }: { est: MigrationEstimate }) {
+function DryRun({ est, desk }: { est: MigrationEstimate; desk: boolean }) {
   const { i18n } = useLingui()
   const num = useNumber()
   const range = useTimeRange()
@@ -102,7 +109,11 @@ function DryRun({ est }: { est: MigrationEstimate }) {
           <Trans>What comes over</Trans>
         </h2>
         <div className="grid grid-cols-2 gap-2.5" data-testid="migration-totals">
-          <Figure value={num(est.conversations)} label={<Trans>Conversations</Trans>} />
+          <Figure
+            value={num(est.conversations)}
+            label={<Trans>Conversations</Trans>}
+            detail={desk ? <Trans>Each with all its messages and notes</Trans> : undefined}
+          />
           <Figure
             value={num(est.messages)}
             label={<Trans>Messages</Trans>}
@@ -230,6 +241,12 @@ function PreviewThread({ thread }: { thread: MigrationPreviewThread }) {
   const messages = thread.messages.slice(-SHOWN)
   const hidden = thread.messages_total - messages.length
   const who = thread.contact.name || thread.contact.address
+  const assigneeMember = thread.assignee_member_id ? members.get(thread.assignee_member_id) : undefined
+  const assignee = assigneeMember
+    ? assigneeMember.name || assigneeMember.email
+    : thread.assignee
+      ? thread.assignee.name || thread.assignee.address
+      : ""
   return (
     <li className="overflow-hidden rounded-xl border bg-card">
       <div className="flex flex-col gap-1 border-b px-3.5 py-3">
@@ -239,6 +256,18 @@ function PreviewThread({ thread }: { thread: MigrationPreviewThread }) {
           <StatusTag tone={thread.status === "closed" ? "muted" : "warning"}>{enums.status[thread.status]}</StatusTag>
         </div>
         <p className="truncate text-body">{thread.subject}</p>
+        {assignee && (
+          <p className="flex items-center gap-1.5 text-caption text-faint" data-testid="migration-preview-assignee">
+            <UserRoundIcon className="size-3 shrink-0" />
+            <span className="truncate">
+              {assigneeMember ? (
+                <Trans>Assigned to {assignee}</Trans>
+              ) : (
+                <Trans>Assigned to {assignee}, kept by name</Trans>
+              )}
+            </span>
+          </p>
+        )}
         {thread.labels.length > 0 && <p className="truncate text-caption text-faint">{thread.labels.join(" · ")}</p>}
       </div>
       {hidden > 0 && (
@@ -250,7 +279,7 @@ function PreviewThread({ thread }: { thread: MigrationPreviewThread }) {
         {messages.map((msg, i) => {
           const member = msg.member_id ? members.get(msg.member_id) : undefined
           const author = member ? member.name || member.email : msg.from.name || msg.from.address
-          const out = msg.direction === "out"
+          const out = msg.direction === "out" || !!msg.note
           return (
             <li key={i} className={cn("flex gap-2", out && "flex-row-reverse")}>
               {out ? (
@@ -265,14 +294,21 @@ function PreviewThread({ thread }: { thread: MigrationPreviewThread }) {
               <div
                 className={cn(
                   "flex max-w-[85%] min-w-0 flex-col gap-0.5 rounded-xl px-3 py-2",
-                  out ? "bg-brand-wash" : "bg-surface"
+                  msg.note ? "border border-note-border bg-note" : out ? "bg-brand-wash" : "bg-surface"
                 )}
+                data-note={msg.note || undefined}
               >
                 <span className="flex items-baseline gap-2 text-caption text-faint">
                   <span className="truncate font-medium text-muted-foreground">{author}</span>
                   <span className="shrink-0">{formatShort(msg.at, i18n.locale)}</span>
                 </span>
                 <p className="line-clamp-4 text-body break-words whitespace-pre-line">{msg.text}</p>
+                {msg.note && (
+                  <span className="flex items-center gap-1 text-caption text-note-ink">
+                    <LockIcon className="size-3" />
+                    <Trans>Note, only the team sees it</Trans>
+                  </span>
+                )}
                 {msg.attachments > 0 && (
                   <span className="flex items-center gap-1 text-caption text-faint">
                     <PaperclipIcon className="size-3" />

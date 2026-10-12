@@ -17,7 +17,7 @@ import {
   useStateAnnouncement,
 } from "@/features/migrations/parts"
 import { useMigrationErrors, useMigrationFolders, useMigrationStep } from "@/features/migrations/queries"
-import { useItemErrorText } from "@/features/migrations/text"
+import { isHelpdesk, useItemErrorText } from "@/features/migrations/text"
 import { WizardLayout } from "@/features/migrations/Wizard"
 import { StepHeader } from "@/features/setup/SetupLayout"
 import type { Migration, MigrationFolder, MigrationPreset } from "@/lib/api"
@@ -36,6 +36,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const address = m.source_address
   const provider = preset.name
   const attention = m.state === "needs_attention"
+  const desk = isHelpdesk(m.source)
   const reconnect = attention && (can("set_credentials") || can("sign_in"))
   const rate = num(m.rate_per_minute ?? 0)
   const left = m.seconds_left ? formatDuration(m.seconds_left, i18n.locale) : ""
@@ -43,7 +44,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   const error = pause.error ?? resume.error ?? ask.error
   return (
     <WizardLayout step="copy" m={m} preset={preset}>
-      <StepHeader title={<Trans>Copying {address}</Trans>}>
+      <StepHeader title={desk ? <Trans>Copying {provider}</Trans> : <Trans>Copying {address}</Trans>}>
         <Trans>Newest conversations first. You can close this page; members can work meanwhile.</Trans>
       </StepHeader>
       {announcement}
@@ -65,7 +66,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
             )}
           </div>
           <MigrationBar m={m} />
-          <Counts m={m} />
+          <Counts m={m} desk={desk} />
         </section>
 
         {waiting && (
@@ -88,6 +89,8 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
             <p className="text-small text-muted-foreground">
               {m.source === "file" ? (
                 <Trans>Nothing is lost: when it continues, copying picks up where it stopped.</Trans>
+              ) : desk ? (
+                <Trans>Nothing is lost: once {provider} is signed in again, copying continues where it stopped.</Trans>
               ) : (
                 <Trans>Nothing is lost: once the mailbox is connected again, copying continues where it stopped.</Trans>
               )}
@@ -108,7 +111,11 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
         {m.state === "paused" && (
           <Notice icon={PauseIcon}>
             <p>
-              <Trans>Paused. Nothing is read from {address} until you resume.</Trans>
+              {desk ? (
+                <Trans>Paused. Nothing is read from {provider} until you resume.</Trans>
+              ) : (
+                <Trans>Paused. Nothing is read from {address} until you resume.</Trans>
+              )}
             </p>
           </Notice>
         )}
@@ -153,7 +160,7 @@ export function CopyStep({ m, preset }: { m: Migration; preset: MigrationPreset 
   )
 }
 
-function Counts({ m }: { m: Migration }) {
+function Counts({ m, desk }: { m: Migration; desk: boolean }) {
   const num = useNumber()
   const c = m.counts
   const imported = num(c.imported)
@@ -162,9 +169,15 @@ function Counts({ m }: { m: Migration }) {
   const failed = num(c.failed)
   return (
     <p className="text-small text-faint" data-testid="migration-counts">
-      <Trans>
-        {imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed
-      </Trans>
+      {desk ? (
+        <Trans>
+          {imported} conversations imported · {already} already in Yuva · {skipped} skipped · {failed} failed
+        </Trans>
+      ) : (
+        <Trans>
+          {imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed
+        </Trans>
+      )}
     </p>
   )
 }
@@ -177,7 +190,13 @@ function Folders({ m }: { m: Migration }) {
   return (
     <section className="flex flex-col gap-3" aria-labelledby="migration-folders-progress">
       <h2 id="migration-folders-progress" className="text-title">
-        <Trans>Folders</Trans>
+        {m.source === "zendesk" ? (
+          <Trans>Brands</Trans>
+        ) : m.source === "helpscout" ? (
+          <Trans>Mailboxes</Trans>
+        ) : (
+          <Trans>Folders</Trans>
+        )}
       </h2>
       <ul className="flex flex-col divide-y rounded-xl border">
         {rows.map((f) => (

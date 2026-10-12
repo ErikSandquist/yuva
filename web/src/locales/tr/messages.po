@@ -329,6 +329,10 @@ msgid "{imported} conversations"
 msgstr "{imported} konuşma"
 
 #: src/features/migrations/CopyStep.tsx
+msgid "{imported} conversations imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
+msgstr "{imported} konuşma aktarıldı · {already} zaten Yuva'da · {skipped} atlandı · {failed} başarısız"
+
+#: src/features/migrations/CopyStep.tsx
 msgid "{imported} imported · {already} already in Yuva · {skipped} skipped · {failed} failed"
 msgstr "{imported} aktarıldı · {already} zaten Yuva'da · {skipped} atlandı · {failed} başarısız"
 
@@ -1532,6 +1536,14 @@ msgstr "Bana ata"
 msgid "Assigned to {0}"
 msgstr "{0} kişisine atandı"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Assigned to {assignee}"
+msgstr "Atanan: {assignee}"
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Assigned to {assignee}, kept by name"
+msgstr "Atanan: {assignee} (yalnızca adıyla)"
+
 #: src/app/Rail.tsx
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/inbox/SidePanels.tsx
@@ -1742,6 +1754,7 @@ msgid "Bounced or reported as spam before"
 msgstr "Daha önce geri döndü ya da spam olarak bildirildi"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
 msgid "Brands"
 msgstr "Markalar"
@@ -2524,6 +2537,10 @@ msgstr "{address} kopyalanıyor"
 msgid "Copying {percent}%"
 msgstr "Kopyalanıyor %{percent}"
 
+#: src/features/migrations/CopyStep.tsx
+msgid "Copying {provider}"
+msgstr "{provider} kopyalanıyor"
+
 #: src/features/conversation/messages/MessageActions.tsx
 msgid "Could not copy"
 msgstr "Kopyalanamadı"
@@ -3178,6 +3195,10 @@ msgstr "Her yeni e-posta bir konuşma başlatır; yanıtlar aynı konuşmada sü
 #: src/features/broadcasts/Report.tsx
 msgid "Each reply is a conversation in the inbox. The first 50 are listed here."
 msgstr "Her yanıt gelen kutusunda bir konuşmadır. İlk 50 tanesi burada listelenir."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "Each with all its messages and notes"
+msgstr "Her biri tüm mesajları ve notlarıyla"
 
 #: src/features/conversation/messages/Thread.tsx
 #: src/features/settings/api-keys/ApiKeysPage.tsx
@@ -4770,6 +4791,7 @@ msgid "Mailbox address"
 msgstr "Posta kutusu adresi"
 
 #: src/features/migrations/ChooseStep.tsx
+#: src/features/migrations/CopyStep.tsx
 #: src/features/migrations/MapStep.tsx
 msgid "Mailboxes"
 msgstr "Posta kutuları"
@@ -5837,6 +5859,10 @@ msgstr "Kişi hakkında not"
 msgid "Note for the teammate"
 msgstr "Ekip arkadaşı için not"
 
+#: src/features/migrations/ReviewStep.tsx
+msgid "Note, only the team sees it"
+msgstr "Not, yalnızca ekip görür"
+
 #: src/features/contact/ContactSheet.tsx
 msgid "Notes"
 msgstr "Notlar"
@@ -5876,6 +5902,10 @@ msgstr "Henüz biten bir şey yok."
 #: src/features/migrations/parts.tsx
 msgid "Nothing is left out."
 msgstr "Dışarıda kalan bir şey yok."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Nothing is lost: once {provider} is signed in again, copying continues where it stopped."
+msgstr "Hiçbir şey kaybolmaz: {provider} hesabında yeniden oturum açıldığında kopyalama kaldığı yerden devam eder."
 
 #: src/features/migrations/CopyStep.tsx
 msgid "Nothing is lost: once the mailbox is connected again, copying continues where it stopped."
@@ -6515,6 +6545,10 @@ msgstr "Kendiliğinden duraklatıldı: SMTP sunucusu hesabı, şifrelemesini ya 
 #: src/features/migrations/CopyStep.tsx
 msgid "Paused. Nothing is read from {address} until you resume."
 msgstr "Duraklatıldı. Siz devam ettirene kadar {address} adresinden hiçbir şey okunmaz."
+
+#: src/features/migrations/CopyStep.tsx
+msgid "Paused. Nothing is read from {provider} until you resume."
+msgstr "Duraklatıldı. Siz devam ettirene kadar {provider} hesabından hiçbir şey okunmaz."
 
 #: src/features/settings/webhooks/DeliverySheet.tsx
 msgid "Payload"
@@ -9482,6 +9516,10 @@ msgstr "Bu, {count} parçası sunucuda olan dosya değil. Devam etmek için o do
 #: src/features/migrations/ReviewStep.tsx
 msgid "This is the dry run for {address}. Nothing is imported until you start."
 msgstr "Bu, {address} için deneme çalıştırması. Siz başlatana kadar hiçbir şey aktarılmaz."
+
+#: src/features/migrations/ReviewStep.tsx
+msgid "This is the dry run for {provider}. Nothing is imported until you start."
+msgstr "Bu, {provider} için deneme çalıştırması. Siz başlatana kadar hiçbir şey aktarılmaz."
 
 #: src/features/setup/InstallStep.tsx
 msgid "This is the live chat, as it looks on your site. You can try it here."
