@@ -43,7 +43,7 @@ func (s *Server) checkRunningLimit(ctx context.Context, q *store.Queries, m stor
 		return err
 	}
 	if int(n) >= s.migrations.MaxActive {
-		return errHostedLimit("this server runs at most " + strconv.Itoa(s.migrations.MaxActive) + " migrations of a workspace at a time (YUVA_MIGRATION_MAX_ACTIVE)")
+		return errHostedLimit(oas.LimitMigrationMaxActive, "this server runs at most "+strconv.Itoa(s.migrations.MaxActive)+" migrations of a workspace at a time (YUVA_MIGRATION_MAX_ACTIVE)")
 	}
 	return nil
 }
@@ -121,7 +121,7 @@ func (s *Server) StartMigration(ctx context.Context, req oas.StartMigrationReque
 				return cur, err
 			}
 			if used >= s.migrations.MaxBytes {
-				return cur, errHostedLimit("this workspace imported as much as the server allows this month (YUVA_MIGRATION_MAX_BYTES)")
+				return cur, errHostedLimit(oas.LimitMigrationMaxBytes, "this workspace imported as much as the server allows this month (YUVA_MIGRATION_MAX_BYTES)")
 			}
 		}
 		n, err := q.MarkMigrationItemsInCopy(ctx, store.MarkMigrationItemsInCopyParams{WorkspaceID: cur.WorkspaceID, MigrationID: cur.ID})

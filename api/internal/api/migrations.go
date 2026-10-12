@@ -15,6 +15,7 @@ import (
 	"github.com/productdevbook/yuva/api/internal/email"
 	"github.com/productdevbook/yuva/api/internal/migrate"
 	"github.com/productdevbook/yuva/api/internal/oas"
+	"github.com/productdevbook/yuva/api/internal/realtime"
 	"github.com/productdevbook/yuva/api/internal/store"
 	"github.com/productdevbook/yuva/api/internal/webhook"
 )
@@ -57,8 +58,10 @@ func errMigrationState(detail string) *apiError {
 	return problem(http.StatusConflict, "migration_state", detail)
 }
 
-func errHostedLimit(detail string) *apiError {
-	return problem(http.StatusUnprocessableEntity, "hosted_limit", detail)
+func errHostedLimit(limit oas.HostedLimit, detail string) *apiError {
+	e := problem(http.StatusUnprocessableEntity, "hosted_limit", detail)
+	e.Limit = limit
+	return e
 }
 
 // MigrationSettings: Sources are the sources the operator allows (YUVA_MIGRATION_SOURCES);
@@ -360,7 +363,26 @@ func (s *Server) migrationEvent(ctx context.Context, q *store.Queries, events *e
 		data.PreviousState = new(oas.MigrationState(*previous))
 	}
 	events.add(eventMigrationUpdated, nil, nil, data)
+	if m.InboxID == nil || (previous != nil && *previous == m.State) || (!importState(m.State) && (previous == nil || !importState(*previous))) {
+		return nil
+	}
+	in, err := q.GetInbox(ctx, store.GetInboxParams{WorkspaceID: m.WorkspaceID, ID: *m.InboxID})
+	if store.IsNotFound(err) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	inbox, err := memberInbox(ctx, q, in)
+	if err != nil {
+		return err
+	}
+	events.add(realtime.InboxUpdated, &inbox.Id, nil, inbox)
 	return nil
+}
+
+func importState(state string) bool {
+	return slices.Contains([]string{migrationScanning, migrationCopying, migrationPaused, migrationNeedsAttention, migrationSyncing}, state)
 }
 
 func (s *Server) migrationAudit(ctx context.Context, q *store.Queries, p principal, migrationID uuid.UUID, action string, detail any) (int64, error) {
@@ -683,7 +705,7 @@ func (s *Server) GetMigration(ctx context.Context, req oas.GetMigrationRequestOb
 
 func (s *Server) checkMigrationPreset(source, preset string) error {
 	if !s.migrationSourceAllowed(source) {
-		return errHostedLimit("this server does not offer " + source + " migrations (YUVA_MIGRATION_SOURCES)")
+		return errHostedLimit(oas.LimitMigrationSources, "this server does not offer "+source+" migrations (YUVA_MIGRATION_SOURCES)")
 	}
 	p, ok := migrate.LookupPreset(preset)
 	if !ok || p.Source != source {

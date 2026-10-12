@@ -39,6 +39,47 @@ func inboxBody(in store.Inbox) oas.Inbox {
 	return out
 }
 
+func inboxImportPercent(state string, c oas.MigrationCounts) int32 {
+	switch {
+	case state == migrationSyncing:
+		return 100
+	case state == migrationScanning || c.Total <= 0:
+		return 0
+	}
+	return int32(min(100, done(c)*100/c.Total))
+}
+
+func withImports(ctx context.Context, q *store.Queries, workspaceID uuid.UUID, items []oas.Inbox) error {
+	if len(items) == 0 {
+		return nil
+	}
+	ids := make([]uuid.UUID, len(items))
+	for i, in := range items {
+		ids[i] = in.Id
+	}
+	rows, err := q.ListInboxImports(ctx, store.ListInboxImportsParams{WorkspaceID: workspaceID, InboxIds: ids})
+	if err != nil {
+		return err
+	}
+	for _, r := range rows {
+		for i := range items {
+			if items[i].Id == r.InboxID {
+				items[i].Import = &oas.InboxImport{
+					Address: r.SourceAddress, State: oas.InboxImportState(r.State),
+					Percent: inboxImportPercent(r.State, migrationCounts(r.Counts)),
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func memberInbox(ctx context.Context, q *store.Queries, in store.Inbox) (oas.Inbox, error) {
+	out := []oas.Inbox{inboxBody(in)}
+	err := withImports(ctx, q, in.WorkspaceID, out)
+	return out[0], err
+}
+
 func validSlug(s string, field string) error {
 	if len(s) > 64 || !slugPattern.MatchString(s) {
 		return errValidation(field + " must be lowercase letters, digits and single dashes, at most 64 characters")
@@ -138,6 +179,9 @@ func (s *Server) ListInboxes(ctx context.Context, _ oas.ListInboxesRequestObject
 	for _, r := range rows {
 		out.Items = append(out.Items, inboxBody(r))
 	}
+	if err := withImports(ctx, s.st.Queries, p.workspaceID, out.Items); err != nil {
+		return nil, err
+	}
 	return out, nil
 }
 
@@ -199,7 +243,11 @@ func (s *Server) GetInbox(ctx context.Context, req oas.GetInboxRequestObject) (o
 	if err != nil {
 		return nil, err
 	}
-	return oas.GetInbox200JSONResponse(inboxBody(in)), nil
+	out, err := memberInbox(ctx, s.st.Queries, in)
+	if err != nil {
+		return nil, err
+	}
+	return oas.GetInbox200JSONResponse(out), nil
 }
 
 func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObject) (oas.UpdateInboxResponseObject, error) {
@@ -208,7 +256,7 @@ func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObje
 		return nil, err
 	}
 	b := req.Body
-	var out store.Inbox
+	var out oas.Inbox
 	err := s.inTx(ctx, p.workspaceID, func(q *store.Queries, events *eventBatch) error {
 		cur, err := q.LockInbox(ctx, store.LockInboxParams{WorkspaceID: p.workspaceID, ID: req.InboxId})
 		if store.IsNotFound(err) {
@@ -258,7 +306,7 @@ func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObje
 		if err := f.validate(); err != nil {
 			return err
 		}
-		out, err = q.UpdateInbox(ctx, store.UpdateInboxParams{
+		in, err := q.UpdateInbox(ctx, store.UpdateInboxParams{
 			WorkspaceID: p.workspaceID, ID: cur.ID, Name: f.name, Slug: f.slug, Branding: mustJSON(f.branding),
 			DefaultLocale: f.locale, Timezone: f.timezone, Mode: f.mode, ExpectedReplyMinutes: f.replyMinutes,
 			BusinessHours: mustJSON(f.hours), AskForRating: ask, Now: s.now(),
@@ -270,17 +318,20 @@ func (s *Server) UpdateInbox(ctx context.Context, req oas.UpdateInboxRequestObje
 			return err
 		}
 		if b.Sender != nil {
-			if out, err = s.setInboxSender(ctx, q, out, *b.Sender); err != nil {
+			if in, err = s.setInboxSender(ctx, q, in, *b.Sender); err != nil {
 				return err
 			}
 		}
-		events.add(realtime.InboxUpdated, &out.ID, nil, inboxBody(out))
+		if out, err = memberInbox(ctx, q, in); err != nil {
+			return err
+		}
+		events.add(realtime.InboxUpdated, &out.Id, nil, out)
 		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
-	return oas.UpdateInbox200JSONResponse(inboxBody(out)), nil
+	return oas.UpdateInbox200JSONResponse(out), nil
 }
 
 func (s *Server) DeleteInbox(ctx context.Context, req oas.DeleteInboxRequestObject) (oas.DeleteInboxResponseObject, error) {

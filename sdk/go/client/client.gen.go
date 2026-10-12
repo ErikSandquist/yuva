@@ -1632,6 +1632,27 @@ func (e HealthStatus) Valid() bool {
 	}
 }
 
+// Defines values for HostedLimit.
+const (
+	LimitMigrationMaxActive HostedLimit = "YUVA_MIGRATION_MAX_ACTIVE"
+	LimitMigrationMaxBytes  HostedLimit = "YUVA_MIGRATION_MAX_BYTES"
+	LimitMigrationSources   HostedLimit = "YUVA_MIGRATION_SOURCES"
+)
+
+// Valid indicates whether the value is a known member of the HostedLimit enum.
+func (e HostedLimit) Valid() bool {
+	switch e {
+	case LimitMigrationMaxActive:
+		return true
+	case LimitMigrationMaxBytes:
+		return true
+	case LimitMigrationSources:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for InboxAccessChangedEventType.
 const (
 	InboxAccessChanged InboxAccessChangedEventType = "inbox_access.changed"
@@ -1671,6 +1692,33 @@ const (
 func (e InboxDeletedEventType) Valid() bool {
 	switch e {
 	case InboxDeleted:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for InboxImportState.
+const (
+	ImportCopying        InboxImportState = "copying"
+	ImportNeedsAttention InboxImportState = "needs_attention"
+	ImportPaused         InboxImportState = "paused"
+	ImportScanning       InboxImportState = "scanning"
+	ImportSyncing        InboxImportState = "syncing"
+)
+
+// Valid indicates whether the value is a known member of the InboxImportState enum.
+func (e InboxImportState) Valid() bool {
+	switch e {
+	case ImportCopying:
+		return true
+	case ImportNeedsAttention:
+		return true
+	case ImportPaused:
+		return true
+	case ImportScanning:
+		return true
+	case ImportSyncing:
 		return true
 	default:
 		return false
@@ -3911,6 +3959,13 @@ type BroadcastProblem struct {
 
 	// Items `review_failed` only: the blocking review items.
 	Items *[]BroadcastReviewItem `json:"items,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Recipients `audience_changed` only: the audience count now.
 	Recipients *int64 `json:"recipients,omitempty"`
@@ -6425,6 +6480,13 @@ type EmailDesignProblem struct {
 	Detail *string             `json:"detail,omitempty"`
 	Errors *[]EmailDesignIssue `json:"errors,omitempty"`
 
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
+
 	// Scope `insufficient_scope` only: the scope the API key lacks.
 	//
 	// Examples: messages:write
@@ -6742,6 +6804,13 @@ type EmailImageProblem struct {
 	// Examples: not_found
 	Code   string  `json:"code"`
 	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
 	//
@@ -7183,6 +7252,13 @@ type Health struct {
 // HealthStatus defines model for Health.Status.
 type HealthStatus string
 
+// HostedLimit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+// the workspace already runs as many migrations at a time as the server allows;
+// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+// allows.
+type HostedLimit string
+
 // IdentitySecret defines model for IdentitySecret.
 type IdentitySecret struct {
 	// IdentitySecret Signs identity tokens (HS256). It is not shown again.
@@ -7216,6 +7292,14 @@ type Inbox struct {
 	// ExpectedReplyMinutes Shown to contacts in `async` mode; absent when not set.
 	ExpectedReplyMinutes *int32    `json:"expected_reply_minutes,omitempty"`
 	Id                   uuid.UUID `json:"id"`
+
+	// Import A migration is filling the inbox with the history of an old mailbox: while it scans,
+	// copies or syncs, and while a copy that has started is paused or needs attention. Absent
+	// otherwise. Everyone who can see the inbox sees it; the migration itself, its counts and
+	// its errors stay with owners, admins and holders of `migrations:manage`. When more than one
+	// migration targets the inbox, the most recently created one. Its appearance, state changes
+	// and disappearance come as `inbox.updated`; `percent` moves between them without an event.
+	Import *InboxImport `json:"import,omitempty"`
 
 	// Mode `live` shows who is available, typing and read receipts; `async` shows the expected reply
 	// time instead.
@@ -7324,6 +7408,32 @@ type InboxDeletedEvent struct {
 // InboxDeletedEventType defines model for InboxDeletedEvent.Type.
 type InboxDeletedEventType string
 
+// InboxImport A migration is filling the inbox with the history of an old mailbox: while it scans,
+// copies or syncs, and while a copy that has started is paused or needs attention. Absent
+// otherwise. Everyone who can see the inbox sees it; the migration itself, its counts and
+// its errors stay with owners, admins and holders of `migrations:manage`. When more than one
+// migration targets the inbox, the most recently created one. Its appearance, state changes
+// and disappearance come as `inbox.updated`; `percent` moves between them without an event.
+type InboxImport struct {
+	// Address The old mailbox's address.
+	//
+	// Examples: support@example.com
+	Address string `json:"address"`
+
+	// Percent Messages done of those planned, rounded down; 0 while scanning, 100 while syncing.
+	Percent int32 `json:"percent"`
+
+	// State `scanning` (reading the mailbox before the copy starts), `copying`, `paused`,
+	// `needs_attention` (stopped until an owner or admin acts), `syncing` (the history is
+	// copied; new mail in the old mailbox is still read until the switch is done).
+	State InboxImportState `json:"state"`
+}
+
+// InboxImportState `scanning` (reading the mailbox before the copy starts), `copying`, `paused`,
+// `needs_attention` (stopped until an owner or admin acts), `syncing` (the history is
+// copied; new mail in the old mailbox is still read until the switch is done).
+type InboxImportState string
+
 // InboxList defines model for InboxList.
 type InboxList struct {
 	Items []Inbox `json:"items"`
@@ -7406,7 +7516,7 @@ type InboxUpdate struct {
 	Timezone *string `json:"timezone,omitempty"`
 }
 
-// InboxUpdatedEvent An inbox's settings changed.
+// InboxUpdatedEvent An inbox's settings changed, or an import into it (`import`) started, changed state or ended.
 type InboxUpdatedEvent struct {
 	CreatedAt   time.Time             `json:"created_at"`
 	Data        Inbox                 `json:"data"`
@@ -9333,6 +9443,13 @@ type Problem struct {
 	// Examples: not_found
 	Code   string  `json:"code"`
 	Detail *string `json:"detail,omitempty"`
+
+	// Limit `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+	// `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+	// the workspace already runs as many migrations at a time as the server allows;
+	// `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+	// allows.
+	Limit *HostedLimit `json:"limit,omitempty"`
 
 	// Scope `insufficient_scope` only: the scope the API key lacks.
 	//

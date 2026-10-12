@@ -1373,6 +1373,50 @@ func (q *Queries) ListFolderPlannedItems(ctx context.Context, arg ListFolderPlan
 	return items, nil
 }
 
+const listInboxImports = `-- name: ListInboxImports :many
+SELECT DISTINCT ON (inbox_id) inbox_id::uuid AS inbox_id, source_address, state, counts FROM migrations
+WHERE workspace_id = $1 AND inbox_id = ANY($2::uuid[])
+  AND (state IN ('scanning', 'copying', 'syncing') OR (state IN ('paused', 'needs_attention') AND started_at IS NOT NULL))
+ORDER BY inbox_id, created_at DESC, id DESC
+`
+
+type ListInboxImportsParams struct {
+	WorkspaceID uuid.UUID
+	InboxIds    []uuid.UUID
+}
+
+type ListInboxImportsRow struct {
+	InboxID       uuid.UUID
+	SourceAddress string
+	State         string
+	Counts        []byte
+}
+
+func (q *Queries) ListInboxImports(ctx context.Context, arg ListInboxImportsParams) ([]ListInboxImportsRow, error) {
+	rows, err := q.db.Query(ctx, listInboxImports, arg.WorkspaceID, arg.InboxIds)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListInboxImportsRow
+	for rows.Next() {
+		var i ListInboxImportsRow
+		if err := rows.Scan(
+			&i.InboxID,
+			&i.SourceAddress,
+			&i.State,
+			&i.Counts,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listMigrationCredentialInfos = `-- name: ListMigrationCredentialInfos :many
 SELECT migration_id, kind, host, port, tls, certificate_sha256, scopes, expires_at, updated_at
 FROM migration_credentials

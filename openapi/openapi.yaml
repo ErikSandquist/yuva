@@ -10556,12 +10556,43 @@ components:
             closed after it was turned on can be rated; turning it off and on again starts over.
         sender:
           $ref: "#/components/schemas/InboxSender"
+        import:
+          $ref: "#/components/schemas/InboxImport"
         created_at:
           type: string
           format: date-time
         updated_at:
           type: string
           format: date-time
+    InboxImport:
+      type: object
+      description: |
+        A migration is filling the inbox with the history of an old mailbox: while it scans,
+        copies or syncs, and while a copy that has started is paused or needs attention. Absent
+        otherwise. Everyone who can see the inbox sees it; the migration itself, its counts and
+        its errors stay with owners, admins and holders of `migrations:manage`. When more than one
+        migration targets the inbox, the most recently created one. Its appearance, state changes
+        and disappearance come as `inbox.updated`; `percent` moves between them without an event.
+      required: [address, state, percent]
+      properties:
+        address:
+          type: string
+          description: The old mailbox's address.
+          examples: [support@example.com]
+        state:
+          type: string
+          description: |
+            `scanning` (reading the mailbox before the copy starts), `copying`, `paused`,
+            `needs_attention` (stopped until an owner or admin acts), `syncing` (the history is
+            copied; new mail in the old mailbox is still read until the switch is done).
+          enum: [scanning, copying, paused, needs_attention, syncing]
+          x-enum-varnames: [ImportScanning, ImportCopying, ImportPaused, ImportNeedsAttention, ImportSyncing]
+        percent:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 100
+          description: Messages done of those planned, rounded down; 0 while scanning, 100 while syncing.
     InboxCreate:
       type: object
       required: [name, slug]
@@ -14075,7 +14106,7 @@ components:
           $ref: "#/components/schemas/ContactRef"
     InboxUpdatedEvent:
       type: object
-      description: An inbox's settings changed.
+      description: An inbox's settings changed, or an import into it (`import`) started, changed state or ended.
       required: [id, type, workspace_id, inbox_id, created_at, data]
       properties:
         id:
@@ -18944,6 +18975,16 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/EmailTemplateImage"
+    HostedLimit:
+      type: string
+      description: |
+        `hosted_limit` only: the server limit that was reached, named by the operator's setting.
+        `YUVA_MIGRATION_SOURCES`: the server does not offer this source; `YUVA_MIGRATION_MAX_ACTIVE`:
+        the workspace already runs as many migrations at a time as the server allows;
+        `YUVA_MIGRATION_MAX_BYTES`: the workspace imported as many bytes this month as the server
+        allows.
+      enum: [YUVA_MIGRATION_SOURCES, YUVA_MIGRATION_MAX_ACTIVE, YUVA_MIGRATION_MAX_BYTES]
+      x-enum-varnames: [LimitMigrationSources, LimitMigrationMaxActive, LimitMigrationMaxBytes]
     Problem:
       type: object
       description: An RFC 9457 problem document.
@@ -18965,5 +19006,7 @@ components:
           type: string
           description: "`insufficient_scope` only: the scope the API key lacks."
           examples: [messages:write]
+        limit:
+          $ref: "#/components/schemas/HostedLimit"
         detail:
           type: string

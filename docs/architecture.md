@@ -1436,10 +1436,14 @@ losing a message and without changing anything at the source. Decisions:
   `migrations:manage`. Every action is in `migration_audit` (actor, client), kept
   `YUVA_MIGRATION_AUDIT_DAYS` (365). Connection tests are limited (10 per migration, 30 per workspace an
   hour) so the server is no password-guessing tool. Hosted limits: `YUVA_MIGRATION_SOURCES`,
-  `YUVA_MIGRATION_MAX_ACTIVE`, `YUVA_MIGRATION_MAX_BYTES`, `YUVA_MIGRATION_UPLOAD_MAX_BYTES`.
+  `YUVA_MIGRATION_MAX_ACTIVE`, `YUVA_MIGRATION_MAX_BYTES`, `YUVA_MIGRATION_UPLOAD_MAX_BYTES`;
+  `422 hosted_limit` names the one reached in the problem's `limit`.
 - **Panel and MCP.** A wizard in the setup layout (Source, Connect, Choose, Map, Review, Copy, Switch,
   Done) with live progress, provider guides inline and in the docs (en, tr, de), Settings → Move to
-  Yuva for the list, a banner in the target inbox while it runs. MCP tools for every operation
+  Yuva for the list, a banner in the target inbox while it runs. The banner reads the inbox's
+  `import` (address, state, percent), which everyone who sees the inbox gets; `inbox.updated` comes
+  when it appears, changes state or ends, and the percent between those is read by refetching the
+  inbox. MCP tools for every operation
   (`create_migration` returns the connect link) and the `move_to_yuva` prompt.
 
 ### Analytics (M15)

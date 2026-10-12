@@ -471,3 +471,9 @@ WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND id = @id
 -- name: ListMigrationDedupeKeysIn :many
 SELECT dedupe_key FROM migration_items
 WHERE workspace_id = @workspace_id AND migration_id = @migration_id AND dedupe_key = ANY(@keys::text[]);
+
+-- name: ListInboxImports :many
+SELECT DISTINCT ON (inbox_id) inbox_id::uuid AS inbox_id, source_address, state, counts FROM migrations
+WHERE workspace_id = @workspace_id AND inbox_id = ANY(@inbox_ids::uuid[])
+  AND (state IN ('scanning', 'copying', 'syncing') OR (state IN ('paused', 'needs_attention') AND started_at IS NOT NULL))
+ORDER BY inbox_id, created_at DESC, id DESC;
