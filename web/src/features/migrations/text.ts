@@ -41,6 +41,7 @@ export function usePresetName() {
   const names: Partial<Record<MigrationPresetId, string>> = {
     microsoft: t`Outlook.com and Microsoft 365`,
     imap: t`Other IMAP server`,
+    file: t`Export file`,
   }
   return (id: MigrationPresetId, name: string) => names[id] ?? name
 }

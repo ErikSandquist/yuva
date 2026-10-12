@@ -3272,6 +3272,10 @@ msgid "Export"
 msgstr "Dışa aktar"
 
 #: src/features/migrations/text.ts
+msgid "Export file"
+msgstr "Dışa aktarma dosyası"
+
+#: src/features/migrations/text.ts
 msgid "Export once as a .zip file. Google mails you a link when it is ready; for a large mailbox that can take a day or more."
 msgstr "Bir kez, .zip dosyası olarak dışa aktarın. Hazır olduğunda Google size bir bağlantı gönderir; büyük bir posta kutusu için bu bir gün ya da daha uzun sürebilir."
 

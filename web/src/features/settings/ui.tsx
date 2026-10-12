@@ -331,20 +331,27 @@ export function ChoiceSelect<T extends string>({
   label,
   disabled,
   className,
+  placeholder,
 }: {
   id?: string
   value: T
   onChange: (value: T) => void
   options: readonly (readonly [T, string])[]
   label?: string
+  placeholder?: string
   disabled?: boolean
   className?: string
 }) {
   const items = Object.fromEntries(options) as Record<T, string>
   return (
-    <Select value={value} items={items} onValueChange={(v) => v !== null && onChange(v as T)} disabled={disabled}>
+    <Select
+      value={placeholder && !(value in items) ? null : value}
+      items={items}
+      onValueChange={(v) => v !== null && onChange(v as T)}
+      disabled={disabled}
+    >
       <SelectTrigger id={id} aria-label={label} className={cn("max-w-full min-w-0 bg-background", className)}>
-        <SelectValue />
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent className="min-w-48">
         {options.map(([v, l]) => (

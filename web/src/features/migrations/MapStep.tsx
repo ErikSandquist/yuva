@@ -228,11 +228,8 @@ export function MapStep({ m, preset }: { m: Migration; preset: MigrationPreset }
               label={t`Inbox`}
               value={inboxId || ""}
               onChange={setInboxId}
-              options={[
-                ...(inboxId ? [] : [["", t`Pick an inbox`] as const]),
-                ...inboxes.map((i) => [i.id, i.name] as const),
-                [NEW_INBOX, t`New inbox…`] as const,
-              ]}
+              placeholder={t`Pick an inbox`}
+              options={[...inboxes.map((i) => [i.id, i.name] as const), [NEW_INBOX, t`New inbox…`] as const]}
               className="h-10 w-full rounded-xl"
             />
           </Field>
