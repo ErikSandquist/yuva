@@ -1444,7 +1444,10 @@ losing a message and without changing anything at the source. Decisions:
   `import` (address, state, percent), which everyone who sees the inbox gets; `inbox.updated` comes
   when it appears, changes state or ends, and the percent between those is read by refetching the
   inbox. MCP tools for every operation
-  (`create_migration` returns the connect link) and the `move_to_yuva` prompt.
+  (`create_migration` returns the connect link) and the `move_to_yuva` prompt. Like the wizard's Map
+  step, `create_migration` given an inbox and no channel uses the inbox's e-mail channel for the
+  mailbox address or creates it (with `inboxes:manage`) without an SMTP account, and its answer
+  tells the person to set SMTP in the panel; no tool takes that password.
 
 ### Analytics (M15)
 

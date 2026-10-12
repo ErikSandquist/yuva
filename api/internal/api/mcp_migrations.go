@@ -11,6 +11,7 @@ import (
 	"github.com/oapi-codegen/nullable"
 
 	"github.com/productdevbook/yuva/api/internal/oas"
+	"github.com/productdevbook/yuva/api/internal/store"
 )
 
 var (
@@ -103,6 +104,9 @@ type mcpMigration struct {
 	RemovableConversations int64                      `json:"removable_conversations,omitempty" jsonschema:"what remove_migration_history would delete; pass it as confirm_count"`
 	CredentialsDeletedAt   *time.Time                 `json:"credentials_deleted_at,omitempty"`
 	PanelURL               string                     `json:"panel_url,omitempty" jsonschema:"where a member follows the migration in Yuva; its workspace parameter opens it in this workspace even when another one is open in the panel"`
+	ChannelCreated         bool                       `json:"channel_created,omitempty" jsonschema:"create_migration created the inbox's e-mail channel for the mailbox address"`
+	ChannelSetup           string                     `json:"channel_setup,omitempty" jsonschema:"what the person sets in the panel at channel_settings_url; tell them"`
+	ChannelSettingsURL     string                     `json:"channel_settings_url,omitempty" jsonschema:"the e-mail channel's sending settings in the panel"`
 }
 
 func (c *mcpCall) migrationOut(m oas.Migration) mcpMigration {
@@ -240,8 +244,45 @@ type createMigrationIn struct {
 	Address   string              `json:"address" jsonschema:"the mailbox to move"`
 	Provider  string              `json:"provider,omitempty" jsonschema:"the preset from detect_mail_source; detected when empty"`
 	InboxID   *uuid.UUID          `json:"inbox_id,omitempty" jsonschema:"the inbox the history goes to"`
-	ChannelID *uuid.UUID          `json:"channel_id,omitempty" jsonschema:"the inbox's e-mail channel that receives mail at the address"`
+	ChannelID *uuid.UUID          `json:"channel_id,omitempty" jsonschema:"the inbox's e-mail channel that receives mail at the address; with inbox_id and no channel_id, that channel is found or created"`
 	Options   *migrationOptionsIn `json:"options,omitempty"`
+}
+
+// migrationChannel finds the inbox's e-mail channel for the mailbox address, or creates it the way
+// the wizard's Map step does: the mailbox address and no SMTP account, which only the panel takes.
+func (c *mcpCall) migrationChannel(ctx context.Context, inboxID uuid.UUID, address string) (uuid.UUID, bool, error) {
+	q := c.s.st.Queries
+	inbox, err := visibleInbox(ctx, q, c.p, inboxID)
+	if err != nil {
+		return uuid.UUID{}, false, err
+	}
+	rows, err := q.ListChannels(ctx, store.ListChannelsParams{WorkspaceID: c.p.workspaceID, InboxID: inboxID})
+	if err != nil {
+		return uuid.UUID{}, false, err
+	}
+	ids := make([]uuid.UUID, len(rows))
+	for i, r := range rows {
+		ids[i] = r.ID
+	}
+	emails, err := emailChannelsByID(ctx, q, c.p.workspaceID, ids)
+	if err != nil {
+		return uuid.UUID{}, false, err
+	}
+	for _, id := range ids {
+		if e, ok := emails[id]; ok && strings.EqualFold(e.Address, address) {
+			return id, false, nil
+		}
+	}
+	if err := keyMayCall(c.p, "CreateChannel"); err != nil {
+		return uuid.UUID{}, false, mcpScopeError(err)
+	}
+	res, err := c.s.CreateChannel(ctx, oas.CreateChannelRequestObject{InboxId: inboxID, Body: &oas.ChannelCreate{
+		Kind: oas.ChannelKindEmail, Name: inbox.Name, Email: &oas.EmailChannelInput{Address: oas.Email(address)},
+	}})
+	if err != nil {
+		return uuid.UUID{}, false, err
+	}
+	return res.(oas.CreateChannel201JSONResponse).Id, true, nil
 }
 
 type updateMigrationIn struct {
@@ -411,7 +452,7 @@ var mcpMigrationTools = []mcpTool{
 			return c.getMigration(ctx, in.MigrationID)
 		}),
 	defineTool("create_migration", "Start moving a mailbox",
-		"Creates a migration of a mailbox into an inbox and returns connect_url, the page where the person enters the app password or signs in. Never ask for a password: give the person connect_url. Nothing is read until they connect. Owners, admins and keys only. Maps to POST /v1/migrations.",
+		"Creates a migration of a mailbox into an inbox and returns connect_url, the page where the person enters the app password or signs in. Never ask for a password: give the person connect_url. Nothing is read until they connect. With inbox_id and no channel_id it uses the inbox's e-mail channel for the mailbox address and creates that channel when the inbox has none (channel_created, which needs inboxes:manage); then tell the person channel_setup. Owners, admins and keys only. Maps to POST /v1/migrations, and to POST /v1/inboxes/{id}/channels with kind email when it creates the channel.",
 		additive, map[string][]any{"provider": migrationPresets}, migrationTool("CreateMigration", "DetectMigrationSource"),
 		func(ctx context.Context, c *mcpCall, in createMigrationIn) (mcpMigration, error) {
 			preset := in.Provider
@@ -422,11 +463,41 @@ var mcpMigrationTools = []mcpTool{
 				}
 				preset = string(res.(oas.DetectMigrationSource200JSONResponse).Preset)
 			}
+			channelID, created := in.ChannelID, false
+			if channelID == nil && in.InboxID != nil {
+				if !oas.MigrationPresetId(preset).Valid() {
+					return mcpMigration{}, errValidation("preset is not a known preset")
+				}
+				if err := c.s.checkMigrationPreset(string(oas.MigrationSourceImap), preset); err != nil {
+					return mcpMigration{}, err
+				}
+				address, err := normalizeEmail(oas.Email(in.Address))
+				if err != nil {
+					return mcpMigration{}, errValidation("source_address is not a valid address")
+				}
+				id, made, err := c.migrationChannel(ctx, *in.InboxID, address)
+				if err != nil {
+					return mcpMigration{}, err
+				}
+				channelID, created = &id, made
+			}
 			res, err := c.s.CreateMigration(ctx, oas.CreateMigrationRequestObject{Body: &oas.MigrationCreate{
-				Preset: oas.MigrationPresetId(preset), SourceAddress: oas.Email(in.Address), InboxId: in.InboxID, ChannelId: in.ChannelID,
+				Preset: oas.MigrationPresetId(preset), SourceAddress: oas.Email(in.Address), InboxId: in.InboxID, ChannelId: channelID,
 				Options: in.Options.body(),
 			}})
-			return c.step(ctx, res, err)
+			out, err := c.step(ctx, res, err)
+			if err != nil || !created {
+				return out, err
+			}
+			out.ChannelCreated = true
+			out.ChannelSetup = "Yuva created the inbox's e-mail channel for " + out.Address + " without an SMTP account. Replies from Yuva are sent only once the person sets the mailbox's SMTP server (host, port, username and password) in the panel at channel_settings_url; Yuva never takes that password through an assistant."
+			if c.s.migrations.ProbeSMTP == nil || c.s.migrations.ProbeFrom == "" {
+				out.ChannelSetup += " This server sends the switch's test message through that SMTP account too, so set it before send_migration_probe."
+			}
+			if !c.s.noPanel {
+				out.ChannelSettingsURL = c.panelURL("/settings/inboxes/" + in.InboxID.String() + "/channels/" + channelID.String())
+			}
+			return out, nil
 		}),
 	defineTool("update_migration", "Change a migration",
 		"Changes the inbox, the channel and the options (folders, since, automatic mail, closing, team addresses, quiet period) while the migration is a draft, connected or ready; a change to what is read needs a new scan_migration. Owners, admins and keys only. Maps to PATCH /v1/migrations/{id}.",
@@ -613,8 +684,8 @@ func (c *mcpCall) moveToYuvaPrompt(args map[string]string) *mcp.GetPromptResult 
 		"Move the mailbox "+address+" into Yuva: its history first, then its new mail.",
 		"Never ask me for a password, an app password or a token, and never accept one if I paste it: Yuva's connect page takes it. No tool takes a credential.",
 		"1. Call detect_mail_source with address "+address+". Tell me which provider it is and how it connects (usually an app password), and quote its read_only promise. If available is false, explain the note and stop.\n"+
-			"2. Inbox: call list_inboxes and pick "+inbox+". "+createInbox+" Then call list_channels for it and use the e-mail channel whose email_address is "+address+" when there is one.\n"+
-			"3. Call create_migration with address "+address+", the provider, the inbox_id and the channel_id. Give me its connect_url and ask me to open it, follow the provider's guide there and connect the mailbox; wait until I say I did.\n"+
+			"2. Inbox: call list_inboxes and pick "+inbox+". "+createInbox+"\n"+
+			"3. Call create_migration with address "+address+", the provider and the inbox_id, without channel_id: it uses the inbox's e-mail channel for "+address+" and creates that channel when there is none. If channel_setup is in the answer, tell me what it says and give me channel_settings_url. Then give me connect_url and ask me to open it, follow the provider's guide there and connect the mailbox; wait until I say I did.\n"+
 			"4. Call get_migration until connected is true and state is connected (call test_migration_connection once if it stays draft, and explain any failed step). Suggest in plain words which folders to read and a date range, apply what I choose with update_migration, then call scan_migration.\n"+
 			"5. Call get_migration until state is ready. Summarise the estimate: conversations, messages in and out, new and existing contacts, labels, what is skipped and why, storage and time. Call preview_migration and show two or three threads briefly. Ask me to confirm. Only after I confirm, call start_migration.\n"+
 			"6. When I ask, report progress from get_migration (percent, counts, waiting_until). If state is needs_attention, explain reason and how to fix it; when the mailbox must be reconnected, give me connect_url again, then call resume_migration.\n"+

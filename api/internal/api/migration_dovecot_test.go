@@ -330,6 +330,14 @@ func (d *dovecotRun) connect(t *testing.T, user string, team []string, channel s
 	id := d.tm.owner.expect(http.StatusCreated, "POST", "/v1/migrations", map[string]any{
 		"preset": "imap", "source_address": address, "channel_id": channel, "options": map[string]any{"team_addresses": team},
 	}).str("id")
+	d.enterCredentials(t, id, user)
+	return id, channel
+}
+
+// enterCredentials does what the person does on the connect page: enters the mailbox's password
+// and trusts Dovecot's self-signed certificate.
+func (d *dovecotRun) enterCredentials(t *testing.T, id, user string) {
+	t.Helper()
 	path := "/v1/migrations/" + id
 	creds := map[string]any{"username": user, "password": d.pass, "host": d.host, "port": d.port}
 	d.tm.owner.expect(http.StatusNoContent, "PUT", path+"/credentials", creds)
@@ -339,7 +347,6 @@ func (d *dovecotRun) connect(t *testing.T, user string, team []string, channel s
 	if res := d.tm.owner.expect(http.StatusOK, "POST", path+"/test", nil); res.body["ok"] != true {
 		t.Fatalf("connection test: %s", res.raw)
 	}
-	return id, channel
 }
 
 func (d *dovecotRun) channelAddress(t *testing.T, channel string) string {
@@ -842,4 +849,98 @@ func TestDovecotMigrationFolderRecreatedDuringCopy(t *testing.T) {
 		t.Fatalf("errors: %v", errs)
 	}
 	tm.owner.expect(http.StatusOK, "POST", "/v1/migrations/"+id+"/cancel", nil)
+}
+
+func TestDovecotMoveToYuvaCreatesTheEmailChannel(t *testing.T) {
+	d := newDovecotRun(t)
+	h, tm := d.h, d.tm
+	ctx := context.Background()
+	want := expectedFixture(t, d.fixtures, "acme")
+	box := copyMailbox(t, d.fixtures, "acme")
+	address := unique("support") + "@example.com"
+	emailChannels := func() int {
+		return h.count("SELECT count(*) FROM channels WHERE workspace_id = $1 AND inbox_id = $2 AND kind = 'email'", tm.ws, tm.inbox)
+	}
+	if n := emailChannels(); n != 0 {
+		t.Fatalf("the inbox starts with %d e-mail channels", n)
+	}
+	resource := testOrigin + "/mcp"
+	args := map[string]any{"address": address, "provider": "imap", "inbox_id": tm.inbox, "options": map[string]any{"team_addresses": want.TeamAddresses}}
+
+	narrow := h.mcpSession(h.oauthToken(tm.owner, tm.ws, "Claude Code", resource, []string{"inboxes:read", "migrations:manage"}))
+	if _, errText := callTool(t, narrow, "create_migration", args); !strings.Contains(errText, "inboxes:manage") {
+		t.Fatalf("created a channel without inboxes:manage: %q", errText)
+	}
+	other := newTeam(t, h)
+	ocs := h.mcpSession(h.oauthToken(other.owner, other.ws, "Claude Code", resource, []string{"inboxes:read", "inboxes:manage", "migrations:manage"}))
+	if _, errText := callTool(t, ocs, "create_migration", args); !strings.Contains(errText, "not_found") && !strings.Contains(errText, "no such inbox") {
+		t.Fatalf("another workspace's inbox: %q", errText)
+	}
+	if n := emailChannels(); n != 0 {
+		t.Fatalf("a refused create_migration left %d e-mail channels", n)
+	}
+
+	cs := h.mcpSession(h.oauthToken(tm.owner, tm.ws, "Claude Code", resource, []string{"inboxes:read", "inboxes:manage", "migrations:manage"}))
+	if text := promptText(t, cs, "move_to_yuva", map[string]string{"address": address}); !strings.Contains(text, "without channel_id") || !strings.Contains(text, "channel_setup") {
+		t.Fatalf("move_to_yuva does not lead to the channel:\n%s", text)
+	}
+	created, errText := callTool(t, cs, "create_migration", args)
+	if errText != "" {
+		t.Fatal(errText)
+	}
+	id, channel := created["id"].(string), created["channel_id"].(string)
+	if created["channel_created"] != true || created["inbox_id"] != tm.inbox || !strings.Contains(created["channel_setup"].(string), "SMTP") ||
+		created["channel_settings_url"] != testOrigin+"/settings/inboxes/"+tm.inbox+"/channels/"+channel+"?workspace="+tm.ws {
+		t.Fatalf("create_migration: %v", created)
+	}
+	if got := d.channelAddress(t, channel); got != address || emailChannels() != 1 ||
+		h.count("SELECT count(*) FROM email_channels WHERE channel_id = $1 AND smtp_host = '' AND smtp_password IS NULL", channel) != 1 {
+		t.Fatalf("the created channel: %s, %d e-mail channels", got, emailChannels())
+	}
+	again, errText := callTool(t, cs, "create_migration", args)
+	if errText != "" || again["channel_id"] != channel || again["channel_created"] != nil || emailChannels() != 1 {
+		t.Fatalf("a second create_migration: %v %s", again, errText)
+	}
+	tm.owner.expect(http.StatusNoContent, "DELETE", "/v1/migrations/"+again["id"].(string), nil)
+
+	d.enterCredentials(t, id, box)
+	step := func(tool string, in map[string]any) map[string]any {
+		t.Helper()
+		out, errText := callTool(t, cs, tool, in)
+		if errText != "" {
+			t.Fatalf("%s: %s", tool, errText)
+		}
+		if m, ok := out["migration"].(map[string]any); ok {
+			return m
+		}
+		return out
+	}
+	if m := step("test_migration_connection", map[string]any{"migration_id": id}); m["state"] != "connected" {
+		t.Fatalf("after the test: %v", m)
+	}
+	step("scan_migration", map[string]any{"migration_id": id})
+	if err := d.work(t, ctx); err != nil {
+		t.Fatal(err)
+	}
+	if m := step("get_migration", map[string]any{"migration_id": id}); m["state"] != "ready" {
+		t.Fatalf("after the scan: %v", m)
+	}
+	if m := step("start_migration", map[string]any{"migration_id": id}); m["state"] != "copying" {
+		t.Fatalf("start_migration: %v", m)
+	}
+	if err := d.work(t, ctx); err != nil {
+		t.Fatal(err)
+	}
+	m := step("get_migration", map[string]any{"migration_id": id})
+	counts := m["counts"].(map[string]any)
+	if m["state"] != "syncing" || num(counts["imported"]) != want.MessagesIn+want.MessagesOut || num(counts["duplicate"]) != want.Skipped["duplicate_copies"] ||
+		num(counts["skipped"]) != want.Skipped["automatic"]+want.Skipped["internal"] || num(m["percent"]) != 100 {
+		t.Fatalf("after the copy: %v", m)
+	}
+	if n := h.count("SELECT count(*) FROM conversations WHERE workspace_id = $1 AND migration_id = $2 AND channel_id = $3", tm.ws, id, channel); n != want.Conversations {
+		t.Fatalf("%d conversations in the created channel, want %d", n, want.Conversations)
+	}
+	if m := step("finish_migration", map[string]any{"migration_id": id, "force": true}); m["state"] != "completed" || m["credentials_deleted_at"] == nil {
+		t.Fatalf("finish_migration: %v", m)
+	}
 }
