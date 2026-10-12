@@ -188,17 +188,25 @@ func TrustedAuth(authResults, authservID string) (AuthVerdict, bool) {
 	if err != nil && len(results) == 0 {
 		return v, true
 	}
+	mailFrom := false
 	for _, r := range results {
 		switch r := r.(type) {
 		case *authres.SPFResult:
-			if v.SPF == "" {
-				v.SPF = string(r.Value)
-				_, d, ok := strings.Cut(r.From, "@")
-				if !ok {
-					d = r.From
-				}
-				v.SPFDomain = strings.ToLower(strings.TrimSuffix(d, "."))
+			// Receivers such as Cloudflare report the HELO check and the MAIL FROM check as two spf
+			// results; DMARC uses the MAIL FROM one, so a HELO result only stands in when it is alone.
+			if mailFrom || (r.From == "" && v.SPF != "") {
+				continue
 			}
+			d := r.Helo
+			if r.From != "" {
+				mailFrom = true
+				d = r.From
+				if _, after, ok := strings.Cut(r.From, "@"); ok {
+					d = after
+				}
+			}
+			v.SPF = string(r.Value)
+			v.SPFDomain = strings.ToLower(strings.TrimSuffix(d, "."))
 		case *authres.DKIMResult:
 			v.DKIM = append(v.DKIM, DKIMVerdict{Result: string(r.Value), Domain: strings.ToLower(strings.TrimSuffix(r.Domain, "."))})
 		case *authres.DMARCResult:
