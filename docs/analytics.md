@@ -140,6 +140,9 @@ Counting without cookies needs no banner under most privacy laws, but some sites
 
 `yuva.consent({ analytics: false })` stops sending again.
 
+Visitors who agree can also be recognised across days, with an id on their device for up to 13 months. That is
+opt-in per property: see [Consent features](analytics-consent.md).
+
 ## Opt-out links
 
 Put these two links on your privacy page:

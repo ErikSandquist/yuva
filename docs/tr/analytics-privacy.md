@@ -61,7 +61,8 @@ Bir web sitesine hangi satırın uygulandığı, Yuva'nın nerede çalıştığ�
 
 Betiği `data-consent="required"` ile kurun ve web sitesinin **Toplama** ayarını **Yalnızca izinle** yapın.
 Kendi izin aracınız `yuva.consent({ analytics: true })` çağırana kadar hiçbir şey sayılmaz. Adımlar
-[Analitik](analytics.md) sayfasının **İzin modu** bölümündedir.
+[Analitik](analytics.md) sayfasının **İzin modu** bölümündedir. Kabul eden ziyaretçiler günler boyunca da tanınabilir;
+bu [İzinle açılan özellikler](analytics-consent.md) sayfasındadır ve bir web sitesi için açmadıkça kapalıdır.
 
 ## Gizlilik bildiriminiz
 

@@ -141,6 +141,9 @@ vorher fragen. Für sie:
 
 `yuva.consent({ analytics: false })` stoppt das Senden wieder.
 
+Zustimmende Besucher lassen sich mit einer ID auf ihrem Gerät, bis zu 13 Monate lang, auch über Tage hinweg
+wiedererkennen. Das ist pro Property optional: siehe [Consent-Funktionen](analytics-consent.md).
+
 ## Opt-out-Links
 
 Setzen Sie diese beiden Links auf Ihre Datenschutzseite:

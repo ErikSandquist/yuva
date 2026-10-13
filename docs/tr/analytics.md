@@ -141,6 +141,9 @@ için:
 
 `yuva.consent({ analytics: false })` göndermeyi yeniden durdurur.
 
+Kabul eden ziyaretçiler, cihazlarındaki en çok 13 aylık bir kimlikle günler boyunca da tanınabilir. Bu, özellik başına
+isteğe bağlıdır: bkz. [İzinle açılan özellikler](analytics-consent.md).
+
 ## Vazgeçme bağlantıları
 
 Şu iki bağlantıyı gizlilik sayfanıza koyun:

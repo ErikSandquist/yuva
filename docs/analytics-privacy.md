@@ -60,7 +60,8 @@ visitors in several countries follows the strictest rule that applies to them, o
 
 Install the script with `data-consent="required"` and set the website's **Collection** to **Only with
 consent**. Nothing is counted until your own consent tool calls `yuva.consent({ analytics: true })`. The steps
-are in [Consent mode](analytics.md#consent-mode).
+are in [Consent mode](analytics.md#consent-mode). Visitors who agree can also be recognised across days; that is
+[Consent features](analytics-consent.md), off unless you turn it on for a website.
 
 ## Your privacy notice
 

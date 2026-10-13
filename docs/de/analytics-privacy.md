@@ -62,7 +62,8 @@ Besuchern aus mehreren Ländern folgt der strengsten Regel, die für sie gilt, o
 
 Installieren Sie das Skript mit `data-consent="required"` und stellen Sie **Collection** der Website auf **Only with
 consent**. Es wird nichts gezählt, bis Ihr eigenes Consent-Tool `yuva.consent({ analytics: true })` aufruft.
-Die Schritte stehen unter [Consent-Modus](analytics.md#consent-modus).
+Die Schritte stehen unter [Consent-Modus](analytics.md#consent-modus). Zustimmende Besucher lassen sich auch über Tage hinweg wiedererkennen; das sind die
+[Consent-Funktionen](analytics-consent.md), aus, solange Sie sie nicht für eine Website einschalten.
 
 ## Ihre Datenschutzerklärung
 
