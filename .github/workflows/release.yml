@@ -185,6 +185,8 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
         run: |
+          # The release pushes this tag with the v tag: GITHUB_TOKEN may not create a ref once main's workflows changed.
+          git ls-remote --exit-code --tags origin "refs/tags/sdk/go/$TAG" >/dev/null && exit 0
           git tag "sdk/go/$TAG" "$TAG"
           git push origin "sdk/go/$TAG"
       - uses: actions/download-artifact@v8.0.1
@@ -195,7 +197,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
-        run: gh release upload "$TAG" dist/yuva.mcpb dist/server.json
+        run: gh release upload --clobber "$TAG" dist/yuva.mcpb dist/server.json
 
   registry:
     needs: [version, release]
