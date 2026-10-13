@@ -264,6 +264,9 @@ ay'a kadar, ya da en fazla 400 günlük özel bir aralık) ve sekmeleri şunlard
 
 Olaylar, hedefler ve dönüşüm hunileri [Olaylar, hedefler ve dönüşüm hunileri](analytics-events.md) sayfasındadır.
 
+Aynı özellik iOS ve Android uygulamalarınızı ([Uygulamalarda analitik](analytics-apps.md)) ve arka ucunuzun
+gönderdiği olayları ([Sunucu tarafı olaylar](analytics-server.md)) da sayar.
+
 **Kanallar** bir ziyaretin nereden geldiğini ayırır: Doğrudan, Organik arama, Ücretli arama, Sosyal,
 Ücretli sosyal, E-posta, Yönlendirme, **Yapay zekâ asistanları** (ChatGPT ve benzeri asistanlardan gelen
 ziyaretler) ve Dahili.

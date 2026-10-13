@@ -23,6 +23,8 @@ const groups = [
       "deliverability",
       "analytics",
       "analytics-events",
+      "analytics-apps",
+      "analytics-server",
       "analytics-privacy",
       "mobile",
     ],

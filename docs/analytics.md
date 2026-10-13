@@ -262,6 +262,9 @@ months, or a custom range of at most 400 days), and its tabs are:
 
 Events, goals and funnels are in [Events, goals and funnels](analytics-events.md).
 
+The same property counts your iOS and Android apps ([Analytics in apps](analytics-apps.md)) and events your backend
+sends ([Server-side events](analytics-server.md)).
+
 **Channels** sort where a visit came from: Direct, Organic search, Paid search, Social, Paid social,
 E-mail, Referral, **AI assistants** (visits from ChatGPT and other assistants) and Internal.
 
