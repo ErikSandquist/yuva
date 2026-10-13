@@ -81,6 +81,8 @@ export interface MessageInput {
 
 export interface ConversationInput extends MessageInput {
   subject?: string
+  page_url?: string | null
+  page_title?: string
 }
 
 export interface Page {
@@ -113,6 +115,18 @@ function jwtSubject(token: string): string | null {
   } catch {
     return null
   }
+}
+
+function currentPage(): { page_url?: string; page_title?: string } {
+  const location = globalThis.location
+  if (!location || !/^https?:$/.test(location.protocol)) return {}
+  const page_url = location.origin + location.pathname
+  if (page_url.length > 2000) return {}
+  const title = Array.from(globalThis.document?.title.trim() ?? "")
+    .slice(0, 300)
+    .join("")
+    .trim()
+  return title ? { page_url, page_title: title } : { page_url }
 }
 
 function defaultStorage(): YuvaStorage {
@@ -330,7 +344,8 @@ export class YuvaClient {
   }
 
   startConversation(input: ConversationInput): Promise<ClientConversationCreated> {
-    return this.#authed("/client/v1/conversations", this.#messageRequest(input))
+    const request = input.page_url === undefined ? { ...input, ...currentPage() } : input
+    return this.#authed("/client/v1/conversations", this.#messageRequest(request))
   }
 
   listMessages(conversationId: string, page: Page & { order?: "asc" | "desc" } = {}): Promise<ClientMessagePage> {
@@ -504,13 +519,17 @@ export class YuvaClient {
     return this.#idempotencyKeys && /^[\x20-\x7e]{1,255}$/.test(client_id) ? { "Idempotency-Key": client_id } : {}
   }
 
-  #messageRequest({ body, subject, files = [], client_id = randomId() }: ConversationInput): Request {
+  #messageRequest({ body, subject, files = [], client_id = randomId(), ...page }: ConversationInput): Request {
     const headers = this.#idempotency(client_id)
-    if (files.length === 0) return { method: "POST", headers, json: { body, subject, client_id } }
+    const page_url = page.page_url ?? undefined
+    const page_title = page_url ? page.page_title : undefined
+    if (files.length === 0) return { method: "POST", headers, json: { body, subject, client_id, page_url, page_title } }
     const fields: [string, string][] = []
     if (subject) fields.push(["subject", subject])
     if (body) fields.push(["body", body])
     fields.push(["client_id", client_id])
+    if (page_url) fields.push(["page_url", page_url])
+    if (page_title) fields.push(["page_title", page_title])
     const boundary = `yuva-${client_id.replace(/[^\w-]/g, "").slice(0, 60)}-${client_id.length}`
     headers["Content-Type"] = `multipart/form-data; boundary=${boundary}`
     return { method: "POST", headers, body: multipart(fields, files, boundary) }

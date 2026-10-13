@@ -250,4 +250,63 @@ describe("<yuva-chat> realtime", () => {
     expect(panel(element).textContent).toContain("A reply from Ada")
     expect(sockets).toHaveLength(1)
   })
+
+  test("the first message sends the page it starts on, without query and fragment", async () => {
+    const window = globalThis as unknown as { happyDOM: { setURL(url: string): void } }
+    const previousURL = location.href
+    const previousTitle = document.title
+    window.happyDOM.setURL("https://shop.example.com/pricing/pro?plan=team&utm_source=x#faq")
+    document.title = `  ${"Pricing ".repeat(50)}  `
+    const sent: Record<string, unknown>[] = []
+    globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+      const route = `${init?.method ?? "GET"} ${new URL(String(input)).pathname}`
+      const reply = (status: number, body: unknown) =>
+        new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } })
+      switch (route) {
+        case "GET /client/v1/channels/pk_test":
+          return reply(200, inbox)
+        case "POST /client/v1/session":
+          return reply(201, session)
+        case "GET /client/v1/conversations":
+          return reply(200, { items: [] })
+        case "POST /client/v1/conversations": {
+          const body = JSON.parse(String(init?.body)) as Record<string, unknown>
+          sent.push(body)
+          const created: ClientConversationCreated = {
+            conversation: {
+              id: "c1",
+              kind: "conversation",
+              subject: "Hello",
+              status: "open",
+              unread: false,
+              can_rate: false,
+              created_at: at,
+            },
+            message: message("m1", "Hello", "contact", String(body.client_id)),
+          }
+          return reply(201, created)
+        }
+        default:
+          return reply(204, {})
+      }
+    }) as typeof fetch
+    globalThis.WebSocket = FakeSocket as unknown as typeof WebSocket
+
+    try {
+      const element = mount({ layout: "embedded", channel: "pk_test", server: "http://yuva.test", locale: "en" })
+      const textarea = () => panel(element).querySelector<HTMLTextAreaElement>("textarea")
+      await until(() => textarea() !== null)
+      textarea()!.value = "Hello"
+      textarea()!.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }))
+      await until(() => sent.length > 0)
+
+      expect(sent).toHaveLength(1)
+      expect(sent[0]?.page_url).toBe("https://shop.example.com/pricing/pro")
+      expect(sent[0]?.page_title).toBe("Pricing ".repeat(50).trim().slice(0, 300).trim())
+      expect(String(sent[0]?.page_title).length).toBeLessThanOrEqual(300)
+    } finally {
+      window.happyDOM.setURL(previousURL)
+      document.title = previousTitle
+    }
+  })
 })
