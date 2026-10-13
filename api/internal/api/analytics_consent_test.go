@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"testing"
 	"time"
+	"uuid"
 )
 
 const (
@@ -321,4 +322,38 @@ func TestAnalyticsConsentFeatureRules(t *testing.T) {
 	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", "/v1/analytics/properties/"+id, map[string]any{"audience": "children"})
 	kids, _ := createProperty(tm.owner, base(map[string]any{"audience": "children"}))
 	tm.owner.expectProblem(http.StatusBadRequest, "validation_failed", "PATCH", "/v1/analytics/properties/"+kids, map[string]any{"consent_features": []string{"persistent"}})
+}
+
+func TestAnalyticsConsentVisitorTypeKeepsVisitNumbers(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	site := consentProperty(t, tm)
+	h.clock.Set(time.Date(2026, 10, 12, 9, 0, 0, 0, time.UTC))
+	for _, page := range []string{"/", "/pricing", "/signup"} {
+		send(h, site.key, "203.0.113.10", uaMac, consented(page, pidAyse))
+		h.flushAnalytics()
+		h.clock.Advance(time.Minute)
+	}
+	send(h, site.key, "198.51.100.20", uaPixel, view("/"))
+	h.flushAnalytics()
+	check := func(when string) {
+		t.Helper()
+		rows := rowsBy(query(tm.owner, site.id, map[string]any{"metrics": []string{"visitors", "visits", "pageviews"}, "range": dayRange("2026-10-12"),
+			"dimensions": []string{"visitor_type"}}))
+		if rows["new"] == nil || rows["new"]["pageviews"].(float64) != 3 || rows["new"]["visits"].(float64) != 1 || rows[""]["pageviews"].(float64) != 1 {
+			t.Fatalf("%s: visitor types %v", when, rows)
+		}
+	}
+	check("raw")
+	ws, prop, day := uuid.MustParse(tm.ws), uuid.MustParse(site.id), time.Date(2026, 10, 12, 0, 0, 0, 0, time.UTC)
+	h.clock.Set(time.Date(2026, 10, 12, 10, 0, 0, 0, time.UTC))
+	if err := h.srv.FoldAnalyticsDay(context.Background(), ws, prop, day); err != nil {
+		t.Fatal(err)
+	}
+	check("folded")
+	h.clock.Set(time.Date(2026, 10, 13, 9, 0, 0, 0, time.UTC))
+	if err := h.srv.RollupAnalyticsDay(context.Background(), ws, prop, day); err != nil {
+		t.Fatal(err)
+	}
+	check("rollups")
 }
