@@ -183,6 +183,10 @@ msgstr "Marke"
 msgid "Brand assets"
 msgstr "Markenmaterial"
 
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Inkompatible Änderungen"
+
 #: src/copy/home.ts
 msgid "Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed."
 msgstr "Bringen Sie Ihren Mail- und Support-Verlauf aus Gmail, Google Workspace, Outlook und Microsoft 365, Yandex, iCloud, Zoho oder jedem IMAP-Server, aus Zendesk und Help Scout oder aus mbox-, Takeout- und .eml-Dateien mit. Yuva liest an der Quelle nur; dort wird nichts verändert."
@@ -1066,6 +1070,10 @@ msgstr "Partnerschaft"
 #: src/copy/docs.ts
 msgid "Payload"
 msgstr "Payload"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Leistung"
 
 #: src/copy/templates.ts
 msgid "Phone"

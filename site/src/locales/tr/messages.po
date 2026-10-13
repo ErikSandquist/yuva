@@ -183,6 +183,10 @@ msgstr "Marka"
 msgid "Brand assets"
 msgstr "Marka varlıkları"
 
+#: src/copy/pages.ts
+msgid "Breaking changes"
+msgstr "Uyumsuz değişiklikler"
+
 #: src/copy/home.ts
 msgid "Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed."
 msgstr "E-posta ve destek geçmişinizi Gmail, Google Workspace, Outlook ve Microsoft 365, Yandex, iCloud, Zoho ya da herhangi bir IMAP sunucusundan, Zendesk ve Help Scout'tan veya mbox, Takeout ve .eml dosyalarından getirin. Yuva kaynakta yalnızca okur; orada hiçbir şey değişmez."
@@ -1066,6 +1070,10 @@ msgstr "İş birliği"
 #: src/copy/docs.ts
 msgid "Payload"
 msgstr "İçerik"
+
+#: src/copy/pages.ts
+msgid "Performance"
+msgstr "Performans"
 
 #: src/copy/templates.ts
 msgid "Phone"

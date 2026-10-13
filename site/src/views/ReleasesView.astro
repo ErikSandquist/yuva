@@ -11,7 +11,7 @@ interface Props {
 
 const { locale } = Astro.props
 const t = releasesCopy(i18nFor(locale))
-const all = list()
+const all = await list()
 const latest = all[0]?.version
 const timeline = [...all].reverse()
 const short = new Intl.DateTimeFormat(bcp47[locale], {
@@ -29,6 +29,8 @@ const dot: Record<string, string> = {
   Removed: "bg-zinc-400",
   Fixed: "bg-violet-500",
   Security: "bg-brand",
+  Performance: "bg-orange-500",
+  "Breaking Changes": "bg-red-500",
 }
 const count = (r: (typeof all)[number]) => r.groups.reduce((n, g) => n + g.items.length, 0)
 const link = "font-medium text-brand hover:underline"

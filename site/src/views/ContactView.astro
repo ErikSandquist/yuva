@@ -16,7 +16,7 @@ const t = contactCopy(i18nFor(locale))
 const email = import.meta.env.PUBLIC_CONTACT_EMAIL as string | undefined
 const first = t.topics[0]!
 const mail = (topic: string) => `mailto:${email}?subject=${encodeURIComponent(`Yuva: ${topic}`)}`
-const all = releases()
+const all = await releases()
 const facts = [
   { label: t.facts.license, value: "AGPL-3.0 · MIT" },
   { label: t.facts.stack, value: "Go · Postgres" },

@@ -58,6 +58,8 @@ export function releasesCopy(i18n: I18n) {
       Removed: i18n._(msg`Removed`),
       Fixed: i18n._(msg`Fixed`),
       Security: i18n._(msg`Security`),
+      Performance: i18n._(msg`Performance`),
+      "Breaking Changes": i18n._(msg`Breaking changes`),
     } as Record<string, string>,
   }
 }

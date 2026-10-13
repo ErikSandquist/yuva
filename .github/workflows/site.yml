@@ -12,6 +12,9 @@ on:
       - "templates/email/**"
       - "api/internal/mail/design/icons/**"
       - ".github/workflows/site.yml"
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -23,14 +26,17 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.repository == 'productdevbook/yuva'
+    if: github.repository == 'productdevbook/yuva' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled')
     runs-on: ubuntu-latest
     environment: site
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: main
       - uses: oven-sh/setup-bun@v2
       - working-directory: site
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           SITE_URL: ${{ vars.SITE_URL }}
           PUBLIC_APP_URL: ${{ vars.PUBLIC_APP_URL }}
           PUBLIC_CONTACT_EMAIL: ${{ vars.PUBLIC_CONTACT_EMAIL }}
