@@ -417,3 +417,41 @@ func TestAnalyticsBatchDropsOnlyInvalidEvents(t *testing.T) {
 		t.Fatalf("%d invalid events counted; want the batch's one and the single one", n)
 	}
 }
+
+func TestAnalyticsComparisonsWithGoalsEventsAndSegments(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	id, key := createProperty(tm.owner, map[string]any{"name": "Compare", "domains": []string{"example.com"}})
+	h.clock.Set(time.Date(2026, 10, 12, 9, 0, 0, 0, time.UTC))
+	signupDay(h, key)
+	goal := tm.owner.expect(http.StatusCreated, "POST", "/v1/analytics/properties/"+id+"/goals", map[string]any{"name": "Signed up", "kind": "event", "event_name": "Signup"}).str("id")
+	seg := tm.owner.expect(http.StatusCreated, "POST", "/v1/analytics/properties/"+id+"/segments", map[string]any{"name": "Pro",
+		"filters": []map[string]any{{"dimension": "prop", "prop": "plan", "op": "is", "values": []string{"pro"}}}}).str("id")
+	for _, with := range []map[string]any{{"with": "previous"}, {"with": "year"}, {"with": "range", "from": "2026-10-12", "to": "2026-10-12"}} {
+		for _, q := range []map[string]any{
+			{"metrics": []string{"visitors", "conversions", "conversion_rate", "revenue"}, "goal_id": goal},
+			{"metrics": []string{"conversions"}, "goal_id": goal},
+			{"metrics": []string{"conversions", "visitors"}, "goal_id": goal, "dimensions": []string{"time:day"}},
+			{"metrics": []string{"conversions", "revenue"}, "goal_id": goal, "dimensions": []string{"channel"}},
+			{"metrics": []string{"visitors", "events", "revenue"}, "dimensions": []string{"event"}},
+			{"metrics": []string{"events"}, "dimensions": []string{"prop"}, "prop": "plan"},
+			{"metrics": []string{"visitors", "pageviews"}},
+			{"metrics": []string{"visitors", "pageviews"}, "segment_id": seg},
+			{"metrics": []string{"conversions"}, "goal_id": goal, "segment_id": seg},
+		} {
+			q["range"], q["compare"] = map[string]any{"period": "today"}, with
+			r := tm.owner.do("POST", "/v1/analytics/properties/"+id+"/query", q)
+			if with["with"] == "year" && r.status == http.StatusUnprocessableEntity && r.str("code") == "needs_raw_window" {
+				continue
+			}
+			if r.status != http.StatusOK || r.body["comparison"] == nil || r.body["totals"] == nil {
+				t.Fatalf("%v: %d %s", q, r.status, r.raw)
+			}
+		}
+	}
+	r := query(tm.owner, id, map[string]any{"metrics": []string{"conversions", "revenue"}, "goal_id": goal, "range": map[string]any{"period": "today"},
+		"compare": map[string]any{"with": "range", "from": "2026-10-12", "to": "2026-10-12"}})
+	if c := r.body["comparison"].(map[string]any)["totals"].(map[string]any); c["conversions"].(float64) != 2 || revenueOf(c) != "EUR:2990/1,USD:500/1" {
+		t.Fatalf("comparison of the same day: %s", r.raw)
+	}
+}

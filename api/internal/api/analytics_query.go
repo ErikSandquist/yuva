@@ -455,9 +455,9 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	if ans.comparison != nil {
 		c := ans.comparison
 		ti := timeIndex(q.Dimensions)
-		cur, prev := bucketOrdinals(res.Rows, max(ti, 0)), bucketOrdinals(c.Rows, max(ti, 0))
-		if ti < 0 {
-			cur, prev = nil, nil
+		var cur, prev map[string]int
+		if ti >= 0 {
+			cur, prev = bucketOrdinals(res.Rows, ti), bucketOrdinals(c.Rows, ti)
 		}
 		byKey := map[string]analytics.Row{}
 		for _, r := range c.Rows {

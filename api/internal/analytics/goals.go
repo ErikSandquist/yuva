@@ -265,7 +265,7 @@ func (p *extraPlan) add(got []extraRow, goal bool, rows, totals *acc) {
 		s := r.sums(goal)
 		if r.group == DimTotal {
 			totals.add(nil, s)
-			if len(p.dims) == 0 {
+			if len(p.dims) == 0 && p.grain != "" {
 				rows.add(p.dimsOf(r.day, 0, nil), s)
 			}
 			continue
