@@ -171,7 +171,7 @@ export function isPathDimension(dim: AnalyticsDimension) {
 function seconds(v: number, locale: string) {
   const s = Math.round(v)
   const unit = (n: number, u: "second" | "minute" | "hour") =>
-    new Intl.NumberFormat(locale, { style: "unit", unit: u, unitDisplay: "narrow" }).format(n)
+    new Intl.NumberFormat(locale, { style: "unit", unit: u, unitDisplay: "short" }).format(n)
   if (s < 60) return unit(s, "second")
   if (s < 3600) return `${unit(Math.floor(s / 60), "minute")} ${unit(s % 60, "second")}`
   return `${unit(Math.floor(s / 3600), "hour")} ${unit(Math.floor((s % 3600) / 60), "minute")}`

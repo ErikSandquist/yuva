@@ -54,7 +54,7 @@ export function DailyChart({
     <ChartContainer config={config} className={cn("aspect-auto h-48 w-full", className)} data-testid={testId}>
       <BarChart
         data={rows}
-        margin={{ top: 4, right: 4, bottom: 0, left: -20 }}
+        margin={{ top: 4, right: 4, bottom: 0, left: 0 }}
         barCategoryGap={rows.length > 40 ? 1 : "20%"}
       >
         <CartesianGrid vertical={false} />
@@ -66,7 +66,7 @@ export function DailyChart({
           minTickGap={24}
           tickFormatter={(d) => tickText(String(d))}
         />
-        <YAxis allowDecimals={false} tickLine={false} axisLine={false} width={44} />
+        <YAxis allowDecimals={false} tickLine={false} axisLine={false} width="auto" />
         <ChartTooltip
           cursor={false}
           content={
