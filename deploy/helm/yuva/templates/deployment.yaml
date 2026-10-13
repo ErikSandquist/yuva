@@ -1,0 +1,165 @@
+{{- include "yuva.validate" . }}
+{{- $local := eq .Values.storage.driver "local" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "yuva.fullname" . }}
+  labels:
+    {{- include "yuva.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 5
+  strategy:
+    {{- if .Values.updateStrategy }}
+    {{- toYaml .Values.updateStrategy | nindent 4 }}
+    {{- else if $local }}
+    type: Recreate
+    {{- else }}
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    {{- end }}
+  selector:
+    matchLabels:
+      {{- include "yuva.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- if not .Values.secrets.existingSecret }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "yuva.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "yuva.serviceAccountName" . }}
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.migrations.enabled }}
+      initContainers:
+        - name: migrate
+          image: {{ include "yuva.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["migrate", "up"]
+          env:
+            {{- include "yuva.env" . | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- with .Values.migrations.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      {{- end }}
+      containers:
+        - name: yuva
+          image: {{ include "yuva.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["serve", "--migrate=false"]
+          env:
+            {{- include "yuva.env" . | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            {{- if .Values.metrics.enabled }}
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+            {{- end }}
+          {{- with .Values.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: geoip
+              mountPath: /data/geoip
+            {{- if $local }}
+            - name: attachments
+              mountPath: /data/attachments
+            {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            {{- with .Values.tmp.medium }}
+            medium: {{ . }}
+            {{- end }}
+            {{- with .Values.tmp.sizeLimit }}
+            sizeLimit: {{ . }}
+            {{- end }}
+        - name: geoip
+          {{- if .Values.persistence.geoip.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.geoip.existingClaim | default (printf "%s-geoip" (include "yuva.fullname" .)) }}
+          {{- else }}
+          emptyDir:
+            sizeLimit: 512Mi
+          {{- end }}
+        {{- if $local }}
+        - name: attachments
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.attachments.existingClaim | default (printf "%s-attachments" (include "yuva.fullname" .)) }}
+        {{- end }}
+      {{- if .Values.topologySpread.enabled }}
+      topologySpreadConstraints:
+        - maxSkew: {{ .Values.topologySpread.maxSkew }}
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: {{ .Values.topologySpread.whenUnsatisfiable }}
+          labelSelector:
+            matchLabels:
+              {{- include "yuva.selectorLabels" . | nindent 14 }}
+        {{- if .Values.topologySpread.zoneSpread }}
+        - maxSkew: {{ .Values.topologySpread.maxSkew }}
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: {{ .Values.topologySpread.whenUnsatisfiable }}
+          labelSelector:
+            matchLabels:
+              {{- include "yuva.selectorLabels" . | nindent 14 }}
+        {{- end }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

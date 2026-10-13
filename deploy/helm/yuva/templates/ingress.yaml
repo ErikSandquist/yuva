@@ -1,0 +1,77 @@
+{{- if .Values.ingress.enabled }}
+{{- $fullname := include "yuva.fullname" . }}
+{{- $hosts := prepend .Values.ingress.extraHosts (.Values.ingress.host | default (include "yuva.publicHost" .)) }}
+{{- $port := .Values.service.port }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullname }}
+  labels:
+    {{- include "yuva.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  rules:
+    {{- range $hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullname }}
+                port:
+                  number: {{ $port }}
+    {{- end }}
+{{- if .Values.service.analytics.separateService }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullname }}-analytics
+  labels:
+    {{- include "yuva.labels" . | nindent 4 }}
+  {{- with .Values.ingress.analyticsAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  rules:
+    {{- range $hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /yuva-analytics.js
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullname }}-analytics
+                port:
+                  number: {{ $port }}
+          - path: /client/v1/analytics/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullname }}-analytics
+                port:
+                  number: {{ $port }}
+    {{- end }}
+{{- end }}
+{{- end }}

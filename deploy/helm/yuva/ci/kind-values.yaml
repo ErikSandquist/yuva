@@ -1,0 +1,17 @@
+publicUrl: http://localhost:8080
+secrets:
+  values:
+    YUVA_DATABASE_URL: postgres://yuva:yuva@postgres:5432/yuva?sslmode=disable
+    YUVA_MASTER_KEY: eXV2YS1jaS1vbmx5LW1hc3Rlci1rZXktMzJieXRlcyE=
+    YUVA_INGRESS_SECRET: ci-only-ingress-secret
+env:
+  YUVA_GEOIP: "off"
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    memory: 512Mi
+persistence:
+  attachments:
+    size: 1Gi

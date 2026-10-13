@@ -1,0 +1,30 @@
+Yuva {{ .Chart.AppVersion }} is installed as {{ include "yuva.fullname" . }} in namespace {{ .Release.Namespace }}.
+
+1. Wait until it is ready:
+
+   kubectl -n {{ .Release.Namespace }} rollout status deployment/{{ include "yuva.fullname" . }}
+
+2. Create the first owner (sign-up is invite only unless YUVA_SIGNUP=open):
+
+   kubectl -n {{ .Release.Namespace }} exec deploy/{{ include "yuva.fullname" . }} -c yuva -- \
+     /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"
+
+3. Open {{ .Values.publicUrl }} and sign in with the code from the e-mail.
+{{- if not (hasKey .Values.env "YUVA_SMTP_HOST") }}
+   YUVA_SMTP_HOST is not set, so the code is in the log:
+
+   kubectl -n {{ .Release.Namespace }} logs deploy/{{ include "yuva.fullname" . }} -c yuva | grep "log mailer"
+{{- end }}
+{{- if not .Values.ingress.enabled }}
+
+   The chart made no Ingress. To try it locally:
+
+   kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "yuva.fullname" . }} 8080:{{ .Values.service.port }}
+{{- end }}
+
+Keep a copy of YUVA_MASTER_KEY outside the cluster: without it a restored database loses its stored secrets.
+{{- if and (not .Values.secrets.existingSecret) .Values.secrets.values }}
+
+The secrets come from your values file. For production, move them to a Secret of your own and set
+secrets.existingSecret.
+{{- end }}

@@ -1,0 +1,26 @@
+{{- range $name, $p := dict "attachments" .Values.persistence.attachments "geoip" .Values.persistence.geoip }}
+{{- $on := ternary (eq $.Values.storage.driver "local") $p.enabled (eq $name "attachments") }}
+{{- if and $on (not $p.existingClaim) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "yuva.fullname" $ }}-{{ $name }}
+  labels:
+    {{- include "yuva.labels" $ | nindent 4 }}
+  annotations:
+    helm.sh/resource-policy: keep
+    {{- with $p.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  accessModes:
+    {{- toYaml $p.accessModes | nindent 4 }}
+  {{- with $p.storageClass }}
+  storageClassName: {{ if eq . "-" }}""{{ else }}{{ . }}{{ end }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $p.size }}
+{{- end }}
+{{- end }}

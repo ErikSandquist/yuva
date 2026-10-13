@@ -1,0 +1,196 @@
+# The URL people and apps use, at the root of its host, e.g. https://support.example.com. Required.
+publicUrl: ""
+
+image:
+  repository: ghcr.io/productdevbook/yuva
+  # Defaults to the chart's appVersion.
+  tag: ""
+  # Pins the image by digest (sha256:...); wins over tag.
+  digest: ""
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Several replicas are supported: they share Postgres, jobs are coordinated through it, and the
+# realtime sockets fan out through Postgres too. Local attachment storage needs exactly one replica.
+replicaCount: 1
+
+# Defaults to Recreate with local attachment storage (a ReadWriteOnce volume) and RollingUpdate otherwise.
+updateStrategy: {}
+
+# Any YUVA_* setting from docs/configuration.md as plain values. Secrets go in `secrets`.
+env: {}
+#  YUVA_CLIENT_IP_HEADER: X-Real-IP
+#  YUVA_TRUSTED_PROXIES: 10.0.0.0/8
+#  YUVA_SMTP_HOST: smtp.example.com
+#  YUVA_SMTP_FROM: Yuva <yuva@example.com>
+
+# Extra container env entries, for valueFrom references of your own.
+extraEnv: []
+
+secrets:
+  # A Secret you manage (kubectl, External Secrets, Sealed Secrets, ...). Its keys are named after
+  # the variables: YUVA_DATABASE_URL and YUVA_MASTER_KEY are required, the rest optional.
+  existingSecret: ""
+  # Renames the key read for a variable in existingSecret, e.g. YUVA_DATABASE_URL: uri for the
+  # app Secret of a CloudNativePG cluster.
+  keys: {}
+  # Without existingSecret the chart creates a Secret from these values. Quick starts only: the
+  # values sit in your values file and in the Helm release, which anyone who can read Secrets in
+  # the namespace can decode.
+  values: {}
+  #  YUVA_DATABASE_URL: postgres://yuva:secret@db:5432/yuva?sslmode=require
+  #  YUVA_MASTER_KEY: <openssl rand -base64 32>
+  #  YUVA_INGRESS_SECRET: <openssl rand -hex 32>
+  #  YUVA_SMTP_USERNAME: yuva@example.com
+  #  YUVA_SMTP_PASSWORD: <password>
+  #  YUVA_VAPID_PUBLIC_KEY: <yuva vapid-keys>
+  #  YUVA_VAPID_PRIVATE_KEY: <yuva vapid-keys>
+
+# Runs `yuva migrate up` in an init container before every pod starts; the server itself starts
+# with --migrate=false. Migrations take a Postgres lock, so replicas starting together are safe.
+migrations:
+  enabled: true
+  resources: {}
+
+storage:
+  # local: attachments on a volume (persistence.attachments), single replica only.
+  # s3: S3, R2, MinIO, ... with YUVA_S3_ENDPOINT, YUVA_S3_BUCKET, ... in env and the keys in secrets.
+  driver: local
+
+persistence:
+  attachments:
+    # Used with storage.driver local, mounted at /data/attachments.
+    existingClaim: ""
+    storageClass: ""
+    accessModes: [ReadWriteOnce]
+    size: 10Gi
+    annotations: {}
+  geoip:
+    # Keeps the monthly DB-IP Lite download (YUVA_GEOIP=dbip) at /data/geoip across restarts.
+    # Disabled, an emptyDir holds it and each new pod downloads it again.
+    enabled: false
+    existingClaim: ""
+    storageClass: ""
+    accessModes: [ReadWriteOnce]
+    size: 1Gi
+    annotations: {}
+
+# Size of the /tmp emptyDir: uploads and large request bodies are buffered there. Export files
+# for moving a mailbox (YUVA_MIGRATION_UPLOAD_MAX_BYTES, 20 GiB by default) need room here.
+tmp:
+  sizeLimit: 2Gi
+  medium: ""
+
+service:
+  type: ClusterIP
+  port: 80
+  annotations: {}
+  # Only if your load balancer sets a sticky-session cookie: analytics.separateService sends
+  # /yuva-analytics.js and /client/v1/analytics/ through this second Service and Ingress, which
+  # carry none of the stickiness annotations (docs/architecture.md, Analytics, Counting the panel).
+  analytics:
+    separateService: false
+    annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  #  nginx.ingress.kubernetes.io/proxy-body-size: 30m
+  #  nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+  #  nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+  # Defaults to the host of publicUrl.
+  host: ""
+  # More hosts served by the same pods, e.g. the host of YUVA_MAIL_LINK_URL.
+  extraHosts: []
+  tls: []
+  #  - secretName: yuva-tls
+  #    hosts: [support.example.com]
+  # Annotations of the analytics Ingress (service.analytics.separateService). Copy the main ones
+  # here without the sticky-session annotations.
+  analyticsAnnotations: {}
+
+metrics:
+  # Prometheus metrics on port 9090 (YUVA_METRICS_ADDR); never routed through the Ingress.
+  enabled: true
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    scrapeTimeout: ""
+    labels: {}
+
+# GOMEMLIMIT is set to this share of resources.limits.memory when that is set.
+goMemLimitRatio: 0.9
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 1Gi
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: http
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+startupProbe:
+  httpGet:
+    path: /healthz
+    port: http
+  periodSeconds: 2
+  failureThreshold: 60
+
+terminationGracePeriodSeconds: 30
+
+podDisruptionBudget:
+  # Created when replicaCount is above 1.
+  minAvailable: 1
+  maxUnavailable: ""
+
+topologySpread:
+  # Spreads replicas over nodes (and zones with zoneSpread).
+  enabled: false
+  maxSkew: 1
+  whenUnsatisfiable: ScheduleAnyway
+  zoneSpread: false
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  fsGroup: 65532
+  fsGroupChangePolicy: OnRootMismatch
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+priorityClassName: ""

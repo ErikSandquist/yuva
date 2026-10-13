@@ -1,0 +1,18 @@
+apiVersion: v2
+name: yuva
+description: Open-source customer messaging - e-mail, live chat and in-app conversations in one inbox.
+type: application
+version: 0.0.10
+appVersion: "0.0.10"
+kubeVersion: ">=1.25.0-0"
+home: https://github.com/productdevbook/yuva
+sources:
+  - https://github.com/productdevbook/yuva
+icon: https://raw.githubusercontent.com/productdevbook/yuva/main/web/public/apple-touch-icon.png
+keywords:
+  - support
+  - inbox
+  - live-chat
+  - helpdesk
+annotations:
+  artifacthub.io/license: AGPL-3.0-only

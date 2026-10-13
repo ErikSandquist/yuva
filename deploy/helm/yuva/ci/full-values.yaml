@@ -1,0 +1,45 @@
+publicUrl: https://support.example.com
+replicaCount: 3
+storage:
+  driver: s3
+env:
+  YUVA_S3_ENDPOINT: https://s3.example.com
+  YUVA_S3_BUCKET: yuva
+  YUVA_CLIENT_IP_HEADER: X-Real-IP
+  YUVA_TRUSTED_PROXIES: 10.0.0.0/8
+  YUVA_SMTP_HOST: smtp.example.com
+  YUVA_SMTP_FROM: Yuva <yuva@example.com>
+  YUVA_MAIL_LINK_URL: https://links.example.com
+secrets:
+  existingSecret: yuva
+  keys:
+    YUVA_DATABASE_URL: uri
+persistence:
+  geoip:
+    enabled: true
+topologySpread:
+  enabled: true
+  zoneSpread: true
+service:
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+  analytics:
+    separateService: true
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/affinity: cookie
+    nginx.ingress.kubernetes.io/proxy-body-size: 30m
+  analyticsAnnotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 30m
+  extraHosts: [links.example.com]
+  tls:
+    - secretName: yuva-tls
+      hosts: [support.example.com, links.example.com]
+metrics:
+  serviceMonitor:
+    enabled: true
+resources:
+  limits:
+    memory: 1536Mi
