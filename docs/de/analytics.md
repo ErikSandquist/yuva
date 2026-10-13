@@ -263,6 +263,9 @@ der Domains der Website sein.
 
 Events, Goals und Funnels stehen unter [Events, Goals und Funnels](analytics-events.md).
 
+Eine mit einem Posteingang verknüpfte Website zeigt außerdem, wie viel Support ihre Seiten auslösen, mit Insights,
+Alerts und E-Mail-Berichten: [Support und Traffic](analytics-support.md).
+
 Dieselbe Property zählt auch Ihre iOS- und Android-Apps ([Analytics in Apps](analytics-apps.md)) und die Events,
 die Ihr Backend sendet ([Serverseitige Events](analytics-server.md)).
 

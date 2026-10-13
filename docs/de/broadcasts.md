@@ -83,7 +83,8 @@ Betreff; die Prüfung hält Sie auf, wenn ein Feld ohne Fallback bei jemandem le
 
 ### Optionen
 
-„Count clicks“ ist aus. Siehe [Klick-Tracking](#klick-tracking).
+„Count clicks“ ist aus. Siehe [Klick-Tracking](#klick-tracking). Links tragen außerdem Kampagnenparameter für
+[Analytics](#kampagnen-tracking-utm), an, solange Sie es nicht ausschalten.
 
 ### Testversand
 
@@ -236,6 +237,21 @@ und der Bericht zeigt eindeutige Klicks pro Link. Nur Web-Links, die für alle E
 Merge-Feld), werden verfolgt; sie werden beim Planen gefunden. Klicks sind ungefähr: Eine `HEAD`-Anfrage
 und drei Links einer Mail, die innerhalb von zwei Sekunden geöffnet werden, wie es Sicherheitsscanner
 tun, werden nicht gezählt.
+
+### Kampagnen-Tracking (UTM)
+
+Standardmäßig an. Web-Links in der Mail bekommen `utm_source=newsletter`, `utm_medium=email` und
+`utm_campaign=<Kampagne>`, damit [Yuva Analytics](analytics.md) die Besuche zählt, die die Mail auf Ihre Website
+bringt, unter dem Channel E-mail. Die Kampagne wird aus dem Namen des Broadcasts gebildet; ändern Sie sie im Entwurf
+(1 bis 100 Kleinbuchstaben, Ziffern, `-`, `_` und `.`). Links, die schon einen eigenen `utm_`-Parameter haben, Links,
+die nicht `http` oder `https` sind, und Yuvas eigene Links (Abmelden, Einstellungen, Klicks) bleiben unberührt.
+Schalten Sie es in den Optionen aus oder mit `utm: false` im Entwurf. Broadcasts, die schon über den Entwurf hinaus
+waren, bevor es das gab, behalten ihre Links, wie sie gesendet wurden.
+
+Der Bericht zeigt dann **Besuche aus dieser Kampagne**: pro Website, die Sie sehen dürfen, die Besucher, Besuche und
+Seitenaufrufe, deren `utm_campaign` die des Broadcasts ist, ab dem Tag, an dem der Versand begann (mit
+`analytics:read`; `campaign_visits` in der API). Mehr unter
+[Support und Traffic](analytics-support.md#broadcast-kampagnen-verfolgen).
 
 Es gibt kein Öffnungs-Tracking und kein Tracking-Pixel. Öffnungsraten sind unzuverlässig, weil
 Mail-Apps Bilder vorab laden, und ein Pixel wäre das Einzige in der Mail, das an Dritte meldet.

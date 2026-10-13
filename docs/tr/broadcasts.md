@@ -77,7 +77,8 @@ da çalışır; yedek değeri olmayan bir alan birinde boş kalacaksa gözden ge
 
 ### Seçenekler
 
-"Tıklamaları say" kapalıdır. Bkz. [Tıklama takibi](#tıklama-takibi).
+"Tıklamaları say" kapalıdır. Bkz. [Tıklama takibi](#tıklama-takibi). Bağlantılar ayrıca [Analytics](#kampanya-takibi-utm) için
+kampanya parametreleri taşır; siz kapatmadıkça açıktır.
 
 ### Deneme gönderimleri
 
@@ -225,6 +226,20 @@ Varsayılan olarak kapalıdır. Açılırsa e-postadaki bağlantılar sunucunun 
 (birleştirme alanı içermeyen) web bağlantıları izlenir; bunlar bülten zamanlanırken bulunur. Tıklamalar
 yaklaşık değerdir: bir `HEAD` isteği ve güvenlik tarayıcılarının yaptığı gibi bir e-postanın üç
 bağlantısının iki saniye içinde açılması sayılmaz.
+
+### Kampanya takibi (UTM)
+
+Varsayılan olarak açıktır. E-postadaki web bağlantıları `utm_source=newsletter`, `utm_medium=email` ve
+`utm_campaign=<kampanya>` alır; böylece [Yuva Analytics](analytics.md), e-postanın web sitenize getirdiği ziyaretleri
+E-posta kanalı altında sayar. Kampanya bültenin adından yapılır; taslakta değiştirin (küçük harf, rakam, `-`, `_` ve
+`.`; 1–100 karakter). Kendi `utm_` parametresi olan bağlantılar, `http` ya da `https` olmayan bağlantılar ve Yuva'nın
+kendi bağlantıları (abonelikten çıkma, tercihler, tıklamalar) olduğu gibi kalır. Seçeneklerden ya da taslakta
+`utm: false` ile kapatın. Bu özellik gelmeden önce taslaktan çıkmış bültenler bağlantılarını gönderildiği gibi korur.
+
+Rapor bundan sonra **bu kampanyadan gelen ziyaretleri** gösterir: görmeye yetkili olduğunuz web sitesi başına,
+`utm_campaign` değeri bültenin kampanyası olan ziyaretçiler, ziyaretler ve sayfa görüntülemeleri; gönderimin başladığı
+günden itibaren (`analytics:read` ile; API'de `campaign_visits`). Ayrıntılar
+[Destek ve trafik](analytics-support.md#bülten-kampanyalarını-izleme) sayfasında.
 
 Açılma takibi ve izleme pikseli yoktur. E-posta uygulamaları görselleri önceden yüklediği için açılma
 oranları güvenilir değildir ve bir piksel, e-postada üçüncü bir tarafa haber veren tek şey olurdu.

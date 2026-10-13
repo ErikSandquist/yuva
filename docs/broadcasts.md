@@ -78,7 +78,8 @@ without a fallback would be empty for anyone.
 
 ### Options
 
-"Count clicks" is off. See [Click tracking](#click-tracking).
+"Count clicks" is off. See [Click tracking](#click-tracking). Links also carry campaign parameters for
+[Analytics](#campaign-tracking-utm), on unless you turn them off.
 
 ### Test sends
 
@@ -223,6 +224,20 @@ report shows unique clicks per link. Only web links that are the same for every 
 field) are tracked, found when the broadcast is scheduled. Clicks are approximate: a `HEAD` request
 and three links of one mail opened within two seconds, which is how security scanners behave, are not
 counted.
+
+### Campaign tracking (UTM)
+
+On by default. Links to the web in the mail get `utm_source=newsletter`, `utm_medium=email` and
+`utm_campaign=<campaign>`, so [Yuva Analytics](analytics.md) counts the visits the mail brings to your website
+under the E-mail channel. The campaign is made from the broadcast's name; change it on the draft (1 to 100
+lowercase letters, digits, `-`, `_` and `.`). Links that already have a `utm_` parameter of their own, links that
+are not `http` or `https` and Yuva's own links (unsubscribe, preferences, clicks) are left alone. Switch it off in
+the options, or with `utm: false` on the draft. Broadcasts that were past draft before this existed keep their
+links as sent.
+
+The report then shows **visits from this campaign**: per website you may see, the visitors, visits and page views
+whose `utm_campaign` is the broadcast's, from the day sending started (with `analytics:read`; `campaign_visits` in
+the API). More in [Support and traffic](analytics-support.md#tracking-broadcast-campaigns).
 
 There is no open tracking and no tracking pixel. Open rates are unreliable since mail apps preload
 images, and a pixel would be the only thing in the mail that reports to a third party.

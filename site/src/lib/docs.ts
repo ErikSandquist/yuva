@@ -26,6 +26,7 @@ const groups = [
       "analytics-apps",
       "analytics-server",
       "analytics-sharing",
+      "analytics-support",
       "analytics-privacy",
       "mobile",
     ],

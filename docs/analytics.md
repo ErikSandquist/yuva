@@ -262,6 +262,9 @@ months, or a custom range of at most 400 days), and its tabs are:
 
 Events, goals and funnels are in [Events, goals and funnels](analytics-events.md).
 
+A website linked to an inbox also shows the support its pages lead to, with insights, alerts and e-mail reports:
+[Support and traffic](analytics-support.md).
+
 The same property counts your iOS and Android apps ([Analytics in apps](analytics-apps.md)) and events your backend
 sends ([Server-side events](analytics-server.md)).
 

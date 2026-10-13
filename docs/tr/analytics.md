@@ -264,6 +264,9 @@ ay'a kadar, ya da en fazla 400 günlük özel bir aralık) ve sekmeleri şunlard
 
 Olaylar, hedefler ve dönüşüm hunileri [Olaylar, hedefler ve dönüşüm hunileri](analytics-events.md) sayfasındadır.
 
+Bir gelen kutusuna bağlı web sitesi ayrıca sayfalarının ne kadar destek doğurduğunu, öngörüler, uyarılar ve e-posta
+raporlarıyla gösterir: [Destek ve trafik](analytics-support.md).
+
 Aynı özellik iOS ve Android uygulamalarınızı ([Uygulamalarda analitik](analytics-apps.md)) ve arka ucunuzun
 gönderdiği olayları ([Sunucu tarafı olaylar](analytics-server.md)) da sayar.
 

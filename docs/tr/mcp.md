@@ -95,6 +95,23 @@ Bir örnek:
 
 Asistan yalnızca sayıyı onayladıktan sonra zamanlar; göstermezse sayıyı sorun.
 
+## Analitiği bir asistanla kullanın
+
+`analytics:read` ile bir asistan web sitelerinizin ve uygulamalarınızın rakamlarını ([Analitik](analytics.md)) ve bir
+gelen kutusuna bağlı web siteleri için sayfalarının ne kadar destek doğurduğunu ([Destek ve trafik](analytics-support.md))
+okur. Örneğin sorun: "Bu ay en çok konuşmaya yol açan sayfalar hangileri?" Asistan web sitelerinizi listeler,
+`analytics_support_report` aracını `period: month` ve `order_by: conversations` ile çağırır ve her sayfanın
+konuşmalarını, sayfa görüntülemelerini ve 1.000 görüntüleme başına konuşma sayısını yanıtlar.
+
+- `analytics_review` prompt'u bir web sitesini bir aralıkta gözden geçirir: önceki aralığa göre başlıca rakamlar,
+  kaynaklar, sayfalar, hedefler ve gelen kutusu varsa sayfa başına destek; öneriyle biter. Asistan analitiği okuyabiliyorsa
+  `weekly_report` prompt'u bir destek-ve-trafik bölümü ekler.
+- `setup_analytics` prompt'u (`analytics:manage` ister) bir web sitesi ya da uygulama oluşturur, kurulum kodunu alır ve
+  projenize ekler; `setup_live_chat` sohbet için neyse odur.
+- Sayfa yolları, yönlendirenler, kampanyalar, olay adları ve özellik değerleri ziyaretçilerin tarayıcılarından gelir ve
+  müşteri metni gibi yalnızca `customer_content` içinde döner. Analitik araçları yalnızca sunucuda analitik açıkken
+  listelenir.
+
 ## Bir posta kutusunu asistanla taşıyın
 
 `migrations:manage` yetkisiyle `move_to_yuva` prompt'unu posta kutusunun adresiyle çalıştırın. Asistan
@@ -123,6 +140,8 @@ Araçlar `/v1` ile aynı kontrollerden geçer. Kullanamayacağınız araçlar li
 | `merge_contacts` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (`html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, `docs-` varyantlarıyla dokümantasyon siteleri ve `list_ids` alan `subscribe-html`, `subscribe-react`, `subscribe-nuxt` ve `subscribe-shadcn` ile abonelik formları için kod) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (sahipler ve yöneticiler) | `inboxes:manage` |
+| `list_properties`, `analytics_overview`, `analytics_query` (`dataset: support` ve `insights` dahil), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `create_property`, `create_goal` (sahipler, yöneticiler, gelen kutusu sınırı olmayan anahtarlar) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (gözden geçirme ve taslak için kitle sayısıyla), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (sahipler ve yöneticiler) | `broadcasts:read` |
@@ -140,8 +159,8 @@ Hiçbir taşıma aracı şifre almaz: `create_migration`, uygulama şifresini gi
 
 | Tür | Öğeler |
 |---|---|
-| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile); abonelikler değişiklikleri izler. |
-| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile). |
+| Kaynaklar | `yuva://inbox/{id}` (gelen kutusu ve en son açık konuşmaları), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (`migrations:manage` ile), `yuva://property/{id}` (bir web sitesi, ayarları, son yedi günü ve hedefleriyle; `analytics:read` ile); abonelikler değişiklikleri izler. |
+| Prompt'lar | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (adres, isteğe bağlı gelen kutusu; `migrations:manage` ile), `analytics_review` (isteğe bağlı web sitesi ve aralık; `analytics:read` ile), `setup_analytics` (site adresi, isteğe bağlı framework; `analytics:manage` ile). |
 
 ### Güvenlik ve sınırlar
 

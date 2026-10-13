@@ -94,6 +94,22 @@ An example:
 
 The assistant schedules only after you confirm the count, so ask for the number if it does not show it.
 
+## Analytics from an assistant
+
+With `analytics:read`, an assistant reads the numbers of your websites and apps ([Analytics](analytics.md)) and, for a
+website linked to an inbox, the support its pages lead to ([Support and traffic](analytics-support.md)). Ask, for
+example: "Which pages lead to the most conversations this month?" The assistant lists your websites, calls
+`analytics_support_report` with `period: month` and `order_by: conversations`, and answers with each page's
+conversations, page views and conversations per 1,000 views.
+
+- The `analytics_review` prompt reviews a website over a range: headline numbers against the range before, sources,
+  pages, goals and, with an inbox, the support per page, ending with suggestions. The `weekly_report` prompt adds a
+  support-and-traffic section when the assistant may read analytics.
+- The `setup_analytics` prompt (needs `analytics:manage`) creates a website or app, gets the install code and adds it
+  to your project, as `setup_live_chat` does for chat.
+- Page paths, referrers, campaigns, event names and prop values come from visitors' browsers and are returned only in
+  `customer_content`, like customer text. Analytics tools are listed only while the server has analytics on.
+
 ## Move a mailbox from an assistant
 
 With the scope `migrations:manage`, run the `move_to_yuva` prompt with the mailbox address. The assistant
@@ -121,6 +137,8 @@ answers `insufficient_scope` with the scope to grant.
 | `merge_contacts` (owners, admins, keys without an inbox limit) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (code for `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, documentation sites with the `docs-` variants, and subscribe forms with `subscribe-html`, `subscribe-react`, `subscribe-nuxt` and `subscribe-shadcn`, which take `list_ids`) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (owners and admins) | `inboxes:manage` |
+| `list_properties`, `analytics_overview`, `analytics_query` (also `dataset: support` and `insights`), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `create_property`, `create_goal` (owners, admins, keys without an inbox limit) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (with the review and, for a draft, the audience count), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (owners and admins) | `broadcasts:read` |
@@ -138,8 +156,8 @@ With `inbox_id` and no `channel_id`, `create_migration` uses the inbox's e-mail 
 
 | Kind | Items |
 |---|---|
-| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`); subscriptions follow changes. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`). |
+| Resources | `yuva://inbox/{id}` (the inbox and its latest open conversations), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (with `migrations:manage`), `yuva://property/{id}` (a website with its settings, the last seven days and its goals; with `analytics:read`); subscriptions follow changes. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (address, optional inbox; with `migrations:manage`), `analytics_review` (optional website and period; with `analytics:read`), `setup_analytics` (site address, optional framework; with `analytics:manage`). |
 
 ### Safety and limits
 

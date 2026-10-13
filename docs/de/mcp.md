@@ -97,6 +97,22 @@ Ein Beispiel:
 
 Der Assistent plant erst, nachdem Sie die Zahl bestätigt haben; fragen Sie danach, wenn er sie nicht zeigt.
 
+## Analytics über einen Assistenten
+
+Mit `analytics:read` liest ein Assistent die Zahlen Ihrer Websites und Apps ([Analytics](analytics.md)) und, bei einer
+mit einem Posteingang verknüpften Website, den Support, den ihre Seiten auslösen ([Support und Traffic](analytics-support.md)).
+Fragen Sie zum Beispiel: „Welche Seiten lösen diesen Monat die meisten Unterhaltungen aus?“ Der Assistent listet Ihre
+Websites, ruft `analytics_support_report` mit `period: month` und `order_by: conversations` auf und antwortet mit den
+Unterhaltungen, Seitenaufrufen und Unterhaltungen pro 1.000 Aufrufe jeder Seite.
+
+- Der Prompt `analytics_review` prüft eine Website über einen Zeitraum: Kennzahlen gegenüber dem Zeitraum davor, Quellen,
+  Seiten, Goals und, mit Posteingang, den Support pro Seite, mit Vorschlägen am Ende. Der Prompt `weekly_report` ergänzt
+  einen Abschnitt zu Support und Traffic, wenn der Assistent Analytics lesen darf.
+- Der Prompt `setup_analytics` (braucht `analytics:manage`) legt eine Website oder App an, holt den Installationscode und
+  fügt ihn Ihrem Projekt hinzu, wie `setup_live_chat` es für den Chat tut.
+- Seitenpfade, Referrer, Kampagnen, Eventnamen und Prop-Werte stammen aus den Browsern der Besucher und kommen wie
+  Kundentext nur in `customer_content` zurück. Analytics-Tools werden nur aufgelistet, solange der Server Analytics an hat.
+
 ## Ein Postfach von einem Assistenten umziehen lassen
 
 Starten Sie mit dem Scope `migrations:manage` den Prompt `move_to_yuva` mit der Postfachadresse. Der Assistent
@@ -125,6 +141,8 @@ aufgelistet; ein Aufruf dennoch antwortet mit `insufficient_scope` und dem zu er
 | `merge_contacts` (Inhaber, Admins, Schlüssel ohne Posteingangs-Beschränkung) | `contacts:write` |
 | `list_channels`, `get_install_snippet` (Code für `html`, `react`, `nextjs`, `nuxt`, `vue`, `astro`, `shadcn`, Dokumentationsseiten mit den `docs-`-Varianten und Anmeldeformulare mit `subscribe-html`, `subscribe-react`, `subscribe-nuxt` und `subscribe-shadcn`, die `list_ids` nehmen) | `inboxes:read` |
 | `create_inbox`, `create_chat_channel`, `update_chat_channel` (Inhaber und Admins) | `inboxes:manage` |
+| `list_properties`, `analytics_overview`, `analytics_query` (auch `dataset: support` und `insights`), `analytics_realtime`, `analytics_support_report`, `list_goals`, `funnel_report`, `get_analytics_snippet`, `add_annotation` | `analytics:read` |
+| `create_property`, `create_goal` (Inhaber, Admins, Keys ohne Posteingangs-Beschränkung) | `analytics:manage` |
 | `list_mailing_lists` | `lists:read` |
 | `list_broadcasts`, `get_broadcast` (mit Prüfung und, bei einem Entwurf, der Zielgruppenzahl), `get_broadcast_report` | `broadcasts:read` |
 | `list_email_templates`, `preview_design` (Inhaber und Admins) | `broadcasts:read` |
@@ -142,8 +160,8 @@ Mit `inbox_id` und ohne `channel_id` verwendet `create_migration` den E-Mail-Kan
 
 | Art | Einträge |
 |---|---|
-| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`); Abonnements folgen Änderungen. |
-| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`). |
+| Ressourcen | `yuva://inbox/{id}` (der Posteingang und seine neuesten offenen Unterhaltungen), `yuva://conversation/{id}`, `yuva://contact/{id}`, `yuva://broadcast/{id}`, `yuva://migration/{id}` (mit `migrations:manage`), `yuva://property/{id}` (eine Website mit ihren Einstellungen, den letzten sieben Tagen und ihren Goals; mit `analytics:read`); Abonnements folgen Änderungen. |
+| Prompts | `triage_inbox`, `draft_reply`, `summarize_conversation`, `weekly_report`, `setup_live_chat`, `draft_newsletter`, `broadcast_report`, `move_to_yuva` (Adresse, optional Posteingang; mit `migrations:manage`), `analytics_review` (optional Website und Zeitraum; mit `analytics:read`), `setup_analytics` (Site-Adresse, optional Framework; mit `analytics:manage`). |
 
 ### Sicherheit und Grenzen
 

@@ -46,6 +46,7 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `contact.updated` | A contact changed | `contact` |
 | `contact.deleted` | A contact was deleted, or merged (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | A [draft](headless.md#a-bot-that-answers-with-drafts) changed; sending it emits `message.created` | `message`, `conversation`, `contact` |
+| `analytics.alert` | A website of [Analytics](analytics.md) raised an [alert](analytics-support.md#alerts): spike, drop, goal drop, support load or new referrer | `alert`, `property` |
 | `broadcast.updated` | A [broadcast](broadcasts.md) changed state: scheduled, sending, paused, sent, cancelled, failed or back to draft | `broadcast`, `previous_state` |
 
 Every body has `type`, `timestamp` (when it happened), `workspace_id`, `inbox_id` (not on contact
