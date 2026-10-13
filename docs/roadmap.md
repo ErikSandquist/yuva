@@ -233,7 +233,7 @@ whole flow through MCP without ever handling a password.
 
 ## M15 — Analytics
 
-Status: in progress; M15.1 (#36) and M15.2 (#37) done, umbrella issue #42, decisions in `architecture.md` › Analytics
+Status: in progress; M15.1 (#36), M15.2 (#37), M15.3 (#38) and M15.5 (#40) done, umbrella issue #42, decisions in `architecture.md` › Analytics
 (M15). Ships in six steps; M15.1 first, then M15.2, M15.3 and M15.5 in parallel, then M15.4 (after M15.2; its broadcast part
 after M13.3) and M15.6 (after M15.2 and M15.3).
 
