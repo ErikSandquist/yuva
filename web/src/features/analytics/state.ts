@@ -53,6 +53,7 @@ export const FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
   "language",
   "platform",
   "app_version",
+  "visitor_type",
   "event",
 ]
 

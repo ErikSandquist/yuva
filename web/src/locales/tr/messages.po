@@ -578,6 +578,10 @@ msgstr "{replies, plural, one {# yanıt} other {# yanıt}}"
 msgid "{replies} replies"
 msgstr "{replies} yanıt"
 
+#: src/features/contact/ContactVisits.tsx
+msgid "{rest, plural, one {and # more page} other {and # more pages}}"
+msgstr "{rest, plural, one {ve # sayfa daha} other {ve # sayfa daha}}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "{rows} satır; {encoding} olarak okundu, sütunlar {delimiter} ile ayrılmış."
@@ -622,6 +626,10 @@ msgstr "{up} yararlı"
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
 msgstr "{valid, plural, one {# adresi içe aktar} other {# adresi içe aktar}}"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "{views, plural, one {# view} other {# views}}"
+msgstr "{views, plural, one {# görüntüleme} other {# görüntüleme}}"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -2995,6 +3003,10 @@ msgstr "Geliştirici"
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "Cihaz"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "Direct"
+msgstr "Doğrudan"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Directory (tenant) ID, optional"
@@ -6217,6 +6229,10 @@ msgstr "Önceki eşleşme (Enter)"
 msgid "Older than the chosen range"
 msgstr "Seçilen aralıktan eski"
 
+#: src/features/contact/ContactVisits.tsx
+msgid "Older visits"
+msgstr "Daha eski ziyaretler"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "On"
@@ -6377,6 +6393,10 @@ msgstr "Yalnızca ekip görür"
 #: src/features/broadcasts/Report.tsx
 msgid "Only those who replied"
 msgstr "Yalnızca yanıtlayanlar"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "Only visits made after they agreed to a persistent id and signed in."
+msgstr "Yalnızca kalıcı kimliğe izin verip oturum açtıktan sonraki ziyaretler."
 
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
@@ -7335,6 +7355,10 @@ msgstr "Alma"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Son etkinlik"
+
+#: src/features/contact/ContactPage.tsx
+msgid "Recent visits"
+msgstr "Son ziyaretler"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx

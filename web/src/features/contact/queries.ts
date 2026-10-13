@@ -165,3 +165,20 @@ export function useCreateConversation() {
     onSuccess: () => void qc.invalidateQueries({ queryKey: keys.conversationLists(live.ws) }),
   })
 }
+
+export function useContactVisits(id: string) {
+  const { workspaceId: ws } = useSession()
+  return useInfiniteQuery({
+    queryKey: keys.contactVisits(ws, id),
+    queryFn: ({ pageParam }) =>
+      unwrap(
+        api.GET("/v1/contacts/{contactId}/visits", {
+          params: { path: { contactId: id }, query: { limit: 5, cursor: pageParam } },
+        })
+      ),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor,
+    staleTime: 60_000,
+    retry: false,
+  })
+}

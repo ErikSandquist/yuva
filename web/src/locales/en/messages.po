@@ -578,6 +578,10 @@ msgstr "{replies, plural, one {# reply} other {# replies}}"
 msgid "{replies} replies"
 msgstr "{replies} replies"
 
+#: src/features/contact/ContactVisits.tsx
+msgid "{rest, plural, one {and # more page} other {and # more pages}}"
+msgstr "{rest, plural, one {and # more page} other {and # more pages}}"
+
 #: src/features/broadcasts/Import.tsx
 msgid "{rows} rows, read as {encoding}, separated by {delimiter}."
 msgstr "{rows} rows, read as {encoding}, separated by {delimiter}."
@@ -622,6 +626,10 @@ msgstr "{up} helpful"
 #: src/features/broadcasts/Import.tsx
 msgid "{valid, plural, one {Import # address} other {Import # addresses}}"
 msgstr "{valid, plural, one {Import # address} other {Import # addresses}}"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "{views, plural, one {# view} other {# views}}"
+msgstr "{views, plural, one {# view} other {# views}}"
 
 #: src/features/account/AccountPage.tsx
 #: src/features/docs/discussions/parts.tsx
@@ -2995,6 +3003,10 @@ msgstr "Developer"
 #: src/features/conversation/Feedback.tsx
 msgid "Device"
 msgstr "Device"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "Direct"
+msgstr "Direct"
 
 #: src/features/migrations/SignInConnectStep.tsx
 msgid "Directory (tenant) ID, optional"
@@ -6217,6 +6229,10 @@ msgstr "Older match (Enter)"
 msgid "Older than the chosen range"
 msgstr "Older than the chosen range"
 
+#: src/features/contact/ContactVisits.tsx
+msgid "Older visits"
+msgstr "Older visits"
+
 #: src/features/broadcasts/BroadcastPage.tsx
 #: src/features/settings/webhooks/parts.tsx
 msgid "On"
@@ -6377,6 +6393,10 @@ msgstr "Only the team sees this"
 #: src/features/broadcasts/Report.tsx
 msgid "Only those who replied"
 msgstr "Only those who replied"
+
+#: src/features/contact/ContactVisits.tsx
+msgid "Only visits made after they agreed to a persistent id and signed in."
+msgstr "Only visits made after they agreed to a persistent id and signed in."
 
 #: src/features/settings/notifications/TabAlertsSection.tsx
 msgid "Only while the panel is open in this browser. Away, you are alerted only about conversations assigned to you."
@@ -7335,6 +7355,10 @@ msgstr "Receiving"
 #: src/features/docs/discussions/DiscussionsPane.tsx
 msgid "Recent activity"
 msgstr "Recent activity"
+
+#: src/features/contact/ContactPage.tsx
+msgid "Recent visits"
+msgstr "Recent visits"
 
 #: src/components/common/ShortcutSheet.tsx
 #: src/features/broadcasts/BroadcastPage.tsx

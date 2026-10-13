@@ -19,7 +19,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useGoalText } from "@/features/analytics/Goals"
-import { Panel, useCurrentProperty } from "@/features/analytics/parts"
+import { ConsentedOnly, offersPersistent, Panel, useCurrentProperty } from "@/features/analytics/parts"
 import {
   useDeleteFunnel,
   useFunnelReport,
@@ -249,7 +249,7 @@ function FunnelProblem({ error, tooLong }: { error: unknown; tooLong: boolean })
   return <ErrorLine error={error} />
 }
 
-function Report({ report }: { report: AnalyticsFunnelReport }) {
+function Report({ report, consented }: { report: AnalyticsFunnelReport; consented: boolean }) {
   const { i18n } = useLingui()
   const n = new Intl.NumberFormat(i18n.locale)
   const pct = (v: number) =>
@@ -273,6 +273,7 @@ function Report({ report }: { report: AnalyticsFunnelReport }) {
           const visitors = n.format(s.visitors)
           const lost = n.format(s.dropoff)
           const lostPct = pct(100 - s.step_rate)
+          const consentedCount = n.format(s.consented_visitors)
           return (
             <li key={s.goal_id} className="flex flex-col" data-testid="funnel-step">
               {i > 0 && (
@@ -302,6 +303,11 @@ function Report({ report }: { report: AnalyticsFunnelReport }) {
                   </span>
                 </div>
               </div>
+              {consented && (
+                <p className="ps-9 pt-1 text-caption text-faint tabular-nums" data-testid="funnel-consented">
+                  <Trans>{consentedCount} consented, across visits and days</Trans>
+                </p>
+              )}
             </li>
           )
         })}
@@ -311,6 +317,17 @@ function Report({ report }: { report: AnalyticsFunnelReport }) {
           {overall} of the visitors who reached the first step also reached the last, {from} – {to}.
         </Trans>
       </p>
+      {consented && (
+        <div className="flex flex-wrap items-center gap-2 px-1 text-caption text-faint">
+          <ConsentedOnly />
+          <span>
+            <Trans>
+              The consented counts follow visitors with a persistent id from one visit and day to the next, so a step
+              reached on a later day still counts.
+            </Trans>
+          </span>
+        </div>
+      )}
     </div>
   )
 }
@@ -371,7 +388,7 @@ function FunnelPanel({ funnel, goals }: { funnel: AnalyticsFunnel; goals: Analyt
       ) : report.isPending ? (
         <Skeleton className="h-48 w-full" />
       ) : report.data ? (
-        <Report report={report.data} />
+        <Report report={report.data} consented={offersPersistent(property)} />
       ) : null}
       {editing && (
         <FunnelDialog

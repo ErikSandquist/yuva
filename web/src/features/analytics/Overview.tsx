@@ -11,6 +11,8 @@ import { deviceCard, groupDimensions, RowLabel, type Group } from "@/features/an
 import {
   Attribution,
   BarList,
+  ConsentedOnly,
+  offersPersistent,
   CsvButton,
   Panel,
   PanelProblem,
@@ -337,6 +339,60 @@ function BreakdownCard({
   )
 }
 
+function VisitorTypeCard() {
+  const { i18n } = useLingui()
+  const text = useAnalyticsText()
+  const property = useCurrentProperty()
+  const { view, addFilter } = useView()
+  const q = useAnalytics(property.id, {
+    metrics: ["visitors"],
+    dimensions: ["visitor_type"],
+    range: view.range,
+    ...scopeOf(view),
+  })
+  const rows = (q.data?.rows ?? []).filter((r) => r.dimensions[0] === "new" || r.dimensions[0] === "returning")
+  return (
+    <Panel
+      title={<Trans>New and returning</Trans>}
+      action={<ConsentedOnly />}
+      testId="card-visitor-type"
+      footer={
+        <Link
+          to={`/analytics/${property.id}/retention`}
+          className="text-small text-brand underline-offset-4 hover:underline"
+        >
+          <Trans>Retention</Trans>
+        </Link>
+      }
+    >
+      {q.isPending ? (
+        <Skeleton className="h-16 w-full" />
+      ) : q.error ? (
+        <PanelProblem error={q.error} />
+      ) : rows.length === 0 ? (
+        <p className="px-2 py-6 text-center text-body text-faint">
+          <Trans>No consented visitors in this range.</Trans>
+        </p>
+      ) : (
+        <BarList
+          head={[text.dimension.visitor_type, text.metric.visitors]}
+          items={rows.map((r) => {
+            const value = r.dimensions[0] ?? ""
+            const v = num(r.metrics, "visitors") ?? 0
+            return {
+              key: value,
+              label: text.visitorType[value],
+              value: v,
+              display: formatCompact(v, i18n.locale),
+              onClick: () => addFilter("visitor_type", value),
+            }
+          })}
+        />
+      )}
+    </Panel>
+  )
+}
+
 export function Overview() {
   const property = useCurrentProperty()
   const text = useAnalyticsText()
@@ -377,6 +433,7 @@ export function Overview() {
             testId="card-devices"
           />
         )}
+        {!share && offersPersistent(property) && <VisitorTypeCard />}
       </div>
       <p className="mx-1 text-caption text-faint">{text.metricHelp.visitors}</p>
     </div>

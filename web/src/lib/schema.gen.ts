@@ -1430,6 +1430,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/contacts/{contactId}/visits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A contact's recent visits
+         * @description The visits linked to the contact on the analytics properties the caller can see, newest
+         *     first, from the raw window (`YUVA_ANALYTICS_RAW_DAYS`). A visit is linked only when the
+         *     visitor consented to the `persistent` and `identify` features of the property and the
+         *     host's backend identified them with a valid identity token; visits of anyone else are never
+         *     joined to a contact, so for most contacts the list is empty. Deleting the contact deletes
+         *     these visits; merging contacts moves them.
+         *
+         *     Scopes: `contacts:read` and `analytics:read`.
+         */
+        get: operations["listContactVisits"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/contacts/{contactId}/subscriptions": {
         parameters: {
             query?: never;
@@ -4709,7 +4736,8 @@ export interface paths {
          *     (one column per dimension and metric) instead.
          *
          *     A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-         *     day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+         *     day's visitors; only a visitor who consented to the `persistent` feature counts once over
+         *     the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
          *     until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
          *     Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
          *     with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -4788,6 +4816,10 @@ export interface paths {
          *       address), hashed under the day's salt like an app's process key. With it, `ip` only
          *       places the visitor and `user_agent` only describes the device.
          *
+         *     A visitor who consented to `persistent` in the browser or app can be named by the
+         *     `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+         *     `identity_token` with it identifies them, as `AnalyticsConsent` describes.
+         *
          *     `url` is the page (http(s), on one of the property's `domains`) or, for a property with
          *     `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
          *     starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
@@ -4803,6 +4835,60 @@ export interface paths {
          */
         post: operations["sendAnalyticsEvents"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/retention": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How consented visitors come back
+         * @description Cohorts of the visitors with a persistent id (the `persistent` consent feature): each
+         *     cohort holds the visitors first seen in one day, week (from Monday) or month of the
+         *     property's time zone, and `periods[n]` how many of them came back in the n-th period after
+         *     it, `periods[0]` being the cohort itself. Days go up to 30 periods, weeks and months up to
+         *     12. Visitors without consent are never in a cohort, so a property without the feature has
+         *     none. The cohorts job rebuilds the numbers every hour (`built_at`); a persistent id is
+         *     forgotten 13 months after it was first seen, so cohorts reach back at most that far.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsRetention"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/visitors/{persistentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a consented visitor's analytics
+         * @description For a person's erasure request: deletes everything stored under a persistent id (the
+         *     value their browser or app holds, `AnalyticsConsent.p`), its raw visits and events, its
+         *     cohort days and its link to a contact. Days already rolled up are rolled up again without
+         *     them. Answers `204` whether or not anything was stored under the id. Owners, admins and
+         *     API keys without an inbox limit.
+         *
+         *     Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsVisitor"];
         options?: never;
         head?: never;
         patch?: never;
@@ -4959,7 +5045,9 @@ export interface paths {
          * How visitors went through a funnel
          * @description Per step, the visitors who completed it after every step before it within one visit, from
          *     the raw events of the range. A visitor exists for one day, so a funnel never crosses
-         *     midnight; visitors over a range are added up per day. The range must lie inside the raw
+         *     midnight; visitors over a range are added up per day. Visitors with a persistent id (the
+         *     `persistent` consent feature) are also followed across visits and days of the range, in
+         *     `consented_visitors`. The range must lie inside the raw
          *     window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
          *     more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
          *     cached for ten minutes.
@@ -6180,7 +6268,15 @@ export interface paths {
          *     `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
          *     still refuse the whole request.
          *
-         *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+         *     Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+         *     a general-audience property that offers `persistent`, is the visitor of that id on every
+         *     day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+         *     links the id to a contact. Without them, or on any other property, the event is counted
+         *     exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+         *     once and is never stored; 20 a minute per shortened address and property.
+         *
+         *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+         *     a `yuva_consent` withdrawal); events
          *     older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
          *     path; events over the property's per-minute limit or the workspace's monthly cap. One
          *     shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -12569,7 +12665,10 @@ export interface components {
         AnalyticsCollection: "anonymous" | "consent";
         /**
          * @description Offered only to visitors who consented: `persistent` keeps a random id on the device for at
-         *     most 13 months, `identify` links a verified user's visits to their contact.
+         *     most 13 months, `identify` links a verified user's visits to their contact. `identify`
+         *     needs `persistent` and a linked inbox, whose identity secret signs the tokens; a children's
+         *     property offers neither. Visitors who did not consent are counted exactly as without
+         *     these features.
          * @enum {string}
          */
         AnalyticsConsentFeature: "persistent" | "identify";
@@ -12748,7 +12847,10 @@ export interface components {
             all?: boolean;
         };
         /**
-         * @description `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+         * @description `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+         *     id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+         *     from their cohort days without filters and from raw rows inside the raw window with
+         *     filters), `visits`, `pageviews`,
          *     `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
          *     `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
          *     focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -12778,14 +12880,16 @@ export interface components {
          *     code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
          *     `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
          *     its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-         *     an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+         *     an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+         *     `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+         *     later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
          *     and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
          *     for events without it: as
          *     a filter of visits they keep the visits with such an event; in an `event` or `prop`
          *     breakdown they keep the matching events.
          * @enum {string}
          */
-        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "event" | "prop";
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop";
         /**
          * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
          *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -12796,7 +12900,7 @@ export interface components {
          *     a time grain other than `time:hour` or a visit dimension.
          * @enum {string}
          */
-        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "event" | "prop";
+        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "visitor_type" | "event" | "prop";
         /**
          * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
          *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -13212,6 +13316,16 @@ export interface components {
             gpc?: boolean;
             /** @description The visitor agreed to analytics; required for a `consent` property to store the event. */
             consent?: boolean;
+            /**
+             * @description The persistent id the visitor's browser or app holds (`AnalyticsConsent.p`), forwarded
+             *     for a visitor who agreed to `persistent`; taken only with `consent: true` on a property
+             *     that offers `persistent`, and then names the visitor in place of `ip` and `user_agent`
+             *     or `visitor_key`. Those are still required: they describe the visit, and name the
+             *     visitor whenever the id is not taken.
+             */
+            persistent_id?: string;
+            /** @description An identity token as in `AnalyticsConsent.j`, with `persistent_id` and `consent: true`, on a property that offers `identify`. */
+            identity_token?: string;
         };
         AnalyticsEventsResult: {
             /** @description The valid events, stored unless a rule of the operation dropped them. */
@@ -13326,6 +13440,12 @@ export interface components {
             visits: number;
             /**
              * Format: int64
+             * @description Visitors with a persistent id who reached this step after all before it anywhere in
+             *     the range, across visits and days, each counted once; 0 on a property without them.
+             */
+            consented_visitors: number;
+            /**
+             * Format: int64
              * @description Visitors of the step before who did not reach this one; 0 for the first step.
              */
             dropoff: number;
@@ -13339,6 +13459,76 @@ export interface components {
              * @description Percent of the step before's visitors; 100 for the first step.
              */
             step_rate: number;
+        };
+        AnalyticsRetention: {
+            /** @enum {string} */
+            grain: "day" | "week" | "month";
+            /**
+             * Format: date
+             * @description The first cohort's start.
+             */
+            from: string;
+            /** Format: date */
+            to: string;
+            /**
+             * Format: date-time
+             * @description When the cohorts job last rebuilt the numbers; absent before it ran.
+             */
+            built_at?: string;
+            /** @description Cohorts with at least one visitor. */
+            cohorts: components["schemas"]["AnalyticsCohort"][];
+        };
+        AnalyticsCohort: {
+            /**
+             * Format: date
+             * @description The start of the day, week or month the cohort's visitors were first seen.
+             */
+            cohort: string;
+            /**
+             * Format: int64
+             * @description The cohort's size, `periods[0]`.
+             */
+            visitors: number;
+            /** @description Visitors of the cohort seen in each period from the cohort's own, up to the period that holds today. */
+            periods: number[];
+        };
+        AnalyticsContactVisitList: {
+            items: components["schemas"]["AnalyticsContactVisit"][];
+            /** @description Present when there are older visits. */
+            next_cursor?: string;
+        };
+        /** @description One visit, described as its first event saw it, as the dimensions of `AnalyticsFilterDimension` name its values. */
+        AnalyticsContactVisit: {
+            /** Format: uuid */
+            property_id: string;
+            property_name: string;
+            /** Format: date-time */
+            started_at: string;
+            /** Format: date-time */
+            ended_at: string;
+            hostname: string;
+            entry_page: string;
+            exit_page: string;
+            pageviews: number;
+            events: number;
+            channel: string;
+            source: string;
+            utm_campaign: string;
+            country: string;
+            city: string;
+            device: string;
+            browser: string;
+            os: string;
+            platform: string;
+            app_version: string;
+            /** @description `new` or `returning`. */
+            visitor_type: string;
+            /** @description The paths (or app screens) the visit viewed, most viewed first, at most 20. */
+            pages: components["schemas"]["AnalyticsVisitPage"][];
+        };
+        AnalyticsVisitPage: {
+            path: string;
+            views: number;
         };
         AnalyticsFunnelReport: {
             /** Format: uuid */
@@ -13764,12 +13954,37 @@ export interface components {
             platform: string;
             app_version?: string;
         };
+        /**
+         * @description What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
+         *     with `a: 1`, on a property whose `consent_features` offer them; otherwise they are ignored
+         *     and the event is counted as in default mode.
+         */
         AnalyticsConsent: {
             /**
              * @description `1` when the visitor agreed to analytics.
              * @enum {integer}
              */
             a?: 0 | 1;
+            /**
+             * @description The persistent id, for a visitor who also agreed to `persistent`: a random value of at
+             *     least 128 bits (a UUID or base64url) that the script or SDK keeps on the device for at
+             *     most 13 months from when it made it, and sends on every event, engagements included.
+             *     The server keeps only a keyed hash of it under the property's own secret, so the same
+             *     id means nothing on another property. With it the visitor counts once over several
+             *     days, is told apart as new or returning, enters retention cohorts and crosses days in
+             *     funnels. A value of the wrong shape is ignored.
+             * @example 0f8fad5b-d9cb-469f-a165-70867728950e
+             */
+            p?: string;
+            /**
+             * @description An identity token of the property's linked inbox, signed by the host's backend as for
+             *     `/client/v1/session` (HS256, `sub`, `exp` at most 10 minutes ahead, a `jti` used once),
+             *     sent once after the user signs in, together with `p`, on a property that offers
+             *     `identify`. It links the persistent id, and its visits, to the contact; the contact is
+             *     found or made exactly as `/client/v1/session` does. A forged, expired or reused token is
+             *     ignored and the event is still counted.
+             */
+            j?: string;
         };
         /**
          * @description One event. Keys the server does not know are ignored, so newer scripts keep working with
@@ -13782,6 +13997,12 @@ export interface components {
              *     link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
              *     `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
              *     characters. `screen` and names starting with `$` or `yuva_` are reserved.
+             *
+             *     `yuva_consent` is not an event and is never stored or counted: it carries a change of
+             *     consent at once. With `c.a: 1`, `c.p` and `c.j` it identifies the visitor (see
+             *     `AnalyticsConsent`); with `c.a: 0` and `c.p` it withdraws: the persistent id's link to
+             *     a contact and its cohort days are deleted, so its visits leave the contact's page and
+             *     retention. A withdrawal is taken even with `Sec-GPC` or `DNT`.
              * @example pageview
              * @example Signup
              * @example outbound_click
@@ -17016,6 +17237,39 @@ export interface operations {
                     "application/json": components["schemas"]["ContactPresence"];
                 };
             };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listContactVisits: {
+        parameters: {
+            query?: {
+                limit?: number;
+                /** @description `next_cursor` of the previous page. */
+                cursor?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                contactId: components["parameters"]["ContactId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The visits, newest first. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsContactVisitList"];
+                };
+            };
+            400: components["responses"]["Problem"];
             401: components["responses"]["Problem"];
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
@@ -21997,6 +22251,79 @@ export interface operations {
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             503: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsRetention: {
+        parameters: {
+            query?: {
+                /** @description `week` when absent. */
+                grain?: "day" | "week" | "month";
+                /** @description The first cohort's day; 30 days, 12 weeks or 12 months before today when absent. */
+                from?: string;
+                /** @description The last cohort's day; today when absent. */
+                to?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The cohorts, oldest first. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRetention"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description `range_too_large`: `from` and `to` are more than 400 days apart. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    deleteAnalyticsVisitor: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                persistentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Nothing is stored under the id any more. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
         };
     };
     getAnalyticsHealth: {

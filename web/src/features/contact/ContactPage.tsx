@@ -22,7 +22,8 @@ import {
 import { MergeContactDialog } from "@/features/contact/MergeContactDialog"
 import { ContactNotes } from "@/features/contact/ContactNotes"
 import { ContactSubscriptions } from "@/features/contact/ContactSubscriptions"
-import { useContact, useContactSummary } from "@/features/contact/queries"
+import { ContactVisits } from "@/features/contact/ContactVisits"
+import { useContact, useContactSummary, useContactVisits } from "@/features/contact/queries"
 import { contactName } from "@/features/contact/Section"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -61,6 +62,8 @@ export function ContactPage() {
   const [filter, setFilter] = useState<ConversationFilter>("all")
   const conversations = useContactConversations(contactId, filterStatus[filter])
   const summary = useContactSummary(contactId).data
+  const visits = useContactVisits(contactId)
+  const visited = (visits.data?.pages[0]?.items.length ?? 0) > 0
   const [merging, setMerging] = useState(false)
   const [starting, setStarting] = useState(false)
   const c = contact.data
@@ -187,6 +190,11 @@ export function ContactPage() {
                   label={<Trans>rated good</Trans>}
                 />
               </div>
+            </Card>
+          )}
+          {visited && (
+            <Card title={<Trans>Recent visits</Trans>}>
+              <ContactVisits visits={visits} />
             </Card>
           )}
           <Card title={<Trans>Mailing lists</Trans>}>

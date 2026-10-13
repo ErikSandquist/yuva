@@ -1,6 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useMutation } from "@tanstack/react-query"
-import { DownloadIcon, HistoryIcon } from "lucide-react"
+import { DownloadIcon, HistoryIcon, UserCheckIcon } from "lucide-react"
 import { useOutletContext } from "react-router"
 
 import { ErrorLine, Notice } from "@/components/common"
@@ -204,4 +204,25 @@ export function Panel({
       {footer && <div className="flex flex-wrap items-center gap-2 border-t px-4 py-2">{footer}</div>}
     </section>
   )
+}
+
+export function ConsentedOnly({ className }: { className?: string }) {
+  const { t } = useLingui()
+  return (
+    <span
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1 rounded-full bg-muted px-2 py-px text-caption font-normal text-muted-foreground",
+        className
+      )}
+      title={t`Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time.`}
+      data-testid="consented-only"
+    >
+      <UserCheckIcon className="size-3 shrink-0" />
+      <Trans>Consented visitors only</Trans>
+    </span>
+  )
+}
+
+export function offersPersistent(p: Pick<AnalyticsProperty, "consent_features">) {
+  return p.consent_features.includes("persistent")
 }

@@ -19,6 +19,7 @@ import { Overview } from "@/features/analytics/Overview"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import { useProperty } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
+import { RetentionView } from "@/features/analytics/Retention"
 import { SettingsView } from "@/features/analytics/Settings"
 import { SupportView } from "@/features/analytics/Support"
 import { useViewSearch } from "@/features/analytics/state"
@@ -38,6 +39,7 @@ const VIEWS = [
   "events",
   "goals",
   "funnels",
+  "retention",
   "support",
   "settings",
 ] as const
@@ -89,6 +91,7 @@ function PropertyLayout() {
     events: t`Events`,
     goals: t`Goals`,
     funnels: t`Funnels`,
+    retention: t`Retention`,
     support: t`Support`,
     settings: t`Settings`,
   }
@@ -101,7 +104,7 @@ function PropertyLayout() {
       </Pane>
     )
   }
-  const controls = current !== "realtime" && current !== "settings"
+  const controls = current !== "realtime" && current !== "settings" && current !== "retention"
   return (
     <Pane wide testId="analytics-property" className="gap-5" key={p.id}>
       <header className="flex flex-col">
@@ -161,6 +164,7 @@ export default function AnalyticsRoutes() {
         <Route path="events" element={<EventsView />} />
         <Route path="goals" element={<GoalsView />} />
         <Route path="funnels" element={<FunnelsView />} />
+        <Route path="retention" element={<RetentionView />} />
         <Route path="support" element={<SupportView />} />
         <Route path="settings" element={<SettingsView />} />
         <Route path="*" element={<Navigate to=".." replace />} />

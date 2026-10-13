@@ -148,6 +148,7 @@ export function useAnalyticsText() {
       language: t`Language`,
       platform: t`Platform`,
       app_version: t`App version`,
+      visitor_type: t`New or returning`,
       event: t`Event`,
       prop: t`Prop`,
     } satisfies Record<AnalyticsFilterDimension, string>,
@@ -191,6 +192,8 @@ export function useAnalyticsText() {
     device: { desktop: t`Desktop`, mobile: t`Mobile`, tablet: t`Tablet` } as Record<string, string>,
     screen: { phone: t`Phone`, tablet: t`Tablet`, laptop: t`Laptop`, desktop: t`Desktop` } as Record<string, string>,
     platform: { web: t`Web`, ios: "iOS", android: "Android", server: t`Server` } as Record<string, string>,
+    visitorType: { new: t`New`, returning: t`Returning` } as Record<string, string>,
+    withoutConsent: t`Without consent`,
     unknown: t`Unknown`,
     notSet: t`(not set)`,
     direct: t`Direct / none`,
@@ -225,6 +228,7 @@ export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: s
   if (value === OTHER) return text.other
   if (value === "") {
     if (dim === "prop") return text.notSet
+    if (dim === "visitor_type") return text.withoutConsent
     return ["source", "referrer", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].includes(dim)
       ? text.direct
       : text.unknown
@@ -238,6 +242,8 @@ export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: s
       return text.screen[value] ?? value
     case "platform":
       return text.platform[value] ?? value
+    case "visitor_type":
+      return text.visitorType[value] ?? value
     case "country":
       return countryName(value, locale)
     case "language":

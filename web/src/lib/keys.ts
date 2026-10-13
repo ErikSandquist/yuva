@@ -42,6 +42,7 @@ export const keys = {
   contactPresence: (ws: string, id: string) => ["ws", ws, "contact-presence", id] as const,
   contactSummary: (ws: string, id: string) => ["ws", ws, "contact-summary", id] as const,
   contactNotes: (ws: string, id: string) => ["ws", ws, "contact-notes", id] as const,
+  contactVisits: (ws: string, id: string) => ["ws", ws, "contact-visits", id] as const,
   webhooks: (ws: string) => ["ws", ws, "webhooks"] as const,
   webhookList: (ws: string, inbox: string) => ["ws", ws, "webhooks", "list", inbox] as const,
   webhook: (ws: string, id: string) => ["ws", ws, "webhooks", "one", id] as const,

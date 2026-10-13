@@ -41,6 +41,7 @@ import { ChoiceSelect, Field, FormActions, FormCard, Card, Section } from "@/fea
 import { useAnalyticsText } from "@/features/analytics/text"
 import {
   ApiError,
+  type AnalyticsConsentFeature,
   type AnalyticsDropCounts,
   type AnalyticsHealthDay,
   type AnalyticsPathRule,
@@ -431,6 +432,103 @@ function TrackedProps({ p }: { p: AnalyticsProperty }) {
           )}
         </Card>
       )}
+    </Section>
+  )
+}
+
+function ConsentFeatures({ p }: { p: AnalyticsProperty }) {
+  const { canManage } = useSession()
+  const update = useUpdateProperty(p.id)
+  const [persistent, setPersistent] = useState(p.consent_features.includes("persistent"))
+  const [identify, setIdentify] = useState(p.consent_features.includes("identify"))
+  const linked = !!p.inbox_id
+  const canIdentify = persistent && linked
+  const features: AnalyticsConsentFeature[] = [
+    ...(persistent ? (["persistent"] as const) : []),
+    ...(canIdentify && identify ? (["identify"] as const) : []),
+  ]
+  const explain = (
+    <Trans>
+      Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a
+      time and without anything stored on the device.
+    </Trans>
+  )
+  if (p.audience === "children") {
+    return (
+      <Section title={<Trans>Consent features</Trans>} description={explain}>
+        <Card data-testid="consent-features-children">
+          <p className="text-body text-muted-foreground">
+            <Trans>Properties for children never keep an id on the device or link visits to a contact.</Trans>
+          </p>
+        </Card>
+      </Section>
+    )
+  }
+  if (!canManage) {
+    return (
+      <Section title={<Trans>Consent features</Trans>} description={explain}>
+        <Card data-testid="consent-features-read">
+          <p className="text-body text-muted-foreground">
+            {p.consent_features.includes("identify") ? (
+              <Trans>Consented visitors keep a persistent id, and signed-in users are linked to their contact.</Trans>
+            ) : p.consent_features.includes("persistent") ? (
+              <Trans>Consented visitors keep a persistent id.</Trans>
+            ) : (
+              <Trans>No consent features are offered.</Trans>
+            )}
+          </p>
+        </Card>
+      </Section>
+    )
+  }
+  return (
+    <Section title={<Trans>Consent features</Trans>} description={explain}>
+      <FormCard
+        onSubmit={() => update.mutate({ consent_features: features })}
+        footer={<FormActions pending={update.isPending} saved={update.isSuccess} error={update.error} />}
+      >
+        <div className="flex flex-col gap-1.5">
+          <Label className="font-normal" data-testid="consent-persistent">
+            <Checkbox
+              checked={persistent}
+              onCheckedChange={(on) => {
+                setPersistent(on)
+                if (!on) setIdentify(false)
+              }}
+            />
+            <span className="font-medium">
+              <Trans>Persistent id</Trans>
+            </span>
+          </Label>
+          <p className="ps-6 text-small text-faint">
+            <Trans>
+              With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor
+              counts once over several days, is told apart as new or returning, fills retention and is followed across
+              days in funnels. Never under Do Not Track or Global Privacy Control.
+            </Trans>
+          </p>
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label className="font-normal" data-testid="consent-identify">
+            <Checkbox checked={canIdentify && identify} disabled={!canIdentify} onCheckedChange={setIdentify} />
+            <span className={cn("font-medium", !canIdentify && "text-faint")}>
+              <Trans>Link signed-in users to their contact</Trans>
+            </span>
+          </Label>
+          <p className="ps-6 text-small text-faint">
+            {!persistent ? (
+              <Trans>Needs the persistent id: a visitor is linked through it.</Trans>
+            ) : !linked ? (
+              <Trans>Needs a linked inbox under General: its identity secret signs the tokens.</Trans>
+            ) : (
+              <Trans>
+                yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to
+                their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored.
+              </Trans>
+            )}
+          </p>
+        </div>
+      </FormCard>
     </Section>
   )
 }
@@ -1007,6 +1105,7 @@ export function SettingsView() {
         <div className="flex flex-col gap-6">
           {canManage && <Tracking p={p} />}
           <TrackedProps p={p} />
+          <ConsentFeatures p={p} />
         </div>
       )}
       {tab === "install" && <Install p={p} />}

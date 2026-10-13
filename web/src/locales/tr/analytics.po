@@ -21,6 +21,10 @@ msgstr "{0, plural, one {# satır} other {# satır}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
 
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "İzin veren {consentedCount} kişi, ziyaretler ve günler boyunca"
+
 #: src/features/analytics/Alerts.tsx
 msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
 msgstr "{count, plural, one {{site} # ziyaret getirdi; önceki 28 günde hiç getirmemişti.} other {{site} # ziyaret getirdi; önceki 28 günde hiç getirmemişti.}}"
@@ -299,6 +303,10 @@ msgstr "Tüm hedefler"
 msgid "An owner or admin can link one in the property’s settings."
 msgstr "Bir sahip veya yönetici, mülkün ayarlarından bir gelen kutusu bağlayabilir."
 
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "Bir sahip ya da yönetici, izin özelliklerinden kalıcı kimliği açabilir."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/NewProperty.tsx
@@ -439,6 +447,14 @@ msgstr "Şehir"
 msgid "Clear"
 msgstr "Temizle"
 
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Gruplar"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Ziyaretçiler kalıcı kimliğe izin verip geri geldikçe gruplar dolar. Sayılar her saat yeniden hesaplanır."
+
 #: src/features/analytics/Settings.tsx
 msgid "Collection"
 msgstr "Toplama"
@@ -481,9 +497,25 @@ msgstr "Karşılaştırma"
 msgid "Completions"
 msgstr "Tamamlanma"
 
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "İzin özellikleri"
+
 #: src/features/analytics/Install.tsx
 msgid "Consent mode"
 msgstr "İzin modu"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "İzin veren ziyaretçiler kalıcı bir kimlik tutar, oturum açan kullanıcılar kişi kayıtlarına bağlanır."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "İzin veren ziyaretçiler kalıcı bir kimlik tutar."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Yalnızca izin veren ziyaretçiler"
 
 #: src/features/analytics/text.ts
 msgid "contains"
@@ -597,9 +629,17 @@ msgstr "data-outbound başka sitelere giden bağlantılara tıklamaları, data-f
 msgid "Day"
 msgstr "Gün"
 
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "{period}. gün"
+
 #: src/features/analytics/Exports.tsx
 msgid "Day by day"
 msgstr "Gün gün"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Günler"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/SharePage.tsx
@@ -779,6 +819,18 @@ msgstr "Atılan"
 msgid "E-mail"
 msgstr "E-posta"
 
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Her satır o gün ilk kez görülen ziyaretçileri, her sütun bunlardan o kadar gün sonra geri gelenlerin payını gösterir."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Her satır o ay ilk kez görülen ziyaretçileri, her sütun bunlardan o kadar ay sonra geri gelenlerin payını gösterir."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Her satır o hafta ilk kez görülen ziyaretçileri, her sütun bunlardan o kadar hafta sonra geri gelenlerin payını gösterir."
+
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/Sharing.tsx
@@ -955,6 +1007,14 @@ msgstr "Filtreler"
 msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
 msgstr "Filtreler görünümden gelir: eklemek için orada bir satıra tıklayın. <0>Görünümde değiştirin</0>"
 
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "İlk gün"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "İlk ay"
+
 #: src/features/analytics/text.ts
 msgid "First page or screen"
 msgstr "İlk sayfa ya da ekran"
@@ -962,6 +1022,10 @@ msgstr "İlk sayfa ya da ekran"
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "İlk ekran"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "İlk hafta"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Five reports an hour at most. Try again later."
@@ -1219,6 +1283,10 @@ msgstr "Sayfa başına desteği görmek için bir gelen kutusu bağlayın"
 msgid "Link inbox"
 msgstr "Gelen kutusunu bağla"
 
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Oturum açan kullanıcıları kişi kayıtlarına bağla"
+
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -1273,6 +1341,10 @@ msgstr "kalıba uyar"
 msgid "Mobile"
 msgstr "Mobil"
 
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "{period}. ay"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Monthly"
 msgstr "Aylık"
@@ -1280,6 +1352,10 @@ msgstr "Aylık"
 #: src/features/analytics/Settings.tsx
 msgid "Monthly limit"
 msgstr "Aylık sınır"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Aylar"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1298,9 +1374,17 @@ msgstr "Yukarı taşı"
 msgid "Name"
 msgstr "Ad"
 
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Genel sekmesinde bağlı bir gelen kutusu gerekir: belirteçleri onun kimlik anahtarı imzalar."
+
 #: src/features/analytics/Alerts.tsx
 msgid "Needs a linked inbox. {help}"
 msgstr "Bağlı bir gelen kutusu gerekir. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Kalıcı kimlik gerekir: ziyaretçi onun üzerinden bağlanır."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Never"
@@ -1310,6 +1394,10 @@ msgstr "Hiçbir zaman"
 msgid "never opened"
 msgstr "hiç açılmadı"
 
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "Yeni"
+
 #: src/features/analytics/Insights.tsx
 msgid "New {kind}: {value} with {count}, none in the compared days."
 msgstr "Yeni {kind}: {value}, {count}; karşılaştırılan günlerde hiç yoktu."
@@ -1317,6 +1405,10 @@ msgstr "Yeni {kind}: {value}, {count}; karşılaştırılan günlerde hiç yoktu
 #: src/features/analytics/Insights.tsx
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "Yeni {kind}: {value}. {metric}: {now}; karşılaştırılan günlerde hiç yoktu."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "Yeni ve geri dönen"
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -1329,6 +1421,10 @@ msgstr "Yeni hedef"
 #: src/features/analytics/Sharing.tsx
 msgid "New link"
 msgstr "Yeni bağlantı"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "Yeni ya da geri dönen"
 
 #: src/features/analytics/Annotations.tsx
 msgid "New pricing page"
@@ -1349,6 +1445,18 @@ msgstr "Henüz uyarı yok."
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "Karşılaştırma yok"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "Hiçbir izin özelliği sunulmuyor."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "Bu aralıkta izin veren ziyaretçi yok."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "Henüz izin veren ziyaretçi yok"
 
 #: src/features/analytics/Support.tsx
 msgid "No conversations, feedback, ratings or discussions from these pages in this range."
@@ -1466,6 +1574,10 @@ msgid "Off"
 msgstr "Kapalı"
 
 #: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Yalnızca izin aracınızda onay veren ziyaretçilere sunulur. Diğer herkes eskisi gibi sayılır: gün gün ve cihazda hiçbir şey saklanmadan."
+
+#: src/features/analytics/Settings.tsx
 msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
 msgstr "72 saatten eski. Uygulamalar bağlantı yokken olayları en fazla bu kadar tutar."
 
@@ -1521,6 +1633,10 @@ msgstr "Yalnızca ülke saklanır, bölge ya da şehir asla."
 msgid "Only totals are shown. There is no list of individual visitors."
 msgstr "Yalnızca toplamlar gösterilir. Tek tek ziyaretçilerin listesi yoktur."
 
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Burada yalnızca kalıcı kimliğe izin veren ziyaretçiler sayılır. Diğer herkes gün gün sayılır."
+
 #: src/features/analytics/Settings.tsx
 msgid "Only with consent"
 msgstr "Yalnızca izinle"
@@ -1532,6 +1648,10 @@ msgstr "Yalnızca şu özellik"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Kod parçası eklenmiş bir sayfanızı açın. Sunucu ilk sayfa görüntülemesini kaydeder kaydetmez burası yeşile döner. Do Not Track ya da Global Privacy Control açık tarayıcılar hiçbir şey göndermez; denemek için başka bir tarayıcı kullanın."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "İzin özelliklerini aç"
 
 #: src/features/analytics/SharePage.tsx
 msgid "Open report"
@@ -1712,6 +1832,10 @@ msgstr "saatlik"
 msgid "per week"
 msgstr "haftalık"
 
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Kalıcı kimlik"
+
 #: src/features/analytics/text.ts
 msgid "Phone"
 msgstr "Telefon"
@@ -1763,6 +1887,14 @@ msgstr "Çocuklara yönelik mülkler özellik saklamaz; yalnızca dış bağlant
 #: src/features/analytics/Settings.tsx
 msgid "Properties for children keep no props, so none can be tracked."
 msgstr "Çocuklara yönelik mülkler özellik saklamaz, bu yüzden hiçbiri izlenemez."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Çocuklara yönelik mülkler cihazda hiçbir kimlik tutmaz ve ziyaretleri bir kişiye bağlamaz."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Çocuklara yönelik mülkler cihazda kimlik tutmaz, bu yüzden geri dönüş verileri olmaz."
 
 #: src/features/analytics/Settings.tsx
 msgid "Property name"
@@ -1823,6 +1955,14 @@ msgstr "Hazır"
 msgid "Realtime"
 msgstr "Canlı"
 
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Her saat yeniden hesaplanır, son olarak {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Her saat yeniden hesaplanır."
+
 #: src/features/analytics/text.ts
 msgid "Referral"
 msgstr "Yönlendirme"
@@ -1879,6 +2019,19 @@ msgstr "Rapor"
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
 msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay isteyen bir mülkte onaysız gelen olaylar alınır, ama ne saklanır ne de burada sayılır."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Geri dönüş"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Geri dönüş için izin özellikleri gerekir"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Geri dönen"
 
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/text.ts
@@ -2110,6 +2263,10 @@ msgstr "Test olayları"
 #: src/features/analytics/SharePage.tsx
 msgid "That password is not right."
 msgstr "Parola yanlış."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "İzin verenlerin sayıları, kalıcı kimliği olan ziyaretçileri ziyaretten ziyarete ve günden güne izler; daha sonraki bir gün ulaşılan adım da sayılır."
 
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
@@ -2355,6 +2512,10 @@ msgstr "Yeniden dene"
 msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
 msgstr "Önce genel ayarlarda Platformlar altında {name} seçeneğini açın. O zamana kadar sunucu uygulamanın olaylarını reddeder."
 
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "İzin özelliklerinden kalıcı kimliği açın, ardından yuva.consent çağrısında persistent değerini true yapın."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Two to eight goals, in the order visitors reach them within one visit."
 msgstr "Ziyaretçilerin tek bir ziyarette ulaştığı sırayla iki ile sekiz hedef."
@@ -2437,6 +2598,7 @@ msgstr "Görüntülemeler iki saatte {now} değerine çıktı; normalde {usual}.
 msgid "Visit duration"
 msgstr "Ziyaret süresi"
 
+#: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
 msgstr "Ziyaretçiler"
@@ -2444,6 +2606,10 @@ msgstr "Ziyaretçiler"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Son 30 dakikadaki ziyaretçiler"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Geri gelen ziyaretçiler"
 
 #: src/features/analytics/text.ts
 msgid "Visitors who reached the goal, per day, added up over the days of the range."
@@ -2493,9 +2659,17 @@ msgstr "Canlı izle"
 msgid "Web"
 msgstr "Web"
 
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "{period}. hafta"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"
 msgstr "Haftalık"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Haftalar"
 
 #: src/features/analytics/Insights.tsx
 msgid "What changed"
@@ -2526,6 +2700,18 @@ msgid "With data-consent=\"required\" the script sends nothing until your consen
 msgstr "data-consent=\"required\" ile betik, izin aracınız ziyaretçinin kabul ettiğini söyleyene kadar hiçbir şey göndermez. Genel ayarlarda Toplama'yı da “Yalnızca izinle” yapın; böylece sunucu izinsiz olayları reddeder."
 
 #: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "yuva.consent çağrısında persistent true olduğunda cihaz 13 ay boyunca rastgele bir kimlik tutar. Ziyaretçi birkaç gün boyunca bir kez sayılır, yeni ya da geri dönen olarak ayrılır, geri dönüş tablosunu doldurur ve hunilerde günler boyunca izlenir. Do Not Track ya da Global Privacy Control açıkken hiç kullanılmaz."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "İzinsiz"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Çerez olmadan ziyaretçi her gün yenidir, bu yüzden kimse günden güne izlenemez. Burada yalnızca izin aracınızda kalıcı kimliğe onay veren ziyaretçiler görünür."
+
+#: src/features/analytics/Settings.tsx
 msgid "Without cookies, for everyone"
 msgstr "Çerezsiz, herkes için"
 
@@ -2540,3 +2726,7 @@ msgstr "Erişiminiz sona erdi. Okumaya devam etmek için parolayı yeniden girin
 #: src/features/analytics/Sharing.tsx
 msgid "Your new share link"
 msgstr "Yeni paylaşım bağlantınız"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "Sunucunuzun sohbet oturumu gibi imzaladığı bir belirteçle yuva.identify, ziyaretçinin ziyaretlerini kişi kaydına bağlar. Bu ziyaretler kişinin sayfasında Son ziyaretler altında görünür. Sahte ya da yeniden kullanılan belirteçler yok sayılır."

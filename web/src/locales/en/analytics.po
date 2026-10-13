@@ -21,6 +21,10 @@ msgstr "{0, plural, one {# row} other {# rows}}"
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {visitor today} other {visitors today}}"
 
+#: src/features/analytics/Funnels.tsx
+msgid "{consentedCount} consented, across visits and days"
+msgstr "{consentedCount} consented, across visits and days"
+
 #: src/features/analytics/Alerts.tsx
 msgid "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
 msgstr "{count, plural, one {{site} sent # visit, and none in the 28 days before.} other {{site} sent # visits, and none in the 28 days before.}}"
@@ -299,6 +303,10 @@ msgstr "All goals"
 msgid "An owner or admin can link one in the property’s settings."
 msgstr "An owner or admin can link one in the property’s settings."
 
+#: src/features/analytics/Retention.tsx
+msgid "An owner or admin can turn on the persistent id in the consent features."
+msgstr "An owner or admin can turn on the persistent id in the consent features."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/NewProperty.tsx
@@ -439,6 +447,14 @@ msgstr "City"
 msgid "Clear"
 msgstr "Clear"
 
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts by"
+msgstr "Cohorts by"
+
+#: src/features/analytics/Retention.tsx
+msgid "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+msgstr "Cohorts fill once visitors agree to a persistent id and come back. The numbers are rebuilt every hour."
+
 #: src/features/analytics/Settings.tsx
 msgid "Collection"
 msgstr "Collection"
@@ -481,9 +497,25 @@ msgstr "Comparison"
 msgid "Completions"
 msgstr "Completions"
 
+#: src/features/analytics/Settings.tsx
+msgid "Consent features"
+msgstr "Consent features"
+
 #: src/features/analytics/Install.tsx
 msgid "Consent mode"
 msgstr "Consent mode"
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+msgstr "Consented visitors keep a persistent id, and signed-in users are linked to their contact."
+
+#: src/features/analytics/Settings.tsx
+msgid "Consented visitors keep a persistent id."
+msgstr "Consented visitors keep a persistent id."
+
+#: src/features/analytics/parts.tsx
+msgid "Consented visitors only"
+msgstr "Consented visitors only"
 
 #: src/features/analytics/text.ts
 msgid "contains"
@@ -597,9 +629,17 @@ msgstr "data-outbound counts clicks on links to other sites, data-files download
 msgid "Day"
 msgstr "Day"
 
+#: src/features/analytics/Retention.tsx
+msgid "Day {period}"
+msgstr "Day {period}"
+
 #: src/features/analytics/Exports.tsx
 msgid "Day by day"
 msgstr "Day by day"
+
+#: src/features/analytics/Retention.tsx
+msgid "Days"
+msgstr "Days"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/SharePage.tsx
@@ -779,6 +819,18 @@ msgstr "Dropped"
 msgid "E-mail"
 msgstr "E-mail"
 
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+msgstr "Each row holds the visitors first seen that day, each column the share of them who came back that many days later."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+msgstr "Each row holds the visitors first seen that month, each column the share of them who came back that many months later."
+
+#: src/features/analytics/Retention.tsx
+msgid "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+msgstr "Each row holds the visitors first seen that week, each column the share of them who came back that many weeks later."
+
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/Sharing.tsx
@@ -955,6 +1007,14 @@ msgstr "Filters"
 msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
 msgstr "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
 
+#: src/features/analytics/Retention.tsx
+msgid "First day"
+msgstr "First day"
+
+#: src/features/analytics/Retention.tsx
+msgid "First month"
+msgstr "First month"
+
 #: src/features/analytics/text.ts
 msgid "First page or screen"
 msgstr "First page or screen"
@@ -962,6 +1022,10 @@ msgstr "First page or screen"
 #: src/features/analytics/text.ts
 msgid "First screen"
 msgstr "First screen"
+
+#: src/features/analytics/Retention.tsx
+msgid "First week"
+msgstr "First week"
 
 #: src/features/analytics/Alerts.tsx
 msgid "Five reports an hour at most. Try again later."
@@ -1219,6 +1283,10 @@ msgstr "Link an inbox to see support per page"
 msgid "Link inbox"
 msgstr "Link inbox"
 
+#: src/features/analytics/Settings.tsx
+msgid "Link signed-in users to their contact"
+msgstr "Link signed-in users to their contact"
+
 #: src/features/analytics/Alerts.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -1273,6 +1341,10 @@ msgstr "matches"
 msgid "Mobile"
 msgstr "Mobile"
 
+#: src/features/analytics/Retention.tsx
+msgid "Month {period}"
+msgstr "Month {period}"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Monthly"
 msgstr "Monthly"
@@ -1280,6 +1352,10 @@ msgstr "Monthly"
 #: src/features/analytics/Settings.tsx
 msgid "Monthly limit"
 msgstr "Monthly limit"
+
+#: src/features/analytics/Retention.tsx
+msgid "Months"
+msgstr "Months"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Move down"
@@ -1298,9 +1374,17 @@ msgstr "Move up"
 msgid "Name"
 msgstr "Name"
 
+#: src/features/analytics/Settings.tsx
+msgid "Needs a linked inbox under General: its identity secret signs the tokens."
+msgstr "Needs a linked inbox under General: its identity secret signs the tokens."
+
 #: src/features/analytics/Alerts.tsx
 msgid "Needs a linked inbox. {help}"
 msgstr "Needs a linked inbox. {help}"
+
+#: src/features/analytics/Settings.tsx
+msgid "Needs the persistent id: a visitor is linked through it."
+msgstr "Needs the persistent id: a visitor is linked through it."
 
 #: src/features/analytics/Sharing.tsx
 msgid "Never"
@@ -1310,6 +1394,10 @@ msgstr "Never"
 msgid "never opened"
 msgstr "never opened"
 
+#: src/features/analytics/text.ts
+msgid "New"
+msgstr "New"
+
 #: src/features/analytics/Insights.tsx
 msgid "New {kind}: {value} with {count}, none in the compared days."
 msgstr "New {kind}: {value} with {count}, none in the compared days."
@@ -1317,6 +1405,10 @@ msgstr "New {kind}: {value} with {count}, none in the compared days."
 #: src/features/analytics/Insights.tsx
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."
 msgstr "New {kind}: {value}. {metric}: {now}, none in the compared days."
+
+#: src/features/analytics/Overview.tsx
+msgid "New and returning"
+msgstr "New and returning"
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -1329,6 +1421,10 @@ msgstr "New goal"
 #: src/features/analytics/Sharing.tsx
 msgid "New link"
 msgstr "New link"
+
+#: src/features/analytics/text.ts
+msgid "New or returning"
+msgstr "New or returning"
 
 #: src/features/analytics/Annotations.tsx
 msgid "New pricing page"
@@ -1349,6 +1445,18 @@ msgstr "No alerts yet."
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "No comparison"
+
+#: src/features/analytics/Settings.tsx
+msgid "No consent features are offered."
+msgstr "No consent features are offered."
+
+#: src/features/analytics/Overview.tsx
+msgid "No consented visitors in this range."
+msgstr "No consented visitors in this range."
+
+#: src/features/analytics/Retention.tsx
+msgid "No consented visitors yet"
+msgstr "No consented visitors yet"
 
 #: src/features/analytics/Support.tsx
 msgid "No conversations, feedback, ratings or discussions from these pages in this range."
@@ -1466,6 +1574,10 @@ msgid "Off"
 msgstr "Off"
 
 #: src/features/analytics/Settings.tsx
+msgid "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+msgstr "Offered only to visitors who agree in your consent tool. Everyone else is counted exactly as before, one day at a time and without anything stored on the device."
+
+#: src/features/analytics/Settings.tsx
 msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
 msgstr "Older than 72 hours. Apps keep events without a connection for at most that long."
 
@@ -1521,6 +1633,10 @@ msgstr "Only the country is kept, never the region or city."
 msgid "Only totals are shown. There is no list of individual visitors."
 msgstr "Only totals are shown. There is no list of individual visitors."
 
+#: src/features/analytics/parts.tsx
+msgid "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+msgstr "Only visitors who agreed to a persistent id are counted here. Everyone else is counted one day at a time."
+
 #: src/features/analytics/Settings.tsx
 msgid "Only with consent"
 msgstr "Only with consent"
@@ -1532,6 +1648,10 @@ msgstr "Only with prop"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+
+#: src/features/analytics/Retention.tsx
+msgid "Open consent features"
+msgstr "Open consent features"
 
 #: src/features/analytics/SharePage.tsx
 msgid "Open report"
@@ -1712,6 +1832,10 @@ msgstr "per hour"
 msgid "per week"
 msgstr "per week"
 
+#: src/features/analytics/Settings.tsx
+msgid "Persistent id"
+msgstr "Persistent id"
+
 #: src/features/analytics/text.ts
 msgid "Phone"
 msgstr "Phone"
@@ -1763,6 +1887,14 @@ msgstr "Properties for children keep no props, only the address of outbound link
 #: src/features/analytics/Settings.tsx
 msgid "Properties for children keep no props, so none can be tracked."
 msgstr "Properties for children keep no props, so none can be tracked."
+
+#: src/features/analytics/Settings.tsx
+msgid "Properties for children never keep an id on the device or link visits to a contact."
+msgstr "Properties for children never keep an id on the device or link visits to a contact."
+
+#: src/features/analytics/Retention.tsx
+msgid "Properties for children never keep an id on the device, so they have no retention."
+msgstr "Properties for children never keep an id on the device, so they have no retention."
 
 #: src/features/analytics/Settings.tsx
 msgid "Property name"
@@ -1823,6 +1955,14 @@ msgstr "Ready"
 msgid "Realtime"
 msgstr "Realtime"
 
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour, last at {builtAt}."
+msgstr "Rebuilt every hour, last at {builtAt}."
+
+#: src/features/analytics/Retention.tsx
+msgid "Rebuilt every hour."
+msgstr "Rebuilt every hour."
+
 #: src/features/analytics/text.ts
 msgid "Referral"
 msgstr "Referral"
@@ -1879,6 +2019,19 @@ msgstr "Report"
 #: src/features/analytics/Settings.tsx
 msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
 msgstr "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Overview.tsx
+msgid "Retention"
+msgstr "Retention"
+
+#: src/features/analytics/Retention.tsx
+msgid "Retention needs consent features"
+msgstr "Retention needs consent features"
+
+#: src/features/analytics/text.ts
+msgid "Returning"
+msgstr "Returning"
 
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/text.ts
@@ -2110,6 +2263,10 @@ msgstr "Test events"
 #: src/features/analytics/SharePage.tsx
 msgid "That password is not right."
 msgstr "That password is not right."
+
+#: src/features/analytics/Funnels.tsx
+msgid "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
+msgstr "The consented counts follow visitors with a persistent id from one visit and day to the next, so a step reached on a later day still counts."
 
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
@@ -2355,6 +2512,10 @@ msgstr "Try again"
 msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
 msgstr "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
 
+#: src/features/analytics/Retention.tsx
+msgid "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+msgstr "Turn on the persistent id in the consent features, then call yuva.consent with persistent set to true."
+
 #: src/features/analytics/Funnels.tsx
 msgid "Two to eight goals, in the order visitors reach them within one visit."
 msgstr "Two to eight goals, in the order visitors reach them within one visit."
@@ -2437,6 +2598,7 @@ msgstr "Views rose to {now} in two hours, against {usual} usually."
 msgid "Visit duration"
 msgstr "Visit duration"
 
+#: src/features/analytics/Retention.tsx
 #: src/features/analytics/text.ts
 msgid "Visitors"
 msgstr "Visitors"
@@ -2444,6 +2606,10 @@ msgstr "Visitors"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Visitors in the last 30 minutes"
+
+#: src/features/analytics/Retention.tsx
+msgid "Visitors who came back"
+msgstr "Visitors who came back"
 
 #: src/features/analytics/text.ts
 msgid "Visitors who reached the goal, per day, added up over the days of the range."
@@ -2493,9 +2659,17 @@ msgstr "Watch it live"
 msgid "Web"
 msgstr "Web"
 
+#: src/features/analytics/Retention.tsx
+msgid "Week {period}"
+msgstr "Week {period}"
+
 #: src/features/analytics/Alerts.tsx
 msgid "Weekly"
 msgstr "Weekly"
+
+#: src/features/analytics/Retention.tsx
+msgid "Weeks"
+msgstr "Weeks"
 
 #: src/features/analytics/Insights.tsx
 msgid "What changed"
@@ -2526,6 +2700,18 @@ msgid "With data-consent=\"required\" the script sends nothing until your consen
 msgstr "With data-consent=\"required\" the script sends nothing until your consent tool says the visitor agreed. Set Collection to “Only with consent” in the general settings too, so the server refuses events without it."
 
 #: src/features/analytics/Settings.tsx
+msgid "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+msgstr "With yuva.consent and persistent set to true, the device keeps a random id for 13 months. The visitor counts once over several days, is told apart as new or returning, fills retention and is followed across days in funnels. Never under Do Not Track or Global Privacy Control."
+
+#: src/features/analytics/text.ts
+msgid "Without consent"
+msgstr "Without consent"
+
+#: src/features/analytics/Retention.tsx
+msgid "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+msgstr "Without cookies a visitor is new every day, so nobody can be followed from one day to the next. Only visitors who agree to a persistent id in your consent tool show up here."
+
+#: src/features/analytics/Settings.tsx
 msgid "Without cookies, for everyone"
 msgstr "Without cookies, for everyone"
 
@@ -2540,3 +2726,7 @@ msgstr "Your access ended. Enter the password again to keep reading."
 #: src/features/analytics/Sharing.tsx
 msgid "Your new share link"
 msgstr "Your new share link"
+
+#: src/features/analytics/Settings.tsx
+msgid "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."
+msgstr "yuva.identify with a token from your backend, signed like a chat session, links the visitor’s visits to their contact. They show on the contact’s page under Recent visits. Forged or reused tokens are ignored."

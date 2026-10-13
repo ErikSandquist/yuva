@@ -448,6 +448,24 @@ export function useFunnelReport(id: string, funnelId: string | undefined, range:
   })
 }
 
+export type RetentionGrain = "day" | "week" | "month"
+
+export function useRetention(id: string, grain: RetentionGrain, enabled: boolean) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.base, "retention", grain],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/retention", {
+          params: { path: { propertyId: id }, query: { grain } },
+        })
+      ),
+    placeholderData: keepPreviousData,
+    staleTime: 5 * 60_000,
+    enabled,
+  })
+}
+
 export function useSegments(id: string) {
   const m = useMeta(id)
   return useQuery({
