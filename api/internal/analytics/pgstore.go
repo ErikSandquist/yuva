@@ -84,12 +84,14 @@ type visitRow struct {
 	interactive           bool
 	engaged               int64
 	info                  *VisitInfo
+	persistent            bool
 }
 
 func (v *visitRow) add(e *Event) {
 	if v.info == nil && e.Info != nil {
 		v.info = e.Info
 	}
+	v.persistent = v.persistent || e.Persistent
 	switch e.Kind {
 	case KindEngagement:
 		if e.EngagedMS != nil {
@@ -238,6 +240,9 @@ func (s *PGStore) Ingest(ctx context.Context, b Batch, now time.Time) (IngestRes
 			return err
 		}
 		if err := markBots(ctx, tx, b.Bots, stale.Add(-VisitGap), changed.late); err != nil {
+			return err
+		}
+		if err := persistVisitors(ctx, tx, visits); err != nil {
 			return err
 		}
 		if err := addCounts(ctx, tx, accepted, drops); err != nil {
@@ -632,23 +637,166 @@ func markBots(ctx context.Context, tx pgx.Tx, bots []BotVisitor, endedBy time.Ti
 UPDATE analytics_visits v SET bot = true
 FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[]) AS u(workspace_id, property_id, day, visitor)
 WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visitor = u.visitor AND NOT v.bot
-RETURNING v.workspace_id, v.property_id, v.day, v.ended_at <= $5`,
+RETURNING v.workspace_id, v.property_id, v.day, v.ended_at <= $5, v.persistent, v.visitor`,
 		ws, props, days, visitors, endedBy)
 	if err != nil {
 		return fmt.Errorf("mark bots: %w", err)
 	}
-	defer rows.Close()
+	var pws, pprops []uuid.UUID
+	var pdays []time.Time
+	var pvisitors []int64
 	for rows.Next() {
 		var k dayKey
-		var ended bool
-		if err := rows.Scan(&k.ws, &k.property, &k.day, &ended); err != nil {
+		var ended, persistent bool
+		var visitor int64
+		if err := rows.Scan(&k.ws, &k.property, &k.day, &ended, &persistent, &visitor); err != nil {
+			rows.Close()
 			return fmt.Errorf("mark bots: %w", err)
 		}
 		if ended {
 			late[dayKey{k.ws, k.property, k.day.UTC()}] = true
 		}
+		if persistent {
+			pws, pprops, pdays, pvisitors = append(pws, k.ws), append(pprops, k.property), append(pdays, k.day), append(pvisitors, visitor)
+		}
 	}
-	return rows.Err()
+	rows.Close()
+	if err := rows.Err(); err != nil || len(pvisitors) == 0 {
+		return err
+	}
+	if _, err := tx.Exec(ctx, `DELETE FROM analytics_persistent_days d
+USING unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[]) AS u(workspace_id, property_id, day, visitor)
+WHERE d.workspace_id = u.workspace_id AND d.property_id = u.property_id AND d.visitor = u.visitor AND d.day = u.day`,
+		pws, pprops, pdays, pvisitors); err != nil {
+		return fmt.Errorf("mark bots: %w", err)
+	}
+	return nil
+}
+
+type persistentKey struct {
+	ws, property uuid.UUID
+	visitor      int64
+}
+
+// persistVisitors records the batch's visits of consented visitors with a persistent id: their first
+// and last days, their cohort days (but for bots), whether each visit's day was their first, and the
+// contact an identity token linked them to. Batches without such visits run none of it.
+func persistVisitors(ctx context.Context, tx pgx.Tx, visits map[visitKey3]*visitRow) error {
+	var list []*visitRow
+	span := map[persistentKey][2]time.Time{}
+	for _, v := range visits {
+		if !v.persistent || !v.active {
+			continue
+		}
+		list = append(list, v)
+		k := persistentKey{v.ws, v.property, v.visitor}
+		if d, ok := span[k]; ok {
+			span[k] = [2]time.Time{minTime(d[0], v.day), maxTime(d[1], v.day)}
+		} else {
+			span[k] = [2]time.Time{v.day, v.day}
+		}
+	}
+	if len(list) == 0 {
+		return nil
+	}
+	keys := slices.SortedFunc(maps.Keys(span), func(a, b persistentKey) int {
+		return cmp.Or(a.property.Compare(b.property), cmp.Compare(a.visitor, b.visitor))
+	})
+	n := len(keys)
+	ws, props, visitors, first, last := make([]uuid.UUID, n), make([]uuid.UUID, n), make([]int64, n), make([]time.Time, n), make([]time.Time, n)
+	for i, k := range keys {
+		ws[i], props[i], visitors[i], first[i], last[i] = k.ws, k.property, k.visitor, span[k][0], span[k][1]
+	}
+	rows, err := tx.Query(ctx, `
+INSERT INTO analytics_persistent_visitors (workspace_id, property_id, visitor, first_day, last_day)
+SELECT * FROM unnest($1::uuid[], $2::uuid[], $3::bigint[], $4::date[], $5::date[])
+ON CONFLICT (property_id, visitor) DO UPDATE SET
+    first_day = least(analytics_persistent_visitors.first_day, EXCLUDED.first_day),
+    last_day = greatest(analytics_persistent_visitors.last_day, EXCLUDED.last_day)
+WHERE analytics_persistent_visitors.workspace_id = EXCLUDED.workspace_id
+RETURNING workspace_id, property_id, visitor, first_day, contact_id`, ws, props, visitors, first, last)
+	if err != nil {
+		return fmt.Errorf("persistent visitors: %w", err)
+	}
+	type known struct {
+		first   time.Time
+		contact *uuid.UUID
+	}
+	found := map[persistentKey]known{}
+	for rows.Next() {
+		var k persistentKey
+		var kn known
+		if err := rows.Scan(&k.ws, &k.property, &k.visitor, &kn.first, &kn.contact); err != nil {
+			rows.Close()
+			return fmt.Errorf("persistent visitors: %w", err)
+		}
+		kn.first = kn.first.UTC()
+		found[k] = kn
+	}
+	rows.Close()
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("persistent visitors: %w", err)
+	}
+	slices.SortFunc(list, func(a, b *visitRow) int {
+		return cmp.Or(a.property.Compare(b.property), a.day.Compare(b.day), cmp.Compare(a.visit, b.visit))
+	})
+	var (
+		vws, vprops []uuid.UUID
+		vdays       []time.Time
+		vvisits     []int64
+		vtypes      []int16
+		vcontacts   []*uuid.UUID
+		dws, dprops []uuid.UUID
+		dvisitors   []int64
+		ddays       []time.Time
+	)
+	for _, v := range list {
+		kn, ok := found[persistentKey{v.ws, v.property, v.visitor}]
+		if !ok {
+			continue
+		}
+		t := VisitorNew
+		if v.day.After(kn.first) {
+			t = VisitorReturning
+		}
+		vws, vprops, vdays, vvisits = append(vws, v.ws), append(vprops, v.property), append(vdays, v.day), append(vvisits, v.visit)
+		vtypes, vcontacts = append(vtypes, int16(t)), append(vcontacts, kn.contact)
+	}
+	rows, err = tx.Query(ctx, `
+UPDATE analytics_visits v SET persistent = true, visitor_type = u.visitor_type, contact_id = u.contact_id
+FROM unnest($1::uuid[], $2::uuid[], $3::date[], $4::bigint[], $5::smallint[], $6::uuid[]) AS u(workspace_id, property_id, day, visit, visitor_type, contact_id)
+WHERE v.workspace_id = u.workspace_id AND v.property_id = u.property_id AND v.day = u.day AND v.visit = u.visit
+RETURNING v.workspace_id, v.property_id, v.visitor, v.day, v.bot`, vws, vprops, vdays, vvisits, vtypes, vcontacts)
+	if err != nil {
+		return fmt.Errorf("persistent visits: %w", err)
+	}
+	for rows.Next() {
+		var w, p uuid.UUID
+		var visitor int64
+		var day time.Time
+		var bot bool
+		if err := rows.Scan(&w, &p, &visitor, &day, &bot); err != nil {
+			rows.Close()
+			return fmt.Errorf("persistent visits: %w", err)
+		}
+		if !bot {
+			dws, dprops, dvisitors, ddays = append(dws, w), append(dprops, p), append(dvisitors, visitor), append(ddays, day)
+		}
+	}
+	rows.Close()
+	if err := rows.Err(); err != nil {
+		return fmt.Errorf("persistent visits: %w", err)
+	}
+	if len(dvisitors) == 0 {
+		return nil
+	}
+	if _, err := tx.Exec(ctx, `
+INSERT INTO analytics_persistent_days (workspace_id, property_id, visitor, day)
+SELECT DISTINCT * FROM unnest($1::uuid[], $2::uuid[], $3::bigint[], $4::date[]) ORDER BY 2, 3, 4
+ON CONFLICT (property_id, visitor, day) DO NOTHING`, dws, dprops, dvisitors, ddays); err != nil {
+		return fmt.Errorf("persistent days: %w", err)
+	}
+	return nil
 }
 
 func addCounts(ctx context.Context, tx pgx.Tx, accepted map[dayKey]int64, drops []Count) error {

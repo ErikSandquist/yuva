@@ -287,6 +287,14 @@ func (f *propertyFields) validate() error {
 	if f.audience == string(oas.AnalyticsAudienceChildren) && (len(f.consentFeatures) > 0 || len(f.trackedProps) > 0) {
 		return errValidation("a children's property cannot offer consent features or tracked props")
 	}
+	if slices.Contains(f.consentFeatures, string(oas.AnalyticsConsentIdentify)) {
+		if !slices.Contains(f.consentFeatures, string(oas.AnalyticsConsentPersistent)) {
+			return errValidation("identify needs persistent: a visitor is identified through their persistent id")
+		}
+		if f.inboxID == nil {
+			return errValidation("identify needs a linked inbox, whose identity secret signs the tokens")
+		}
+	}
 	if f.retention != nil && (*f.retention < 1 || *f.retention > 120) {
 		return errValidation("retention_months must be 1 to 120, or null to keep rollups forever")
 	}

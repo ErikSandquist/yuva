@@ -267,10 +267,73 @@ func trafficQuery(ctx context.Context, tx pgx.Tx, q Query) (Result, error) {
 			}
 			p.open = days(q.From, q.To)
 		}
-		res, err = p.run(ctx, tx)
-		return err
+		if res, err = p.run(ctx, tx); err != nil {
+			return err
+		}
+		return p.consentedOnce(ctx, tx, &res)
 	}()
 	return res, err
+}
+
+// consentedOnce counts a visitor with a persistent id once over the totals and once per week or
+// month bucket, by taking the days they were seen beyond their first off the visitors. Without
+// filters their cohort days say which days those were; with filters, the raw rows of the days inside
+// the raw window. Properties without such visitors in the range pay one index probe.
+func (p *plan) consentedOnce(ctx context.Context, tx pgx.Tx, res *Result) error {
+	from, to := p.q.From, p.q.To
+	if len(p.q.Filters) > 0 && from.Before(p.q.RawFrom) {
+		from = p.q.RawFrom
+	}
+	if p.need()&needVisitors == 0 || !from.Before(to) {
+		return nil
+	}
+	var found bool
+	if err := tx.QueryRow(ctx, `SELECT EXISTS (SELECT 1 FROM analytics_persistent_days
+		WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4)`, p.q.WorkspaceID, p.q.PropertyID, from, to).Scan(&found); err != nil || !found {
+		return err
+	}
+	src := `SELECT visitor, day FROM analytics_persistent_days WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4`
+	args := []any{p.q.WorkspaceID, p.q.PropertyID, from, to}
+	if len(p.q.Filters) > 0 {
+		sc := newScope(p.q.WorkspaceID, p.q.PropertyID, from, to)
+		for _, f := range p.q.Filters {
+			if err := sc.addFilter(f); err != nil {
+				return badQuery("%s", err.Error())
+			}
+		}
+		sc.visitWhere = append(sc.visitWhere, "v.persistent")
+		src, args = "WITH "+sc.visitsCTE()+" SELECT DISTINCT v.visitor, v.day FROM vv v", sc.args
+	}
+	buckets := len(p.dims) == 0 && (p.grain == "week" || p.grain == "month")
+	sql := `SELECT true, NULL::date, (count(*) - count(DISTINCT visitor))::bigint FROM (` + src + `) s`
+	if buckets {
+		sql = `SELECT GROUPING(b) = 1, b, (count(*) - count(DISTINCT visitor))::bigint FROM (
+			SELECT visitor, date_trunc('` + p.grain + `', day::timestamp)::date AS b FROM (` + src + `) s) x GROUP BY GROUPING SETS ((), (b))`
+	}
+	rows, err := tx.Query(ctx, sql, args...)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var total bool
+		var b *time.Time
+		var n int64
+		if err := rows.Scan(&total, &b, &n); err != nil {
+			return err
+		}
+		if total {
+			res.Totals.Visitors -= n
+			continue
+		}
+		key := b.UTC().Format(time.DateOnly)
+		for i := range res.Rows {
+			if res.Rows[i].Dims[0] == key {
+				res.Rows[i].Sums.Visitors -= n
+			}
+		}
+	}
+	return rows.Err()
 }
 
 // queryLimits sets a query transaction's timeout and memory. JIT compiling costs more than it saves

@@ -16,9 +16,10 @@ import (
 )
 
 // FunnelStep is how many visitors (added up per day) and visits reached a step after every step
-// before it within one visit.
+// before it within one visit, and how many visitors with a persistent id reached it after every step
+// before it anywhere in the range.
 type FunnelStep struct {
-	Visitors, Visits int64
+	Visitors, Visits, Consented int64
 }
 
 // FunnelWorkers spreads the scan of a busy month over more cores; funnels are few and their answers
@@ -72,34 +73,59 @@ func (s *PGStore) Funnel(ctx context.Context, ws, property uuid.UUID, from, to t
 			return err
 		}
 		start, sum := from, int64(0)
+		consented := map[int64][]funnelEvent{}
 		for d := from; !d.After(to); d = d.AddDate(0, 0, 1) {
 			if sum += perDay[d]; d.Equal(to) || sum+perDay[d.AddDate(0, 0, 1)] > FunnelChunkEvents {
-				if err := funnelChunk(ctx, tx, ws, property, start, d, steps, out); err != nil {
+				if err := funnelChunk(ctx, tx, ws, property, start, d, steps, out, consented); err != nil {
 					return err
 				}
 				start, sum = d.AddDate(0, 0, 1), 0
 			}
+		}
+		for _, evs := range consented {
+			followVisitor(evs, len(steps), out)
 		}
 		return nil
 	})
 	return out, err
 }
 
-// funnelChunk reads the steps' events of the days from to and adds how far their visits got to out.
-func funnelChunk(ctx context.Context, tx pgx.Tx, ws, property uuid.UUID, from, to time.Time, steps []Goal, out []FunnelStep) error {
-	bots := map[[2]int64]bool{}
-	rows, err := tx.Query(ctx, `SELECT (day - DATE '2000-01-01')::int8, visit FROM analytics_visits
-		WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4 AND bot`, ws, property, from, to)
+// followVisitor counts how far one visitor with a persistent id got over every visit and day.
+func followVisitor(evs []funnelEvent, steps int, out []FunnelStep) {
+	slices.SortFunc(evs, func(a, b funnelEvent) int { return cmp.Compare(a.at, b.at) })
+	reached := 0
+	for _, e := range evs {
+		if reached < steps && e.at&(1<<reached) != 0 {
+			reached++
+		}
+	}
+	for j := 0; j < reached; j++ {
+		out[j].Consented++
+	}
+}
+
+// funnelChunk reads the steps' events of the days from to and adds how far their visits got to out;
+// the events of visitors with a persistent id are also kept in consented, by visitor, to be followed
+// over the whole range.
+func funnelChunk(ctx context.Context, tx pgx.Tx, ws, property uuid.UUID, from, to time.Time, steps []Goal, out []FunnelStep, consented map[int64][]funnelEvent) error {
+	bots, persistent := map[[2]int64]bool{}, map[[2]int64]bool{}
+	rows, err := tx.Query(ctx, `SELECT (day - DATE '2000-01-01')::int8, visit, bot FROM analytics_visits
+		WHERE workspace_id = $1 AND property_id = $2 AND day BETWEEN $3 AND $4 AND (bot OR persistent)`, ws, property, from, to)
 	if err != nil {
 		return err
 	}
 	for rows.Next() {
 		var k [2]int64
-		if err := rows.Scan(&k[0], &k[1]); err != nil {
+		var bot bool
+		if err := rows.Scan(&k[0], &k[1], &bot); err != nil {
 			rows.Close()
 			return err
 		}
-		bots[k] = true
+		if bot {
+			bots[k] = true
+		} else {
+			persistent[k] = true
+		}
 	}
 	rows.Close()
 	if err := rows.Err(); err != nil {
@@ -128,7 +154,11 @@ WHERE e.workspace_id = $1 AND e.property_id = $2 AND e.day BETWEEN $3 AND $4 AND
 		}
 		day, visit := int64(binary.BigEndian.Uint64(raw[0])), int64(binary.BigEndian.Uint64(raw[2]))
 		if !bots[[2]int64{day, visit}] {
-			byDay[day] = append(byDay[day], funnelEvent{int64(binary.BigEndian.Uint64(raw[1])), visit, binary.BigEndian.Uint64(raw[3])})
+			e := funnelEvent{int64(binary.BigEndian.Uint64(raw[1])), visit, binary.BigEndian.Uint64(raw[3])}
+			byDay[day] = append(byDay[day], e)
+			if persistent[[2]int64{day, visit}] {
+				consented[e.visitor] = append(consented[e.visitor], e)
+			}
 		}
 	}
 	rows.Close()

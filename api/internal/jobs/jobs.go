@@ -57,6 +57,7 @@ const (
 	AnalyticsPartitionsInterval = time.Hour
 	AnalyticsRollupScanInterval = 5 * time.Minute
 	AnalyticsSaltsInterval      = 15 * time.Minute
+	AnalyticsCohortsInterval    = time.Hour
 	AnalyticsGeoIPInterval      = 24 * time.Hour
 	AnalyticsAlertsInterval     = time.Hour
 	AnalyticsReportsInterval    = time.Hour
@@ -112,6 +113,9 @@ func New(pool *pgxpool.Pool, q *store.Queries, log *slog.Logger, broadcastWorker
 			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsSaltsInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return AnalyticsSaltsArgs{}, onAnalytics
 			}, &river.PeriodicJobOpts{ID: "analytics_salts", RunOnStart: true}),
+			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsCohortsInterval), func() (river.JobArgs, *river.InsertOpts) {
+				return AnalyticsCohortsArgs{}, onAnalytics
+			}, &river.PeriodicJobOpts{ID: "analytics_cohorts", RunOnStart: true}),
 			river.NewPeriodicJob(river.PeriodicInterval(AnalyticsGeoIPInterval), func() (river.JobArgs, *river.InsertOpts) {
 				return AnalyticsGeoIPArgs{}, onAnalytics
 			}, &river.PeriodicJobOpts{ID: "analytics_geoip"}),
@@ -148,6 +152,12 @@ func (AnalyticsRollupScanArgs) Kind() string { return "analytics_rollup_scan" }
 type AnalyticsSaltsArgs struct{}
 
 func (AnalyticsSaltsArgs) Kind() string { return "analytics_salts" }
+
+// AnalyticsCohortsArgs is worked by the api package: it forgets persistent ids first seen more than
+// 13 months ago and rebuilds the retention cohorts.
+type AnalyticsCohortsArgs struct{}
+
+func (AnalyticsCohortsArgs) Kind() string { return "analytics_cohorts" }
 
 // AnalyticsGeoIPArgs is worked by the api package: it tells every process to fetch the month's
 // GeoIP database if it has not got it yet.

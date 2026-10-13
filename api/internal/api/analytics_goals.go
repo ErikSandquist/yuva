@@ -578,7 +578,7 @@ func (s *Server) GetAnalyticsFunnelReport(ctx context.Context, req oas.GetAnalyt
 	out := oas.AnalyticsFunnelReport{FunnelId: f.ID, From: openapi_types.Date{Time: from}, To: openapi_types.Date{Time: to},
 		RawWindowFrom: openapi_types.Date{Time: rawFrom}, Steps: make([]oas.AnalyticsFunnelStep, len(steps))}
 	for i, c := range counts {
-		st := oas.AnalyticsFunnelStep{GoalId: f.Steps[i], Name: names[i], Visitors: c.Visitors, Visits: c.Visits, StepRate: 100}
+		st := oas.AnalyticsFunnelStep{GoalId: f.Steps[i], Name: names[i], Visitors: c.Visitors, Visits: c.Visits, ConsentedVisitors: c.Consented, StepRate: 100}
 		if first := counts[0].Visitors; first > 0 {
 			st.ConversionRate = percent(c.Visitors, first)
 		}

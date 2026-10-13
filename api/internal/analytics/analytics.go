@@ -40,6 +40,19 @@ const (
 	PlatformServer  Platform = 4
 )
 
+// VisitorType tells a consented visitor's first day (new) from their later ones; every other
+// visit is VisitorAnonymous.
+type VisitorType int16
+
+const (
+	VisitorAnonymous VisitorType = 0
+	VisitorNew       VisitorType = 1
+	VisitorReturning VisitorType = 2
+)
+
+// VisitorTypeName is the visitor_type dimension's value.
+func VisitorTypeName(t VisitorType) string { return visitorTypeNames[int(t)] }
+
 // Drop reasons, as counted per property and day.
 const (
 	ReasonAccepted  = "accepted"
@@ -94,6 +107,8 @@ type Event struct {
 	Props       map[string]string
 	Revenue     *Revenue
 	Info        *VisitInfo
+	// Persistent: Visitor is the hash of a consented persistent id, the same on every day.
+	Persistent bool
 }
 
 // Count is a number of events of a property and day for one reason.
@@ -160,6 +175,8 @@ type Store interface {
 	Funnel(ctx context.Context, workspaceID, propertyID uuid.UUID, from, to time.Time, steps []Goal) ([]FunnelStep, error)
 	// RawEvents calls fn with every event of a property's day that is not a bot's, in time order.
 	RawEvents(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, fn func(RawEvent) error) error
+	// ContactVisits lists a contact's linked visits, newest first, on the properties of inboxes (all when nil).
+	ContactVisits(ctx context.Context, workspaceID, contactID uuid.UUID, inboxes []uuid.UUID, after *VisitCursor, limit int) ([]ContactVisit, error)
 }
 
 // LocalDay is the date of t in loc, as midnight UTC, the form days are stored and compared in.

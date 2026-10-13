@@ -265,6 +265,9 @@ func (s *Server) forgetReader(ctx context.Context, q *store.Queries, personID uu
 			if err := s.rememberContactObjections(ctx, q, c.WorkspaceID, c.ID); err != nil {
 				return err
 			}
+			if err := deleteContactAnalytics(ctx, q, c.WorkspaceID, c.ID); err != nil {
+				return err
+			}
 			_, err = q.DeleteContact(ctx, store.DeleteContactParams{WorkspaceID: c.WorkspaceID, ID: c.ID})
 		} else {
 			err = q.ClearContactPerson(ctx, store.ClearContactPersonParams{WorkspaceID: c.WorkspaceID, ID: c.ID})

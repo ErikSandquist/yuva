@@ -58,6 +58,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"GetContactPresence": {oas.ContactsRead},
 	"GetContactSummary":  {oas.ContactsRead, oas.ConversationsRead},
 	"ListContactNotes":   {oas.ContactsRead},
+	"ListContactVisits":  {oas.ContactsRead, oas.AnalyticsRead},
 
 	"CreateContact":             {oas.ContactsWrite},
 	"UpdateContact":             {oas.ContactsWrite},
@@ -214,6 +215,8 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"QueryAnalytics":          {oas.AnalyticsRead},
 	"GetAnalyticsRealtime":    {oas.AnalyticsRead},
 	"GetAnalyticsHealth":      {oas.AnalyticsRead},
+	"GetAnalyticsRetention":   {oas.AnalyticsRead},
+	"DeleteAnalyticsVisitor":  {oas.AnalyticsManage},
 	"SendAnalyticsEvents":     {oas.AnalyticsWrite},
 
 	"ListAnalyticsGoals":        {oas.AnalyticsRead},

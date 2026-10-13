@@ -437,12 +437,14 @@ WHERE c.workspace_id = @workspace_id AND c.migration_id = @migration_id
 ORDER BY c.id
 LIMIT @max_rows;
 
--- Messages cascade with their author contact, so a contact that wrote anywhere stays.
+-- Messages cascade with their author contact, so a contact that wrote anywhere stays, and so does one
+-- that analytics visits are linked to.
 -- name: DeleteLeftoverMigrationContacts :execrows
 DELETE FROM contacts ct
 WHERE ct.workspace_id = @workspace_id AND ct.migration_id = @migration_id
   AND NOT EXISTS (SELECT 1 FROM conversations c WHERE c.workspace_id = ct.workspace_id AND c.contact_id = ct.id)
-  AND NOT EXISTS (SELECT 1 FROM messages m WHERE m.workspace_id = ct.workspace_id AND m.author_contact_id = ct.id);
+  AND NOT EXISTS (SELECT 1 FROM messages m WHERE m.workspace_id = ct.workspace_id AND m.author_contact_id = ct.id)
+  AND NOT EXISTS (SELECT 1 FROM analytics_persistent_visitors v WHERE v.workspace_id = ct.workspace_id AND v.contact_id = ct.id);
 
 -- An audit entry is kept while its migration runs and for the audit period after it ended or was deleted.
 -- name: DeleteOldMigrationAudit :execrows

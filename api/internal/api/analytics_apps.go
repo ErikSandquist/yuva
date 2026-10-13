@@ -130,10 +130,15 @@ func (s *Server) collectApp(w http.ResponseWriter, r *http.Request, cp *cachedPr
 	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
 	consent := prop.Collection == string(oas.AnalyticsCollectionConsent)
 	items := make([]analyticsItem, 0, len(evs))
+	var changes []collectEvent
 	for _, e := range evs {
 		pg, ok := analytics.ParseScreen(e.U)
 		if !ok {
 			drop(analytics.ReasonInvalid, 1)
+			continue
+		}
+		if e.N == consentEvent {
+			changes = append(changes, e)
 			continue
 		}
 		var at time.Time
@@ -152,10 +157,19 @@ func (s *Server) collectApp(w http.ResponseWriter, r *http.Request, cp *cachedPr
 				continue
 			}
 		}
+		if e.C != nil && e.C.J != "" {
+			changes = append(changes, e)
+		}
 		if consent && (e.C == nil || e.C.A != 1) {
 			continue
 		}
 		items = append(items, analyticsItem{e: e, page: pg, custom: ce, at: at})
+	}
+	if len(changes) > 0 {
+		if err := s.takeConsentChanges(r.Context(), r, cp, changes, now); err != nil {
+			writeProblem(w, err)
+			return
+		}
 	}
 	if len(items) == 0 {
 		w.WriteHeader(http.StatusAccepted)
@@ -183,6 +197,7 @@ func (s *Server) collectApp(w http.ResponseWriter, r *http.Request, cp *cachedPr
 	}
 	for i := range items {
 		items[i].visitor, items[i].describe = visitor, describe
+		s.consentedVisitor(r.Context(), cp, items[i].e.C, &items[i])
 	}
 	if err := s.takeAnalytics(r.Context(), cp, now, items, drop); err != nil {
 		writeProblem(w, err)
@@ -281,20 +296,29 @@ func (s *Server) SendAnalyticsEvents(ctx context.Context, req oas.SendAnalyticsE
 	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
 	consent := prop.Collection == string(oas.AnalyticsCollectionConsent)
 	items := make([]analyticsItem, 0, len(req.Body.Events))
+	var changes []collectEvent
 	for i, se := range req.Body.Events {
-		item, reason, err := s.serverItem(cp, se, now, children, consent)
+		item, reason, err := s.serverItem(ctx, cp, se, now, children, consent)
 		if err != nil {
 			drop(analytics.ReasonInvalid, 1)
 			out.Errors = append(out.Errors, oas.AnalyticsEventError{Index: i, Detail: err.Error()})
 			continue
 		}
 		out.Accepted++
+		if reason != notCollected && se.IdentityToken != nil && se.PersistentId != nil && se.Consent != nil && *se.Consent {
+			changes = append(changes, collectEvent{N: consentEvent, C: &collectConsent{A: 1, P: *se.PersistentId, J: *se.IdentityToken}})
+		}
 		switch reason {
 		case "":
 			items = append(items, item)
 		case notCollected:
 		default:
 			drop(reason, 1)
+		}
+	}
+	if len(changes) > 0 {
+		if err := s.takeConsentChanges(ctx, nil, cp, changes, now); err != nil {
+			return nil, err
 		}
 	}
 	slices.SortStableFunc(items, func(a, b analyticsItem) int { return a.at.Compare(b.at) })
@@ -319,7 +343,7 @@ const notCollected = "-"
 
 // serverItem checks one server-side event; reason names why a valid event is dropped before it
 // reaches its visit (late, excluded, bot, rate, or notCollected).
-func (s *Server) serverItem(cp *cachedProperty, se oas.AnalyticsServerEvent, now time.Time, children, consent bool) (analyticsItem, string, error) {
+func (s *Server) serverItem(ctx context.Context, cp *cachedProperty, se oas.AnalyticsServerEvent, now time.Time, children, consent bool) (analyticsItem, string, error) {
 	a, prop := s.analytics, cp.prop
 	e, err := serverEvent(se)
 	if err != nil {
@@ -361,6 +385,9 @@ func (s *Server) serverItem(cp *cachedProperty, se oas.AnalyticsServerEvent, now
 	}
 	at, late := eventTime(at, now)
 	item := analyticsItem{e: e, page: pg, custom: ce, at: at, visitor: v.visitor}
+	if se.PersistentId != nil && se.Consent != nil && *se.Consent {
+		s.consentedVisitor(ctx, cp, &collectConsent{A: 1, P: *se.PersistentId}, &item)
+	}
 	switch {
 	case (se.Dnt != nil && *se.Dnt) || (se.Gpc != nil && *se.Gpc) || (consent && (se.Consent == nil || !*se.Consent)):
 		return item, notCollected, nil

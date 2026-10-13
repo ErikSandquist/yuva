@@ -46,6 +46,15 @@ type AnalyticsAnnotation struct {
 	AlertID     *uuid.UUID
 }
 
+type AnalyticsCohort struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Grain       string
+	Cohort      time.Time
+	Period      int32
+	Visitors    int64
+}
+
 type AnalyticsDaily struct {
 	WorkspaceID  uuid.UUID
 	PropertyID   uuid.UUID
@@ -234,6 +243,23 @@ type AnalyticsPartialHourly struct {
 	Events      int64
 }
 
+type AnalyticsPersistentDay struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Visitor     int64
+	Day         time.Time
+}
+
+type AnalyticsPersistentVisitor struct {
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Visitor     int64
+	FirstDay    time.Time
+	LastDay     time.Time
+	ContactID   *uuid.UUID
+	LinkedAt    *time.Time
+}
+
 type AnalyticsProperty struct {
 	ID               uuid.UUID
 	WorkspaceID      uuid.UUID
@@ -263,6 +289,7 @@ type AnalyticsProperty struct {
 	UpdatedAt        time.Time
 	DeletedAt        *time.Time
 	GoalsVersion     int64
+	CohortsBuiltAt   *time.Time
 }
 
 type AnalyticsRollupDay struct {
@@ -372,6 +399,7 @@ type AnalyticsVisit struct {
 	Persistent   bool
 	ContactID    *uuid.UUID
 	Bot          bool
+	VisitorType  int16
 }
 
 type AnalyticsVisitClaim struct {

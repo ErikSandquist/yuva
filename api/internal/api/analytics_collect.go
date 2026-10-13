@@ -221,6 +221,10 @@ type cachedProperty struct {
 	loc   *time.Location
 	rules []analytics.PathRule
 	at    time.Time
+	// key is the property's visitor key, opened the first time a consented visitor needs it.
+	keyOnce sync.Once
+	key     []byte
+	keyErr  error
 }
 
 // propertyCache finds properties by public key for a minute; an unknown key is remembered too, so
@@ -532,9 +536,14 @@ type collectEvent struct {
 	P   json.RawMessage `json:"p"`
 	Rev json.RawMessage `json:"$"`
 	I   *bool           `json:"i"`
-	C   *struct {
-		A int `json:"a"`
-	} `json:"c"`
+	C   *collectConsent `json:"c"`
+}
+
+// collectConsent is an event's AnalyticsConsent.
+type collectConsent struct {
+	A int    `json:"a"`
+	P string `json:"p"`
+	J string `json:"j"`
 }
 
 // customEvent is a custom or built-in event once its name, props and revenue are checked.
@@ -636,6 +645,7 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Header.Get("Sec-GPC") == "1" || r.Header.Get("DNT") == "1" {
+		s.takeWithdrawals(w, r, cp)
 		w.WriteHeader(http.StatusAccepted)
 		return
 	}
@@ -659,6 +669,7 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	pages := make([]analytics.Page, len(evs))
 	customs := make([]*customEvent, len(evs))
 	valid := make([]bool, len(evs))
+	var changes []collectEvent
 	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
 	// In a batch an invalid event is dropped on its own, so a mistake in one custom event does not
 	// cost the page views sent with it; a single event answers why it was refused.
@@ -684,6 +695,10 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		pages[i] = pg
+		if e.N == consentEvent {
+			changes = append(changes, e)
+			continue
+		}
 		if e.N == "pageview" || e.N == "engagement" {
 			if len(e.Rev) > 0 && string(e.Rev) != "null" {
 				if refuse("only custom and built-in events carry revenue") {
@@ -707,6 +722,15 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	for i, e := range evs {
 		if valid[i] && (prop.Collection != string(oas.AnalyticsCollectionConsent) || (e.C != nil && e.C.A == 1)) {
 			keep = append(keep, i)
+		}
+		if valid[i] && e.C != nil && e.C.J != "" {
+			changes = append(changes, e)
+		}
+	}
+	if len(changes) > 0 {
+		if err := s.takeConsentChanges(ctx, r, cp, changes, now); err != nil {
+			writeProblem(w, err)
+			return
 		}
 	}
 	if len(keep) == 0 {
@@ -732,10 +756,12 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	items := make([]analyticsItem, 0, len(keep))
 	for _, i := range keep {
 		width := evs[i].W
-		items = append(items, analyticsItem{e: evs[i], page: pages[i], custom: customs[i], at: now, visitor: visitor,
+		it := analyticsItem{e: evs[i], page: pages[i], custom: customs[i], at: now, visitor: visitor,
 			describe: func(pg analytics.Page, refHost, refPath string) *analytics.VisitInfo {
 				return s.visitInfo(r, prop, short, agent, pg, refHost, refPath, width, language)
-			}})
+			}}
+		s.consentedVisitor(ctx, cp, evs[i].C, &it)
+		items = append(items, it)
 	}
 	if err := s.takeAnalytics(ctx, cp, now, items, drop); err != nil {
 		writeProblem(w, err)
@@ -801,6 +827,8 @@ type analyticsItem struct {
 	at       time.Time
 	visitor  func(salt []byte) int64
 	describe func(pg analytics.Page, refHost, refPath string) *analytics.VisitInfo
+	// persistent: visitor is a consented persistent id's hash, the same on every day.
+	persistent bool
 }
 
 // takeAnalytics puts checked events into the buffer: excluded paths and spam referrers are dropped,
@@ -851,7 +879,7 @@ func (s *Server) takeAnalytics(ctx context.Context, cp *cachedProperty, now time
 		}
 		ev := analytics.Event{
 			WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Day: v.Day, TS: it.at, Visit: v.Visit, Visitor: v.Visitor,
-			Kind: analytics.KindPageview, Name: e.N, Hostname: pg.Host, Path: path, Interactive: true,
+			Kind: analytics.KindPageview, Name: e.N, Hostname: pg.Host, Path: path, Interactive: true, Persistent: it.persistent,
 		}
 		if ce != nil {
 			ev.Kind, ev.Name, ev.Props, ev.Revenue, ev.Interactive = analytics.KindCustom, ce.name, ce.props, ce.revenue, ce.interactive

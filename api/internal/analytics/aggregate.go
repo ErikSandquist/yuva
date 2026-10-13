@@ -62,6 +62,8 @@ var (
 	deviceNames   = map[int]string{1: "desktop", 2: "mobile", 3: "tablet"}
 	screenNames   = map[int]string{1: "phone", 2: "tablet", 3: "laptop", 4: "desktop"}
 	platformNames = map[int]string{1: "web", 2: "ios", 3: "android", 4: "server"}
+	// visitorTypeNames name the visits of consented visitors with a persistent id; 0 is every other.
+	visitorTypeNames = map[int]string{int(VisitorNew): "new", int(VisitorReturning): "returning"}
 )
 
 func channelCodes() map[string]int16 {
@@ -120,6 +122,7 @@ var Dims = []Dim{
 	{Code: 21, Name: "language", Group: "v.language"},
 	{Code: 22, Name: "platform", Group: caseOf("v.platform", platformNames), Codes: codesOf(platformNames), Column: "v.platform"},
 	{Code: 23, Name: "app_version", Group: "v.app_version"},
+	{Code: 24, Name: "visitor_type", Group: caseOf("v.visitor_type", visitorTypeNames), Codes: codesOf(visitorTypeNames), Column: "v.visitor_type"},
 	{Code: DimPage, Name: "page", Page: true, Path: true},
 	{Code: DimEvent, Name: "event", Event: true},
 	{Code: DimProp, Name: "prop", Event: true},
@@ -363,7 +366,7 @@ SELECT v.day, v.visit, v.visitor, v.started_at, v.views, v.events, v.views <= 1 
     extract(epoch FROM v.ended_at - v.started_at)::bigint AS dur, ` + eng + `,
     v.entry_path, v.exit_path, v.hostname, v.channel, v.source, v.referrer_host, v.utm_source, v.utm_medium, v.utm_campaign,
     v.utm_term, v.utm_content, v.country, v.region, v.city, v.device, v.browser, v.browser_major, v.os, v.os_major, v.screen,
-    v.language, v.platform, v.app_version
+    v.language, v.platform, v.app_version, v.visitor_type
 FROM ` + from + `
 WHERE ` + strings.Join(where, " AND ") + `)`
 }

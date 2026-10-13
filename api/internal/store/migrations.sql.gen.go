@@ -483,6 +483,7 @@ DELETE FROM contacts ct
 WHERE ct.workspace_id = $1 AND ct.migration_id = $2
   AND NOT EXISTS (SELECT 1 FROM conversations c WHERE c.workspace_id = ct.workspace_id AND c.contact_id = ct.id)
   AND NOT EXISTS (SELECT 1 FROM messages m WHERE m.workspace_id = ct.workspace_id AND m.author_contact_id = ct.id)
+  AND NOT EXISTS (SELECT 1 FROM analytics_persistent_visitors v WHERE v.workspace_id = ct.workspace_id AND v.contact_id = ct.id)
 `
 
 type DeleteLeftoverMigrationContactsParams struct {
@@ -490,7 +491,8 @@ type DeleteLeftoverMigrationContactsParams struct {
 	MigrationID *uuid.UUID
 }
 
-// Messages cascade with their author contact, so a contact that wrote anywhere stays.
+// Messages cascade with their author contact, so a contact that wrote anywhere stays, and so does one
+// that analytics visits are linked to.
 func (q *Queries) DeleteLeftoverMigrationContacts(ctx context.Context, arg DeleteLeftoverMigrationContactsParams) (int64, error) {
 	result, err := q.db.Exec(ctx, deleteLeftoverMigrationContacts, arg.WorkspaceID, arg.MigrationID)
 	if err != nil {

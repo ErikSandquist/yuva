@@ -107,8 +107,14 @@ func (s *Server) DeleteAnalytics(ctx context.Context, a AnalyticsDeleteArgs, bud
 			if err == nil {
 				err = q.DeleteAnalyticsSupportRollups(ctx, store.DeleteAnalyticsSupportRollupsParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID})
 			}
+			if err == nil {
+				err = q.DeleteAnalyticsPersistentData(ctx, store.DeleteAnalyticsPersistentDataParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID})
+			}
 		default:
 			_, err = q.MarkAnalyticsDaysDirty(ctx, store.MarkAnalyticsDaysDirtyParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID, FromDay: *from, ToDay: *to})
+			if err == nil {
+				err = q.DeleteAnalyticsPersistentDays(ctx, store.DeleteAnalyticsPersistentDaysParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID, FromDay: *from, ToDay: *to})
+			}
 		}
 		if err != nil {
 			return false, err
@@ -320,6 +326,15 @@ func (w *analyticsSaltsWorker) Work(ctx context.Context, _ *river.Job[jobs.Analy
 	return err
 }
 
+type analyticsCohortsWorker struct {
+	river.WorkerDefaults[jobs.AnalyticsCohortsArgs]
+	s *Server
+}
+
+func (w *analyticsCohortsWorker) Work(ctx context.Context, _ *river.Job[jobs.AnalyticsCohortsArgs]) error {
+	return w.s.BuildAnalyticsCohorts(ctx)
+}
+
 type analyticsGeoIPWorker struct {
 	river.WorkerDefaults[jobs.AnalyticsGeoIPArgs]
 	s *Server
@@ -342,6 +357,7 @@ func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsPartitionsWorker{s: s})
 	river.AddWorker(workers, &analyticsRollupScanWorker{s: s})
 	river.AddWorker(workers, &analyticsSaltsWorker{s: s})
+	river.AddWorker(workers, &analyticsCohortsWorker{s: s})
 	river.AddWorker(workers, &analyticsGeoIPWorker{s: s})
 	river.AddWorker(workers, &analyticsExportWorker{s: s})
 	river.AddWorker(workers, &analyticsAlertsWorker{s: s})

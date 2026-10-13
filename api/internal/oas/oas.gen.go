@@ -270,6 +270,7 @@ const (
 	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
 	AnalyticsByUtmSource      AnalyticsDimension = "utm_source"
 	AnalyticsByUtmTerm        AnalyticsDimension = "utm_term"
+	AnalyticsByVisitorType    AnalyticsDimension = "visitor_type"
 	AnalyticsByWeek           AnalyticsDimension = "time:week"
 )
 
@@ -333,6 +334,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByUtmSource:
 		return true
 	case AnalyticsByUtmTerm:
+		return true
+	case AnalyticsByVisitorType:
 		return true
 	case AnalyticsByWeek:
 		return true
@@ -459,6 +462,7 @@ const (
 	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
 	AnalyticsDimUtmSource      AnalyticsFilterDimension = "utm_source"
 	AnalyticsDimUtmTerm        AnalyticsFilterDimension = "utm_term"
+	AnalyticsDimVisitorType    AnalyticsFilterDimension = "visitor_type"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsFilterDimension enum.
@@ -515,6 +519,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimUtmSource:
 		return true
 	case AnalyticsDimUtmTerm:
+		return true
+	case AnalyticsDimVisitorType:
 		return true
 	default:
 		return false
@@ -806,6 +812,27 @@ func (e AnalyticsResultMetaServedFrom) Valid() bool {
 	case AnalyticsServedRaw:
 		return true
 	case AnalyticsServedRollups:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsRetentionGrain.
+const (
+	AnalyticsCohortDay   AnalyticsRetentionGrain = "day"
+	AnalyticsCohortMonth AnalyticsRetentionGrain = "month"
+	AnalyticsCohortWeek  AnalyticsRetentionGrain = "week"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRetentionGrain enum.
+func (e AnalyticsRetentionGrain) Valid() bool {
+	switch e {
+	case AnalyticsCohortDay:
+		return true
+	case AnalyticsCohortMonth:
+		return true
+	case AnalyticsCohortWeek:
 		return true
 	default:
 		return false
@@ -4475,6 +4502,27 @@ func (e QueryAnalyticsParamsFormat) Valid() bool {
 	}
 }
 
+// Defines values for GetAnalyticsRetentionParamsGrain.
+const (
+	AnalyticsRetentionDay   GetAnalyticsRetentionParamsGrain = "day"
+	AnalyticsRetentionMonth GetAnalyticsRetentionParamsGrain = "month"
+	AnalyticsRetentionWeek  GetAnalyticsRetentionParamsGrain = "week"
+)
+
+// Valid indicates whether the value is a known member of the GetAnalyticsRetentionParamsGrain enum.
+func (e GetAnalyticsRetentionParamsGrain) Valid() bool {
+	switch e {
+	case AnalyticsRetentionDay:
+		return true
+	case AnalyticsRetentionMonth:
+		return true
+	case AnalyticsRetentionWeek:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -4756,6 +4804,18 @@ type AnalyticsBatch struct {
 	union json.RawMessage
 }
 
+// AnalyticsCohort defines model for AnalyticsCohort.
+type AnalyticsCohort struct {
+	// Cohort The start of the day, week or month the cohort's visitors were first seen.
+	Cohort openapi_types.Date `json:"cohort"`
+
+	// Periods Visitors of the cohort seen in each period from the cohort's own, up to the period that holds today.
+	Periods []int64 `json:"periods"`
+
+	// Visitors The cohort's size, `periods[0]`.
+	Visitors int64 `json:"visitors"`
+}
+
 // AnalyticsCollection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 // address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 // script sends after `yuva.consent({analytics: true})`.
@@ -4784,18 +4844,80 @@ type AnalyticsComparison struct {
 	Totals AnalyticsMetrics `json:"totals"`
 }
 
-// AnalyticsConsent defines model for AnalyticsConsent.
+// AnalyticsConsent What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
+// with `a: 1`, on a property whose `consent_features` offer them; otherwise they are ignored
+// and the event is counted as in default mode.
 type AnalyticsConsent struct {
 	// A `1` when the visitor agreed to analytics.
 	A *AnalyticsConsentA `json:"a,omitempty"`
+
+	// J An identity token of the property's linked inbox, signed by the host's backend as for
+	// `/client/v1/session` (HS256, `sub`, `exp` at most 10 minutes ahead, a `jti` used once),
+	// sent once after the user signs in, together with `p`, on a property that offers
+	// `identify`. It links the persistent id, and its visits, to the contact; the contact is
+	// found or made exactly as `/client/v1/session` does. A forged, expired or reused token is
+	// ignored and the event is still counted.
+	J *string `json:"j,omitempty"`
+
+	// P The persistent id, for a visitor who also agreed to `persistent`: a random value of at
+	// least 128 bits (a UUID or base64url) that the script or SDK keeps on the device for at
+	// most 13 months from when it made it, and sends on every event, engagements included.
+	// The server keeps only a keyed hash of it under the property's own secret, so the same
+	// id means nothing on another property. With it the visitor counts once over several
+	// days, is told apart as new or returning, enters retention cohorts and crosses days in
+	// funnels. A value of the wrong shape is ignored.
+	//
+	//
+	// Examples: 0f8fad5b-d9cb-469f-a165-70867728950e
+	P *string `json:"p,omitempty"`
 }
 
 // AnalyticsConsentA `1` when the visitor agreed to analytics.
 type AnalyticsConsentA int
 
 // AnalyticsConsentFeature Offered only to visitors who consented: `persistent` keeps a random id on the device for at
-// most 13 months, `identify` links a verified user's visits to their contact.
+// most 13 months, `identify` links a verified user's visits to their contact. `identify`
+// needs `persistent` and a linked inbox, whose identity secret signs the tokens; a children's
+// property offers neither. Visitors who did not consent are counted exactly as without
+// these features.
 type AnalyticsConsentFeature string
+
+// AnalyticsContactVisit One visit, described as its first event saw it, as the dimensions of `AnalyticsFilterDimension` name its values.
+type AnalyticsContactVisit struct {
+	AppVersion string    `json:"app_version"`
+	Browser    string    `json:"browser"`
+	Channel    string    `json:"channel"`
+	City       string    `json:"city"`
+	Country    string    `json:"country"`
+	Device     string    `json:"device"`
+	EndedAt    time.Time `json:"ended_at"`
+	EntryPage  string    `json:"entry_page"`
+	Events     int       `json:"events"`
+	ExitPage   string    `json:"exit_page"`
+	Hostname   string    `json:"hostname"`
+	Os         string    `json:"os"`
+
+	// Pages The paths (or app screens) the visit viewed, most viewed first, at most 20.
+	Pages        []AnalyticsVisitPage `json:"pages"`
+	Pageviews    int                  `json:"pageviews"`
+	Platform     string               `json:"platform"`
+	PropertyId   uuid.UUID            `json:"property_id"`
+	PropertyName string               `json:"property_name"`
+	Source       string               `json:"source"`
+	StartedAt    time.Time            `json:"started_at"`
+	UtmCampaign  string               `json:"utm_campaign"`
+
+	// VisitorType `new` or `returning`.
+	VisitorType string `json:"visitor_type"`
+}
+
+// AnalyticsContactVisitList defines model for AnalyticsContactVisitList.
+type AnalyticsContactVisitList struct {
+	Items []AnalyticsContactVisit `json:"items"`
+
+	// NextCursor Present when there are older visits.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
 
 // AnalyticsDataDeletion Either `from` and `to`, or `all: true`.
 type AnalyticsDataDeletion struct {
@@ -4867,7 +4989,11 @@ type AnalyticsEvent struct {
 	// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
 	// code. It is stored in minor units per currency; Yuva converts nothing.
 	DollarSign *AnalyticsEventRevenue `json:"$,omitempty"`
-	C          *AnalyticsConsent      `json:"c,omitempty"`
+
+	// C What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
+	// with `a: 1`, on a property whose `consent_features` offer them; otherwise they are ignored
+	// and the event is counted as in default mode.
+	C *AnalyticsConsent `json:"c,omitempty"`
 
 	// H The page uses hash routing, so the fragment is part of the path.
 	H *bool `json:"h,omitempty"`
@@ -4883,6 +5009,12 @@ type AnalyticsEvent struct {
 	// link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
 	// `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
 	// characters. `screen` and names starting with `$` or `yuva_` are reserved.
+	//
+	// `yuva_consent` is not an event and is never stored or counted: it carries a change of
+	// consent at once. With `c.a: 1`, `c.p` and `c.j` it identifies the visitor (see
+	// `AnalyticsConsent`); with `c.a: 0` and `c.p` it withdraws: the persistent id's link to
+	// a contact and its cohort days are deleted, so its visits leave the contact's page and
+	// retention. A withdrawal is taken even with `Sec-GPC` or `DNT`.
 	//
 	//
 	// Examples: pageview, Signup, outbound_click
@@ -5048,7 +5180,9 @@ type AnalyticsExportCreate struct {
 	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+	// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+	// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5090,7 +5224,9 @@ type AnalyticsFilter struct {
 	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+	// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+	// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5115,7 +5251,9 @@ type AnalyticsFilterOp string
 // code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 // `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 // its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 // and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5155,6 +5293,10 @@ type AnalyticsFunnelReport struct {
 
 // AnalyticsFunnelStep defines model for AnalyticsFunnelStep.
 type AnalyticsFunnelStep struct {
+	// ConsentedVisitors Visitors with a persistent id who reached this step after all before it anywhere in
+	// the range, across visits and days, each counted once; 0 on a property without them.
+	ConsentedVisitors int64 `json:"consented_visitors"`
+
 	// ConversionRate Percent of the first step's visitors.
 	ConversionRate float64 `json:"conversion_rate"`
 
@@ -5329,7 +5471,10 @@ type AnalyticsInsight struct {
 	Dimension *string              `json:"dimension,omitempty"`
 	Kind      AnalyticsInsightKind `json:"kind"`
 
-	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// Metric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+	// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+	// from their cohort days without filters and from raw rows inside the raw window with
+	// filters), `visits`, `pageviews`,
 	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5358,7 +5503,10 @@ type AnalyticsInsight struct {
 // AnalyticsInsightKind defines model for AnalyticsInsight.Kind.
 type AnalyticsInsightKind string
 
-// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+// from their cohort days without filters and from raw rows inside the raw window with
+// filters), `visits`, `pageviews`,
 // `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 // `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 // focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5414,7 +5562,10 @@ type AnalyticsMinute struct {
 type AnalyticsOrder struct {
 	Dir *AnalyticsOrderDir `json:"dir,omitempty"`
 
-	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// Metric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+	// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+	// from their cohort days without filters and from raw rows inside the raw window with
+	// filters), `visits`, `pageviews`,
 	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5775,6 +5926,23 @@ type AnalyticsResultMeta struct {
 // AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
 type AnalyticsResultMetaServedFrom string
 
+// AnalyticsRetention defines model for AnalyticsRetention.
+type AnalyticsRetention struct {
+	// BuiltAt When the cohorts job last rebuilt the numbers; absent before it ran.
+	BuiltAt *time.Time `json:"built_at,omitempty"`
+
+	// Cohorts Cohorts with at least one visitor.
+	Cohorts []AnalyticsCohort `json:"cohorts"`
+
+	// From The first cohort's start.
+	From  openapi_types.Date      `json:"from"`
+	Grain AnalyticsRetentionGrain `json:"grain"`
+	To    openapi_types.Date      `json:"to"`
+}
+
+// AnalyticsRetentionGrain defines model for AnalyticsRetention.Grain.
+type AnalyticsRetentionGrain string
+
 // AnalyticsRevenue defines model for AnalyticsRevenue.
 type AnalyticsRevenue struct {
 	// Average Per event that carried revenue, in minor units, rounded.
@@ -5851,6 +6019,9 @@ type AnalyticsServerEvent struct {
 	// Gpc The visitor's request had `Sec-GPC: 1`; the event is not stored.
 	Gpc *bool `json:"gpc,omitempty"`
 
+	// IdentityToken An identity token as in `AnalyticsConsent.j`, with `persistent_id` and `consent: true`, on a property that offers `identify`.
+	IdentityToken *string `json:"identity_token,omitempty"`
+
 	// Interactive `false` makes a custom event non-interactive.
 	Interactive *bool `json:"interactive,omitempty"`
 
@@ -5863,6 +6034,13 @@ type AnalyticsServerEvent struct {
 	//
 	// Examples: Signup
 	Name string `json:"name"`
+
+	// PersistentId The persistent id the visitor's browser or app holds (`AnalyticsConsent.p`), forwarded
+	// for a visitor who agreed to `persistent`; taken only with `consent: true` on a property
+	// that offers `persistent`, and then names the visitor in place of `ip` and `user_agent`
+	// or `visitor_key`. Those are still required: they describe the visit, and name the
+	// visitor whenever the id is not taken.
+	PersistentId *string `json:"persistent_id,omitempty"`
 
 	// Props Up to 30 props with the rules of `AnalyticsEvent.p`.
 	//
@@ -6072,6 +6250,12 @@ type AnalyticsUsage struct {
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
+}
+
+// AnalyticsVisitPage defines model for AnalyticsVisitPage.
+type AnalyticsVisitPage struct {
+	Path  string `json:"path"`
+	Views int    `json:"views"`
 }
 
 // ApiKey defines model for ApiKey.
@@ -13982,6 +14166,24 @@ type GetAnalyticsRealtimeParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetAnalyticsRetentionParams defines parameters for GetAnalyticsRetention.
+type GetAnalyticsRetentionParams struct {
+	// Grain `week` when absent.
+	Grain *GetAnalyticsRetentionParamsGrain `form:"grain,omitempty" json:"grain,omitempty"`
+
+	// From The first cohort's day; 30 days, 12 weeks or 12 months before today when absent.
+	From *openapi_types.Date `form:"from,omitempty" json:"from,omitempty"`
+
+	// To The last cohort's day; today when absent.
+	To *openapi_types.Date `form:"to,omitempty" json:"to,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsRetentionParamsGrain defines parameters for GetAnalyticsRetention.
+type GetAnalyticsRetentionParamsGrain string
+
 // RotateAnalyticsKeyParams defines parameters for RotateAnalyticsKey.
 type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -14065,6 +14267,12 @@ type UpdateAnalyticsSubscriptionParams struct {
 
 // SendAnalyticsReportParams defines parameters for SendAnalyticsReport.
 type SendAnalyticsReportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsVisitorParams defines parameters for DeleteAnalyticsVisitor.
+type DeleteAnalyticsVisitorParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -14464,6 +14672,17 @@ type ListContactSubscriptionsParams struct {
 
 // GetContactSummaryParams defines parameters for GetContactSummary.
 type GetContactSummaryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListContactVisitsParams defines parameters for ListContactVisits.
+type ListContactVisitsParams struct {
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor `next_cursor` of the previous page.
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -19713,6 +19932,9 @@ type ServerInterface interface {
 	// GetAnalyticsRealtime The last 30 minutes
 	// (GET /v1/analytics/properties/{propertyId}/realtime)
 	GetAnalyticsRealtime(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRealtimeParams)
+	// GetAnalyticsRetention How consented visitors come back
+	// (GET /v1/analytics/properties/{propertyId}/retention)
+	GetAnalyticsRetention(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRetentionParams)
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams)
@@ -19752,6 +19974,9 @@ type ServerInterface interface {
 	// SendAnalyticsReport Send me a report now
 	// (POST /v1/analytics/properties/{propertyId}/subscription/send-report)
 	SendAnalyticsReport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params SendAnalyticsReportParams)
+	// DeleteAnalyticsVisitor Delete a consented visitor's analytics
+	// (DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId})
+	DeleteAnalyticsVisitor(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, persistentId string, params DeleteAnalyticsVisitorParams)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(w http.ResponseWriter, r *http.Request, params ListApiKeysParams)
@@ -19911,6 +20136,9 @@ type ServerInterface interface {
 	// GetContactSummary How the team served a contact
 	// (GET /v1/contacts/{contactId}/summary)
 	GetContactSummary(w http.ResponseWriter, r *http.Request, contactId ContactId, params GetContactSummaryParams)
+	// ListContactVisits A contact's recent visits
+	// (GET /v1/contacts/{contactId}/visits)
+	ListContactVisits(w http.ResponseWriter, r *http.Request, contactId ContactId, params ListContactVisitsParams)
 	// ListConversations List conversations
 	// (GET /v1/conversations)
 	ListConversations(w http.ResponseWriter, r *http.Request, params ListConversationsParams)
@@ -23608,6 +23836,95 @@ func (siw *ServerInterfaceWrapper) GetAnalyticsRealtime(w http.ResponseWriter, r
 	handler.ServeHTTP(w, r)
 }
 
+// GetAnalyticsRetention operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsRetention(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsRetentionParams
+
+	// ------------- Optional query parameter "grain" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "grain", r.URL.Query(), &params.Grain, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "grain"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "grain", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "from" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "from", r.URL.Query(), &params.From, runtime.BindQueryParameterOptions{Type: "string", Format: "date"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "from"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "from", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "to" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "to", r.URL.Query(), &params.To, runtime.BindQueryParameterOptions{Type: "string", Format: "date"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "to"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "to", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsRetention(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // RotateAnalyticsKey operation middleware
 func (siw *ServerInterfaceWrapper) RotateAnalyticsKey(w http.ResponseWriter, r *http.Request) {
 
@@ -24351,6 +24668,65 @@ func (siw *ServerInterfaceWrapper) SendAnalyticsReport(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.SendAnalyticsReport(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsVisitor operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsVisitor(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "persistentId" -------------
+	var persistentId string
+
+	err = runtime.BindStyledParameterWithOptions("simple", "persistentId", r.PathValue("persistentId"), &persistentId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "persistentId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsVisitorParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsVisitor(w, r, propertyId, persistentId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -27343,6 +27719,82 @@ func (siw *ServerInterfaceWrapper) GetContactSummary(w http.ResponseWriter, r *h
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.GetContactSummary(w, r, contactId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListContactVisits operation middleware
+func (siw *ServerInterfaceWrapper) ListContactVisits(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "contactId" -------------
+	var contactId ContactId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "contactId", r.PathValue("contactId"), &contactId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "contactId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListContactVisitsParams
+
+	// ------------- Optional query parameter "limit" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "limit", r.URL.Query(), &params.Limit, runtime.BindQueryParameterOptions{Type: "integer", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "limit"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "limit", Err: err})
+		}
+		return
+	}
+
+	// ------------- Optional query parameter "cursor" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "cursor", r.URL.Query(), &params.Cursor, runtime.BindQueryParameterOptions{Type: "string", Format: ""})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "cursor"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "cursor", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListContactVisits(w, r, contactId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -36889,6 +37341,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/contacts/{contactId}/notes/{noteId}", wrapper.DeleteContactNote)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/summary", wrapper.GetContactSummary)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/presence", wrapper.GetContactPresence)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/visits", wrapper.ListContactVisits)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/subscriptions", wrapper.ListContactSubscriptions)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/contacts/{contactId}/consent", wrapper.ExportContactConsent)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/conversations", wrapper.ListConversations)
@@ -37043,6 +37496,8 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/query", wrapper.QueryAnalytics)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/realtime", wrapper.GetAnalyticsRealtime)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/events", wrapper.SendAnalyticsEvents)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/retention", wrapper.GetAnalyticsRetention)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/visitors/{persistentId}", wrapper.DeleteAnalyticsVisitor)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/goals", wrapper.ListAnalyticsGoals)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/goals", wrapper.CreateAnalyticsGoal)
@@ -44808,6 +45263,101 @@ func (response GetAnalyticsRealtime429ApplicationProblemPlusJSONResponse) VisitG
 	return err
 }
 
+type GetAnalyticsRetentionRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     GetAnalyticsRetentionParams
+}
+
+type GetAnalyticsRetentionResponseObject interface {
+	VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsRetention200JSONResponse AnalyticsRetention
+
+func (response GetAnalyticsRetention200JSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRetention400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsRetention400ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRetention401ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRetention401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRetention403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRetention403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRetention404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRetention404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsRetention422ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsRetention422ApplicationProblemPlusJSONResponse) VisitGetAnalyticsRetentionResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type RotateAnalyticsKeyRequestObject struct {
 	PropertyId AnalyticsPropertyId `json:"propertyId"`
 	Params     RotateAnalyticsKeyParams
@@ -45821,6 +46371,82 @@ func (response SendAnalyticsReport429ApplicationProblemPlusJSONResponse) VisitSe
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsVisitorRequestObject struct {
+	PropertyId   AnalyticsPropertyId `json:"propertyId"`
+	PersistentId string              `json:"persistentId"`
+	Params       DeleteAnalyticsVisitorParams
+}
+
+type DeleteAnalyticsVisitorResponseObject interface {
+	VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsVisitor204Response struct {
+}
+
+func (response DeleteAnalyticsVisitor204Response) VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteAnalyticsVisitor400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsVisitor400ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsVisitor401ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsVisitor401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsVisitor403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsVisitor403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsVisitor404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsVisitor404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsVisitorResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -49762,6 +50388,87 @@ func (response GetContactSummary403ApplicationProblemPlusJSONResponse) VisitGetC
 type GetContactSummary404ApplicationProblemPlusJSONResponse Problem
 
 func (response GetContactSummary404ApplicationProblemPlusJSONResponse) VisitGetContactSummaryResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactVisitsRequestObject struct {
+	ContactId ContactId `json:"contactId"`
+	Params    ListContactVisitsParams
+}
+
+type ListContactVisitsResponseObject interface {
+	VisitListContactVisitsResponse(w http.ResponseWriter) error
+}
+
+type ListContactVisits200JSONResponse AnalyticsContactVisitList
+
+func (response ListContactVisits200JSONResponse) VisitListContactVisitsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactVisits400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListContactVisits400ApplicationProblemPlusJSONResponse) VisitListContactVisitsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactVisits401ApplicationProblemPlusJSONResponse Problem
+
+func (response ListContactVisits401ApplicationProblemPlusJSONResponse) VisitListContactVisitsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactVisits403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListContactVisits403ApplicationProblemPlusJSONResponse) VisitListContactVisitsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListContactVisits404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListContactVisits404ApplicationProblemPlusJSONResponse) VisitListContactVisitsResponse(w http.ResponseWriter) error {
 
 	var buf bytes.Buffer
 	if err := json.NewEncoder(&buf).Encode(response); err != nil {
@@ -62586,6 +63293,9 @@ type StrictServerInterface interface {
 	// GetAnalyticsRealtime The last 30 minutes
 	// (GET /v1/analytics/properties/{propertyId}/realtime)
 	GetAnalyticsRealtime(ctx context.Context, request GetAnalyticsRealtimeRequestObject) (GetAnalyticsRealtimeResponseObject, error)
+	// GetAnalyticsRetention How consented visitors come back
+	// (GET /v1/analytics/properties/{propertyId}/retention)
+	GetAnalyticsRetention(ctx context.Context, request GetAnalyticsRetentionRequestObject) (GetAnalyticsRetentionResponseObject, error)
 	// RotateAnalyticsKey Give an analytics property a new public key
 	// (POST /v1/analytics/properties/{propertyId}/rotate-key)
 	RotateAnalyticsKey(ctx context.Context, request RotateAnalyticsKeyRequestObject) (RotateAnalyticsKeyResponseObject, error)
@@ -62625,6 +63335,9 @@ type StrictServerInterface interface {
 	// SendAnalyticsReport Send me a report now
 	// (POST /v1/analytics/properties/{propertyId}/subscription/send-report)
 	SendAnalyticsReport(ctx context.Context, request SendAnalyticsReportRequestObject) (SendAnalyticsReportResponseObject, error)
+	// DeleteAnalyticsVisitor Delete a consented visitor's analytics
+	// (DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId})
+	DeleteAnalyticsVisitor(ctx context.Context, request DeleteAnalyticsVisitorRequestObject) (DeleteAnalyticsVisitorResponseObject, error)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(ctx context.Context, request ListApiKeysRequestObject) (ListApiKeysResponseObject, error)
@@ -62784,6 +63497,9 @@ type StrictServerInterface interface {
 	// GetContactSummary How the team served a contact
 	// (GET /v1/contacts/{contactId}/summary)
 	GetContactSummary(ctx context.Context, request GetContactSummaryRequestObject) (GetContactSummaryResponseObject, error)
+	// ListContactVisits A contact's recent visits
+	// (GET /v1/contacts/{contactId}/visits)
+	ListContactVisits(ctx context.Context, request ListContactVisitsRequestObject) (ListContactVisitsResponseObject, error)
 	// ListConversations List conversations
 	// (GET /v1/conversations)
 	ListConversations(ctx context.Context, request ListConversationsRequestObject) (ListConversationsResponseObject, error)
@@ -65606,6 +66322,33 @@ func (sh *strictHandler) GetAnalyticsRealtime(w http.ResponseWriter, r *http.Req
 	}
 }
 
+// GetAnalyticsRetention operation middleware
+func (sh *strictHandler) GetAnalyticsRetention(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params GetAnalyticsRetentionParams) {
+	var request GetAnalyticsRetentionRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsRetention(ctx, request.(GetAnalyticsRetentionRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsRetention")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsRetentionResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsRetentionResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // RotateAnalyticsKey operation middleware
 func (sh *strictHandler) RotateAnalyticsKey(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params RotateAnalyticsKeyParams) {
 	var request RotateAnalyticsKeyRequestObject
@@ -65990,6 +66733,34 @@ func (sh *strictHandler) SendAnalyticsReport(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(SendAnalyticsReportResponseObject); ok {
 		if err := validResponse.VisitSendAnalyticsReportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsVisitor operation middleware
+func (sh *strictHandler) DeleteAnalyticsVisitor(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, persistentId string, params DeleteAnalyticsVisitorParams) {
+	var request DeleteAnalyticsVisitorRequestObject
+
+	request.PropertyId = propertyId
+	request.PersistentId = persistentId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsVisitor(ctx, request.(DeleteAnalyticsVisitorRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsVisitor")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsVisitorResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsVisitorResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
@@ -67522,6 +68293,33 @@ func (sh *strictHandler) GetContactSummary(w http.ResponseWriter, r *http.Reques
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(GetContactSummaryResponseObject); ok {
 		if err := validResponse.VisitGetContactSummaryResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListContactVisits operation middleware
+func (sh *strictHandler) ListContactVisits(w http.ResponseWriter, r *http.Request, contactId ContactId, params ListContactVisitsParams) {
+	var request ListContactVisitsRequestObject
+
+	request.ContactId = contactId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListContactVisits(ctx, request.(ListContactVisitsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListContactVisits")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListContactVisitsResponseObject); ok {
+		if err := validResponse.VisitListContactVisitsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
