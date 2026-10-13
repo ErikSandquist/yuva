@@ -112,6 +112,7 @@ Gereken yetki olmadan yapılan çağrı `403 insufficient_scope` döner.
 | `workspace:manage` | Çalışma alanı ayarları ve kullanım |
 | `migrations:manage` | [Bir posta kutusunu Yuva'ya taşıma](migrate.md): tespit, oluşturma, bağlama, tarama, başlatma, bitirme, aktarılan geçmişi kaldırma. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
 | `analytics:read` | [Analitik](analytics.md#api): mülkler, rakamlar, canlı, durum |
+| `analytics:write` | [Sunucu tarafı olayları](analytics-server.md) gönderme (`POST /v1/analytics/properties/{propertyId}/events`). Yalnızca API anahtarları; OAuth istemcilerine asla sunulmaz. |
 | `analytics:manage` | Mülk oluşturma, değiştirme ve silme, anahtarlarını yenileme, verilerini silme. Asistan hesaplarına ve gelen kutularıyla sınırlı anahtarlara asla verilmez. |
 | `feedback:write` | `POST /v1/feedback` |
 

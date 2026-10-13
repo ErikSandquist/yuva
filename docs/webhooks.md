@@ -46,6 +46,12 @@ or out of order: skip a `webhook-id` you have handled and order by `timestamp`.
 | `contact.updated` | A contact changed | `contact` |
 | `contact.deleted` | A contact was deleted, or merged (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | A [draft](headless.md#a-bot-that-answers-with-drafts) changed; sending it emits `message.created` | `message`, `conversation`, `contact` |
+| `discussion.created` | A [discussion](documentation-pages.md) thread was started, also while it waits for a member (`state: pending`) | `discussion` |
+| `discussion.post_created` | A reply was written in a thread, also while it waits for a member | `discussion`, `post` |
+| `discussion.answered` | A reply was accepted as the answer | `discussion`, `post` |
+| `discussion.updated` | A thread or post was approved, hidden, marked spam, edited, deleted, locked or unlocked, or the answer was cleared | `discussion`, and `post` when a post changed |
+| `subscription.created` | Someone subscribed to a [list](lists.md) of the endpoint's inbox, in any state (`pending` while waiting for confirmation) | `subscription`, `list`, `contact` |
+| `subscription.updated` | A subscription was confirmed, unsubscribed (with `unsubscribe_reason`) or subscribed again | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | A website of [Analytics](analytics.md) raised an [alert](analytics-support.md#alerts): spike, drop, goal drop, support load or new referrer | `alert`, `property` |
 | `broadcast.updated` | A [broadcast](broadcasts.md) changed state: scheduled, sending, paused, sent, cancelled, failed or back to draft | `broadcast`, `previous_state` |
 

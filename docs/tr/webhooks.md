@@ -48,6 +48,12 @@ göre sıralayın.
 | `contact.updated` | Bir kişi değişti | `contact` |
 | `contact.deleted` | Bir kişi silindi ya da birleştirildi (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Bir [taslak](headless.md#taslakla-yanıtlayan-bot) değişti; gönderilmesi `message.created` üretir | `message`, `conversation`, `contact` |
+| `discussion.created` | Bir [tartışma](documentation-pages.md) başlığı açıldı; bir üyeyi beklerken de (`state: pending`) | `discussion` |
+| `discussion.post_created` | Bir başlığa yanıt yazıldı; bir üyeyi beklerken de | `discussion`, `post` |
+| `discussion.answered` | Bir yanıt cevap olarak kabul edildi | `discussion`, `post` |
+| `discussion.updated` | Bir başlık ya da gönderi onaylandı, gizlendi, spam işaretlendi, düzenlendi, silindi, kilitlendi, kilidi açıldı ya da cevap kaldırıldı | `discussion`, bir gönderi değiştiyse `post` |
+| `subscription.created` | Biri uç noktanın gelen kutusundaki bir [listeye](lists.md) abone oldu, her durumda (onay beklerken `pending`) | `subscription`, `list`, `contact` |
+| `subscription.updated` | Bir abonelik onaylandı, iptal edildi (`unsubscribe_reason` ile) ya da yeniden abone olundu | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | Bir [Analytics](analytics.md) web sitesi [uyarı](analytics-support.md#uyarılar) tetikledi: ani artış, düşüş, hedef düşüşü, destek yükü ya da yeni yönlendiren | `alert`, `property` |
 | `broadcast.updated` | Bir [bülten](broadcasts.md) durum değiştirdi: zamanlandı, gönderiliyor, duraklatıldı, gönderildi, iptal edildi, başarısız oldu ya da taslağa döndü | `broadcast`, `previous_state` |
 

@@ -48,6 +48,12 @@ eine `webhook-id`, die Sie schon verarbeitet haben, und sortieren Sie nach `time
 | `contact.updated` | Ein Kontakt hat sich geändert | `contact` |
 | `contact.deleted` | Ein Kontakt wurde gelöscht oder zusammengeführt (`merged_into_id`) | `contact` |
 | `draft.created`, `draft.updated`, `draft.deleted` | Ein [Entwurf](headless.md#ein-bot-der-antworten-entwirft) hat sich geändert; wird er gesendet, folgt `message.created` | `message`, `conversation`, `contact` |
+| `discussion.created` | Ein [Diskussions](documentation-pages.md)-Thread wurde begonnen, auch während er auf ein Mitglied wartet (`state: pending`) | `discussion` |
+| `discussion.post_created` | In einem Thread wurde eine Antwort geschrieben, auch während sie auf ein Mitglied wartet | `discussion`, `post` |
+| `discussion.answered` | Eine Antwort wurde als Lösung akzeptiert | `discussion`, `post` |
+| `discussion.updated` | Ein Thread oder Beitrag wurde freigegeben, ausgeblendet, als Spam markiert, bearbeitet, gelöscht, gesperrt oder entsperrt, oder die Lösung wurde zurückgenommen | `discussion`, und `post`, wenn sich ein Beitrag geändert hat |
+| `subscription.created` | Jemand hat eine [Liste](lists.md) des Posteingangs des Endpunkts abonniert, in jedem Zustand (`pending`, solange die Bestätigung aussteht) | `subscription`, `list`, `contact` |
+| `subscription.updated` | Ein Abonnement wurde bestätigt, abgemeldet (mit `unsubscribe_reason`) oder erneut abonniert | `subscription`, `list`, `contact`, `previous_state` |
 | `analytics.alert` | Eine [Analytics](analytics.md)-Website hat einen [Alert](analytics-support.md#alerts) ausgelöst: Spike, Einbruch, Goal-Einbruch, Support-Last oder neuer Referrer | `alert`, `property` |
 | `broadcast.updated` | Ein [Broadcast](broadcasts.md) hat den Status gewechselt: geplant, sendend, pausiert, gesendet, abgebrochen, fehlgeschlagen oder zurück zum Entwurf | `broadcast`, `previous_state` |
 
