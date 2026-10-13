@@ -1634,6 +1634,9 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   linked visits are kept. Children's properties refuse consent features.
   The script tag keeps `/yuva-analytics.js` at 1.5 KB without them; script-tag sites that use consent
   features load `/yuva-analytics-consent.js` (≤ 2 KB) instead, served and routed like the first.
+  Every client treats consent to analytics without `persistent: true` as a withdrawal of a stored id, so
+  hosts pass `persistent: true` on each call where the visitor agreed to it; identify and withdrawal
+  are sent once and never queued.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
