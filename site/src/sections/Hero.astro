@@ -123,6 +123,26 @@ const dot = "size-1.5 shrink-0 rounded-full bg-ink-faint"
       </div>
     </div>
 
+    <div class="mx-auto mt-12 max-w-3xl text-center sm:mt-16">
+      <p class="font-semibold tracking-tight">{t.analytics.title}</p>
+      <p class="mx-auto mt-1.5 max-w-xl text-sm leading-relaxed text-pretty text-ink-soft">{t.analytics.body}</p>
+      <a
+        href={t.analytics.href}
+        class="mt-2 inline-block text-sm font-medium text-brand underline-offset-4 hover:underline"
+      >
+        {t.analytics.link} <span aria-hidden="true">→</span>
+      </a>
+      <div class="mt-6 overflow-hidden rounded-xl border border-rule bg-paper-deep shadow-paper">
+        <Shot
+          light={s.analytics.light}
+          dark={s.analytics.dark}
+          alt={t.analytics.alt}
+          widths={[480, 720, 960, 1440, 1920]}
+          sizes="(min-width: 840px) 768px, calc(100vw - 40px)"
+        />
+      </div>
+    </div>
+
     <ul class="mt-10 flex flex-wrap justify-center gap-2 sm:mt-12" aria-label={t.channelsLabel}>
       {t.channels.map((c) => (
         <li>

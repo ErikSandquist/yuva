@@ -1,4 +1,16 @@
 import type { ImageMetadata } from "astro"
+import analyticsEnDark from "@/assets/shots/panel-analytics-en-dark.webp"
+import analyticsEnLight from "@/assets/shots/panel-analytics-en-light.webp"
+import analyticsTrDark from "@/assets/shots/panel-analytics-tr-dark.webp"
+import analyticsTrLight from "@/assets/shots/panel-analytics-tr-light.webp"
+import broadcastEnDark from "@/assets/shots/panel-broadcast-en-dark.webp"
+import broadcastEnLight from "@/assets/shots/panel-broadcast-en-light.webp"
+import broadcastTrDark from "@/assets/shots/panel-broadcast-tr-dark.webp"
+import broadcastTrLight from "@/assets/shots/panel-broadcast-tr-light.webp"
+import migrationEnDark from "@/assets/shots/panel-migration-en-dark.webp"
+import migrationEnLight from "@/assets/shots/panel-migration-en-light.webp"
+import migrationTrDark from "@/assets/shots/panel-migration-tr-dark.webp"
+import migrationTrLight from "@/assets/shots/panel-migration-tr-light.webp"
 import feedbackEnDark from "@/assets/shots/panel-feedback-en-dark.webp"
 import feedbackEnLight from "@/assets/shots/panel-feedback-en-light.webp"
 import feedbackTrDark from "@/assets/shots/panel-feedback-tr-dark.webp"
@@ -24,9 +36,22 @@ import widgetTrLight from "@/assets/shots/widget-tr-light.webp"
 import type { Locale } from "./routes"
 
 type Pair = { light: ImageMetadata; dark: ImageMetadata }
-export type Shots = { thread: Pair; phoneThread: Pair; feedback: Pair; phone: Pair; widget: Pair; ios: ImageMetadata }
+export type Shots = {
+  analytics: Pair
+  broadcast: Pair
+  migration: Pair
+  thread: Pair
+  phoneThread: Pair
+  feedback: Pair
+  phone: Pair
+  widget: Pair
+  ios: ImageMetadata
+}
 
 const en: Shots = {
+  analytics: { light: analyticsEnLight, dark: analyticsEnDark },
+  broadcast: { light: broadcastEnLight, dark: broadcastEnDark },
+  migration: { light: migrationEnLight, dark: migrationEnDark },
   thread: { light: threadEnLight, dark: threadEnDark },
   phoneThread: { light: phoneThreadEnLight, dark: phoneThreadEnDark },
   feedback: { light: feedbackEnLight, dark: feedbackEnDark },
@@ -39,6 +64,9 @@ const byLocale: Record<Locale, Shots> = {
   en,
   de: en,
   tr: {
+    analytics: { light: analyticsTrLight, dark: analyticsTrDark },
+    broadcast: { light: broadcastTrLight, dark: broadcastTrDark },
+    migration: { light: migrationTrLight, dark: migrationTrDark },
     thread: { light: threadTrLight, dark: threadTrDark },
     phoneThread: { light: phoneThreadTrLight, dark: phoneThreadTrDark },
     feedback: { light: feedbackTrLight, dark: feedbackTrDark },

@@ -46,6 +46,17 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
         draft: i18n._(msg`Reply draft`),
         draftNote: i18n._(msg`via Claude Code`),
       },
+      analytics: {
+        title: i18n._(msg`New: cookieless analytics`),
+        body: i18n._(
+          msg`Visitors, pages, sources and goals for your websites, next to the inbox. No cookies, no stored IP addresses.`
+        ),
+        link: i18n._(msg`How it works`),
+        href: docs("analytics/"),
+        alt: i18n._(
+          msg`The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources.`
+        ),
+      },
       channelsLabel: i18n._(msg`Channels`),
       channels: [
         { icon: "mail", label: i18n._(msg`E-mail`), href: docs("email/") },
@@ -245,6 +256,9 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
           body: i18n._(
             msg`Keep mailing lists with recorded consent and subscribe forms, build e-mails in the designer or start from the template gallery, and send them with deliverability checks: SPF, DKIM, DMARC and one-click unsubscribe.`
           ),
+          shotAlt: i18n._(
+            msg`The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link.`
+          ),
           links: [
             { label: i18n._(msg`Broadcasts`), href: docs("broadcasts/") },
             { label: i18n._(msg`Lists`), href: docs("lists/") },
@@ -258,6 +272,9 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
           body: i18n._(
             msg`Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed.`
           ),
+          shotAlt: i18n._(
+            msg`A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox.`
+          ),
           links: [{ label: i18n._(msg`Migration guide`), href: docs("migrate/") }],
         },
         {
@@ -266,13 +283,16 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
           body: i18n._(
             msg`Cookieless web analytics next to your support inbox: no cookies, no stored IP addresses, and Do Not Track and Global Privacy Control respected. See pages, sources, locations, devices and realtime visitors, plus events with revenue, goals and funnels.`
           ),
+          shotAlt: i18n._(
+            msg`The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources.`
+          ),
           links: [
             { label: i18n._(msg`Analytics`), href: docs("analytics/") },
             { label: i18n._(msg`Events and goals`), href: docs("analytics-events/") },
             { label: i18n._(msg`Privacy`), href: docs("analytics-privacy/") },
           ],
         },
-      ] as { icon: IconName; title: string; body: string; links: { label: string; href: string }[] }[],
+      ] as { icon: IconName; title: string; body: string; shotAlt: string; links: { label: string; href: string }[] }[],
     },
 
     developers: {

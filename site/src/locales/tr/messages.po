@@ -45,6 +45,10 @@ msgid "A feedback form rendered by your own backend posts to /v1/feedback with a
 msgstr "Kendi sunucunuzun oluşturduğu bir geri bildirim formu, çalışma alanı API anahtarıyla /v1/feedback adresine gönderir. Betikler gelen kutusu, kanal ve anahtar oluşturur; sunucunuz kişileri kendi kullanıcı kimliğinizle bulur ya da siler."
 
 #: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Panelde tamamlanmış bir aktarım: bir mbox dosyasından kopyalanan 6 konuşma ve 12 mesaj, Yuva'nın posta kutunuza erişimi olmadığını belirten bir notla."
+
+#: src/copy/home.ts
 msgid "A host with Docker, Postgres 16 or newer, an SMTP account for sign-in codes and notifications, and a host name with TLS behind a reverse proxy that passes WebSockets. Attachments go on a volume or into an S3-compatible bucket."
 msgstr "Docker çalışan bir sunucu, Postgres 16 ya da üstü, giriş kodları ve bildirimler için bir SMTP hesabı ve WebSocket'leri geçiren bir ters vekil sunucunun arkasında TLS'li bir alan adı. Ekler bir diskte ya da S3 uyumlu bir kovada durur."
 
@@ -864,6 +868,10 @@ msgstr "Yeni: sohbet tarzı panel"
 msgid "New: a chat-style panel for every conversation"
 msgstr "Yeni: her konuşma için sohbet tarzı bir panel"
 
+#: src/copy/home.ts
+msgid "New: cookieless analytics"
+msgstr "Yeni: çerezsiz analitik"
+
 #: src/copy/pages.ts
 msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
 msgstr "Bütün ürünleriniz için açık kaynak gelen kutusu Yuva'yı geliştirirken yazdığımız haberler, sürüm hikâyeleri ve notlar."
@@ -1394,6 +1402,10 @@ msgstr "Şablon galerisi"
 msgid "Templates"
 msgstr "Şablonlar"
 
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Panelde analitik özeti: 30 günlük ziyaretçi, sayfa görüntüleme ve çıkış oranı, bir bültenin gönderildiği güne not düşülmüş günlük grafik, en çok görüntülenen sayfalar ve kaynaklar."
+
 #: src/copy/docs.ts
 msgid "The English page has changed since this translation was last updated."
 msgstr "İngilizce sayfa, bu çevirinin son güncellenmesinden sonra değişti."
@@ -1433,6 +1445,10 @@ msgstr "Panel programın içinde gelir. Hızlıdır, klavyeyle kullanılmak içi
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Yuva'nın webhook uç noktalarınıza gönderdiği içerikler."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Panelde gönderilmiş bir bültenin raporu: 240 gönderim, 5 abonelikten çıkma ve bağlantıya tıklayan 56 kişi, zamana göre grafik ve her bağlantının tıklama sayısı."
 
 #: src/copy/home.ts
 msgid "The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies."
@@ -1549,6 +1565,10 @@ msgstr "Claude Code ile"
 #: src/copy/home.ts
 msgid "View on GitHub"
 msgstr "GitHub'da inceleyin"
+
+#: src/copy/home.ts
+msgid "Visitors, pages, sources and goals for your websites, next to the inbox. No cookies, no stored IP addresses."
+msgstr "Web sitelerinizin ziyaretçileri, sayfaları, kaynakları ve hedefleri, gelen kutusunun yanında. Çerez yok, saklanan IP adresi yok."
 
 #: src/copy/templates.ts
 msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."

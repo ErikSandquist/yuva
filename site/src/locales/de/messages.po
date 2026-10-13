@@ -45,6 +45,10 @@ msgid "A feedback form rendered by your own backend posts to /v1/feedback with a
 msgstr "Ein Feedback-Formular aus Ihrem eigenen Backend sendet mit einem Workspace-API-Schlüssel an /v1/feedback. Skripte legen Posteingänge, Kanäle und Schlüssel an, und Ihr Backend findet oder löscht Kontakte über die eigene Nutzer-ID."
 
 #: src/copy/home.ts
+msgid "A finished import in the panel: 6 conversations and 12 messages copied from an mbox file, with a note that Yuva has no access to your mailbox."
+msgstr "Ein abgeschlossener Import im Panel: 6 Unterhaltungen und 12 Nachrichten aus einer mbox-Datei, mit dem Hinweis, dass Yuva keinen Zugriff auf Ihr Postfach hat."
+
+#: src/copy/home.ts
 msgid "A host with Docker, Postgres 16 or newer, an SMTP account for sign-in codes and notifications, and a host name with TLS behind a reverse proxy that passes WebSockets. Attachments go on a volume or into an S3-compatible bucket."
 msgstr "Einen Host mit Docker, Postgres 16 oder neuer, ein SMTP-Konto für Anmeldecodes und Benachrichtigungen und einen Hostnamen mit TLS hinter einem Reverse Proxy, der WebSockets durchreicht. Anhänge landen auf einem Volume oder in einem S3-kompatiblen Bucket."
 
@@ -864,6 +868,10 @@ msgstr "Neu: ein Chat-Panel"
 msgid "New: a chat-style panel for every conversation"
 msgstr "Neu: ein Chat-Panel für jede Unterhaltung"
 
+#: src/copy/home.ts
+msgid "New: cookieless analytics"
+msgstr "Neu: Analytics ohne Cookies"
+
 #: src/copy/pages.ts
 msgid "News, release stories and notes from building Yuva, the open-source inbox for every product you run."
 msgstr "Neuigkeiten, Release-Geschichten und Notizen aus der Entwicklung von Yuva, dem Open-Source-Posteingang für alle Ihre Produkte."
@@ -1394,6 +1402,10 @@ msgstr "Vorlagengalerie"
 msgid "Templates"
 msgstr "Vorlagen"
 
+#: src/copy/home.ts
+msgid "The analytics overview in the panel: 30 days of visitors, pageviews and bounce rate, a daily chart with a note on the day a newsletter went out, and the top pages and sources."
+msgstr "Die Analytics-Übersicht im Panel: 30 Tage Besucher, Seitenaufrufe und Absprungrate, ein Tagesdiagramm mit einer Notiz zum Tag des Newsletter-Versands sowie die meistbesuchten Seiten und Quellen."
+
 #: src/copy/docs.ts
 msgid "The English page has changed since this translation was last updated."
 msgstr "Die englische Seite wurde seit der letzten Aktualisierung dieser Übersetzung geändert."
@@ -1433,6 +1445,10 @@ msgstr "Das Panel steckt im Binary. Es ist schnell, für die Tastatur gemacht un
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Die Payloads, die Yuva an Ihre Webhook-Endpunkte sendet."
+
+#: src/copy/home.ts
+msgid "The report of a sent newsletter in the panel: 240 sent, 5 unsubscribed and 56 who clicked a link, a chart over time and the number of clicks on each link."
+msgstr "Der Bericht eines versendeten Newsletters im Panel: 240 versendet, 5 abgemeldet und 56 mit Klick auf einen Link, ein Diagramm über die Zeit und die Klicks pro Link."
 
 #: src/copy/home.ts
 msgid "The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies."
@@ -1549,6 +1565,10 @@ msgstr "über Claude Code"
 #: src/copy/home.ts
 msgid "View on GitHub"
 msgstr "Auf GitHub ansehen"
+
+#: src/copy/home.ts
+msgid "Visitors, pages, sources and goals for your websites, next to the inbox. No cookies, no stored IP addresses."
+msgstr "Besucher, Seiten, Quellen und Ziele Ihrer Websites, direkt neben dem Posteingang. Keine Cookies, keine gespeicherten IP-Adressen."
 
 #: src/copy/templates.ts
 msgid "Want to add a template? Send a pull request; the guide explains the folder, the rules and the preview."
