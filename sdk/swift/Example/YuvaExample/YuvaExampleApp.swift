@@ -1,10 +1,13 @@
 import SwiftUI
+import YuvaAnalytics
 import YuvaKit
 
 struct ExampleConfig {
     let serverURL: URL
     let channelKey: String
     let identityTokenURL: URL?
+    let analyticsKey: String?
+    let analyticsRequireConsent: Bool
 
     static func load() -> ExampleConfig? {
         guard let url = Bundle.main.url(forResource: "Config", withExtension: "plist"),
@@ -14,16 +17,37 @@ struct ExampleConfig {
               let channel = values["ChannelKey"]
         else { return nil }
         return ExampleConfig(
-            serverURL: server, channelKey: channel, identityTokenURL: values["IdentityTokenURL"].flatMap(URL.init(string:)))
+            serverURL: server, channelKey: channel, identityTokenURL: values["IdentityTokenURL"].flatMap(URL.init(string:)),
+            analyticsKey: values["AnalyticsKey"].flatMap { $0.isEmpty ? nil : $0 },
+            analyticsRequireConsent: values["AnalyticsConsent"] == "required")
     }
 }
 
 @main
 struct YuvaExampleApp: App {
+    private let config = ExampleConfig.load()
+    @State private var tab = UserDefaults.standard.string(forKey: "YuvaTab") ?? "support"
+
+    init() {
+        if let config, let key = config.analyticsKey {
+            YuvaAnalytics.configure(
+                YuvaAnalyticsConfiguration(
+                    serverURL: config.serverURL, key: key, requireConsent: config.analyticsRequireConsent, debug: true))
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
-            if let config = ExampleConfig.load() {
-                ContentView(config: config)
+            if let config {
+                TabView(selection: $tab) {
+                    ContentView(config: config)
+                        .yuvaScreen("Support")
+                        .tabItem { Label("Support", systemImage: "bubble.left.and.bubble.right") }
+                        .tag("support")
+                    AnalyticsView(config: config)
+                        .tabItem { Label("Analytics", systemImage: "chart.bar") }
+                        .tag("analytics")
+                }
             } else {
                 ContentUnavailableView(
                     "Missing Config.plist", systemImage: "gearshape",

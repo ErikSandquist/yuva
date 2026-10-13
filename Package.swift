@@ -7,6 +7,7 @@ let package = Package(
     platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
         .library(name: "YuvaKit", targets: ["YuvaKit"]),
+        .library(name: "YuvaAnalytics", targets: ["YuvaAnalytics"]),
     ],
     targets: [
         .target(
@@ -14,10 +15,20 @@ let package = Package(
             path: "sdk/swift/Sources/YuvaKit",
             resources: [.process("Resources")]
         ),
+        .target(
+            name: "YuvaAnalytics",
+            path: "sdk/swift/Sources/YuvaAnalytics",
+            resources: [.copy("PrivacyInfo.xcprivacy")]
+        ),
         .testTarget(
             name: "YuvaKitTests",
             dependencies: ["YuvaKit"],
             path: "sdk/swift/Tests/YuvaKitTests"
+        ),
+        .testTarget(
+            name: "YuvaAnalyticsTests",
+            dependencies: ["YuvaAnalytics"],
+            path: "sdk/swift/Tests/YuvaAnalyticsTests"
         ),
     ]
 )

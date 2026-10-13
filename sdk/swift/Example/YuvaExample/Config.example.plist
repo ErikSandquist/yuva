@@ -8,5 +8,9 @@
 	<string>your-channel-public-key</string>
 	<key>IdentityTokenURL</key>
 	<string>http://localhost:8090/identity-token</string>
+	<key>AnalyticsKey</key>
+	<string>yuva_ak_your-analytics-property-key</string>
+	<key>AnalyticsConsent</key>
+	<string>none</string>
 </dict>
 </plist>

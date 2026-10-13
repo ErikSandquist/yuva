@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* YuvaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000002 /* YuvaKit */; };
+		A10000000000000000000004 /* YuvaAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000005 /* YuvaAnalytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000001 /* YuvaKit in Frameworks */,
+				A10000000000000000000004 /* YuvaAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,7 @@
 			name = YuvaExample;
 			packageProductDependencies = (
 				A10000000000000000000002 /* YuvaKit */,
+				A10000000000000000000005 /* YuvaAnalytics */,
 			);
 			productName = YuvaExample;
 			productReference = A10000000000000000000010 /* YuvaExample.app */;
@@ -257,6 +260,10 @@
 		A10000000000000000000002 /* YuvaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = YuvaKit;
+		};
+		A10000000000000000000005 /* YuvaAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = YuvaAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
