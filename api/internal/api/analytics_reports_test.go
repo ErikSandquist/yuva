@@ -519,3 +519,99 @@ func TestBroadcastUTMCampaignVisits(t *testing.T) {
 		t.Fatal("a key without analytics:read gets campaign visits")
 	}
 }
+
+func insightsOf(t *testing.T, r response) []map[string]any {
+	t.Helper()
+	var out []map[string]any
+	seen := map[string]bool{}
+	for _, x := range r.body["insights"].([]any) {
+		m := x.(map[string]any)
+		key := fmt.Sprint(m["kind"], m["metric"], m["dimension"], m["value"])
+		if seen[key] {
+			t.Fatalf("insight %s twice: %s", key, r.raw)
+		}
+		seen[key] = true
+		out = append(out, m)
+	}
+	return out
+}
+
+func TestAnalyticsInsightsWithAnEmptyComparison(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	ctx := context.Background()
+	today := time.Date(2026, 10, 12, 0, 0, 0, 0, time.UTC)
+	if err := (&analytics.PGStore{Pool: h.st.Pool}).EnsurePartitions(ctx, today.AddDate(0, 0, -2), today); err != nil {
+		t.Fatal(err)
+	}
+	empty, emptyKey := createProperty(tm.owner, map[string]any{"name": "New site", "domains": []string{"example.com"}, "timezone": "UTC"})
+	grown, grownKey := createProperty(tm.owner, map[string]any{"name": "Grown", "domains": []string{"example.com"}, "timezone": "UTC"})
+	small, smallKey := createProperty(tm.owner, map[string]any{"name": "Small", "domains": []string{"example.com"}, "timezone": "UTC"})
+	h.clock.Set(today.Add(-12 * time.Hour))
+	viewsFrom(h, grownKey, "https://example.com", "/", 15, 0)
+	viewsFrom(h, smallKey, "https://example.com", "/", 5, 100)
+	h.clock.Set(today.Add(12 * time.Hour))
+	viewsFrom(h, emptyKey, "https://example.com", "/", 12, 200)
+	viewsFrom(h, grownKey, "https://example.com", "/", 30, 300)
+	viewsFrom(h, smallKey, "https://example.com", "/", 40, 400)
+	h.flushAnalytics()
+	ask := func(id string, dims ...string) []map[string]any {
+		q := map[string]any{"metrics": []string{"visitors", "visits", "pageviews", "bounce_rate"}, "range": map[string]any{"period": "today"},
+			"compare": map[string]any{"with": "previous"}, "insights": true}
+		if len(dims) > 0 {
+			q["dimensions"] = dims
+		}
+		return insightsOf(t, query(tm.owner, id, q))
+	}
+
+	for _, dims := range [][]string{nil, {"time:day"}, {"page"}} {
+		got := ask(empty, dims...)
+		kinds := map[string]bool{}
+		for _, in := range got {
+			if in["kind"] == "metric_change" {
+				t.Fatalf("a zero baseline reported as a change: %v", got)
+			}
+			if in["kind"] == "metric_new" {
+				if in["previous"] != 0.0 || in["current"] != 12.0 || in["change"] != nil {
+					t.Fatalf("metric_new %v", in)
+				}
+				kinds[in["metric"].(string)] = true
+			}
+		}
+		if len(kinds) != 3 || !kinds["visitors"] || !kinds["visits"] || !kinds["pageviews"] {
+			t.Fatalf("%v: metric_new for %v in %v", dims, kinds, got)
+		}
+	}
+	page := ask(empty, "page")
+	if last := page[len(page)-1]; last["kind"] != "new_value" || last["value"] != "/" || last["previous"] != 0.0 || last["change"] != nil {
+		t.Fatalf("new page %v", page)
+	}
+
+	got := ask(grown)
+	if len(got) != 3 {
+		t.Fatalf("grown %v", got)
+	}
+	for _, in := range got {
+		if in["kind"] != "metric_change" || in["previous"] != 15.0 || in["current"] != 30.0 || in["change"] != 100.0 {
+			t.Fatalf("change %v", in)
+		}
+	}
+	if got := ask(small); len(got) != 0 {
+		t.Fatalf("a baseline under 10 gave %v", got)
+	}
+
+	key := tm.owner.expect(http.StatusCreated, "POST", "/v1/api-keys", map[string]any{"name": "a", "scopes": []string{"analytics:read"}}).str("secret")
+	out, errText := callTool(t, h.mcpSession(key), "analytics_overview", map[string]any{"property_id": empty, "period": "today"})
+	if errText != "" {
+		t.Fatal(errText)
+	}
+	seen := map[string]bool{}
+	for _, x := range out["insights"].([]any) {
+		m := x.(map[string]any)
+		k := fmt.Sprint(m["kind"], m["metric"], m["dimension"], m["customer_content"])
+		if seen[k] || m["kind"] == "metric_change" {
+			t.Fatalf("overview insights %v", out["insights"])
+		}
+		seen[k] = true
+	}
+}

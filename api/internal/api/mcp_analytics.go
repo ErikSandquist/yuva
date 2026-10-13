@@ -91,12 +91,12 @@ type mcpInsightContent struct {
 }
 
 type mcpInsight struct {
-	Kind            string             `json:"kind" jsonschema:"metric_change, row_change, new_value or support_hotspot"`
+	Kind            string             `json:"kind" jsonschema:"metric_change, metric_new (none in the compared range), row_change, new_value or support_hotspot"`
 	Metric          string             `json:"metric"`
 	Dimension       string             `json:"dimension,omitempty"`
 	Current         float64            `json:"current"`
 	Previous        float64            `json:"previous"`
-	Change          float64            `json:"change,omitempty" jsonschema:"percent of previous"`
+	Change          float64            `json:"change,omitempty" jsonschema:"percent of previous; absent for metric_new and new_value"`
 	CustomerContent *mcpInsightContent `json:"customer_content,omitempty"`
 }
 
@@ -151,10 +151,7 @@ func analyticsResultOut(propertyID uuid.UUID, r oas.AnalyticsResult) mcpAnalytic
 	}
 	if r.Insights != nil {
 		for _, in := range *r.Insights {
-			o := mcpInsight{Kind: string(in.Kind), Metric: string(in.Metric), Current: in.Current}
-			if in.Previous != nil {
-				o.Previous = *in.Previous
-			}
+			o := mcpInsight{Kind: string(in.Kind), Metric: string(in.Metric), Current: in.Current, Previous: in.Previous}
 			if in.Change != nil {
 				o.Change = *in.Change
 			}
@@ -601,7 +598,11 @@ func (c *mcpCall) overview(ctx context.Context, in overviewIn) (mcpOverview, err
 		if err != nil {
 			return nil, err
 		}
-		totals.Insights = append(totals.Insights, res.Insights...)
+		for _, in := range res.Insights {
+			if in.Dimension != "" {
+				totals.Insights = append(totals.Insights, in)
+			}
+		}
 		return res.Rows, nil
 	}
 	out := mcpOverview{PropertyID: in.PropertyID, From: totals.From, To: totals.To, ComparisonFrom: totals.ComparisonFrom, ComparisonTo: totals.ComparisonTo,

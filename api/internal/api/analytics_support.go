@@ -187,30 +187,25 @@ func sortSupportRows(rows []analytics.Row, dims []string) {
 	})
 }
 
-// analyticsInsights applies the fixed insight rules to an answer.
+// analyticsInsights applies the fixed insight rules to an answer, each insight once.
 func analyticsInsights(q analytics.Query, ans analyticsAnswer, order []analytics.Order) []oas.AnalyticsInsight {
 	out := []oas.AnalyticsInsight{}
 	res := ans.result
 	if c := ans.comparison; c != nil {
-		for _, m := range q.Metrics {
+		for _, m := range slices.Compact(slices.Clone(q.Metrics)) {
 			if !slices.Contains(countMetrics, m) {
 				continue
 			}
 			cur, prev := res.Totals.Metric(m), c.Totals.Metric(m)
-			if max(cur, prev) < insightMinCount || (prev > 0 && math.Abs(cur-prev)/prev < insightTotalChange) || (prev == 0 && cur == 0) {
-				continue
+			switch {
+			case prev == 0 && cur >= insightMinCount:
+				out = append(out, insight(oas.AnalyticsInsightMetricNew, m, "", "", cur, 0, false))
+			case prev >= insightMinCount && math.Abs(cur-prev)/prev >= insightTotalChange:
+				out = append(out, insight(oas.AnalyticsInsightMetricChange, m, "", "", cur, prev, true))
 			}
-			out = append(out, insight(oas.AnalyticsInsightMetricChange, m, "", "", cur, prev))
 		}
 	}
-	place := -1
-	for i, d := range q.Dimensions {
-		if strings.HasPrefix(d, "time:") {
-			return out
-		}
-		place = i
-	}
-	if place < 0 || len(q.Dimensions) != 1 {
+	if len(q.Dimensions) != 1 || strings.HasPrefix(q.Dimensions[0], "time:") {
 		return out
 	}
 	dim := q.Dimensions[0]
@@ -225,24 +220,26 @@ func analyticsInsights(q analytics.Query, ans analyticsAnswer, order []analytics
 		if metric != "" {
 			before := map[string]float64{}
 			for _, r := range c.Rows {
-				before[r.Dims[0]] = r.Sums.Metric(metric)
+				before[r.Dims[0]] += r.Sums.Metric(metric)
 			}
 			var moved, fresh []oas.AnalyticsInsight
+			seen := map[string]bool{}
 			for _, r := range res.Rows {
 				v := r.Dims[0]
-				if v == analytics.OtherValue {
+				if v == analytics.OtherValue || seen[v] {
 					continue
 				}
+				seen[v] = true
 				cur, prev := r.Sums.Metric(metric), before[v]
 				switch {
 				case prev == 0 && cur >= insightMinCount:
-					fresh = append(fresh, insight(oas.AnalyticsInsightNewValue, metric, dim, v, cur, 0))
-				case prev > 0 && max(cur, prev) >= insightMinCount && math.Abs(cur-prev)/prev >= insightRowChange:
-					moved = append(moved, insight(oas.AnalyticsInsightRowChange, metric, dim, v, cur, prev))
+					fresh = append(fresh, insight(oas.AnalyticsInsightNewValue, metric, dim, v, cur, 0, false))
+				case prev >= insightMinCount && math.Abs(cur-prev)/prev >= insightRowChange:
+					moved = append(moved, insight(oas.AnalyticsInsightRowChange, metric, dim, v, cur, prev, true))
 				}
 			}
 			slices.SortStableFunc(moved, func(a, b oas.AnalyticsInsight) int {
-				return cmp.Compare(math.Abs(b.Current-*b.Previous), math.Abs(a.Current-*a.Previous))
+				return cmp.Compare(math.Abs(b.Current-b.Previous), math.Abs(a.Current-a.Previous))
 			})
 			slices.SortStableFunc(fresh, func(a, b oas.AnalyticsInsight) int { return cmp.Compare(b.Current, a.Current) })
 			out = append(append(out, moved[:min(len(moved), insightRows)]...), fresh[:min(len(fresh), insightRows)]...)
@@ -254,7 +251,7 @@ func analyticsInsights(q analytics.Query, ans analyticsAnswer, order []analytics
 		for _, r := range res.Rows {
 			rate := r.Sums.Metric("support_rate")
 			if overall > 0 && r.Sums.Conversations >= hotspotMinCalls && rate >= hotspotRateMultiple*overall {
-				hot = append(hot, insight(oas.AnalyticsInsightSupportHotspot, "support_rate", dim, r.Dims[0], rate, overall))
+				hot = append(hot, insight(oas.AnalyticsInsightSupportHotspot, "support_rate", dim, r.Dims[0], rate, overall, true))
 			}
 		}
 		slices.SortStableFunc(hot, func(a, b oas.AnalyticsInsight) int { return cmp.Compare(b.Current, a.Current) })
@@ -263,12 +260,12 @@ func analyticsInsights(q analytics.Query, ans analyticsAnswer, order []analytics
 	return out
 }
 
-func insight(kind oas.AnalyticsInsightKind, metric, dim, value string, cur, prev float64) oas.AnalyticsInsight {
-	out := oas.AnalyticsInsight{Kind: kind, Metric: oas.AnalyticsMetric(metric), Current: cur, Previous: &prev}
+func insight(kind oas.AnalyticsInsightKind, metric, dim, value string, cur, prev float64, change bool) oas.AnalyticsInsight {
+	out := oas.AnalyticsInsight{Kind: kind, Metric: oas.AnalyticsMetric(metric), Current: cur, Previous: prev}
 	if dim != "" {
 		out.Dimension, out.Value = &dim, &value
 	}
-	if prev > 0 {
+	if change && prev > 0 {
 		out.Change = new(math.Round((cur-prev)/prev*1000) / 10)
 	}
 	return out
