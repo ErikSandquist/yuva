@@ -10,7 +10,7 @@ import {
   TriangleAlertIcon,
   XIcon,
 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
 
 import { CodeLine, ErrorLine, Notice, Segmented, TypeToConfirmDialog, useConfirm } from "@/components/common"
@@ -663,12 +663,41 @@ function since(now: AnalyticsHealthDay[], base: AnalyticsHealthDay[]): Counts {
   return out
 }
 
+type Baseline = { at: number; days: AnalyticsHealthDay[] }
+
+const BASELINE_FOR = 30 * 60_000
+
+function baselineKey(id: string) {
+  return `yuva.analytics.test-events.${id}`
+}
+
+function readBaseline(id: string, now: number): Baseline | null {
+  try {
+    const b = JSON.parse(localStorage.getItem(baselineKey(id)) ?? "null") as Baseline | null
+    if (b && typeof b.at === "number" && Array.isArray(b.days) && now - b.at < BASELINE_FOR) return b
+  } catch {
+    return null
+  }
+  return null
+}
+
+function writeBaseline(id: string, b: Baseline) {
+  try {
+    localStorage.setItem(baselineKey(id), JSON.stringify(b))
+  } catch {
+    return
+  }
+}
+
 function TestEvents({ p }: { p: AnalyticsProperty }) {
   const { t, i18n } = useLingui()
   const watch = useHealthWatch(p.id)
   const h = watch.data
-  const [base, setBase] = useState<{ at: number; days: AnalyticsHealthDay[] } | null>(null)
-  if (h && !base) setBase({ at: watch.dataUpdatedAt, days: h.days })
+  const [base, setBase] = useState<Baseline | null>(null)
+  if (h && !base) setBase(readBaseline(p.id, watch.dataUpdatedAt) ?? { at: watch.dataUpdatedAt, days: h.days })
+  useEffect(() => {
+    if (base) writeBaseline(p.id, base)
+  }, [p.id, base])
   const fmt = new Intl.NumberFormat(i18n.locale)
   if (!h || !base) return watch.error ? <ErrorLine error={watch.error} /> : <Skeleton className="h-64 rounded-2xl" />
   const c = since(h.days, base.days)

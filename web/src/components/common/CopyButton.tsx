@@ -48,14 +48,15 @@ export function CodeLine({ value, testId }: { value: string; testId?: string }) 
 
 export function CodeBlock({ value, testId }: { value: string; testId?: string }) {
   return (
-    <div className="min-w-0 rounded-xl border bg-surface py-2 ps-3.5 pe-2 after:block after:clear-both">
-      <CopyButton value={value} className="float-end ms-3" />
+    <div className="flex min-w-0 items-start gap-3 rounded-xl border bg-surface py-2 ps-3.5 pe-2">
       <pre
-        className="py-1 font-mono text-caption leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]"
+        className="min-w-0 flex-1 overflow-x-auto py-1 font-mono text-caption leading-relaxed whitespace-pre"
         data-testid={testId}
+        tabIndex={0}
       >
         {value}
       </pre>
+      <CopyButton value={value} className="shrink-0" />
     </div>
   )
 }
