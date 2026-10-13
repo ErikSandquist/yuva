@@ -782,8 +782,13 @@ msgid "Filter by this"
 msgstr "Filter by this"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 msgid "Filters"
 msgstr "Filters"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
 
 #: src/features/analytics/text.ts
 msgid "First page or screen"
@@ -1176,6 +1181,10 @@ msgstr "Nobody reached the first step in this range."
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
 msgstr "None yet"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "None, every visit counts."
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1842,8 +1851,8 @@ msgid "The link stops working at once and stays in the list."
 msgstr "The link stops working at once and stays in the list."
 
 #: src/features/analytics/Sharing.tsx
-msgid "The link stops working at the end of this day. Leave empty to keep it until revoked."
-msgstr "The link stops working at the end of this day. Leave empty to keep it until revoked."
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."

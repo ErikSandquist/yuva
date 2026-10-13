@@ -782,8 +782,13 @@ msgid "Filter by this"
 msgstr "Buna göre filtrele"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 msgid "Filters"
 msgstr "Filtreler"
+
+#: src/features/analytics/Exports.tsx
+msgid "Filters come from the view: click a row there to add one. <0>Change them in the view</0>"
+msgstr "Filtreler görünümden gelir: eklemek için orada bir satıra tıklayın. <0>Görünümde değiştirin</0>"
 
 #: src/features/analytics/text.ts
 msgid "First page or screen"
@@ -1176,6 +1181,10 @@ msgstr "Bu aralıkta ilk adıma ulaşan olmadı."
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
 msgstr "Henüz yok"
+
+#: src/features/analytics/Exports.tsx
+msgid "None, every visit counts."
+msgstr "Yok, her ziyaret sayılır."
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -1842,8 +1851,8 @@ msgid "The link stops working at once and stays in the list."
 msgstr "Bağlantı hemen çalışmayı bırakır ve listede kalır."
 
 #: src/features/analytics/Sharing.tsx
-msgid "The link stops working at the end of this day. Leave empty to keep it until revoked."
-msgstr "Bağlantı bu günün sonunda çalışmayı bırakır. İptal edilene kadar açık kalması için boş bırakın."
+msgid "The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked."
+msgstr "Bağlantı bu günün sonunda ({timezone} saatiyle) çalışmayı bırakır. İptal edilene kadar açık kalması için boş bırakın."
 
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."

@@ -19,7 +19,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { splitLines } from "@/features/analytics/NewProperty"
 import { useCreateShare, useShareActions, useShares } from "@/features/analytics/queries"
-import { todayIso } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Card, EmptyRow, Field, Row, Rows, Section, StatusTag } from "@/features/settings/ui"
 import { useNow } from "@/hooks/use-now"
@@ -60,23 +59,53 @@ export function useShareViewNames(): Record<AnalyticsShareView, string> {
   }
 }
 
-function localDay(iso: string) {
-  const d = new Date(iso)
-  const pad = (n: number) => String(n).padStart(2, "0")
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+function zoneParts(ms: number, tz: string) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: tz,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(new Date(ms))
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "0"
+  return { y: get("year"), m: get("month"), d: get("day"), h: +get("hour"), min: +get("minute"), s: +get("second") }
 }
 
-function endOfDay(day: string) {
-  return new Date(`${day}T23:59:59`).toISOString()
+export function dayIn(ms: number, tz: string) {
+  const p = zoneParts(ms, tz)
+  return `${p.y}-${p.m}-${p.d}`
+}
+
+function offsetAt(ms: number, tz: string) {
+  const p = zoneParts(ms, tz)
+  return Date.UTC(+p.y, +p.m - 1, +p.d, p.h, p.min, p.s) - Math.floor(ms / 1000) * 1000
+}
+
+export function endOfDayIn(day: string, tz: string) {
+  const wall = Date.parse(`${day}T23:59:59Z`)
+  const first = wall - offsetAt(wall, tz)
+  return new Date(wall - offsetAt(first, tz)).toISOString()
+}
+
+export function formatInZone(iso: string, locale: string, tz: string) {
+  const at = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeStyle: "short", timeZone: tz }).format(
+    new Date(iso)
+  )
+  return `${at} (${tz})`
 }
 
 function ShareDialog({
   propertyId,
+  timezone,
   share,
   onClose,
   onCreated,
 }: {
   propertyId: string
+  timezone: string
   share?: AnalyticsShare
   onClose: () => void
   onCreated: (c: AnalyticsShareCreated) => void
@@ -90,8 +119,9 @@ function ShareDialog({
   const [locked, setLocked] = useState(share?.has_password ?? false)
   const [password, setPassword] = useState("")
   const [origins, setOrigins] = useState((share?.embed_origins ?? []).join("\n"))
-  const [expires, setExpires] = useState(share?.expires_at ? localDay(share.expires_at) : "")
-  const today = todayIso()
+  const [expires, setExpires] = useState(share?.expires_at ? dayIn(Date.parse(share.expires_at), timezone) : "")
+  const now = useNow(60_000)
+  const today = dayIn(now, timezone)
   const keepsPassword = !!share?.has_password && locked && !password
   const passwordOk = !locked || keepsPassword || password.length >= 8
   const list = splitLines(origins)
@@ -106,13 +136,13 @@ function ShareDialog({
           views: ordered,
           ...(locked ? { password } : {}),
           ...(list.length ? { embed_origins: list } : {}),
-          ...(expires ? { expires_at: endOfDay(expires) } : {}),
+          ...(expires ? { expires_at: endOfDayIn(expires, timezone) } : {}),
         },
         { onSuccess: onCreated }
       )
       return
     }
-    const before = share.expires_at ? localDay(share.expires_at) : ""
+    const before = share.expires_at ? dayIn(Date.parse(share.expires_at), timezone) : ""
     update.mutate(
       {
         shareId: share.id,
@@ -121,7 +151,7 @@ function ShareDialog({
           views: ordered,
           embed_origins: list,
           ...(!locked && share.has_password ? { password: null } : locked && password ? { password } : {}),
-          ...(expires !== before ? { expires_at: expires ? endOfDay(expires) : null } : {}),
+          ...(expires !== before ? { expires_at: expires ? endOfDayIn(expires, timezone) : null } : {}),
         },
       },
       { onSuccess: onClose }
@@ -225,7 +255,11 @@ function ShareDialog({
           <Field
             label={<Trans>Expires</Trans>}
             htmlFor="share-expires"
-            hint={<Trans>The link stops working at the end of this day. Leave empty to keep it until revoked.</Trans>}
+            hint={
+              <Trans>
+                The link stops working at the end of this day in {timezone}. Leave empty to keep it until revoked.
+              </Trans>
+            }
           >
             <div className="flex items-center gap-2">
               <Input
@@ -311,12 +345,14 @@ function CreatedDialog({ created, onClose }: { created: AnalyticsShareCreated; o
 
 function ShareRow({
   s,
+  timezone,
   now,
   onEdit,
   onRevoke,
   onDelete,
 }: {
   s: AnalyticsShare
+  timezone: string
   now: number
   onEdit?: () => void
   onRevoke?: () => void
@@ -329,7 +365,7 @@ function ShareRow({
   const by = creator ? creator.name || creator.email : null
   const created = formatDate(s.created_at, i18n.locale)
   const viewed = s.last_viewed_at ? formatDateTime(s.last_viewed_at, i18n.locale) : null
-  const expires = s.expires_at ? formatDateTime(s.expires_at, i18n.locale) : null
+  const expires = s.expires_at ? formatInZone(s.expires_at, i18n.locale, timezone) : null
   const expired = !s.revoked_at && !!s.expires_at && Date.parse(s.expires_at) <= now
   const status = s.revoked_at ? (
     <StatusTag data-testid="share-status">
@@ -462,6 +498,7 @@ export function Sharing({ p }: { p: AnalyticsProperty }) {
             <Rows>
               {items.map((s) => (
                 <ShareRow
+                  timezone={p.timezone}
                   key={s.id}
                   s={s}
                   now={now}
@@ -502,6 +539,7 @@ export function Sharing({ p }: { p: AnalyticsProperty }) {
       {editing && (
         <ShareDialog
           propertyId={p.id}
+          timezone={p.timezone}
           share={editing === "new" ? undefined : editing}
           onClose={() => setEditing(null)}
           onCreated={(c) => {

@@ -1,14 +1,15 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro"
 import { DownloadIcon, FileDownIcon, Trash2Icon } from "lucide-react"
 import { useState } from "react"
+import { Link } from "react-router"
 
 import { ErrorLine, ProgressBar, Segmented } from "@/components/common"
 import { formatBytes, formatDate, formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { RangePicker } from "@/features/analytics/Controls"
+import { FilterBar, RangePicker } from "@/features/analytics/Controls"
 import { exportDownloadUrl, useExportActions, useExports, useHealth } from "@/features/analytics/queries"
-import { FILTER_DIMENSIONS, todayIso, useView } from "@/features/analytics/state"
+import { FILTER_DIMENSIONS, todayIso, useView, useViewSearch } from "@/features/analytics/state"
 import { useAnalyticsText } from "@/features/analytics/text"
 import { Card, ChoiceSelect, EmptyRow, Field, Row, Rows, Section, StatusTag } from "@/features/settings/ui"
 import {
@@ -40,6 +41,7 @@ function NewExport({ p }: { p: AnalyticsProperty }) {
   const text = useAnalyticsText()
   const { canManage } = useSession()
   const { view } = useView()
+  const search = useViewSearch()
   const { create } = useExportActions(p.id)
   const rawFrom = useHealth(p.id, 1).data?.raw_window_from
   const [kind, setKind] = useState<AnalyticsExportKind>("view")
@@ -200,6 +202,29 @@ function NewExport({ p }: { p: AnalyticsProperty }) {
               />
             </Field>
           </div>
+          {kind === "view" && (
+            <Field label={<Trans>Filters</Trans>}>
+              {filters > 0 ? (
+                <FilterBar />
+              ) : (
+                <p className="text-body text-muted-foreground" data-testid="export-no-filters">
+                  <Trans>None, every visit counts.</Trans>
+                </p>
+              )}
+              <p className="text-small text-faint">
+                <Trans>
+                  Filters come from the view: click a row there to add one.{" "}
+                  <Link
+                    to={`/analytics/${p.id}${search}`}
+                    className="text-brand underline-offset-4 hover:underline"
+                    data-testid="export-change-filters"
+                  >
+                    Change them in the view
+                  </Link>
+                </Trans>
+              </p>
+            </Field>
+          )}
         </>
       )}
     </Card>

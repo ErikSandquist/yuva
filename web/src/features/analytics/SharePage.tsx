@@ -8,7 +8,6 @@ import { Navigate, Outlet, Route, Routes, useLocation, useNavigate, useParams } 
 
 import { EmptyState, ErrorLine, Segmented, YuvaMark } from "@/components/common"
 import { LanguageMenu } from "@/components/common/LanguageMenu"
-import { formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -19,7 +18,7 @@ import { GoalsView } from "@/features/analytics/Goals"
 import { Overview } from "@/features/analytics/Overview"
 import { ShareContext, shareHeaders, type ShareScope } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
-import { SHARE_VIEWS, useShareViewNames } from "@/features/analytics/Sharing"
+import { formatInZone, SHARE_VIEWS, useShareViewNames } from "@/features/analytics/Sharing"
 import { useViewSearch } from "@/features/analytics/state"
 import { api, ApiError, unwrap, type AnalyticsProperty, type AnalyticsShareView } from "@/lib/api"
 
@@ -172,7 +171,7 @@ function SharedLayout({ scope, expiresAt }: { scope: ShareScope; expiresAt?: str
   const views = SHARE_VIEWS.filter((v) => scope.views.includes(v))
   const last = pathname.split("/")[3] as AnalyticsShareView | undefined
   const current = last && views.includes(last) ? last : (views[0] ?? "overview")
-  const expires = expiresAt ? formatDateTime(expiresAt, i18n.locale) : ""
+  const expires = expiresAt ? formatInZone(expiresAt, i18n.locale, scope.property.timezone) : ""
   useEffect(() => {
     const before = document.title
     document.title = property.name
@@ -259,7 +258,7 @@ export default function SharePage() {
   const data = page.data
   const scope = useMemo<ShareScope | null>(
     () =>
-      data && !data.password_required && data.property
+      data?.property && (!data.password_required || access)
         ? {
             token,
             access,
@@ -307,7 +306,7 @@ export default function SharePage() {
       </Message>
     )
   }
-  if (data?.password_required || !scope) {
+  if (!scope) {
     return (
       <Unlock
         token={token}
