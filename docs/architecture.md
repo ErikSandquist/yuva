@@ -1618,6 +1618,20 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   `setup_analytics` prompts and the `yuva://property/{id}` resource; visitor-sent values are
   `customer_content`. Insights compare in percent only from a baseline of at least 10; a total with none
   before is `metric_new`, a row `new_value`; each insight appears once per answer.
+- **Consent features (M15.6).** A consented `persistent` id (kept on the device for 13 months, made only
+  without DNT or GPC) is hashed with the property's sealed random `visitor_key` and is that visitor on
+  every day (`persistent`, `visitor_type`); ids first seen more than 13 months ago are forgotten by the
+  hourly `analytics_cohorts` job, which also rebuilds `analytics_cohorts` (days to 30 periods, weeks and
+  months to 12). `identify` needs `persistent` and a linked inbox; its token is checked exactly as for
+  `/client/v1/session` (single-use `jti`) and links the id and its raw visits to the contact; forged,
+  expired or reused tokens are ignored. `yuva_consent` events carry identification and withdrawal and
+  are never stored, counted or billed; a withdrawal, honoured under GPC and DNT, deletes the id's link
+  and cohort days, and `DELETE …/visitors/{persistentId}` erases everything stored under the id. A
+  consented visitor counts once over a range's totals and per week or month bucket (from cohort days
+  without filters, from raw rows inside the raw window with filters); default-mode traffic stays a sum
+  of days. Funnels follow consented visitors across visits and days in `consented_visitors`. Deleting a
+  contact deletes its linked visits, merging moves them, and contacts left from an import that have
+  linked visits are kept. Children's properties refuse consent features.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
