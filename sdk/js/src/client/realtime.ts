@@ -26,7 +26,7 @@ export class Realtime {
 
   start(): void {
     this.#stopped = false
-    if (!this.#socket) this.#connect()
+    if (!this.#socket && !this.#timer) this.#connect()
   }
 
   stop(): void {

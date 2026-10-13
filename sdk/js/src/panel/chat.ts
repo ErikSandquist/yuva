@@ -144,6 +144,7 @@ export class Chat implements PanelController {
       this.#setInbox(session.inbox)
       this.#contact = session.contact
       if (renewed) void this.#reload()
+      else if (!this.#beginning) void this.#client.connect().catch(() => undefined)
     })
     this.#setLocale()
     this.#live.setAttribute("aria-live", "polite")
