@@ -34,6 +34,14 @@ msgid "{count, plural, one {Goal “{goal}” had # conversion, against {usual} 
 msgstr "{count, plural, one {“{goal}” hedefinde # dönüşüm oldu; önceki hafta günlük ortalama {usual} idi.} other {“{goal}” hedefinde # dönüşüm oldu; önceki hafta günlük ortalama {usual} idi.}}"
 
 #: src/features/analytics/Insights.tsx
+msgid "{count} in this range, none in the compared days."
+msgstr "Bu aralıkta {count}; karşılaştırılan günlerde hiç yoktu."
+
+#: src/features/analytics/Insights.tsx
+msgid "{dim} {value}: {count}, none in the compared days."
+msgstr "{dim} {value}: {count}; karşılaştırılan günlerde hiç yoktu."
+
+#: src/features/analytics/Insights.tsx
 msgid "{dim} {value}: {lower} fell {change}, {now} against {before}."
 msgstr "{dim} {value}: {lower} {change} azaldı, önce {before}, şimdi {now}."
 
@@ -64,6 +72,34 @@ msgstr "{metric} {change} arttı: şimdi {now}, karşılaştırılan günlerde {
 #: src/features/analytics/Insights.tsx
 msgid "{metric}: {now}, none in the compared days."
 msgstr "{metric}: {now}; karşılaştırılan günlerde hiç yoktu."
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversation} other {# conversations}}"
+msgstr "{n, plural, one {# konuşma} other {# konuşma}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# conversion} other {# conversions}}"
+msgstr "{n, plural, one {# dönüşüm} other {# dönüşüm}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# discussion} other {# discussions}}"
+msgstr "{n, plural, one {# tartışma} other {# tartışma}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# event} other {# events}}"
+msgstr "{n, plural, one {# olay} other {# olay}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# view} other {# views}}"
+msgstr "{n, plural, one {# görüntüleme} other {# görüntüleme}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visit} other {# visits}}"
+msgstr "{n, plural, one {# ziyaret} other {# ziyaret}}"
+
+#: src/features/analytics/Insights.tsx
+msgid "{n, plural, one {# visitor} other {# visitors}}"
+msgstr "{n, plural, one {# ziyaretçi} other {# ziyaretçi}}"
 
 #: src/features/analytics/Events.tsx
 msgid "{n} payments, {avg} on average"
@@ -1273,6 +1309,10 @@ msgstr "Hiçbir zaman"
 #: src/features/analytics/Sharing.tsx
 msgid "never opened"
 msgstr "hiç açılmadı"
+
+#: src/features/analytics/Insights.tsx
+msgid "New {kind}: {value} with {count}, none in the compared days."
+msgstr "Yeni {kind}: {value}, {count}; karşılaştırılan günlerde hiç yoktu."
 
 #: src/features/analytics/Insights.tsx
 msgid "New {kind}: {value}. {metric}: {now}, none in the compared days."

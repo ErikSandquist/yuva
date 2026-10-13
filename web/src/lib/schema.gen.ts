@@ -13006,33 +13006,41 @@ export interface components {
             insights?: components["schemas"]["AnalyticsInsight"][];
         };
         /**
-         * @description A fixed rule over the answer's own numbers; Yuva runs no model.
-         *     `metric_change`: a total moved by at least 20% against `compare` (at least 10 before or
-         *     after). With one dimension other than time: `row_change`, a row whose first count metric
-         *     (by `order_by`, else the first one asked) moved by at least 50% (at least 10 before or
-         *     after), the three largest moves; `new_value`, a row with at least 10 that had none in the
-         *     comparison range (a new referrer, page or campaign), the three largest. `support_hotspot`
-         *     (`dataset: support` by page): a page with at least 3 conversations whose `support_rate` is
-         *     at least twice the range's, the three highest. The change rules need `compare`.
+         * @description A fixed rule over the answer's own numbers; Yuva runs no model. Each insight appears once
+         *     per answer, and `current` and `previous` are the plain numbers to phrase and pluralise it.
+         *     The change rules need `compare`; a number below 10 is never compared in percent.
+         *     `metric_change`: a count total that moved by at least 20% from a comparison total of at
+         *     least 10; `change` is the percentage. `metric_new`: a count total of at least 10 whose
+         *     comparison total is 0 ("no visitors in the compared days"); it has no `change`. A
+         *     comparison total from 1 to 9 gives neither. With one dimension other than time:
+         *     `row_change`, a row whose first count metric (by `order_by`, else the first one asked)
+         *     moved by at least 50% from at least 10, the three largest moves; `new_value`, a row with at
+         *     least 10 that had none in the comparison range (a new referrer, page or campaign), the
+         *     three largest, without `change`. `support_hotspot` (`dataset: support` by page): a page
+         *     with at least 3 conversations whose `support_rate` (`current`) is at least twice the
+         *     range's (`previous`), the three highest; `change` is how much higher in percent.
          */
         AnalyticsInsight: {
             /** @enum {string} */
-            kind: "metric_change" | "row_change" | "new_value" | "support_hotspot";
+            kind: "metric_change" | "metric_new" | "row_change" | "new_value" | "support_hotspot";
             metric: components["schemas"]["AnalyticsMetric"];
             /** @description The dimension of the row; absent for a total. */
             dimension?: string;
             /** @description The row's value of `dimension`. */
             value?: string;
-            /** Format: double */
+            /**
+             * Format: double
+             * @description The range's number.
+             */
             current: number;
             /**
              * Format: double
-             * @description The comparison range's number, or the range's overall `support_rate` for a hotspot.
+             * @description The comparison range's number (0 for `metric_new` and `new_value`), or the range's overall `support_rate` for a hotspot.
              */
-            previous?: number;
+            previous: number;
             /**
              * Format: double
-             * @description The change in percent of `previous`; absent when `previous` is 0.
+             * @description The change in percent of `previous`, one decimal; only for `metric_change`, `row_change` and `support_hotspot`.
              */
             change?: number;
         };

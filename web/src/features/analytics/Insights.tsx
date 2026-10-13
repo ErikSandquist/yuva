@@ -9,9 +9,30 @@ import { formatMetric, useAnalyticsText, valueText } from "@/features/analytics/
 import type { AnalyticsDimension, AnalyticsInsight, AnalyticsProperty, AnalyticsQuery } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-const ORDER: AnalyticsInsight["kind"][] = ["metric_change", "support_hotspot", "row_change", "new_value"]
+const ORDER: AnalyticsInsight["kind"][] = ["metric_change", "metric_new", "support_hotspot", "row_change", "new_value"]
 
 export const SUPPORT_FILTERS = ["page", "hostname"]
+
+function counted(metric: AnalyticsInsight["metric"], n: number) {
+  switch (metric) {
+    case "visitors":
+      return plural(n, { one: "# visitor", other: "# visitors" })
+    case "visits":
+      return plural(n, { one: "# visit", other: "# visits" })
+    case "pageviews":
+      return plural(n, { one: "# view", other: "# views" })
+    case "events":
+      return plural(n, { one: "# event", other: "# events" })
+    case "conversions":
+      return plural(n, { one: "# conversion", other: "# conversions" })
+    case "conversations":
+      return plural(n, { one: "# conversation", other: "# conversations" })
+    case "discussions":
+      return plural(n, { one: "# discussion", other: "# discussions" })
+    default:
+      return null
+  }
+}
 
 export function useInsightText() {
   const { t, i18n } = useLingui()
@@ -32,19 +53,33 @@ export function useInsightText() {
     const value = valueText(text, dimension, x.value ?? "", i18n.locale)
     const up = (x.change ?? 0) >= 0
     const fresh = !x.previous || x.change === undefined
+    if (x.kind === "metric_new" || (x.kind === "metric_change" && fresh)) {
+      const count = counted(x.metric, x.current)
+      return count
+        ? t`${count} in this range, none in the compared days.`
+        : t`${metric}: ${now}, none in the compared days.`
+    }
     switch (x.kind) {
       case "metric_change":
-        if (fresh) return t`${metric}: ${now}, none in the compared days.`
         return up
           ? t`${metric} rose ${change}: ${now}, against ${before} in the compared days.`
           : t`${metric} fell ${change}: ${now}, against ${before} in the compared days.`
       case "row_change":
-        if (fresh) return t`${dim} ${value}: ${metric} ${now}, none in the compared days.`
+        if (fresh) {
+          const count = counted(x.metric, x.current)
+          return count
+            ? t`${dim} ${value}: ${count}, none in the compared days.`
+            : t`${dim} ${value}: ${metric} ${now}, none in the compared days.`
+        }
         return up
           ? t`${dim} ${value}: ${lower} rose ${change}, ${now} against ${before}.`
           : t`${dim} ${value}: ${lower} fell ${change}, ${now} against ${before}.`
-      case "new_value":
-        return t`New ${kind}: ${value}. ${metric}: ${now}, none in the compared days.`
+      case "new_value": {
+        const count = counted(x.metric, x.current)
+        return count
+          ? t`New ${kind}: ${value} with ${count}, none in the compared days.`
+          : t`New ${kind}: ${value}. ${metric}: ${now}, none in the compared days.`
+      }
       case "support_hotspot": {
         const rate = Math.round(x.current * 10) / 10
         const site = formatMetric("support_rate", x.previous ?? 0, i18n.locale)
@@ -64,7 +99,7 @@ export function InsightList({ items, testId }: { items: AnalyticsInsight[]; test
     <ul className="flex flex-col gap-1" data-testid={testId}>
       {sorted.map((x, i) => {
         const up = (x.change ?? 0) >= 0
-        const fresh = x.kind === "new_value" || !x.previous || x.change === undefined
+        const fresh = x.kind === "new_value" || x.kind === "metric_new" || !x.previous || x.change === undefined
         const Icon =
           x.kind === "support_hotspot" ? LifeBuoyIcon : fresh ? SparkleIcon : up ? ArrowUpRightIcon : ArrowDownRightIcon
         return (
