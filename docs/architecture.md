@@ -1560,6 +1560,20 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   31 when the property counted more than 10M events in the last 30), answers cached 10 minutes.
   Segments and annotations need `analytics:read` and are edited by their author, owners, admins and keys
   without an inbox limit; Yuva's own annotations (`key_rotated`, `goal_created`) cannot be edited.
+- **Apps and servers (M15.3).** An app screen is a page view of `app://<app id>/<screen>`; the app id is
+  the visit's hostname and is not checked against `domains`. App requests have no `Origin`, use the batch
+  form `{k, a, e}` with one process key per request (a fresh UUID per launch, kept in memory only) and
+  need `a.platform` in the property's `platforms`; they skip the browser-header bot rules and the
+  user-agent parser, the volume rules still apply. A late event (at most 72 hours old, `t` from apps,
+  `timestamp` from servers) is stored on its own day at its own time, hashed under its day's salt while
+  that salt exists and under the arrival day's otherwise; visits, claims and bot counts use the event's
+  time. `POST /v1/analytics/properties/{id}/events` (keys with `analytics:write`) takes server events that
+  forward `ip`, `user_agent` and the client hints, hashed exactly like the browser's request so they
+  join its visit, or a `visitor_key` hashed in a scope of its own; a visit a server event starts has
+  platform `server`. `dnt`, `gpc` or a missing `consent` mean the event is not stored; invalid events
+  come back in `errors`, and only a body or auth problem refuses the request. `sdk/go/analytics` drops
+  DNT and GPC requests before sending and retries 429, 5xx and network errors with backoff that honours
+  `Retry-After`.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
