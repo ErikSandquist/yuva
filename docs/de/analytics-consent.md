@@ -14,10 +14,10 @@ selbst mit; Yuva zeigt nie ein Banner.
 |---|---|
 | Eine zufällige ID auf dem Gerät | Vom Skript oder der App erzeugt, höchstens 13 Monate ab Erzeugung aufbewahrt und mit jedem Event gesendet. Der Server speichert nur einen Hash davon unter einem Geheimnis der Property; dieselbe ID bedeutet auf einer anderen Property nichts. |
 | Besucher einmal gezählt | Ein Besucher zählt über einen Zeitraum, eine Woche oder einen Monat einmal statt einmal pro Tag. |
-| Neu und wiederkehrend | Die Dimension **Visitor type** (`visitor_type`): `new` am Tag, an dem die ID zuerst gesehen wurde, danach `returning`. Für alle anderen leer. |
-| Retention | `GET /v1/analytics/properties/{propertyId}/retention`: Kohorten nach Tag, Woche oder Monat und wie viele davon zurückkamen. |
+| Neu und wiederkehrend | Die Karte **New and returning** der Übersicht und die Dimension `visitor_type`: `new` am Tag, an dem die ID zuerst gesehen wurde, danach `returning`. Für alle anderen leer. |
+| Retention | Der Tab **Retention** und `GET /v1/analytics/properties/{propertyId}/retention`: Kohorten nach Tag, Woche oder Monat und wie viele davon zurückkamen. |
 | Funnels über Tage | `consented_visitors` eines Funnels verfolgt diese Besucher über Besuche und Tage, jeder einmal gezählt. |
-| Mit `identify` zusätzlich | Die letzten Besuche des Kontakts: `GET /v1/contacts/{contactId}/visits` und auf der Kontaktseite. |
+| Mit `identify` zusätzlich | **Recent visits** auf der Kontaktseite und `GET /v1/contacts/{contactId}/visits`. |
 
 In diesen Ansichten sind nur Besucher mit Einwilligung. Eine Property ohne die Funktion hat keine Retention-Kohorten.
 
@@ -31,14 +31,15 @@ In diesen Ansichten sind nur Besucher mit Einwilligung. Eine Property ohne die F
 
 ## Für eine Property einschalten
 
-Die Consent-Funktionen sind eine Einstellung der Property, `consent_features`, mit zwei Werten:
+Öffnen Sie im Panel **Settings → Tracking → Consent features** der Website. Ein Owner oder Admin setzt zwei Schalter (bei
+Properties für Kinder sind sie aus und deaktiviert); in der API sind es die `consent_features` der Property:
 
-| Wert | Wirkung |
-|---|---|
-| `persistent` | Besucher, die zustimmen, erhalten die 13-Monate-ID. |
-| `identify` | Die ID darf mit einem Kontakt verknüpft werden. Braucht `persistent` und eine mit einem Posteingang verbundene Property, dessen [Identity-Secret](identity.md) die Tokens signiert. |
+| Schalter | `consent_features` | Wirkung |
+|---|---|---|
+| **Persistent id** | `persistent` | Besucher, die zustimmen, erhalten die 13-Monate-ID. |
+| **Link signed-in users** | `identify` | Die ID darf mit einem Kontakt verknüpft werden. Braucht **Persistent id** und eine mit einem Posteingang verbundene Website, dessen [Identity-Secret](identity.md) die Tokens signiert. |
 
-Setzen Sie sie mit einem Schlüssel mit `analytics:manage`:
+Oder mit einem Schlüssel mit `analytics:manage`:
 
 ```sh
 curl -X PATCH -H "Authorization: Bearer $YUVA_API_KEY" -H "Content-Type: application/json" \
@@ -57,19 +58,24 @@ Monate eine ID auf seinem Gerät erhält, wofür sie dient und wie er widerruft 
 ## Das Skript aus Ihrem Consent-Tool aufrufen
 
 Das Skript merkt sich keine Antwort; rufen Sie es deshalb bei **jedem Seitenaufruf** mit der aktuellen Wahl des Besuchers
-auf. Installieren Sie das Skript wie im [Consent-Modus](analytics.md#consent-modus) mit `data-consent="required"`.
+auf und übergeben Sie `persistent: true` bei **jedem** Aufruf, solange der Besucher zustimmt: Jeder `consent`-Aufruf ohne
+es, auch `consent({ analytics: true })`, widerruft eine gespeicherte ID.
 
 ```js
 window.yuva.consent({ analytics: true, persistent: true })
 window.yuva.consent(false)
 ```
 
-`consent({ analytics: true })` zählt den Besucher ohne ID. Mit `persistent: true` wird die ID erzeugt. `consent(false)`
-hört auf zu zählen, löscht die ID vom Gerät und weist den Server an, die Verknüpfung der ID mit einem Kontakt und ihre
-Retention-Tage zu vergessen. Bevor das Skript geladen ist, reihen Sie den Aufruf ein:
+`consent({ analytics: true })` zählt den Besucher ohne ID. Mit `persistent: true` wird die ID erzeugt und im lokalen
+Speicher des Browsers gehalten. `consent(false)`, ein Aufruf ohne `persistent: true` und ein Opt-out beenden die ID: Sie wird
+vom Gerät gelöscht, und der Server vergisst ihre Verknüpfung mit einem Kontakt und ihre Retention-Tage, auch wenn der Browser
+Do Not Track sendet. Bevor das Skript geladen ist, reihen Sie den Aufruf ein:
 `;(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true, persistent: true }])`.
 
-Die Consent-Funktionen brauchen ein Skript und Apps, die sie enthalten; der Server nimmt sie schon an.
+**Script-Tag.** Das übliche `/yuva-analytics.js` lässt die Consent-Funktionen weg, um klein zu bleiben. Laden Sie sie mit
+`/yuva-analytics-consent.js` (unter 2 KB gzip) vom selben Ort, mit denselben Attributen, und setzen Sie wie im
+[Consent-Modus](analytics.md#consent-modus) `data-consent="required"`. `window.yuva` hat dann auch `identify` und
+`persistentId`. Mit `useyuva/analytics`, React und Nuxt sind die Aufrufe schon da.
 
 ### Rezepte
 
@@ -196,36 +202,38 @@ stehen unter [Server-Events](analytics-server.md).
 
 ## Apps
 
-Die Swift- und Kotlin-Bibliotheken erhalten dieselben drei Aufrufe wie das Skript: Consent mit den zwei Wahlmöglichkeiten,
-`consent(false)` für den Widerruf und `identify` mit einem Token, das Ihr Backend signiert. Die ID liegt im privaten Speicher
-der App, höchstens 13 Monate; wann gefragt wird, entscheidet Ihr eigener Consent-Dialog.
+Die Swift- und Kotlin-Bibliotheken haben dieselben Aufrufe wie das Skript. Wann gefragt wird, entscheidet Ihr eigener
+Consent-Dialog. Die ID liegt im privaten Speicher der App, höchstens 13 Monate. Übergeben Sie wie im Web bei jedem
+`consent`-Aufruf `persistent: true`, solange der Nutzer zustimmt: Ein Aufruf ohne es widerruft die ID.
 
 ```swift
-YuvaAnalytics.consent(analytics: true, persistent: true)
-YuvaAnalytics.identify(token: token)
+YuvaAnalytics.consent(true, persistent: true)
+YuvaAnalytics.identify(token)
+let id = YuvaAnalytics.persistentId
 YuvaAnalytics.consent(false)
 ```
 
 ```kotlin
-YuvaAnalytics.consent(analytics = true, persistent = true)
+YuvaAnalytics.consent(true, persistent = true)
 YuvaAnalytics.identify(token)
+val id = YuvaAnalytics.persistentId
 YuvaAnalytics.consent(false)
 ```
 
-Diese Aufrufe kommen mit dem nächsten Release der App-Bibliotheken; die Namen sind die des Skripts, die Signaturen stehen
-dann auf der [Bibliotheksseite](analytics-apps.md). Bis dahin funktionieren `consent(true)` und `consent(false)` wie unter
-[Einwilligung und Opt-out](analytics-apps.md#einwilligung-und-opt-out) beschrieben. Rufen Sie sie bei jedem Start auf.
+`identify` und ein Widerruf werden einmal gesendet und nie eingereiht. `persistentId` ist `nil` oder `null`, wenn der Nutzer
+keine ID hat. Rufen Sie `consent` bei jedem Start auf, wie unter [Einwilligung und Opt-out](analytics-apps.md#einwilligung-und-opt-out).
 
 ### Antworten für die Stores
 
 Sie gelten, wenn `persistent` an ist und der Nutzer zugestimmt hat; sonst gelten die [Antworten auf der Apps-Seite](analytics-apps.md#antworten-für-die-stores).
 Die ID ist zufällig, wird von der Bibliothek erzeugt, ist nicht die Werbe-ID und wird mit niemandem geteilt.
 
-**App Store.** Ergänzen Sie den Datenschutzbericht:
+**App Store.** Das Privacy Manifest der Swift-Bibliothek deklariert **Device ID** (für Analytics erhoben, nicht für Tracking
+genutzt); der Datenschutzbericht von Xcode listet sie also schon. Antworten Sie in App Store Connect:
 
 | Datentyp | Mit dem Nutzer verknüpft | Für Tracking genutzt | Zweck |
 |---|---|---|---|
-| Identifiers → Device ID | Nein | Nein | Analytics |
+| Identifiers → Device ID | Nein, solange Ihre App nicht `identify` aufruft | Nein | Analytics |
 | Identifiers → User ID, nur wenn Sie `identify` aufrufen | Ja | Nein | Analytics |
 
 Yuva verbindet die ID mit keinen Daten aus Apps oder Websites anderer Unternehmen; sie ist daher kein Tracking im Sinne von

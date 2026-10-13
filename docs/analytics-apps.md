@@ -168,6 +168,8 @@ Both libraries work the same way.
   **Only with consent** requires. The choice is not remembered: store it yourself and call `consent(true)`
   again after `configure` on every launch where the user has agreed. `consent(false)` stops counting and
   deletes whatever waits to be sent.
+- **Consent features.** `consent(true, persistent: true)`, `identify` and `persistentId` give consenting users a
+  13-month id and link their visits to a contact: see [Consent features](analytics-consent.md#apps).
 - **`optOut()`** stops counting for good: it is remembered on the device, deletes whatever waits to be sent,
   and `configure` honours it on every later launch. **`optIn()`** reverses it, and `isOptedOut` tells which it
   is. Offer this in your settings screen.

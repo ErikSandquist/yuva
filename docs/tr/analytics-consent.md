@@ -14,10 +14,10 @@ Yuva hiçbir zaman bant göstermez.
 |---|---|
 | Cihazda rastgele bir kimlik | Betik ya da uygulama üretir, üretildiği andan itibaren en çok 13 ay saklanır ve her olayla gönderilir. Sunucu yalnızca, özelliğe ait bir sırla alınmış özetini saklar; bu yüzden aynı kimlik başka bir özellikte hiçbir şey ifade etmez. |
 | Ziyaretçi bir kez sayılır | Bir ziyaretçi, günde bir kez yerine bir aralıkta, haftada ya da ayda bir kez sayılır. |
-| Yeni ve geri dönen | **Ziyaretçi türü** boyutu (`visitor_type`): kimliğin ilk görüldüğü gün `new`, sonrası `returning`. Diğer herkes için boş. |
-| Elde tutma | `GET /v1/analytics/properties/{propertyId}/retention`: gün, hafta ya da ay kohortları ve her birinden kaçının geri geldiği. |
+| Yeni ve geri dönen | Genel bakıştaki **Yeni ve geri dönen** kartı ve `visitor_type` boyutu: kimliğin ilk görüldüğü gün `new`, sonrası `returning`. Diğer herkes için boş. |
+| Elde tutma | **Elde tutma** sekmesi ve `GET /v1/analytics/properties/{propertyId}/retention`: gün, hafta ya da ay kohortları ve her birinden kaçının geri geldiği. |
 | Günlere yayılan huniler | Hunideki `consented_visitors`, bu ziyaretçileri ziyaretler ve günler boyunca izler; her biri bir kez sayılır. |
-| `identify` de açıksa | Kişinin son ziyaretleri: `GET /v1/contacts/{contactId}/visits` ve kişi sayfasında. |
+| `identify` de açıksa | Kişi sayfasındaki **Son ziyaretler** ve `GET /v1/contacts/{contactId}/visits`. |
 
 Bu görünümlerde yalnızca izin veren ziyaretçiler vardır. Özelliği kullanmayan bir özellikte elde tutma kohortu olmaz.
 
@@ -31,14 +31,15 @@ Bu görünümlerde yalnızca izin veren ziyaretçiler vardır. Özelliği kullan
 
 ## Bir özellik için açın
 
-İzinle açılan özellikler özelliğin `consent_features` ayarıdır ve iki değeri vardır:
+Panelde web sitesinin **Ayarlar → İzleme → İzinle açılan özellikler** bölümünü açın. Sahip ya da yönetici iki anahtarı
+ayarlar (çocuklara yönelik özelliklerde kapalı ve devre dışıdır); API'de bunlar özelliğin `consent_features` ayarıdır:
 
-| Değer | Ne yapar |
-|---|---|
-| `persistent` | Kabul eden ziyaretçilerin 13 aylık kimlik almasını sağlar. |
-| `identify` | Kimliğin bir kişiye bağlanmasını sağlar. `persistent` ve bir gelen kutusuna bağlı özellik gerekir; tokenları o gelen kutusunun [kimlik sırrı](identity.md) imzalar. |
+| Anahtar | `consent_features` | Ne yapar |
+|---|---|---|
+| **Kalıcı kimlik** | `persistent` | Kabul eden ziyaretçilerin 13 aylık kimlik almasını sağlar. |
+| **Oturum açan kullanıcıları bağla** | `identify` | Kimliğin bir kişiye bağlanmasını sağlar. **Kalıcı kimlik** ve bir gelen kutusuna bağlı web sitesi gerekir; tokenları o gelen kutusunun [kimlik sırrı](identity.md) imzalar. |
 
-`analytics:manage` yetkili bir anahtarla ayarlayın:
+Ya da `analytics:manage` yetkili bir anahtarla:
 
 ```sh
 curl -X PATCH -H "Authorization: Bearer $YUVA_API_KEY" -H "Content-Type: application/json" \
@@ -56,20 +57,25 @@ aldığını, ne için kullanıldığını ve nasıl vazgeçileceğini ([vazgeç
 
 ## İzin aracınızdan betiği çağırın
 
-Betik cevabı saklamaz; bu yüzden ziyaretçinin güncel tercihiyle **her sayfa yüklemesinde** çağırın. Betiği
-[izin modundaki](analytics.md#i̇zin-modu) gibi `data-consent="required"` ile kurun.
+Betik cevabı saklamaz; bu yüzden ziyaretçinin güncel tercihiyle **her sayfa yüklemesinde** çağırın ve ziyaretçi kabul ettiği
+sürece **her** çağrıda `persistent: true` verin: `persistent: true` olmayan her `consent` çağrısı, `consent({ analytics: true })`
+dahil, saklı kimliği geri çeker.
 
 ```js
 window.yuva.consent({ analytics: true, persistent: true })
 window.yuva.consent(false)
 ```
 
-`consent({ analytics: true })` ziyaretçiyi kimliksiz sayar. `persistent: true` eklemek kimliği üretir. `consent(false)`
-saymayı durdurur, kimliği cihazdan siler ve sunucuya kimliğin bir kişiye bağlantısını ve elde tutma günlerini unutmasını
-söyler. Betik yüklenmeden önce çağrıyı kuyruğa alın:
+`consent({ analytics: true })` ziyaretçiyi kimliksiz sayar. `persistent: true` eklemek kimliği üretir ve tarayıcının yerel
+depolamasında tutar. `consent(false)`, `persistent: true` olmayan bir çağrı ve vazgeçme kimliği durdurur: cihazdan silinir,
+sunucu kimliğin bir kişiye bağlantısını ve elde tutma günlerini unutur; tarayıcı Do Not Track gönderse bile. Betik
+yüklenmeden önce çağrıyı kuyruğa alın:
 `;(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true, persistent: true }])`.
 
-İzinle açılan özellikler, bunları içeren bir betik ve uygulama sürümü gerektirir; sunucu bunları şimdiden kabul eder.
+**Betik etiketi.** Her zamanki `/yuva-analytics.js` küçük kalmak için bu özellikleri içermez. Kullanmak için aynı yerden, aynı
+özniteliklerle `/yuva-analytics-consent.js` yükleyin (gzip ile 2 KB altında) ve [izin modundaki](analytics.md#i̇zin-modu) gibi
+`data-consent="required"` verin. `window.yuva` o zaman `identify` ve `persistentId` de taşır. `useyuva/analytics`, React ve
+Nuxt'ta çağrılar zaten vardır.
 
 ### Tarifler
 
@@ -194,36 +200,38 @@ Olay o zaman, tarayıcının kendi olayları gibi ziyaretçinin günlerine dahil
 
 ## Uygulamalar
 
-Swift ve Kotlin kütüphaneleri betikle aynı üç çağrıyı alır: iki seçimli izin, vazgeçme için `consent(false)` ve arka
-ucunuzun imzaladığı bir tokenla `identify`. Kimlik uygulamanın özel depolamasında en çok 13 ay durur; ne zaman soracağınıza
-kendi izin ekranınız karar verir.
+Swift ve Kotlin kütüphaneleri betikle aynı çağrılara sahiptir. Ne zaman soracağınıza kendi izin ekranınız karar verir. Kimlik
+uygulamanın özel depolamasında en çok 13 ay durur. Webdeki gibi, kullanıcı kabul ettiği sürece her `consent` çağrısında
+`persistent: true` verin: onsuz bir çağrı kimliği geri çeker.
 
 ```swift
-YuvaAnalytics.consent(analytics: true, persistent: true)
-YuvaAnalytics.identify(token: token)
+YuvaAnalytics.consent(true, persistent: true)
+YuvaAnalytics.identify(token)
+let id = YuvaAnalytics.persistentId
 YuvaAnalytics.consent(false)
 ```
 
 ```kotlin
-YuvaAnalytics.consent(analytics = true, persistent = true)
+YuvaAnalytics.consent(true, persistent = true)
 YuvaAnalytics.identify(token)
+val id = YuvaAnalytics.persistentId
 YuvaAnalytics.consent(false)
 ```
 
-Bu çağrılar uygulama kütüphanelerinin bir sonraki sürümüyle gelir; adlar betikteki adlardır ve imzalar
-[kütüphane sayfasında](analytics-apps.md) yer alacaktır. O zamana kadar `consent(true)` ve `consent(false)`,
-[İzin ve vazgeçme](analytics-apps.md#i̇zin-ve-vazgeçme) bölümünde anlatıldığı gibi çalışır. Bunları her açılışta çağırın.
+`identify` ve vazgeçme bir kez gönderilir ve hiç kuyruğa alınmaz. Kullanıcının kimliği yoksa `persistentId` `nil` ya da
+`null` olur. [İzin ve vazgeçme](analytics-apps.md#i̇zin-ve-vazgeçme) bölümündeki gibi `consent` işlevini her açılışta çağırın.
 
 ### Mağazalar için yanıtlar
 
 Bunlar `persistent` açıkken ve kullanıcı kabul ettiğinde geçerlidir; açık değilse [uygulamalar sayfasındaki yanıtlar](analytics-apps.md#mağazalar-için-yanıtlar)
 geçerlidir. Kimlik rastgeledir, kütüphane üretir, reklam kimliği değildir ve kimseyle paylaşılmaz.
 
-**App Store.** Gizlilik raporuna ekleyin:
+**App Store.** Swift kütüphanesinin gizlilik manifestosu **Device ID** bildirir (analitik için toplanır, izleme için
+kullanılmaz); bu yüzden Xcode'un gizlilik raporu onu zaten listeler. App Store Connect'te şöyle yanıtlayın:
 
 | Veri türü | Kullanıcıya bağlı | İzleme için kullanılıyor | Amaç |
 |---|---|---|---|
-| Identifiers → Device ID | Hayır | Hayır | Analitik |
+| Identifiers → Device ID | Hayır, uygulamanız `identify` çağırmıyorsa | Hayır | Analitik |
 | Identifiers → User ID, yalnızca `identify` çağırıyorsanız | Evet | Hayır | Analitik |
 
 Yuva kimliği başka şirketlerin uygulama ya da sitelerinden gelen verilerle birleştirmez; bu yüzden Apple'ın anlamında

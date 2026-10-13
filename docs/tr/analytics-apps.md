@@ -172,6 +172,8 @@ Metin, sayı ya da boolean olmayan bir özellik değeri metin olarak gönderilir
   olan bir özellik bunu ister. Seçim hatırlanmaz: kendiniz saklayın ve kullanıcının onay verdiği her
   açılışta `configure`'dan sonra yeniden `consent(true)` çağırın. `consent(false)` saymayı durdurur ve
   gönderilmeyi bekleyen her şeyi siler.
+- **İzinle açılan özellikler.** `consent(true, persistent: true)`, `identify` ve `persistentId`, kabul eden kullanıcılara 13
+  aylık bir kimlik verir ve ziyaretlerini bir kişiye bağlar: bkz. [İzinle açılan özellikler](analytics-consent.md#uygulamalar).
 - **`optOut()`** saymayı kalıcı olarak durdurur: cihazda hatırlanır, gönderilmeyi bekleyen her şeyi siler ve
   `configure` sonraki her açılışta buna uyar. **`optIn()`** bunu geri alır, `isOptedOut` hangisinde olduğunu
   söyler. Bunu ayarlar ekranınızda sunun.

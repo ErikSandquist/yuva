@@ -173,6 +173,8 @@ Beide Bibliotheken arbeiten gleich.
   **Collection** **Only with consent** verlangt. Die Entscheidung wird nicht gemerkt: Speichern Sie sie selbst
   und rufen Sie nach `configure` bei jedem Start, bei dem der Nutzer zugestimmt hat, erneut `consent(true)`
   auf. `consent(false)` hört auf zu zählen und löscht alles, was auf das Senden wartet.
+- **Consent-Funktionen.** `consent(true, persistent: true)`, `identify` und `persistentId` geben zustimmenden Nutzern eine
+  13-Monate-ID und verknüpfen ihre Besuche mit einem Kontakt: siehe [Consent-Funktionen](analytics-consent.md#apps).
 - **`optOut()`** hört dauerhaft auf zu zählen: Es wird auf dem Gerät gemerkt, löscht alles, was auf das Senden
   wartet, und `configure` beachtet es bei jedem späteren Start. **`optIn()`** macht es rückgängig,
   `isOptedOut` sagt, welcher Zustand gilt. Bieten Sie das in Ihren Einstellungen an.
