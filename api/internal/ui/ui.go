@@ -19,10 +19,12 @@ var dist, _ = fs.Sub(embedded, "dist")
 // csp lets the panel load only its own code. Styles allow inline because the e-mail frame
 // (srcdoc, which inherits this policy) carries its own <style>, and images allow any http(s)
 // source because a member may choose to show an e-mail's remote images there.
-const csp = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
+const cspBase = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
 	"img-src 'self' data: blob: https: http:; font-src 'self' data:; connect-src 'self'; " +
 	"frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; " +
-	"form-action 'self'; frame-ancestors 'none'"
+	"form-action 'self'; frame-ancestors "
+
+const csp = cspBase + "'none'"
 
 func Handler(analyticsKey string) http.Handler {
 	index, err := fs.ReadFile(dist, "index.html")
@@ -77,4 +79,29 @@ func withAnalytics(index []byte, key string) []byte {
 	}
 	tag := `<script defer data-manual data-key="` + html.EscapeString(key) + `" src="/yuva-analytics.js"></script>` + "\n    "
 	return slices.Concat(index[:at], []byte(tag), index[at:])
+}
+
+// SharePage serves the panel's page for an analytics share link: framable only by ancestors
+// (origins the server has already checked), and without the panel's own analytics script, which
+// would count the link's token.
+func SharePage(w http.ResponseWriter, r *http.Request, ancestors []string) {
+	index, err := fs.ReadFile(dist, "index.html")
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	h := w.Header()
+	if len(ancestors) == 0 {
+		h.Set("Content-Security-Policy", csp)
+		h.Set("X-Frame-Options", "DENY")
+	} else {
+		h.Set("Content-Security-Policy", cspBase+strings.Join(ancestors, " "))
+	}
+	h.Set("Referrer-Policy", "same-origin")
+	h.Set("Content-Type", "text/html; charset=utf-8")
+	h.Set("Cache-Control", "no-store")
+	h.Set("X-Robots-Tag", "noindex")
+	if r.Method == http.MethodGet {
+		_, _ = w.Write(index)
+	}
 }

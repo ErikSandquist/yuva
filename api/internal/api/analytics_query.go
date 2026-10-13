@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"io"
 	"math"
 	"net/http"
 	"slices"
@@ -317,32 +318,61 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	if err != nil {
 		return nil, err
 	}
-	b := req.Body
+	ar, err := s.analyticsRequest(ctx, prop, *req.Body)
+	if err != nil {
+		return nil, err
+	}
+	out, err := s.analyticsResult(ctx, prop, ar, false)
+	if err != nil {
+		return nil, err
+	}
+	if req.Params.Format != nil && *req.Params.Format == oas.AnalyticsFormatCSV {
+		body := analyticsCSV(ar.q.Dimensions, ar.q.Metrics, out.Rows)
+		name := `attachment; filename="analytics-` + ar.q.From.Format(time.DateOnly) + `-` + ar.q.To.Format(time.DateOnly) + `.csv"`
+		return oas.QueryAnalytics200TextcsvResponse{Body: bytes.NewReader(body), ContentLength: int64(len(body)),
+			Headers: oas.QueryAnalytics200ResponseHeaders{ContentDisposition: &name}}, nil
+	}
+	return oas.QueryAnalytics200JSONResponse{Body: out}, nil
+}
+
+// analyticsRequest is a query body checked and turned into the property's query, its comparison
+// and its page.
+type analyticsRequest struct {
+	q      analytics.Query
+	cmp    *analytics.Query
+	order  []analytics.Order
+	limit  int
+	offset int
+}
+
+func (s *Server) analyticsRequest(ctx context.Context, prop store.AnalyticsProperty, b oas.AnalyticsQuery) (analyticsRequest, error) {
+	var ar analyticsRequest
+	ws := prop.WorkspaceID
 	loc := propertyLocation(prop.Timezone)
 	today := analytics.LocalDay(s.now(), loc)
 	from, to, err := analyticsRange(b.Range, today)
 	if err != nil {
-		return nil, err
+		return ar, err
 	}
-	q := analytics.Query{WorkspaceID: p.workspaceID, PropertyID: prop.ID, Timezone: prop.Timezone, From: from, To: to, RawFrom: s.rawFrom()}
+	q := analytics.Query{WorkspaceID: ws, PropertyID: prop.ID, Timezone: prop.Timezone, From: from, To: to, RawFrom: s.rawFrom()}
 	if b.Prop != nil {
 		if q.Prop, err = trimmed(*b.Prop, 1, 300, "prop"); err != nil {
-			return nil, err
+			return ar, err
 		}
 	}
 	if b.GoalId != nil {
-		g, err := s.st.GetAnalyticsGoal(ctx, store.GetAnalyticsGoalParams{WorkspaceID: p.workspaceID, PropertyID: prop.ID, ID: *b.GoalId})
+		g, err := s.st.GetAnalyticsGoal(ctx, store.GetAnalyticsGoalParams{WorkspaceID: ws, PropertyID: prop.ID, ID: *b.GoalId})
 		if store.IsNotFound(err) {
-			return nil, errGoalGone
+			return ar, errGoalGone
 		}
 		if err != nil {
-			return nil, err
+			return ar, err
 		}
 		q.Goal = goalDef(g)
 	}
 	for _, m := range b.Metrics {
 		if slices.Contains(q.Metrics, string(m)) {
-			return nil, errValidation("metric " + string(m) + " is listed twice")
+			return ar, errValidation("metric " + string(m) + " is listed twice")
 		}
 		q.Metrics = append(q.Metrics, string(m))
 	}
@@ -353,24 +383,24 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	}
 	if b.Filters != nil {
 		if q.Filters, err = segmentFilters(*b.Filters); err != nil {
-			return nil, err
+			return ar, err
 		}
 	}
 	if b.SegmentId != nil {
-		sg, err := s.st.GetAnalyticsSegment(ctx, store.GetAnalyticsSegmentParams{WorkspaceID: p.workspaceID, PropertyID: prop.ID, ID: *b.SegmentId})
+		sg, err := s.st.GetAnalyticsSegment(ctx, store.GetAnalyticsSegmentParams{WorkspaceID: ws, PropertyID: prop.ID, ID: *b.SegmentId})
 		if store.IsNotFound(err) {
-			return nil, errSegmentGone
+			return ar, errSegmentGone
 		}
 		if err != nil {
-			return nil, err
+			return ar, err
 		}
 		var saved []oas.AnalyticsFilter
 		if err := json.Unmarshal(sg.Filters, &saved); err != nil {
-			return nil, err
+			return ar, err
 		}
 		fs, err := segmentFilters(saved)
 		if err != nil {
-			return nil, err
+			return ar, err
 		}
 		q.Filters = append(q.Filters, fs...)
 	}
@@ -383,7 +413,7 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 		order = nil
 		for _, o := range *b.OrderBy {
 			if o.Metric == oas.AnalyticsMetricRevenue {
-				return nil, errValidation("rows cannot be ordered by revenue, which is per currency")
+				return ar, errValidation("rows cannot be ordered by revenue, which is per currency")
 			}
 			order = append(order, analytics.Order{Metric: string(o.Metric), Desc: o.Dir == nil || *o.Dir == oas.AnalyticsDesc})
 		}
@@ -396,7 +426,7 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 		limit = *b.Limit
 	}
 	if limit < 1 || limit > 1000 {
-		return nil, errValidation("limit must be 1 to 1000")
+		return ar, errValidation("limit must be 1 to 1000")
 	}
 	offset := 0
 	if b.Cursor != nil && *b.Cursor != "" {
@@ -405,22 +435,32 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 			offset, err = strconv.Atoi(string(raw))
 		}
 		if err != nil || offset < 0 {
-			return nil, errValidation("cursor is not one this query returned")
+			return ar, errValidation("cursor is not one this query returned")
 		}
 	}
-	var cmp *analytics.Query
 	if b.Compare != nil {
 		cf, ct, err := comparisonRange(*b.Compare, from, to)
 		if err != nil {
-			return nil, err
+			return ar, err
 		}
 		c := q
 		c.From, c.To = cf, ct
-		cmp = &c
+		ar.cmp = &c
+	}
+	ar.q, ar.order, ar.limit, ar.offset = q, order, limit, offset
+	return ar, nil
+}
+
+// analyticsResult answers a checked query; all leaves out the comparison and returns every row
+// instead of one page.
+func (s *Server) analyticsResult(ctx context.Context, prop store.AnalyticsProperty, ar analyticsRequest, all bool) (oas.AnalyticsResult, error) {
+	q, cmp, order, limit, offset := ar.q, ar.cmp, ar.order, ar.limit, ar.offset
+	if all {
+		cmp = nil
 	}
 	ans, err := s.runAnalyticsQuery(ctx, prop, q, cmp)
 	if err != nil {
-		return nil, err
+		return oas.AnalyticsResult{}, err
 	}
 	res := ans.result
 	rows := slices.Clone(res.Rows)
@@ -429,7 +469,7 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	}
 	sortAnalyticsRows(rows, q.Dimensions, order)
 	next := ""
-	if !timeOnly(q.Dimensions) {
+	if !timeOnly(q.Dimensions) && !all {
 		if offset > len(rows) {
 			offset = len(rows)
 		}
@@ -442,7 +482,7 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 	out := oas.AnalyticsResult{
 		Rows: make([]oas.AnalyticsRow, len(rows)), Totals: metricsBody(res.Totals, q.Metrics),
 		Meta: oas.AnalyticsResultMeta{
-			From: openapi_types.Date{Time: from}, To: openapi_types.Date{Time: to}, Timezone: prop.Timezone,
+			From: openapi_types.Date{Time: q.From}, To: openapi_types.Date{Time: q.To}, Timezone: prop.Timezone,
 			ServedFrom: oas.AnalyticsResultMetaServedFrom(res.ServedFrom), RawWindowFrom: openapi_types.Date{Time: q.RawFrom},
 		},
 	}
@@ -474,13 +514,7 @@ func (s *Server) QueryAnalytics(ctx context.Context, req oas.QueryAnalyticsReque
 		}
 		out.Comparison = &comp
 	}
-	if req.Params.Format != nil && *req.Params.Format == oas.AnalyticsFormatCSV {
-		body := analyticsCSV(q.Dimensions, q.Metrics, out.Rows)
-		name := `attachment; filename="analytics-` + from.Format(time.DateOnly) + `-` + to.Format(time.DateOnly) + `.csv"`
-		return oas.QueryAnalytics200TextcsvResponse{Body: bytes.NewReader(body), ContentLength: int64(len(body)),
-			Headers: oas.QueryAnalytics200ResponseHeaders{ContentDisposition: &name}}, nil
-	}
-	return oas.QueryAnalytics200JSONResponse{Body: out}, nil
+	return out, nil
 }
 
 // runAnalyticsQuery answers a query and its comparison from the cache or the store, at most four
@@ -527,19 +561,27 @@ func (s *Server) runAnalyticsQuery(ctx context.Context, prop store.AnalyticsProp
 
 func analyticsCSV(dims, metrics []string, rows []oas.AnalyticsRow) []byte {
 	var buf bytes.Buffer
+	_ = writeAnalyticsCSV(&buf, dims, metrics, rows)
+	return buf.Bytes()
+}
+
+func writeAnalyticsCSV(w io.Writer, dims, metrics []string, rows []oas.AnalyticsRow) error {
 	header := slices.Clone(dims)
 	places := slices.ContainsFunc(dims, func(d string) bool { return d == "region" || d == "city" })
 	if places {
 		header = append(header, "country", "region")
 	}
 	header = append(header, metrics...)
-	write := func(cells []string) {
+	write := func(cells []string) error {
 		for i, c := range cells {
 			cells[i] = csvCell(c)
 		}
-		buf.WriteString(strings.Join(cells, ",") + "\r\n")
+		_, err := io.WriteString(w, strings.Join(cells, ",")+"\r\n")
+		return err
 	}
-	write(header)
+	if err := write(header); err != nil {
+		return err
+	}
 	for _, r := range rows {
 		cells := slices.Clone(r.Dimensions)
 		if places {
@@ -551,9 +593,11 @@ func analyticsCSV(dims, metrics []string, rows []oas.AnalyticsRow) []byte {
 		for _, name := range metrics {
 			cells = append(cells, strconv.FormatFloat(m[name], 'f', -1, 64))
 		}
-		write(cells)
+		if err := write(cells); err != nil {
+			return err
+		}
 	}
-	return buf.Bytes()
+	return nil
 }
 
 func derefString(v *string) string {
@@ -580,19 +624,27 @@ func (s *Server) GetAnalyticsRealtime(ctx context.Context, req oas.GetAnalyticsR
 	if err != nil {
 		return nil, err
 	}
+	out, err := s.analyticsRealtime(ctx, prop)
+	if err != nil {
+		return nil, err
+	}
+	return oas.GetAnalyticsRealtime200JSONResponse(out), nil
+}
+
+func (s *Server) analyticsRealtime(ctx context.Context, prop store.AnalyticsProperty) (oas.AnalyticsRealtime, error) {
 	a, now := s.analytics, s.now()
 	key := prop.ID.String() + "|realtime"
 	if v, ok := a.answers.get(key, now); ok {
-		return oas.GetAnalyticsRealtime200JSONResponse(v.(oas.AnalyticsRealtime)), nil
+		return v.(oas.AnalyticsRealtime), nil
 	}
 	release, err := a.slots.acquire(ctx, prop.WorkspaceID)
 	if err != nil {
-		return nil, err
+		return oas.AnalyticsRealtime{}, err
 	}
 	defer release()
-	rt, err := a.store.Realtime(ctx, p.workspaceID, prop.ID, propertyLocation(prop.Timezone), now)
+	rt, err := a.store.Realtime(ctx, prop.WorkspaceID, prop.ID, propertyLocation(prop.Timezone), now)
 	if err != nil {
-		return nil, err
+		return oas.AnalyticsRealtime{}, err
 	}
 	out := oas.AnalyticsRealtime{Visitors: rt.Visitors, Pageviews: rt.Pageviews, Minutes: make([]oas.AnalyticsMinute, len(rt.Minutes)),
 		Pages: topValues(rt.Pages), Sources: topValues(rt.Sources), Countries: topValues(rt.Countries)}
@@ -600,7 +652,7 @@ func (s *Server) GetAnalyticsRealtime(ctx context.Context, req oas.GetAnalyticsR
 		out.Minutes[i] = oas.AnalyticsMinute{At: m.At, Visitors: m.Visitors, Pageviews: m.Pageviews}
 	}
 	a.answers.put(key, out, now, analyticsRealtimeTTL)
-	return oas.GetAnalyticsRealtime200JSONResponse(out), nil
+	return out, nil
 }
 
 func (s *Server) GetAnalyticsHealth(ctx context.Context, req oas.GetAnalyticsHealthRequestObject) (oas.GetAnalyticsHealthResponseObject, error) {

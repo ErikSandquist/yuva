@@ -85,6 +85,11 @@ var operationAccess = map[string]access{
 	"ListClientMailingLists":   accessPublic,
 	"CreateClientSubscription": accessPublic,
 
+	"GetSharedAnalytics":         accessPublic,
+	"UnlockSharedAnalytics":      accessPublic,
+	"QuerySharedAnalytics":       accessPublic,
+	"GetSharedAnalyticsRealtime": accessPublic,
+
 	"CreateClientDiscussion":       accessDiscussant,
 	"CreateClientDiscussionPost":   accessDiscussant,
 	"AcceptClientDiscussionAnswer": accessDiscussant,
@@ -199,7 +204,7 @@ var (
 	errForbidden             = problem(http.StatusForbidden, "forbidden", "your role does not allow this")
 )
 
-var workspaceQueryOperations = map[string]bool{"DownloadAttachment": true}
+var workspaceQueryOperations = map[string]bool{"DownloadAttachment": true, "DownloadAnalyticsExport": true}
 
 // workspaceFromQuery lets clients that cannot set headers (WebSocket, links) name the workspace
 // with ?workspace_id=.

@@ -158,6 +158,8 @@ type Store interface {
 	Realtime(ctx context.Context, workspaceID, propertyID uuid.UUID, loc *time.Location, now time.Time) (Realtime, error)
 	// Funnel counts the visitors and visits that went through the steps in order within a visit.
 	Funnel(ctx context.Context, workspaceID, propertyID uuid.UUID, from, to time.Time, steps []Goal) ([]FunnelStep, error)
+	// RawEvents calls fn with every event of a property's day that is not a bot's, in time order.
+	RawEvents(ctx context.Context, workspaceID, propertyID uuid.UUID, day time.Time, fn func(RawEvent) error) error
 }
 
 // LocalDay is the date of t in loc, as midnight UTC, the form days are stored and compared in.

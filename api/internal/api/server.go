@@ -366,6 +366,7 @@ func (s *Server) Handler() http.Handler {
 	var panel http.Handler
 	if !s.noPanel {
 		panel = ui.Handler(s.panelKey)
+		mux.HandleFunc("GET "+sharePagePrefix+"{token}", s.serveSharePage)
 	}
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if panel == nil || isAPIPath(r.URL.Path) {
@@ -468,7 +469,7 @@ func (s *Server) logRequests(next http.Handler) http.Handler {
 		if strings.HasPrefix(r.URL.Path, emailImagePathPrefix) {
 			return
 		}
-		s.log.Info("request", slog.String("method", r.Method), slog.String("path", r.URL.Path),
+		s.log.Info("request", slog.String("method", r.Method), slog.String("path", loggedPath(r.URL.Path)),
 			slog.Int("status", rec.status), slog.Duration("duration", took))
 	})
 }
@@ -486,4 +487,18 @@ func (s *Server) recoverer(next http.Handler) http.Handler {
 		}()
 		next.ServeHTTP(w, r)
 	})
+}
+
+// loggedPath leaves share link tokens out of the request log: anyone holding one can read the link.
+func loggedPath(p string) string {
+	for _, prefix := range []string{sharePagePrefix, shareClientPrefix} {
+		if rest, ok := strings.CutPrefix(p, prefix); ok {
+			_, tail, _ := strings.Cut(rest, "/")
+			if tail != "" {
+				tail = "/" + tail
+			}
+			return prefix + "…" + tail
+		}
+	}
+	return p
 }

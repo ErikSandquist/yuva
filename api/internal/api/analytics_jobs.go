@@ -98,6 +98,9 @@ func (s *Server) DeleteAnalytics(ctx context.Context, a AnalyticsDeleteArgs, bud
 	if p.Done {
 		switch {
 		case a.Property:
+			if err = s.deletePropertyExports(ctx, a.WorkspaceID, a.PropertyID); err != nil {
+				return false, err
+			}
 			_, err = q.DeleteAnalyticsPropertyRow(ctx, store.DeleteAnalyticsPropertyRowParams{WorkspaceID: a.WorkspaceID, ID: a.PropertyID})
 		case a.All:
 			err = q.DeleteAnalyticsRollups(ctx, store.DeleteAnalyticsRollupsParams{WorkspaceID: a.WorkspaceID, PropertyID: a.PropertyID})
@@ -157,6 +160,9 @@ func (s *Server) purgeWorkspaceAnalytics(ctx context.Context, ws uuid.UUID, dead
 		return false, err
 	}
 	for _, id := range ids {
+		if err := s.deletePropertyExports(ctx, ws, id); err != nil {
+			return false, err
+		}
 		p, err := s.purgeAnalyticsRaw(ctx, ws, id, nil, nil, deadline)
 		if err != nil || !p.Done {
 			return false, err
@@ -334,6 +340,7 @@ func (s *Server) addAnalyticsWorkers(workers *river.Workers) {
 	river.AddWorker(workers, &analyticsRollupScanWorker{s: s})
 	river.AddWorker(workers, &analyticsSaltsWorker{s: s})
 	river.AddWorker(workers, &analyticsGeoIPWorker{s: s})
+	river.AddWorker(workers, &analyticsExportWorker{s: s})
 }
 
 // rawFrom is the oldest day whose raw rows the partitions job keeps.
@@ -358,6 +365,11 @@ func (s *Server) MaintainAnalytics(ctx context.Context) error {
 	}
 	if len(dropped) > 0 {
 		s.log.InfoContext(ctx, "analytics partitions dropped", slog.Int("count", len(dropped)))
+	}
+	if n, err := s.CleanAnalyticsExports(ctx); err != nil {
+		return err
+	} else if n > 0 {
+		s.log.InfoContext(ctx, "analytics exports expired", slog.Int("count", n))
 	}
 	ids, err := s.st.ListAnalyticsWorkspaceIDs(ctx)
 	if err != nil {

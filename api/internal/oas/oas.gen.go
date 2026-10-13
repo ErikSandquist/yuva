@@ -278,6 +278,69 @@ func (e AnalyticsDimension) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsExportStatus.
+const (
+	AnalyticsExportDone    AnalyticsExportStatus = "done"
+	AnalyticsExportFailed  AnalyticsExportStatus = "failed"
+	AnalyticsExportQueued  AnalyticsExportStatus = "queued"
+	AnalyticsExportRunning AnalyticsExportStatus = "running"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportStatus enum.
+func (e AnalyticsExportStatus) Valid() bool {
+	switch e {
+	case AnalyticsExportDone:
+		return true
+	case AnalyticsExportFailed:
+		return true
+	case AnalyticsExportQueued:
+		return true
+	case AnalyticsExportRunning:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsExportFormat.
+const (
+	AnalyticsExportCSV    AnalyticsExportFormat = "csv"
+	AnalyticsExportNDJSON AnalyticsExportFormat = "ndjson"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportFormat enum.
+func (e AnalyticsExportFormat) Valid() bool {
+	switch e {
+	case AnalyticsExportCSV:
+		return true
+	case AnalyticsExportNDJSON:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsExportKind.
+const (
+	AnalyticsExportDaily AnalyticsExportKind = "daily"
+	AnalyticsExportRaw   AnalyticsExportKind = "raw"
+	AnalyticsExportView  AnalyticsExportKind = "view"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsExportKind enum.
+func (e AnalyticsExportKind) Valid() bool {
+	switch e {
+	case AnalyticsExportDaily:
+		return true
+	case AnalyticsExportRaw:
+		return true
+	case AnalyticsExportView:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsFilterOp.
 const (
 	AnalyticsFilterContains    AnalyticsFilterOp = "contains"
@@ -572,6 +635,30 @@ func (e AnalyticsRangePeriod) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsRawEventType.
+const (
+	AnalyticsRawEventTypeEngagement AnalyticsRawEventType = "engagement"
+	AnalyticsRawEventTypeEvent      AnalyticsRawEventType = "event"
+	AnalyticsRawEventTypePageview   AnalyticsRawEventType = "pageview"
+	AnalyticsRawEventTypeScreen     AnalyticsRawEventType = "screen"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRawEventType enum.
+func (e AnalyticsRawEventType) Valid() bool {
+	switch e {
+	case AnalyticsRawEventTypeEngagement:
+		return true
+	case AnalyticsRawEventTypeEvent:
+		return true
+	case AnalyticsRawEventTypePageview:
+		return true
+	case AnalyticsRawEventTypeScreen:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsResultMetaServedFrom.
 const (
 	AnalyticsServedMixed   AnalyticsResultMetaServedFrom = "mixed"
@@ -587,6 +674,42 @@ func (e AnalyticsResultMetaServedFrom) Valid() bool {
 	case AnalyticsServedRaw:
 		return true
 	case AnalyticsServedRollups:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsShareView.
+const (
+	AnalyticsShareDevices   AnalyticsShareView = "devices"
+	AnalyticsShareEvents    AnalyticsShareView = "events"
+	AnalyticsShareGoals     AnalyticsShareView = "goals"
+	AnalyticsShareLocations AnalyticsShareView = "locations"
+	AnalyticsShareOverview  AnalyticsShareView = "overview"
+	AnalyticsSharePages     AnalyticsShareView = "pages"
+	AnalyticsShareRealtime  AnalyticsShareView = "realtime"
+	AnalyticsShareSources   AnalyticsShareView = "sources"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsShareView enum.
+func (e AnalyticsShareView) Valid() bool {
+	switch e {
+	case AnalyticsShareDevices:
+		return true
+	case AnalyticsShareEvents:
+		return true
+	case AnalyticsShareGoals:
+		return true
+	case AnalyticsShareLocations:
+		return true
+	case AnalyticsShareOverview:
+		return true
+	case AnalyticsSharePages:
+		return true
+	case AnalyticsShareRealtime:
+		return true
+	case AnalyticsShareSources:
 		return true
 	default:
 		return false
@@ -4505,6 +4628,10 @@ type AnalyticsDropCounts struct {
 	Rate int64 `json:"rate"`
 }
 
+// AnalyticsEmbedOrigin A site whose pages may frame the link: `https://` (or `http://`) and a host with an
+// optional port, nothing after it; `https://*.example.com` allows every subdomain.
+type AnalyticsEmbedOrigin = string
+
 // AnalyticsEvent One event. Keys the server does not know are ignored, so newer scripts keep working with
 // older servers.
 type AnalyticsEvent struct {
@@ -4643,6 +4770,83 @@ type AnalyticsEventsResult struct {
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
 type AnalyticsExcludedAddress = string
+
+// AnalyticsExport defines model for AnalyticsExport.
+type AnalyticsExport struct {
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who asked for it; absent for API keys and removed members.
+	CreatedBy *uuid.UUID `json:"created_by,omitempty"`
+
+	// Error Why a `failed` export failed: `too_large`, `needs_raw_window`, `invalid_query` (with the
+	// reason after a colon) or `internal`.
+	Error *string `json:"error,omitempty"`
+
+	// ExpiresAt When the export and its file are deleted, seven days after it was made or finished.
+	ExpiresAt time.Time `json:"expires_at"`
+
+	// FileName The file's name, when it is `done`.
+	FileName   *string               `json:"file_name,omitempty"`
+	FinishedAt *time.Time            `json:"finished_at,omitempty"`
+	Format     AnalyticsExportFormat `json:"format"`
+	From       openapi_types.Date    `json:"from"`
+	Id         uuid.UUID             `json:"id"`
+	Kind       AnalyticsExportKind   `json:"kind"`
+
+	// Progress Percent of the work done.
+	Progress   int       `json:"progress"`
+	PropertyId uuid.UUID `json:"property_id"`
+
+	// Rows Rows written so far.
+	Rows      int64                 `json:"rows"`
+	SizeBytes int64                 `json:"size_bytes"`
+	Status    AnalyticsExportStatus `json:"status"`
+	To        openapi_types.Date    `json:"to"`
+}
+
+// AnalyticsExportStatus defines model for AnalyticsExport.Status.
+type AnalyticsExportStatus string
+
+// AnalyticsExportCreate `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
+// and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
+// `format` is `csv` by default, and must be `ndjson` for `raw`.
+type AnalyticsExportCreate struct {
+	// Dimension A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
+	// `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
+	// `channel` is one of `direct`, `organic_search`, `paid_search`, `social`, `paid_social`,
+	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
+	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
+	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
+	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+	// for events without it: as
+	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
+	// breakdown they keep the matching events.
+	Dimension *AnalyticsFilterDimension `json:"dimension,omitempty"`
+	Format    *AnalyticsExportFormat    `json:"format,omitempty"`
+	Kind      AnalyticsExportKind       `json:"kind"`
+	Query     *AnalyticsQuery           `json:"query,omitempty"`
+
+	// Range Days of the property's time zone: a `period` ending today (`today`, `yesterday`, `7d`,
+	// `28d`, `30d`, `90d`, `6mo`, `12mo` count back from today, today included; `month` and
+	// `year` are the current calendar month and year to date; `last_month` the one before), or
+	// `from` and `to` (inclusive, at most 400 days apart).
+	Range *AnalyticsRange `json:"range,omitempty"`
+}
+
+// AnalyticsExportFormat defines model for AnalyticsExportFormat.
+type AnalyticsExportFormat string
+
+// AnalyticsExportKind defines model for AnalyticsExportKind.
+type AnalyticsExportKind string
+
+// AnalyticsExportList defines model for AnalyticsExportList.
+type AnalyticsExportList struct {
+	Items []AnalyticsExport `json:"items"`
+}
 
 // AnalyticsFilter `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
 // does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -5152,6 +5356,50 @@ type AnalyticsRangeProblem struct {
 	Type string `json:"type"`
 }
 
+// AnalyticsRawEvent One line of a `raw` export. `visit` counts up from 1 within the file and joins a visit's
+// events; it is not the stored visit and says nothing about the visitor. `type` is
+// `pageview`, `screen`, `event` or `engagement`. Places, devices and sources describe the
+// visit as its first event did.
+type AnalyticsRawEvent struct {
+	AppVersion     *string                 `json:"app_version,omitempty"`
+	Browser        *string                 `json:"browser,omitempty"`
+	BrowserVersion *string                 `json:"browser_version,omitempty"`
+	Channel        string                  `json:"channel"`
+	City           *string                 `json:"city,omitempty"`
+	Country        *string                 `json:"country,omitempty"`
+	Currency       *string                 `json:"currency,omitempty"`
+	Day            openapi_types.Date      `json:"day"`
+	Device         *string                 `json:"device,omitempty"`
+	EngagedMs      *int                    `json:"engaged_ms,omitempty"`
+	Hostname       string                  `json:"hostname"`
+	Language       *string                 `json:"language,omitempty"`
+	Name           *string                 `json:"name,omitempty"`
+	Os             *string                 `json:"os,omitempty"`
+	OsVersion      *string                 `json:"os_version,omitempty"`
+	Path           string                  `json:"path"`
+	Platform       string                  `json:"platform"`
+	Props          *map[string]interface{} `json:"props,omitempty"`
+	Referrer       *string                 `json:"referrer,omitempty"`
+	Region         *string                 `json:"region,omitempty"`
+
+	// RevenueMinor Revenue the event carried, in the currency's minor units.
+	RevenueMinor *int64                `json:"revenue_minor,omitempty"`
+	ScreenSize   *string               `json:"screen_size,omitempty"`
+	Scroll       *int                  `json:"scroll,omitempty"`
+	Source       *string               `json:"source,omitempty"`
+	Time         time.Time             `json:"time"`
+	Type         AnalyticsRawEventType `json:"type"`
+	UtmCampaign  *string               `json:"utm_campaign,omitempty"`
+	UtmContent   *string               `json:"utm_content,omitempty"`
+	UtmMedium    *string               `json:"utm_medium,omitempty"`
+	UtmSource    *string               `json:"utm_source,omitempty"`
+	UtmTerm      *string               `json:"utm_term,omitempty"`
+	Visit        int64                 `json:"visit"`
+}
+
+// AnalyticsRawEventType defines model for AnalyticsRawEvent.Type.
+type AnalyticsRawEventType string
+
 // AnalyticsRealtime defines model for AnalyticsRealtime.
 type AnalyticsRealtime struct {
 	Countries []AnalyticsTopValue `json:"countries"`
@@ -5343,6 +5591,116 @@ type AnalyticsServerEvent_Props_AdditionalProperties struct {
 // AnalyticsServerEvents defines model for AnalyticsServerEvents.
 type AnalyticsServerEvents struct {
 	Events []AnalyticsServerEvent `json:"events"`
+}
+
+// AnalyticsShare defines model for AnalyticsShare.
+type AnalyticsShare struct {
+	// Active Neither revoked nor expired.
+	Active    bool      `json:"active"`
+	CreatedAt time.Time `json:"created_at"`
+
+	// CreatedBy The member who made it; absent for API keys and removed members.
+	CreatedBy    *uuid.UUID             `json:"created_by,omitempty"`
+	EmbedOrigins []AnalyticsEmbedOrigin `json:"embed_origins"`
+	ExpiresAt    *time.Time             `json:"expires_at,omitempty"`
+	HasPassword  bool                   `json:"has_password"`
+	Id           uuid.UUID              `json:"id"`
+
+	// LastViewedAt The last time the link's page settings were read, to the minute.
+	LastViewedAt *time.Time `json:"last_viewed_at,omitempty"`
+
+	// Name What the link is for, shown to members only.
+	Name       string     `json:"name"`
+	PropertyId uuid.UUID  `json:"property_id"`
+	RevokedAt  *time.Time `json:"revoked_at,omitempty"`
+
+	// TokenPrefix The first characters of the token, to tell links apart.
+	TokenPrefix string               `json:"token_prefix"`
+	UpdatedAt   time.Time            `json:"updated_at"`
+	Views       []AnalyticsShareView `json:"views"`
+}
+
+// AnalyticsShareAccess defines model for AnalyticsShareAccess.
+type AnalyticsShareAccess struct {
+	// AccessToken `yuva_sa_…`, sent as `Authorization: Bearer` to the link's other endpoints.
+	AccessToken string    `json:"access_token"`
+	ExpiresAt   time.Time `json:"expires_at"`
+}
+
+// AnalyticsShareCreate defines model for AnalyticsShareCreate.
+type AnalyticsShareCreate struct {
+	EmbedOrigins *[]AnalyticsEmbedOrigin `json:"embed_origins,omitempty"`
+
+	// ExpiresAt When the link stops working; in the future.
+	ExpiresAt *time.Time           `json:"expires_at,omitempty"`
+	Name      string               `json:"name"`
+	Password  *string              `json:"password,omitempty"`
+	Views     []AnalyticsShareView `json:"views"`
+}
+
+// AnalyticsShareCreated defines model for AnalyticsShareCreated.
+type AnalyticsShareCreated struct {
+	Share AnalyticsShare `json:"share"`
+
+	// Token The link's token, `yuva_sh_…`; shown only in this answer.
+	Token string `json:"token"`
+
+	// Url The share page, `<public URL>/share/<token>`.
+	Url string `json:"url"`
+}
+
+// AnalyticsShareList defines model for AnalyticsShareList.
+type AnalyticsShareList struct {
+	Items []AnalyticsShare `json:"items"`
+}
+
+// AnalyticsShareUnlock defines model for AnalyticsShareUnlock.
+type AnalyticsShareUnlock struct {
+	Password string `json:"password"`
+}
+
+// AnalyticsShareUpdate defines model for AnalyticsShareUpdate.
+type AnalyticsShareUpdate struct {
+	EmbedOrigins *[]AnalyticsEmbedOrigin `json:"embed_origins,omitempty"`
+
+	// ExpiresAt `null` keeps the link until it is revoked.
+	ExpiresAt nullable.Nullable[time.Time] `json:"expires_at,omitempty"`
+	Name      *string                      `json:"name,omitempty"`
+
+	// Password A new password; `null` removes it.
+	Password nullable.Nullable[string] `json:"password,omitempty"`
+	Views    *[]AnalyticsShareView     `json:"views,omitempty"`
+}
+
+// AnalyticsShareView A part of the property's report a share link shows: `overview` (totals and the chart),
+// `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
+type AnalyticsShareView string
+
+// AnalyticsSharedPage With `password_required` and no valid access token only that field is present; otherwise
+// everything the page shows.
+type AnalyticsSharedPage struct {
+	ExpiresAt *time.Time      `json:"expires_at,omitempty"`
+	Geoip     *AnalyticsGeoIP `json:"geoip,omitempty"`
+
+	// Goals With the `goals` view, the property's goals.
+	Goals *[]AnalyticsGoal `json:"goals,omitempty"`
+
+	// Name The link's name.
+	Name             *string                  `json:"name,omitempty"`
+	PasswordRequired bool                     `json:"password_required"`
+	Property         *AnalyticsSharedProperty `json:"property,omitempty"`
+
+	// RawWindowFrom The first day queries that need raw rows can serve.
+	RawWindowFrom *openapi_types.Date   `json:"raw_window_from,omitempty"`
+	Views         *[]AnalyticsShareView `json:"views,omitempty"`
+}
+
+// AnalyticsSharedProperty defines model for AnalyticsSharedProperty.
+type AnalyticsSharedProperty struct {
+	Currency  string              `json:"currency"`
+	Name      string              `json:"name"`
+	Platforms []AnalyticsPlatform `json:"platforms"`
+	Timezone  string              `json:"timezone"`
 }
 
 // AnalyticsTopValue defines model for AnalyticsTopValue.
@@ -12742,6 +13100,9 @@ type WorkspaceUpdate struct {
 // AnalyticsAnnotationId defines model for AnalyticsAnnotationId.
 type AnalyticsAnnotationId = uuid.UUID
 
+// AnalyticsExportId defines model for AnalyticsExportId.
+type AnalyticsExportId = uuid.UUID
+
 // AnalyticsFunnelId defines model for AnalyticsFunnelId.
 type AnalyticsFunnelId = uuid.UUID
 
@@ -12753,6 +13114,12 @@ type AnalyticsPropertyId = uuid.UUID
 
 // AnalyticsSegmentId defines model for AnalyticsSegmentId.
 type AnalyticsSegmentId = uuid.UUID
+
+// AnalyticsShareId defines model for AnalyticsShareId.
+type AnalyticsShareId = uuid.UUID
+
+// AnalyticsShareToken defines model for AnalyticsShareToken.
+type AnalyticsShareToken = string
 
 // ApiKeyId defines model for ApiKeyId.
 type ApiKeyId = uuid.UUID
@@ -13069,6 +13436,42 @@ type DeleteAnalyticsDataParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListAnalyticsExportsParams defines parameters for ListAnalyticsExports.
+type ListAnalyticsExportsParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsExportParams defines parameters for CreateAnalyticsExport.
+type CreateAnalyticsExportParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsExportParams defines parameters for DeleteAnalyticsExport.
+type DeleteAnalyticsExportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsExportParams defines parameters for GetAnalyticsExport.
+type GetAnalyticsExportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DownloadAnalyticsExportParams defines parameters for DownloadAnalyticsExport.
+type DownloadAnalyticsExportParams struct {
+	// WorkspaceId The workspace to act on, for links that cannot send `Yuva-Workspace`.
+	WorkspaceId *uuid.UUID `form:"workspace_id,omitempty" json:"workspace_id,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListAnalyticsFunnelsParams defines parameters for ListAnalyticsFunnels.
 type ListAnalyticsFunnelsParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
@@ -13196,6 +13599,39 @@ type DeleteAnalyticsSegmentParams struct {
 
 // UpdateAnalyticsSegmentParams defines parameters for UpdateAnalyticsSegment.
 type UpdateAnalyticsSegmentParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListAnalyticsSharesParams defines parameters for ListAnalyticsShares.
+type ListAnalyticsSharesParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// CreateAnalyticsShareParams defines parameters for CreateAnalyticsShare.
+type CreateAnalyticsShareParams struct {
+	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
+	IdempotencyKey *IdempotencyKey `json:"Idempotency-Key,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsShareParams defines parameters for DeleteAnalyticsShare.
+type DeleteAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsShareParams defines parameters for UpdateAnalyticsShare.
+type UpdateAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// RevokeAnalyticsShareParams defines parameters for RevokeAnalyticsShare.
+type RevokeAnalyticsShareParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -15098,6 +15534,12 @@ type WebhookSubscriptionUpdatedParams struct {
 	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
 }
 
+// UnlockSharedAnalyticsJSONRequestBody defines body for UnlockSharedAnalytics for application/json ContentType.
+type UnlockSharedAnalyticsJSONRequestBody = AnalyticsShareUnlock
+
+// QuerySharedAnalyticsJSONRequestBody defines body for QuerySharedAnalytics for application/json ContentType.
+type QuerySharedAnalyticsJSONRequestBody = AnalyticsQuery
+
 // CreatePageRatingJSONRequestBody defines body for CreatePageRating for application/json ContentType.
 type CreatePageRatingJSONRequestBody = PageRatingCreate
 
@@ -15182,6 +15624,9 @@ type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
 // SendAnalyticsEventsJSONRequestBody defines body for SendAnalyticsEvents for application/json ContentType.
 type SendAnalyticsEventsJSONRequestBody = AnalyticsServerEvents
 
+// CreateAnalyticsExportJSONRequestBody defines body for CreateAnalyticsExport for application/json ContentType.
+type CreateAnalyticsExportJSONRequestBody = AnalyticsExportCreate
+
 // CreateAnalyticsFunnelJSONRequestBody defines body for CreateAnalyticsFunnel for application/json ContentType.
 type CreateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelCreate
 
@@ -15202,6 +15647,12 @@ type CreateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentCreate
 
 // UpdateAnalyticsSegmentJSONRequestBody defines body for UpdateAnalyticsSegment for application/json ContentType.
 type UpdateAnalyticsSegmentJSONRequestBody = AnalyticsSegmentUpdate
+
+// CreateAnalyticsShareJSONRequestBody defines body for CreateAnalyticsShare for application/json ContentType.
+type CreateAnalyticsShareJSONRequestBody = AnalyticsShareCreate
+
+// UpdateAnalyticsShareJSONRequestBody defines body for UpdateAnalyticsShare for application/json ContentType.
+type UpdateAnalyticsShareJSONRequestBody = AnalyticsShareUpdate
 
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
@@ -18522,6 +18973,18 @@ func (t *StoredEvent) UnmarshalJSON(b []byte) error {
 
 // ServerInterface represents all server handlers.
 type ServerInterface interface {
+	// GetSharedAnalytics A share link's page settings
+	// (GET /client/v1/analytics-shares/{token})
+	GetSharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken)
+	// UnlockSharedAnalytics Unlock a share link with its password
+	// (POST /client/v1/analytics-shares/{token}/access)
+	UnlockSharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken)
+	// QuerySharedAnalytics Query a shared property's numbers
+	// (POST /client/v1/analytics-shares/{token}/query)
+	QuerySharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken)
+	// GetSharedAnalyticsRealtime A shared property's last 30 minutes
+	// (GET /client/v1/analytics-shares/{token}/realtime)
+	GetSharedAnalyticsRealtime(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken)
 	// DownloadClientAttachment Download an attachment
 	// (GET /client/v1/attachments/{attachmentId})
 	DownloadClientAttachment(w http.ResponseWriter, r *http.Request, attachmentId AttachmentId)
@@ -18687,6 +19150,21 @@ type ServerInterface interface {
 	// SendAnalyticsEvents Send server-side analytics events
 	// (POST /v1/analytics/properties/{propertyId}/events)
 	SendAnalyticsEvents(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId)
+	// ListAnalyticsExports List a property's exports
+	// (GET /v1/analytics/properties/{propertyId}/exports)
+	ListAnalyticsExports(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsExportsParams)
+	// CreateAnalyticsExport Export a property's numbers or raw events
+	// (POST /v1/analytics/properties/{propertyId}/exports)
+	CreateAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params CreateAnalyticsExportParams)
+	// DeleteAnalyticsExport Delete an export
+	// (DELETE /v1/analytics/properties/{propertyId}/exports/{exportId})
+	DeleteAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params DeleteAnalyticsExportParams)
+	// GetAnalyticsExport An export and its progress
+	// (GET /v1/analytics/properties/{propertyId}/exports/{exportId})
+	GetAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params GetAnalyticsExportParams)
+	// DownloadAnalyticsExport Download an export's file
+	// (GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download)
+	DownloadAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params DownloadAnalyticsExportParams)
 	// ListAnalyticsFunnels List a property's funnels
 	// (GET /v1/analytics/properties/{propertyId}/funnels)
 	ListAnalyticsFunnels(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsFunnelsParams)
@@ -18738,6 +19216,21 @@ type ServerInterface interface {
 	// UpdateAnalyticsSegment Update a segment
 	// (PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId})
 	UpdateAnalyticsSegment(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, segmentId AnalyticsSegmentId, params UpdateAnalyticsSegmentParams)
+	// ListAnalyticsShares List a property's share links
+	// (GET /v1/analytics/properties/{propertyId}/shares)
+	ListAnalyticsShares(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsSharesParams)
+	// CreateAnalyticsShare Make a read-only share link
+	// (POST /v1/analytics/properties/{propertyId}/shares)
+	CreateAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params CreateAnalyticsShareParams)
+	// DeleteAnalyticsShare Delete a share link
+	// (DELETE /v1/analytics/properties/{propertyId}/shares/{shareId})
+	DeleteAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params DeleteAnalyticsShareParams)
+	// UpdateAnalyticsShare Change a share link
+	// (PATCH /v1/analytics/properties/{propertyId}/shares/{shareId})
+	UpdateAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params UpdateAnalyticsShareParams)
+	// RevokeAnalyticsShare Revoke a share link
+	// (POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke)
+	RevokeAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params RevokeAnalyticsShareParams)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(w http.ResponseWriter, r *http.Request, params ListApiKeysParams)
@@ -19396,6 +19889,110 @@ type ServerInterfaceWrapper struct {
 }
 
 type MiddlewareFunc func(http.Handler) http.Handler
+
+// GetSharedAnalytics operation middleware
+func (siw *ServerInterfaceWrapper) GetSharedAnalytics(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "token" -------------
+	var token AnalyticsShareToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", r.PathValue("token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetSharedAnalytics(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UnlockSharedAnalytics operation middleware
+func (siw *ServerInterfaceWrapper) UnlockSharedAnalytics(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "token" -------------
+	var token AnalyticsShareToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", r.PathValue("token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UnlockSharedAnalytics(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// QuerySharedAnalytics operation middleware
+func (siw *ServerInterfaceWrapper) QuerySharedAnalytics(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "token" -------------
+	var token AnalyticsShareToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", r.PathValue("token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.QuerySharedAnalytics(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetSharedAnalyticsRealtime operation middleware
+func (siw *ServerInterfaceWrapper) GetSharedAnalyticsRealtime(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "token" -------------
+	var token AnalyticsShareToken
+
+	err = runtime.BindStyledParameterWithOptions("simple", "token", r.PathValue("token"), &token, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "token", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetSharedAnalyticsRealtime(w, r, token)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
 
 // DownloadClientAttachment operation middleware
 func (siw *ServerInterfaceWrapper) DownloadClientAttachment(w http.ResponseWriter, r *http.Request) {
@@ -21370,6 +21967,315 @@ func (siw *ServerInterfaceWrapper) SendAnalyticsEvents(w http.ResponseWriter, r 
 	handler.ServeHTTP(w, r)
 }
 
+// ListAnalyticsExports operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsExports(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsExportsParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsExports(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateAnalyticsExport operation middleware
+func (siw *ServerInterfaceWrapper) CreateAnalyticsExport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateAnalyticsExportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateAnalyticsExport(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsExport operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsExport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "exportId" -------------
+	var exportId AnalyticsExportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "exportId", r.PathValue("exportId"), &exportId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "exportId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsExportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsExport(w, r, propertyId, exportId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// GetAnalyticsExport operation middleware
+func (siw *ServerInterfaceWrapper) GetAnalyticsExport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "exportId" -------------
+	var exportId AnalyticsExportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "exportId", r.PathValue("exportId"), &exportId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "exportId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params GetAnalyticsExportParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.GetAnalyticsExport(w, r, propertyId, exportId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DownloadAnalyticsExport operation middleware
+func (siw *ServerInterfaceWrapper) DownloadAnalyticsExport(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "exportId" -------------
+	var exportId AnalyticsExportId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "exportId", r.PathValue("exportId"), &exportId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "exportId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DownloadAnalyticsExportParams
+
+	// ------------- Optional query parameter "workspace_id" -------------
+
+	err = runtime.BindQueryParameterWithOptions("form", true, false, "workspace_id", r.URL.Query(), &params.WorkspaceId, runtime.BindQueryParameterOptions{Type: "string", Format: "uuid"})
+	if err != nil {
+		var requiredError *runtime.RequiredParameterError
+		if errors.As(err, &requiredError) {
+			siw.ErrorHandlerFunc(w, r, &RequiredParamError{ParamName: "workspace_id"})
+		} else {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "workspace_id", Err: err})
+		}
+		return
+	}
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DownloadAnalyticsExport(w, r, propertyId, exportId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
 // ListAnalyticsFunnels operation middleware
 func (siw *ServerInterfaceWrapper) ListAnalyticsFunnels(w http.ResponseWriter, r *http.Request) {
 
@@ -22415,6 +23321,302 @@ func (siw *ServerInterfaceWrapper) UpdateAnalyticsSegment(w http.ResponseWriter,
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.UpdateAnalyticsSegment(w, r, propertyId, segmentId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// ListAnalyticsShares operation middleware
+func (siw *ServerInterfaceWrapper) ListAnalyticsShares(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params ListAnalyticsSharesParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.ListAnalyticsShares(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// CreateAnalyticsShare operation middleware
+func (siw *ServerInterfaceWrapper) CreateAnalyticsShare(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params CreateAnalyticsShareParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Idempotency-Key" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Idempotency-Key")]; found {
+		var IdempotencyKey IdempotencyKey
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Idempotency-Key", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Idempotency-Key", valueList[0], &IdempotencyKey, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: ""})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Idempotency-Key", Err: err})
+			return
+		}
+
+		params.IdempotencyKey = &IdempotencyKey
+
+	}
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.CreateAnalyticsShare(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// DeleteAnalyticsShare operation middleware
+func (siw *ServerInterfaceWrapper) DeleteAnalyticsShare(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "shareId" -------------
+	var shareId AnalyticsShareId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "shareId", r.PathValue("shareId"), &shareId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "shareId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params DeleteAnalyticsShareParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.DeleteAnalyticsShare(w, r, propertyId, shareId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// UpdateAnalyticsShare operation middleware
+func (siw *ServerInterfaceWrapper) UpdateAnalyticsShare(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "shareId" -------------
+	var shareId AnalyticsShareId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "shareId", r.PathValue("shareId"), &shareId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "shareId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params UpdateAnalyticsShareParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.UpdateAnalyticsShare(w, r, propertyId, shareId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// RevokeAnalyticsShare operation middleware
+func (siw *ServerInterfaceWrapper) RevokeAnalyticsShare(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	// ------------- Path parameter "shareId" -------------
+	var shareId AnalyticsShareId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "shareId", r.PathValue("shareId"), &shareId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "shareId", Err: err})
+		return
+	}
+
+	// Parameter object where we will unmarshal all parameters from the context
+	var params RevokeAnalyticsShareParams
+
+	headers := r.Header
+
+	// ------------- Optional header parameter "Yuva-Workspace" -------------
+	if valueList, found := headers[http.CanonicalHeaderKey("Yuva-Workspace")]; found {
+		var YuvaWorkspace WorkspaceHeader
+		n := len(valueList)
+		if n != 1 {
+			siw.ErrorHandlerFunc(w, r, &TooManyValuesForParamError{ParamName: "Yuva-Workspace", Count: n})
+			return
+		}
+
+		err = runtime.BindStyledParameterWithOptions("simple", "Yuva-Workspace", valueList[0], &YuvaWorkspace, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationHeader, Explode: false, Required: false, Type: "string", Format: "uuid"})
+		if err != nil {
+			siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "Yuva-Workspace", Err: err})
+			return
+		}
+
+		params.YuvaWorkspace = &YuvaWorkspace
+
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.RevokeAnalyticsShare(w, r, propertyId, shareId, params)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -35125,6 +36327,16 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations", wrapper.CreateAnalyticsAnnotation)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations/{annotationId}", wrapper.DeleteAnalyticsAnnotation)
 	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/annotations/{annotationId}", wrapper.UpdateAnalyticsAnnotation)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares", wrapper.ListAnalyticsShares)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares", wrapper.CreateAnalyticsShare)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares/{shareId}", wrapper.DeleteAnalyticsShare)
+	m.HandleFunc(http.MethodPatch+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares/{shareId}", wrapper.UpdateAnalyticsShare)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/shares/{shareId}/revoke", wrapper.RevokeAnalyticsShare)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports", wrapper.ListAnalyticsExports)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports", wrapper.CreateAnalyticsExport)
+	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}", wrapper.DeleteAnalyticsExport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}", wrapper.GetAnalyticsExport)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/exports/{exportId}/download", wrapper.DownloadAnalyticsExport)
 	m.HandleFunc(http.MethodDelete+" "+options.BaseURL+"/client/v1/session", wrapper.DeleteClientSession)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/session", wrapper.GetClientSession)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/session", wrapper.CreateClientSession)
@@ -35159,6 +36371,10 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/feedback", wrapper.CreateClientFeedback)
 	m.HandleFunc(http.MethodPut+" "+options.BaseURL+"/client/v1/contact/email", wrapper.SetClientContactEmail)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/attachments/{attachmentId}", wrapper.DownloadClientAttachment)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/analytics-shares/{token}", wrapper.GetSharedAnalytics)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/access", wrapper.UnlockSharedAnalytics)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/query", wrapper.QuerySharedAnalytics)
+	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/client/v1/analytics-shares/{token}/realtime", wrapper.GetSharedAnalyticsRealtime)
 
 	return m
 }
@@ -36807,6 +38023,356 @@ type SignedInJSONResponse struct {
 	Body Me
 
 	Headers SignedInResponseHeaders
+}
+
+type GetSharedAnalyticsRequestObject struct {
+	Token AnalyticsShareToken `json:"token"`
+}
+
+type GetSharedAnalyticsResponseObject interface {
+	VisitGetSharedAnalyticsResponse(w http.ResponseWriter) error
+}
+
+type GetSharedAnalytics200JSONResponse AnalyticsSharedPage
+
+func (response GetSharedAnalytics200JSONResponse) VisitGetSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalytics401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetSharedAnalytics401ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalytics404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSharedAnalytics404ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalytics429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSharedAnalytics429ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalyticsRequestObject struct {
+	Token AnalyticsShareToken `json:"token"`
+	Body  *UnlockSharedAnalyticsJSONRequestBody
+}
+
+type UnlockSharedAnalyticsResponseObject interface {
+	VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error
+}
+
+type UnlockSharedAnalytics200JSONResponse AnalyticsShareAccess
+
+func (response UnlockSharedAnalytics200JSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalytics400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UnlockSharedAnalytics400ApplicationProblemPlusJSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalytics401ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlockSharedAnalytics401ApplicationProblemPlusJSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalytics404ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlockSharedAnalytics404ApplicationProblemPlusJSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalytics409ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlockSharedAnalytics409ApplicationProblemPlusJSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UnlockSharedAnalytics429ApplicationProblemPlusJSONResponse Problem
+
+func (response UnlockSharedAnalytics429ApplicationProblemPlusJSONResponse) VisitUnlockSharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalyticsRequestObject struct {
+	Token AnalyticsShareToken `json:"token"`
+	Body  *QuerySharedAnalyticsJSONRequestBody
+}
+
+type QuerySharedAnalyticsResponseObject interface {
+	VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error
+}
+
+type QuerySharedAnalytics200JSONResponse AnalyticsResult
+
+func (response QuerySharedAnalytics200JSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response QuerySharedAnalytics400ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics401ApplicationProblemPlusJSONResponse Problem
+
+func (response QuerySharedAnalytics401ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics403ApplicationProblemPlusJSONResponse Problem
+
+func (response QuerySharedAnalytics403ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics404ApplicationProblemPlusJSONResponse Problem
+
+func (response QuerySharedAnalytics404ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics422ApplicationProblemPlusJSONResponse AnalyticsRangeProblem
+
+func (response QuerySharedAnalytics422ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type QuerySharedAnalytics429ApplicationProblemPlusJSONResponse Problem
+
+func (response QuerySharedAnalytics429ApplicationProblemPlusJSONResponse) VisitQuerySharedAnalyticsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalyticsRealtimeRequestObject struct {
+	Token AnalyticsShareToken `json:"token"`
+}
+
+type GetSharedAnalyticsRealtimeResponseObject interface {
+	VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error
+}
+
+type GetSharedAnalyticsRealtime200JSONResponse AnalyticsRealtime
+
+func (response GetSharedAnalyticsRealtime200JSONResponse) VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalyticsRealtime401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetSharedAnalyticsRealtime401ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalyticsRealtime403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSharedAnalyticsRealtime403ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalyticsRealtime404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSharedAnalyticsRealtime404ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetSharedAnalyticsRealtime429ApplicationProblemPlusJSONResponse Problem
+
+func (response GetSharedAnalyticsRealtime429ApplicationProblemPlusJSONResponse) VisitGetSharedAnalyticsRealtimeResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
 }
 
 type DownloadClientAttachmentRequestObject struct {
@@ -40790,6 +42356,470 @@ func (response SendAnalyticsEvents503ApplicationProblemPlusJSONResponse) VisitSe
 	return err
 }
 
+type ListAnalyticsExportsRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     ListAnalyticsExportsParams
+}
+
+type ListAnalyticsExportsResponseObject interface {
+	VisitListAnalyticsExportsResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsExports200JSONResponse AnalyticsExportList
+
+func (response ListAnalyticsExports200JSONResponse) VisitListAnalyticsExportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsExports401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsExports401ApplicationProblemPlusJSONResponse) VisitListAnalyticsExportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsExports403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsExports403ApplicationProblemPlusJSONResponse) VisitListAnalyticsExportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsExports404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsExports404ApplicationProblemPlusJSONResponse) VisitListAnalyticsExportsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExportRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     CreateAnalyticsExportParams
+	Body       *CreateAnalyticsExportJSONRequestBody
+}
+
+type CreateAnalyticsExportResponseObject interface {
+	VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error
+}
+
+type CreateAnalyticsExport202JSONResponse AnalyticsExport
+
+func (response CreateAnalyticsExport202JSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateAnalyticsExport400ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsExport401ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsExport403ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsExport404ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport422ApplicationProblemPlusJSONResponse AnalyticsRangeProblem
+
+func (response CreateAnalyticsExport422ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(422)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsExport429ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsExport429ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(429)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsExportRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ExportId   AnalyticsExportId   `json:"exportId"`
+	Params     DeleteAnalyticsExportParams
+}
+
+type DeleteAnalyticsExportResponseObject interface {
+	VisitDeleteAnalyticsExportResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsExport204Response struct {
+}
+
+func (response DeleteAnalyticsExport204Response) VisitDeleteAnalyticsExportResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteAnalyticsExport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsExport401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsExport403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsExport403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsExport404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsExport404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsExportRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ExportId   AnalyticsExportId   `json:"exportId"`
+	Params     GetAnalyticsExportParams
+}
+
+type GetAnalyticsExportResponseObject interface {
+	VisitGetAnalyticsExportResponse(w http.ResponseWriter) error
+}
+
+type GetAnalyticsExport200JSONResponse AnalyticsExport
+
+func (response GetAnalyticsExport200JSONResponse) VisitGetAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsExport401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response GetAnalyticsExport401ApplicationProblemPlusJSONResponse) VisitGetAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsExport403ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsExport403ApplicationProblemPlusJSONResponse) VisitGetAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type GetAnalyticsExport404ApplicationProblemPlusJSONResponse Problem
+
+func (response GetAnalyticsExport404ApplicationProblemPlusJSONResponse) VisitGetAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DownloadAnalyticsExportRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ExportId   AnalyticsExportId   `json:"exportId"`
+	Params     DownloadAnalyticsExportParams
+}
+
+type DownloadAnalyticsExportResponseObject interface {
+	VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error
+}
+
+type DownloadAnalyticsExport200ResponseHeaders struct {
+	ContentDisposition *string
+}
+
+type DownloadAnalyticsExport200ApplicationxNdjsonResponse struct {
+	Body          io.Reader
+	Headers       DownloadAnalyticsExport200ResponseHeaders
+	ContentLength int64
+}
+
+func (response DownloadAnalyticsExport200ApplicationxNdjsonResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "application/x-ndjson")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	flusher, ok := w.(http.Flusher)
+	if !ok {
+		// If w doesn't support flushing, fall back to io.Copy.
+		_, err := io.Copy(w, response.Body)
+		return err
+	}
+	// text/event-stream messages are typically small; use a
+	// modest buffer and flush after each chunk so clients see
+	// events immediately instead of waiting on OS buffering.
+	buf := make([]byte, 4096)
+	for {
+		n, err := response.Body.Read(buf)
+		if n > 0 {
+			if _, writeErr := w.Write(buf[:n]); writeErr != nil {
+				return writeErr
+			}
+			flusher.Flush()
+		}
+		if err != nil {
+			if err == io.EOF {
+				return nil
+			}
+			return err
+		}
+	}
+}
+
+type DownloadAnalyticsExport200TextcsvResponse struct {
+	Body          io.Reader
+	Headers       DownloadAnalyticsExport200ResponseHeaders
+	ContentLength int64
+}
+
+func (response DownloadAnalyticsExport200TextcsvResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	w.Header().Set("Content-Type", "text/csv")
+	if response.ContentLength != 0 {
+		w.Header().Set("Content-Length", fmt.Sprint(response.ContentLength))
+	}
+	if response.Headers.ContentDisposition != nil {
+		w.Header().Set("Content-Disposition", fmt.Sprint(*response.Headers.ContentDisposition))
+	}
+	w.WriteHeader(200)
+
+	if closer, ok := response.Body.(io.ReadCloser); ok {
+		defer closer.Close()
+	}
+	_, err := io.Copy(w, response.Body)
+	return err
+}
+
+type DownloadAnalyticsExport400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DownloadAnalyticsExport400ApplicationProblemPlusJSONResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DownloadAnalyticsExport401ApplicationProblemPlusJSONResponse Problem
+
+func (response DownloadAnalyticsExport401ApplicationProblemPlusJSONResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DownloadAnalyticsExport403ApplicationProblemPlusJSONResponse Problem
+
+func (response DownloadAnalyticsExport403ApplicationProblemPlusJSONResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DownloadAnalyticsExport404ApplicationProblemPlusJSONResponse Problem
+
+func (response DownloadAnalyticsExport404ApplicationProblemPlusJSONResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DownloadAnalyticsExport409ApplicationProblemPlusJSONResponse Problem
+
+func (response DownloadAnalyticsExport409ApplicationProblemPlusJSONResponse) VisitDownloadAnalyticsExportResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
 type ListAnalyticsFunnelsRequestObject struct {
 	PropertyId AnalyticsPropertyId `json:"propertyId"`
 	Params     ListAnalyticsFunnelsParams
@@ -42249,6 +44279,382 @@ func (response UpdateAnalyticsSegment409ApplicationProblemPlusJSONResponse) Visi
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsSharesRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     ListAnalyticsSharesParams
+}
+
+type ListAnalyticsSharesResponseObject interface {
+	VisitListAnalyticsSharesResponse(w http.ResponseWriter) error
+}
+
+type ListAnalyticsShares200JSONResponse AnalyticsShareList
+
+func (response ListAnalyticsShares200JSONResponse) VisitListAnalyticsSharesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsShares401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response ListAnalyticsShares401ApplicationProblemPlusJSONResponse) VisitListAnalyticsSharesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsShares403ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsShares403ApplicationProblemPlusJSONResponse) VisitListAnalyticsSharesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type ListAnalyticsShares404ApplicationProblemPlusJSONResponse Problem
+
+func (response ListAnalyticsShares404ApplicationProblemPlusJSONResponse) VisitListAnalyticsSharesResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsShareRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Params     CreateAnalyticsShareParams
+	Body       *CreateAnalyticsShareJSONRequestBody
+}
+
+type CreateAnalyticsShareResponseObject interface {
+	VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error
+}
+
+type CreateAnalyticsShare201JSONResponse AnalyticsShareCreated
+
+func (response CreateAnalyticsShare201JSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(201)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsShare400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response CreateAnalyticsShare400ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsShare401ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsShare401ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsShare403ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsShare403ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type CreateAnalyticsShare404ApplicationProblemPlusJSONResponse Problem
+
+func (response CreateAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitCreateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsShareRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ShareId    AnalyticsShareId    `json:"shareId"`
+	Params     DeleteAnalyticsShareParams
+}
+
+type DeleteAnalyticsShareResponseObject interface {
+	VisitDeleteAnalyticsShareResponse(w http.ResponseWriter) error
+}
+
+type DeleteAnalyticsShare204Response struct {
+}
+
+func (response DeleteAnalyticsShare204Response) VisitDeleteAnalyticsShareResponse(w http.ResponseWriter) error {
+	w.WriteHeader(204)
+	return nil
+}
+
+type DeleteAnalyticsShare401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response DeleteAnalyticsShare401ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsShare403ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsShare403ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type DeleteAnalyticsShare404ApplicationProblemPlusJSONResponse Problem
+
+func (response DeleteAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitDeleteAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShareRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ShareId    AnalyticsShareId    `json:"shareId"`
+	Params     UpdateAnalyticsShareParams
+	Body       *UpdateAnalyticsShareJSONRequestBody
+}
+
+type UpdateAnalyticsShareResponseObject interface {
+	VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error
+}
+
+type UpdateAnalyticsShare200JSONResponse AnalyticsShare
+
+func (response UpdateAnalyticsShare200JSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response UpdateAnalyticsShare400ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare401ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsShare401ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare403ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsShare403ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare404ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type UpdateAnalyticsShare409ApplicationProblemPlusJSONResponse Problem
+
+func (response UpdateAnalyticsShare409ApplicationProblemPlusJSONResponse) VisitUpdateAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(409)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RevokeAnalyticsShareRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	ShareId    AnalyticsShareId    `json:"shareId"`
+	Params     RevokeAnalyticsShareParams
+}
+
+type RevokeAnalyticsShareResponseObject interface {
+	VisitRevokeAnalyticsShareResponse(w http.ResponseWriter) error
+}
+
+type RevokeAnalyticsShare200JSONResponse AnalyticsShare
+
+func (response RevokeAnalyticsShare200JSONResponse) VisitRevokeAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RevokeAnalyticsShare401ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response RevokeAnalyticsShare401ApplicationProblemPlusJSONResponse) VisitRevokeAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RevokeAnalyticsShare403ApplicationProblemPlusJSONResponse Problem
+
+func (response RevokeAnalyticsShare403ApplicationProblemPlusJSONResponse) VisitRevokeAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type RevokeAnalyticsShare404ApplicationProblemPlusJSONResponse Problem
+
+func (response RevokeAnalyticsShare404ApplicationProblemPlusJSONResponse) VisitRevokeAnalyticsShareResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -58783,6 +61189,18 @@ func (response CreateWorkspace429ApplicationProblemPlusJSONResponse) VisitCreate
 
 // StrictServerInterface represents all server handlers.
 type StrictServerInterface interface {
+	// GetSharedAnalytics A share link's page settings
+	// (GET /client/v1/analytics-shares/{token})
+	GetSharedAnalytics(ctx context.Context, request GetSharedAnalyticsRequestObject) (GetSharedAnalyticsResponseObject, error)
+	// UnlockSharedAnalytics Unlock a share link with its password
+	// (POST /client/v1/analytics-shares/{token}/access)
+	UnlockSharedAnalytics(ctx context.Context, request UnlockSharedAnalyticsRequestObject) (UnlockSharedAnalyticsResponseObject, error)
+	// QuerySharedAnalytics Query a shared property's numbers
+	// (POST /client/v1/analytics-shares/{token}/query)
+	QuerySharedAnalytics(ctx context.Context, request QuerySharedAnalyticsRequestObject) (QuerySharedAnalyticsResponseObject, error)
+	// GetSharedAnalyticsRealtime A shared property's last 30 minutes
+	// (GET /client/v1/analytics-shares/{token}/realtime)
+	GetSharedAnalyticsRealtime(ctx context.Context, request GetSharedAnalyticsRealtimeRequestObject) (GetSharedAnalyticsRealtimeResponseObject, error)
 	// DownloadClientAttachment Download an attachment
 	// (GET /client/v1/attachments/{attachmentId})
 	DownloadClientAttachment(ctx context.Context, request DownloadClientAttachmentRequestObject) (DownloadClientAttachmentResponseObject, error)
@@ -58948,6 +61366,21 @@ type StrictServerInterface interface {
 	// SendAnalyticsEvents Send server-side analytics events
 	// (POST /v1/analytics/properties/{propertyId}/events)
 	SendAnalyticsEvents(ctx context.Context, request SendAnalyticsEventsRequestObject) (SendAnalyticsEventsResponseObject, error)
+	// ListAnalyticsExports List a property's exports
+	// (GET /v1/analytics/properties/{propertyId}/exports)
+	ListAnalyticsExports(ctx context.Context, request ListAnalyticsExportsRequestObject) (ListAnalyticsExportsResponseObject, error)
+	// CreateAnalyticsExport Export a property's numbers or raw events
+	// (POST /v1/analytics/properties/{propertyId}/exports)
+	CreateAnalyticsExport(ctx context.Context, request CreateAnalyticsExportRequestObject) (CreateAnalyticsExportResponseObject, error)
+	// DeleteAnalyticsExport Delete an export
+	// (DELETE /v1/analytics/properties/{propertyId}/exports/{exportId})
+	DeleteAnalyticsExport(ctx context.Context, request DeleteAnalyticsExportRequestObject) (DeleteAnalyticsExportResponseObject, error)
+	// GetAnalyticsExport An export and its progress
+	// (GET /v1/analytics/properties/{propertyId}/exports/{exportId})
+	GetAnalyticsExport(ctx context.Context, request GetAnalyticsExportRequestObject) (GetAnalyticsExportResponseObject, error)
+	// DownloadAnalyticsExport Download an export's file
+	// (GET /v1/analytics/properties/{propertyId}/exports/{exportId}/download)
+	DownloadAnalyticsExport(ctx context.Context, request DownloadAnalyticsExportRequestObject) (DownloadAnalyticsExportResponseObject, error)
 	// ListAnalyticsFunnels List a property's funnels
 	// (GET /v1/analytics/properties/{propertyId}/funnels)
 	ListAnalyticsFunnels(ctx context.Context, request ListAnalyticsFunnelsRequestObject) (ListAnalyticsFunnelsResponseObject, error)
@@ -58999,6 +61432,21 @@ type StrictServerInterface interface {
 	// UpdateAnalyticsSegment Update a segment
 	// (PATCH /v1/analytics/properties/{propertyId}/segments/{segmentId})
 	UpdateAnalyticsSegment(ctx context.Context, request UpdateAnalyticsSegmentRequestObject) (UpdateAnalyticsSegmentResponseObject, error)
+	// ListAnalyticsShares List a property's share links
+	// (GET /v1/analytics/properties/{propertyId}/shares)
+	ListAnalyticsShares(ctx context.Context, request ListAnalyticsSharesRequestObject) (ListAnalyticsSharesResponseObject, error)
+	// CreateAnalyticsShare Make a read-only share link
+	// (POST /v1/analytics/properties/{propertyId}/shares)
+	CreateAnalyticsShare(ctx context.Context, request CreateAnalyticsShareRequestObject) (CreateAnalyticsShareResponseObject, error)
+	// DeleteAnalyticsShare Delete a share link
+	// (DELETE /v1/analytics/properties/{propertyId}/shares/{shareId})
+	DeleteAnalyticsShare(ctx context.Context, request DeleteAnalyticsShareRequestObject) (DeleteAnalyticsShareResponseObject, error)
+	// UpdateAnalyticsShare Change a share link
+	// (PATCH /v1/analytics/properties/{propertyId}/shares/{shareId})
+	UpdateAnalyticsShare(ctx context.Context, request UpdateAnalyticsShareRequestObject) (UpdateAnalyticsShareResponseObject, error)
+	// RevokeAnalyticsShare Revoke a share link
+	// (POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke)
+	RevokeAnalyticsShare(ctx context.Context, request RevokeAnalyticsShareRequestObject) (RevokeAnalyticsShareResponseObject, error)
 	// ListApiKeys List API keys
 	// (GET /v1/api-keys)
 	ListApiKeys(ctx context.Context, request ListApiKeysRequestObject) (ListApiKeysResponseObject, error)
@@ -59686,6 +62134,124 @@ type strictHandler struct {
 	ssi         StrictServerInterface
 	middlewares []StrictMiddlewareFunc
 	options     StrictHTTPServerOptions
+}
+
+// GetSharedAnalytics operation middleware
+func (sh *strictHandler) GetSharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken) {
+	var request GetSharedAnalyticsRequestObject
+
+	request.Token = token
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSharedAnalytics(ctx, request.(GetSharedAnalyticsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSharedAnalytics")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetSharedAnalyticsResponseObject); ok {
+		if err := validResponse.VisitGetSharedAnalyticsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UnlockSharedAnalytics operation middleware
+func (sh *strictHandler) UnlockSharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken) {
+	var request UnlockSharedAnalyticsRequestObject
+
+	request.Token = token
+
+	var body UnlockSharedAnalyticsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UnlockSharedAnalytics(ctx, request.(UnlockSharedAnalyticsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UnlockSharedAnalytics")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UnlockSharedAnalyticsResponseObject); ok {
+		if err := validResponse.VisitUnlockSharedAnalyticsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// QuerySharedAnalytics operation middleware
+func (sh *strictHandler) QuerySharedAnalytics(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken) {
+	var request QuerySharedAnalyticsRequestObject
+
+	request.Token = token
+
+	var body QuerySharedAnalyticsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.QuerySharedAnalytics(ctx, request.(QuerySharedAnalyticsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "QuerySharedAnalytics")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(QuerySharedAnalyticsResponseObject); ok {
+		if err := validResponse.VisitQuerySharedAnalyticsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetSharedAnalyticsRealtime operation middleware
+func (sh *strictHandler) GetSharedAnalyticsRealtime(w http.ResponseWriter, r *http.Request, token AnalyticsShareToken) {
+	var request GetSharedAnalyticsRealtimeRequestObject
+
+	request.Token = token
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetSharedAnalyticsRealtime(ctx, request.(GetSharedAnalyticsRealtimeRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetSharedAnalyticsRealtime")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetSharedAnalyticsRealtimeResponseObject); ok {
+		if err := validResponse.VisitGetSharedAnalyticsRealtimeResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
 }
 
 // DownloadClientAttachment operation middleware
@@ -61326,6 +63892,151 @@ func (sh *strictHandler) SendAnalyticsEvents(w http.ResponseWriter, r *http.Requ
 	}
 }
 
+// ListAnalyticsExports operation middleware
+func (sh *strictHandler) ListAnalyticsExports(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsExportsParams) {
+	var request ListAnalyticsExportsRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsExports(ctx, request.(ListAnalyticsExportsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsExports")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsExportsResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsExportsResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateAnalyticsExport operation middleware
+func (sh *strictHandler) CreateAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params CreateAnalyticsExportParams) {
+	var request CreateAnalyticsExportRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body CreateAnalyticsExportJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateAnalyticsExport(ctx, request.(CreateAnalyticsExportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateAnalyticsExport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateAnalyticsExportResponseObject); ok {
+		if err := validResponse.VisitCreateAnalyticsExportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsExport operation middleware
+func (sh *strictHandler) DeleteAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params DeleteAnalyticsExportParams) {
+	var request DeleteAnalyticsExportRequestObject
+
+	request.PropertyId = propertyId
+	request.ExportId = exportId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsExport(ctx, request.(DeleteAnalyticsExportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsExport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsExportResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsExportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// GetAnalyticsExport operation middleware
+func (sh *strictHandler) GetAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params GetAnalyticsExportParams) {
+	var request GetAnalyticsExportRequestObject
+
+	request.PropertyId = propertyId
+	request.ExportId = exportId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.GetAnalyticsExport(ctx, request.(GetAnalyticsExportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "GetAnalyticsExport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(GetAnalyticsExportResponseObject); ok {
+		if err := validResponse.VisitGetAnalyticsExportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DownloadAnalyticsExport operation middleware
+func (sh *strictHandler) DownloadAnalyticsExport(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, exportId AnalyticsExportId, params DownloadAnalyticsExportParams) {
+	var request DownloadAnalyticsExportRequestObject
+
+	request.PropertyId = propertyId
+	request.ExportId = exportId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DownloadAnalyticsExport(ctx, request.(DownloadAnalyticsExportRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DownloadAnalyticsExport")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DownloadAnalyticsExportResponseObject); ok {
+		if err := validResponse.VisitDownloadAnalyticsExportResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
 // ListAnalyticsFunnels operation middleware
 func (sh *strictHandler) ListAnalyticsFunnels(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsFunnelsParams) {
 	var request ListAnalyticsFunnelsRequestObject
@@ -61834,6 +64545,158 @@ func (sh *strictHandler) UpdateAnalyticsSegment(w http.ResponseWriter, r *http.R
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(UpdateAnalyticsSegmentResponseObject); ok {
 		if err := validResponse.VisitUpdateAnalyticsSegmentResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// ListAnalyticsShares operation middleware
+func (sh *strictHandler) ListAnalyticsShares(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsSharesParams) {
+	var request ListAnalyticsSharesRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.ListAnalyticsShares(ctx, request.(ListAnalyticsSharesRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "ListAnalyticsShares")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(ListAnalyticsSharesResponseObject); ok {
+		if err := validResponse.VisitListAnalyticsSharesResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// CreateAnalyticsShare operation middleware
+func (sh *strictHandler) CreateAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params CreateAnalyticsShareParams) {
+	var request CreateAnalyticsShareRequestObject
+
+	request.PropertyId = propertyId
+	request.Params = params
+
+	var body CreateAnalyticsShareJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.CreateAnalyticsShare(ctx, request.(CreateAnalyticsShareRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "CreateAnalyticsShare")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(CreateAnalyticsShareResponseObject); ok {
+		if err := validResponse.VisitCreateAnalyticsShareResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// DeleteAnalyticsShare operation middleware
+func (sh *strictHandler) DeleteAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params DeleteAnalyticsShareParams) {
+	var request DeleteAnalyticsShareRequestObject
+
+	request.PropertyId = propertyId
+	request.ShareId = shareId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.DeleteAnalyticsShare(ctx, request.(DeleteAnalyticsShareRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "DeleteAnalyticsShare")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(DeleteAnalyticsShareResponseObject); ok {
+		if err := validResponse.VisitDeleteAnalyticsShareResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// UpdateAnalyticsShare operation middleware
+func (sh *strictHandler) UpdateAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params UpdateAnalyticsShareParams) {
+	var request UpdateAnalyticsShareRequestObject
+
+	request.PropertyId = propertyId
+	request.ShareId = shareId
+	request.Params = params
+
+	var body UpdateAnalyticsShareJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.UpdateAnalyticsShare(ctx, request.(UpdateAnalyticsShareRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "UpdateAnalyticsShare")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(UpdateAnalyticsShareResponseObject); ok {
+		if err := validResponse.VisitUpdateAnalyticsShareResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// RevokeAnalyticsShare operation middleware
+func (sh *strictHandler) RevokeAnalyticsShare(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params RevokeAnalyticsShareParams) {
+	var request RevokeAnalyticsShareRequestObject
+
+	request.PropertyId = propertyId
+	request.ShareId = shareId
+	request.Params = params
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.RevokeAnalyticsShare(ctx, request.(RevokeAnalyticsShareRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "RevokeAnalyticsShare")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(RevokeAnalyticsShareResponseObject); ok {
+		if err := validResponse.VisitRevokeAnalyticsShareResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {

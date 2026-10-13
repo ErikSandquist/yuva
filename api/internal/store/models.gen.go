@@ -92,6 +92,27 @@ type AnalyticsEvent struct {
 	Interactive  bool
 }
 
+type AnalyticsExport struct {
+	ID          uuid.UUID
+	WorkspaceID uuid.UUID
+	PropertyID  uuid.UUID
+	Kind        string
+	Format      string
+	Status      string
+	Params      []byte
+	FromDay     time.Time
+	ToDay       time.Time
+	Progress    int16
+	Rows        int64
+	SizeBytes   int64
+	StorageKey  *string
+	Error       *string
+	CreatedBy   *uuid.UUID
+	CreatedAt   time.Time
+	FinishedAt  *time.Time
+	ExpiresAt   time.Time
+}
+
 type AnalyticsFunnel struct {
 	ID          uuid.UUID
 	WorkspaceID uuid.UUID
@@ -238,6 +259,24 @@ type AnalyticsSegment struct {
 	CreatedBy   *uuid.UUID
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+}
+
+type AnalyticsShare struct {
+	ID           uuid.UUID
+	WorkspaceID  uuid.UUID
+	PropertyID   uuid.UUID
+	Name         string
+	TokenHash    []byte
+	TokenPrefix  string
+	Views        []string
+	PasswordHash *string
+	EmbedOrigins []string
+	ExpiresAt    *time.Time
+	RevokedAt    *time.Time
+	LastViewedAt *time.Time
+	CreatedBy    *uuid.UUID
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 type AnalyticsVisit struct {
