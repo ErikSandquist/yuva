@@ -42,11 +42,11 @@ struct AnalyticsView: View {
                 }
                 Section("Privacy") {
                     if config.analyticsRequireConsent {
-                        Toggle("Analytics consent", isOn: $consent)
+                        ToggleRow(title: "Analytics consent", isOn: $consent)
                             .onChange(of: consent) { _, granted in YuvaAnalytics.consent(granted) }
                             .accessibilityIdentifier("example.analytics.consent")
                     }
-                    Toggle("Opt out", isOn: $optedOut)
+                    ToggleRow(title: "Opt out", isOn: $optedOut)
                         .onChange(of: optedOut) { _, out in
                             if out { YuvaAnalytics.optOut() } else { YuvaAnalytics.optIn() }
                             note(out ? "Opted out" : "Opted in")
@@ -68,5 +68,25 @@ struct AnalyticsView: View {
 
     private func note(_ text: String) {
         log.insert("\(Date().formatted(date: .omitted, time: .standard))  \(text)", at: 0)
+    }
+}
+
+struct ToggleRow: View {
+    let title: String
+    @Binding var isOn: Bool
+
+    var body: some View {
+        Button {
+            isOn.toggle()
+        } label: {
+            HStack {
+                Text(title).foregroundStyle(.primary)
+                Spacer()
+                Toggle(title, isOn: $isOn).labelsHidden().allowsHitTesting(false)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityRepresentation { Toggle(title, isOn: $isOn) }
     }
 }
