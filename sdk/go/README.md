@@ -91,3 +91,39 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 During a secret rotation Yuva signs with both the new and the old secret for 24 hours, so either
 secret verifies.
+
+## Server-side analytics
+
+`analytics` reports events only your backend sees, such as a signup or a payment, to an analytics
+property. It needs an API key with the `analytics:write` scope and the property's id. `Track`
+forwards the visitor's address, user agent and client hints from their request (never stored by
+Yuva), so the event counts as the same visitor as their browser that day; requests with `DNT: 1` or
+`Sec-GPC: 1` send nothing. Events are queued and sent in batches of up to 100 with retries.
+
+```go
+import "github.com/productdevbook/yuva/sdk/go/analytics"
+
+events, err := analytics.New(analytics.Config{
+	BaseURL:    "https://yuva.example.com",
+	APIKey:     os.Getenv("YUVA_API_KEY"),
+	PropertyID: os.Getenv("YUVA_ANALYTICS_PROPERTY"),
+	OnError:    func(err error) { slog.Warn("yuva analytics", "error", err) },
+})
+if err != nil {
+	return err
+}
+defer events.Close(context.Background())
+
+func signup(w http.ResponseWriter, r *http.Request) {
+	// ...
+	_ = events.Track(r, analytics.Event{
+		Name:    "Signup",
+		Props:   map[string]any{"plan": "pro"},
+		Revenue: &analytics.Revenue{Amount: "29.90", Currency: "EUR"},
+	})
+}
+```
+
+Behind a proxy, set `ClientIP` to read the visitor's address the way your proxy reports it. Without
+a request, `Send` takes an `Event` with your own `VisitorKey` (a session id, never an e-mail
+address) instead of `IP` and `UserAgent`.

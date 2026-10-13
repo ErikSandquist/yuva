@@ -42,6 +42,45 @@ func (e AnalyticsAnnotationKind) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsAppDevice.
+const (
+	Desktop AnalyticsAppDevice = "desktop"
+	Mobile  AnalyticsAppDevice = "mobile"
+	Tablet  AnalyticsAppDevice = "tablet"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppDevice enum.
+func (e AnalyticsAppDevice) Valid() bool {
+	switch e {
+	case Desktop:
+		return true
+	case Mobile:
+		return true
+	case Tablet:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsAppPlatform.
+const (
+	AnalyticsAppAndroid AnalyticsAppPlatform = "android"
+	AnalyticsAppIos     AnalyticsAppPlatform = "ios"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppPlatform enum.
+func (e AnalyticsAppPlatform) Valid() bool {
+	switch e {
+	case AnalyticsAppAndroid:
+		return true
+	case AnalyticsAppIos:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAudience.
 const (
 	AnalyticsAudienceChildren AnalyticsAudience = "children"
@@ -4335,6 +4374,40 @@ type AnalyticsAnnotationUpdate struct {
 	Text     *string             `json:"text,omitempty"`
 }
 
+// AnalyticsApp Apps only, required there: the app that sent the events, describing a visit it starts.
+// Nothing here identifies a device.
+type AnalyticsApp struct {
+	// Device `tablet` for iPads and Android tablets, `desktop` for Mac and ChromeOS.
+	Device *AnalyticsAppDevice `json:"device,omitempty"`
+
+	// Language The app's language as a BCP 47 tag; only its primary language is kept. `Accept-Language` when absent.
+	//
+	// Examples: tr-TR
+	Language *string `json:"language,omitempty"`
+
+	// OsVersion The OS version; its major number is kept (`os_version` dimension `iOS 18`).
+	//
+	// Examples: 18.1
+	OsVersion *string              `json:"os_version,omitempty"`
+	Platform  AnalyticsAppPlatform `json:"platform"`
+
+	// Version The app's version as users see it (`CFBundleShortVersionString`, `versionName`), the `app_version` dimension.
+	//
+	// Examples: 2.3.1
+	Version *string `json:"version,omitempty"`
+
+	// Width Screen width in points or dp, turned into a screen size class and not stored.
+	//
+	// Examples: 390
+	Width *int `json:"width,omitempty"`
+}
+
+// AnalyticsAppDevice `tablet` for iPads and Android tablets, `desktop` for Mac and ChromeOS.
+type AnalyticsAppDevice string
+
+// AnalyticsAppPlatform defines model for AnalyticsApp.Platform.
+type AnalyticsAppPlatform string
+
 // AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
 type AnalyticsAudience string
 
@@ -4474,10 +4547,18 @@ type AnalyticsEvent struct {
 	// Sd `engagement` only: the deepest scroll position reached, in percent.
 	Sd *int `json:"sd,omitempty"`
 
+	// T Apps only: when the event happened, in milliseconds since the Unix epoch. Taken as now
+	// when absent or in the future; an event older than 72 hours is dropped as `late`.
+	//
+	//
+	// Examples: 1760263200000
+	T *int64 `json:"t,omitempty"`
+
 	// U The page URL. Only the host and the path are kept; of the query, only `utm_source`,
 	// `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
 	// the visit's acquisition. Path segments shaped like e-mail addresses are stored as
-	// `:email`.
+	// `:email`. In an app, the screen: `app://<app id>/<screen>`, the screen's path
+	// percent-encoded (`app://com.example.shop/Product%20Detail`), read the same way.
 	U string `json:"u"`
 
 	// W Viewport width in CSS pixels, turned into a screen size class and not stored.
@@ -4498,9 +4579,27 @@ type AnalyticsEvent_P_AdditionalProperties struct {
 	union json.RawMessage
 }
 
-// AnalyticsEventBatch defines model for AnalyticsEventBatch.
+// AnalyticsEventBatch Up to 100 events. Apps also send `k` and `a`, and one request per process key.
 type AnalyticsEventBatch struct {
+	// A Apps only, required there: the app that sent the events, describing a visit it starts.
+	// Nothing here identifies a device.
+	A *AnalyticsApp    `json:"a,omitempty"`
 	E []AnalyticsEvent `json:"e"`
+
+	// K Apps only, required there: the process key, a random value (at least 128 bits, such as
+	// a UUID) the app makes at launch and keeps in memory only, never on disk. It stands for
+	// the visitor in place of the address: a relaunch makes a new key, so a new visitor and
+	// visit. Queued events keep the key of the process that recorded them.
+	//
+	//
+	// Examples: 0f8fad5b-d9cb-469f-a165-70867728950e
+	K *string `json:"k,omitempty"`
+}
+
+// AnalyticsEventError defines model for AnalyticsEventError.
+type AnalyticsEventError struct {
+	Detail string `json:"detail"`
+	Index  int    `json:"index"`
 }
 
 // AnalyticsEventRevenue Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
@@ -4529,6 +4628,15 @@ type AnalyticsEventRevenue_A struct {
 	union json.RawMessage
 }
 
+// AnalyticsEventsResult defines model for AnalyticsEventsResult.
+type AnalyticsEventsResult struct {
+	// Accepted The valid events, stored unless a rule of the operation dropped them.
+	Accepted int `json:"accepted"`
+
+	// Errors The events left out as invalid, by their position in `events`.
+	Errors []AnalyticsEventError `json:"errors"`
+}
+
 // AnalyticsExcludedAddress An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
@@ -4545,7 +4653,10 @@ type AnalyticsFilter struct {
 	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-	// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -4567,7 +4678,10 @@ type AnalyticsFilterOp string
 // `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 // (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 // `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
 // and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -4833,7 +4947,8 @@ type AnalyticsPathRule struct {
 	Replacement string `json:"replacement"`
 }
 
-// AnalyticsPlatform Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+// AnalyticsPlatform Where a property's events come from. Browsers send from `web` pages; `ios` and `android`
+// apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
 type AnalyticsPlatform string
 
 // AnalyticsProperty A website or app the workspace measures.
@@ -5142,6 +5257,90 @@ type AnalyticsSegmentList struct {
 type AnalyticsSegmentUpdate struct {
 	Filters *[]AnalyticsFilter `json:"filters,omitempty"`
 	Name    *string            `json:"name,omitempty"`
+}
+
+// AnalyticsServerEvent One server-side event. Give `ip` and `user_agent`, or `visitor_key`.
+type AnalyticsServerEvent struct {
+	// AcceptLanguage The visitor's `Accept-Language` header; only the primary language of its first entry is kept.
+	AcceptLanguage *string `json:"accept_language,omitempty"`
+
+	// Consent The visitor agreed to analytics; required for a `consent` property to store the event.
+	Consent *bool `json:"consent,omitempty"`
+
+	// Dnt The visitor's request had `DNT: 1`; the event is not stored.
+	Dnt *bool `json:"dnt,omitempty"`
+
+	// Gpc The visitor's request had `Sec-GPC: 1`; the event is not stored.
+	Gpc *bool `json:"gpc,omitempty"`
+
+	// Interactive `false` makes a custom event non-interactive.
+	Interactive *bool `json:"interactive,omitempty"`
+
+	// Ip The visitor's IP address as your server saw it. Shortened on arrival, never stored.
+	//
+	// Examples: 203.0.113.7
+	Ip *string `json:"ip,omitempty"`
+
+	// Name `pageview`, a built-in event or a custom event's name, as in `AnalyticsEvent.n`.
+	//
+	// Examples: Signup
+	Name string `json:"name"`
+
+	// Props Up to 30 props with the rules of `AnalyticsEvent.p`.
+	//
+	// Examples: {"plan":"pro"}
+	Props *map[string]AnalyticsServerEvent_Props_AdditionalProperties `json:"props,omitempty"`
+
+	// Referrer The page's referrer, for a `pageview` that starts a visit.
+	Referrer *string `json:"referrer,omitempty"`
+
+	// Revenue Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+	// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+	// code. It is stored in minor units per currency; Yuva converts nothing.
+	Revenue *AnalyticsEventRevenue `json:"revenue,omitempty"`
+
+	// SecChUaMobile The visitor's `Sec-CH-UA-Mobile` header, as sent.
+	//
+	// Examples: ?0
+	SecChUaMobile *string `json:"sec_ch_ua_mobile,omitempty"`
+
+	// SecChUaPlatform The visitor's `Sec-CH-UA-Platform` header, as sent.
+	//
+	// Examples: "macOS"
+	SecChUaPlatform *string `json:"sec_ch_ua_platform,omitempty"`
+
+	// Timestamp When it happened; now when absent.
+	Timestamp *time.Time `json:"timestamp,omitempty"`
+
+	// Url The page or app screen, read like `AnalyticsEvent.u`.
+	//
+	// Examples: https://example.com/signup
+	Url string `json:"url"`
+
+	// UserAgent The visitor's `User-Agent` header. Never stored.
+	UserAgent *string `json:"user_agent,omitempty"`
+
+	// VisitorKey Your own key for the visitor instead of `ip` and `user_agent`; hashed under the day's salt, never stored.
+	VisitorKey *string `json:"visitor_key,omitempty"`
+}
+
+// AnalyticsServerEventProps0 defines model for AnalyticsServerEvent.Props.0.
+type AnalyticsServerEventProps0 = string
+
+// AnalyticsServerEventProps1 defines model for AnalyticsServerEvent.Props.1.
+type AnalyticsServerEventProps1 = float32
+
+// AnalyticsServerEventProps2 defines model for AnalyticsServerEvent.Props.2.
+type AnalyticsServerEventProps2 = bool
+
+// AnalyticsServerEvent_Props_AdditionalProperties defines model for AnalyticsServerEvent.props.AdditionalProperties.
+type AnalyticsServerEvent_Props_AdditionalProperties struct {
+	union json.RawMessage
+}
+
+// AnalyticsServerEvents defines model for AnalyticsServerEvents.
+type AnalyticsServerEvents struct {
+	Events []AnalyticsServerEvent `json:"events"`
 }
 
 // AnalyticsTopValue defines model for AnalyticsTopValue.
@@ -14984,6 +15183,9 @@ type UpdateAnalyticsAnnotationJSONRequestBody = AnalyticsAnnotationUpdate
 // DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
 type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
 
+// SendAnalyticsEventsJSONRequestBody defines body for SendAnalyticsEvents for application/json ContentType.
+type SendAnalyticsEventsJSONRequestBody = AnalyticsServerEvents
+
 // CreateAnalyticsFunnelJSONRequestBody defines body for CreateAnalyticsFunnel for application/json ContentType.
 type CreateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelCreate
 
@@ -15486,6 +15688,94 @@ func (t AnalyticsEventRevenue_A) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AnalyticsEventRevenue_A) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsAnalyticsServerEventProps0 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps0
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps0() (AnalyticsServerEventProps0, error) {
+	var body AnalyticsServerEventProps0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps0 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps0
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps0(v AnalyticsServerEventProps0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps0 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps0
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps0(v AnalyticsServerEventProps0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsServerEventProps1 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps1
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps1() (AnalyticsServerEventProps1, error) {
+	var body AnalyticsServerEventProps1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps1 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps1
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps1(v AnalyticsServerEventProps1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps1 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps1
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps1(v AnalyticsServerEventProps1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsServerEventProps2 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps2
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps2() (AnalyticsServerEventProps2, error) {
+	var body AnalyticsServerEventProps2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps2 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps2
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps2(v AnalyticsServerEventProps2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps2 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps2
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps2(v AnalyticsServerEventProps2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t AnalyticsServerEvent_Props_AdditionalProperties) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -18318,8 +18608,20 @@ type ClientInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -18332,7 +18634,7 @@ type ClientInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -18353,8 +18655,20 @@ type ClientInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -18367,7 +18681,7 @@ type ClientInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -18388,8 +18702,20 @@ type ClientInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -18402,7 +18728,7 @@ type ClientInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -19465,6 +19791,76 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendAnalyticsEventsWithBody Send server-side analytics events
+	//
+	// A host backend reports up to 100 events of its visitors, such as a signup its server
+	// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+	// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+	// `analytics:write`.
+	//
+	// Each event names its visitor in one of two ways, neither stored:
+	// - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+	//   and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+	//   collection endpoint hashes the browser's own request, so the event joins the visitor's
+	//   browser visit of that day; the address is shortened first and used for the location,
+	//   excluded addresses and the per-address limit like a browser's.
+	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
+	//   places the visitor and `user_agent` only describes the device.
+	//
+	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+	// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+	// an event older than 72 hours is dropped as `late`.
+	//
+	// Invalid events are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not stored, as on the collection endpoint and counted in the property's health:
+	// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+	// from bots, excluded addresses or paths; events over the per-address or per-property limit
+	// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+	// with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+	SendAnalyticsEventsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendAnalyticsEvents Send server-side analytics events
+	//
+	// A host backend reports up to 100 events of its visitors, such as a signup its server
+	// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+	// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+	// `analytics:write`.
+	//
+	// Each event names its visitor in one of two ways, neither stored:
+	// - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+	//   and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+	//   collection endpoint hashes the browser's own request, so the event joins the visitor's
+	//   browser visit of that day; the address is shortened first and used for the location,
+	//   excluded addresses and the per-address limit like a browser's.
+	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
+	//   places the visitor and `user_agent` only describes the device.
+	//
+	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+	// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+	// an event older than 72 hours is dropped as `late`.
+	//
+	// Invalid events are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not stored, as on the collection endpoint and counted in the property's health:
+	// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+	// from bots, excluded addresses or paths; events over the per-address or per-property limit
+	// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+	// with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+	SendAnalyticsEvents(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAnalyticsFunnels List a property's funnels
 	//
@@ -23543,8 +23939,20 @@ type ClientInterface interface {
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -23557,7 +23965,7 @@ type ClientInterface interface {
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -23588,8 +23996,20 @@ func (c *Client) CollectAnalyticsWithBody(ctx context.Context, key string, conte
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -23602,7 +24022,7 @@ func (c *Client) CollectAnalyticsWithBody(ctx context.Context, key string, conte
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -23633,8 +24053,20 @@ func (c *Client) CollectAnalytics(ctx context.Context, key string, body CollectA
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -23647,7 +24079,7 @@ func (c *Client) CollectAnalytics(ctx context.Context, key string, body CollectA
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -25491,6 +25923,96 @@ func (c *Client) DeleteAnalyticsDataWithBody(ctx context.Context, propertyId Ana
 // Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 func (c *Client) DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteAnalyticsDataRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendAnalyticsEventsWithBody Send server-side analytics events
+//
+// A host backend reports up to 100 events of its visitors, such as a signup its server
+// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+// `analytics:write`.
+//
+// Each event names its visitor in one of two ways, neither stored:
+//   - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+//     and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+//     collection endpoint hashes the browser's own request, so the event joins the visitor's
+//     browser visit of that day; the address is shortened first and used for the location,
+//     excluded addresses and the per-address limit like a browser's.
+//   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+//     address), hashed under the day's salt like an app's process key. With it, `ip` only
+//     places the visitor and `user_agent` only describes the device.
+//
+// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+// an event older than 72 hours is dropped as `late`.
+//
+// Invalid events are left out on their own and listed in `errors`; the others are taken.
+// Taken but not stored, as on the collection endpoint and counted in the property's health:
+// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+// from bots, excluded addresses or paths; events over the per-address or per-property limit
+// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+// with `Retry-After`.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+func (c *Client) SendAnalyticsEventsWithBody(ctx context.Context, propertyId AnalyticsPropertyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendAnalyticsEventsRequestWithBody(c.Server, propertyId, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendAnalyticsEvents Send server-side analytics events
+//
+// A host backend reports up to 100 events of its visitors, such as a signup its server
+// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+// `analytics:write`.
+//
+// Each event names its visitor in one of two ways, neither stored:
+//   - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+//     and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+//     collection endpoint hashes the browser's own request, so the event joins the visitor's
+//     browser visit of that day; the address is shortened first and used for the location,
+//     excluded addresses and the per-address limit like a browser's.
+//   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+//     address), hashed under the day's salt like an app's process key. With it, `ip` only
+//     places the visitor and `user_agent` only describes the device.
+//
+// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+// an event older than 72 hours is dropped as `late`.
+//
+// Invalid events are left out on their own and listed in `errors`; the others are taken.
+// Taken but not stored, as on the collection endpoint and counted in the property's health:
+// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+// from bots, excluded addresses or paths; events over the per-address or per-property limit
+// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+// with `Retry-After`.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+func (c *Client) SendAnalyticsEvents(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendAnalyticsEventsRequest(c.Server, propertyId, body)
 	if err != nil {
 		return nil, err
 	}
@@ -35363,6 +35885,53 @@ func NewDeleteAnalyticsDataRequestWithBody(server string, propertyId AnalyticsPr
 		}
 
 	}
+
+	return req, nil
+}
+
+// NewSendAnalyticsEventsRequest calls the generic SendAnalyticsEvents builder with application/json body
+func NewSendAnalyticsEventsRequest(server string, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewSendAnalyticsEventsRequestWithBody(server, propertyId, "application/json", bodyReader)
+}
+
+// NewSendAnalyticsEventsRequestWithBody constructs an http.Request for the SendAnalyticsEvents method, with any body, and a specified content type
+func NewSendAnalyticsEventsRequestWithBody(server string, propertyId AnalyticsPropertyId, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/events", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	return req, nil
 }
@@ -49872,8 +50441,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -49886,7 +50467,7 @@ type ClientWithResponsesInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -49907,8 +50488,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -49921,7 +50514,7 @@ type ClientWithResponsesInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -49942,8 +50535,20 @@ type ClientWithResponsesInterface interface {
 	//
 	// A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 	// `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-	// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-	// are refused until app collection exists. An unknown or deleted key answers `404`.
+	// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+	// answers `404`.
+	//
+	// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+	// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+	// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+	// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+	// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+	// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+	// for the life of its process, under the salt of the event's day, or of the day the event
+	// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+	// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+	// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+	// the volume rules do.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -49956,7 +50561,7 @@ type ClientWithResponsesInterface interface {
 	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
 	// `Retry-After`). When the server cannot take more events it answers `503` with
@@ -51079,6 +51684,76 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/delete-data (the `DeleteAnalyticsData` operationId).
 	DeleteAnalyticsDataWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *DeleteAnalyticsDataParams, body DeleteAnalyticsDataJSONRequestBody, reqEditors ...RequestEditorFn) (*DeleteAnalyticsDataResponse, error)
+
+	// SendAnalyticsEventsWithBodyWithResponse Send server-side analytics events
+	//
+	// A host backend reports up to 100 events of its visitors, such as a signup its server
+	// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+	// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+	// `analytics:write`.
+	//
+	// Each event names its visitor in one of two ways, neither stored:
+	// - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+	//   and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+	//   collection endpoint hashes the browser's own request, so the event joins the visitor's
+	//   browser visit of that day; the address is shortened first and used for the location,
+	//   excluded addresses and the per-address limit like a browser's.
+	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
+	//   places the visitor and `user_agent` only describes the device.
+	//
+	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+	// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+	// an event older than 72 hours is dropped as `late`.
+	//
+	// Invalid events are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not stored, as on the collection endpoint and counted in the property's health:
+	// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+	// from bots, excluded addresses or paths; events over the per-address or per-property limit
+	// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+	// with `Retry-After`.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+	SendAnalyticsEventsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendAnalyticsEventsResponse, error)
+
+	// SendAnalyticsEventsWithResponse Send server-side analytics events
+	//
+	// A host backend reports up to 100 events of its visitors, such as a signup its server
+	// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+	// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+	// `analytics:write`.
+	//
+	// Each event names its visitor in one of two ways, neither stored:
+	// - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+	//   and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+	//   collection endpoint hashes the browser's own request, so the event joins the visitor's
+	//   browser visit of that day; the address is shortened first and used for the location,
+	//   excluded addresses and the per-address limit like a browser's.
+	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
+	//   places the visitor and `user_agent` only describes the device.
+	//
+	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+	// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+	// an event older than 72 hours is dropped as `late`.
+	//
+	// Invalid events are left out on their own and listed in `errors`; the others are taken.
+	// Taken but not stored, as on the collection endpoint and counted in the property's health:
+	// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+	// from bots, excluded addresses or paths; events over the per-address or per-property limit
+	// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+	// with `Retry-After`.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+	SendAnalyticsEventsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*SendAnalyticsEventsResponse, error)
 
 	// ListAnalyticsFunnelsWithResponse List a property's funnels
 	//
@@ -58963,6 +59638,82 @@ func (r DeleteAnalyticsDataResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r DeleteAnalyticsDataResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SendAnalyticsEventsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON202 the response for an HTTP 202 `application/json` response
+	JSON202 *AnalyticsEventsResult
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON503 the response for an HTTP 503 `application/problem+json` response
+	ApplicationproblemJSON503 *Problem
+}
+
+// GetJSON202 returns the response for an HTTP 202 `application/json` response
+func (r SendAnalyticsEventsResponse) GetJSON202() *AnalyticsEventsResult {
+	return r.JSON202
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SendAnalyticsEventsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SendAnalyticsEventsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SendAnalyticsEventsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SendAnalyticsEventsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON503 returns the response for an HTTP 503 `application/problem+json` response
+func (r SendAnalyticsEventsResponse) GetApplicationproblemJSON503() *Problem {
+	return r.ApplicationproblemJSON503
+}
+
+// GetBody returns the raw response body bytes
+func (r SendAnalyticsEventsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SendAnalyticsEventsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SendAnalyticsEventsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SendAnalyticsEventsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -74421,8 +75172,20 @@ func (r CreateWorkspaceResponse) ContentType() string {
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -74435,7 +75198,7 @@ func (r CreateWorkspaceResponse) ContentType() string {
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -74462,8 +75225,20 @@ func (c *ClientWithResponses) CollectAnalyticsWithBodyWithResponse(ctx context.C
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -74476,7 +75251,7 @@ func (c *ClientWithResponses) CollectAnalyticsWithBodyWithResponse(ctx context.C
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -74503,8 +75278,20 @@ func (c *ClientWithResponses) CollectAnalyticsWithResponse(ctx context.Context, 
 //
 // A browser's `Origin` host and every event's page host (`u`) must be one of the property's
 // `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-// `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-// are refused until app collection exists. An unknown or deleted key answers `404`.
+// `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+// answers `404`.
+//
+// Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+// `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+// (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+// neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+// `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+// against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+// for the life of its process, under the salt of the event's day, or of the day the event
+// arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+// carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+// in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+// the volume rules do.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
 // `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
@@ -74517,7 +75304,7 @@ func (c *ClientWithResponses) CollectAnalyticsWithResponse(ctx context.Context, 
 // still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
 // `Retry-After`). When the server cannot take more events it answers `503` with
@@ -76113,6 +76900,88 @@ func (c *ClientWithResponses) DeleteAnalyticsDataWithResponse(ctx context.Contex
 		return nil, err
 	}
 	return ParseDeleteAnalyticsDataResponse(rsp)
+}
+
+// SendAnalyticsEventsWithBodyWithResponse Send server-side analytics events
+//
+// A host backend reports up to 100 events of its visitors, such as a signup its server
+// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+// `analytics:write`.
+//
+// Each event names its visitor in one of two ways, neither stored:
+//   - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+//     and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+//     collection endpoint hashes the browser's own request, so the event joins the visitor's
+//     browser visit of that day; the address is shortened first and used for the location,
+//     excluded addresses and the per-address limit like a browser's.
+//   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+//     address), hashed under the day's salt like an app's process key. With it, `ip` only
+//     places the visitor and `user_agent` only describes the device.
+//
+// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+// an event older than 72 hours is dropped as `late`.
+//
+// Invalid events are left out on their own and listed in `errors`; the others are taken.
+// Taken but not stored, as on the collection endpoint and counted in the property's health:
+// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+// from bots, excluded addresses or paths; events over the per-address or per-property limit
+// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+// with `Retry-After`.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+func (c *ClientWithResponses) SendAnalyticsEventsWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*SendAnalyticsEventsResponse, error) {
+	rsp, err := c.SendAnalyticsEventsWithBody(ctx, propertyId, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendAnalyticsEventsResponse(rsp)
+}
+
+// SendAnalyticsEventsWithResponse Send server-side analytics events
+//
+// A host backend reports up to 100 events of its visitors, such as a signup its server
+// handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+// members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+// `analytics:write`.
+//
+// Each event names its visitor in one of two ways, neither stored:
+//   - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+//     and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+//     collection endpoint hashes the browser's own request, so the event joins the visitor's
+//     browser visit of that day; the address is shortened first and used for the location,
+//     excluded addresses and the per-address limit like a browser's.
+//   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+//     address), hashed under the day's salt like an app's process key. With it, `ip` only
+//     places the visitor and `user_agent` only describes the device.
+//
+// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+// rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+// an event older than 72 hours is dropped as `late`.
+//
+// Invalid events are left out on their own and listed in `errors`; the others are taken.
+// Taken but not stored, as on the collection endpoint and counted in the property's health:
+// events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+// from bots, excluded addresses or paths; events over the per-address or per-property limit
+// or the workspace's monthly cap. When the server cannot take more events it answers `503`
+// with `Retry-After`.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/events (the `SendAnalyticsEvents` operationId).
+func (c *ClientWithResponses) SendAnalyticsEventsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, body SendAnalyticsEventsJSONRequestBody, reqEditors ...RequestEditorFn) (*SendAnalyticsEventsResponse, error) {
+	rsp, err := c.SendAnalyticsEvents(ctx, propertyId, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendAnalyticsEventsResponse(rsp)
 }
 
 // ListAnalyticsFunnelsWithResponse List a property's funnels
@@ -85104,6 +85973,67 @@ func ParseDeleteAnalyticsDataResponse(rsp *http.Response) (*DeleteAnalyticsDataR
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSendAnalyticsEventsResponse parses an HTTP response from a SendAnalyticsEventsWithResponse call
+func ParseSendAnalyticsEventsResponse(rsp *http.Response) (*SendAnalyticsEventsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SendAnalyticsEventsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 202:
+		var dest AnalyticsEventsResult
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON202 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON503 = &dest
 
 	}
 
