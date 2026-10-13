@@ -10,20 +10,12 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { RowLabel } from "@/features/analytics/Breakdown"
-import { RevenueTiles } from "@/features/analytics/Events"
+import { RevenueAmounts, RevenueTiles } from "@/features/analytics/Events"
 import { Change, TimeChart } from "@/features/analytics/Overview"
 import { BarList, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
 import { useAnalytics, useDeleteGoal, useGoalTotals, useGoals, useSaveGoal } from "@/features/analytics/queries"
 import { scopeOf, useView } from "@/features/analytics/state"
-import {
-  formatCompact,
-  formatMetric,
-  formatRevenue,
-  num,
-  OTHER,
-  useAnalyticsText,
-  type NumMetric,
-} from "@/features/analytics/text"
+import { formatCompact, formatMetric, num, OTHER, useAnalyticsText, type NumMetric } from "@/features/analytics/text"
 import { Field } from "@/features/settings/ui"
 import { ApiError, type AnalyticsFilterDimension, type AnalyticsGoal, type AnalyticsGoalKind } from "@/lib/api"
 import { useSession } from "@/lib/session"
@@ -480,12 +472,9 @@ function GoalList({ goals, onPick }: { goals: AnalyticsGoal[]; onPick: (id: stri
                     )}
                   </td>
                   <td
-                    className={cn(
-                      "truncate px-4 py-2 text-end tabular-nums phone:hidden",
-                      !m?.revenue?.length && "text-faint"
-                    )}
+                    className={cn("px-4 py-2 text-end tabular-nums phone:hidden", !m?.revenue?.length && "text-faint")}
                   >
-                    {m ? formatRevenue(m.revenue, i18n.locale) : <Dash pending={totals.isPending} />}
+                    {m ? <RevenueAmounts revenue={m.revenue} /> : <Dash pending={totals.isPending} />}
                   </td>
                 </tr>
               )

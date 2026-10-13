@@ -1,13 +1,7 @@
 import { useLingui } from "@lingui/react/macro"
 
 import type { Period, FilterOp } from "@/features/analytics/state"
-import type {
-  AnalyticsDimension,
-  AnalyticsFilterDimension,
-  AnalyticsMetric,
-  AnalyticsMetrics,
-  AnalyticsRevenue,
-} from "@/lib/api"
+import type { AnalyticsDimension, AnalyticsFilterDimension, AnalyticsMetric, AnalyticsMetrics } from "@/lib/api"
 
 export const OTHER = "(other)"
 
@@ -201,11 +195,6 @@ export function formatMoney(minor: number, currency: string, digits: number, loc
   } catch {
     return `${new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(amount)} ${currency}`
   }
-}
-
-export function formatRevenue(r: AnalyticsRevenue[] | undefined, locale: string) {
-  if (!r || r.length === 0) return "–"
-  return r.map((x) => formatMoney(x.total, x.currency, x.digits, locale)).join(" · ")
 }
 
 export function formatMetric(metric: AnalyticsMetric, v: number | undefined, locale: string) {

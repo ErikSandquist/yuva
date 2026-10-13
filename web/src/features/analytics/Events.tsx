@@ -10,15 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { CsvButton, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
 import { downloadCsv, useAnalytics, useAnalyticsTable } from "@/features/analytics/queries"
 import { useView } from "@/features/analytics/state"
-import {
-  formatMetric,
-  formatMoney,
-  formatRevenue,
-  num,
-  OTHER,
-  useAnalyticsText,
-  valueText,
-} from "@/features/analytics/text"
+import { formatMetric, formatMoney, num, OTHER, useAnalyticsText, valueText } from "@/features/analytics/text"
 import type { AnalyticsDimension, AnalyticsFilter, AnalyticsQuery, AnalyticsRevenue, AnalyticsRow } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
@@ -123,11 +115,11 @@ function EventTable({
                     </td>
                     <td
                       className={cn(
-                        "truncate px-4 py-2 text-end tabular-nums phone:hidden",
+                        "px-4 py-2 text-end tabular-nums phone:hidden",
                         !r.metrics.revenue?.length && "text-faint"
                       )}
                     >
-                      {formatRevenue(r.metrics.revenue, i18n.locale)}
+                      <RevenueAmounts revenue={r.metrics.revenue} />
                     </td>
                   </tr>
                 )
@@ -150,6 +142,16 @@ function EventTable({
       </div>
     </>
   )
+}
+
+export function RevenueAmounts({ revenue }: { revenue?: AnalyticsRevenue[] }) {
+  const { i18n } = useLingui()
+  if (!revenue?.length) return "–"
+  return revenue.map((r) => (
+    <span key={r.currency} className="block whitespace-nowrap">
+      {formatMoney(r.total, r.currency, r.digits, i18n.locale)}
+    </span>
+  ))
 }
 
 export function RevenueTiles({ revenue }: { revenue?: AnalyticsRevenue[] }) {
