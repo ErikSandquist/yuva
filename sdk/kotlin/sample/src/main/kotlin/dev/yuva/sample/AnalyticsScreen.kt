@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -29,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import dev.yuva.analytics.TrackScreen
@@ -95,23 +97,32 @@ internal fun AnalyticsScreen(onClose: () -> Unit) {
                 note("Send now")
             }, Modifier.fillMaxWidth().testTag("sample.analytics.flush")) { Text("Send now") }
             if (BuildConfig.ANALYTICS_CONSENT == "required") {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Text("Analytics consent", Modifier.weight(1f))
-                    Switch(checked = consent, onCheckedChange = {
-                        consent = it
-                        YuvaAnalytics.consent(it)
-                    }, modifier = Modifier.testTag("sample.analytics.consent"))
+                ToggleRow("Analytics consent", consent, "sample.analytics.consent") {
+                    consent = it
+                    YuvaAnalytics.consent(it)
                 }
             }
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text("Opt out", Modifier.weight(1f))
-                Switch(checked = optedOut, onCheckedChange = {
-                    optedOut = it
-                    if (it) YuvaAnalytics.optOut() else YuvaAnalytics.optIn()
-                    note(if (it) "Opted out" else "Opted in")
-                }, modifier = Modifier.testTag("sample.analytics.optout"))
+            ToggleRow("Opt out", optedOut, "sample.analytics.optout") {
+                optedOut = it
+                if (it) YuvaAnalytics.optOut() else YuvaAnalytics.optIn()
+                note(if (it) "Opted out" else "Opted in")
             }
             log.forEach { Text(it, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace) }
         }
+    }
+}
+
+@Composable
+private fun ToggleRow(label: String, checked: Boolean, tag: String, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .toggleable(value = checked, role = Role.Switch, onValueChange = onChange)
+            .testTag(tag)
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(label, Modifier.weight(1f))
+        Switch(checked = checked, onCheckedChange = null)
     }
 }

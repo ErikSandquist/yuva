@@ -1,6 +1,7 @@
 package dev.yuva.sample
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -59,19 +60,32 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
+    private val requested = mutableStateOf<Request?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val extras = intent.extras?.keySet()?.associateWith { intent.extras?.getString(it).orEmpty() }.orEmpty()
-        val openConversation = Yuva.handleNotification(extras)
-        val startScreen = intent.getStringExtra("yuva_open")
+        requested.value = request(intent)
         setContent {
             MaterialTheme {
-                Sample(this, openConversation, startScreen)
+                Sample(this, requested.value)
             }
         }
     }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        requested.value = request(intent)
+    }
+
+    private fun request(intent: Intent): Request {
+        val extras = intent.extras?.keySet()?.associateWith { intent.extras?.getString(it).orEmpty() }.orEmpty()
+        return Request(Yuva.handleNotification(extras), intent.getStringExtra("yuva_open"))
+    }
 }
+
+private class Request(val conversation: String?, val screen: String?)
 
 private fun client(context: Context, identified: Boolean, userId: String): YuvaClient {
     val tokenUrl = BuildConfig.IDENTITY_TOKEN_URL
@@ -89,11 +103,16 @@ private fun client(context: Context, identified: Boolean, userId: String): YuvaC
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun Sample(context: Context, openConversation: String?, startScreen: String?) {
+private fun Sample(context: Context, request: Request?) {
+    val openConversation = request?.conversation
     val prefs = remember { context.getSharedPreferences("sample", Context.MODE_PRIVATE) }
     var identified by remember { mutableStateOf(prefs.getBoolean("identified", false)) }
     var userId by remember { mutableStateOf(prefs.getString("user_id", "").orEmpty()) }
-    var screen by remember { mutableStateOf(if (openConversation != null) "messages" else startScreen) }
+    fun target(request: Request?) = if (request?.conversation != null) "messages" else request?.screen
+    var screen by remember { mutableStateOf(target(request)) }
+    LaunchedEffect(request) {
+        if (request != null) screen = target(request)
+    }
     var yuva by remember { mutableStateOf<YuvaClient?>(client(context, identified, userId)) }
     var screenshot by remember { mutableStateOf<YuvaUpload?>(null) }
     val view = LocalView.current
