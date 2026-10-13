@@ -4,12 +4,64 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      openapi: ${{ steps.parts.outputs.openapi }}
+      api: ${{ steps.parts.outputs.api }}
+      web: ${{ steps.parts.outputs.web }}
+      edge: ${{ steps.parts.outputs.edge }}
+      sdk_js: ${{ steps.parts.outputs.sdk_js }}
+      sdk_shadcn: ${{ steps.parts.outputs.sdk_shadcn }}
+      examples: ${{ steps.parts.outputs.examples }}
+      site: ${{ steps.parts.outputs.site }}
+      sdk_swift: ${{ steps.parts.outputs.sdk_swift }}
+      sdk_kotlin: ${{ steps.parts.outputs.sdk_kotlin }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - id: parts
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          case "$GITHUB_EVENT_NAME" in
+            pull_request) base=HEAD^1 ;;
+            push) base=$BEFORE ;;
+            *) base= ;;
+          esac
+          if [ -n "$base" ] && git cat-file -e "$base^{commit}" 2>/dev/null; then
+            files=$(git diff --name-only --no-renames "$base" HEAD)
+          else
+            files=.github/workflows/ci.yml
+          fi
+          printf '%s\n' "$files"
+          ts='|^\.oxfmtrc\.json$|^\.oxlintrc\.json$'
+          part() {
+            if printf '%s\n' "$files" | grep -qE "$2|^\.github/workflows/ci\.yml$"; then v=true; else v=false; fi
+            echo "$1=$v" >> "$GITHUB_OUTPUT"
+            echo "$1: $v"
+          }
+          part openapi '^openapi/'
+          part api '^(api|sdk/go|openapi|templates/email|deploy/dovecot)/'
+          part web "^web/$ts"
+          part edge "^edge/$ts"
+          part sdk_js "^sdk/js/$ts"
+          part sdk_shadcn "^sdk/shadcn/$ts"
+          part examples "^(examples|sdk/js|sdk/shadcn)/$ts"
+          part site "^(site|docs|sdk/shadcn|templates/email|api/internal/mail/design/icons)/|^openapi/openapi\.yaml$|^CHANGELOG\.md\$$ts"
+          part sdk_swift '^sdk/swift/|^Package\.(swift|resolved)$'
+          part sdk_kotlin '^sdk/kotlin/|^jitpack\.yml$'
+
   openapi:
+    needs: changes
+    if: needs.changes.outputs.openapi == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -21,6 +73,8 @@ jobs:
           REDOCLY_TELEMETRY: "off"
 
   api:
+    needs: changes
+    if: needs.changes.outputs.api == 'true'
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -86,6 +140,8 @@ jobs:
         run: git diff --exit-code -- api sdk/go
 
   web:
+    needs: changes
+    if: needs.changes.outputs.web == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -102,6 +158,8 @@ jobs:
         run: npm ci && npm run -s format:check && npm run -s lint && npm run -s extract && npx lingui compile --strict && npm run -s build
 
   edge:
+    needs: changes
+    if: needs.changes.outputs.edge == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -114,6 +172,8 @@ jobs:
         run: bun install --frozen-lockfile && bun run check
 
   sdk-js:
+    needs: changes
+    if: needs.changes.outputs.sdk_js == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -126,6 +186,8 @@ jobs:
         run: bun install --frozen-lockfile && bun run check && bun run build
 
   sdk-shadcn:
+    needs: changes
+    if: needs.changes.outputs.sdk_shadcn == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -134,6 +196,8 @@ jobs:
         run: bun install --frozen-lockfile && bun run check
 
   examples:
+    needs: changes
+    if: needs.changes.outputs.examples == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -165,6 +229,8 @@ jobs:
         run: npm ci && npm run -s typecheck
 
   site:
+    needs: changes
+    if: needs.changes.outputs.site == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -175,6 +241,8 @@ jobs:
         run: git diff --exit-code -- site/src/locales
 
   sdk-swift:
+    needs: changes
+    if: needs.changes.outputs.sdk_swift == 'true'
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
@@ -184,6 +252,8 @@ jobs:
         run: xcodebuild -project YuvaExample.xcodeproj -scheme YuvaExample -destination "generic/platform=iOS Simulator" CODE_SIGNING_ALLOWED=NO build
 
   sdk-kotlin:
+    needs: changes
+    if: needs.changes.outputs.sdk_kotlin == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5

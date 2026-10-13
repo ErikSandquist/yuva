@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "docs/**"
       - "sdk/shadcn/**"
       - "openapi/openapi.yaml"
       - "CHANGELOG.md"
