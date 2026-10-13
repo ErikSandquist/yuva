@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react"
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 
@@ -22,8 +24,19 @@ export function Segmented<T extends string>({
   className?: string
   itemClassName?: string
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const item = ref.current?.querySelector<HTMLElement>('[aria-pressed="true"]')
+    let box = ref.current?.parentElement
+    while (box && !/auto|scroll/.test(getComputedStyle(box).overflowX)) box = box.parentElement
+    if (!item || !box) return
+    const b = box.getBoundingClientRect()
+    const r = item.getBoundingClientRect()
+    if (r.left < b.left || r.right > b.right) box.scrollLeft += r.left - b.left - (b.width - r.width) / 2
+  }, [value])
   return (
     <ToggleGroup
+      ref={ref}
       value={[value]}
       onValueChange={(v) => {
         if (v[0]) onChange(v[0] as T)
