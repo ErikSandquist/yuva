@@ -127,7 +127,7 @@ Status: done in `v0.0.4`; plan in issue #17, decisions in `architecture.md` › 
 Accept: Claude Code and claude.ai triage an inbox and draft replies a member sends from the panel;
 a prompt-injection e-mail sends nothing; a headless chat works with the panel turned off.
 
-## M10 — Native apps for members (0.0.9)
+## M10 — Native apps for members (0.0.10)
 
 Status: planned; iOS in issue #18, Android in issue #19.
 
@@ -233,7 +233,7 @@ whole flow through MCP without ever handling a password.
 
 ## M15 — Analytics
 
-Status: in progress; M15.1 done (#36), umbrella issue #42, decisions in `architecture.md` › Analytics
+Status: in progress; M15.1 (#36) and M15.2 (#37) done, umbrella issue #42, decisions in `architecture.md` › Analytics
 (M15). Ships in six steps; M15.1 first, then M15.2, M15.3 and M15.5 in parallel, then M15.4 (after M15.2; its broadcast part
 after M13.3) and M15.6 (after M15.2 and M15.3).
 
