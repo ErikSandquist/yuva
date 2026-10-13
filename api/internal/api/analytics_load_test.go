@@ -405,6 +405,24 @@ func loadQueries(t *testing.T, h *harness, rep *loadReport, size string, perMont
 			t.Errorf("%s at %s: p50 %v over the target %v", v.name, size, p50, target)
 		}
 	}
+	steps := []analytics.Goal{{Kind: analytics.GoalPageview, Path: "/"}, {Kind: analytics.GoalPageview, Path: "/docs/**"},
+		{Kind: analytics.GoalPageview, Path: "/p/2"}, {Kind: analytics.GoalPageview, Path: "/help/3"}}
+	var funnel []time.Duration
+	for i := 0; i < 5; i++ {
+		s := time.Now()
+		if _, err := pg.Funnel(ctx, ws, prop, today.AddDate(0, 0, -29), today, steps); err != nil {
+			t.Fatal(err)
+		}
+		funnel = append(funnel, time.Since(s))
+	}
+	ft := 500 * time.Millisecond
+	if perMonth > 1_000_000 {
+		ft = 3 * time.Second
+	}
+	rep.add(t, "| Funnel, 30 days: home, a docs page, two pages (raw) | %v | %v | < %v |", quantile(funnel, 0.5).Round(time.Millisecond), quantile(funnel, 0.95).Round(time.Millisecond), ft)
+	if quantile(funnel, 0.5) > ft {
+		t.Errorf("funnel at %s: p50 %v over the target %v", size, quantile(funnel, 0.5), ft)
+	}
 	var times []time.Duration
 	for i := 0; i < 20; i++ {
 		s := time.Now()
