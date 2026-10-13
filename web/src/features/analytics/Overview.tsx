@@ -7,7 +7,7 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { Segmented } from "@/components/common"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
 import { Skeleton } from "@/components/ui/skeleton"
-import { groupDimensions, RowLabel, type Group } from "@/features/analytics/Breakdown"
+import { deviceCard, groupDimensions, RowLabel, type Group } from "@/features/analytics/Breakdown"
 import {
   Attribution,
   BarList,
@@ -347,7 +347,7 @@ export function Overview() {
       <div className="grid gap-4 md:grid-cols-2">
         <BreakdownCard
           group="pages"
-          title={<Trans>Top pages</Trans>}
+          title={text.title.top}
           dims={["page", "entry_page", "exit_page"]}
           testId="card-pages"
         />
@@ -361,7 +361,7 @@ export function Overview() {
         <BreakdownCard
           group="devices"
           title={<Trans>Devices</Trans>}
-          dims={["device", "browser", "os"]}
+          dims={deviceCard(property)}
           testId="card-devices"
         />
       </div>

@@ -86,14 +86,12 @@ export function Realtime() {
               </b>
             </div>
             <div className="rounded-2xl border bg-card px-4 py-3.5">
-              <span className="text-small text-faint">
-                <Trans>Pageviews in the last 30 minutes</Trans>
-              </span>
+              <span className="text-small text-faint">{text.title.lastHalfHour}</span>
               <b className="block text-[2.5rem] leading-tight tabular-nums">{fmt.format(r.pageviews)}</b>
             </div>
           </div>
           <Panel
-            title={<Trans>Pageviews per minute</Trans>}
+            title={text.title.perMinute}
             action={
               <span className="text-caption text-faint">
                 <Trans>Refreshes every 15 seconds</Trans>
@@ -130,7 +128,7 @@ export function Realtime() {
             </ChartContainer>
           </Panel>
           <div className="grid gap-4 md:grid-cols-2">
-            <Top title={<Trans>Pages</Trans>} dim="page" items={r.pages} testId="realtime-pages" />
+            <Top title={text.title.pages} dim="page" items={r.pages} testId="realtime-pages" />
             <Top title={<Trans>Sources</Trans>} dim="source" items={r.sources} testId="realtime-sources" />
             <Top
               title={<Trans>Countries</Trans>}

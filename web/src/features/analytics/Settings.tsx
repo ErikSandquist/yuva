@@ -1,13 +1,26 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { ClockIcon, KeyRoundIcon, PlusIcon, Trash2Icon, XIcon } from "lucide-react"
+import {
+  CheckCircle2Icon,
+  ClockIcon,
+  KeyRoundIcon,
+  PlusIcon,
+  RadioIcon,
+  RotateCcwIcon,
+  Trash2Icon,
+  TriangleAlertIcon,
+  XIcon,
+} from "lucide-react"
 import { useState } from "react"
 import { useNavigate, useSearchParams } from "react-router"
 
 import { CodeLine, ErrorLine, Notice, Segmented, TypeToConfirmDialog, useConfirm } from "@/components/common"
 import { formatDate, formatDateTime } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 import { InstallSnippets } from "@/features/analytics/Install"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
@@ -16,18 +29,27 @@ import {
   useDeleteData,
   useDeleteProperty,
   useHealth,
+  useHealthWatch,
   useRotateKey,
   useUpdateProperty,
 } from "@/features/analytics/queries"
 import { todayIso } from "@/features/analytics/state"
 import { ChoiceSelect, Field, FormActions, FormCard, Card, Section } from "@/features/settings/ui"
-import { ApiError, type AnalyticsDropCounts, type AnalyticsPathRule, type AnalyticsProperty } from "@/lib/api"
+import { useAnalyticsText } from "@/features/analytics/text"
+import {
+  ApiError,
+  type AnalyticsDropCounts,
+  type AnalyticsHealthDay,
+  type AnalyticsPathRule,
+  type AnalyticsPlatform,
+  type AnalyticsProperty,
+} from "@/lib/api"
 import { useNow } from "@/hooks/use-now"
 import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-type Tab = "general" | "tracking" | "install" | "health" | "data"
+type Tab = "general" | "tracking" | "install" | "test" | "health" | "data"
 
 const NO_INBOX = "none"
 
@@ -38,8 +60,11 @@ function lines(s: string) {
     .filter(Boolean)
 }
 
+const PLATFORMS: AnalyticsPlatform[] = ["web", "ios", "android"]
+
 function General({ p }: { p: AnalyticsProperty }) {
   const { t } = useLingui()
+  const text = useAnalyticsText()
   const inboxes = useInboxes().data ?? []
   const zones = useZones()
   const update = useUpdateProperty(p.id)
@@ -50,6 +75,7 @@ function General({ p }: { p: AnalyticsProperty }) {
   const [inbox, setInbox] = useState(p.inbox_id ?? NO_INBOX)
   const [audience, setAudience] = useState(p.audience)
   const [collection, setCollection] = useState(p.collection)
+  const [platforms, setPlatforms] = useState<AnalyticsPlatform[]>(p.platforms)
   const hosts = splitLines(domains).map(hostOnly).filter(Boolean)
   const save = () =>
     update.mutate({
@@ -60,6 +86,7 @@ function General({ p }: { p: AnalyticsProperty }) {
       inbox_id: inbox === NO_INBOX ? null : inbox,
       audience,
       collection,
+      platforms: PLATFORMS.filter((x) => platforms.includes(x)),
       ...(audience === "children" ? { consent_features: [], tracked_props: [] } : {}),
     })
   return (
@@ -70,7 +97,13 @@ function General({ p }: { p: AnalyticsProperty }) {
           pending={update.isPending}
           saved={update.isSuccess}
           error={update.error}
-          disabled={!name.trim() || hosts.length === 0 || !zones.includes(zone) || !/^[A-Za-z]{3}$/.test(currency)}
+          disabled={
+            !name.trim() ||
+            hosts.length === 0 ||
+            platforms.length === 0 ||
+            !zones.includes(zone) ||
+            !/^[A-Za-z]{3}$/.test(currency)
+          }
         />
       }
     >
@@ -84,6 +117,35 @@ function General({ p }: { p: AnalyticsProperty }) {
       >
         <Textarea id="ap-domains" dir="ltr" rows={3} value={domains} onChange={(e) => setDomains(e.target.value)} />
       </Field>
+      <div className="flex min-w-0 flex-col gap-2">
+        <span className="text-body font-medium" id="ap-platforms">
+          <Trans>Platforms</Trans>
+        </span>
+        <div className="flex flex-wrap gap-x-5 gap-y-2" role="group" aria-labelledby="ap-platforms">
+          {PLATFORMS.map((x) => (
+            <Label key={x} className="font-normal" data-testid={`ap-platform-${x}`}>
+              <Checkbox
+                checked={platforms.includes(x)}
+                onCheckedChange={(on) => setPlatforms(on ? [...platforms, x] : platforms.filter((y) => y !== x))}
+                aria-invalid={platforms.length === 0 || undefined}
+              />
+              {text.platform[x]}
+            </Label>
+          ))}
+        </div>
+        {platforms.length === 0 ? (
+          <p role="alert" className="text-small text-destructive">
+            <Trans>Pick at least one platform.</Trans>
+          </p>
+        ) : (
+          <p className="text-small text-faint">
+            <Trans>
+              Apps send without a domain, so only the platforms turned on here are counted. Events from your backend
+              need no platform.
+            </Trans>
+          </p>
+        )}
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label={<Trans>Time zone</Trans>}
@@ -573,6 +635,175 @@ function Health({ p }: { p: AnalyticsProperty }) {
   )
 }
 
+type Counts = Pick<AnalyticsHealthDay, "accepted"> & { dropped: AnalyticsDropCounts }
+
+const NO_DROPS: AnalyticsDropCounts = {
+  bot: 0,
+  rate: 0,
+  origin: 0,
+  invalid: 0,
+  late: 0,
+  over_limit: 0,
+  buffer: 0,
+  excluded: 0,
+}
+
+function since(now: AnalyticsHealthDay[], base: AnalyticsHealthDay[]): Counts {
+  const out: Counts = { accepted: 0, dropped: { ...NO_DROPS } }
+  for (const d of now) {
+    const b = base.find((x) => x.day === d.day)
+    out.accepted += Math.max(0, d.accepted - (b?.accepted ?? 0))
+    for (const k of Object.keys(NO_DROPS) as (keyof AnalyticsDropCounts)[])
+      out.dropped[k] += Math.max(0, d.dropped[k] - (b?.dropped[k] ?? 0))
+  }
+  return out
+}
+
+function TestEvents({ p }: { p: AnalyticsProperty }) {
+  const { t, i18n } = useLingui()
+  const watch = useHealthWatch(p.id)
+  const h = watch.data
+  const [base, setBase] = useState<{ at: number; days: AnalyticsHealthDay[] } | null>(null)
+  if (h && !base) setBase({ at: watch.dataUpdatedAt, days: h.days })
+  const fmt = new Intl.NumberFormat(i18n.locale)
+  if (!h || !base) return watch.error ? <ErrorLine error={watch.error} /> : <Skeleton className="h-64 rounded-2xl" />
+  const c = since(h.days, base.days)
+  const other = c.dropped.bot + c.dropped.rate + c.dropped.excluded + c.dropped.over_limit + c.dropped.buffer
+  const drops = dropped(c.dropped)
+  const at = new Intl.DateTimeFormat(i18n.locale, { timeStyle: "short" }).format(new Date(base.at))
+  const today = h.days[0]
+  const last = h.last_event_at ? formatDateTime(h.last_event_at, i18n.locale) : ""
+  const todayCounted = fmt.format(today?.accepted ?? 0)
+  const todayDropped = fmt.format(today ? dropped(today.dropped) : 0)
+  const tiles: { key: string; value: number; label: string; help: string; bad?: boolean }[] = [
+    {
+      key: "accepted",
+      value: c.accepted,
+      label: t`Counted`,
+      help: t`Taken and stored. They show up in Realtime within a minute.`,
+    },
+    {
+      key: "late",
+      value: c.dropped.late,
+      label: t`Too late`,
+      help: t`Older than 72 hours. Apps keep events without a connection for at most that long.`,
+      bad: true,
+    },
+    {
+      key: "invalid",
+      value: c.dropped.invalid,
+      label: t`Invalid`,
+      help: t`Broken events, such as a screen address that does not start with app://, a reserved name or too many props.`,
+      bad: true,
+    },
+    {
+      key: "origin",
+      value: c.dropped.origin,
+      label: t`Refused`,
+      help: t`From a site that is not one of the domains, or from an app whose platform is not turned on.`,
+      bad: true,
+    },
+    {
+      key: "other",
+      value: other,
+      label: t`Other drops`,
+      help: t`Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server.`,
+      bad: true,
+    },
+  ]
+  return (
+    <div className="flex flex-col gap-6" data-testid="analytics-test-events">
+      <Section
+        title={<Trans>Test events</Trans>}
+        description={
+          <Trans>
+            Send a screen or an event from your app or backend while this page is open, and see whether it reached the
+            server. Refreshes every 5 seconds.
+          </Trans>
+        }
+      >
+        {c.accepted > 0 && drops === 0 ? (
+          <Notice icon={CheckCircle2Icon} className="bg-success/8 [&>svg]:text-success" data-testid="test-events-ok">
+            <Trans>Events are arriving.</Trans>
+          </Notice>
+        ) : drops > 0 ? (
+          <Notice tone="warning" icon={TriangleAlertIcon} data-testid="test-events-dropped">
+            <Trans>Some events were dropped. The reasons are below.</Trans>
+          </Notice>
+        ) : (
+          <Notice icon={RadioIcon} data-testid="test-events-waiting">
+            <span className="flex items-center gap-2">
+              <Spinner className="size-3.5" />
+              <Trans>Waiting for events since {at}.</Trans>
+            </span>
+          </Notice>
+        )}
+        <ul className="grid grid-cols-2 gap-2 sm:grid-cols-5" data-testid="test-events-counts">
+          {tiles.map((x) => (
+            <li
+              key={x.key}
+              className={cn(
+                "min-w-0 rounded-2xl border bg-card px-4 py-3.5 phone:px-3",
+                x.key === "accepted" && "col-span-2 sm:col-span-1"
+              )}
+              title={x.help}
+              data-testid={`test-events-${x.key}`}
+            >
+              <b
+                className={cn(
+                  "block text-page tabular-nums",
+                  x.value === 0 ? "text-faint" : x.bad ? "text-warning" : "text-success"
+                )}
+              >
+                {fmt.format(x.value)}
+              </b>
+              <span className="block text-small break-words text-faint">{x.label}</span>
+            </li>
+          ))}
+        </ul>
+        <Card>
+          <dl className="grid gap-x-6 gap-y-3 text-body sm:grid-cols-2">
+            {tiles.slice(1).map((x) => (
+              <div key={x.key}>
+                <dt className="font-medium">{x.label}</dt>
+                <dd className="text-small text-faint">{x.help}</dd>
+              </div>
+            ))}
+          </dl>
+        </Card>
+        <div className="mx-1 flex flex-wrap items-center gap-x-3 gap-y-2 text-small text-faint">
+          <span data-testid="test-events-last">
+            {last ? <Trans>Last event: {last}</Trans> : <Trans>No event yet.</Trans>}
+          </span>
+          {today && (
+            <span>
+              <Trans>
+                Today: {todayCounted} counted, {todayDropped} dropped
+              </Trans>
+            </span>
+          )}
+          <span className="flex-1" />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setBase({ at: watch.dataUpdatedAt, days: h.days })}
+            data-testid="test-events-reset"
+          >
+            <RotateCcwIcon />
+            <Trans>Start over</Trans>
+          </Button>
+        </div>
+        <p className="mx-1 text-caption text-faint">
+          <Trans>
+            Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs
+            it, are taken but neither stored nor counted here.
+          </Trans>
+        </p>
+      </Section>
+    </div>
+  )
+}
+
 function Data({ p }: { p: AnalyticsProperty }) {
   const { i18n } = useLingui()
   const navigate = useNavigate()
@@ -703,14 +934,15 @@ export function SettingsView() {
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
   const tabs: Tab[] = canManage
-    ? ["general", "tracking", "install", "health", "data"]
-    : ["install", "tracking", "health"]
+    ? ["general", "tracking", "install", "test", "health", "data"]
+    : ["install", "test", "tracking", "health"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]
   const names: Record<Tab, string> = {
     general: t`General`,
     tracking: t`Tracking`,
     install: t`Install`,
+    test: t`Test events`,
     health: t`Health`,
     data: t`Data`,
   }
@@ -732,6 +964,7 @@ export function SettingsView() {
         </div>
       )}
       {tab === "install" && <Install p={p} />}
+      {tab === "test" && <TestEvents p={p} />}
       {tab === "health" && <Health p={p} />}
       {tab === "data" && <Data p={p} />}
     </div>

@@ -12,6 +12,7 @@ import { scopeOf, useView } from "@/features/analytics/state"
 import {
   flag,
   formatMetric,
+  hasApps,
   isPathDimension,
   num,
   OTHER,
@@ -19,6 +20,7 @@ import {
   valueText,
   type AnalyticsText,
   type NumMetric,
+  type Wording,
 } from "@/features/analytics/text"
 import type { AnalyticsFilterDimension, AnalyticsProperty, AnalyticsQuery, AnalyticsRow } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -34,8 +36,26 @@ export function groupDimensions(group: Group, p: AnalyticsProperty): AnalyticsFi
     case "locations":
       return p.audience === "children" ? ["country"] : ["country", "region", "city"]
     case "devices":
-      return ["device", "browser", "browser_version", "os", "os_version", "screen_size", "language"]
+      if (!hasApps(p))
+        return ["device", "browser", "browser_version", "os", "os_version", "screen_size", "language", "platform"]
+      if (!p.platforms.includes("web")) return ["platform", "app_version", "device", "os", "os_version", "language"]
+      return [
+        "platform",
+        "app_version",
+        "device",
+        "browser",
+        "browser_version",
+        "os",
+        "os_version",
+        "screen_size",
+        "language",
+      ]
   }
+}
+
+export function deviceCard(p: AnalyticsProperty): AnalyticsFilterDimension[] {
+  if (!hasApps(p)) return ["device", "browser", "os"]
+  return p.platforms.includes("web") ? ["platform", "browser", "os"] : ["platform", "app_version", "os"]
 }
 
 export function RowLabel({
@@ -66,10 +86,11 @@ export function RowLabel({
   )
 }
 
-function tableMetrics(dim: AnalyticsFilterDimension): NumMetric[] {
-  return dim === "page"
-    ? ["visitors", "pageviews", "bounce_rate", "time_on_page", "scroll_depth"]
-    : ["visitors", "visits", "pageviews", "bounce_rate", "visit_duration"]
+function tableMetrics(dim: AnalyticsFilterDimension, wording: Wording): NumMetric[] {
+  if (dim !== "page") return ["visitors", "visits", "pageviews", "bounce_rate", "visit_duration"]
+  return wording === "screens"
+    ? ["visitors", "pageviews", "bounce_rate"]
+    : ["visitors", "pageviews", "bounce_rate", "time_on_page", "scroll_depth"]
 }
 
 export function BreakdownView({ group }: { group: Group }) {
@@ -81,7 +102,7 @@ export function BreakdownView({ group }: { group: Group }) {
   const dims = groupDimensions(group, property)
   const raw = params.get("by") as AnalyticsFilterDimension | null
   const dim = raw && dims.includes(raw) ? raw : dims[0]
-  const metrics = tableMetrics(dim)
+  const metrics = tableMetrics(dim, text.wording)
   const [order, setOrder] = useState<{ metric: NumMetric; dir: "asc" | "desc" }>({
     metric: "visitors",
     dir: "desc",
@@ -98,7 +119,7 @@ export function BreakdownView({ group }: { group: Group }) {
   const table = useAnalyticsTable(property.id, body)
   const rows = table.data?.pages.flatMap((p) => p.rows) ?? []
   const titles: Record<Group, string> = {
-    pages: t`Pages`,
+    pages: text.title.pages,
     sources: t`Sources`,
     locations: t`Locations`,
     devices: t`Devices`,

@@ -4758,6 +4758,52 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/analytics/properties/{propertyId}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send server-side analytics events
+         * @description A host backend reports up to 100 events of its visitors, such as a signup its server
+         *     handled, with `sdk/go/analytics` or any HTTP client. API keys only (`403 forbidden` for
+         *     members' sessions); a key limited to inboxes reaches the properties of its inboxes. Scope:
+         *     `analytics:write`.
+         *
+         *     Each event names its visitor in one of two ways, neither stored:
+         *     - `ip` and `user_agent` forwarded from the visitor's request, with `sec_ch_ua_platform`
+         *       and `sec_ch_ua_mobile` when the request had them. They are hashed exactly as the
+         *       collection endpoint hashes the browser's own request, so the event joins the visitor's
+         *       browser visit of that day; the address is shortened first and used for the location,
+         *       excluded addresses and the per-address limit like a browser's.
+         *     - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
+         *       address), hashed under the day's salt like an app's process key. With it, `ip` only
+         *       places the visitor and `user_agent` only describes the device.
+         *
+         *     `url` is the page (http(s), on one of the property's `domains`) or, for a property with
+         *     `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
+         *     starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
+         *     rules of `AnalyticsEvent`; `engagement` is for browsers only. `timestamp` defaults to now;
+         *     an event older than 72 hours is dropped as `late`.
+         *
+         *     Invalid events are left out on their own and listed in `errors`; the others are taken.
+         *     Taken but not stored, as on the collection endpoint and counted in the property's health:
+         *     events with `dnt` or `gpc`; events of a `consent` property without `consent: true`; events
+         *     from bots, excluded addresses or paths; events over the per-address or per-property limit
+         *     or the workspace's monthly cap. When the server cannot take more events it answers `503`
+         *     with `Retry-After`.
+         */
+        post: operations["sendAnalyticsEvents"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/analytics/properties/{propertyId}/health": {
         parameters: {
             query?: never;
@@ -5836,16 +5882,33 @@ export interface paths {
          *
          *     A browser's `Origin` host and every event's page host (`u`) must be one of the property's
          *     `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
-         *     `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
-         *     are refused until app collection exists. An unknown or deleted key answers `404`.
+         *     `Access-Control-Allow-Origin` so the script can read them. An unknown or deleted key
+         *     answers `404`.
+         *
+         *     Apps (the Swift and Kotlin SDKs) send without an `Origin`, always in the batch form with
+         *     `k` and `a` (`AnalyticsEventBatch`), to a property whose `platforms` hold `a.platform`
+         *     (`403 platform_not_allowed` otherwise; a request without an `Origin` to a property with
+         *     neither `ios` nor `android` answers `403 origin_not_allowed`). A screen is a page view whose
+         *     `u` is `app://<app id>/<screen>`; the app id is the visit's `hostname` and is not checked
+         *     against `domains`. The visitor is a keyed hash of `k`, a random key the app holds in memory
+         *     for the life of its process, under the salt of the event's day, or of the day the event
+         *     arrives once that day's salt is gone: a new process is a new visitor and a new visit. Events
+         *     carry their own time in `t`; one older than 72 hours is dropped and counted as `late`, one
+         *     in the future is taken as now. The browser-only header rules for bots do not apply to apps,
+         *     the volume rules do.
          *
          *     Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-         *     `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-         *     an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-         *     answers `400` for the whole request.
+         *     `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+         *     or revenue that break those limits, revenue on a page view or engagement, an
+         *     `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+         *     to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+         *     it is dropped on its own and counted as `invalid` in the property's health, the batch's
+         *     other events are taken, and the answer is `202`. A body that is not JSON or does not match
+         *     `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+         *     still refuse the whole request.
          *
          *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
-         *     of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
+         *     older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
          *     path; events over the property's per-minute limit or the workspace's monthly cap. One
          *     shortened address may send 120 events a minute to a property (`429 rate_limited` with
          *     `Retry-After`). When the server cannot take more events it answers `503` with
@@ -12051,7 +12114,8 @@ export interface components {
         /** @description One server message on `/client/v1/realtime`, told apart by `type`. */
         ClientRealtimeMessage: components["schemas"]["ClientConversationCreatedEvent"] | components["schemas"]["ClientConversationUpdatedEvent"] | components["schemas"]["ClientMessageEvent"] | components["schemas"]["ClientReadEvent"] | components["schemas"]["ClientTypingEvent"] | components["schemas"]["ClientPresenceEvent"] | components["schemas"]["ClientInboxUpdatedEvent"] | components["schemas"]["RealtimeReady"] | components["schemas"]["RealtimeResyncRequired"];
         /**
-         * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+         * @description Where a property's events come from. Browsers send from `web` pages; `ios` and `android`
+         *     apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
          * @enum {string}
          */
         AnalyticsPlatform: "web" | "ios" | "android";
@@ -12264,7 +12328,10 @@ export interface components {
          *     `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
          *     (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
          *     `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-         *     code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+         *     code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+         *     `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+         *     its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+         *     an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
          *     and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
          *     for events without it: as
          *     a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -12561,6 +12628,78 @@ export interface components {
             /** @description Why no database is loaded, or why the last update failed. */
             error?: string;
         };
+        AnalyticsServerEvents: {
+            events: components["schemas"]["AnalyticsServerEvent"][];
+        };
+        /** @description One server-side event. Give `ip` and `user_agent`, or `visitor_key`. */
+        AnalyticsServerEvent: {
+            /**
+             * @description `pageview`, a built-in event or a custom event's name, as in `AnalyticsEvent.n`.
+             * @example Signup
+             */
+            name: string;
+            /**
+             * @description The page or app screen, read like `AnalyticsEvent.u`.
+             * @example https://example.com/signup
+             */
+            url: string;
+            /** @description The page's referrer, for a `pageview` that starts a visit. */
+            referrer?: string;
+            /**
+             * Format: date-time
+             * @description When it happened; now when absent.
+             */
+            timestamp?: string;
+            /**
+             * @description Up to 30 props with the rules of `AnalyticsEvent.p`.
+             * @example {
+             *       "plan": "pro"
+             *     }
+             */
+            props?: {
+                [key: string]: string | number | boolean;
+            };
+            revenue?: components["schemas"]["AnalyticsEventRevenue"];
+            /** @description `false` makes a custom event non-interactive. */
+            interactive?: boolean;
+            /**
+             * @description The visitor's IP address as your server saw it. Shortened on arrival, never stored.
+             * @example 203.0.113.7
+             */
+            ip?: string;
+            /** @description The visitor's `User-Agent` header. Never stored. */
+            user_agent?: string;
+            /**
+             * @description The visitor's `Sec-CH-UA-Platform` header, as sent.
+             * @example "macOS"
+             */
+            sec_ch_ua_platform?: string;
+            /**
+             * @description The visitor's `Sec-CH-UA-Mobile` header, as sent.
+             * @example ?0
+             */
+            sec_ch_ua_mobile?: string;
+            /** @description The visitor's `Accept-Language` header; only the primary language of its first entry is kept. */
+            accept_language?: string;
+            /** @description Your own key for the visitor instead of `ip` and `user_agent`; hashed under the day's salt, never stored. */
+            visitor_key?: string;
+            /** @description The visitor's request had `DNT: 1`; the event is not stored. */
+            dnt?: boolean;
+            /** @description The visitor's request had `Sec-GPC: 1`; the event is not stored. */
+            gpc?: boolean;
+            /** @description The visitor agreed to analytics; required for a `consent` property to store the event. */
+            consent?: boolean;
+        };
+        AnalyticsEventsResult: {
+            /** @description The valid events, stored unless a rule of the operation dropped them. */
+            accepted: number;
+            /** @description The events left out as invalid, by their position in `events`. */
+            errors: components["schemas"]["AnalyticsEventError"][];
+        };
+        AnalyticsEventError: {
+            index: number;
+            detail: string;
+        };
         AnalyticsHealth: {
             /** Format: date-time */
             first_event_at?: string;
@@ -12788,9 +12927,17 @@ export interface components {
              * @description The page URL. Only the host and the path are kept; of the query, only `utm_source`,
              *     `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
              *     the visit's acquisition. Path segments shaped like e-mail addresses are stored as
-             *     `:email`.
+             *     `:email`. In an app, the screen: `app://<app id>/<screen>`, the screen's path
+             *     percent-encoded (`app://com.example.shop/Product%20Detail`), read the same way.
              */
             u: string;
+            /**
+             * Format: int64
+             * @description Apps only: when the event happened, in milliseconds since the Unix epoch. Taken as now
+             *     when absent or in the future; an event older than 72 hours is dropped as `late`.
+             * @example 1760263200000
+             */
+            t?: number;
             /** @description `document.referrer`; only its host and path are kept, and none when it is the page's own host. */
             r?: string;
             /** @description Viewport width in CSS pixels, turned into a screen size class and not stored. */
@@ -12834,8 +12981,51 @@ export interface components {
             /** @example EUR */
             c: string;
         };
+        /** @description Up to 100 events. Apps also send `k` and `a`, and one request per process key. */
         AnalyticsEventBatch: {
+            /**
+             * @description Apps only, required there: the process key, a random value (at least 128 bits, such as
+             *     a UUID) the app makes at launch and keeps in memory only, never on disk. It stands for
+             *     the visitor in place of the address: a relaunch makes a new key, so a new visitor and
+             *     visit. Queued events keep the key of the process that recorded them.
+             * @example 0f8fad5b-d9cb-469f-a165-70867728950e
+             */
+            k?: string;
+            a?: components["schemas"]["AnalyticsApp"];
             e: components["schemas"]["AnalyticsEvent"][];
+        };
+        /**
+         * @description Apps only, required there: the app that sent the events, describing a visit it starts.
+         *     Nothing here identifies a device.
+         */
+        AnalyticsApp: {
+            /** @enum {string} */
+            platform: "ios" | "android";
+            /**
+             * @description The app's version as users see it (`CFBundleShortVersionString`, `versionName`), the `app_version` dimension.
+             * @example 2.3.1
+             */
+            version?: string;
+            /**
+             * @description The OS version; its major number is kept (`os_version` dimension `iOS 18`).
+             * @example 18.1
+             */
+            os_version?: string;
+            /**
+             * @description `tablet` for iPads and Android tablets, `desktop` for Mac and ChromeOS.
+             * @enum {string}
+             */
+            device?: "mobile" | "tablet" | "desktop";
+            /**
+             * @description Screen width in points or dp, turned into a screen size class and not stored.
+             * @example 390
+             */
+            width?: number;
+            /**
+             * @description The app's language as a BCP 47 tag; only its primary language is kept. `Accept-Language` when absent.
+             * @example tr-TR
+             */
+            language?: string;
         };
         /** @description One event, or up to 100 in `e`. */
         AnalyticsBatch: components["schemas"]["AnalyticsEvent"] | components["schemas"]["AnalyticsEventBatch"];
@@ -20908,6 +21098,37 @@ export interface operations {
             403: components["responses"]["Problem"];
             404: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
+        };
+    };
+    sendAnalyticsEvents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsServerEvents"];
+            };
+        };
+        responses: {
+            /** @description Taken; stored unless one of the rules above dropped them. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsEventsResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            503: components["responses"]["Problem"];
         };
     };
     getAnalyticsHealth: {

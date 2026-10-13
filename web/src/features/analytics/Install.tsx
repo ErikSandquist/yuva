@@ -1,15 +1,55 @@
 import { Trans, useLingui } from "@lingui/react/macro"
+import { InfoIcon } from "lucide-react"
 import { useState } from "react"
-import { useSearchParams } from "react-router"
+import { Link, useSearchParams } from "react-router"
 
-import { CodeBlock, Segmented } from "@/components/common"
-import type { AnalyticsProperty } from "@/lib/api"
+import { CodeBlock, Notice, Segmented } from "@/components/common"
+import { hasApps } from "@/features/analytics/text"
+import { useVersion, type AnalyticsProperty } from "@/lib/api"
+import { useSession } from "@/lib/session"
 
-type Tab = "html" | "react" | "nuxt" | "other" | "events" | "optout" | "consent" | "domain"
+type Tab =
+  | "html"
+  | "react"
+  | "nuxt"
+  | "other"
+  | "swift"
+  | "kotlin"
+  | "go"
+  | "curl"
+  | "events"
+  | "optout"
+  | "consent"
+  | "domain"
 
-const TABS: Tab[] = ["html", "react", "nuxt", "other", "events", "optout", "consent", "domain"]
+const WEB: Tab[] = ["html", "react", "nuxt", "other"]
+const APPS: Tab[] = ["swift", "kotlin"]
+const SERVER: Tab[] = ["go", "curl"]
+const WEB_MORE: Tab[] = ["events", "optout", "consent", "domain"]
 
-export function snippet(tab: Tab, server: string, key: string, optOut: string, optIn: string) {
+function tabsFor(p: AnalyticsProperty): Tab[] {
+  const web = p.platforms.includes("web")
+  return [...(web ? WEB : []), ...APPS, ...SERVER, ...(web ? WEB_MORE : [])]
+}
+
+type Values = {
+  server: string
+  key: string
+  id: string
+  page: string
+  release: string | null
+  optOut: string
+  optIn: string
+}
+
+function examplePage(p: AnalyticsProperty) {
+  const host = p.domains.find((d) => !d.startsWith("*.")) ?? p.domains[0]?.replace(/^\*\./, "")
+  if (p.platforms.includes("web") || !hasApps(p)) return `https://${host ?? "example.com"}/signup`
+  return "app://com.example.app/Signup"
+}
+
+export function snippet(tab: Tab, v: Values) {
+  const { server, key, optOut, optIn } = v
   switch (tab) {
     case "html":
       return `<script defer data-key="${key}" src="${server}/yuva-analytics.js"></script>`
@@ -49,6 +89,93 @@ export function snippet(tab: Tab, server: string, key: string, optOut: string, o
         `import { createAnalytics } from "useyuva/analytics"`,
         ``,
         `createAnalytics({ server: "${server}", key: "${key}" })`,
+      ].join("\n")
+    case "swift":
+      return [
+        `// Package.swift`,
+        `.package(`,
+        `    url: "https://github.com/productdevbook/yuva.git",`,
+        `    ${v.release ? `exact: "${v.release}"` : `branch: "main"`}`,
+        `),`,
+        `.product(name: "YuvaAnalytics", package: "yuva"),`,
+        ``,
+        `import SwiftUI`,
+        `import YuvaAnalytics`,
+        ``,
+        `@main`,
+        `struct MyApp: App {`,
+        `    init() {`,
+        `        YuvaAnalytics.configure(server: URL(string: "${server}")!, key: "${key}")`,
+        `    }`,
+        ``,
+        `    var body: some Scene {`,
+        `        WindowGroup {`,
+        `            HomeView()`,
+        `                .yuvaScreen("Home")`,
+        `        }`,
+        `    }`,
+        `}`,
+        ``,
+        `// UIKit: YuvaAnalytics.screen("Settings") in viewDidAppear`,
+        `YuvaAnalytics.track("Signup", props: ["plan": "pro"])`,
+      ].join("\n")
+    case "kotlin":
+      return [
+        `// settings.gradle.kts: maven("https://jitpack.io")`,
+        `implementation("com.github.productdevbook:yuva-analytics:${v.release ? `v${v.release}` : "main-SNAPSHOT"}")`,
+        ``,
+        `class MyApp : Application() {`,
+        `    override fun onCreate() {`,
+        `        super.onCreate()`,
+        `        YuvaAnalytics.configure(this, server = "${server}", key = "${key}")`,
+        `    }`,
+        `}`,
+        ``,
+        `@Composable`,
+        `fun HomeScreen() {`,
+        `    TrackScreen("Home")`,
+        `    // ...`,
+        `}`,
+        ``,
+        `YuvaAnalytics.track("Signup", props = mapOf("plan" to "pro"))`,
+      ].join("\n")
+    case "go":
+      return [
+        `// go get github.com/productdevbook/yuva/sdk/go/analytics`,
+        `import "github.com/productdevbook/yuva/sdk/go/analytics"`,
+        ``,
+        `yuva, err := analytics.New(analytics.Config{`,
+        `\tBaseURL:    "${server}",`,
+        `\tAPIKey:     os.Getenv("YUVA_API_KEY"), // a key with analytics:write`,
+        `\tPropertyID: "${v.id}",`,
+        `})`,
+        `if err != nil {`,
+        `\tlog.Fatal(err)`,
+        `}`,
+        `defer yuva.Close(context.Background())`,
+        ``,
+        `// in a handler: the visitor's address and browser come from r`,
+        `yuva.Track(r, analytics.Event{`,
+        `\tName:  "Signup",`,
+        `\tProps: map[string]any{"plan": "pro"},`,
+        `})`,
+      ].join("\n")
+    case "curl":
+      return [
+        `curl ${server}/v1/analytics/properties/${v.id}/events \\`,
+        `  -H "Authorization: Bearer $YUVA_API_KEY" \\`,
+        `  -H "Content-Type: application/json" \\`,
+        `  -d '{`,
+        `    "events": [{`,
+        `      "name": "Signup",`,
+        `      "url": "${v.page}",`,
+        `      "ip": "203.0.113.7",`,
+        `      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",`,
+        `      "props": { "plan": "pro" }`,
+        `    }]`,
+        `  }'`,
+        ``,
+        `# {"accepted": 1, "errors": []}`,
       ].join("\n")
     case "events":
       return [
@@ -100,6 +227,7 @@ export function snippet(tab: Tab, server: string, key: string, optOut: string, o
 }
 
 function Hint({ tab }: { tab: Tab }) {
+  const { canManage } = useSession()
   switch (tab) {
     case "html":
       return (
@@ -124,6 +252,47 @@ function Hint({ tab }: { tab: Tab }) {
       )
     case "other":
       return <Trans>Call it once in the browser. During server rendering it does nothing.</Trans>
+    case "swift":
+      return (
+        <Trans>
+          Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a
+          SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait
+          on the device for up to 72 hours and arrive with their own times.
+        </Trans>
+      )
+    case "kotlin":
+      return (
+        <Trans>
+          Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose
+          screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times.
+        </Trans>
+      )
+    case "go":
+      return canManage ? (
+        <Trans>
+          For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and
+          browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It
+          needs an{" "}
+          <Link to="/settings/api-keys" className="text-brand underline-offset-4 hover:underline">
+            API key
+          </Link>{" "}
+          with the analytics:write scope, which stays on your server.
+        </Trans>
+      ) : (
+        <Trans>
+          For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and
+          browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It
+          needs an API key with the analytics:write scope from an owner or admin, which stays on your server.
+        </Trans>
+      )
+    case "curl":
+      return (
+        <Trans>
+          Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key.
+          Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under
+          Test events.
+        </Trans>
+      )
     case "events":
       return (
         <Trans>
@@ -157,16 +326,44 @@ function Hint({ tab }: { tab: Tab }) {
   }
 }
 
+function PlatformOff({ tab, property }: { tab: Tab; property: AnalyticsProperty }) {
+  const { canManage } = useSession()
+  const platform = tab === "swift" ? "ios" : tab === "kotlin" ? "android" : null
+  if (!platform || property.platforms.includes(platform)) return null
+  const name = platform === "ios" ? "iOS" : "Android"
+  return (
+    <Notice icon={InfoIcon} data-testid="install-platform-off">
+      {canManage ? (
+        <Trans>
+          Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events.
+        </Trans>
+      ) : (
+        <Trans>
+          {name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can
+          turn it on.
+        </Trans>
+      )}
+    </Notice>
+  )
+}
+
 export function InstallSnippets({ property }: { property: AnalyticsProperty }) {
   const { t } = useLingui()
   const [params] = useSearchParams()
+  const version = useVersion().data?.version
+  const tabs = tabsFor(property)
   const asked = params.get("snippet") as Tab | null
-  const [tab, setTab] = useState<Tab>(asked && TABS.includes(asked) ? asked : "html")
+  const [picked, setTab] = useState<Tab>(asked && tabs.includes(asked) ? asked : tabs[0]!)
+  const tab = tabs.includes(picked) ? picked : tabs[0]!
   const names: Record<Tab, string> = {
     html: "HTML",
     react: "React, Next.js",
     nuxt: "Nuxt",
     other: t`Vue, Astro, other`,
+    swift: "Swift",
+    kotlin: "Kotlin",
+    go: "Go",
+    curl: "curl",
     events: t`Events`,
     optout: t`Opt-out link`,
     consent: t`Consent mode`,
@@ -179,21 +376,24 @@ export function InstallSnippets({ property }: { property: AnalyticsProperty }) {
           value={tab}
           onChange={setTab}
           label={t`How to install`}
-          items={TABS.map((v) => ({ value: v, label: names[v], testId: `install-tab-${v}` }))}
+          items={tabs.map((v) => ({ value: v, label: names[v], testId: `install-tab-${v}` }))}
         />
       </div>
       <p className="text-body text-muted-foreground">
         <Hint tab={tab} />
       </p>
+      <PlatformOff tab={tab} property={property} />
       <div dir="ltr">
         <CodeBlock
-          value={snippet(
-            tab,
-            window.location.origin,
-            property.public_key,
-            t`Do not count my visits`,
-            t`Count my visits again`
-          )}
+          value={snippet(tab, {
+            server: window.location.origin,
+            key: property.public_key,
+            id: property.id,
+            page: examplePage(property),
+            release: version && /^\d+\.\d+\.\d+$/.test(version) ? version : null,
+            optOut: t`Do not count my visits`,
+            optIn: t`Count my visits again`,
+          })}
           testId="install-snippet"
         />
       </div>

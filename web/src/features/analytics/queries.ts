@@ -111,6 +111,22 @@ export function useHealth(id: string, days: number) {
   })
 }
 
+export function useHealthWatch(id: string) {
+  const { workspaceId: ws } = useSession()
+  return useQuery({
+    queryKey: [...keys.analyticsData(ws, id), "health-watch"],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/health", {
+          params: { path: { propertyId: id }, query: { days: 2 } },
+        })
+      ),
+    refetchInterval: 5_000,
+    staleTime: 0,
+    gcTime: 0,
+  })
+}
+
 export function useGeoAttribution(id: string) {
   const geo = useHealth(id, 1).data?.geoip
   return geo?.attribution ? { text: geo.attribution, url: geo.attribution_url } : null

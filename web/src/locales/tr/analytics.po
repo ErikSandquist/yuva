@@ -24,6 +24,10 @@ msgstr "{lost} kişi ayrıldı ({lostPct})"
 msgid "{n} payments, {avg} on average"
 msgstr "{n} ödeme, ortalama {avg}"
 
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} bu mülkün platformlarından biri değil, bu yüzden sunucu uygulamanın olaylarını reddediyor. Bir sahip ya da yönetici açabilir."
+
 #: src/features/analytics/Funnels.tsx
 msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} kadarı son adıma da ulaştı."
@@ -89,8 +93,16 @@ msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts a
 msgstr "İzlenen bir özellik günlük toplamlarda da saklanır; böylece dökümü ayrıntılı kayıtlar silindikten sonra da kalır ve Olaylar görünümünde bir seçenek olarak çıkar."
 
 #: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan sayfa ya da ekran görüntülemeleri."
+
+#: src/features/analytics/text.ts
 msgid "A visitor's page views without a gap of 30 minutes, within one day."
 msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan sayfa görüntülemeleri."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan ekran görüntülemeleri. Uygulama her açıldığında yeni bir ziyaret başlar."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Add"
@@ -124,6 +136,14 @@ msgstr "Ekle ve kur"
 #: src/features/analytics/Annotations.tsx
 msgid "Add note"
 msgstr "Not ekle"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Yuva paketindeki YuvaAnalytics kütüphanesini ekleyin ve uygulama açılırken bir kez yapılandırın. .yuvaScreen bir SwiftUI ekranını sayar; UIKit'te bir ekran göründüğünde YuvaAnalytics.screen çağırın. Bağlantı yokken olaylar cihazda en fazla 72 saat bekler ve kendi zamanlarıyla gelir."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "yuva-analytics kütüphanesini JitPack'ten ekleyin ve Application.onCreate içinde bir kez yapılandırın. TrackScreen bir Compose ekranını sayar. Bağlantı yokken olaylar cihazda en fazla 72 saat bekler ve kendi zamanlarıyla gelir."
 
 #: src/features/analytics/Settings.tsx
 msgid "Addresses not counted"
@@ -161,8 +181,16 @@ msgid "Analytics views"
 msgstr "Analitik görünümleri"
 
 #: src/features/analytics/text.ts
+msgid "App"
+msgstr "Uygulama"
+
+#: src/features/analytics/text.ts
 msgid "App version"
 msgstr "Uygulama sürümü"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Uygulamalar alan adı olmadan gönderir, bu yüzden yalnızca burada açık olan platformlar sayılır. Sunucunuzdan gelen olaylar platform gerektirmez."
 
 #: src/features/analytics/Settings.tsx
 msgid "At most 10 props can be tracked."
@@ -176,6 +204,10 @@ msgstr "Kitle"
 msgid "Bots"
 msgstr "Botlar"
 
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Botlar, hız sınırları, hariç tutulan adresler ve yollar, aylık sınır ya da meşgul sunucu."
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Hemen çıkma oranı"
@@ -188,6 +220,10 @@ msgstr "Özelliğe göre dök"
 #: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Döküm"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Bozuk olaylar: app:// ile başlamayan bir ekran adresi, ayrılmış bir ad ya da fazla özellik gibi."
 
 #: src/features/analytics/text.ts
 msgid "Browser"
@@ -558,6 +594,10 @@ msgstr "{key} = {value} olan {event} olayı"
 msgid "Events"
 msgstr "Olaylar"
 
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Olaylar geliyor."
+
 #: src/features/analytics/Events.tsx
 msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
 msgstr "Olaylar, sayfalarınızdaki ve uygulamalarınızdaki track() çağrılarından gelir. Dış bağlantılar, indirmeler ve sohbet açılışları, betikte ilgili öznitelikler varsa sayılır."
@@ -606,6 +646,14 @@ msgstr "Buna göre filtrele"
 msgid "Filters"
 msgstr "Filtreler"
 
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "İlk sayfa ya da ekran"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "İlk ekran"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
 msgstr "Örneğin Fieldnote web sitesi"
@@ -614,11 +662,23 @@ msgstr "Örneğin Fieldnote web sitesi"
 msgid "For revenue, an ISO code like EUR."
 msgstr "Gelir için, EUR gibi bir ISO kodu."
 
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için. Track ziyaretçinin adresini ve tarayıcısını iletir, böylece olay ziyaretine eklenir; Do Not Track ya da Global Privacy Control taşıyan istekler gönderilmez. analytics:write yetkili bir <0>API anahtarı</0> gerekir ve bu anahtar sunucunuzda kalır."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için. Track ziyaretçinin adresini ve tarayıcısını iletir, böylece olay ziyaretine eklenir; Do Not Track ya da Global Privacy Control taşıyan istekler gönderilmez. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir ve bu anahtar sunucunuzda kalır."
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "Başlangıç"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "Alan adlarından biri olmayan bir siteden ya da platformu açık olmayan bir uygulamadan."
 
 #: src/features/analytics/Funnels.tsx
 msgid "From pricing to signup"
@@ -664,6 +724,10 @@ msgstr "Durum"
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Alan adı"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Alan adı ya da uygulama"
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -763,9 +827,21 @@ msgstr "Son 90 gün"
 msgid "Last event"
 msgstr "Son olay"
 
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Son olay: {last}"
+
 #: src/features/analytics/text.ts
 msgid "Last month"
 msgstr "Geçen ay"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Son sayfa ya da ekran"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Son ekran"
 
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -846,6 +922,10 @@ msgstr "Karşılaştırma yok"
 msgid "No conversions in this range."
 msgstr "Bu aralıkta dönüşüm yok."
 
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "Henüz olay yok."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No events in the last 24 hours"
 msgstr "Son 24 saatte olay yok"
@@ -914,6 +994,10 @@ msgid "Off"
 msgstr "Kapalı"
 
 #: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "72 saatten eski. Uygulamalar bağlantı yokken olayları en fazla bu kadar tutar."
+
+#: src/features/analytics/Settings.tsx
 msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
 msgstr "Her satıra bir IP adresi ya da aralığı, en fazla 50 tane; örneğin ofisiniz ya da bir izleme hizmeti."
 
@@ -977,6 +1061,10 @@ msgstr "İşletim sistemi sürümü"
 msgid "Other"
 msgstr "Diğer"
 
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Diğer atılanlar"
+
 #: src/features/analytics/Events.tsx
 msgid "Other prop"
 msgstr "Başka özellik"
@@ -1014,15 +1102,25 @@ msgstr "Sayfa"
 msgid "Page not found"
 msgstr "Sayfa bulunamadı"
 
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Sayfa ya da ekran"
+
 #: src/features/analytics/Goals.tsx
 msgid "Page view of {path}"
 msgstr "{path} sayfasının görüntülenmesi"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Sayfalar"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Sayfalar ve ekranlar"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Görüntülenen sayfalar ve ekranlar."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
@@ -1048,11 +1146,11 @@ msgstr "Sayfa görüntüleme"
 msgid "Pageviews divided by visits."
 msgstr "Sayfa görüntülemelerinin ziyaretlere bölümü."
 
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pageviews in the last 30 minutes"
 msgstr "Son 30 dakikadaki sayfa görüntülemeleri"
 
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pageviews per minute"
 msgstr "Dakika başına sayfa görüntüleme"
 
@@ -1104,6 +1202,10 @@ msgstr "Bir hedef seçin"
 msgid "Pick a prop to see the values this event carried."
 msgstr "Bu olayın taşıdığı değerleri görmek için bir özellik seçin."
 
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "En az bir platform seçin."
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
 msgstr "Sitenin nasıl yapıldığını seçip kod parçasını kopyalayın. Anahtar, sohbet anahtarı gibi herkese açıktır: yalnızca mülkün alan adlarında çalışır."
@@ -1111,6 +1213,10 @@ msgstr "Sitenin nasıl yapıldığını seçip kod parçasını kopyalayın. Ana
 #: src/features/analytics/text.ts
 msgid "Platform"
 msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platformlar"
 
 #: src/features/analytics/text.ts
 msgid "Prop"
@@ -1181,6 +1287,10 @@ msgstr "Yönlendiren"
 msgid "Refreshes every 15 seconds"
 msgstr "15 saniyede bir yenilenir"
 
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Reddedilen"
+
 #: src/features/analytics/text.ts
 msgid "Region"
 msgstr "Bölge"
@@ -1214,6 +1324,10 @@ msgstr "Segmentin adını değiştir"
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; altındaki her yerde useYuvaAnalytics() yöntemleri verir."
 
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay isteyen bir mülkte onaysız gelen olaylar alınır, ama ne saklanır ne de burada sayılır."
+
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/text.ts
 msgid "Revenue"
@@ -1244,8 +1358,36 @@ msgid "Saved segments"
 msgstr "Kayıtlı segmentler"
 
 #: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Ekran"
+
+#: src/features/analytics/text.ts
 msgid "Screen size"
 msgstr "Ekran boyutu"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Ekran görüntüleme"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Ekran görüntülemelerinin ziyaretlere bölümü."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Son 30 dakikadaki ekran görüntülemeleri"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Dakika başına ekran görüntüleme"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Ekranlar"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Görüntülenen ekranlar."
 
 #: src/features/analytics/text.ts
 msgid "Scroll depth"
@@ -1266,6 +1408,10 @@ msgstr "Segment"
 #: src/features/analytics/Controls.tsx
 msgid "Segments"
 msgstr "Segmentler"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Bu sayfa açıkken uygulamanızdan ya da sunucunuzdan bir ekran veya olay gönderin ve sunucuya ulaşıp ulaşmadığını görün. 5 saniyede bir yenilenir."
 
 #: src/features/analytics/Goals.tsx
 msgid "Sends an event"
@@ -1314,6 +1460,10 @@ msgstr "Kaydoldu"
 msgid "Social"
 msgstr "Sosyal"
 
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Bazı olaylar atıldı. Nedenleri aşağıda."
+
 #: src/features/analytics/text.ts
 msgid "Source"
 msgstr "Kaynak"
@@ -1324,6 +1474,10 @@ msgstr "Kaynak"
 #: src/features/analytics/Realtime.tsx
 msgid "Sources"
 msgstr "Kaynaklar"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Sıfırla"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -1337,6 +1491,14 @@ msgstr "Adımlar"
 #: src/features/analytics/text.ts
 msgid "Tablet"
 msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Alındı ve saklandı. Bir dakika içinde Canlı görünümde çıkar."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Test olayları"
 
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
@@ -1466,12 +1628,24 @@ msgid "Today"
 msgstr "Bugün"
 
 #: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Bugün: {todayCounted} sayılan, {todayDropped} atılan"
+
+#: src/features/analytics/Settings.tsx
 msgid "Too late"
 msgstr "Çok geç"
 
-#: src/features/analytics/Overview.tsx
+#: src/features/analytics/text.ts
 msgid "Top pages"
 msgstr "En çok ziyaret edilen sayfalar"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "En çok görüntülenen sayfalar ve ekranlar"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "En çok görüntülenen ekranlar"
 
 #: src/features/analytics/Settings.tsx
 msgid "Tracked props"
@@ -1480,6 +1654,10 @@ msgstr "İzlenen özellikler"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "İzleme"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Önce genel ayarlarda Platformlar altında {name} seçeneğini açın. O zamana kadar sunucu uygulamanın olaylarını reddeder."
 
 #: src/features/analytics/Funnels.tsx
 msgid "Two to eight goals, in the order visitors reach them within one visit."
@@ -1492,6 +1670,10 @@ msgstr "Mülkü ve tüm verilerini silmek için adını yazın."
 #: src/features/analytics/text.ts
 msgid "Unknown"
 msgstr "Bilinmiyor"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "İstek başına en fazla 100 olay; her biri ziyaretçinin IP adresi ve kullanıcı aracısıyla ya da kendi visitor_key değerinizle. Hiçbiri saklanmaz. Geçersiz diye dışarıda bırakılan olaylar sıralarıyla errors içinde döner; nelerin geldiğini Test olayları altında görün."
 
 #: src/features/analytics/text.ts
 msgid "UTM campaign"
@@ -1513,9 +1695,25 @@ msgstr "UTM kaynağı"
 msgid "UTM term"
 msgstr "UTM terimi"
 
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Görüntüleme"
+
 #: src/features/analytics/Goals.tsx
 msgid "Views a page"
 msgstr "Sayfa görüntüler"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Görüntülemelerin ziyaretlere bölümü."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Son 30 dakikadaki görüntülemeler"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Dakika başına görüntüleme"
 
 #: src/features/analytics/text.ts
 msgid "Views per visit"
@@ -1546,12 +1744,24 @@ msgid "Visits"
 msgstr "Ziyaretler"
 
 #: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Tek sayfa ya da ekran görüntülemesi olan ve başka hiçbir şey yapılmayan ziyaretler."
+
+#: src/features/analytics/text.ts
 msgid "Visits with one page view and nothing else."
 msgstr "Tek sayfa görüntülemesi olan ve başka hiçbir şey yapılmayan ziyaretler."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Tek ekran görüntülemesi olan ve başka hiçbir şey yapılmayan ziyaretler."
 
 #: src/features/analytics/Install.tsx
 msgid "Vue, Astro, other"
 msgstr "Vue, Astro, diğer"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "{at} saatinden beri olaylar bekleniyor."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Waiting for the first event"

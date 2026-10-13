@@ -21,6 +21,7 @@ import { useProperty } from "@/features/analytics/queries"
 import { Realtime } from "@/features/analytics/Realtime"
 import { SettingsView } from "@/features/analytics/Settings"
 import { useViewSearch } from "@/features/analytics/state"
+import { useAnalyticsText } from "@/features/analytics/text"
 import { Segmented } from "@/components/common"
 import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
@@ -66,6 +67,7 @@ function AnalyticsHome() {
 
 function PropertyLayout() {
   const { t } = useLingui()
+  const text = useAnalyticsText()
   const { propertyId = "" } = useParams()
   const { pathname } = useLocation()
   const navigate = useNavigate()
@@ -78,7 +80,7 @@ function PropertyLayout() {
   const names: Record<ViewKey, string> = {
     overview: t`Overview`,
     realtime: t`Realtime`,
-    pages: t`Pages`,
+    pages: text.title.pages,
     sources: t`Sources`,
     locations: t`Locations`,
     devices: t`Devices`,

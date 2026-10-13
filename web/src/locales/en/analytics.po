@@ -24,6 +24,10 @@ msgstr "{lost} left ({lostPct})"
 msgid "{n} payments, {avg} on average"
 msgstr "{n} payments, {avg} on average"
 
+#: src/features/analytics/Install.tsx
+msgid "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+msgstr "{name} is not one of this property’s platforms, so the server refuses the app’s events. An owner or admin can turn it on."
+
 #: src/features/analytics/Funnels.tsx
 msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 msgstr "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
@@ -89,8 +93,16 @@ msgid "A tracked prop is also kept in the daily totals, so its breakdown lasts a
 msgstr "A tracked prop is also kept in the daily totals, so its breakdown lasts after the detailed records are gone, and it shows as a chip on the Events view."
 
 #: src/features/analytics/text.ts
+msgid "A visitor's page or screen views without a gap of 30 minutes, within one day."
+msgstr "A visitor's page or screen views without a gap of 30 minutes, within one day."
+
+#: src/features/analytics/text.ts
 msgid "A visitor's page views without a gap of 30 minutes, within one day."
 msgstr "A visitor's page views without a gap of 30 minutes, within one day."
+
+#: src/features/analytics/text.ts
+msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+msgstr "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Add"
@@ -124,6 +136,14 @@ msgstr "Add and install"
 #: src/features/analytics/Annotations.tsx
 msgid "Add note"
 msgstr "Add note"
+
+#: src/features/analytics/Install.tsx
+msgid "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Add the YuvaAnalytics library of the Yuva package and configure it once at launch. .yuvaScreen counts a SwiftUI screen; in UIKit, call YuvaAnalytics.screen when a screen appears. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+
+#: src/features/analytics/Install.tsx
+msgid "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
+msgstr "Add yuva-analytics from JitPack and configure it once in Application.onCreate. TrackScreen counts a Compose screen. Without a connection, events wait on the device for up to 72 hours and arrive with their own times."
 
 #: src/features/analytics/Settings.tsx
 msgid "Addresses not counted"
@@ -161,8 +181,16 @@ msgid "Analytics views"
 msgstr "Analytics views"
 
 #: src/features/analytics/text.ts
+msgid "App"
+msgstr "App"
+
+#: src/features/analytics/text.ts
 msgid "App version"
 msgstr "App version"
+
+#: src/features/analytics/Settings.tsx
+msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
+msgstr "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
 
 #: src/features/analytics/Settings.tsx
 msgid "At most 10 props can be tracked."
@@ -176,6 +204,10 @@ msgstr "Audience"
 msgid "Bots"
 msgstr "Bots"
 
+#: src/features/analytics/Settings.tsx
+msgid "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+msgstr "Bots, rate limits, excluded addresses and paths, the monthly limit or a busy server."
+
 #: src/features/analytics/text.ts
 msgid "Bounce rate"
 msgstr "Bounce rate"
@@ -188,6 +220,10 @@ msgstr "Break down by prop"
 #: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Breakdown"
+
+#: src/features/analytics/Settings.tsx
+msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
+msgstr "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
 
 #: src/features/analytics/text.ts
 msgid "Browser"
@@ -558,6 +594,10 @@ msgstr "Event {event} with {key} = {value}"
 msgid "Events"
 msgstr "Events"
 
+#: src/features/analytics/Settings.tsx
+msgid "Events are arriving."
+msgstr "Events are arriving."
+
 #: src/features/analytics/Events.tsx
 msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
 msgstr "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
@@ -606,6 +646,14 @@ msgstr "Filter by this"
 msgid "Filters"
 msgstr "Filters"
 
+#: src/features/analytics/text.ts
+msgid "First page or screen"
+msgstr "First page or screen"
+
+#: src/features/analytics/text.ts
+msgid "First screen"
+msgstr "First screen"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "For example Fieldnote website"
 msgstr "For example Fieldnote website"
@@ -614,11 +662,23 @@ msgstr "For example Fieldnote website"
 msgid "For revenue, an ISO code like EUR."
 msgstr "For revenue, an ISO code like EUR."
 
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+msgstr "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an <0>API key</0> with the analytics:write scope, which stays on your server."
+
+#: src/features/analytics/Install.tsx
+msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+msgstr "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "From"
+
+#: src/features/analytics/Settings.tsx
+msgid "From a site that is not one of the domains, or from an app whose platform is not turned on."
+msgstr "From a site that is not one of the domains, or from an app whose platform is not turned on."
 
 #: src/features/analytics/Funnels.tsx
 msgid "From pricing to signup"
@@ -664,6 +724,10 @@ msgstr "Health"
 #: src/features/analytics/text.ts
 msgid "Host"
 msgstr "Host"
+
+#: src/features/analytics/text.ts
+msgid "Host or app"
+msgstr "Host or app"
 
 #: src/features/analytics/Install.tsx
 msgid "How to install"
@@ -763,9 +827,21 @@ msgstr "Last 90 days"
 msgid "Last event"
 msgstr "Last event"
 
+#: src/features/analytics/Settings.tsx
+msgid "Last event: {last}"
+msgstr "Last event: {last}"
+
 #: src/features/analytics/text.ts
 msgid "Last month"
 msgstr "Last month"
+
+#: src/features/analytics/text.ts
+msgid "Last page or screen"
+msgstr "Last page or screen"
+
+#: src/features/analytics/text.ts
+msgid "Last screen"
+msgstr "Last screen"
 
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -846,6 +922,10 @@ msgstr "No comparison"
 msgid "No conversions in this range."
 msgstr "No conversions in this range."
 
+#: src/features/analytics/Settings.tsx
+msgid "No event yet."
+msgstr "No event yet."
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No events in the last 24 hours"
 msgstr "No events in the last 24 hours"
@@ -914,6 +994,10 @@ msgid "Off"
 msgstr "Off"
 
 #: src/features/analytics/Settings.tsx
+msgid "Older than 72 hours. Apps keep events without a connection for at most that long."
+msgstr "Older than 72 hours. Apps keep events without a connection for at most that long."
+
+#: src/features/analytics/Settings.tsx
 msgid "One IP address or range per line, up to 50, such as your office or a monitoring service."
 msgstr "One IP address or range per line, up to 50, such as your office or a monitoring service."
 
@@ -977,6 +1061,10 @@ msgstr "OS version"
 msgid "Other"
 msgstr "Other"
 
+#: src/features/analytics/Settings.tsx
+msgid "Other drops"
+msgstr "Other drops"
+
 #: src/features/analytics/Events.tsx
 msgid "Other prop"
 msgstr "Other prop"
@@ -1014,15 +1102,25 @@ msgstr "Page"
 msgid "Page not found"
 msgstr "Page not found"
 
+#: src/features/analytics/text.ts
+msgid "Page or screen"
+msgstr "Page or screen"
+
 #: src/features/analytics/Goals.tsx
 msgid "Page view of {path}"
 msgstr "Page view of {path}"
 
-#: src/features/analytics/AnalyticsRoutes.tsx
-#: src/features/analytics/Breakdown.tsx
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pages"
 msgstr "Pages"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens"
+msgstr "Pages and screens"
+
+#: src/features/analytics/text.ts
+msgid "Pages and screens viewed."
+msgstr "Pages and screens viewed."
 
 #: src/features/analytics/Settings.tsx
 msgid "Pages not counted"
@@ -1048,11 +1146,11 @@ msgstr "Pageviews"
 msgid "Pageviews divided by visits."
 msgstr "Pageviews divided by visits."
 
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pageviews in the last 30 minutes"
 msgstr "Pageviews in the last 30 minutes"
 
-#: src/features/analytics/Realtime.tsx
+#: src/features/analytics/text.ts
 msgid "Pageviews per minute"
 msgstr "Pageviews per minute"
 
@@ -1104,6 +1202,10 @@ msgstr "Pick a goal"
 msgid "Pick a prop to see the values this event carried."
 msgstr "Pick a prop to see the values this event carried."
 
+#: src/features/analytics/Settings.tsx
+msgid "Pick at least one platform."
+msgstr "Pick at least one platform."
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
 msgstr "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
@@ -1111,6 +1213,10 @@ msgstr "Pick how the site is built and copy the snippet. The key is public, like
 #: src/features/analytics/text.ts
 msgid "Platform"
 msgstr "Platform"
+
+#: src/features/analytics/Settings.tsx
+msgid "Platforms"
+msgstr "Platforms"
 
 #: src/features/analytics/text.ts
 msgid "Prop"
@@ -1181,6 +1287,10 @@ msgstr "Referrer"
 msgid "Refreshes every 15 seconds"
 msgstr "Refreshes every 15 seconds"
 
+#: src/features/analytics/Settings.tsx
+msgid "Refused"
+msgstr "Refused"
+
 #: src/features/analytics/text.ts
 msgid "Region"
 msgstr "Region"
@@ -1214,6 +1324,10 @@ msgstr "Rename segment"
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 
+#: src/features/analytics/Settings.tsx
+msgid "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+msgstr "Requests with Do Not Track or Global Privacy Control, and events without consent on a property that needs it, are taken but neither stored nor counted here."
+
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/text.ts
 msgid "Revenue"
@@ -1244,8 +1358,36 @@ msgid "Saved segments"
 msgstr "Saved segments"
 
 #: src/features/analytics/text.ts
+msgid "Screen"
+msgstr "Screen"
+
+#: src/features/analytics/text.ts
 msgid "Screen size"
 msgstr "Screen size"
+
+#: src/features/analytics/text.ts
+msgid "Screen views"
+msgstr "Screen views"
+
+#: src/features/analytics/text.ts
+msgid "Screen views divided by visits."
+msgstr "Screen views divided by visits."
+
+#: src/features/analytics/text.ts
+msgid "Screen views in the last 30 minutes"
+msgstr "Screen views in the last 30 minutes"
+
+#: src/features/analytics/text.ts
+msgid "Screen views per minute"
+msgstr "Screen views per minute"
+
+#: src/features/analytics/text.ts
+msgid "Screens"
+msgstr "Screens"
+
+#: src/features/analytics/text.ts
+msgid "Screens viewed."
+msgstr "Screens viewed."
 
 #: src/features/analytics/text.ts
 msgid "Scroll depth"
@@ -1266,6 +1408,10 @@ msgstr "Segment"
 #: src/features/analytics/Controls.tsx
 msgid "Segments"
 msgstr "Segments"
+
+#: src/features/analytics/Settings.tsx
+msgid "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
+msgstr "Send a screen or an event from your app or backend while this page is open, and see whether it reached the server. Refreshes every 5 seconds."
 
 #: src/features/analytics/Goals.tsx
 msgid "Sends an event"
@@ -1314,6 +1460,10 @@ msgstr "Signed up"
 msgid "Social"
 msgstr "Social"
 
+#: src/features/analytics/Settings.tsx
+msgid "Some events were dropped. The reasons are below."
+msgstr "Some events were dropped. The reasons are below."
+
 #: src/features/analytics/text.ts
 msgid "Source"
 msgstr "Source"
@@ -1324,6 +1474,10 @@ msgstr "Source"
 #: src/features/analytics/Realtime.tsx
 msgid "Sources"
 msgstr "Sources"
+
+#: src/features/analytics/Settings.tsx
+msgid "Start over"
+msgstr "Start over"
 
 #. placeholder {0}: i + 1
 #: src/features/analytics/Funnels.tsx
@@ -1337,6 +1491,14 @@ msgstr "Steps"
 #: src/features/analytics/text.ts
 msgid "Tablet"
 msgstr "Tablet"
+
+#: src/features/analytics/Settings.tsx
+msgid "Taken and stored. They show up in Realtime within a minute."
+msgstr "Taken and stored. They show up in Realtime within a minute."
+
+#: src/features/analytics/Settings.tsx
+msgid "Test events"
+msgstr "Test events"
 
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
@@ -1466,12 +1628,24 @@ msgid "Today"
 msgstr "Today"
 
 #: src/features/analytics/Settings.tsx
+msgid "Today: {todayCounted} counted, {todayDropped} dropped"
+msgstr "Today: {todayCounted} counted, {todayDropped} dropped"
+
+#: src/features/analytics/Settings.tsx
 msgid "Too late"
 msgstr "Too late"
 
-#: src/features/analytics/Overview.tsx
+#: src/features/analytics/text.ts
 msgid "Top pages"
 msgstr "Top pages"
+
+#: src/features/analytics/text.ts
+msgid "Top pages and screens"
+msgstr "Top pages and screens"
+
+#: src/features/analytics/text.ts
+msgid "Top screens"
+msgstr "Top screens"
 
 #: src/features/analytics/Settings.tsx
 msgid "Tracked props"
@@ -1480,6 +1654,10 @@ msgstr "Tracked props"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "Tracking"
+
+#: src/features/analytics/Install.tsx
+msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
+msgstr "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
 
 #: src/features/analytics/Funnels.tsx
 msgid "Two to eight goals, in the order visitors reach them within one visit."
@@ -1492,6 +1670,10 @@ msgstr "Type the property’s name to delete it and all its data."
 #: src/features/analytics/text.ts
 msgid "Unknown"
 msgstr "Unknown"
+
+#: src/features/analytics/Install.tsx
+msgid "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
+msgstr "Up to 100 events per request, each with the visitor’s IP address and user agent or your own visitor_key. Neither is stored. Events left out as invalid come back in errors with their position; see what arrived under Test events."
 
 #: src/features/analytics/text.ts
 msgid "UTM campaign"
@@ -1513,9 +1695,25 @@ msgstr "UTM source"
 msgid "UTM term"
 msgstr "UTM term"
 
+#: src/features/analytics/text.ts
+msgid "Views"
+msgstr "Views"
+
 #: src/features/analytics/Goals.tsx
 msgid "Views a page"
 msgstr "Views a page"
+
+#: src/features/analytics/text.ts
+msgid "Views divided by visits."
+msgstr "Views divided by visits."
+
+#: src/features/analytics/text.ts
+msgid "Views in the last 30 minutes"
+msgstr "Views in the last 30 minutes"
+
+#: src/features/analytics/text.ts
+msgid "Views per minute"
+msgstr "Views per minute"
 
 #: src/features/analytics/text.ts
 msgid "Views per visit"
@@ -1546,12 +1744,24 @@ msgid "Visits"
 msgstr "Visits"
 
 #: src/features/analytics/text.ts
+msgid "Visits with one page or screen view and nothing else."
+msgstr "Visits with one page or screen view and nothing else."
+
+#: src/features/analytics/text.ts
 msgid "Visits with one page view and nothing else."
 msgstr "Visits with one page view and nothing else."
+
+#: src/features/analytics/text.ts
+msgid "Visits with one screen view and nothing else."
+msgstr "Visits with one screen view and nothing else."
 
 #: src/features/analytics/Install.tsx
 msgid "Vue, Astro, other"
 msgstr "Vue, Astro, other"
+
+#: src/features/analytics/Settings.tsx
+msgid "Waiting for events since {at}."
+msgstr "Waiting for events since {at}."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Waiting for the first event"

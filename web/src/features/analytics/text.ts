@@ -1,17 +1,75 @@
 import { useLingui } from "@lingui/react/macro"
+import { useParams, useSearchParams } from "react-router"
 
-import type { Period, FilterOp } from "@/features/analytics/state"
-import type { AnalyticsDimension, AnalyticsFilterDimension, AnalyticsMetric, AnalyticsMetrics } from "@/lib/api"
+import { useProperty } from "@/features/analytics/queries"
+import { parseFilters, type Period, type FilterOp } from "@/features/analytics/state"
+import type {
+  AnalyticsDimension,
+  AnalyticsFilter,
+  AnalyticsFilterDimension,
+  AnalyticsMetric,
+  AnalyticsMetrics,
+  AnalyticsProperty,
+} from "@/lib/api"
 
 export const OTHER = "(other)"
 
+export type Wording = "pages" | "screens" | "both"
+
+const APP_PLATFORMS = ["ios", "android"]
+
+export function hasApps(p: Pick<AnalyticsProperty, "platforms">) {
+  return p.platforms.some((x) => APP_PLATFORMS.includes(x))
+}
+
+export function wordingFor(p: Pick<AnalyticsProperty, "platforms">, filters: AnalyticsFilter[] = []): Wording {
+  const platform = filters.find((f) => f.dimension === "platform" && f.op === "is")?.values[0]
+  if (platform) return APP_PLATFORMS.includes(platform) ? "screens" : "pages"
+  if (!hasApps(p)) return "pages"
+  return p.platforms.includes("web") ? "both" : "screens"
+}
+
+export function useWording(): Wording {
+  const { propertyId = "" } = useParams()
+  const [params] = useSearchParams()
+  const property = useProperty(propertyId).data
+  return wordingFor(property ?? { platforms: ["web"] }, parseFilters(params.getAll("f")))
+}
+
 export function useAnalyticsText() {
   const { t } = useLingui()
+  const wording = useWording()
+  const words = {
+    pages: { page: t`Page`, entry: t`Entry page`, exit: t`Exit page`, host: t`Host`, views: t`Pageviews` },
+    screens: { page: t`Screen`, entry: t`First screen`, exit: t`Last screen`, host: t`App`, views: t`Screen views` },
+    both: {
+      page: t`Page or screen`,
+      entry: t`First page or screen`,
+      exit: t`Last page or screen`,
+      host: t`Host or app`,
+      views: t`Views`,
+    },
+  }[wording]
   return {
+    wording,
+    title: {
+      pages: { pages: t`Pages`, screens: t`Screens`, both: t`Pages and screens` }[wording],
+      top: { pages: t`Top pages`, screens: t`Top screens`, both: t`Top pages and screens` }[wording],
+      perMinute: {
+        pages: t`Pageviews per minute`,
+        screens: t`Screen views per minute`,
+        both: t`Views per minute`,
+      }[wording],
+      lastHalfHour: {
+        pages: t`Pageviews in the last 30 minutes`,
+        screens: t`Screen views in the last 30 minutes`,
+        both: t`Views in the last 30 minutes`,
+      }[wording],
+    },
     metric: {
       visitors: t`Visitors`,
       visits: t`Visits`,
-      pageviews: t`Pageviews`,
+      pageviews: words.views,
       views_per_visit: t`Views per visit`,
       bounce_rate: t`Bounce rate`,
       visit_duration: t`Visit duration`,
@@ -25,10 +83,22 @@ export function useAnalyticsText() {
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
-      visits: t`A visitor's page views without a gap of 30 minutes, within one day.`,
-      pageviews: t`Pages viewed.`,
-      views_per_visit: t`Pageviews divided by visits.`,
-      bounce_rate: t`Visits with one page view and nothing else.`,
+      visits: {
+        pages: t`A visitor's page views without a gap of 30 minutes, within one day.`,
+        screens: t`A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit.`,
+        both: t`A visitor's page or screen views without a gap of 30 minutes, within one day.`,
+      }[wording],
+      pageviews: { pages: t`Pages viewed.`, screens: t`Screens viewed.`, both: t`Pages and screens viewed.` }[wording],
+      views_per_visit: {
+        pages: t`Pageviews divided by visits.`,
+        screens: t`Screen views divided by visits.`,
+        both: t`Views divided by visits.`,
+      }[wording],
+      bounce_rate: {
+        pages: t`Visits with one page view and nothing else.`,
+        screens: t`Visits with one screen view and nothing else.`,
+        both: t`Visits with one page or screen view and nothing else.`,
+      }[wording],
       visit_duration: t`Time from the first to the last event of a visit, on average. Bounces count as zero.`,
       time_on_page: t`Time the page was visible and in focus, per view.`,
       scroll_depth: t`The deepest point reached on the page, per view.`,
@@ -39,10 +109,10 @@ export function useAnalyticsText() {
       revenue: t`What the goal's events carried, per currency. Currencies are never converted or added up.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
-      page: t`Page`,
-      entry_page: t`Entry page`,
-      exit_page: t`Exit page`,
-      hostname: t`Host`,
+      page: words.page,
+      entry_page: words.entry,
+      exit_page: words.exit,
+      hostname: words.host,
       channel: t`Channel`,
       source: t`Source`,
       referrer: t`Referrer`,
