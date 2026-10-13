@@ -1591,6 +1591,31 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   finish. `view` and `daily` need `analytics:read`; `raw` needs `analytics:manage` and an owner, admin or
   key without an inbox limit, because raw rows are pseudonymous. CSV cells starting with `=`, `+`, `-`,
   `@`, tab or CR get a leading `'`.
+- **Support, alerts and reports (M15.4).** `analytics_daily_support` keeps conversations, page feedback,
+  ratings and discussion threads of the linked inbox by (host, path, day), paths after the property's
+  path rules, built in the same job as the day's traffic rollup; a day is read from it only while
+  `analytics_support_days` names the property's current inbox, other days from the inbox's own tables.
+  Conversations and discussions count on their local day, page ratings on the UTC day they were given.
+  `support_rate` is conversations per 1,000 page views, joined to traffic by path (hostname as its own
+  dimension or filter), never through a visitor; `<yuva-chat>` sends the page URL without query or
+  fragment and the title with a new conversation. Alerts: spike and drop compare the last two finished
+  hours with the same hours averaged over the 7 days before (3× or more, half or less, a baseline of at
+  least 20 views); goal drop is yesterday at half or less of its 7-day average with at least 10 a day;
+  support load is yesterday's rate at twice the 28-day rate with at least 5 conversations; a new referrer
+  has 10 or more visits yesterday and none in the 28 days before. An alert is unique by (property, kind,
+  key) and fires once a day (a new referrer once per host), writing an annotation, the `analytics.alert`
+  stored event and webhook, and a mail to subscribers. Weekly (Monday to Sunday) and monthly reports go
+  out at 08:00 property time once per member and period, in the member's language, without images or
+  link tracking; subscriptions are per member session. Broadcast links get `utm_source=newsletter`,
+  `utm_medium=email` and the campaign (on by default; links that carry a `utm_` parameter and the
+  server's own links are left alone; broadcasts already past draft at upgrade keep their links), and the
+  report shows the campaign's visits to callers with `analytics:read`. `ListAnalyticsReportWorkspaceIDs`
+  reads `analytics_subscriptions` across workspaces to find which have work, the same maintenance
+  exception as `ListAnalyticsWorkspaceIDs`; every query after it filters by workspace. MCP adds the
+  analytics tools (read: properties, overview, query, realtime, support report, goals and funnels,
+  funnel report, snippet, notes; manage: create goal, create property), the `analytics_review` and
+  `setup_analytics` prompts and the `yuva://property/{id}` resource; visitor-sent values are
+  `customer_content`.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
