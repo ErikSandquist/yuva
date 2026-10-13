@@ -577,26 +577,30 @@ func TestAnalyticsOff(t *testing.T) {
 	if r := collect(h, "yuva_ak_x", collectReq{origin: "https://example.com", ip: "203.0.113.7", body: pageview("https://example.com/")}); r.status != http.StatusNotFound {
 		t.Fatalf("collect %d", r.status)
 	}
-	res, err := http.Get(h.url + "/yuva-analytics.js")
-	if err != nil {
-		t.Fatal(err)
-	}
-	res.Body.Close()
-	if res.StatusCode != http.StatusNotFound {
-		t.Fatalf("script %d", res.StatusCode)
+	for _, name := range []string{"/yuva-analytics.js", "/yuva-analytics-consent.js"} {
+		res, err := http.Get(h.url + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Body.Close()
+		if res.StatusCode != http.StatusNotFound {
+			t.Fatalf("%s %d", name, res.StatusCode)
+		}
 	}
 }
 
 func TestAnalyticsScriptIsServed(t *testing.T) {
 	h := newHarness(t)
-	res, err := http.Get(h.url + "/yuva-analytics.js")
-	if err != nil {
-		t.Fatal(err)
-	}
-	res.Body.Close()
-	if res.StatusCode != http.StatusOK || res.Header.Get("Content-Type") != "text/javascript; charset=utf-8" ||
-		res.Header.Get("Access-Control-Allow-Origin") != "*" || res.Header.Get("Set-Cookie") != "" {
-		t.Fatalf("script %d %v", res.StatusCode, res.Header)
+	for _, name := range []string{"/yuva-analytics.js", "/yuva-analytics-consent.js"} {
+		res, err := http.Get(h.url + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		res.Body.Close()
+		if res.StatusCode != http.StatusOK || res.Header.Get("Content-Type") != "text/javascript; charset=utf-8" ||
+			res.Header.Get("Access-Control-Allow-Origin") != "*" || res.Header.Get("Set-Cookie") != "" {
+			t.Fatalf("%s %d %v", name, res.StatusCode, res.Header)
+		}
 	}
 }
 

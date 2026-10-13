@@ -27,7 +27,8 @@ RUN cd api \
     && go mod download \
     && find internal/ui/dist -mindepth 1 -delete && cp -R ../web/dist/. internal/ui/dist/ \
     && cp ../sdk/js/dist/yuva.js ../sdk/js/dist/yuva-chat.js ../sdk/js/dist/yuva-docs.js \
-          ../sdk/js/dist/yuva-subscribe.js ../sdk/js/dist/yuva-analytics.js internal/widget/dist/ \
+          ../sdk/js/dist/yuva-subscribe.js ../sdk/js/dist/yuva-analytics.js ../sdk/js/dist/yuva-analytics-consent.js \
+          internal/widget/dist/ \
     && rm -rf internal/widget/dist/widget \
     && if [ -d ../sdk/js/dist/widget ]; then cp -R ../sdk/js/dist/widget internal/widget/dist/; fi \
     && go build ./... \

@@ -218,11 +218,16 @@ export function snippet(tab: Tab, v: Values) {
       return [`<a href="#yuva-optout">${optOut}</a>`, `<a href="#yuva-optin">${optIn}</a>`].join("\n")
     case "consent":
       return [
+        `<!-- with the persistent or identify consent features, load yuva-analytics-consent.js instead -->`,
         `<script defer data-key="${key}" data-consent="required" src="${server}/yuva-analytics.js"></script>`,
         ``,
         `<script>`,
         `  // in your consent tool's callback, once the visitor agreed to analytics`,
         `  window.yuva.consent({ analytics: true })`,
+        `  // or instead, with yuva-analytics-consent.js, if they also agreed to be recognised on later visits`,
+        `  window.yuva.consent({ analytics: true, persistent: true })`,
+        `  // and after sign-in, with a fresh identity token from your backend`,
+        `  window.yuva.identify(token)`,
         `  // before the script has loaded, queue the call instead`,
         `  ;(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true }])`,
         `</script>`,

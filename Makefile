@@ -10,6 +10,7 @@ build: web widget
 		if [ -d sdk/js/dist/widget ]; then cp -R sdk/js/dist/widget api/internal/widget/dist/; fi; \
 	fi
 	@if [ -f sdk/js/dist/yuva-analytics.js ]; then cp sdk/js/dist/yuva-analytics.js api/internal/widget/dist/; fi
+	@if [ -f sdk/js/dist/yuva-analytics-consent.js ]; then cp sdk/js/dist/yuva-analytics-consent.js api/internal/widget/dist/; fi
 	cd api && CGO_ENABLED=0 go build -trimpath -o ../bin/yuva ./cmd/yuva
 
 web:

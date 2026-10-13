@@ -29,6 +29,7 @@
     "./dist/yuva-chat.js",
     "./dist/yuva-docs.js",
     "./dist/yuva-analytics.js",
+    "./dist/yuva-analytics-consent.js",
     "./dist/yuva-subscribe.js"
   ],
   "exports": {

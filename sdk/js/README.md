@@ -232,8 +232,9 @@ Links to `#yuva-optout` and `#yuva-optin` opt the visitor out and back in.
 
 ### Consent features
 
-For a property whose consent features offer them, and only from `useyuva/analytics`, React and Nuxt
-(the `/yuva-analytics.js` script tag leaves them out to stay within 1.5 KB):
+For a property whose consent features offer them, from `useyuva/analytics`, React and Nuxt, or with
+the `/yuva-analytics-consent.js` script tag instead of `/yuva-analytics.js` (which leaves them out
+to stay within 1.5 KB; `window.yuva` then has `identify` and `persistentId` too):
 
 ```ts
 analytics.consent({ analytics: true, persistent: true }); // from your consent tool, on every page load
@@ -244,9 +245,11 @@ analytics.persistentId(); // the id, for an erasure request (DELETE …/visitors
 `persistent: true` keeps `{ id, createdAt }` (a random UUID) in `localStorage.yuva_pid` and sends the
 id as `c.p` on every event, engagement included; a new id is made when none exists or it is 13 months
 old, and none ever under GPC or Do Not Track. Without that call nothing is stored and no id is sent.
+Pass `persistent: true` on every `consent` call while the visitor agrees to it:
+`consent({ analytics: true })` or `persistent: false` with an id stored withdraws it, as below.
 `identify(token)` needs the id; it sends the identity token once in a `yuva_consent` event and keeps
-nothing. `consent(false)` and `optOut()` send a `yuva_consent` withdrawal for a stored id, also under
-GPC or Do Not Track, and delete the id.
+nothing. `consent(false)`, `consent` without `persistent: true` and `optOut()` send a `yuva_consent`
+withdrawal for a stored id, also under GPC or Do Not Track, and delete the id.
 
 In React, render `<YuvaAnalytics server="…" publicKey="yuva_ak_…" outbound />` once (it renders nothing; the
 other options are props too) and call

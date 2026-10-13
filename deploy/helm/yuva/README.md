@@ -125,8 +125,8 @@ WebSocket upgrades on `/v1/realtime` and `/client/v1/realtime`, keep idle connec
 
 If your load balancer sets a sticky-session cookie anyway, it must not set it on the analytics
 script and its endpoint, which promise to leave nothing on the visitor's device. Set
-`service.analytics.separateService: true`: `/yuva-analytics.js` and `/client/v1/analytics/` then
-go through a second Service (`service.analytics.annotations`) and a second Ingress
+`service.analytics.separateService: true`: `/yuva-analytics.js`, `/yuva-analytics-consent.js` and
+`/client/v1/analytics/` then go through a second Service (`service.analytics.annotations`) and a second Ingress
 (`ingress.analyticsAnnotations`), so put your stickiness annotations only in
 `service.annotations` and `ingress.annotations`.
 

@@ -89,8 +89,8 @@ service:
   port: 80
   annotations: {}
   # Only if your load balancer sets a sticky-session cookie: analytics.separateService sends
-  # /yuva-analytics.js and /client/v1/analytics/ through this second Service and Ingress, which
-  # carry none of the stickiness annotations (docs/architecture.md, Analytics, Counting the panel).
+  # /yuva-analytics.js, /yuva-analytics-consent.js and /client/v1/analytics/ through this second
+  # Service and Ingress, which carry none of the stickiness annotations (docs/architecture.md, Analytics, Counting the panel).
   analytics:
     separateService: false
     annotations: {}

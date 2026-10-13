@@ -38,7 +38,7 @@ export interface AnalyticsMethods {
   /** Marks the current page as the site's 404 page (`not_found`, non-interactive). */
   notFound(): void
   pageview(options?: PageviewOptions): void
-  /** `persistent: true` keeps a random id on this device for 13 months and sends it on every event; never under GPC or Do Not Track. */
+  /** `persistent: true` keeps a random id on this device for 13 months and sends it on every event; never under GPC or Do Not Track. Without it a stored id is withdrawn and deleted. */
   consent(choice: Choice | boolean): void
   /** Links the persistent id to a contact with a fresh identity token from your backend; needs `persistent` consent. */
   identify(token: string): void
@@ -238,10 +238,13 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
         if (consented && (choice as Choice).persistent && !off) pid = keep()
       }
       if (consented) auto()
-      else if (lite) queue = []
-      else {
-        queue = withdrawal(page || location.href)
-        flush(true)
+      else queue = []
+      if (!lite && !pid) {
+        const [withdrawn] = withdrawal(page || location.href)
+        if (withdrawn) {
+          queue.push(withdrawn)
+          flush(true)
+        }
       }
     },
     optOut,

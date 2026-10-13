@@ -65,6 +65,13 @@ spec:
                 name: {{ $fullname }}-analytics
                 port:
                   number: {{ $port }}
+          - path: /yuva-analytics-consent.js
+            pathType: Exact
+            backend:
+              service:
+                name: {{ $fullname }}-analytics
+                port:
+                  number: {{ $port }}
           - path: /client/v1/analytics/
             pathType: Prefix
             backend:

@@ -15,10 +15,13 @@ import (
 //go:embed dist
 var embedded embed.FS
 
-// AnalyticsScript is served only while analytics is on.
-const AnalyticsScript = "yuva-analytics.js"
+// AnalyticsScript and AnalyticsConsentScript are served only while analytics is on.
+const (
+	AnalyticsScript        = "yuva-analytics.js"
+	AnalyticsConsentScript = "yuva-analytics-consent.js"
+)
 
-var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js", "yuva-subscribe.js", AnalyticsScript}
+var Files = []string{"yuva.js", "yuva-chat.js", "yuva-docs.js", "yuva-subscribe.js", AnalyticsScript, AnalyticsConsentScript}
 
 func Handler(name string) http.Handler {
 	body, err := embedded.ReadFile("dist/" + name)

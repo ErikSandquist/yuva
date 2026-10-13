@@ -40,18 +40,20 @@ const scripts = [
   { entry: "src/yuva-chat.ts", format: "esm" },
   { entry: "src/yuva-docs.ts", format: "iife" },
   { entry: "src/yuva-subscribe.ts", format: "iife" },
-  { entry: "src/yuva-analytics.ts", format: "iife" },
+  { entry: "src/yuva-analytics.ts", format: "iife", lite: true },
+  { entry: "src/yuva-analytics.ts", format: "iife", naming: "yuva-analytics-consent.js" },
 ] as const
 
-for (const { entry, format } of scripts) {
+for (const script of scripts) {
   check(
     await Bun.build({
-      entrypoints: [entry],
+      entrypoints: [script.entry],
       outdir: "dist",
-      format,
+      format: script.format,
       target: "browser",
       minify: true,
-      define: entry == "src/yuva-analytics.ts" ? { ...define, YUVA_ANALYTICS_LITE: "true" } : define,
+      naming: "naming" in script ? script.naming : undefined,
+      define: "lite" in script ? { ...define, YUVA_ANALYTICS_LITE: "true" } : define,
       plugins: [linguiMacro],
     })
   )
@@ -100,7 +102,11 @@ for await (const path of new Bun.Glob("dist/types/**/*.d.ts").scan()) {
   await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
 
-const budgets: Record<string, number> = { "yuva-analytics.js": 1536, "esm/analytics.js": 1920 }
+const budgets: Record<string, number> = {
+  "yuva-analytics.js": 1536,
+  "yuva-analytics-consent.js": 2048,
+  "esm/analytics.js": 1920,
+}
 let over = false
 for (const name of [
   "yuva.js",
@@ -108,6 +114,7 @@ for (const name of [
   "yuva-docs.js",
   "yuva-subscribe.js",
   "yuva-analytics.js",
+  "yuva-analytics-consent.js",
   thread,
   subscribeClient,
   "esm/index.js",

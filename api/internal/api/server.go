@@ -356,7 +356,7 @@ func (s *Server) Handler() http.Handler {
 	}
 	if !s.noWidget {
 		for _, name := range widget.Files {
-			if name == widget.AnalyticsScript && s.analytics == nil {
+			if (name == widget.AnalyticsScript || name == widget.AnalyticsConsentScript) && s.analytics == nil {
 				continue
 			}
 			mux.Handle("GET /"+name, widget.Handler(name))

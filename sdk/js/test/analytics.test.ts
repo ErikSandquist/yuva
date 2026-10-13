@@ -236,6 +236,11 @@ describe("consent features", () => {
   for (const [how, withdraw] of [
     ["consent(false)", (analytics: Analytics) => analytics.consent(false)],
     ["optOut()", (analytics: Analytics) => analytics.optOut()],
+    ["consent({ analytics: true })", (analytics: Analytics) => analytics.consent({ analytics: true })],
+    [
+      "consent({ analytics: true, persistent: false })",
+      (analytics: Analytics) => analytics.consent({ analytics: true, persistent: false }),
+    ],
   ] as const)
     test(`${how} sends the withdrawal and deletes the id, also under GPC`, async () => {
       start().consent({ analytics: true, persistent: true })
@@ -244,11 +249,14 @@ describe("consent features", () => {
       await settle()
       sent = []
       signal("globalPrivacyControl", true)
-      withdraw(start())
+      withdraw(start({ manual: true }))
       await settle()
       expect(sent).toEqual([
         { via: "beacon", url: endpoint, body: { n: "yuva_consent", u: "https://site.test/", c: { a: 0, p: id } } },
       ])
+      instance!.consent({ analytics: true })
+      await settle()
+      expect(sent).toHaveLength(1)
       expect(realStorage.getItem(PERSISTENT_KEY)).toBeNull()
       expect(instance!.persistentId()).toBeUndefined()
     })
