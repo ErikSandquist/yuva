@@ -5,6 +5,9 @@ struct AnalyticsView: View {
     let config: ExampleConfig
     @State private var optedOut = YuvaAnalytics.isOptedOut
     @State private var consent = false
+    @State private var persistent = YuvaAnalytics.persistentId != nil
+    @State private var persistentId = YuvaAnalytics.persistentId
+    @State private var token = ""
     @State private var log: [String] = []
 
     var body: some View {
@@ -43,13 +46,42 @@ struct AnalyticsView: View {
                 Section("Privacy") {
                     if config.analyticsRequireConsent {
                         ToggleRow(title: "Analytics consent", isOn: $consent)
-                            .onChange(of: consent) { _, granted in YuvaAnalytics.consent(granted) }
+                            .onChange(of: consent) { _, granted in
+                                if !granted { persistent = false }
+                                YuvaAnalytics.consent(granted, persistent: persistent)
+                                refreshId()
+                            }
                             .accessibilityIdentifier("example.analytics.consent")
                     }
+                    ToggleRow(title: "Remember me (persistent)", isOn: $persistent)
+                        .onChange(of: persistent) { _, keep in
+                            if keep, config.analyticsRequireConsent { consent = true }
+                            YuvaAnalytics.consent(keep || consent || !config.analyticsRequireConsent, persistent: keep)
+                            note(keep ? "Persistent consent" : "Persistent withdrawn")
+                            refreshId()
+                        }
+                        .accessibilityIdentifier("example.analytics.persistent")
+                    if let persistentId {
+                        Text(persistentId).font(.caption.monospaced()).foregroundStyle(.secondary)
+                            .accessibilityIdentifier("example.analytics.persistentId")
+                    }
+                    TextField("Identity token", text: $token)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .accessibilityIdentifier("example.analytics.token")
+                    Button("Identify") {
+                        YuvaAnalytics.identify(token)
+                        note("Identify")
+                        token = ""
+                    }
+                    .disabled(persistentId == nil || token.isEmpty)
+                    .accessibilityIdentifier("example.analytics.identify")
                     ToggleRow(title: "Opt out", isOn: $optedOut)
                         .onChange(of: optedOut) { _, out in
                             if out { YuvaAnalytics.optOut() } else { YuvaAnalytics.optIn() }
+                            if out { persistent = false }
                             note(out ? "Opted out" : "Opted in")
+                            refreshId()
                         }
                         .accessibilityIdentifier("example.analytics.optout")
                 }
@@ -64,6 +96,13 @@ struct AnalyticsView: View {
             .navigationTitle("Analytics")
         }
         .yuvaScreen("Analytics")
+    }
+
+    private func refreshId() {
+        Task {
+            try? await Task.sleep(for: .milliseconds(200))
+            persistentId = YuvaAnalytics.persistentId
+        }
     }
 
     private func note(_ text: String) {

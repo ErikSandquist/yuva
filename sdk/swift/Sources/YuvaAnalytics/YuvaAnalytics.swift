@@ -83,8 +83,9 @@ public enum YuvaAnalytics {
         let core = AnalyticsCore(
             endpoint: configuration.serverURL.appendingPathComponent("client/v1/analytics")
                 .appendingPathComponent(configuration.key),
-            processKey: processKey, app: Device.app(), requireConsent: configuration.requireConsent,
-            optedOut: optedOut, queueFile: queueFile(key: configuration.key), session: URLSession(configuration: .ephemeral),
+            processKey: processKey, app: Device.app(), home: "app://\(configuration.appId)/",
+            requireConsent: configuration.requireConsent, optedOut: optedOut, queueFile: queueFile(key: configuration.key),
+            ids: PersistentIDStore(defaults: .standard), session: URLSession(configuration: .ephemeral),
             debug: configuration.debug)
         state.install(core: core, appId: configuration.appId)
         Device.observe()
@@ -107,8 +108,17 @@ public enum YuvaAnalytics {
                     i: interactive ? nil : false)))
     }
 
-    public static func consent(_ granted: Bool) {
-        state.send(.consent(granted))
+    public static func consent(_ granted: Bool, persistent: Bool = false) {
+        state.send(.consent(granted, persistent: persistent))
+    }
+
+    public static func identify(_ token: String) {
+        state.send(.identify(token))
+    }
+
+    public static var persistentId: String? {
+        guard let value = PersistentIDStore(defaults: .standard).load(), !value.expired(at: Date()) else { return nil }
+        return value.id
     }
 
     public static func optOut() {

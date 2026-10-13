@@ -21,6 +21,8 @@ struct RevenueBody: Codable, Sendable, Equatable {
 
 struct ConsentBody: Codable, Sendable, Equatable {
     var a: Int
+    var p: String?
+    var j: String?
 }
 
 struct QueuedEvent: Codable, Sendable, Equatable {
@@ -84,6 +86,15 @@ struct AnalyticsQueue: Sendable {
 
     mutating func updateApp(key: String, _ change: (inout AppInfo) -> Void) {
         for index in batches.indices where batches[index].k == key { change(&batches[index].a) }
+    }
+
+    mutating func stripPersistent() {
+        for index in batches.indices {
+            for event in batches[index].e.indices where batches[index].e[event].c != nil {
+                batches[index].e[event].c?.p = nil
+                batches[index].e[event].c?.j = nil
+            }
+        }
     }
 
     mutating func prune(now: Int64) {

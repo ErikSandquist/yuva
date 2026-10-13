@@ -3,7 +3,8 @@ import os
 
 enum AnalyticsCommand: Sendable {
     case record(QueuedEvent)
-    case consent(Bool)
+    case consent(Bool, persistent: Bool)
+    case identify(String)
     case optOut
     case optIn
     case flush((@Sendable () -> Void)?)
@@ -12,9 +13,14 @@ enum AnalyticsCommand: Sendable {
 
 actor AnalyticsCore {
     typealias Sleep = @Sendable (Duration) async throws -> Void
+    static let consentEvent = "yuva_consent"
 
     nonisolated let endpoint: URL
     nonisolated let processKey: String
+    private let home: String
+    private let ids: PersistentIDStore
+    private var persistentID: PersistentID?
+    private var posts: [Task<Void, Never>] = []
     private let requireConsent: Bool
     private let session: URLSession
     private let autoFlush: Duration?
@@ -32,14 +38,16 @@ actor AnalyticsCore {
     private var senderWaiting = false
 
     init(
-        endpoint: URL, processKey: String, app: AppInfo, requireConsent: Bool, optedOut: Bool,
-        queueFile: URL?, session: URLSession, autoFlush: Duration? = .seconds(5), debug: Bool = false,
+        endpoint: URL, processKey: String, app: AppInfo, home: String, requireConsent: Bool, optedOut: Bool,
+        queueFile: URL?, ids: PersistentIDStore, session: URLSession, autoFlush: Duration? = .seconds(5), debug: Bool = false,
         now: @escaping @Sendable () -> Date = Date.init,
         sleep: @escaping Sleep = { try await Task.sleep(for: $0) }
     ) {
         self.endpoint = endpoint
         self.processKey = processKey
         self.app = app
+        self.home = home
+        self.ids = ids
         self.requireConsent = requireConsent
         self.optedOut = optedOut
         self.consented = !requireConsent
@@ -53,6 +61,12 @@ actor AnalyticsCore {
         queue.prune(now: Int64(now().timeIntervalSince1970 * 1000))
         queue.save()
         self.queue = queue
+        var stored = ids.load()
+        if let value = stored, optedOut || value.expired(at: now()) {
+            ids.delete()
+            stored = nil
+        }
+        self.persistentID = stored
     }
 
     var pending: [EventBatch] { queue.batches }
@@ -69,7 +83,8 @@ actor AnalyticsCore {
                 logger?.debug("dropped \(event.n, privacy: .public): \(reason, privacy: .public)")
                 return
             }
-            if requireConsent { event.c = ConsentBody(a: 1) }
+            let id = currentID()
+            if requireConsent || id != nil { event.c = ConsentBody(a: 1, p: id) }
             guard queue.append(event, key: processKey, app: app) else {
                 logger?.error("dropped \(event.n, privacy: .public): larger than 64 KiB")
                 return
@@ -77,11 +92,27 @@ actor AnalyticsCore {
             queue.save()
             logger?.debug("queued \(event.n, privacy: .public) \(event.u, privacy: .public)")
             if let autoFlush { schedule(after: autoFlush) }
-        case .consent(let granted):
+        case .consent(let granted, let persistent):
             consented = granted
+            if granted, persistent, !optedOut {
+                if currentID() == nil {
+                    let fresh = PersistentID.make(now: now())
+                    ids.save(fresh)
+                    persistentID = fresh
+                }
+            } else {
+                withdraw()
+            }
             if !granted { clear() }
+        case .identify(let token):
+            guard !optedOut, consented, !token.isEmpty, let id = currentID() else {
+                logger?.debug("identify ignored: no persistent consent")
+                return
+            }
+            post(QueuedEvent(n: Self.consentEvent, u: home, t: timestamp(), c: ConsentBody(a: 1, p: id, j: token)))
         case .optOut:
             optedOut = true
+            withdraw()
             clear()
         case .optIn:
             optedOut = false
@@ -100,10 +131,57 @@ actor AnalyticsCore {
     }
 
     func idle() async {
+        while !posts.isEmpty {
+            let pending = posts
+            posts.removeAll()
+            for post in pending { await post.value }
+        }
         while let sender {
             await sender.value
             if self.sender == sender { break }
         }
+    }
+
+    private func timestamp() -> Int64 {
+        Int64(now().timeIntervalSince1970 * 1000)
+    }
+
+    private func currentID() -> String? {
+        guard let value = persistentID else { return nil }
+        guard value.expired(at: now()) else { return value.id }
+        let fresh = PersistentID.make(now: now())
+        ids.save(fresh)
+        persistentID = fresh
+        return fresh.id
+    }
+
+    private func withdraw() {
+        guard let value = persistentID else { return }
+        post(QueuedEvent(n: Self.consentEvent, u: home, t: timestamp(), c: ConsentBody(a: 0, p: value.id)))
+        ids.delete()
+        persistentID = nil
+        queue.stripPersistent()
+        queue.save()
+    }
+
+    private func post(_ event: QueuedEvent) {
+        guard let body = try? JSONEncoder().encode(EventBatch(k: processKey, a: app, e: [event])) else { return }
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.httpBody = body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = self.session
+        let logger = self.logger
+        posts.append(
+            Task {
+                do {
+                    let (_, response) = try await session.data(for: request)
+                    let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+                    logger?.debug("sent \(Self.consentEvent, privacy: .public): \(status, privacy: .public)")
+                } catch {
+                    logger?.debug("dropped \(Self.consentEvent, privacy: .public): \(error.localizedDescription, privacy: .public)")
+                }
+            })
     }
 
     private func clear() {

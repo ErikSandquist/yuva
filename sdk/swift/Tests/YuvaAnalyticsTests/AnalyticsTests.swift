@@ -96,13 +96,17 @@ func tempFile() -> URL {
     FileManager.default.temporaryDirectory.appendingPathComponent("yuva-analytics-\(UUID().uuidString).json")
 }
 
+func tempStore() -> PersistentIDStore {
+    PersistentIDStore(defaults: UserDefaults(suiteName: "yuva-analytics-\(UUID().uuidString)")!)
+}
+
 func makeCore(
     key: String = "0f8fad5b-d9cb-469f-a165-70867728950e", file: URL? = nil, collector: FakeCollector,
-    requireConsent: Bool = false, optedOut: Bool = false, sleeps: Sleeps = Sleeps()
+    requireConsent: Bool = false, optedOut: Bool = false, sleeps: Sleeps = Sleeps(), ids: PersistentIDStore = tempStore()
 ) -> AnalyticsCore {
     AnalyticsCore(
         endpoint: URL(string: "https://yuva.test/client/v1/analytics/yuva_ak_test")!, processKey: key, app: app,
-        requireConsent: requireConsent, optedOut: optedOut, queueFile: file,
+        home: "app://dev.yuva.example/", requireConsent: requireConsent, optedOut: optedOut, queueFile: file, ids: ids,
         session: CollectorProtocol.session(for: collector), autoFlush: nil, now: { now },
         sleep: { sleeps.record($0) })
 }
@@ -242,7 +246,7 @@ func send(_ core: AnalyticsCore) async {
     let collector = FakeCollector()
     let core = makeCore(collector: collector, requireConsent: true)
     await core.handle(screen("Before"))
-    await core.handle(.consent(true))
+    await core.handle(.consent(true, persistent: false))
     await core.handle(screen("After"))
     await send(core)
 
@@ -278,4 +282,154 @@ func send(_ core: AnalyticsCore) async {
     #expect(YuvaAnalytics.screenURL(appId: "com.example.shop", name: "Product Detail") == "app://com.example.shop/Product%20Detail")
     #expect(YuvaAnalytics.screenURL(appId: "com.example.shop", name: "/Settings/Profile") == "app://com.example.shop/Settings/Profile")
     #expect(YuvaAnalytics.screenURL(appId: "com.example.shop", name: "Ürün?#") == "app://com.example.shop/%C3%9Cr%C3%BCn%3F%23")
+}
+
+@Test func defaultModeKeepsNoIdAndSendsNoPersistentConsent() async throws {
+    let ids = tempStore()
+    let collector = FakeCollector()
+    let core = makeCore(collector: collector, ids: ids)
+    await core.handle(screen("Home"))
+    await core.handle(.consent(true, persistent: false))
+    await core.handle(screen("Cart"))
+    await core.handle(.identify("token"))
+    await send(core)
+
+    #expect(ids.load() == nil)
+    #expect(collector.batches.flatMap(\.e).map(\.n) == ["screen", "screen"])
+    #expect(collector.batches.flatMap(\.e).allSatisfy { $0.c == nil })
+}
+
+@Test func persistentConsentKeepsOneIdAndSendsItOnEveryEvent() async throws {
+    let ids = tempStore()
+    let collector = FakeCollector()
+    let core = makeCore(collector: collector, requireConsent: true, ids: ids)
+    await core.handle(.consent(true, persistent: true))
+    let stored = try #require(ids.load())
+    #expect(stored.createdAt == nowMs)
+    #expect(UUID(uuidString: stored.id) != nil)
+    await core.handle(screen("Home"))
+    await send(core)
+
+    let next = FakeCollector()
+    let relaunched = makeCore(collector: next, requireConsent: true, ids: ids)
+    await relaunched.handle(.consent(true, persistent: true))
+    await relaunched.handle(screen("Cart"))
+    await send(relaunched)
+
+    #expect(ids.load() == stored)
+    #expect((collector.batches + next.batches).flatMap(\.e).map(\.c) == [
+        ConsentBody(a: 1, p: stored.id), ConsentBody(a: 1, p: stored.id),
+    ])
+}
+
+@Test func anIdOlderThan13MonthsIsReplaced() async throws {
+    let ids = tempStore()
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(identifier: "UTC")!
+    let old = calendar.date(byAdding: .month, value: -13, to: now)!
+    ids.save(PersistentID(id: "11111111-2222-4333-8444-555555555555", createdAt: Int64(old.timeIntervalSince1970 * 1000)))
+    let collector = FakeCollector()
+    let core = makeCore(collector: collector, ids: ids)
+    #expect(ids.load() == nil)
+
+    await core.handle(screen("Home"))
+    await core.handle(.consent(true, persistent: true))
+    await core.handle(screen("Cart"))
+    await send(core)
+
+    let fresh = try #require(ids.load())
+    #expect(fresh.id != "11111111-2222-4333-8444-555555555555")
+    #expect(collector.batches.flatMap(\.e).map(\.c) == [nil, ConsentBody(a: 1, p: fresh.id)])
+
+    let young = tempStore()
+    let recent = calendar.date(byAdding: .day, value: 1, to: old)!
+    let kept = PersistentID(id: "11111111-2222-4333-8444-555555555555", createdAt: Int64(recent.timeIntervalSince1970 * 1000))
+    young.save(kept)
+    _ = makeCore(collector: FakeCollector(), ids: young)
+    #expect(young.load() == kept)
+}
+
+@Test func identifySendsTheTokenRightAwayOnlyOnceAnIdExists() async throws {
+    let ids = tempStore()
+    let collector = FakeCollector()
+    let core = makeCore(collector: collector, ids: ids)
+    await core.handle(.identify("before"))
+    await core.idle()
+    #expect(collector.requests.isEmpty)
+
+    await core.handle(.consent(true, persistent: true))
+    await core.handle(screen("Home"))
+    await core.handle(.identify("signed.jwt.token"))
+    await core.idle()
+
+    let id = try #require(ids.load()?.id)
+    let json = try #require(collector.requests.first.flatMap { try JSONSerialization.jsonObject(with: $0) as? [String: Any] })
+    let event = try #require((json["e"] as? [[String: Any]])?.first)
+    #expect(event["n"] as? String == "yuva_consent")
+    #expect(event["u"] as? String == "app://dev.yuva.example/")
+    let consent = try #require(event["c"] as? [String: Any])
+    #expect(consent["a"] as? Int == 1)
+    #expect(consent["p"] as? String == id)
+    #expect(consent["j"] as? String == "signed.jwt.token")
+    #expect(collector.requests.count == 1)
+    #expect(await core.pending.flatMap(\.e).map(\.c) == [ConsentBody(a: 1, p: id)])
+}
+
+@Test func identifyWhileOfflineIsDroppedNotQueued() async throws {
+    let ids = tempStore()
+    let collector = FakeCollector(offline: true)
+    let core = makeCore(collector: collector, ids: ids)
+    await core.handle(.consent(true, persistent: true))
+    await core.handle(.identify("signed.jwt.token"))
+    await core.idle()
+
+    #expect(collector.requests.count == 1)
+    #expect(await core.pending.isEmpty)
+    #expect(ids.load() != nil)
+}
+
+@Test func withdrawingPersistentSendsTheIdThenForgetsIt() async throws {
+    let ids = tempStore()
+    let collector = FakeCollector()
+    let core = makeCore(collector: collector, ids: ids)
+    await core.handle(.consent(true, persistent: true))
+    let id = try #require(ids.load()?.id)
+    await core.handle(screen("Home"))
+    await core.handle(.consent(true, persistent: false))
+    await core.idle()
+
+    #expect(ids.load() == nil)
+    let withdrawal = try #require(collector.batches.first?.e.first)
+    #expect(withdrawal.n == "yuva_consent")
+    #expect(withdrawal.c == ConsentBody(a: 0, p: id))
+    #expect(await core.pending.flatMap(\.e).map(\.c) == [ConsentBody(a: 1)])
+
+    await core.handle(.identify("signed.jwt.token"))
+    await send(core)
+    #expect(collector.batches.flatMap(\.e).map(\.n) == ["yuva_consent", "screen"])
+    #expect(collector.batches.flatMap(\.e).allSatisfy { $0.c?.j == nil })
+}
+
+@Test func consentFalseAndOptOutWithdrawAndDeleteTheId() async throws {
+    for command in [AnalyticsCommand.consent(false, persistent: true), .optOut] {
+        let ids = tempStore()
+        let collector = FakeCollector()
+        let core = makeCore(collector: collector, ids: ids)
+        await core.handle(.consent(true, persistent: true))
+        let id = try #require(ids.load()?.id)
+        await core.handle(screen("Home"))
+        await core.handle(command)
+        await core.idle()
+
+        #expect(ids.load() == nil)
+        #expect(await core.pending.isEmpty)
+        #expect(collector.batches.map(\.e) == [[QueuedEvent(n: "yuva_consent", u: "app://dev.yuva.example/", t: nowMs, c: ConsentBody(a: 0, p: id))]])
+    }
+}
+
+@Test func optedOutDevicesMakeNoId() async throws {
+    let ids = tempStore()
+    let core = makeCore(collector: FakeCollector(), optedOut: true, ids: ids)
+    await core.handle(.consent(true, persistent: true))
+    #expect(ids.load() == nil)
 }
