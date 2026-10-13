@@ -8,23 +8,19 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Attribution, CsvButton, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
 import { downloadCsv, useAnalyticsTable } from "@/features/analytics/queries"
-import { useView } from "@/features/analytics/state"
+import { scopeOf, useView } from "@/features/analytics/state"
 import {
   flag,
   formatMetric,
   isPathDimension,
+  num,
   OTHER,
   useAnalyticsText,
   valueText,
   type AnalyticsText,
+  type NumMetric,
 } from "@/features/analytics/text"
-import type {
-  AnalyticsFilterDimension,
-  AnalyticsMetric,
-  AnalyticsProperty,
-  AnalyticsQuery,
-  AnalyticsRow,
-} from "@/lib/api"
+import type { AnalyticsFilterDimension, AnalyticsProperty, AnalyticsQuery, AnalyticsRow } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
 export type Group = "pages" | "sources" | "locations" | "devices"
@@ -70,7 +66,7 @@ export function RowLabel({
   )
 }
 
-function tableMetrics(dim: AnalyticsFilterDimension): AnalyticsMetric[] {
+function tableMetrics(dim: AnalyticsFilterDimension): NumMetric[] {
   return dim === "page"
     ? ["visitors", "pageviews", "bounce_rate", "time_on_page", "scroll_depth"]
     : ["visitors", "visits", "pageviews", "bounce_rate", "visit_duration"]
@@ -86,7 +82,7 @@ export function BreakdownView({ group }: { group: Group }) {
   const raw = params.get("by") as AnalyticsFilterDimension | null
   const dim = raw && dims.includes(raw) ? raw : dims[0]
   const metrics = tableMetrics(dim)
-  const [order, setOrder] = useState<{ metric: AnalyticsMetric; dir: "asc" | "desc" }>({
+  const [order, setOrder] = useState<{ metric: NumMetric; dir: "asc" | "desc" }>({
     metric: "visitors",
     dir: "desc",
   })
@@ -95,7 +91,7 @@ export function BreakdownView({ group }: { group: Group }) {
     metrics,
     dimensions: [dim],
     range: view.range,
-    filters: view.filters,
+    ...scopeOf(view),
     order_by: [sort],
     limit: 100,
   }
@@ -196,7 +192,7 @@ export function BreakdownView({ group }: { group: Group }) {
                     </td>
                     {metrics.map((m, j) => (
                       <td key={m} className={cn("px-2 py-2 text-end tabular-nums", j > 0 && "phone:hidden")}>
-                        {formatMetric(m, r.metrics[m], i18n.locale)}
+                        {formatMetric(m, num(r.metrics, m), i18n.locale)}
                       </td>
                     ))}
                   </tr>

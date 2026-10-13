@@ -873,6 +873,22 @@ msgstr "A part of the file arrived damaged several times. Check your connection,
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "A part of the file was larger than the server takes. Reload the page and pick the file again."
 
+#: src/components/common/text.ts
+msgid "A property can have at most 1,000 notes. Delete old ones first."
+msgstr "A property can have at most 1,000 notes. Delete old ones first."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 100 goals. Delete one first."
+msgstr "A property can have at most 100 goals. Delete one first."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 100 segments. Delete one first."
+msgstr "A property can have at most 100 segments. Delete one first."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 20 funnels. Delete one first."
+msgstr "A property can have at most 20 funnels. Delete one first."
+
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "A question about {name}"
@@ -9748,6 +9764,10 @@ msgid "This file type is not allowed."
 msgstr "This file type is not allowed."
 
 #: src/components/common/text.ts
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+
+#: src/components/common/text.ts
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox already has a list with this name."
 msgstr "This inbox already has a list with this name."
@@ -9853,6 +9873,18 @@ msgstr "This month"
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
 msgstr "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
+
+#: src/components/common/text.ts
+msgid "This property already has a funnel with this name."
+msgstr "This property already has a funnel with this name."
+
+#: src/components/common/text.ts
+msgid "This property already has a goal with this name."
+msgstr "This property already has a goal with this name."
+
+#: src/components/common/text.ts
+msgid "This property already has a segment with this name."
+msgstr "This property already has a segment with this name."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "This request expired or was already used. Start connecting again from the app."
@@ -11340,3 +11372,7 @@ msgstr "Yuva turned this endpoint off on {disabledAt}."
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off."
 msgstr "Yuva turned this endpoint off."
+
+#: src/components/common/text.ts
+msgid "Yuva's own notes cannot be changed."
+msgstr "Yuva's own notes cannot be changed."

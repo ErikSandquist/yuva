@@ -18,12 +18,22 @@ import {
   useCurrentProperty,
 } from "@/features/analytics/parts"
 import { downloadCsv, useAnalytics, type Query } from "@/features/analytics/queries"
-import { grainFor, KPIS, useView, useViewSearch } from "@/features/analytics/state"
-import { formatCompact, formatMetric, lowerIsBetter, OTHER, useAnalyticsText } from "@/features/analytics/text"
+import { AddNoteButton, annotationMarks, AnnotationList } from "@/features/analytics/Annotations"
+import { useAnnotations } from "@/features/analytics/queries"
+import { grainFor, KPIS, scopeOf, useView, useViewSearch } from "@/features/analytics/state"
+import {
+  formatCompact,
+  formatMetric,
+  lowerIsBetter,
+  num,
+  OTHER,
+  useAnalyticsText,
+  type NumMetric,
+} from "@/features/analytics/text"
 import type { AnalyticsDimension, AnalyticsFilterDimension, AnalyticsMetric } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-function Change({ now, before, metric }: { now?: number; before?: number; metric: AnalyticsMetric }) {
+export function Change({ now, before, metric }: { now?: number; before?: number; metric: AnalyticsMetric }) {
   const { i18n } = useLingui()
   if (now === undefined || before === undefined) return null
   if (before === 0) return <span className="text-caption text-faint">–</span>
@@ -55,7 +65,7 @@ function Kpis() {
   const q = useAnalytics(property.id, {
     metrics: KPIS,
     range: view.range,
-    filters: view.filters,
+    ...scopeOf(view),
     compare: view.compare,
   })
   const totals = q.data?.totals
@@ -82,13 +92,13 @@ function Kpis() {
               <Skeleton className="mt-1 h-7 w-16" />
             ) : (
               <span className="flex flex-wrap items-baseline gap-x-2">
-                <b className="text-page tabular-nums">{formatMetric(m, totals?.[m], i18n.locale)}</b>
-                {view.compare && <Change now={totals?.[m]} before={before?.[m]} metric={m} />}
+                <b className="text-page tabular-nums">{formatMetric(m, num(totals, m), i18n.locale)}</b>
+                {view.compare && <Change now={num(totals, m)} before={num(before, m)} metric={m} />}
               </span>
             )}
             {view.compare && !q.isPending && (
               <span className="max-w-full truncate text-caption text-faint tabular-nums">
-                {formatMetric(m, before?.[m], i18n.locale)}
+                {formatMetric(m, num(before, m), i18n.locale)}
               </span>
             )}
           </button>
@@ -102,20 +112,22 @@ function bucketDate(grain: AnalyticsDimension, v: string) {
   return new Date(grain === "time:hour" ? `${v}:00Z` : `${v}T00:00:00Z`)
 }
 
-function TimeChart() {
+export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalId?: string }) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view } = useView()
-  const metric = view.metric
+  const metric = fixed ?? view.metric
   const grain = grainFor(view.range, metric)
   const q = useAnalytics(property.id, {
     metrics: [metric],
     dimensions: [grain],
     range: view.range,
-    filters: view.filters,
+    ...scopeOf(view),
     compare: view.compare,
+    goal_id: goalId,
   })
+  const notes = useAnnotations(property.id, q.data?.meta.from, q.data?.meta.to)
   const hour = grain === "time:hour"
   const tick = new Intl.DateTimeFormat(
     i18n.locale,
@@ -135,8 +147,8 @@ function TimeChart() {
   const before = q.data?.comparison?.rows ?? []
   const data = (q.data?.rows ?? []).map((r, i) => ({
     at: r.dimensions[0] ?? "",
-    value: r.metrics[metric] ?? 0,
-    previous: view.compare ? (before[i]?.metrics[metric] ?? 0) : undefined,
+    value: num(r.metrics, metric) ?? 0,
+    previous: view.compare ? (num(before[i]?.metrics, metric) ?? 0) : undefined,
     previousAt: before[i]?.dimensions[0],
   }))
   const config: ChartConfig = {
@@ -154,6 +166,7 @@ function TimeChart() {
           </span>
         </>
       }
+      action={<AddNoteButton propertyId={property.id} />}
       testId="analytics-chart"
     >
       {q.isPending ? (
@@ -177,7 +190,7 @@ function TimeChart() {
               tickLine={false}
               axisLine={false}
               width={48}
-              allowDecimals={metric === "views_per_visit"}
+              allowDecimals={metric === "views_per_visit" || metric === "conversion_rate"}
               tickFormatter={(v) => formatMetric(metric, Number(v), i18n.locale)}
             />
             <ChartTooltip
@@ -226,9 +239,15 @@ function TimeChart() {
               fillOpacity={0.12}
               isAnimationActive={false}
             />
+            {annotationMarks(
+              notes.data ?? [],
+              data.map((d) => d.at),
+              grain
+            )}
           </AreaChart>
         </ChartContainer>
       )}
+      <AnnotationList propertyId={property.id} items={notes.data ?? []} />
     </Panel>
   )
 }
@@ -255,7 +274,7 @@ function BreakdownCard({
     metrics: ["visitors"],
     dimensions: [by],
     range: view.range,
-    filters: view.filters,
+    ...scopeOf(view),
     limit: 8,
   }
   const q = useAnalytics(property.id, body)
@@ -306,8 +325,8 @@ function BreakdownCard({
             return {
               key: `${value}${i}`,
               label: <RowLabel dim={by} row={r} value={value} text={text} />,
-              value: r.metrics.visitors ?? 0,
-              display: formatCompact(r.metrics.visitors ?? 0, i18n.locale),
+              value: num(r.metrics, "visitors") ?? 0,
+              display: formatCompact(num(r.metrics, "visitors") ?? 0, i18n.locale),
               onClick: value === OTHER ? undefined : () => addFilter(by, value),
             }
           })}

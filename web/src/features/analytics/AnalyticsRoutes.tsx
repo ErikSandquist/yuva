@@ -11,6 +11,9 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { UsageBanner } from "@/features/analytics/AnalyticsColumn"
 import { BreakdownView } from "@/features/analytics/Breakdown"
 import { Controls } from "@/features/analytics/Controls"
+import { EventsView } from "@/features/analytics/Events"
+import { FunnelsView } from "@/features/analytics/Funnels"
+import { GoalsView } from "@/features/analytics/Goals"
 import { InstallPropertyPage, NewPropertyPage, WaitForFirstEvent } from "@/features/analytics/NewProperty"
 import { Overview } from "@/features/analytics/Overview"
 import { useAnalyticsProperties } from "@/features/analytics/properties"
@@ -23,7 +26,18 @@ import { useIsPhone } from "@/hooks/use-media-query"
 import { useSession } from "@/lib/session"
 import { useInboxes } from "@/lib/workspace"
 
-const VIEWS = ["overview", "realtime", "pages", "sources", "locations", "devices", "settings"] as const
+const VIEWS = [
+  "overview",
+  "realtime",
+  "pages",
+  "sources",
+  "locations",
+  "devices",
+  "events",
+  "goals",
+  "funnels",
+  "settings",
+] as const
 type ViewKey = (typeof VIEWS)[number]
 
 function AnalyticsHome() {
@@ -55,7 +69,7 @@ function PropertyLayout() {
   const { propertyId = "" } = useParams()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const search = useViewSearch()
+  const search = useViewSearch(true)
   const property = useProperty(propertyId)
   const usage = useAnalyticsProperties().data?.usage
   const inbox = (useInboxes().data ?? []).find((i) => i.id === property.data?.inbox_id)
@@ -68,6 +82,9 @@ function PropertyLayout() {
     sources: t`Sources`,
     locations: t`Locations`,
     devices: t`Devices`,
+    events: t`Events`,
+    goals: t`Goals`,
+    funnels: t`Funnels`,
     settings: t`Settings`,
   }
   const p = property.data
@@ -111,7 +128,13 @@ function PropertyLayout() {
         />
       </div>
       {!p.first_event_at && current !== "settings" && <WaitForFirstEvent propertyId={p.id} />}
-      {controls && <Controls />}
+      {controls && (
+        <Controls
+          propertyId={p.id}
+          compare={current !== "events" && current !== "funnels"}
+          filters={current !== "funnels"}
+        />
+      )}
       <Outlet context={{ property: p }} />
     </Pane>
   )
@@ -130,6 +153,9 @@ export default function AnalyticsRoutes() {
         <Route path="sources" element={<BreakdownView group="sources" />} />
         <Route path="locations" element={<BreakdownView group="locations" />} />
         <Route path="devices" element={<BreakdownView group="devices" />} />
+        <Route path="events" element={<EventsView />} />
+        <Route path="goals" element={<GoalsView />} />
+        <Route path="funnels" element={<FunnelsView />} />
         <Route path="settings" element={<SettingsView />} />
         <Route path="*" element={<Navigate to=".." replace />} />
       </Route>

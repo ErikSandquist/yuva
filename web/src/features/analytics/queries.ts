@@ -4,12 +4,16 @@ import { useAnalyticsProperties } from "@/features/analytics/properties"
 import {
   api,
   unwrap,
+  type AnalyticsFilter,
+  type AnalyticsGoal,
+  type AnalyticsGoalCreate,
   type AnalyticsProperty,
   type AnalyticsPropertyUpdate,
   type AnalyticsQuery,
   type AnalyticsResult,
 } from "@/lib/api"
 import { saveDownload } from "@/lib/download"
+import type { paths } from "@/lib/schema.gen"
 import { keys } from "@/lib/keys"
 import { useSession } from "@/lib/session"
 
@@ -178,5 +182,238 @@ export function useDeleteProperty(id: string) {
         api.DELETE("/v1/analytics/properties/{propertyId}", { params: { path: { propertyId: id } }, body: { name } })
       ),
     onSuccess: () => store.drop(id),
+  })
+}
+
+function useMeta(id: string) {
+  const qc = useQueryClient()
+  const { workspaceId: ws } = useSession()
+  const base = keys.analyticsData(ws, id)
+  return {
+    goals: [...base, "goals"] as const,
+    funnels: [...base, "funnels"] as const,
+    segments: [...base, "segments"] as const,
+    annotations: [...base, "annotations"] as const,
+    base,
+    invalidate: (key: readonly unknown[]) => void qc.invalidateQueries({ queryKey: key }),
+  }
+}
+
+const path = (id: string) => ({ params: { path: { propertyId: id } } })
+
+export function useGoals(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: m.goals,
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/goals", path(id))),
+    select: (d) => d.items,
+    staleTime: 60_000,
+  })
+}
+
+export function useSaveGoal(id: string, goalId?: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (body: AnalyticsGoalCreate) =>
+      goalId
+        ? unwrap(
+            api.PATCH("/v1/analytics/properties/{propertyId}/goals/{goalId}", {
+              params: { path: { propertyId: id, goalId } },
+              body: { ...body, prop_key: body.kind === "event" ? (body.prop_key ?? null) : undefined },
+            })
+          )
+        : unwrap(api.POST("/v1/analytics/properties/{propertyId}/goals", { ...path(id), body })),
+    onSuccess: () => m.invalidate(m.base),
+  })
+}
+
+export function useDeleteGoal(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (goalId: string) =>
+      unwrap(
+        api.DELETE("/v1/analytics/properties/{propertyId}/goals/{goalId}", {
+          params: { path: { propertyId: id, goalId } },
+        })
+      ),
+    onSuccess: () => m.invalidate(m.base),
+  })
+}
+
+export function useGoalTotals(id: string, goals: AnalyticsGoal[], query: Omit<Query, "metrics" | "goal_id">) {
+  const m = useMeta(id)
+  const ids = goals.map((g) => g.id)
+  return useQuery({
+    queryKey: [...m.base, "goal-totals", ids, query],
+    queryFn: async () => {
+      const out = new Map<string, AnalyticsResult["totals"]>()
+      const queue = [...ids]
+      const worker = async () => {
+        for (let goal = queue.shift(); goal; goal = queue.shift()) {
+          const r = (await unwrap(
+            api.POST("/v1/analytics/properties/{propertyId}/query", {
+              ...path(id),
+              body: { limit: 1, ...query, goal_id: goal, metrics: ["conversions", "conversion_rate", "revenue"] },
+            })
+          )) as AnalyticsResult
+          out.set(goal, r.totals)
+        }
+      }
+      await Promise.all([worker(), worker()])
+      return out
+    },
+    placeholderData: keepPreviousData,
+    staleTime: 30_000,
+    enabled: ids.length > 0,
+  })
+}
+
+export function useFunnels(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: m.funnels,
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/funnels", path(id))),
+    select: (d) => d.items,
+    staleTime: 60_000,
+  })
+}
+
+export function useSaveFunnel(id: string, funnelId?: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (body: { name: string; steps: string[] }) =>
+      funnelId
+        ? unwrap(
+            api.PATCH("/v1/analytics/properties/{propertyId}/funnels/{funnelId}", {
+              params: { path: { propertyId: id, funnelId } },
+              body,
+            })
+          )
+        : unwrap(api.POST("/v1/analytics/properties/{propertyId}/funnels", { ...path(id), body })),
+    onSuccess: () => m.invalidate(m.base),
+  })
+}
+
+export function useDeleteFunnel(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (funnelId: string) =>
+      unwrap(
+        api.DELETE("/v1/analytics/properties/{propertyId}/funnels/{funnelId}", {
+          params: { path: { propertyId: id, funnelId } },
+        })
+      ),
+    onSuccess: () => m.invalidate(m.funnels),
+  })
+}
+
+export type FunnelRange = { period: NonNullable<FunnelPeriod> } | { from: string; to: string }
+type FunnelPeriod = NonNullable<
+  paths["/v1/analytics/properties/{propertyId}/funnels/{funnelId}/report"]["get"]["parameters"]["query"]
+>["period"]
+
+export function useFunnelReport(id: string, funnelId: string | undefined, range: FunnelRange | null) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.base, "funnel", funnelId, range],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/funnels/{funnelId}/report", {
+          params: { path: { propertyId: id, funnelId: funnelId! }, query: range ?? {} },
+        })
+      ),
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+    enabled: !!funnelId && !!range,
+  })
+}
+
+export function useSegments(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: m.segments,
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/segments", path(id))),
+    select: (d) => d.items,
+    staleTime: 60_000,
+  })
+}
+
+export function useSaveSegment(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: ({ segmentId, ...body }: { segmentId?: string; name?: string; filters?: AnalyticsFilter[] }) =>
+      segmentId
+        ? unwrap(
+            api.PATCH("/v1/analytics/properties/{propertyId}/segments/{segmentId}", {
+              params: { path: { propertyId: id, segmentId } },
+              body,
+            })
+          )
+        : unwrap(
+            api.POST("/v1/analytics/properties/{propertyId}/segments", {
+              ...path(id),
+              body: { name: body.name ?? "", filters: body.filters ?? [] },
+            })
+          ),
+    onSuccess: () => m.invalidate(m.base),
+  })
+}
+
+export function useDeleteSegment(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (segmentId: string) =>
+      unwrap(
+        api.DELETE("/v1/analytics/properties/{propertyId}/segments/{segmentId}", {
+          params: { path: { propertyId: id, segmentId } },
+        })
+      ),
+    onSuccess: () => m.invalidate(m.segments),
+  })
+}
+
+export function useAnnotations(id: string, from?: string, to?: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.annotations, from, to],
+    queryFn: () =>
+      unwrap(
+        api.GET("/v1/analytics/properties/{propertyId}/annotations", {
+          params: { path: { propertyId: id }, query: { from, to } },
+        })
+      ),
+    select: (d) => d.items,
+    placeholderData: keepPreviousData,
+    staleTime: 60_000,
+    enabled: !!from && !!to,
+  })
+}
+
+export function useSaveAnnotation(id: string, annotationId?: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (body: { starts_on: string; ends_on: string; text: string }) =>
+      annotationId
+        ? unwrap(
+            api.PATCH("/v1/analytics/properties/{propertyId}/annotations/{annotationId}", {
+              params: { path: { propertyId: id, annotationId } },
+              body,
+            })
+          )
+        : unwrap(api.POST("/v1/analytics/properties/{propertyId}/annotations", { ...path(id), body })),
+    onSuccess: () => m.invalidate(m.annotations),
+  })
+}
+
+export function useDeleteAnnotation(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (annotationId: string) =>
+      unwrap(
+        api.DELETE("/v1/analytics/properties/{propertyId}/annotations/{annotationId}", {
+          params: { path: { propertyId: id, annotationId } },
+        })
+      ),
+    onSuccess: () => m.invalidate(m.annotations),
   })
 }

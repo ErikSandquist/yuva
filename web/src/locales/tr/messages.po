@@ -873,6 +873,22 @@ msgstr "Dosyanın bir parçası birkaç kez bozuk ulaştı. Bağlantınızı den
 msgid "A part of the file was larger than the server takes. Reload the page and pick the file again."
 msgstr "Dosyanın bir parçası sunucunun kabul ettiğinden büyüktü. Sayfayı yenileyip dosyayı yeniden seçin."
 
+#: src/components/common/text.ts
+msgid "A property can have at most 1,000 notes. Delete old ones first."
+msgstr "Bir mülkte en fazla 1.000 not olabilir. Önce eskilerini silin."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 100 goals. Delete one first."
+msgstr "Bir mülkte en fazla 100 hedef olabilir. Önce birini silin."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 100 segments. Delete one first."
+msgstr "Bir mülkte en fazla 100 segment olabilir. Önce birini silin."
+
+#: src/components/common/text.ts
+msgid "A property can have at most 20 funnels. Delete one first."
+msgstr "Bir mülkte en fazla 20 huni olabilir. Önce birini silin."
+
 #: src/features/setup/previews.tsx
 msgid "A question about {name}"
 msgstr "{name} hakkında bir soru"
@@ -9748,6 +9764,10 @@ msgid "This file type is not allowed."
 msgstr "Bu dosya türüne izin verilmiyor."
 
 #: src/components/common/text.ts
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Bu hedef bir huninin adımı. Önce onu huniden çıkarın ya da huniyi silin."
+
+#: src/components/common/text.ts
 #: src/features/broadcasts/ListForm.tsx
 msgid "This inbox already has a list with this name."
 msgstr "Bu gelen kutusunda bu adla bir liste zaten var."
@@ -9853,6 +9873,18 @@ msgstr "Bu ay"
 #: src/components/common/text.ts
 msgid "This person unsubscribed from everything, reported a mail as spam or had their data erased, so the team cannot add them again."
 msgstr "Bu kişi tüm listelerden çıktı, bir e-postayı istenmeyen olarak bildirdi ya da verilerinin silinmesini istedi; bu yüzden ekip onu yeniden ekleyemez."
+
+#: src/components/common/text.ts
+msgid "This property already has a funnel with this name."
+msgstr "Bu mülkte bu adla bir huni zaten var."
+
+#: src/components/common/text.ts
+msgid "This property already has a goal with this name."
+msgstr "Bu mülkte bu adla bir hedef zaten var."
+
+#: src/components/common/text.ts
+msgid "This property already has a segment with this name."
+msgstr "Bu mülkte bu adla bir segment zaten var."
 
 #: src/features/oauth/ConsentPage.tsx
 msgid "This request expired or was already used. Start connecting again from the app."
@@ -11340,3 +11372,7 @@ msgstr "Yuva bu uç noktayı {disabledAt} tarihinde kapattı."
 #: src/features/settings/webhooks/WebhookPage.tsx
 msgid "Yuva turned this endpoint off."
 msgstr "Yuva bu uç noktayı kapattı."
+
+#: src/components/common/text.ts
+msgid "Yuva's own notes cannot be changed."
+msgstr "Yuva'nın kendi notları değiştirilemez."

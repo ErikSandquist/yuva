@@ -1,7 +1,13 @@
 import { useLingui } from "@lingui/react/macro"
 
 import type { Period, FilterOp } from "@/features/analytics/state"
-import type { AnalyticsDimension, AnalyticsFilterDimension, AnalyticsMetric } from "@/lib/api"
+import type {
+  AnalyticsDimension,
+  AnalyticsFilterDimension,
+  AnalyticsMetric,
+  AnalyticsMetrics,
+  AnalyticsRevenue,
+} from "@/lib/api"
 
 export const OTHER = "(other)"
 
@@ -18,6 +24,10 @@ export function useAnalyticsText() {
       time_on_page: t`Time on page`,
       scroll_depth: t`Scroll depth`,
       events: t`Events`,
+      conversions: t`Conversions`,
+      conversion_rate: t`Conversion rate`,
+      completions: t`Completions`,
+      revenue: t`Revenue`,
     } satisfies Record<AnalyticsMetric, string>,
     metricHelp: {
       visitors: t`Distinct visitors per day, added up over the days of the range. Someone who comes back on another day counts again.`,
@@ -28,7 +38,11 @@ export function useAnalyticsText() {
       visit_duration: t`Time from the first to the last event of a visit, on average. Bounces count as zero.`,
       time_on_page: t`Time the page was visible and in focus, per view.`,
       scroll_depth: t`The deepest point reached on the page, per view.`,
-      events: t`Custom events.`,
+      events: t`Custom and built-in events.`,
+      conversions: t`Visitors who reached the goal, per day, added up over the days of the range.`,
+      conversion_rate: t`Conversions per 100 visitors.`,
+      completions: t`Times the goal was reached, also several times by one visitor.`,
+      revenue: t`What the goal's events carried, per currency. Currencies are never converted or added up.`,
     } satisfies Record<AnalyticsMetric, string>,
     dimension: {
       page: t`Page`,
@@ -55,7 +69,15 @@ export function useAnalyticsText() {
       language: t`Language`,
       platform: t`Platform`,
       app_version: t`App version`,
+      event: t`Event`,
+      prop: t`Prop`,
     } satisfies Record<AnalyticsFilterDimension, string>,
+    event: {
+      outbound_click: t`Outbound link`,
+      file_download: t`File download`,
+      not_found: t`Page not found`,
+      chat_open: t`Chat opened`,
+    } as Record<string, string>,
     op: {
       is: t`is`,
       is_not: t`is not`,
@@ -91,6 +113,7 @@ export function useAnalyticsText() {
     screen: { phone: t`Phone`, tablet: t`Tablet`, laptop: t`Laptop`, desktop: t`Desktop` } as Record<string, string>,
     platform: { web: t`Web`, ios: "iOS", android: "Android", server: t`Server` } as Record<string, string>,
     unknown: t`Unknown`,
+    notSet: t`(not set)`,
     direct: t`Direct / none`,
     other: t`Other`,
   }
@@ -122,6 +145,7 @@ function languageName(tag: string, locale: string) {
 export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: string, locale: string) {
   if (value === OTHER) return text.other
   if (value === "") {
+    if (dim === "prop") return text.notSet
     return ["source", "referrer", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"].includes(dim)
       ? text.direct
       : text.unknown
@@ -139,6 +163,8 @@ export function valueText(text: AnalyticsText, dim: AnalyticsDimension, value: s
       return countryName(value, locale)
     case "language":
       return languageName(value, locale)
+    case "event":
+      return text.event[value] ?? value
     default:
       return value
   }
@@ -157,9 +183,36 @@ function seconds(v: number, locale: string) {
   return `${unit(Math.floor(s / 3600), "hour")} ${unit(Math.floor((s % 3600) / 60), "minute")}`
 }
 
+export type NumMetric = Exclude<AnalyticsMetric, "revenue">
+
+export function num(m: AnalyticsMetrics | undefined, k: NumMetric) {
+  return m?.[k]
+}
+
+export function formatMoney(minor: number, currency: string, digits: number, locale: string) {
+  const amount = minor / 10 ** digits
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    }).format(amount)
+  } catch {
+    return `${new Intl.NumberFormat(locale, { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(amount)} ${currency}`
+  }
+}
+
+export function formatRevenue(r: AnalyticsRevenue[] | undefined, locale: string) {
+  if (!r || r.length === 0) return "–"
+  return r.map((x) => formatMoney(x.total, x.currency, x.digits, locale)).join(" · ")
+}
+
 export function formatMetric(metric: AnalyticsMetric, v: number | undefined, locale: string) {
   if (v === undefined || Number.isNaN(v)) return "–"
   switch (metric) {
+    case "conversion_rate":
+      return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 1 }).format(v / 100)
     case "bounce_rate":
     case "scroll_depth":
       return new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 0 }).format(v / 100)

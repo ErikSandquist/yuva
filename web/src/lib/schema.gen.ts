@@ -4718,6 +4718,10 @@ export interface paths {
          *     `raw_window_from`. Each day keeps its 1,000 most visited values of a dimension; the rest are
          *     added up as `(other)`.
          *
+         *     Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
+         *     raw rows inside the raw window, for any prop key, and the rollups of the property's
+         *     `tracked_props` before it. `segment_id` adds a saved segment's filters.
+         *
          *     Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
          *     two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
          *     answers that include today for 30 seconds.
@@ -4778,6 +4782,265 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/goals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's goals
+         * @description Oldest first. Their numbers come from `queryAnalytics` with a `goal_id`.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsGoals"];
+        put?: never;
+        /**
+         * Create a goal
+         * @description A page view (`path_pattern`), a custom or built-in event (`event_name`, optionally with one
+         *     prop equal to a value) or a scroll depth on matching pages. The goal counts on every day of
+         *     the raw window, also those before it was made: those days are rolled up again in the
+         *     background and read from raw rows until then. A property has at most 100 goals
+         *     (`403 goal_limit`); names are unique per property (`409 goal_taken`). Adds a `goal_created`
+         *     annotation.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createAnalyticsGoal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/goals/{goalId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a goal
+         * @description Deletes the goal and its rollups. A goal that is a step of a funnel cannot be deleted
+         *     (`409 goal_in_use`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsGoal"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a goal
+         * @description Changes the given fields; the goal is checked whole afterwards. A changed definition counts
+         *     anew over the raw window like a new goal; older days keep what they counted.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsGoal"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/funnels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's funnels
+         * @description Oldest first. Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsFunnels"];
+        put?: never;
+        /**
+         * Create a funnel
+         * @description Two to eight goals of the property, in order. A property has at most 20 funnels
+         *     (`403 funnel_limit`); names are unique per property (`409 funnel_taken`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createAnalyticsFunnel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/funnels/{funnelId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a funnel
+         * @description Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsFunnel"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a funnel
+         * @description Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsFunnel"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/funnels/{funnelId}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * How visitors went through a funnel
+         * @description Per step, the visitors who completed it after every step before it within one visit, from
+         *     the raw events of the range. A visitor exists for one day, so a funnel never crosses
+         *     midnight; visitors over a range are added up per day. The range must lie inside the raw
+         *     window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
+         *     more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
+         *     cached for ten minutes.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["getAnalyticsFunnelReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/segments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's segments
+         * @description Named filter sets, shared with everyone who sees the property, by name.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsSegments"];
+        put?: never;
+        /**
+         * Save a segment
+         * @description Anyone who sees the property. A property has at most 100 segments (`403 segment_limit`);
+         *     names are unique per property (`409 segment_taken`).
+         *
+         *     Scope: `analytics:read`.
+         */
+        post: operations["createAnalyticsSegment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/segments/{segmentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a segment
+         * @description Its author, owners, admins and API keys without an inbox limit.
+         *
+         *     Scope: `analytics:read`.
+         */
+        delete: operations["deleteAnalyticsSegment"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a segment
+         * @description Its author, owners, admins and API keys without an inbox limit.
+         *
+         *     Scope: `analytics:read`.
+         */
+        patch: operations["updateAnalyticsSegment"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/annotations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's annotations
+         * @description Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
+         *     (`key_rotated`, `goal_created`). With `from` and `to`, those that overlap those days; at
+         *     most 1,000.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsAnnotations"];
+        put?: never;
+        /**
+         * Add an annotation
+         * @description A note on a day or a range of days of the property. Anyone who sees the property; at most
+         *     1,000 per property (`403 annotation_limit`).
+         *
+         *     Scope: `analytics:read`.
+         */
+        post: operations["createAnalyticsAnnotation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/annotations/{annotationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete an annotation
+         * @description Its author, owners, admins and API keys without an inbox limit; Yuva's own annotations only
+         *     owners, admins and API keys without an inbox limit.
+         *
+         *     Scope: `analytics:read`.
+         */
+        delete: operations["deleteAnalyticsAnnotation"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an annotation
+         * @description Its author, owners, admins and API keys without an inbox limit. Yuva's own annotations
+         *     cannot be changed (`403 annotation_read_only`).
+         *
+         *     Scope: `analytics:read`.
+         */
+        patch: operations["updateAnalyticsAnnotation"];
         trace?: never;
     };
     "/v1/realtime": {
@@ -5575,6 +5838,11 @@ export interface paths {
          *     `domains` (`403 origin_not_allowed`, `403 page_not_allowed`); refusals carry
          *     `Access-Control-Allow-Origin` so the script can read them. Requests without an `Origin`
          *     are refused until app collection exists. An unknown or deleted key answers `404`.
+         *
+         *     Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
+         *     `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
+         *     an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
+         *     answers `400` for the whole request.
          *
          *     Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
          *     of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -11979,10 +12247,16 @@ export interface components {
          *     `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
          *     `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
          *     focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
-         *     page view that reported it), `events` (custom events).
+         *     page view that reported it), `events` (custom and built-in events).
+         *
+         *     With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+         *     `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+         *     completed) and `revenue` (what the completing events carried, per currency, in
+         *     `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+         *     and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
          * @enum {string}
          */
-        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events";
+        AnalyticsMetric: "visitors" | "visits" | "pageviews" | "views_per_visit" | "bounce_rate" | "visit_duration" | "time_on_page" | "scroll_depth" | "events" | "conversions" | "conversion_rate" | "completions" | "revenue";
         /**
          * @description A value of a visit or page. `page` is a path that was viewed (pages are counted by path;
          *     `hostname` tells sites apart), `entry_page` and `exit_page` the first and last of a visit.
@@ -11990,19 +12264,25 @@ export interface components {
          *     `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
          *     (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
          *     `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-         *     code. Unknown values are empty strings.
+         *     code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+         *     and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
+         *     for events without it: as
+         *     a filter of visits they keep the visits with such an event; in an `event` or `prop`
+         *     breakdown they keep the matching events.
          * @enum {string}
          */
-        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version";
+        AnalyticsFilterDimension: "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "event" | "prop";
         /**
          * @description A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
          *     of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
          *     `events`), `time:day`, `time:week` (weeks start on Monday) or `time:month`. A time grain's
          *     values are the bucket's start, `2026-10-12` or `2026-10-12T14:00`, and every bucket of the
-         *     range is present.
+         *     range is present. `event` breaks custom and built-in events down by name, `prop` by the
+         *     value of the event prop the query's `prop` names; either takes at most one other dimension,
+         *     a time grain other than `time:hour` or a visit dimension.
          * @enum {string}
          */
-        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version";
+        AnalyticsDimension: "time:hour" | "time:day" | "time:week" | "time:month" | "page" | "entry_page" | "exit_page" | "hostname" | "channel" | "source" | "referrer" | "utm_source" | "utm_medium" | "utm_campaign" | "utm_term" | "utm_content" | "country" | "region" | "city" | "device" | "browser" | "browser_version" | "os" | "os_version" | "screen_size" | "language" | "platform" | "app_version" | "event" | "prop";
         /**
          * @description `is` and `is_not` compare whole values, `contains` and `not_contains` parts of them (case
          *     does not matter), `matches` patterns: on paths `*` is one segment and `**` any number of
@@ -12011,6 +12291,8 @@ export interface components {
          */
         AnalyticsFilter: {
             dimension: components["schemas"]["AnalyticsFilterDimension"];
+            /** @description With `dimension` `prop`, the prop key compared. */
+            prop?: string;
             /** @enum {string} */
             op: "is" | "is_not" | "contains" | "not_contains" | "matches";
             values: string[];
@@ -12051,6 +12333,22 @@ export interface components {
         };
         AnalyticsQuery: {
             metrics: components["schemas"]["AnalyticsMetric"][];
+            /**
+             * Format: uuid
+             * @description The goal whose `conversions`, `conversion_rate`, `completions` and `revenue` the query
+             *     asks for. Goal numbers of finished days come from rollups by total, time, `entry_page`,
+             *     `channel`, `source`, `utm_campaign`, `country` and `device`; other breakdowns and any
+             *     filter need raw rows. A goal counts on every day of the raw window, also before it was
+             *     made; older days have it only if it existed when they were rolled up.
+             */
+            goal_id?: string;
+            /** @description The event prop key a `prop` dimension breaks down by. */
+            prop?: string;
+            /**
+             * Format: uuid
+             * @description A saved segment of the property, whose filters are added to `filters`.
+             */
+            segment_id?: string;
             dimensions?: components["schemas"]["AnalyticsDimension"][];
             filters?: components["schemas"]["AnalyticsFilter"][];
             range: components["schemas"]["AnalyticsRange"];
@@ -12085,6 +12383,35 @@ export interface components {
             scroll_depth?: number;
             /** Format: double */
             events?: number;
+            /** Format: double */
+            conversions?: number;
+            /** Format: double */
+            conversion_rate?: number;
+            /** Format: double */
+            completions?: number;
+            /** @description Per currency, most first. */
+            revenue?: components["schemas"]["AnalyticsRevenue"][];
+        };
+        AnalyticsRevenue: {
+            /** @description ISO 4217 code. */
+            currency: string;
+            /**
+             * Format: int64
+             * @description In the currency's minor units (cents; yen for JPY).
+             */
+            total: number;
+            /**
+             * Format: int64
+             * @description Per event that carried revenue, in minor units, rounded.
+             */
+            average: number;
+            /**
+             * Format: int64
+             * @description Events that carried revenue in this currency.
+             */
+            events: number;
+            /** @description The currency's minor-unit digits, so `total / 10^digits` is the amount. */
+            digits: number;
         };
         AnalyticsRow: {
             /** @description One value per dimension of the query, in its order. */
@@ -12251,6 +12578,189 @@ export interface components {
             days: components["schemas"]["AnalyticsHealthDay"][];
             totals: components["schemas"]["AnalyticsIngestCounts"];
         };
+        /**
+         * @description `pageview`: a page view whose path matches `path_pattern`. `event`: a custom or built-in
+         *     event named `event_name`, and with `prop_key` only when that prop equals `prop_value`.
+         *     `scroll`: a page whose path matches `path_pattern` scrolled to at least `scroll_pct`.
+         * @enum {string}
+         */
+        AnalyticsGoalKind: "pageview" | "event" | "scroll";
+        AnalyticsGoal: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            kind: components["schemas"]["AnalyticsGoalKind"];
+            path_pattern?: components["schemas"]["AnalyticsPathPattern"];
+            event_name?: string;
+            prop_key?: string;
+            prop_value?: string;
+            scroll_pct?: number;
+            /**
+             * Format: date
+             * @description The first day the goal has numbers for, the start of the raw window when it was made.
+             */
+            counts_from: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsGoalCreate: {
+            name: string;
+            kind: components["schemas"]["AnalyticsGoalKind"];
+            path_pattern?: components["schemas"]["AnalyticsPathPattern"];
+            event_name?: string;
+            prop_key?: string;
+            prop_value?: string;
+            scroll_pct?: number;
+        };
+        /** @description Fields the goal's (new) kind does not use are dropped. */
+        AnalyticsGoalUpdate: {
+            name?: string;
+            kind?: components["schemas"]["AnalyticsGoalKind"];
+            path_pattern?: components["schemas"]["AnalyticsPathPattern"];
+            event_name?: string;
+            /** @description `null` drops the prop condition, with its value. */
+            prop_key?: string | null;
+            prop_value?: string;
+            scroll_pct?: number;
+        };
+        AnalyticsGoalList: {
+            items: components["schemas"]["AnalyticsGoal"][];
+        };
+        AnalyticsFunnel: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            /** @description Goal ids, in order. */
+            steps: string[];
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsFunnelCreate: {
+            name: string;
+            steps: string[];
+        };
+        AnalyticsFunnelUpdate: {
+            name?: string;
+            steps?: string[];
+        };
+        AnalyticsFunnelList: {
+            items: components["schemas"]["AnalyticsFunnel"][];
+        };
+        AnalyticsFunnelStep: {
+            /** Format: uuid */
+            goal_id: string;
+            /** @description The goal's name. */
+            name: string;
+            /**
+             * Format: int64
+             * @description Visitors who reached this step after all before it within a visit, added up per day.
+             */
+            visitors: number;
+            /** Format: int64 */
+            visits: number;
+            /**
+             * Format: int64
+             * @description Visitors of the step before who did not reach this one; 0 for the first step.
+             */
+            dropoff: number;
+            /**
+             * Format: double
+             * @description Percent of the first step's visitors.
+             */
+            conversion_rate: number;
+            /**
+             * Format: double
+             * @description Percent of the step before's visitors; 100 for the first step.
+             */
+            step_rate: number;
+        };
+        AnalyticsFunnelReport: {
+            /** Format: uuid */
+            funnel_id: string;
+            /** Format: date */
+            from: string;
+            /** Format: date */
+            to: string;
+            steps: components["schemas"]["AnalyticsFunnelStep"][];
+            /** Format: date */
+            raw_window_from: string;
+        };
+        AnalyticsSegment: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            filters: components["schemas"]["AnalyticsFilter"][];
+            /**
+             * Format: uuid
+             * @description The member who saved it; absent for API keys and removed members.
+             */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsSegmentCreate: {
+            name: string;
+            filters: components["schemas"]["AnalyticsFilter"][];
+        };
+        AnalyticsSegmentUpdate: {
+            name?: string;
+            filters?: components["schemas"]["AnalyticsFilter"][];
+        };
+        AnalyticsSegmentList: {
+            items: components["schemas"]["AnalyticsSegment"][];
+        };
+        AnalyticsAnnotation: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * @description `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
+             *     `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+             * @enum {string}
+             */
+            kind: "note" | "key_rotated" | "goal_created";
+            /** Format: date */
+            starts_on: string;
+            /** Format: date */
+            ends_on: string;
+            text: string;
+            /** Format: uuid */
+            goal_id?: string;
+            /**
+             * Format: uuid
+             * @description The member who wrote it; absent for Yuva's own, API keys and removed members.
+             */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsAnnotationCreate: {
+            /** Format: date */
+            starts_on: string;
+            /**
+             * Format: date
+             * @description The last day; `starts_on` when absent.
+             */
+            ends_on?: string;
+            text: string;
+        };
+        AnalyticsAnnotationUpdate: {
+            /** Format: date */
+            starts_on?: string;
+            /** Format: date */
+            ends_on?: string;
+            text?: string;
+        };
+        AnalyticsAnnotationList: {
+            items: components["schemas"]["AnalyticsAnnotation"][];
+        };
         AnalyticsConsent: {
             /**
              * @description `1` when the visitor agreed to analytics.
@@ -12264,10 +12774,16 @@ export interface components {
          */
         AnalyticsEvent: {
             /**
-             * @description `pageview`, or `engagement` (sent once per view when the page is hidden or left).
-             * @enum {string}
+             * @description `pageview`; `engagement` (sent once per view when the page is hidden or left); a built-in
+             *     event: `outbound_click` (a link to another host, with prop `url`), `file_download` (a
+             *     link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
+             *     `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
+             *     characters. `screen` and names starting with `$` or `yuva_` are reserved.
+             * @example pageview
+             * @example Signup
+             * @example outbound_click
              */
-            n: "pageview" | "engagement";
+            n: string;
             /**
              * @description The page URL. Only the host and the path are kept; of the query, only `utm_source`,
              *     `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
@@ -12285,7 +12801,38 @@ export interface components {
             ms?: number;
             /** @description `engagement` only: the deepest scroll position reached, in percent. */
             sd?: number;
+            /**
+             * @description Custom and built-in events only: up to 30 props. Keys have 1 to 300 characters and must
+             *     not start with `$` or `yuva_`; values are strings, numbers or booleans, kept as text of
+             *     at most 2,000 characters. A value shaped like an e-mail address is dropped (and counted
+             *     as scrubbed); a children's property keeps no props but a built-in event's `url`. The
+             *     `url` of `outbound_click` and `file_download` is kept without its query and fragment.
+             * @example {
+             *       "plan": "pro",
+             *       "seats": 3
+             *     }
+             */
+            p?: {
+                [key: string]: string | number | boolean;
+            };
+            $?: components["schemas"]["AnalyticsEventRevenue"];
+            /** @description `false` makes a custom event non-interactive, so a visit with only that event still bounces. */
+            i?: boolean;
             c?: components["schemas"]["AnalyticsConsent"];
+        };
+        /**
+         * @description Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+         *     currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+         *     code. It is stored in minor units per currency; Yuva converts nothing.
+         */
+        AnalyticsEventRevenue: {
+            /**
+             * @description As a string ("29.90") or a number.
+             * @example 29.90
+             */
+            a: string | number;
+            /** @example EUR */
+            c: string;
         };
         AnalyticsEventBatch: {
             e: components["schemas"]["AnalyticsEvent"][];
@@ -13118,6 +13665,10 @@ export interface components {
         /** @description The chat channel's public key. */
         ChannelKey: string;
         AnalyticsPropertyId: string;
+        AnalyticsGoalId: string;
+        AnalyticsFunnelId: string;
+        AnalyticsSegmentId: string;
+        AnalyticsAnnotationId: string;
         ListId: string;
         MigrationId: string;
         ImportId: string;
@@ -20383,6 +20934,558 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AnalyticsHealth"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsGoals: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The goals. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsGoalList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsGoal: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsGoalCreate"];
+            };
+        };
+        responses: {
+            /** @description The goal. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsGoal"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsGoal: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                goalId: components["parameters"]["AnalyticsGoalId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsGoal: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                goalId: components["parameters"]["AnalyticsGoalId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsGoalUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated goal. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsGoal"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsFunnels: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The funnels. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsFunnelList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsFunnel: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsFunnelCreate"];
+            };
+        };
+        responses: {
+            /** @description The funnel. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsFunnel"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsFunnel: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                funnelId: components["parameters"]["AnalyticsFunnelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsFunnel: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                funnelId: components["parameters"]["AnalyticsFunnelId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsFunnelUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated funnel. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsFunnel"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsFunnelReport: {
+        parameters: {
+            query?: {
+                /** @description A period ending today as in `AnalyticsRange`; `30d` when neither it nor `from` and `to` are given. */
+                period?: "today" | "yesterday" | "7d" | "28d" | "30d" | "90d" | "month" | "last_month";
+                from?: string;
+                to?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                funnelId: components["parameters"]["AnalyticsFunnelId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The funnel's steps. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsFunnelReport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description `needs_raw_window` or `range_too_large`, as described above. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AnalyticsRangeProblem"];
+                };
+            };
+            429: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsSegments: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The segments. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSegmentList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsSegment: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsSegmentCreate"];
+            };
+        };
+        responses: {
+            /** @description The segment. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSegment"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsSegment: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                segmentId: components["parameters"]["AnalyticsSegmentId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsSegment: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                segmentId: components["parameters"]["AnalyticsSegmentId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsSegmentUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated segment. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSegment"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsAnnotations: {
+        parameters: {
+            query?: {
+                from?: string;
+                to?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The annotations. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsAnnotationList"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsAnnotation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsAnnotationCreate"];
+            };
+        };
+        responses: {
+            /** @description The annotation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsAnnotation"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsAnnotation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                annotationId: components["parameters"]["AnalyticsAnnotationId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsAnnotation: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                annotationId: components["parameters"]["AnalyticsAnnotationId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsAnnotationUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated annotation. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsAnnotation"];
                 };
             };
             400: components["responses"]["Problem"];

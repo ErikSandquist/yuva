@@ -1,12 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro"
 import { useState } from "react"
+import { useSearchParams } from "react-router"
 
 import { CodeBlock, Segmented } from "@/components/common"
 import type { AnalyticsProperty } from "@/lib/api"
 
-type Tab = "html" | "react" | "nuxt" | "other" | "optout" | "consent" | "domain"
+type Tab = "html" | "react" | "nuxt" | "other" | "events" | "optout" | "consent" | "domain"
 
-const TABS: Tab[] = ["html", "react", "nuxt", "other", "optout", "consent", "domain"]
+const TABS: Tab[] = ["html", "react", "nuxt", "other", "events", "optout", "consent", "domain"]
 
 export function snippet(tab: Tab, server: string, key: string, optOut: string, optIn: string) {
   switch (tab) {
@@ -48,6 +49,24 @@ export function snippet(tab: Tab, server: string, key: string, optOut: string, o
         `import { createAnalytics } from "useyuva/analytics"`,
         ``,
         `createAnalytics({ server: "${server}", key: "${key}" })`,
+      ].join("\n")
+    case "events":
+      return [
+        `<!-- data-outbound, data-files and data-chat are each optional -->`,
+        `<script defer data-key="${key}" data-outbound data-files data-chat src="${server}/yuva-analytics.js"></script>`,
+        ``,
+        `<script>`,
+        `  // a custom event with props and revenue (amount in the currency, never converted)`,
+        `  window.yuva.track("Signup", {`,
+        `    props: { plan: "pro", seats: 3 },`,
+        `    revenue: { amount: "29.90", currency: "EUR" },`,
+        `  })`,
+        `  // on your 404 page`,
+        `  window.yuva.notFound()`,
+        `</script>`,
+        ``,
+        `// React: <YuvaAnalytics server="${server}" publicKey="${key}" outbound files chat />`,
+        `// then const { track } = useYuvaAnalytics()`,
       ].join("\n")
     case "optout":
       return [`<a href="#yuva-optout">${optOut}</a>`, `<a href="#yuva-optin">${optIn}</a>`].join("\n")
@@ -105,6 +124,14 @@ function Hint({ tab }: { tab: Tab }) {
       )
     case "other":
       return <Trans>Call it once in the browser. During server rendering it does nothing.</Trans>
+    case "events":
+      return (
+        <Trans>
+          data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and
+          data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail
+          addresses in props are dropped. Make goals from events in the Goals view.
+        </Trans>
+      )
     case "optout":
       return (
         <Trans>
@@ -132,12 +159,15 @@ function Hint({ tab }: { tab: Tab }) {
 
 export function InstallSnippets({ property }: { property: AnalyticsProperty }) {
   const { t } = useLingui()
-  const [tab, setTab] = useState<Tab>("html")
+  const [params] = useSearchParams()
+  const asked = params.get("snippet") as Tab | null
+  const [tab, setTab] = useState<Tab>(asked && TABS.includes(asked) ? asked : "html")
   const names: Record<Tab, string> = {
     html: "HTML",
     react: "React, Next.js",
     nuxt: "Nuxt",
     other: t`Vue, Astro, other`,
+    events: t`Events`,
     optout: t`Opt-out link`,
     consent: t`Consent mode`,
     domain: t`Own domain`,

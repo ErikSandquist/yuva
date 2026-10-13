@@ -7,10 +7,26 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(not set)"
+
 #. placeholder {0}: p.visitors_today
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {visitor today} other {visitors today}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} left ({lostPct})"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} payments, {avg} on average"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -19,6 +35,46 @@ msgstr "{used} of {limit} analytics events used this month. Events over the limi
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "A change applies to new events. Days already counted keep their zone."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "A changed goal is counted again over the days the detailed records are kept."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "A funnel is made of two to eight goals in a row. Make at least two goals first."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "A funnel needs each visit’s steps, which are no longer kept for this range."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "A new goal also counts the days the detailed records are kept, not only from today."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "A new key was made"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "A path. * stands for one part of it, ** for any number of them."
 
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
@@ -32,9 +88,17 @@ msgstr "A visitor's page views without a gap of 30 minutes, within one day."
 msgid "Add"
 msgstr "Add"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Add a note to the chart"
+
 #: src/features/analytics/Settings.tsx
 msgid "Add a rule"
 msgstr "Add a rule"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Add a step"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/NewProperty.tsx
@@ -49,6 +113,10 @@ msgstr "Add a website to count its visitors, pages and sources, without cookies.
 msgid "Add and install"
 msgstr "Add and install"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Add note"
+
 #: src/features/analytics/Settings.tsx
 msgid "Addresses not counted"
 msgstr "Addresses not counted"
@@ -61,6 +129,14 @@ msgstr "Agents of this inbox can see the numbers."
 #: src/features/analytics/text.ts
 msgid "AI assistants"
 msgstr "AI assistants"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "All events"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "All goals"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -92,6 +168,11 @@ msgstr "Bots"
 msgid "Bounce rate"
 msgstr "Bounce rate"
 
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Break down by prop"
+
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Breakdown"
@@ -108,7 +189,10 @@ msgstr "Browser version"
 msgid "Call it once in the browser. During server rendering it does nothing."
 msgstr "Call it once in the browser. During server rendering it does nothing."
 
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -116,9 +200,17 @@ msgstr "Cancel"
 msgid "Change filter: {label}"
 msgstr "Change filter: {label}"
 
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "changed"
+
 #: src/features/analytics/text.ts
 msgid "Channel"
 msgstr "Channel"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Chat opened"
 
 #: src/features/analytics/Settings.tsx
 msgid "Children"
@@ -174,6 +266,10 @@ msgstr "Compared days"
 msgid "Comparison"
 msgstr "Comparison"
 
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Completions"
+
 #: src/features/analytics/Install.tsx
 msgid "Consent mode"
 msgstr "Consent mode"
@@ -185,6 +281,18 @@ msgstr "contains"
 #: src/features/analytics/Install.tsx
 msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
 msgstr "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Conversion rate"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Conversions"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "Conversions per 100 visitors."
 
 #: src/features/analytics/Install.tsx
 msgid "Count my visits again"
@@ -218,13 +326,17 @@ msgstr "Country"
 msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 msgstr "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+
 #: src/features/analytics/Settings.tsx
 msgid "Currency"
 msgstr "Currency"
 
 #: src/features/analytics/text.ts
-msgid "Custom events."
-msgstr "Custom events."
+msgid "Custom and built-in events."
+msgstr "Custom and built-in events."
 
 #: src/features/analytics/Controls.tsx
 msgid "Custom range"
@@ -237,6 +349,10 @@ msgstr "Custom range…"
 #: src/features/analytics/Settings.tsx
 msgid "Data"
 msgstr "Data"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
 
 #: src/features/analytics/Settings.tsx
 msgid "Day"
@@ -272,9 +388,40 @@ msgstr "Delete all data of {0}?"
 msgid "Delete days"
 msgstr "Delete days"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Delete funnel"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Delete goal"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Delete note"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Delete segment"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "Delete the funnel “{0}”?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "Delete the goal “{0}”?"
+
 #: src/features/analytics/Settings.tsx
 msgid "Delete the property"
 msgstr "Delete the property"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "Delete the segment “{0}”?"
 
 #: src/features/analytics/Settings.tsx
 msgid "Delete the visits and events of {span}?"
@@ -284,9 +431,17 @@ msgstr "Delete the visits and events of {span}?"
 msgid "Delete these days"
 msgstr "Delete these days"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Delete this note?"
+
 #: src/features/analytics/Settings.tsx
 msgid "Deleting in the background. The numbers update when it is done."
 msgstr "Deleting in the background. The numbers update when it is done."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Depth in %"
 
 #: src/features/analytics/text.ts
 msgid "Desktop"
@@ -347,13 +502,53 @@ msgstr "Dropped"
 msgid "E-mail"
 msgstr "E-mail"
 
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+msgid "Edit"
+msgstr "Edit"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Edit funnel"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Edit goal"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Edit note"
+
 #: src/features/analytics/text.ts
 msgid "Entry page"
 msgstr "Entry page"
 
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "equal to"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Event"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "Event {event}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "Event {event} with {key} = {value}"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
 #: src/features/analytics/text.ts
 msgid "Events"
 msgstr "Events"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
 
 #: src/features/analytics/Settings.tsx
 msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
@@ -371,6 +566,14 @@ msgstr "events dropped"
 msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
 msgstr "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
 
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Everyone who sees this property can pick it. You, owners and admins can change it."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Everyone who sees this property sees the note, such as a launch or a campaign."
+
 #: src/features/analytics/Settings.tsx
 msgid "Excluded"
 msgstr "Excluded"
@@ -378,6 +581,10 @@ msgstr "Excluded"
 #: src/features/analytics/text.ts
 msgid "Exit page"
 msgstr "Exit page"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "File download"
 
 #: src/features/analytics/Breakdown.tsx
 msgid "Filter by this"
@@ -395,14 +602,44 @@ msgstr "For example Fieldnote website"
 msgid "For revenue, an ISO code like EUR."
 msgstr "For revenue, an ISO code like EUR."
 
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "From"
 
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "From pricing to signup"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Funnel"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Funnels"
+
 #: src/features/analytics/Settings.tsx
 msgid "General"
 msgstr "General"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Go to goals"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Goal"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "Goal “{0}” was created"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Goals"
+msgstr "Goals"
 
 #: src/features/analytics/Settings.tsx
 msgid "had an address removed"
@@ -419,6 +656,10 @@ msgstr "Host"
 #: src/features/analytics/Install.tsx
 msgid "How to install"
 msgstr "How to install"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "How to send events"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -450,9 +691,29 @@ msgstr "is"
 msgid "is not"
 msgstr "is not"
 
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "It is gone for everyone who uses it. The numbers stay."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Its goals stay."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Its numbers are deleted too. This cannot be undone."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Keep only visits with this value"
+
 #: src/features/analytics/Settings.tsx
 msgid "Key"
 msgstr "Key"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Kind of goal"
 
 #: src/features/analytics/text.ts
 msgid "Language"
@@ -495,6 +756,7 @@ msgid "Last month"
 msgstr "Last month"
 
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
 msgid "Load more"
 msgstr "Load more"
 
@@ -516,6 +778,14 @@ msgstr "Make a new key"
 msgid "Make a new key?"
 msgstr "Make a new key?"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Make at least two goals first."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Make goal"
+
 #: src/features/analytics/text.ts
 msgid "matches"
 msgstr "matches"
@@ -528,14 +798,41 @@ msgstr "Mobile"
 msgid "Monthly limit"
 msgstr "Monthly limit"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Move down"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Move up"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Name"
 msgstr "Name"
 
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "New funnel"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "New goal"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "New pricing page"
+
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "No comparison"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "No conversions in this range."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No events in the last 24 hours"
@@ -545,13 +842,29 @@ msgstr "No events in the last 24 hours"
 msgid "No events yet"
 msgstr "No events yet"
 
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "No funnels yet"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "No goals yet"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No properties yet"
 msgstr "No properties yet"
 
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "No segment"
+
 #: src/features/analytics/Realtime.tsx
 msgid "Nobody in the last 30 minutes."
 msgstr "Nobody in the last 30 minutes."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Nobody reached the first step in this range."
 
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
@@ -566,7 +879,16 @@ msgstr "None, owners and admins only"
 msgid "Not available for this range."
 msgstr "Not available for this range."
 
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Note"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Notes"
+
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Nothing counted in this range."
 msgstr "Nothing counted in this range."
@@ -603,6 +925,10 @@ msgstr "Only totals are shown. There is no list of individual visitors."
 msgid "Only with consent"
 msgstr "Only with consent"
 
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Only with prop"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
@@ -631,9 +957,17 @@ msgstr "OS version"
 msgid "Other"
 msgstr "Other"
 
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Other prop"
+
 #: src/features/analytics/Settings.tsx
 msgid "Other sites"
 msgstr "Other sites"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Outbound link"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Overview"
@@ -643,9 +977,26 @@ msgstr "Overview"
 msgid "Own domain"
 msgstr "Own domain"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Owners and admins make goals. They show up here with their conversions."
+
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
 msgid "Page"
 msgstr "Page"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Page not found"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "Page view of {path}"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -701,6 +1052,10 @@ msgstr "Path rules"
 msgid "Pattern"
 msgstr "Pattern"
 
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Paying customers from Germany"
+
 #: src/features/analytics/Overview.tsx
 msgid "per day"
 msgstr "per day"
@@ -721,6 +1076,14 @@ msgstr "per week"
 msgid "Phone"
 msgstr "Phone"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Pick a goal"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Pick a prop to see the values this event carried."
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
 msgstr "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
@@ -729,9 +1092,33 @@ msgstr "Pick how the site is built and copy the snippet. The key is public, like
 msgid "Platform"
 msgstr "Platform"
 
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Prop"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Prop name"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Prop name, like plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Properties for children keep no props, only the address of outbound links and downloads."
+
 #: src/features/analytics/Settings.tsx
 msgid "Property name"
 msgstr "Property name"
+
+#: src/features/analytics/Events.tsx
+msgid "Props"
+msgstr "Props"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
 
 #: src/features/analytics/Install.tsx
 msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
@@ -748,6 +1135,10 @@ msgstr "Range"
 #: src/features/analytics/Settings.tsx
 msgid "Rate limits"
 msgstr "Rate limits"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Reached when a visitor"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Realtime"
@@ -781,9 +1172,51 @@ msgstr "Remove filter: {label}"
 msgid "Remove rule"
 msgstr "Remove rule"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Remove step"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "Rename “{0}”…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Rename segment"
+
 #: src/features/analytics/Install.tsx
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Revenue"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+msgid "Save"
+msgstr "Save"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Save the changes to “{0}”"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Save the filters as a new segment…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Save these filters as a segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Saved segments"
 
 #: src/features/analytics/text.ts
 msgid "Screen size"
@@ -792,6 +1225,26 @@ msgstr "Screen size"
 #: src/features/analytics/text.ts
 msgid "Scroll depth"
 msgstr "Scroll depth"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "Scrolled to {pct} on {path}"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Scrolls"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Segments"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Sends an event"
 
 #: src/features/analytics/text.ts
 msgid "Server"
@@ -807,16 +1260,30 @@ msgid "Settings"
 msgstr "Settings"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
 msgid "Show"
 msgstr "Show"
 
+#: src/features/analytics/Funnels.tsx
 #: src/features/analytics/parts.tsx
 msgid "Show from {day}"
 msgstr "Show from {day}"
 
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Show its props"
+
 #: src/features/analytics/Controls.tsx
 msgid "Show the days"
 msgstr "Show the days"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Show the last 30 days"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Signed up"
 
 #: src/features/analytics/text.ts
 msgid "Social"
@@ -833,6 +1300,15 @@ msgstr "Source"
 msgid "Sources"
 msgstr "Sources"
 
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "Step {0}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Steps"
+
 #: src/features/analytics/text.ts
 msgid "Tablet"
 msgstr "Tablet"
@@ -848,6 +1324,10 @@ msgstr "The deepest point reached on the page, per view."
 #: src/features/analytics/NewProperty.tsx
 msgid "The first event arrived at {at}."
 msgstr "The first event arrived at {at}."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "The goal reports the revenue its events carry, per currency."
 
 #: src/features/analytics/Settings.tsx
 msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
@@ -868,6 +1348,10 @@ msgstr "The module adds a client plugin and the useYuvaAnalytics() composable. N
 #: src/features/analytics/Settings.tsx
 msgid "The name does not match. Type it exactly as shown."
 msgstr "The name does not match. Type it exactly as shown."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "The name given to track(), or outbound_click, file_download, not_found, chat_open."
 
 #: src/features/analytics/Settings.tsx
 msgid "The previous key keeps working until {at}. Update every page and app before then."
@@ -893,9 +1377,29 @@ msgstr "These filters need the detailed records, which are kept since {day}. Ear
 msgid "This cannot be undone."
 msgstr "This cannot be undone."
 
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "This goal has numbers from {since} on. Days before that show none."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+
 #: src/features/analytics/text.ts
 msgid "This month"
 msgstr "This month"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "This property already has a funnel with this name."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "This property already has a goal with this name."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "This property already has a segment with this name."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
@@ -922,6 +1426,11 @@ msgstr "Time the page was visible and in focus, per view."
 msgid "Time zone"
 msgstr "Time zone"
 
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Times the goal was reached, also several times by one visitor."
+
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "To"
@@ -942,6 +1451,10 @@ msgstr "Top pages"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "Tracking"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Two to eight goals, in the order visitors reach them within one visit."
 
 #: src/features/analytics/Settings.tsx
 msgid "Type the property’s name to delete it and all its data."
@@ -971,6 +1484,10 @@ msgstr "UTM source"
 msgid "UTM term"
 msgstr "UTM term"
 
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Views a page"
+
 #: src/features/analytics/text.ts
 msgid "Views per visit"
 msgstr "Views per visit"
@@ -986,6 +1503,10 @@ msgstr "Visitors"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Visitors in the last 30 minutes"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Visitors who reached the goal, per day, added up over the days of the range."
 
 #: src/features/analytics/Settings.tsx
 msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
@@ -1014,6 +1535,14 @@ msgstr "Watch it live"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "What the goal's events carried, per currency. Currencies are never converted or added up."
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Where conversions come from"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."

@@ -359,6 +359,16 @@ export function useErrorText() {
       return t`Outlook.com and Microsoft 365 connect with “Sign in with Microsoft”, which this server does not offer yet.`
     if (err.code === "confirm_count_mismatch")
       return t`The number of conversations changed since you looked. Check it and confirm again.`
+    if (err.code === "goal_taken") return t`This property already has a goal with this name.`
+    if (err.code === "goal_limit") return t`A property can have at most 100 goals. Delete one first.`
+    if (err.code === "goal_in_use")
+      return t`This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first.`
+    if (err.code === "funnel_taken") return t`This property already has a funnel with this name.`
+    if (err.code === "funnel_limit") return t`A property can have at most 20 funnels. Delete one first.`
+    if (err.code === "segment_taken") return t`This property already has a segment with this name.`
+    if (err.code === "segment_limit") return t`A property can have at most 100 segments. Delete one first.`
+    if (err.code === "annotation_limit") return t`A property can have at most 1,000 notes. Delete old ones first.`
+    if (err.code === "annotation_read_only") return t`Yuva's own notes cannot be changed.`
     switch (err.status) {
       case 400:
         return t`Some of the values are not valid.`

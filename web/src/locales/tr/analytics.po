@@ -7,10 +7,26 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: tr\n"
 
+#: src/features/analytics/text.ts
+msgid "(not set)"
+msgstr "(belirtilmemiş)"
+
 #. placeholder {0}: p.visitors_today
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{0, plural, one {visitor today} other {visitors today}}"
 msgstr "{0, plural, one {bugünkü ziyaretçi} other {bugünkü ziyaretçi}}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{lost} left ({lostPct})"
+msgstr "{lost} kişi ayrıldı ({lostPct})"
+
+#: src/features/analytics/Events.tsx
+msgid "{n} payments, {avg} on average"
+msgstr "{n} ödeme, ortalama {avg}"
+
+#: src/features/analytics/Funnels.tsx
+msgid "{overall} of the visitors who reached the first step also reached the last, {from} – {to}."
+msgstr "{from} – {to} arasında ilk adıma ulaşan ziyaretçilerin {overall} kadarı son adıma da ulaştı."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{used} of {limit} analytics events used this month. Events over the limit are dropped until the month ends."
@@ -19,6 +35,46 @@ msgstr "Bu ay {limit} analitik olayın {used} tanesi kullanıldı. Sınırı aş
 #: src/features/analytics/Settings.tsx
 msgid "A change applies to new events. Days already counted keep their zone."
 msgstr "Değişiklik yeni olaylara uygulanır. Sayılmış günler kendi saat dilimini korur."
+
+#: src/features/analytics/Goals.tsx
+msgid "A changed goal is counted again over the days the detailed records are kept."
+msgstr "Değiştirilen hedef, ayrıntılı kayıtların saklandığı günler için yeniden sayılır."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel follows each visit step by step, so it covers at most 90 days at once, or 31 days for a property with more than 10 million events a month. Pick a shorter range."
+msgstr "Huni her ziyareti adım adım izler; bu yüzden en fazla 90 günü, ayda 10 milyondan fazla olay alan bir mülkte 31 günü kapsar. Daha kısa bir aralık seçin."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel is made of two to eight goals in a row. Make at least two goals first."
+msgstr "Huni, art arda gelen iki ile sekiz hedeften oluşur. Önce en az iki hedef oluşturun."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are kept since {day}. Earlier days only have totals, so they cannot show a funnel."
+msgstr "Huni her ziyaretin adımlarına ihtiyaç duyar; bunlar {day} tarihinden beri saklanıyor. Önceki günler için yalnızca toplamlar var, bu yüzden huni gösterilemez."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel needs each visit’s steps, which are no longer kept for this range."
+msgstr "Huni her ziyaretin adımlarına ihtiyaç duyar; bunlar bu aralık için artık saklanmıyor."
+
+#: src/features/analytics/Funnels.tsx
+msgid "A funnel shows how many visitors go from one goal to the next within a visit, and where they leave."
+msgstr "Huni, bir ziyaret içinde kaç ziyaretçinin bir hedeften sonrakine geçtiğini ve nerede ayrıldığını gösterir."
+
+#: src/features/analytics/Goals.tsx
+msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
+msgstr "Hedef, bir sayfayı görüntüleyen, bir olay gönderen ya da yeterince aşağı kaydıran ziyaretçileri ve getirdikleri geliri sayar."
+
+#: src/features/analytics/Goals.tsx
+msgid "A new goal also counts the days the detailed records are kept, not only from today."
+msgstr "Yeni hedef yalnızca bugünden itibaren değil, ayrıntılı kayıtların saklandığı günleri de sayar."
+
+#: src/features/analytics/Annotations.tsx
+msgid "A new key was made"
+msgstr "Yeni bir anahtar oluşturuldu"
+
+#: src/features/analytics/Goals.tsx
+msgid "A path. * stands for one part of it, ** for any number of them."
+msgstr "Bir yol. * yolun bir parçası, ** ise herhangi sayıda parçası yerine geçer."
 
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
@@ -32,9 +88,17 @@ msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boş
 msgid "Add"
 msgstr "Ekle"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Add a note to the chart"
+msgstr "Grafiğe not ekle"
+
 #: src/features/analytics/Settings.tsx
 msgid "Add a rule"
 msgstr "Kural ekle"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Add a step"
+msgstr "Adım ekle"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/NewProperty.tsx
@@ -49,6 +113,10 @@ msgstr "Ziyaretçilerini, sayfalarını ve kaynaklarını çerezsiz saymak için
 msgid "Add and install"
 msgstr "Ekle ve kur"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Add note"
+msgstr "Not ekle"
+
 #: src/features/analytics/Settings.tsx
 msgid "Addresses not counted"
 msgstr "Sayılmayan adresler"
@@ -61,6 +129,14 @@ msgstr "Bu gelen kutusunun temsilcileri rakamları görebilir."
 #: src/features/analytics/text.ts
 msgid "AI assistants"
 msgstr "Yapay zekâ asistanları"
+
+#: src/features/analytics/Events.tsx
+msgid "All events"
+msgstr "Tüm olaylar"
+
+#: src/features/analytics/Goals.tsx
+msgid "All goals"
+msgstr "Tüm hedefler"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 #: src/features/analytics/AnalyticsRoutes.tsx
@@ -92,6 +168,11 @@ msgstr "Botlar"
 msgid "Bounce rate"
 msgstr "Hemen çıkma oranı"
 
+#: src/features/analytics/Events.tsx
+msgid "Break down by prop"
+msgstr "Özelliğe göre dök"
+
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Breakdown"
 msgstr "Döküm"
@@ -108,7 +189,10 @@ msgstr "Tarayıcı sürümü"
 msgid "Call it once in the browser. During server rendering it does nothing."
 msgstr "Tarayıcıda bir kez çağırın. Sunucu tarafında oluşturma sırasında hiçbir şey yapmaz."
 
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -116,9 +200,17 @@ msgstr "Vazgeç"
 msgid "Change filter: {label}"
 msgstr "Filtreyi değiştir: {label}"
 
+#: src/features/analytics/Controls.tsx
+msgid "changed"
+msgstr "değişti"
+
 #: src/features/analytics/text.ts
 msgid "Channel"
 msgstr "Kanal"
+
+#: src/features/analytics/text.ts
+msgid "Chat opened"
+msgstr "Sohbet açıldı"
 
 #: src/features/analytics/Settings.tsx
 msgid "Children"
@@ -174,6 +266,10 @@ msgstr "Karşılaştırılan günler"
 msgid "Comparison"
 msgstr "Karşılaştırma"
 
+#: src/features/analytics/text.ts
+msgid "Completions"
+msgstr "Tamamlanma"
+
 #: src/features/analytics/Install.tsx
 msgid "Consent mode"
 msgstr "İzin modu"
@@ -185,6 +281,18 @@ msgstr "içerir"
 #: src/features/analytics/Install.tsx
 msgid "Content blockers often stop scripts from other domains. Serving the script and its endpoint from your own site keeps those visitors counted. The Yuva server has to trust your proxy’s forwarded address; otherwise all visitors look like one."
 msgstr "İçerik engelleyiciler başka alan adlarından gelen betikleri sık sık durdurur. Betiği ve uç noktasını kendi sitenizden sunarsanız bu ziyaretçiler de sayılır. Yuva sunucusunun, vekil sunucunuzun ilettiği adrese güvenmesi gerekir; yoksa tüm ziyaretçiler tek kişi gibi görünür."
+
+#: src/features/analytics/text.ts
+msgid "Conversion rate"
+msgstr "Dönüşüm oranı"
+
+#: src/features/analytics/text.ts
+msgid "Conversions"
+msgstr "Dönüşümler"
+
+#: src/features/analytics/text.ts
+msgid "Conversions per 100 visitors."
+msgstr "100 ziyaretçi başına dönüşüm."
 
 #: src/features/analytics/Install.tsx
 msgid "Count my visits again"
@@ -218,13 +326,17 @@ msgstr "Ülke"
 msgid "Counts every visitor without asking: nothing is stored on the device and no IP address is kept."
 msgstr "Her ziyaretçiyi sormadan sayar: cihaza hiçbir şey yazılmaz ve IP adresi saklanmaz."
 
+#: src/features/analytics/Funnels.tsx
+msgid "Counts the visitors who reached each step after the ones before it, within one visit on one day. Numbers are at most ten minutes old."
+msgstr "Her adıma, öncekilerden sonra, aynı gün tek bir ziyaret içinde ulaşan ziyaretçileri sayar. Sayılar en fazla on dakika eskidir."
+
 #: src/features/analytics/Settings.tsx
 msgid "Currency"
 msgstr "Para birimi"
 
 #: src/features/analytics/text.ts
-msgid "Custom events."
-msgstr "Özel olaylar."
+msgid "Custom and built-in events."
+msgstr "Özel ve yerleşik olaylar."
 
 #: src/features/analytics/Controls.tsx
 msgid "Custom range"
@@ -237,6 +349,10 @@ msgstr "Özel aralık…"
 #: src/features/analytics/Settings.tsx
 msgid "Data"
 msgstr "Veriler"
+
+#: src/features/analytics/Install.tsx
+msgid "data-outbound counts clicks on links to other sites, data-files downloads of documents and archives, and data-chat each time a visitor opens the chat. track() sends your own events with up to 30 props; e-mail addresses in props are dropped. Make goals from events in the Goals view."
+msgstr "data-outbound başka sitelere giden bağlantılara tıklamaları, data-files belge ve arşiv indirmelerini, data-chat ise ziyaretçinin sohbeti her açışını sayar. track() kendi olaylarınızı en fazla 30 özellikle gönderir; özelliklerdeki e-posta adresleri atılır. Olaylardan Hedefler görünümünde hedef oluşturun."
 
 #: src/features/analytics/Settings.tsx
 msgid "Day"
@@ -272,9 +388,40 @@ msgstr "{0} için tüm veriler silinsin mi?"
 msgid "Delete days"
 msgstr "Günleri sil"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Delete funnel"
+msgstr "Huniyi sil"
+
+#: src/features/analytics/Goals.tsx
+msgid "Delete goal"
+msgstr "Hedefi sil"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Delete note"
+msgstr "Notu sil"
+
+#: src/features/analytics/Controls.tsx
+msgid "Delete segment"
+msgstr "Segmenti sil"
+
+#. placeholder {0}: funnel.name
+#: src/features/analytics/Funnels.tsx
+msgid "Delete the funnel “{0}”?"
+msgstr "“{0}” hunisi silinsin mi?"
+
+#. placeholder {0}: goal.name
+#: src/features/analytics/Goals.tsx
+msgid "Delete the goal “{0}”?"
+msgstr "“{0}” hedefi silinsin mi?"
+
 #: src/features/analytics/Settings.tsx
 msgid "Delete the property"
 msgstr "Mülkü sil"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Delete the segment “{0}”?"
+msgstr "“{0}” segmenti silinsin mi?"
 
 #: src/features/analytics/Settings.tsx
 msgid "Delete the visits and events of {span}?"
@@ -284,9 +431,17 @@ msgstr "{span} tarihlerinin ziyaretleri ve olayları silinsin mi?"
 msgid "Delete these days"
 msgstr "Bu günleri sil"
 
+#: src/features/analytics/Annotations.tsx
+msgid "Delete this note?"
+msgstr "Bu not silinsin mi?"
+
 #: src/features/analytics/Settings.tsx
 msgid "Deleting in the background. The numbers update when it is done."
 msgstr "Arka planda siliniyor. Bittiğinde rakamlar güncellenir."
+
+#: src/features/analytics/Goals.tsx
+msgid "Depth in %"
+msgstr "Derinlik (%)"
 
 #: src/features/analytics/text.ts
 msgid "Desktop"
@@ -347,13 +502,53 @@ msgstr "Atılan"
 msgid "E-mail"
 msgstr "E-posta"
 
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Edit funnel"
+msgstr "Huniyi düzenle"
+
+#: src/features/analytics/Goals.tsx
+msgid "Edit goal"
+msgstr "Hedefi düzenle"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Edit note"
+msgstr "Notu düzenle"
+
 #: src/features/analytics/text.ts
 msgid "Entry page"
 msgstr "Giriş sayfası"
 
+#: src/features/analytics/Goals.tsx
+msgid "equal to"
+msgstr "değeri"
+
+#: src/features/analytics/Goals.tsx
+#: src/features/analytics/text.ts
+msgid "Event"
+msgstr "Olay"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event}"
+msgstr "{event} olayı"
+
+#: src/features/analytics/Goals.tsx
+msgid "Event {event} with {key} = {value}"
+msgstr "{key} = {value} olan {event} olayı"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Install.tsx
 #: src/features/analytics/text.ts
 msgid "Events"
 msgstr "Olaylar"
+
+#: src/features/analytics/Events.tsx
+msgid "Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when the script has their attributes."
+msgstr "Olaylar, sayfalarınızdaki ve uygulamalarınızdaki track() çağrılarından gelir. Dış bağlantılar, indirmeler ve sohbet açılışları, betikte ilgili öznitelikler varsa sayılır."
 
 #: src/features/analytics/Settings.tsx
 msgid "Events count only after the page calls yuva.consent with analytics set to true. Install the script with data-consent=\"required\"."
@@ -371,6 +566,14 @@ msgstr "olay atıldı"
 msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
 msgstr "Bütün ziyaretler, olaylar ve toplamlar silinir. Mülk ve anahtarı kalır, sayım sürer."
 
+#: src/features/analytics/Controls.tsx
+msgid "Everyone who sees this property can pick it. You, owners and admins can change it."
+msgstr "Bu mülkü gören herkes seçebilir. Siz, sahipler ve yöneticiler değiştirebilir."
+
+#: src/features/analytics/Annotations.tsx
+msgid "Everyone who sees this property sees the note, such as a launch or a campaign."
+msgstr "Bu mülkü gören herkes notu görür; örneğin bir lansman ya da kampanya."
+
 #: src/features/analytics/Settings.tsx
 msgid "Excluded"
 msgstr "Hariç tutulan"
@@ -378,6 +581,10 @@ msgstr "Hariç tutulan"
 #: src/features/analytics/text.ts
 msgid "Exit page"
 msgstr "Çıkış sayfası"
+
+#: src/features/analytics/text.ts
+msgid "File download"
+msgstr "Dosya indirme"
 
 #: src/features/analytics/Breakdown.tsx
 msgid "Filter by this"
@@ -395,14 +602,44 @@ msgstr "Örneğin Fieldnote web sitesi"
 msgid "For revenue, an ISO code like EUR."
 msgstr "Gelir için, EUR gibi bir ISO kodu."
 
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "Başlangıç"
 
+#: src/features/analytics/Funnels.tsx
+msgid "From pricing to signup"
+msgstr "Fiyatlardan kayda"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Funnel"
+msgstr "Huni"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Funnels"
+msgstr "Huniler"
+
 #: src/features/analytics/Settings.tsx
 msgid "General"
 msgstr "Genel"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Go to goals"
+msgstr "Hedeflere git"
+
+#: src/features/analytics/Goals.tsx
+msgid "Goal"
+msgstr "Hedef"
+
+#. placeholder {0}: a.text
+#: src/features/analytics/Annotations.tsx
+msgid "Goal “{0}” was created"
+msgstr "“{0}” hedefi oluşturuldu"
+
+#: src/features/analytics/AnalyticsRoutes.tsx
+msgid "Goals"
+msgstr "Hedefler"
 
 #: src/features/analytics/Settings.tsx
 msgid "had an address removed"
@@ -419,6 +656,10 @@ msgstr "Alan adı"
 #: src/features/analytics/Install.tsx
 msgid "How to install"
 msgstr "Kurulum yolu"
+
+#: src/features/analytics/Events.tsx
+msgid "How to send events"
+msgstr "Olaylar nasıl gönderilir"
 
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
@@ -450,9 +691,29 @@ msgstr "eşittir"
 msgid "is not"
 msgstr "eşit değildir"
 
+#: src/features/analytics/Controls.tsx
+msgid "It is gone for everyone who uses it. The numbers stay."
+msgstr "Kullanan herkes için kaybolur. Sayılar kalır."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Its goals stay."
+msgstr "Hedefleri kalır."
+
+#: src/features/analytics/Goals.tsx
+msgid "Its numbers are deleted too. This cannot be undone."
+msgstr "Sayıları da silinir. Bu geri alınamaz."
+
+#: src/features/analytics/Events.tsx
+msgid "Keep only visits with this value"
+msgstr "Yalnızca bu değere sahip ziyaretleri tut"
+
 #: src/features/analytics/Settings.tsx
 msgid "Key"
 msgstr "Anahtar"
+
+#: src/features/analytics/Goals.tsx
+msgid "Kind of goal"
+msgstr "Hedef türü"
 
 #: src/features/analytics/text.ts
 msgid "Language"
@@ -495,6 +756,7 @@ msgid "Last month"
 msgstr "Geçen ay"
 
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
 msgid "Load more"
 msgstr "Daha fazla yükle"
 
@@ -516,6 +778,14 @@ msgstr "Yeni anahtar oluştur"
 msgid "Make a new key?"
 msgstr "Yeni anahtar oluşturulsun mu?"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Make at least two goals first."
+msgstr "Önce en az iki hedef oluşturun."
+
+#: src/features/analytics/Goals.tsx
+msgid "Make goal"
+msgstr "Hedef oluştur"
+
 #: src/features/analytics/text.ts
 msgid "matches"
 msgstr "kalıba uyar"
@@ -528,14 +798,41 @@ msgstr "Mobil"
 msgid "Monthly limit"
 msgstr "Aylık sınır"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Move down"
+msgstr "Aşağı taşı"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Move up"
+msgstr "Yukarı taşı"
+
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Name"
 msgstr "Ad"
 
+#: src/features/analytics/Funnels.tsx
+msgid "New funnel"
+msgstr "Yeni huni"
+
+#: src/features/analytics/Goals.tsx
+msgid "New goal"
+msgstr "Yeni hedef"
+
+#: src/features/analytics/Annotations.tsx
+msgid "New pricing page"
+msgstr "Yeni fiyat sayfası"
+
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
 msgstr "Karşılaştırma yok"
+
+#: src/features/analytics/Goals.tsx
+msgid "No conversions in this range."
+msgstr "Bu aralıkta dönüşüm yok."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No events in the last 24 hours"
@@ -545,13 +842,29 @@ msgstr "Son 24 saatte olay yok"
 msgid "No events yet"
 msgstr "Henüz olay yok"
 
+#: src/features/analytics/Funnels.tsx
+msgid "No funnels yet"
+msgstr "Henüz huni yok"
+
+#: src/features/analytics/Goals.tsx
+msgid "No goals yet"
+msgstr "Henüz hedef yok"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "No properties yet"
 msgstr "Henüz mülk yok"
 
+#: src/features/analytics/Controls.tsx
+msgid "No segment"
+msgstr "Segment yok"
+
 #: src/features/analytics/Realtime.tsx
 msgid "Nobody in the last 30 minutes."
 msgstr "Son 30 dakikada kimse yok."
+
+#: src/features/analytics/Funnels.tsx
+msgid "Nobody reached the first step in this range."
+msgstr "Bu aralıkta ilk adıma ulaşan olmadı."
 
 #: src/features/analytics/Settings.tsx
 msgid "None yet"
@@ -566,7 +879,16 @@ msgstr "Yok, yalnızca sahipler ve yöneticiler"
 msgid "Not available for this range."
 msgstr "Bu aralık için gösterilemiyor."
 
+#: src/features/analytics/Annotations.tsx
+msgid "Note"
+msgstr "Not"
+
+#: src/features/analytics/Annotations.tsx
+msgid "Notes"
+msgstr "Notlar"
+
 #: src/features/analytics/Breakdown.tsx
+#: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
 msgid "Nothing counted in this range."
 msgstr "Bu aralıkta sayılan bir şey yok."
@@ -603,6 +925,10 @@ msgstr "Yalnızca toplamlar gösterilir. Tek tek ziyaretçilerin listesi yoktur.
 msgid "Only with consent"
 msgstr "Yalnızca izinle"
 
+#: src/features/analytics/Goals.tsx
+msgid "Only with prop"
+msgstr "Yalnızca şu özellik"
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Kod parçası eklenmiş bir sayfanızı açın. Sunucu ilk sayfa görüntülemesini kaydeder kaydetmez burası yeşile döner. Do Not Track ya da Global Privacy Control açık tarayıcılar hiçbir şey göndermez; denemek için başka bir tarayıcı kullanın."
@@ -631,9 +957,17 @@ msgstr "İşletim sistemi sürümü"
 msgid "Other"
 msgstr "Diğer"
 
+#: src/features/analytics/Events.tsx
+msgid "Other prop"
+msgstr "Başka özellik"
+
 #: src/features/analytics/Settings.tsx
 msgid "Other sites"
 msgstr "Başka siteler"
+
+#: src/features/analytics/text.ts
+msgid "Outbound link"
+msgstr "Dış bağlantı"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Overview"
@@ -643,9 +977,26 @@ msgstr "Genel bakış"
 msgid "Own domain"
 msgstr "Kendi alan adınız"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Owners and admins make funnels from goals. They show up here with each step’s drop-off."
+msgstr "Sahipler ve yöneticiler hedeflerden huni oluşturur. Huniler burada her adımdaki kayıpla görünür."
+
+#: src/features/analytics/Goals.tsx
+msgid "Owners and admins make goals. They show up here with their conversions."
+msgstr "Hedefleri sahipler ve yöneticiler oluşturur. Hedefler burada dönüşümleriyle görünür."
+
+#: src/features/analytics/Goals.tsx
 #: src/features/analytics/text.ts
 msgid "Page"
 msgstr "Sayfa"
+
+#: src/features/analytics/text.ts
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#: src/features/analytics/Goals.tsx
+msgid "Page view of {path}"
+msgstr "{path} sayfasının görüntülenmesi"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
@@ -701,6 +1052,10 @@ msgstr "Yol kuralları"
 msgid "Pattern"
 msgstr "Kalıp"
 
+#: src/features/analytics/Controls.tsx
+msgid "Paying customers from Germany"
+msgstr "Almanya'dan ödeme yapan müşteriler"
+
 #: src/features/analytics/Overview.tsx
 msgid "per day"
 msgstr "günlük"
@@ -721,6 +1076,14 @@ msgstr "haftalık"
 msgid "Phone"
 msgstr "Telefon"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Pick a goal"
+msgstr "Bir hedef seçin"
+
+#: src/features/analytics/Events.tsx
+msgid "Pick a prop to see the values this event carried."
+msgstr "Bu olayın taşıdığı değerleri görmek için bir özellik seçin."
+
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
 msgstr "Sitenin nasıl yapıldığını seçip kod parçasını kopyalayın. Anahtar, sohbet anahtarı gibi herkese açıktır: yalnızca mülkün alan adlarında çalışır."
@@ -729,9 +1092,33 @@ msgstr "Sitenin nasıl yapıldığını seçip kod parçasını kopyalayın. Ana
 msgid "Platform"
 msgstr "Platform"
 
+#: src/features/analytics/text.ts
+msgid "Prop"
+msgstr "Özellik"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name"
+msgstr "Özellik adı"
+
+#: src/features/analytics/Events.tsx
+msgid "Prop name, like plan"
+msgstr "Özellik adı, örneğin plan"
+
+#: src/features/analytics/Events.tsx
+msgid "Properties for children keep no props, only the address of outbound links and downloads."
+msgstr "Çocuklara yönelik mülkler özellik saklamaz; yalnızca dış bağlantıların ve indirmelerin adresini tutar."
+
 #: src/features/analytics/Settings.tsx
 msgid "Property name"
 msgstr "Mülk adı"
+
+#: src/features/analytics/Events.tsx
+msgid "Props"
+msgstr "Özellikler"
+
+#: src/features/analytics/Events.tsx
+msgid "Props of any name can be broken down for the days the detailed records are kept. Earlier days only have the tracked props."
+msgstr "Ayrıntılı kayıtların saklandığı günlerde her özellik dökülebilir. Önceki günlerde yalnızca izlenen özellikler var."
 
 #: src/features/analytics/Install.tsx
 msgid "Put the script in the head of every page. It counts page views, also when a single-page app changes the address, and stores nothing on the visitor’s device."
@@ -748,6 +1135,10 @@ msgstr "Aralık"
 #: src/features/analytics/Settings.tsx
 msgid "Rate limits"
 msgstr "Hız sınırları"
+
+#: src/features/analytics/Goals.tsx
+msgid "Reached when a visitor"
+msgstr "Ziyaretçi şunu yapınca ulaşılır"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 msgid "Realtime"
@@ -781,9 +1172,51 @@ msgstr "Filtreyi kaldır: {label}"
 msgid "Remove rule"
 msgstr "Kuralı kaldır"
 
+#: src/features/analytics/Funnels.tsx
+msgid "Remove step"
+msgstr "Adımı kaldır"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Rename “{0}”…"
+msgstr "“{0}” adını değiştir…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Rename segment"
+msgstr "Segmentin adını değiştir"
+
 #: src/features/analytics/Install.tsx
 msgid "Render the component once, in the root layout. It renders nothing; useYuvaAnalytics() gives the methods anywhere below it."
 msgstr "Bileşeni kök yerleşimde bir kez kullanın. Ekrana bir şey çizmez; altındaki her yerde useYuvaAnalytics() yöntemleri verir."
+
+#: src/features/analytics/Events.tsx
+#: src/features/analytics/text.ts
+msgid "Revenue"
+msgstr "Gelir"
+
+#: src/features/analytics/Annotations.tsx
+#: src/features/analytics/Controls.tsx
+#: src/features/analytics/Funnels.tsx
+#: src/features/analytics/Goals.tsx
+msgid "Save"
+msgstr "Kaydet"
+
+#. placeholder {0}: current.name
+#: src/features/analytics/Controls.tsx
+msgid "Save the changes to “{0}”"
+msgstr "Değişiklikleri “{0}” segmentine kaydet"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save the filters as a new segment…"
+msgstr "Filtreleri yeni segment olarak kaydet…"
+
+#: src/features/analytics/Controls.tsx
+msgid "Save these filters as a segment"
+msgstr "Bu filtreleri segment olarak kaydet"
+
+#: src/features/analytics/Controls.tsx
+msgid "Saved segments"
+msgstr "Kayıtlı segmentler"
 
 #: src/features/analytics/text.ts
 msgid "Screen size"
@@ -792,6 +1225,26 @@ msgstr "Ekran boyutu"
 #: src/features/analytics/text.ts
 msgid "Scroll depth"
 msgstr "Kaydırma derinliği"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolled to {pct} on {path}"
+msgstr "{path} sayfasında {pct} kaydırma"
+
+#: src/features/analytics/Goals.tsx
+msgid "Scrolls"
+msgstr "Kaydırır"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segment"
+msgstr "Segment"
+
+#: src/features/analytics/Controls.tsx
+msgid "Segments"
+msgstr "Segmentler"
+
+#: src/features/analytics/Goals.tsx
+msgid "Sends an event"
+msgstr "Olay gönderir"
 
 #: src/features/analytics/text.ts
 msgid "Server"
@@ -807,16 +1260,30 @@ msgid "Settings"
 msgstr "Ayarlar"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Events.tsx
 msgid "Show"
 msgstr "Göster"
 
+#: src/features/analytics/Funnels.tsx
 #: src/features/analytics/parts.tsx
 msgid "Show from {day}"
 msgstr "{day} tarihinden itibaren göster"
 
+#: src/features/analytics/Events.tsx
+msgid "Show its props"
+msgstr "Özelliklerini göster"
+
 #: src/features/analytics/Controls.tsx
 msgid "Show the days"
 msgstr "Gösterilecek günler"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Show the last 30 days"
+msgstr "Son 30 günü göster"
+
+#: src/features/analytics/Goals.tsx
+msgid "Signed up"
+msgstr "Kaydoldu"
 
 #: src/features/analytics/text.ts
 msgid "Social"
@@ -833,6 +1300,15 @@ msgstr "Kaynak"
 msgid "Sources"
 msgstr "Kaynaklar"
 
+#. placeholder {0}: i + 1
+#: src/features/analytics/Funnels.tsx
+msgid "Step {0}"
+msgstr "{0}. adım"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Steps"
+msgstr "Adımlar"
+
 #: src/features/analytics/text.ts
 msgid "Tablet"
 msgstr "Tablet"
@@ -848,6 +1324,10 @@ msgstr "Görüntüleme başına sayfada inilen en derin nokta."
 #: src/features/analytics/NewProperty.tsx
 msgid "The first event arrived at {at}."
 msgstr "İlk olay {at} tarihinde geldi."
+
+#: src/features/analytics/Goals.tsx
+msgid "The goal reports the revenue its events carry, per currency."
+msgstr "Hedef, olaylarının taşıdığı geliri para birimi başına gösterir."
 
 #: src/features/analytics/Settings.tsx
 msgid "The key is public, like a chat key: every page carries it, and it only works on the property’s domains."
@@ -868,6 +1348,10 @@ msgstr "Modül bir istemci eklentisi ve useYuvaAnalytics() composable'ını ekle
 #: src/features/analytics/Settings.tsx
 msgid "The name does not match. Type it exactly as shown."
 msgstr "Ad eşleşmiyor. Tam olarak gösterildiği gibi yazın."
+
+#: src/features/analytics/Goals.tsx
+msgid "The name given to track(), or outbound_click, file_download, not_found, chat_open."
+msgstr "track() çağrısına verilen ad ya da outbound_click, file_download, not_found, chat_open."
 
 #: src/features/analytics/Settings.tsx
 msgid "The previous key keeps working until {at}. Update every page and app before then."
@@ -893,9 +1377,29 @@ msgstr "Bu filtreler ayrıntılı kayıtlara ihtiyaç duyar; bunlar {day} tarihi
 msgid "This cannot be undone."
 msgstr "Bu geri alınamaz."
 
+#: src/features/analytics/Goals.tsx
+msgid "This goal has numbers from {since} on. Days before that show none."
+msgstr "Bu hedefin sayıları {since} tarihinden itibaren var. Önceki günlerde sayı görünmez."
+
+#: src/features/analytics/Goals.tsx
+msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
+msgstr "Bu hedef bir huninin adımı. Önce onu huniden çıkarın ya da huniyi silin."
+
 #: src/features/analytics/text.ts
 msgid "This month"
 msgstr "Bu ay"
+
+#: src/features/analytics/Funnels.tsx
+msgid "This property already has a funnel with this name."
+msgstr "Bu mülkte bu adla bir huni zaten var."
+
+#: src/features/analytics/Goals.tsx
+msgid "This property already has a goal with this name."
+msgstr "Bu mülkte bu adla bir hedef zaten var."
+
+#: src/features/analytics/Controls.tsx
+msgid "This property already has a segment with this name."
+msgstr "Bu mülkte bu adla bir segment zaten var."
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
@@ -922,6 +1426,11 @@ msgstr "Görüntüleme başına sayfanın görünür ve odakta kaldığı süre.
 msgid "Time zone"
 msgstr "Saat dilimi"
 
+#: src/features/analytics/text.ts
+msgid "Times the goal was reached, also several times by one visitor."
+msgstr "Hedefe kaç kez ulaşıldığı; bir ziyaretçinin birden çok kez ulaşması da sayılır."
+
+#: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Settings.tsx
 msgid "To"
@@ -942,6 +1451,10 @@ msgstr "En çok ziyaret edilen sayfalar"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "İzleme"
+
+#: src/features/analytics/Funnels.tsx
+msgid "Two to eight goals, in the order visitors reach them within one visit."
+msgstr "Ziyaretçilerin tek bir ziyarette ulaştığı sırayla iki ile sekiz hedef."
 
 #: src/features/analytics/Settings.tsx
 msgid "Type the property’s name to delete it and all its data."
@@ -971,6 +1484,10 @@ msgstr "UTM kaynağı"
 msgid "UTM term"
 msgstr "UTM terimi"
 
+#: src/features/analytics/Goals.tsx
+msgid "Views a page"
+msgstr "Sayfa görüntüler"
+
 #: src/features/analytics/text.ts
 msgid "Views per visit"
 msgstr "Ziyaret başına görüntüleme"
@@ -986,6 +1503,10 @@ msgstr "Ziyaretçiler"
 #: src/features/analytics/Realtime.tsx
 msgid "Visitors in the last 30 minutes"
 msgstr "Son 30 dakikadaki ziyaretçiler"
+
+#: src/features/analytics/text.ts
+msgid "Visitors who reached the goal, per day, added up over the days of the range."
+msgstr "Hedefe ulaşan ziyaretçiler; gün başına sayılıp aralığın günleri boyunca toplanır."
 
 #: src/features/analytics/Settings.tsx
 msgid "Visitors with Do Not Track or Global Privacy Control send nothing, so they are not counted here either. Nothing about a dropped event is kept but its count."
@@ -1014,6 +1535,14 @@ msgstr "Canlı izle"
 #: src/features/analytics/text.ts
 msgid "Web"
 msgstr "Web"
+
+#: src/features/analytics/text.ts
+msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
+msgstr "Hedefin olaylarının taşıdığı tutar, para birimi başına. Para birimleri asla çevrilmez ya da toplanmaz."
+
+#: src/features/analytics/Goals.tsx
+msgid "Where conversions come from"
+msgstr "Dönüşümler nereden geliyor"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Where the property’s day starts and ends."

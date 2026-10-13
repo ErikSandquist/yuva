@@ -53,11 +53,12 @@ export const FILTER_DIMENSIONS: AnalyticsFilterDimension[] = [
   "language",
   "platform",
   "app_version",
+  "event",
 ]
 
 export const OPS: FilterOp[] = ["is", "is_not", "contains", "not_contains", "matches"]
 
-export const KPIS: AnalyticsMetric[] = [
+export const KPIS: Exclude<AnalyticsMetric, "revenue">[] = [
   "visitors",
   "visits",
   "pageviews",
@@ -92,18 +93,42 @@ export function parseCompare(raw: string | null): AnalyticsCompare | undefined {
   return custom ? { with: "range", ...custom } : undefined
 }
 
+const PROP = "prop."
+
 export function parseFilters(values: string[]): AnalyticsFilter[] {
   const out: AnalyticsFilter[] = []
   for (const v of values) {
     const a = v.indexOf(":")
     const b = a < 0 ? -1 : v.indexOf(":", a + 1)
     if (b < 0) continue
-    const dimension = v.slice(0, a) as AnalyticsFilterDimension
+    const head = v.slice(0, a)
     const op = v.slice(a + 1, b) as FilterOp
-    if (!FILTER_DIMENSIONS.includes(dimension) || !OPS.includes(op)) continue
-    out.push({ dimension, op, values: [v.slice(b + 1)] })
+    if (!OPS.includes(op)) continue
+    const value = v.slice(b + 1)
+    if (head.startsWith(PROP)) {
+      let prop = ""
+      try {
+        prop = decodeURIComponent(head.slice(PROP.length))
+      } catch {
+        continue
+      }
+      if (prop) out.push({ dimension: "prop", prop, op, values: [value] })
+      continue
+    }
+    const dimension = head as AnalyticsFilterDimension
+    if (!FILTER_DIMENSIONS.includes(dimension)) continue
+    out.push({ dimension, op, values: [value] })
   }
   return out.slice(0, 10)
+}
+
+function filterParam(f: AnalyticsFilter) {
+  const head = f.dimension === "prop" ? `${PROP}${encodeURIComponent(f.prop ?? "")}` : f.dimension
+  return `${head}:${f.op}:${f.values[0] ?? ""}`
+}
+
+function sameTarget(a: AnalyticsFilter, b: AnalyticsFilter) {
+  return a.dimension === b.dimension && (a.dimension !== "prop" || a.prop === b.prop)
 }
 
 export function rangeParam(range: AnalyticsRange) {
@@ -163,16 +188,31 @@ export type View = {
   range: AnalyticsRange
   compare?: AnalyticsCompare
   filters: AnalyticsFilter[]
-  metric: AnalyticsMetric
+  segment?: string
+  metric: Exclude<AnalyticsMetric, "revenue">
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+export function scopeOf(view: View): { filters: AnalyticsFilter[] } {
+  return { filters: view.filters }
+}
+
+export function sameFilters(a: AnalyticsFilter[], b: AnalyticsFilter[]) {
+  const key = (f: AnalyticsFilter) => filterParam(f)
+  const x = a.map(key).sort()
+  const y = b.map(key).sort()
+  return x.length === y.length && x.every((v, i) => v === y[i])
 }
 
 export function useView() {
   const [params, setParams] = useSearchParams()
-  const metric = params.get("metric") as AnalyticsMetric | null
+  const metric = params.get("metric") as View["metric"] | null
   const view: View = {
     range: parseRange(params.get("period")),
     compare: parseCompare(params.get("compare")),
     filters: parseFilters(params.getAll("f")),
+    segment: UUID.test(params.get("segment") ?? "") ? params.get("segment")! : undefined,
     metric: metric && KPIS.includes(metric) ? metric : "visitors",
   }
   const update = (fn: (p: URLSearchParams) => void) =>
@@ -186,7 +226,7 @@ export function useView() {
     )
   const writeFilters = (p: URLSearchParams, filters: AnalyticsFilter[]) => {
     p.delete("f")
-    for (const f of filters) p.append("f", `${f.dimension}:${f.op}:${f.values[0] ?? ""}`)
+    for (const f of filters) p.append("f", filterParam(f))
   }
   return {
     view,
@@ -207,10 +247,18 @@ export function useView() {
         if (m === "visitors") p.delete("metric")
         else p.set("metric", m)
       }),
-    addFilter: (dimension: AnalyticsFilterDimension, value: string, op: FilterOp = "is") =>
-      update((p) =>
-        writeFilters(p, [...view.filters.filter((f) => f.dimension !== dimension), { dimension, op, values: [value] }])
-      ),
+    addFilter: (dimension: AnalyticsFilterDimension, value: string, op: FilterOp = "is", prop?: string) =>
+      update((p) => {
+        const f: AnalyticsFilter = prop ? { dimension, prop, op, values: [value] } : { dimension, op, values: [value] }
+        writeFilters(p, [...view.filters.filter((x) => !sameTarget(x, f)), f])
+      }),
+    setFilters: (filters: AnalyticsFilter[]) => update((p) => writeFilters(p, filters.slice(0, 10))),
+    setSegment: (id: string | undefined, filters: AnalyticsFilter[]) =>
+      update((p) => {
+        if (id) p.set("segment", id)
+        else p.delete("segment")
+        writeFilters(p, filters.slice(0, 10))
+      }),
     setFilter: (i: number, f: AnalyticsFilter) =>
       update((p) =>
         writeFilters(
@@ -225,14 +273,19 @@ export function useView() {
           view.filters.filter((_, j) => j !== i)
         )
       ),
-    clearFilters: () => update((p) => p.delete("f")),
+    clearFilters: () =>
+      update((p) => {
+        p.delete("f")
+        p.delete("segment")
+      }),
   }
 }
 
-export function useViewSearch() {
+export function useViewSearch(withSegment = false) {
   const [params] = useSearchParams()
   const keep = new URLSearchParams()
-  for (const k of ["period", "compare", "f"]) for (const v of params.getAll(k)) keep.append(k, v)
+  for (const k of withSegment ? ["period", "compare", "f", "segment"] : ["period", "compare", "f"])
+    for (const v of params.getAll(k)) keep.append(k, v)
   const s = keep.toString()
   return s ? `?${s}` : ""
 }

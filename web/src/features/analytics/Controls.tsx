@@ -1,14 +1,27 @@
 import { Trans, useLingui } from "@lingui/react/macro"
-import { CalendarRangeIcon, ChevronDownIcon, GitCompareArrowsIcon, XIcon } from "lucide-react"
+import {
+  BookmarkIcon,
+  CalendarRangeIcon,
+  ChevronDownIcon,
+  ChevronsUpDownIcon,
+  GitCompareArrowsIcon,
+  PencilIcon,
+  SaveIcon,
+  Trash2Icon,
+  XIcon,
+} from "lucide-react"
 import { useState } from "react"
 
+import { ErrorLine, useConfirm } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
@@ -17,9 +30,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { OPS, PERIODS, todayIso, useView, type FilterOp, type Period } from "@/features/analytics/state"
-import { flag, useAnalyticsText, valueText } from "@/features/analytics/text"
-import type { AnalyticsFilter } from "@/lib/api"
+import { useDeleteSegment, useSaveSegment, useSegments } from "@/features/analytics/queries"
+import { OPS, PERIODS, sameFilters, todayIso, useView, type FilterOp, type Period } from "@/features/analytics/state"
+import { flag, useAnalyticsText, valueText, type AnalyticsText } from "@/features/analytics/text"
+import { Field } from "@/features/settings/ui"
+import { ApiError, type AnalyticsFilter, type AnalyticsSegment } from "@/lib/api"
+import { useSession } from "@/lib/session"
 
 const CUSTOM = "custom"
 
@@ -185,13 +201,21 @@ export function ComparePicker() {
   )
 }
 
+function filterName(text: AnalyticsText, f: AnalyticsFilter) {
+  return f.dimension === "prop" && f.prop ? f.prop : text.dimension[f.dimension]
+}
+
+export function filterLabel(text: AnalyticsText, f: AnalyticsFilter, locale: string) {
+  return `${filterName(text, f)} ${text.op[f.op]} ${valueText(text, f.dimension, f.values[0] ?? "", locale)}`
+}
+
 function FilterChip({ f, i }: { f: AnalyticsFilter; i: number }) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const { setFilter, removeFilter } = useView()
   const value = f.values[0] ?? ""
   const shown = valueText(text, f.dimension, value, i18n.locale)
-  const label = `${text.dimension[f.dimension]} ${text.op[f.op]} ${shown}`
+  const label = filterLabel(text, f, i18n.locale)
   return (
     <li
       className="flex h-7 shrink-0 items-center rounded-full border bg-card ps-1 text-small"
@@ -202,7 +226,9 @@ function FilterChip({ f, i }: { f: AnalyticsFilter; i: number }) {
           className="flex h-full max-w-72 items-center gap-1 rounded-full ps-2 pe-1 outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
           aria-label={t`Change filter: ${label}`}
         >
-          <span className="text-faint">{text.dimension[f.dimension]}</span>
+          <span className="truncate text-faint" dir="auto">
+            {filterName(text, f)}
+          </span>
           <span className="text-faint">{text.op[f.op]}</span>
           <span className="truncate font-medium" dir="auto">
             {f.dimension === "country" && flag(value)} {shown}
@@ -262,14 +288,222 @@ export function FilterBar() {
   )
 }
 
-export function Controls() {
+function SegmentDialog({
+  propertyId,
+  segment,
+  filters,
+  onClose,
+  onSaved,
+}: {
+  propertyId: string
+  segment?: AnalyticsSegment
+  filters: AnalyticsFilter[]
+  onClose: () => void
+  onSaved: (s: AnalyticsSegment) => void
+}) {
+  const { t, i18n } = useLingui()
+  const text = useAnalyticsText()
+  const save = useSaveSegment(propertyId)
+  const [name, setName] = useState(segment?.name ?? "")
+  const taken = save.error instanceof ApiError && save.error.code === "segment_taken"
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent data-testid="segment-dialog">
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (!name.trim()) return
+            save.mutate(segment ? { segmentId: segment.id, name: name.trim() } : { name: name.trim(), filters }, {
+              onSuccess: onSaved,
+            })
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>
+              {segment ? <Trans>Rename segment</Trans> : <Trans>Save these filters as a segment</Trans>}
+            </DialogTitle>
+          </DialogHeader>
+          <Field
+            label={<Trans>Name</Trans>}
+            htmlFor="segment-name"
+            error={taken ? <Trans>This property already has a segment with this name.</Trans> : undefined}
+            hint={
+              segment ? undefined : (
+                <Trans>Everyone who sees this property can pick it. You, owners and admins can change it.</Trans>
+              )
+            }
+          >
+            <Input
+              id="segment-name"
+              required
+              maxLength={100}
+              value={name}
+              placeholder={t`Paying customers from Germany`}
+              onChange={(e) => setName(e.target.value)}
+              data-testid="segment-name"
+            />
+          </Field>
+          {!segment && (
+            <ul className="flex flex-wrap gap-1.5" aria-label={t`Filters`}>
+              {filters.map((f, i) => (
+                <li key={i} className="rounded-full border bg-card px-2.5 py-0.5 text-small" dir="auto">
+                  {filterLabel(text, f, i18n.locale)}
+                </li>
+              ))}
+            </ul>
+          )}
+          {!taken && <ErrorLine error={save.error} />}
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose}>
+              <Trans>Cancel</Trans>
+            </Button>
+            <Button type="submit" disabled={!name.trim() || save.isPending} data-testid="segment-save">
+              <Trans>Save</Trans>
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export function SegmentPicker({ propertyId }: { propertyId: string }) {
+  const { t, i18n } = useLingui()
+  const text = useAnalyticsText()
+  const { canManage, membership } = useSession()
+  const segments = useSegments(propertyId)
+  const { view, setSegment } = useView()
+  const save = useSaveSegment(propertyId)
+  const remove = useDeleteSegment(propertyId)
+  const [ask, confirm] = useConfirm()
+  const [dialog, setDialog] = useState<"new" | "rename" | null>(null)
+  const items = segments.data ?? []
+  const current = items.find((s) => s.id === view.segment)
+  const changed = !!current && !sameFilters(current.filters, view.filters)
+  const editable = !!current && (canManage || current.created_by === membership.member_id)
+  const summary = (s: AnalyticsSegment) => s.filters.map((f) => filterLabel(text, f, i18n.locale)).join(", ")
+  if (items.length === 0 && view.filters.length === 0) return null
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          className="flex h-9 max-w-full min-w-0 items-center gap-2 rounded-xl border border-input bg-background ps-3 pe-2.5 text-body whitespace-nowrap transition-colors outline-none hover:border-foreground/25 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/25"
+          aria-label={t`Segment`}
+          data-testid="analytics-segment"
+        >
+          <BookmarkIcon className="size-4 shrink-0 text-faint" />
+          <span className="min-w-0 truncate">{current?.name ?? t`Segments`}</span>
+          {changed && <span className="shrink-0 text-caption text-faint">{t`changed`}</span>}
+          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-faint" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-72 max-w-[calc(100vw-32px)]">
+          {items.length > 0 && (
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>
+                <Trans>Saved segments</Trans>
+              </DropdownMenuLabel>
+              <DropdownMenuRadioGroup
+                value={view.segment ?? ""}
+                onValueChange={(v) => {
+                  const s = items.find((x) => x.id === v)
+                  setSegment(s?.id, s?.filters ?? [])
+                }}
+              >
+                <DropdownMenuRadioItem value="">
+                  <Trans>No segment</Trans>
+                </DropdownMenuRadioItem>
+                {items.map((s) => (
+                  <DropdownMenuRadioItem key={s.id} value={s.id} data-testid="segment-item">
+                    <span className="flex min-w-0 flex-col">
+                      <span className="truncate">{s.name}</span>
+                      <span className="truncate text-caption text-faint" dir="auto">
+                        {summary(s)}
+                      </span>
+                    </span>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuGroup>
+          )}
+          {items.length > 0 && <DropdownMenuSeparator />}
+          {current && editable && changed && view.filters.length > 0 && (
+            <DropdownMenuItem
+              onClick={() => save.mutate({ segmentId: current.id, filters: view.filters })}
+              data-testid="segment-update"
+            >
+              <SaveIcon />
+              <Trans>Save the changes to “{current.name}”</Trans>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem
+            disabled={view.filters.length === 0}
+            onClick={() => setDialog("new")}
+            data-testid="segment-new"
+          >
+            <BookmarkIcon />
+            <Trans>Save the filters as a new segment…</Trans>
+          </DropdownMenuItem>
+          {current && editable && (
+            <>
+              <DropdownMenuItem onClick={() => setDialog("rename")} data-testid="segment-rename">
+                <PencilIcon />
+                <Trans>Rename “{current.name}”…</Trans>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() =>
+                  ask({
+                    title: <Trans>Delete the segment “{current.name}”?</Trans>,
+                    description: <Trans>It is gone for everyone who uses it. The numbers stay.</Trans>,
+                    confirm: <Trans>Delete segment</Trans>,
+                    run: () => remove.mutate(current.id, { onSuccess: () => setSegment(undefined, view.filters) }),
+                  })
+                }
+                data-testid="segment-delete"
+              >
+                <Trash2Icon />
+                <Trans>Delete segment</Trans>
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <ErrorLine error={save.error ?? remove.error} className="text-small" />
+      {dialog && (
+        <SegmentDialog
+          propertyId={propertyId}
+          segment={dialog === "rename" ? current : undefined}
+          filters={view.filters}
+          onClose={() => setDialog(null)}
+          onSaved={(s) => {
+            setDialog(null)
+            if (dialog === "new") setSegment(s.id, s.filters)
+          }}
+        />
+      )}
+      {confirm}
+    </>
+  )
+}
+
+export function Controls({
+  propertyId,
+  compare = true,
+  filters = true,
+}: {
+  propertyId: string
+  compare?: boolean
+  filters?: boolean
+}) {
   return (
     <div className="flex flex-col gap-2.5">
       <div className="flex flex-wrap items-center gap-2">
         <RangePicker />
-        <ComparePicker />
+        {compare && <ComparePicker />}
+        {filters && <SegmentPicker propertyId={propertyId} />}
       </div>
-      <FilterBar />
+      {filters && <FilterBar />}
     </div>
   )
 }
