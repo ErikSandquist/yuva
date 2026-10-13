@@ -111,6 +111,11 @@ type Event struct {
 	// VisitorKey is your own key for the visitor, such as a session id (never an e-mail address),
 	// used instead of IP and UserAgent.
 	VisitorKey string
+	// PersistentID is the id the visitor's browser or app keeps after they agreed to the
+	// persistent consent feature; with Consent it names them on every day. IdentityToken, an
+	// identity token of the property's inbox sent with it, links them to their contact.
+	PersistentID  string
+	IdentityToken string
 }
 
 type wireEvent struct {
@@ -128,13 +133,15 @@ type wireEvent struct {
 	SecCHUAMobile   string         `json:"sec_ch_ua_mobile,omitempty"`
 	AcceptLanguage  string         `json:"accept_language,omitempty"`
 	VisitorKey      string         `json:"visitor_key,omitempty"`
+	PersistentID    string         `json:"persistent_id,omitempty"`
+	IdentityToken   string         `json:"identity_token,omitempty"`
 }
 
 func (e Event) wire() wireEvent {
 	w := wireEvent{
 		Name: e.Name, URL: e.URL, Referrer: e.Referrer, Timestamp: e.Time.UTC(), Props: e.Props, Revenue: e.Revenue, Consent: e.Consent,
 		IP: e.IP, UserAgent: e.UserAgent, SecCHUAPlatform: e.SecCHUAPlatform, SecCHUAMobile: e.SecCHUAMobile,
-		AcceptLanguage: e.AcceptLanguage, VisitorKey: e.VisitorKey,
+		AcceptLanguage: e.AcceptLanguage, VisitorKey: e.VisitorKey, PersistentID: e.PersistentID, IdentityToken: e.IdentityToken,
 	}
 	if e.NonInteractive {
 		w.Interactive = new(bool)

@@ -268,6 +268,7 @@ const (
 	AnalyticsByUtmMedium      AnalyticsDimension = "utm_medium"
 	AnalyticsByUtmSource      AnalyticsDimension = "utm_source"
 	AnalyticsByUtmTerm        AnalyticsDimension = "utm_term"
+	AnalyticsByVisitorType    AnalyticsDimension = "visitor_type"
 	AnalyticsByWeek           AnalyticsDimension = "time:week"
 )
 
@@ -331,6 +332,8 @@ func (e AnalyticsDimension) Valid() bool {
 	case AnalyticsByUtmSource:
 		return true
 	case AnalyticsByUtmTerm:
+		return true
+	case AnalyticsByVisitorType:
 		return true
 	case AnalyticsByWeek:
 		return true
@@ -457,6 +460,7 @@ const (
 	AnalyticsDimUtmMedium      AnalyticsFilterDimension = "utm_medium"
 	AnalyticsDimUtmSource      AnalyticsFilterDimension = "utm_source"
 	AnalyticsDimUtmTerm        AnalyticsFilterDimension = "utm_term"
+	AnalyticsDimVisitorType    AnalyticsFilterDimension = "visitor_type"
 )
 
 // Valid indicates whether the value is a known member of the AnalyticsFilterDimension enum.
@@ -513,6 +517,8 @@ func (e AnalyticsFilterDimension) Valid() bool {
 	case AnalyticsDimUtmSource:
 		return true
 	case AnalyticsDimUtmTerm:
+		return true
+	case AnalyticsDimVisitorType:
 		return true
 	default:
 		return false
@@ -804,6 +810,27 @@ func (e AnalyticsResultMetaServedFrom) Valid() bool {
 	case AnalyticsServedRaw:
 		return true
 	case AnalyticsServedRollups:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsRetentionGrain.
+const (
+	AnalyticsCohortDay   AnalyticsRetentionGrain = "day"
+	AnalyticsCohortMonth AnalyticsRetentionGrain = "month"
+	AnalyticsCohortWeek  AnalyticsRetentionGrain = "week"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsRetentionGrain enum.
+func (e AnalyticsRetentionGrain) Valid() bool {
+	switch e {
+	case AnalyticsCohortDay:
+		return true
+	case AnalyticsCohortMonth:
+		return true
+	case AnalyticsCohortWeek:
 		return true
 	default:
 		return false
@@ -4473,6 +4500,27 @@ func (e QueryAnalyticsParamsFormat) Valid() bool {
 	}
 }
 
+// Defines values for GetAnalyticsRetentionParamsGrain.
+const (
+	AnalyticsRetentionDay   GetAnalyticsRetentionParamsGrain = "day"
+	AnalyticsRetentionMonth GetAnalyticsRetentionParamsGrain = "month"
+	AnalyticsRetentionWeek  GetAnalyticsRetentionParamsGrain = "week"
+)
+
+// Valid indicates whether the value is a known member of the GetAnalyticsRetentionParamsGrain enum.
+func (e GetAnalyticsRetentionParamsGrain) Valid() bool {
+	switch e {
+	case AnalyticsRetentionDay:
+		return true
+	case AnalyticsRetentionMonth:
+		return true
+	case AnalyticsRetentionWeek:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ListContactsParamsKind.
 const (
 	Known   ListContactsParamsKind = "known"
@@ -4754,6 +4802,18 @@ type AnalyticsBatch struct {
 	union json.RawMessage
 }
 
+// AnalyticsCohort defines model for AnalyticsCohort.
+type AnalyticsCohort struct {
+	// Cohort The start of the day, week or month the cohort's visitors were first seen.
+	Cohort openapi_types.Date `json:"cohort"`
+
+	// Periods Visitors of the cohort seen in each period from the cohort's own, up to the period that holds today.
+	Periods []int64 `json:"periods"`
+
+	// Visitors The cohort's size, `periods[0]`.
+	Visitors int64 `json:"visitors"`
+}
+
 // AnalyticsCollection `anonymous` counts without consent: nothing is put on the visitor's device and no IP
 // address is stored. `consent` takes an event only when it carries `c.a: 1`, which the
 // script sends after `yuva.consent({analytics: true})`.
@@ -4782,18 +4842,80 @@ type AnalyticsComparison struct {
 	Totals AnalyticsMetrics `json:"totals"`
 }
 
-// AnalyticsConsent defines model for AnalyticsConsent.
+// AnalyticsConsent What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
+// with `a: 1`, on a property whose `consent_features` offer them; otherwise they are ignored
+// and the event is counted as in default mode.
 type AnalyticsConsent struct {
 	// A `1` when the visitor agreed to analytics.
 	A *AnalyticsConsentA `json:"a,omitempty"`
+
+	// J An identity token of the property's linked inbox, signed by the host's backend as for
+	// `/client/v1/session` (HS256, `sub`, `exp` at most 10 minutes ahead, a `jti` used once),
+	// sent once after the user signs in, together with `p`, on a property that offers
+	// `identify`. It links the persistent id, and its visits, to the contact; the contact is
+	// found or made exactly as `/client/v1/session` does. A forged, expired or reused token is
+	// ignored and the event is still counted.
+	J *string `json:"j,omitempty"`
+
+	// P The persistent id, for a visitor who also agreed to `persistent`: a random value of at
+	// least 128 bits (a UUID or base64url) that the script or SDK keeps on the device for at
+	// most 13 months from when it made it, and sends on every event, engagements included.
+	// The server keeps only a keyed hash of it under the property's own secret, so the same
+	// id means nothing on another property. With it the visitor counts once over several
+	// days, is told apart as new or returning, enters retention cohorts and crosses days in
+	// funnels. A value of the wrong shape is ignored.
+	//
+	//
+	// Examples: 0f8fad5b-d9cb-469f-a165-70867728950e
+	P *string `json:"p,omitempty"`
 }
 
 // AnalyticsConsentA `1` when the visitor agreed to analytics.
 type AnalyticsConsentA int
 
 // AnalyticsConsentFeature Offered only to visitors who consented: `persistent` keeps a random id on the device for at
-// most 13 months, `identify` links a verified user's visits to their contact.
+// most 13 months, `identify` links a verified user's visits to their contact. `identify`
+// needs `persistent` and a linked inbox, whose identity secret signs the tokens; a children's
+// property offers neither. Visitors who did not consent are counted exactly as without
+// these features.
 type AnalyticsConsentFeature string
+
+// AnalyticsContactVisit One visit, described as its first event saw it, as the dimensions of `AnalyticsFilterDimension` name its values.
+type AnalyticsContactVisit struct {
+	AppVersion string    `json:"app_version"`
+	Browser    string    `json:"browser"`
+	Channel    string    `json:"channel"`
+	City       string    `json:"city"`
+	Country    string    `json:"country"`
+	Device     string    `json:"device"`
+	EndedAt    time.Time `json:"ended_at"`
+	EntryPage  string    `json:"entry_page"`
+	Events     int       `json:"events"`
+	ExitPage   string    `json:"exit_page"`
+	Hostname   string    `json:"hostname"`
+	Os         string    `json:"os"`
+
+	// Pages The paths (or app screens) the visit viewed, most viewed first, at most 20.
+	Pages        []AnalyticsVisitPage `json:"pages"`
+	Pageviews    int                  `json:"pageviews"`
+	Platform     string               `json:"platform"`
+	PropertyId   uuid.UUID            `json:"property_id"`
+	PropertyName string               `json:"property_name"`
+	Source       string               `json:"source"`
+	StartedAt    time.Time            `json:"started_at"`
+	UtmCampaign  string               `json:"utm_campaign"`
+
+	// VisitorType `new` or `returning`.
+	VisitorType string `json:"visitor_type"`
+}
+
+// AnalyticsContactVisitList defines model for AnalyticsContactVisitList.
+type AnalyticsContactVisitList struct {
+	Items []AnalyticsContactVisit `json:"items"`
+
+	// NextCursor Present when there are older visits.
+	NextCursor *string `json:"next_cursor,omitempty"`
+}
 
 // AnalyticsDataDeletion Either `from` and `to`, or `all: true`.
 type AnalyticsDataDeletion struct {
@@ -4865,7 +4987,11 @@ type AnalyticsEvent struct {
 	// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
 	// code. It is stored in minor units per currency; Yuva converts nothing.
 	DollarSign *AnalyticsEventRevenue `json:"$,omitempty"`
-	C          *AnalyticsConsent      `json:"c,omitempty"`
+
+	// C What the visitor agreed to in the site's or app's own consent tool. `p` and `j` count only
+	// with `a: 1`, on a property whose `consent_features` offer them; otherwise they are ignored
+	// and the event is counted as in default mode.
+	C *AnalyticsConsent `json:"c,omitempty"`
 
 	// H The page uses hash routing, so the fragment is part of the path.
 	H *bool `json:"h,omitempty"`
@@ -4881,6 +5007,12 @@ type AnalyticsEvent struct {
 	// link to a file, with prop `url`), `not_found` (the page is the site's 404 page) or
 	// `chat_open` (the page's chat was opened); or a custom event's name, 1 to 120
 	// characters. `screen` and names starting with `$` or `yuva_` are reserved.
+	//
+	// `yuva_consent` is not an event and is never stored or counted: it carries a change of
+	// consent at once. With `c.a: 1`, `c.p` and `c.j` it identifies the visitor (see
+	// `AnalyticsConsent`); with `c.a: 0` and `c.p` it withdraws: the persistent id's link to
+	// a contact and its cohort days are deleted, so its visits leave the contact's page and
+	// retention. A withdrawal is taken even with `Sec-GPC` or `DNT`.
 	//
 	//
 	// Examples: pageview, Signup, outbound_click
@@ -5046,7 +5178,9 @@ type AnalyticsExportCreate struct {
 	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+	// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+	// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5088,7 +5222,9 @@ type AnalyticsFilter struct {
 	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+	// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+	// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5113,7 +5249,9 @@ type AnalyticsFilterOp string
 // code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
 // `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
 // its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
-// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
+// an app property's "Screens" are a `page` breakdown filtered by `platform`. `visitor_type` is
+// `new` (the day a consented visitor with a persistent id was first seen) or `returning` (a
+// later day) for consented traffic, and empty for every other visit. Unknown values are empty strings. `event` is the name of a custom or built-in event
 // and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -5153,6 +5291,10 @@ type AnalyticsFunnelReport struct {
 
 // AnalyticsFunnelStep defines model for AnalyticsFunnelStep.
 type AnalyticsFunnelStep struct {
+	// ConsentedVisitors Visitors with a persistent id who reached this step after all before it anywhere in
+	// the range, across visits and days, each counted once; 0 on a property without them.
+	ConsentedVisitors int64 `json:"consented_visitors"`
+
 	// ConversionRate Percent of the first step's visitors.
 	ConversionRate float64 `json:"conversion_rate"`
 
@@ -5327,7 +5469,10 @@ type AnalyticsInsight struct {
 	Dimension *string              `json:"dimension,omitempty"`
 	Kind      AnalyticsInsightKind `json:"kind"`
 
-	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// Metric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+	// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+	// from their cohort days without filters and from raw rows inside the raw window with
+	// filters), `visits`, `pageviews`,
 	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5356,7 +5501,10 @@ type AnalyticsInsight struct {
 // AnalyticsInsightKind defines model for AnalyticsInsight.Kind.
 type AnalyticsInsightKind string
 
-// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+// AnalyticsMetric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+// from their cohort days without filters and from raw rows inside the raw window with
+// filters), `visits`, `pageviews`,
 // `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 // `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 // focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5412,7 +5560,10 @@ type AnalyticsMinute struct {
 type AnalyticsOrder struct {
 	Dir *AnalyticsOrderDir `json:"dir,omitempty"`
 
-	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// Metric `visitors` (distinct visitors per day, added up over the range; a visitor with a persistent
+	// id counts once over the range's totals and once per `time:week` or `time:month` bucket,
+	// from their cohort days without filters and from raw rows inside the raw window with
+	// filters), `visits`, `pageviews`,
 	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
 	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
@@ -5773,6 +5924,23 @@ type AnalyticsResultMeta struct {
 // AnalyticsResultMetaServedFrom defines model for AnalyticsResultMeta.ServedFrom.
 type AnalyticsResultMetaServedFrom string
 
+// AnalyticsRetention defines model for AnalyticsRetention.
+type AnalyticsRetention struct {
+	// BuiltAt When the cohorts job last rebuilt the numbers; absent before it ran.
+	BuiltAt *time.Time `json:"built_at,omitempty"`
+
+	// Cohorts Cohorts with at least one visitor.
+	Cohorts []AnalyticsCohort `json:"cohorts"`
+
+	// From The first cohort's start.
+	From  openapi_types.Date      `json:"from"`
+	Grain AnalyticsRetentionGrain `json:"grain"`
+	To    openapi_types.Date      `json:"to"`
+}
+
+// AnalyticsRetentionGrain defines model for AnalyticsRetention.Grain.
+type AnalyticsRetentionGrain string
+
 // AnalyticsRevenue defines model for AnalyticsRevenue.
 type AnalyticsRevenue struct {
 	// Average Per event that carried revenue, in minor units, rounded.
@@ -5849,6 +6017,9 @@ type AnalyticsServerEvent struct {
 	// Gpc The visitor's request had `Sec-GPC: 1`; the event is not stored.
 	Gpc *bool `json:"gpc,omitempty"`
 
+	// IdentityToken An identity token as in `AnalyticsConsent.j`, with `persistent_id` and `consent: true`, on a property that offers `identify`.
+	IdentityToken *string `json:"identity_token,omitempty"`
+
 	// Interactive `false` makes a custom event non-interactive.
 	Interactive *bool `json:"interactive,omitempty"`
 
@@ -5861,6 +6032,13 @@ type AnalyticsServerEvent struct {
 	//
 	// Examples: Signup
 	Name string `json:"name"`
+
+	// PersistentId The persistent id the visitor's browser or app holds (`AnalyticsConsent.p`), forwarded
+	// for a visitor who agreed to `persistent`; taken only with `consent: true` on a property
+	// that offers `persistent`, and then names the visitor in place of `ip` and `user_agent`
+	// or `visitor_key`. Those are still required: they describe the visit, and name the
+	// visitor whenever the id is not taken.
+	PersistentId *string `json:"persistent_id,omitempty"`
 
 	// Props Up to 30 props with the rules of `AnalyticsEvent.p`.
 	//
@@ -6070,6 +6248,12 @@ type AnalyticsUsage struct {
 
 	// Month Examples: 2026-10
 	Month string `json:"month"`
+}
+
+// AnalyticsVisitPage defines model for AnalyticsVisitPage.
+type AnalyticsVisitPage struct {
+	Path  string `json:"path"`
+	Views int    `json:"views"`
 }
 
 // ApiKey defines model for ApiKey.
@@ -13980,6 +14164,24 @@ type GetAnalyticsRealtimeParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// GetAnalyticsRetentionParams defines parameters for GetAnalyticsRetention.
+type GetAnalyticsRetentionParams struct {
+	// Grain `week` when absent.
+	Grain *GetAnalyticsRetentionParamsGrain `form:"grain,omitempty" json:"grain,omitempty"`
+
+	// From The first cohort's day; 30 days, 12 weeks or 12 months before today when absent.
+	From *openapi_types.Date `form:"from,omitempty" json:"from,omitempty"`
+
+	// To The last cohort's day; today when absent.
+	To *openapi_types.Date `form:"to,omitempty" json:"to,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsRetentionParamsGrain defines parameters for GetAnalyticsRetention.
+type GetAnalyticsRetentionParamsGrain string
+
 // RotateAnalyticsKeyParams defines parameters for RotateAnalyticsKey.
 type RotateAnalyticsKeyParams struct {
 	// IdempotencyKey Makes a retried request return the first response; see "Idempotency".
@@ -14063,6 +14265,12 @@ type UpdateAnalyticsSubscriptionParams struct {
 
 // SendAnalyticsReportParams defines parameters for SendAnalyticsReport.
 type SendAnalyticsReportParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// DeleteAnalyticsVisitorParams defines parameters for DeleteAnalyticsVisitor.
+type DeleteAnalyticsVisitorParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -14462,6 +14670,17 @@ type ListContactSubscriptionsParams struct {
 
 // GetContactSummaryParams defines parameters for GetContactSummary.
 type GetContactSummaryParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// ListContactVisitsParams defines parameters for ListContactVisits.
+type ListContactVisitsParams struct {
+	Limit *int `form:"limit,omitempty" json:"limit,omitempty"`
+
+	// Cursor `next_cursor` of the previous page.
+	Cursor *string `form:"cursor,omitempty" json:"cursor,omitempty"`
+
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -19682,7 +19901,15 @@ type ClientInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -19729,7 +19956,15 @@ type ClientInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -19776,7 +20011,15 @@ type ClientInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -20880,6 +21123,10 @@ type ClientInterface interface {
 	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
 	//   places the visitor and `user_agent` only describes the device.
 	//
+	// A visitor who consented to `persistent` in the browser or app can be named by the
+	// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+	// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
+	//
 	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
 	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
@@ -20914,6 +21161,10 @@ type ClientInterface interface {
 	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
 	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
 	//   places the visitor and `user_agent` only describes the device.
+	//
+	// A visitor who consented to `persistent` in the browser or app can be named by the
+	// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+	// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
 	//
 	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
@@ -21090,7 +21341,9 @@ type ClientInterface interface {
 	//
 	// Per step, the visitors who completed it after every step before it within one visit, from
 	// the raw events of the range. A visitor exists for one day, so a funnel never crosses
-	// midnight; visitors over a range are added up per day. The range must lie inside the raw
+	// midnight; visitors over a range are added up per day. Visitors with a persistent id (the
+	// `persistent` consent feature) are also followed across visits and days of the range, in
+	// `consented_visitors`. The range must lie inside the raw
 	// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
 	// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
 	// cached for ten minutes.
@@ -21196,7 +21449,8 @@ type ClientInterface interface {
 	// (one column per dimension and metric) instead.
 	//
 	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+	// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -21232,7 +21486,8 @@ type ClientInterface interface {
 	// (one column per dimension and metric) instead.
 	//
 	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+	// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -21269,6 +21524,21 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 	GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsRetention How consented visitors come back
+	//
+	// Cohorts of the visitors with a persistent id (the `persistent` consent feature): each
+	// cohort holds the visitors first seen in one day, week (from Monday) or month of the
+	// property's time zone, and `periods[n]` how many of them came back in the n-th period after
+	// it, `periods[0]` being the cohort itself. Days go up to 30 periods, weeks and months up to
+	// 12. Visitors without consent are never in a cohort, so a property without the feature has
+	// none. The cohorts job rebuilds the numbers every hour (`built_at`); a persistent id is
+	// forgotten 13 months after it was first seen, so cohorts reach back at most that far.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/retention (the `GetAnalyticsRetention` operationId).
+	GetAnalyticsRetention(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRetentionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RotateAnalyticsKey Give an analytics property a new public key
 	//
@@ -21479,6 +21749,19 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
 	SendAnalyticsReport(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// DeleteAnalyticsVisitor Delete a consented visitor's analytics
+	//
+	// For a person's erasure request: deletes everything stored under a persistent id (the
+	// value their browser or app holds, `AnalyticsConsent.p`), its raw visits and events, its
+	// cohort days and its link to a contact. Days already rolled up are rolled up again without
+	// them. Answers `204` whether or not anything was stored under the id. Owners, admins and
+	// API keys without an inbox limit.
+	//
+	// Scope: `analytics:manage`.
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId} (the `DeleteAnalyticsVisitor` operationId).
+	DeleteAnalyticsVisitor(ctx context.Context, propertyId AnalyticsPropertyId, persistentId string, params *DeleteAnalyticsVisitorParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListApiKeys List API keys
 	//
@@ -22301,6 +22584,20 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /v1/contacts/{contactId}/summary (the `GetContactSummary` operationId).
 	GetContactSummary(ctx context.Context, contactId ContactId, params *GetContactSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ListContactVisits A contact's recent visits
+	//
+	// The visits linked to the contact on the analytics properties the caller can see, newest
+	// first, from the raw window (`YUVA_ANALYTICS_RAW_DAYS`). A visit is linked only when the
+	// visitor consented to the `persistent` and `identify` features of the property and the
+	// host's backend identified them with a valid identity token; visits of anyone else are never
+	// joined to a contact, so for most contacts the list is empty. Deleting the contact deletes
+	// these visits; merging contacts moves them.
+	//
+	// Scopes: `contacts:read` and `analytics:read`.
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/visits (the `ListContactVisits` operationId).
+	ListContactVisits(ctx context.Context, contactId ContactId, params *ListContactVisitsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListConversations List conversations
 	//
@@ -25424,7 +25721,15 @@ func (c *Client) GetSharedAnalyticsRealtime(ctx context.Context, token Analytics
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -25481,7 +25786,15 @@ func (c *Client) CollectAnalyticsWithBody(ctx context.Context, key string, conte
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -25538,7 +25851,15 @@ func (c *Client) CollectAnalytics(ctx context.Context, key string, body CollectA
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -27442,6 +27763,10 @@ func (c *Client) DeleteAnalyticsData(ctx context.Context, propertyId AnalyticsPr
 //     address), hashed under the day's salt like an app's process key. With it, `ip` only
 //     places the visitor and `user_agent` only describes the device.
 //
+// A visitor who consented to `persistent` in the browser or app can be named by the
+// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
+//
 // `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 // `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
 // starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
@@ -27486,6 +27811,10 @@ func (c *Client) SendAnalyticsEventsWithBody(ctx context.Context, propertyId Ana
 //   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
 //     address), hashed under the day's salt like an app's process key. With it, `ip` only
 //     places the visitor and `user_agent` only describes the device.
+//
+// A visitor who consented to `persistent` in the browser or app can be named by the
+// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
 //
 // `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 // `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
@@ -27792,7 +28121,9 @@ func (c *Client) UpdateAnalyticsFunnel(ctx context.Context, propertyId Analytics
 //
 // Per step, the visitors who completed it after every step before it within one visit, from
 // the raw events of the range. A visitor exists for one day, so a funnel never crosses
-// midnight; visitors over a range are added up per day. The range must lie inside the raw
+// midnight; visitors over a range are added up per day. Visitors with a persistent id (the
+// `persistent` consent feature) are also followed across visits and days of the range, in
+// `consented_visitors`. The range must lie inside the raw
 // window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
 // more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
 // cached for ten minutes.
@@ -27978,7 +28309,8 @@ func (c *Client) GetAnalyticsHealth(ctx context.Context, propertyId AnalyticsPro
 // (one column per dimension and metric) instead.
 //
 // A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 // until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 // Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 // with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -28024,7 +28356,8 @@ func (c *Client) QueryAnalyticsWithBody(ctx context.Context, propertyId Analytic
 // (one column per dimension and metric) instead.
 //
 // A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 // until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 // Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 // with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -28072,6 +28405,31 @@ func (c *Client) QueryAnalytics(ctx context.Context, propertyId AnalyticsPropert
 // Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 func (c *Client) GetAnalyticsRealtime(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetAnalyticsRealtimeRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsRetention How consented visitors come back
+//
+// Cohorts of the visitors with a persistent id (the `persistent` consent feature): each
+// cohort holds the visitors first seen in one day, week (from Monday) or month of the
+// property's time zone, and `periods[n]` how many of them came back in the n-th period after
+// it, `periods[0]` being the cohort itself. Days go up to 30 periods, weeks and months up to
+// 12. Visitors without consent are never in a cohort, so a property without the feature has
+// none. The cohorts job rebuilds the numbers every hour (`built_at`); a persistent id is
+// forgotten 13 months after it was first seen, so cohorts reach back at most that far.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/retention (the `GetAnalyticsRetention` operationId).
+func (c *Client) GetAnalyticsRetention(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRetentionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsRetentionRequest(c.Server, propertyId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -28462,6 +28820,29 @@ func (c *Client) UpdateAnalyticsSubscription(ctx context.Context, propertyId Ana
 // Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
 func (c *Client) SendAnalyticsReport(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSendAnalyticsReportRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// DeleteAnalyticsVisitor Delete a consented visitor's analytics
+//
+// For a person's erasure request: deletes everything stored under a persistent id (the
+// value their browser or app holds, `AnalyticsConsent.p`), its raw visits and events, its
+// cohort days and its link to a contact. Days already rolled up are rolled up again without
+// them. Answers `204` whether or not anything was stored under the id. Owners, admins and
+// API keys without an inbox limit.
+//
+// Scope: `analytics:manage`.
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId} (the `DeleteAnalyticsVisitor` operationId).
+func (c *Client) DeleteAnalyticsVisitor(ctx context.Context, propertyId AnalyticsPropertyId, persistentId string, params *DeleteAnalyticsVisitorParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewDeleteAnalyticsVisitorRequest(c.Server, propertyId, persistentId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -29984,6 +30365,30 @@ func (c *Client) ListContactSubscriptions(ctx context.Context, contactId Contact
 // Corresponds with GET /v1/contacts/{contactId}/summary (the `GetContactSummary` operationId).
 func (c *Client) GetContactSummary(ctx context.Context, contactId ContactId, params *GetContactSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetContactSummaryRequest(c.Server, contactId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// ListContactVisits A contact's recent visits
+//
+// The visits linked to the contact on the analytics properties the caller can see, newest
+// first, from the raw window (`YUVA_ANALYTICS_RAW_DAYS`). A visit is linked only when the
+// visitor consented to the `persistent` and `identify` features of the property and the
+// host's backend identified them with a valid identity token; visits of anyone else are never
+// joined to a contact, so for most contacts the list is empty. Deleting the contact deletes
+// these visits; merging contacts moves them.
+//
+// Scopes: `contacts:read` and `analytics:read`.
+//
+// Corresponds with GET /v1/contacts/{contactId}/visits (the `ListContactVisits` operationId).
+func (c *Client) ListContactVisits(ctx context.Context, contactId ContactId, params *ListContactVisitsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListContactVisitsRequest(c.Server, contactId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -39208,6 +39613,106 @@ func NewGetAnalyticsRealtimeRequest(server string, propertyId AnalyticsPropertyI
 	return req, nil
 }
 
+// NewGetAnalyticsRetentionRequest constructs an http.Request for the GetAnalyticsRetention method
+func NewGetAnalyticsRetentionRequest(server string, propertyId AnalyticsPropertyId, params *GetAnalyticsRetentionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/retention", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Grain != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "grain", *params.Grain, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewRotateAnalyticsKeyRequest constructs an http.Request for the RotateAnalyticsKey method
 func NewRotateAnalyticsKeyRequest(server string, propertyId AnalyticsPropertyId, params *RotateAnalyticsKeyParams) (*http.Request, error) {
 	var err error
@@ -39956,6 +40461,62 @@ func NewSendAnalyticsReportRequest(server string, propertyId AnalyticsPropertyId
 	}
 
 	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewDeleteAnalyticsVisitorRequest constructs an http.Request for the DeleteAnalyticsVisitor method
+func NewDeleteAnalyticsVisitorRequest(server string, propertyId AnalyticsPropertyId, persistentId string, params *DeleteAnalyticsVisitorParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "persistentId", persistentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/visitors/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodDelete, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -43154,6 +43715,94 @@ func NewGetContactSummaryRequest(server string, contactId ContactId, params *Get
 	queryURL, err := serverURL.Parse(operationPath)
 	if err != nil {
 		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewListContactVisitsRequest constructs an http.Request for the ListContactVisits method
+func NewListContactVisitsRequest(server string, contactId ContactId, params *ListContactVisitsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "contactId", contactId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/contacts/%s/visits", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Limit != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "limit", *params.Limit, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.Cursor != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "cursor", *params.Cursor, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
@@ -53479,7 +54128,15 @@ type ClientWithResponsesInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -53526,7 +54183,15 @@ type ClientWithResponsesInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -53573,7 +54238,15 @@ type ClientWithResponsesInterface interface {
 	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 	// still refuse the whole request.
 	//
-	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+	// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+	// a general-audience property that offers `persistent`, is the visitor of that id on every
+	// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+	// links the id to a contact. Without them, or on any other property, the event is counted
+	// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+	// once and is never stored; 20 a minute per shortened address and property.
+	//
+	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+	// a `yuva_consent` withdrawal); events
 	// older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 	// path; events over the property's per-minute limit or the workspace's monthly cap. One
 	// shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -54739,6 +55412,10 @@ type ClientWithResponsesInterface interface {
 	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
 	//   places the visitor and `user_agent` only describes the device.
 	//
+	// A visitor who consented to `persistent` in the browser or app can be named by the
+	// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+	// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
+	//
 	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
 	// starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
@@ -54773,6 +55450,10 @@ type ClientWithResponsesInterface interface {
 	// - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
 	//   address), hashed under the day's salt like an app's process key. With it, `ip` only
 	//   places the visitor and `user_agent` only describes the device.
+	//
+	// A visitor who consented to `persistent` in the browser or app can be named by the
+	// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+	// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
 	//
 	// `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 	// `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
@@ -54961,7 +55642,9 @@ type ClientWithResponsesInterface interface {
 	//
 	// Per step, the visitors who completed it after every step before it within one visit, from
 	// the raw events of the range. A visitor exists for one day, so a funnel never crosses
-	// midnight; visitors over a range are added up per day. The range must lie inside the raw
+	// midnight; visitors over a range are added up per day. Visitors with a persistent id (the
+	// `persistent` consent feature) are also followed across visits and days of the range, in
+	// `consented_visitors`. The range must lie inside the raw
 	// window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
 	// more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
 	// cached for ten minutes.
@@ -55075,7 +55758,8 @@ type ClientWithResponsesInterface interface {
 	// (one column per dimension and metric) instead.
 	//
 	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+	// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -55111,7 +55795,8 @@ type ClientWithResponsesInterface interface {
 	// (one column per dimension and metric) instead.
 	//
 	// A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-	// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+	// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+	// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 	// until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 	// Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 	// with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -55150,6 +55835,23 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/analytics/properties/{propertyId}/realtime (the `GetAnalyticsRealtime` operationId).
 	GetAnalyticsRealtimeWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRealtimeParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRealtimeResponse, error)
+
+	// GetAnalyticsRetentionWithResponse How consented visitors come back
+	//
+	// Cohorts of the visitors with a persistent id (the `persistent` consent feature): each
+	// cohort holds the visitors first seen in one day, week (from Monday) or month of the
+	// property's time zone, and `periods[n]` how many of them came back in the n-th period after
+	// it, `periods[0]` being the cohort itself. Days go up to 30 periods, weeks and months up to
+	// 12. Visitors without consent are never in a cohort, so a property without the feature has
+	// none. The cohorts job rebuilds the numbers every hour (`built_at`); a persistent id is
+	// forgotten 13 months after it was first seen, so cohorts reach back at most that far.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/retention (the `GetAnalyticsRetention` operationId).
+	GetAnalyticsRetentionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRetentionParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRetentionResponse, error)
 
 	// RotateAnalyticsKeyWithResponse Give an analytics property a new public key
 	//
@@ -55376,6 +56078,21 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
 	SendAnalyticsReportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*SendAnalyticsReportResponse, error)
+
+	// DeleteAnalyticsVisitorWithResponse Delete a consented visitor's analytics
+	//
+	// For a person's erasure request: deletes everything stored under a persistent id (the
+	// value their browser or app holds, `AnalyticsConsent.p`), its raw visits and events, its
+	// cohort days and its link to a contact. Days already rolled up are rolled up again without
+	// them. Answers `204` whether or not anything was stored under the id. Owners, admins and
+	// API keys without an inbox limit.
+	//
+	// Scope: `analytics:manage`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId} (the `DeleteAnalyticsVisitor` operationId).
+	DeleteAnalyticsVisitorWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, persistentId string, params *DeleteAnalyticsVisitorParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsVisitorResponse, error)
 
 	// ListApiKeysWithResponse List API keys
 	//
@@ -56270,6 +56987,22 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /v1/contacts/{contactId}/summary (the `GetContactSummary` operationId).
 	GetContactSummaryWithResponse(ctx context.Context, contactId ContactId, params *GetContactSummaryParams, reqEditors ...RequestEditorFn) (*GetContactSummaryResponse, error)
+
+	// ListContactVisitsWithResponse A contact's recent visits
+	//
+	// The visits linked to the contact on the analytics properties the caller can see, newest
+	// first, from the raw window (`YUVA_ANALYTICS_RAW_DAYS`). A visit is linked only when the
+	// visitor consented to the `persistent` and `identify` features of the property and the
+	// host's backend identified them with a valid identity token; visits of anyone else are never
+	// joined to a contact, so for most contacts the list is empty. Deleting the contact deletes
+	// these visits; merging contacts moves them.
+	//
+	// Scopes: `contacts:read` and `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/contacts/{contactId}/visits (the `ListContactVisits` operationId).
+	ListContactVisitsWithResponse(ctx context.Context, contactId ContactId, params *ListContactVisitsParams, reqEditors ...RequestEditorFn) (*ListContactVisitsResponse, error)
 
 	// ListConversationsWithResponse List conversations
 	//
@@ -64568,6 +65301,82 @@ func (r GetAnalyticsRealtimeResponse) ContentType() string {
 	return ""
 }
 
+type GetAnalyticsRetentionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsRetention
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON422 the response for an HTTP 422 `application/problem+json` response
+	ApplicationproblemJSON422 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsRetentionResponse) GetJSON200() *AnalyticsRetention {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetAnalyticsRetentionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsRetentionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsRetentionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsRetentionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON422 returns the response for an HTTP 422 `application/problem+json` response
+func (r GetAnalyticsRetentionResponse) GetApplicationproblemJSON422() *Problem {
+	return r.ApplicationproblemJSON422
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsRetentionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsRetentionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsRetentionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsRetentionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type RotateAnalyticsKeyResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -65424,6 +66233,68 @@ func (r SendAnalyticsReportResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SendAnalyticsReportResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type DeleteAnalyticsVisitorResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r DeleteAnalyticsVisitorResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r DeleteAnalyticsVisitorResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r DeleteAnalyticsVisitorResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r DeleteAnalyticsVisitorResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r DeleteAnalyticsVisitorResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r DeleteAnalyticsVisitorResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r DeleteAnalyticsVisitorResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r DeleteAnalyticsVisitorResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -68865,6 +69736,75 @@ func (r GetContactSummaryResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetContactSummaryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ListContactVisitsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsContactVisitList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListContactVisitsResponse) GetJSON200() *AnalyticsContactVisitList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListContactVisitsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListContactVisitsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListContactVisitsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListContactVisitsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListContactVisitsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListContactVisitsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListContactVisitsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListContactVisitsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -79849,7 +80789,15 @@ func (c *ClientWithResponses) GetSharedAnalyticsRealtimeWithResponse(ctx context
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -79902,7 +80850,15 @@ func (c *ClientWithResponses) CollectAnalyticsWithBodyWithResponse(ctx context.C
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -79955,7 +80911,15 @@ func (c *ClientWithResponses) CollectAnalyticsWithResponse(ctx context.Context, 
 // `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
 // still refuse the whole request.
 //
-// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
+// Consent features (`AnalyticsConsent`): an event with `c.a: 1` and a persistent id `c.p`, on
+// a general-audience property that offers `persistent`, is the visitor of that id on every
+// day instead of the day's hash; `c.j` with it, on a property that also offers `identify`,
+// links the id to a contact. Without them, or on any other property, the event is counted
+// exactly as in default mode. `yuva_consent` carries an identification or a withdrawal at
+// once and is never stored; 20 a minute per shortened address and property.
+//
+// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1` (but for
+// a `yuva_consent` withdrawal); events
 // older than 72 hours; events of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
 // path; events over the property's per-minute limit or the workspace's monthly cap. One
 // shortened address may send 120 events a minute to a property (`429 rate_limited` with
@@ -81601,6 +82565,10 @@ func (c *ClientWithResponses) DeleteAnalyticsDataWithResponse(ctx context.Contex
 //     address), hashed under the day's salt like an app's process key. With it, `ip` only
 //     places the visitor and `user_agent` only describes the device.
 //
+// A visitor who consented to `persistent` in the browser or app can be named by the
+// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
+//
 // `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 // `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
 // starts has platform `server`. `name` is `pageview` or a custom or built-in event with the
@@ -81641,6 +82609,10 @@ func (c *ClientWithResponses) SendAnalyticsEventsWithBodyWithResponse(ctx contex
 //   - `visitor_key`, the backend's own key for the visitor (a session id, never an e-mail
 //     address), hashed under the day's salt like an app's process key. With it, `ip` only
 //     places the visitor and `user_agent` only describes the device.
+//
+// A visitor who consented to `persistent` in the browser or app can be named by the
+// `persistent_id` it holds, with `consent: true`, so the event joins that visitor's days;
+// `identity_token` with it identifies them, as `AnalyticsConsent` describes.
 //
 // `url` is the page (http(s), on one of the property's `domains`) or, for a property with
 // `ios` or `android`, an app screen (`app://<app id>/<screen>`). A visit that a server event
@@ -81907,7 +82879,9 @@ func (c *ClientWithResponses) UpdateAnalyticsFunnelWithResponse(ctx context.Cont
 //
 // Per step, the visitors who completed it after every step before it within one visit, from
 // the raw events of the range. A visitor exists for one day, so a funnel never crosses
-// midnight; visitors over a range are added up per day. The range must lie inside the raw
+// midnight; visitors over a range are added up per day. Visitors with a persistent id (the
+// `persistent` consent feature) are also followed across visits and days of the range, in
+// `consented_visitors`. The range must lie inside the raw
 // window (`422 needs_raw_window`) and span at most 90 days, or 31 when the property counted
 // more than 10 million events over the last 30 days (`422 range_too_large`). Answers are
 // cached for ten minutes.
@@ -82069,7 +83043,8 @@ func (c *ClientWithResponses) GetAnalyticsHealthWithResponse(ctx context.Context
 // (one column per dimension and metric) instead.
 //
 // A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 // until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 // Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 // with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -82111,7 +83086,8 @@ func (c *ClientWithResponses) QueryAnalyticsWithBodyWithResponse(ctx context.Con
 // (one column per dimension and metric) instead.
 //
 // A visitor exists for one day (its salt does), so `visitors` over a range is the sum of each
-// day's visitors. Finished days are read from daily rollups and open days (today, yesterday
+// day's visitors; only a visitor who consented to the `persistent` feature counts once over
+// the range (`AnalyticsMetric`). Finished days are read from daily rollups and open days (today, yesterday
 // until it is rolled up, days with late events) from raw rows; `meta.served_from` says which.
 // Totals, any single dimension, totals with one `is` filter on a visit dimension, and pages
 // with one `is` filter on `channel`, `source` or `country` come from rollups. Other
@@ -82161,6 +83137,29 @@ func (c *ClientWithResponses) GetAnalyticsRealtimeWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseGetAnalyticsRealtimeResponse(rsp)
+}
+
+// GetAnalyticsRetentionWithResponse How consented visitors come back
+//
+// Cohorts of the visitors with a persistent id (the `persistent` consent feature): each
+// cohort holds the visitors first seen in one day, week (from Monday) or month of the
+// property's time zone, and `periods[n]` how many of them came back in the n-th period after
+// it, `periods[0]` being the cohort itself. Days go up to 30 periods, weeks and months up to
+// 12. Visitors without consent are never in a cohort, so a property without the feature has
+// none. The cohorts job rebuilds the numbers every hour (`built_at`); a persistent id is
+// forgotten 13 months after it was first seen, so cohorts reach back at most that far.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/retention (the `GetAnalyticsRetention` operationId).
+func (c *ClientWithResponses) GetAnalyticsRetentionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsRetentionParams, reqEditors ...RequestEditorFn) (*GetAnalyticsRetentionResponse, error) {
+	rsp, err := c.GetAnalyticsRetention(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsRetentionResponse(rsp)
 }
 
 // RotateAnalyticsKeyWithResponse Give an analytics property a new public key
@@ -82495,6 +83494,27 @@ func (c *ClientWithResponses) SendAnalyticsReportWithResponse(ctx context.Contex
 		return nil, err
 	}
 	return ParseSendAnalyticsReportResponse(rsp)
+}
+
+// DeleteAnalyticsVisitorWithResponse Delete a consented visitor's analytics
+//
+// For a person's erasure request: deletes everything stored under a persistent id (the
+// value their browser or app holds, `AnalyticsConsent.p`), its raw visits and events, its
+// cohort days and its link to a contact. Days already rolled up are rolled up again without
+// them. Answers `204` whether or not anything was stored under the id. Owners, admins and
+// API keys without an inbox limit.
+//
+// Scope: `analytics:manage`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with DELETE /v1/analytics/properties/{propertyId}/visitors/{persistentId} (the `DeleteAnalyticsVisitor` operationId).
+func (c *ClientWithResponses) DeleteAnalyticsVisitorWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, persistentId string, params *DeleteAnalyticsVisitorParams, reqEditors ...RequestEditorFn) (*DeleteAnalyticsVisitorResponse, error) {
+	rsp, err := c.DeleteAnalyticsVisitor(ctx, propertyId, persistentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseDeleteAnalyticsVisitorResponse(rsp)
 }
 
 // ListApiKeysWithResponse List API keys
@@ -83809,6 +84829,28 @@ func (c *ClientWithResponses) GetContactSummaryWithResponse(ctx context.Context,
 		return nil, err
 	}
 	return ParseGetContactSummaryResponse(rsp)
+}
+
+// ListContactVisitsWithResponse A contact's recent visits
+//
+// The visits linked to the contact on the analytics properties the caller can see, newest
+// first, from the raw window (`YUVA_ANALYTICS_RAW_DAYS`). A visit is linked only when the
+// visitor consented to the `persistent` and `identify` features of the property and the
+// host's backend identified them with a valid identity token; visits of anyone else are never
+// joined to a contact, so for most contacts the list is empty. Deleting the contact deletes
+// these visits; merging contacts moves them.
+//
+// Scopes: `contacts:read` and `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/contacts/{contactId}/visits (the `ListContactVisits` operationId).
+func (c *ClientWithResponses) ListContactVisitsWithResponse(ctx context.Context, contactId ContactId, params *ListContactVisitsParams, reqEditors ...RequestEditorFn) (*ListContactVisitsResponse, error) {
+	rsp, err := c.ListContactVisits(ctx, contactId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListContactVisitsResponse(rsp)
 }
 
 // ListConversationsWithResponse List conversations
@@ -92329,6 +93371,67 @@ func ParseGetAnalyticsRealtimeResponse(rsp *http.Response) (*GetAnalyticsRealtim
 	return response, nil
 }
 
+// ParseGetAnalyticsRetentionResponse parses an HTTP response from a GetAnalyticsRetentionWithResponse call
+func ParseGetAnalyticsRetentionResponse(rsp *http.Response) (*GetAnalyticsRetentionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsRetentionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsRetention
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 422:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON422 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseRotateAnalyticsKeyResponse parses an HTTP response from a RotateAnalyticsKeyWithResponse call
 func ParseRotateAnalyticsKeyResponse(rsp *http.Response) (*RotateAnalyticsKeyResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -92999,6 +94102,56 @@ func ParseSendAnalyticsReportResponse(rsp *http.Response) (*SendAnalyticsReportR
 			return nil, err
 		}
 		response.ApplicationproblemJSON429 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseDeleteAnalyticsVisitorResponse parses an HTTP response from a DeleteAnalyticsVisitorWithResponse call
+func ParseDeleteAnalyticsVisitorResponse(rsp *http.Response) (*DeleteAnalyticsVisitorResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &DeleteAnalyticsVisitorResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
 
 	}
 
@@ -95693,6 +96846,60 @@ func ParseGetContactSummaryResponse(rsp *http.Response) (*GetContactSummaryRespo
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseListContactVisitsResponse parses an HTTP response from a ListContactVisitsWithResponse call
+func ParseListContactVisitsResponse(rsp *http.Response) (*ListContactVisitsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListContactVisitsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsContactVisitList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
 		var dest Problem
