@@ -206,14 +206,32 @@ Track or `navigator.webdriver` nothing is sent at all.
 | `data-hash` | `hash: true` | Hash routing: the fragment is part of the page. |
 | `data-consent="required"` | `consent: "required"` | Send nothing until `consent({ analytics: true })`. |
 | `data-manual` | `manual: true` | No automatic pageviews; call `pageview()`. |
+| `data-outbound` | `outbound: true` | A click on a link to another host sends `outbound_click` with prop `url`. |
+| `data-files` | `files: true` | A click on a link to a pdf, zip, dmg, exe, apk, csv, xls(x), doc(x), ppt(x), mp3 or mp4 file sends `file_download` with prop `url`. |
+| `data-chat` | `chat: true` | Opening a `<yuva-chat>` on the page sends `chat_open`. |
 
-Methods (`window.yuva` for the script): `pageview({ url?, referrer? })`, `consent({ analytics })`
-(or `consent(false)`), `optOut()`, `optIn()`, and `destroy()` on `createAnalytics`. Calls made
-before the script loads go to `(window.yuvaq = window.yuvaq || []).push(["consent", { analytics: true }])`.
+Methods (`window.yuva` for the script): `pageview({ url?, referrer? })`,
+`track(name, { props?, revenue? })`, `notFound()`, `consent({ analytics })` (or `consent(false)`),
+`optOut()`, `optIn()`, and `destroy()`. Calls made before the script loads go to
+`(window.yuvaq = window.yuvaq || []).push(["track", "Signup", { props: { plan: "pro" } }])`.
+
+```ts
+analytics.track("Signup", { props: { plan: "pro", seats: 3 }, revenue: { amount: "29.90", currency: "EUR" } });
+analytics.notFound(); // on the site's 404 page
+```
+
+`track` sends a custom event on the current page: up to 30 props (keys of 1 to 300 characters, not
+starting with `$` or `yuva_`; string, number or boolean values) and revenue as a decimal amount in an
+ISO 4217 currency, which Yuva never converts. The server refuses `pageview`, `engagement`, `screen`
+and names starting with `$` or `yuva_`. `notFound()` sends `not_found`, which does not stop the visit
+from bouncing. Every event follows consent mode, the opt-out, GPC, Do Not Track and `webdriver`
+like pageviews do. `<yuva-chat>` dispatches `yuva-open` (bubbling, composed) when its launcher
+opens it; the embedded layout does not.
 Links to `#yuva-optout` and `#yuva-optin` opt the visitor out and back in.
 
-In React, render `<YuvaAnalytics server="…" publicKey="yuva_ak_…" />` once (it renders nothing) and call
-`useYuvaAnalytics()` anywhere for `pageview`, `consent`, `optOut` and `optIn`; calls before it has
+In React, render `<YuvaAnalytics server="…" publicKey="yuva_ak_…" outbound />` once (it renders nothing; the
+other options are props too) and call
+`useYuvaAnalytics()` anywhere for `pageview`, `track`, `notFound`, `consent`, `optOut` and `optIn`; calls before it has
 loaded wait for it. The prop is `publicKey` because React keeps `key` for itself. In Nuxt, set `yuva.analytics` (below) and use `useYuvaAnalytics()`.
 
 ## Nuxt
@@ -232,7 +250,7 @@ export default defineNuxtConfig({
 
 `NUXT_PUBLIC_YUVA_SERVER`, `NUXT_PUBLIC_YUVA_CHANNEL`, `NUXT_PUBLIC_YUVA_LOCALE` and, when
 `analytics` is set, `NUXT_PUBLIC_YUVA_ANALYTICS_KEY` override the options at runtime. `analytics`
-takes `key`, `server` (defaults to `yuva.server`), `hash`, `consent` and `manual`, adds a client
+takes `key`, `server` (defaults to `yuva.server`), `hash`, `consent`, `manual`, `outbound`, `files` and `chat`, adds a client
 plugin and auto-imports `useYuvaAnalytics()`. `<YuvaChat />`, `<YuvaPageFeedback />`, `<YuvaDiscussions />` and `<YuvaSubscribe />` are
 auto-imported, render on the server and load their element in the browser when they mount. Props
 are the attributes in camelCase (`pageTitle`, `identityToken`, which also takes a function);

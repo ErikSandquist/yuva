@@ -10,6 +10,8 @@ const call =
 
 export const analytics: AnalyticsMethods = {
   pageview: call("pageview"),
+  track: call("track"),
+  notFound: call("notFound"),
   consent: call("consent"),
   optOut: call("optOut"),
   optIn: call("optIn"),

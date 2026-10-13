@@ -41,6 +41,9 @@ describe("<yuva-chat> launcher", () => {
   })
 
   test("opens and closes, loading the panel once", async () => {
+    let opened = 0
+    const count = () => opened++
+    document.addEventListener("yuva-open", count)
     const element = mount({ locale: "en" })
     launcher(element)!.click()
     await until(() => !panel(element).hidden)
@@ -55,6 +58,8 @@ describe("<yuva-chat> launcher", () => {
     await element.open()
     expect(panel(element).hidden).toBe(false)
     expect(loads).toBe(1)
+    expect(opened).toBe(2)
+    document.removeEventListener("yuva-open", count)
   })
 
   test("translates to Turkish and follows locale changes", async () => {

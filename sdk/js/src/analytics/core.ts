@@ -2,6 +2,7 @@ import type { components } from "../schema.gen"
 
 export type AnalyticsEvent = components["schemas"]["AnalyticsEvent"]
 export type AnalyticsBatch = components["schemas"]["AnalyticsBatch"]
+export type AnalyticsProps = NonNullable<AnalyticsEvent["p"]>
 
 export interface AnalyticsOptions {
   server: string
@@ -9,6 +10,12 @@ export interface AnalyticsOptions {
   hash?: boolean
   consent?: "required"
   manual?: boolean
+  /** Send `outbound_click` for clicks on links to another host. */
+  outbound?: boolean
+  /** Send `file_download` for clicks on links to pdf, zip, dmg, exe, apk, csv, xls(x), doc(x), ppt(x), mp3 and mp4 files. */
+  files?: boolean
+  /** Send `chat_open` when a `<yuva-chat>` on the page opens. */
+  chat?: boolean
 }
 
 export interface PageviewOptions {
@@ -16,7 +23,18 @@ export interface PageviewOptions {
   referrer?: string
 }
 
+export interface TrackOptions {
+  /** Up to 30 props; keys must not start with `$` or `yuva_`. */
+  props?: AnalyticsProps
+  /** The amount as a decimal string (`"29.90"`) or a number, in an ISO 4217 currency. Never converted. */
+  revenue?: { amount: string | number; currency: string }
+}
+
 export interface AnalyticsMethods {
+  /** A custom event. `pageview`, `engagement`, `screen` and names starting with `$` or `yuva_` are refused by the server. */
+  track(name: string, options?: TrackOptions): void
+  /** Marks the current page as the site's 404 page (`not_found`, non-interactive). */
+  notFound(): void
   pageview(options?: PageviewOptions): void
   consent(choice: { analytics?: boolean } | boolean): void
   optOut(): void
@@ -32,8 +50,8 @@ export const OPT_OUT_KEY = "yuva_optout"
 const noop = () => {}
 
 export function createAnalytics(options: AnalyticsOptions): Analytics {
-  const api: Analytics = { pageview: noop, consent: noop, optOut: noop, optIn: noop, destroy: noop }
-  if (typeof window == "undefined" || !options.key) return api
+  if (typeof window == "undefined" || !options.key)
+    return { pageview: noop, track: noop, notFound: noop, consent: noop, optOut: noop, optIn: noop, destroy: noop }
   const nav = navigator as Navigator & { globalPrivacyControl?: boolean }
   const doc = document as Document & { prerendering?: boolean }
   const storage = () => {
@@ -43,11 +61,10 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   }
   const url = `${options.server.replace(/\/$/, "")}/client/v1/analytics/${options.key}`
   const hash = options.hash
-  let blocked = nav.globalPrivacyControl === true || nav.doNotTrack == "1" || nav.webdriver
+  let blocked = nav.globalPrivacyControl || nav.doNotTrack == "1" || nav.webdriver
   let off = blocked || storage()?.getItem(OPT_OUT_KEY) == "1"
   let consented = !options.consent
   let queue: AnalyticsEvent[] = []
-  let timer: ReturnType<typeof setTimeout> | undefined
   let view = ""
   let page = ""
   let referrer: string | undefined = doc.referrer
@@ -56,14 +73,10 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   let depth = 0
 
   const flush = (beacon?: boolean) => {
-    clearTimeout(timer)
-    timer = undefined
-    if (!queue.length) return
     const body = JSON.stringify(queue[1] ? { e: queue } : queue[0])
-    queue = []
-    if (!(beacon && nav.sendBeacon?.(url, body)))
+    if (queue[0] && !((queue = []), beacon && nav.sendBeacon?.(url, body)))
       fetch(url, { method: "POST", body, keepalive: true, credentials: "omit" }).then(
-        (response) => void (response.status == 403 && (off = blocked = true)),
+        (res) => void (res.status == 403 && (off = blocked = true)),
         noop
       )
   }
@@ -72,15 +85,13 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
     if (off || !consented) return
     if (hash) event.h = true
     if (options.consent) event.c = { a: 1 }
-    queue.push(event)
-    timer ??= setTimeout(flush)
+    if (queue.push(event) < 2) setTimeout(flush)
   }
 
-  const active = () => doc.visibilityState == "visible" && doc.hasFocus()
   const tick = () => {
     const now = Date.now()
     if (since) ms += now - since
-    since = active() ? now : 0
+    since = doc.visibilityState == "visible" && doc.hasFocus() ? now : 0
   }
   const scroll = () => {
     depth = Math.max(
@@ -108,21 +119,24 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
     referrer = undefined
   }
 
+  const track = (name: string, { props, revenue }: TrackOptions = {}) =>
+    send({ n: name, u: page || location.href, p: props, $: revenue && { a: revenue.amount, c: revenue.currency } })
+
   const auto = () => !options.manual && view != key() && pageview()
 
   const leave = () => {
     engagement()
     flush(true)
   }
-  const hidden = () => (doc.visibilityState == "hidden" ? leave() : tick())
 
-  const click = (event: Event) => {
-    const href = (event.target as Element).closest?.("a")?.getAttribute("href")
-    const choice = href == "#yuva-optout" ? api.optOut : href == "#yuva-optin" ? api.optIn : 0
-    if (choice) {
-      event.preventDefault()
-      choice()
-    }
+  const optOut = () => {
+    off = true
+    queue = []
+    storage()?.setItem(OPT_OUT_KEY, "1")
+  }
+  const optIn = () => {
+    off = blocked
+    storage()?.removeItem(OPT_OUT_KEY)
   }
 
   const push = history.pushState
@@ -132,41 +146,51 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   }
   history.pushState = wrapped
 
-  const listeners: [EventTarget, string, EventListener][] = [
-    [window, "popstate", auto],
-    [window, "hashchange", auto],
-    [window, "scroll", scroll],
-    [window, "focus", tick],
-    [window, "blur", tick],
-    [window, "pagehide", leave],
-    [doc, "visibilitychange", hidden],
-    [doc, "click", click],
-    [doc, "prerenderingchange", auto],
-  ]
-  for (const [target, type, listener] of listeners) target.addEventListener(type, listener)
-
-  api.pageview = pageview
-  api.consent = (choice) => {
-    consented = typeof choice == "object" ? !!choice.analytics : choice
-    if (consented) auto()
-    else queue = []
+  // Capture on window also sees the document's events that do not bubble, such as prerenderingchange.
+  const on: Record<string, (event: Event) => void> = {
+    popstate: auto,
+    hashchange: auto,
+    prerenderingchange: auto,
+    scroll,
+    focus: tick,
+    blur: tick,
+    pagehide: leave,
+    visibilitychange: () => (doc.visibilityState == "hidden" ? leave() : tick()),
+    click: (event) => {
+      const link = (event.target as Element).closest?.("a")
+      if (!link) return
+      const href = link.getAttribute("href")
+      const choice = href == "#yuva-optout" ? optOut : href == "#yuva-optin" ? optIn : 0
+      const name =
+        options.files && /\.(pdf|zip|dmg|exe|apk|csv|xlsx?|docx?|pptx?|mp[34])$/i.test(link.pathname)
+          ? "file_download"
+          : options.outbound && link.host != location.host && "outbound_click"
+      if (choice) {
+        event.preventDefault()
+        choice()
+      } else if (name && /^https?:/.test(link.href)) track(name, { props: { url: link.href } })
+    },
   }
-  api.optOut = () => {
-    off = true
-    queue = []
-    storage()?.setItem(OPT_OUT_KEY, "1")
-  }
-  api.optIn = () => {
-    off = blocked
-    storage()?.removeItem(OPT_OUT_KEY)
-  }
-  api.destroy = () => {
-    leave()
-    off = true
-    if (history.pushState == wrapped) history.pushState = push
-    for (const [target, type, listener] of listeners) target.removeEventListener(type, listener)
-  }
+  if (options.chat) on["yuva-open"] = () => track("chat_open")
+  for (const t in on) addEventListener(t, on[t]!, true)
 
   if (!doc.prerendering) auto()
-  return api
+  return {
+    pageview,
+    track,
+    notFound: () => track("not_found"),
+    consent: (choice) => {
+      consented = choice === true || !!(choice as { analytics?: boolean }).analytics
+      if (consented) auto()
+      else queue = []
+    },
+    optOut,
+    optIn,
+    destroy: () => {
+      leave()
+      off = true
+      if (history.pushState == wrapped) history.pushState = push
+      for (const t in on) removeEventListener(t, on[t]!, true)
+    },
+  }
 }

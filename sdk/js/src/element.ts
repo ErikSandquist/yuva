@@ -265,6 +265,7 @@ export class YuvaChatElement extends HTMLElement {
     if (!this.#open) return
     this.#panel.hidden = false
     controller.opened()
+    if (this.layout !== "embedded") this.dispatchEvent(new Event("yuva-open", { bubbles: true, composed: true }))
   }
 
   close(): void {

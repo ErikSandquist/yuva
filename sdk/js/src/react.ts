@@ -392,13 +392,22 @@ export interface YuvaAnalyticsProps extends Omit<AnalyticsOptions, "key"> {
   publicKey: string
 }
 
-export function YuvaAnalytics({ server, publicKey: key, hash, consent, manual }: YuvaAnalyticsProps): null {
+export function YuvaAnalytics({
+  server,
+  publicKey: key,
+  hash,
+  consent,
+  manual,
+  outbound,
+  files,
+  chat,
+}: YuvaAnalyticsProps): null {
   useEffect(() => {
     let instance: Analytics | undefined
     let mounted = true
     void import("./analytics").then(({ createAnalytics }) => {
       if (!mounted) return
-      instance = createAnalytics({ server, key, hash, consent, manual })
+      instance = createAnalytics({ server, key, hash, consent, manual, outbound, files, chat })
       attachAnalytics(instance)
     })
     return () => {
@@ -406,7 +415,7 @@ export function YuvaAnalytics({ server, publicKey: key, hash, consent, manual }:
       instance?.destroy()
       attachAnalytics(undefined)
     }
-  }, [server, key, hash, consent, manual])
+  }, [server, key, hash, consent, manual, outbound, files, chat])
   return null
 }
 

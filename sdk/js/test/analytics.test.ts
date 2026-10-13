@@ -302,6 +302,67 @@ describe("opt-out", () => {
   })
 })
 
+describe("events", () => {
+  test("track sends props and revenue on the current page", async () => {
+    const analytics = start()
+    analytics.track("Signup", { props: { plan: "pro", seats: 3 }, revenue: { amount: "29.90", currency: "EUR" } })
+    analytics.notFound()
+    await settle()
+    expect(events().slice(1)).toEqual([
+      { n: "Signup", u: "https://site.test/", p: { plan: "pro", seats: 3 }, $: { a: "29.90", c: "EUR" } },
+      { n: "not_found", u: "https://site.test/" },
+    ])
+  })
+
+  test("outbound, file and chat events only with their options", async () => {
+    document.body.innerHTML =
+      '<a href="https://other.test/x">Other</a><a href="/files/report.PDF?v=2">Report</a><a href="/about">About</a><a href="mailto:a@other.test">Mail</a><yuva-chat></yuva-chat>'
+    const [other, file, about, mail] = document.querySelectorAll("a")
+    const chat = document.querySelector("yuva-chat")!
+    const prevent = (event: Event) => event.preventDefault()
+    document.addEventListener("click", prevent)
+    const interact = async () => {
+      for (const link of [other, file, about, mail]) link!.click()
+      chat.dispatchEvent(new Event("yuva-open", { bubbles: true, composed: true }))
+      await settle()
+    }
+    try {
+      start()
+      await interact()
+      expect(names()).toEqual(["pageview /"])
+      instance?.destroy()
+
+      sent = []
+      start({ outbound: true, files: true, chat: true })
+      await interact()
+      expect(events().map(({ n, p }) => [n, p?.url])).toEqual([
+        ["pageview", undefined],
+        ["outbound_click", "https://other.test/x"],
+        ["file_download", "https://site.test/files/report.PDF?v=2"],
+        ["chat_open", undefined],
+      ])
+    } finally {
+      document.removeEventListener("click", prevent)
+      document.body.replaceChildren()
+    }
+  })
+
+  test("consent mode and opt-out hold back custom events", async () => {
+    const analytics = start({ consent: "required", chat: true })
+    analytics.track("Signup")
+    document.dispatchEvent(new Event("yuva-open", { bubbles: true }))
+    await settle()
+    expect(sent).toEqual([])
+    analytics.consent({ analytics: true })
+    await settle()
+    analytics.optOut()
+    analytics.track("Signup")
+    analytics.notFound()
+    await settle()
+    expect(names()).toEqual(["pageview /"])
+  })
+})
+
 describe("/yuva-analytics.js", () => {
   test("reads its attributes, drains yuvaq and keeps an existing window.yuva", async () => {
     const script = document.createElement("script")

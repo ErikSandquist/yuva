@@ -1,6 +1,6 @@
-import { createAnalytics, type AnalyticsMethods } from "./analytics/core"
+import { createAnalytics, type Analytics } from "./analytics/core"
 
-type Call = [keyof AnalyticsMethods, ...unknown[]]
+type Call = [keyof Analytics, ...unknown[]]
 type Host = Window & { yuva?: Record<string, unknown>; yuvaq?: Call[] | { push(call: Call): void } }
 
 const script = document.currentScript as HTMLScriptElement | null
@@ -10,14 +10,15 @@ const analytics = createAnalytics({
   key: data.key ?? "",
   server: data.api ?? new URL(script?.src ?? "/", location.href).origin,
   hash: "hash" in data,
-  consent: data.consent == "required" ? "required" : undefined,
+  consent: data.consent as "required" | undefined,
   manual: "manual" in data,
+  outbound: "outbound" in data,
+  files: "files" in data,
+  chat: "chat" in data,
 })
-const { pageview, consent, optOut, optIn } = analytics
-const methods: AnalyticsMethods = { pageview, consent, optOut, optIn }
-const run = ([name, ...args]: Call) => (methods[name] as (...args: unknown[]) => void)?.(...args)
+const run = ([name, ...args]: Call) => (analytics[name] as (...args: unknown[]) => void)?.(...args)
 const queued = host.yuvaq
 
-host.yuva = Object.assign(host.yuva ?? {}, methods)
+host.yuva = Object.assign(host.yuva ?? {}, analytics)
 host.yuvaq = { push: run }
-if (Array.isArray(queued)) queued.forEach(run)
+;(queued as Call[] | undefined)?.forEach?.(run)

@@ -6,5 +6,7 @@ export {
   type AnalyticsEvent,
   type AnalyticsMethods,
   type AnalyticsOptions,
+  type AnalyticsProps,
   type PageviewOptions,
+  type TrackOptions,
 } from "./analytics/core"
