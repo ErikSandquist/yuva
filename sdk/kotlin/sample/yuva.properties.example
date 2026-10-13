@@ -1,3 +1,5 @@
 serverUrl=http://10.0.2.2:8080
 channelKey=your-channel-public-key
 identityTokenUrl=http://10.0.2.2:8090/identity-token
+analyticsKey=yuva_ak_your-analytics-property-key
+analyticsConsent=none

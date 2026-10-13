@@ -47,6 +47,7 @@ import dev.yuva.YuvaConfiguration
 import dev.yuva.YuvaSubscription
 import dev.yuva.YuvaSubscriptionState
 import dev.yuva.YuvaUpload
+import dev.yuva.analytics.TrackScreen
 import dev.yuva.ui.YuvaConversationsView
 import dev.yuva.ui.YuvaFeedbackView
 import java.net.URL
@@ -118,6 +119,11 @@ private fun Sample(context: Context, openConversation: String?, startScreen: Str
         Text("Copy sample/yuva.properties.example to sample/yuva.properties and rebuild.", Modifier.padding(32.dp))
         return
     }
+    if (screen == "analytics") {
+        BackHandler { screen = null }
+        AnalyticsScreen(onClose = { screen = null })
+        return
+    }
     val current = yuva
     when (screen.takeIf { current != null }) {
         "messages" -> {
@@ -131,6 +137,7 @@ private fun Sample(context: Context, openConversation: String?, startScreen: Str
             return
         }
     }
+    TrackScreen("Home")
     Scaffold(topBar = { TopAppBar(title = { Text("Yuva Sample") }) }) { padding ->
         Column(
             Modifier.fillMaxSize().padding(padding).padding(16.dp),
@@ -168,6 +175,9 @@ private fun Sample(context: Context, openConversation: String?, startScreen: Str
                 screenshot = capture(view)
                 screen = "feedback"
             }, modifier = Modifier.fillMaxWidth()) { Text("Send feedback") }
+            Button(onClick = { screen = "analytics" }, modifier = Modifier.fillMaxWidth().testTag("sample.analytics")) {
+                Text("Analytics")
+            }
             if (identified && userId.isNotBlank() && current != null) {
                 key(current) { Newsletter(current) }
             }

@@ -1,3 +1,4 @@
+import com.android.build.api.artifact.SingleArtifact
 import java.util.Properties
 
 plugins {
@@ -24,6 +25,8 @@ android {
         buildConfigField("String", "SERVER_URL", configValue("serverUrl"))
         buildConfigField("String", "CHANNEL_KEY", configValue("channelKey"))
         buildConfigField("String", "IDENTITY_TOKEN_URL", configValue("identityTokenUrl"))
+        buildConfigField("String", "ANALYTICS_KEY", configValue("analyticsKey"))
+        buildConfigField("String", "ANALYTICS_CONSENT", configValue("analyticsConsent"))
     }
     buildFeatures {
         compose = true
@@ -40,9 +43,32 @@ android {
 
 dependencies {
     implementation(project(":yuva"))
+    implementation(project(":analytics"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
+}
+
+abstract class CheckNoAdId : DefaultTask() {
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.NONE)
+    abstract val manifest: RegularFileProperty
+
+    @TaskAction
+    fun check() {
+        val file = manifest.get().asFile
+        check("com.google.android.gms.permission.AD_ID" !in file.readText()) { "$file asks for the advertising id (AD_ID)" }
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        val task = tasks.register<CheckNoAdId>("check${variant.name.replaceFirstChar(Char::uppercase)}NoAdId") {
+            manifest.set(variant.artifacts.get(SingleArtifact.MERGED_MANIFEST))
+        }
+        tasks.named("check") { dependsOn(task) }
+    }
 }

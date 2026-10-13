@@ -17,4 +17,5 @@ dependencyResolutionManagement {
 rootProject.name = "yuva-kotlin"
 
 include(":yuva")
+include(":analytics")
 include(":sample")
