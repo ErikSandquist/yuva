@@ -214,6 +214,7 @@ var operationScopes = map[string][]oas.ApiKeyScope{
 	"QueryAnalytics":          {oas.AnalyticsRead},
 	"GetAnalyticsRealtime":    {oas.AnalyticsRead},
 	"GetAnalyticsHealth":      {oas.AnalyticsRead},
+	"SendAnalyticsEvents":     {oas.AnalyticsWrite},
 
 	"ListAnalyticsGoals":        {oas.AnalyticsRead},
 	"CreateAnalyticsGoal":       {oas.AnalyticsManage},

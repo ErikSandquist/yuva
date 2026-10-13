@@ -22,6 +22,22 @@ func VisitorHash(salt []byte, property uuid.UUID, ip ShortIP, userAgent string) 
 	return int64(binary.BigEndian.Uint64(m.Sum(nil)[:8]))
 }
 
+// Key scopes keep an app's process key and a host backend's visitor key apart in KeyVisitorHash.
+const (
+	ScopeProcess byte = 'p'
+	ScopeVisitor byte = 'k'
+)
+
+// KeyVisitorHash is the day's visitor for a key that stands in for the address: an app's process
+// key or a host backend's own visitor key, as VisitorHash computes it for an address.
+func KeyVisitorHash(salt []byte, property uuid.UUID, scope byte, key string) int64 {
+	m := hmac.New(sha256.New, salt)
+	m.Write(property[:])
+	m.Write([]byte{scope})
+	m.Write([]byte(key))
+	return int64(binary.BigEndian.Uint64(m.Sum(nil)[:8]))
+}
+
 // VisitHash names a visit by its visitor and first event.
 func VisitHash(salt []byte, visitor int64, first time.Time) int64 {
 	m := hmac.New(sha256.New, salt)

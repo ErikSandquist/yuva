@@ -485,6 +485,10 @@ func (s *Server) analyticsCORS(w http.ResponseWriter, r *http.Request, next http
 		writeProblem(w, errNotFound)
 		return
 	}
+	if raw == "" && r.Method == http.MethodPost && cp.apps() {
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), analyticsPropertyKey, cp)))
+		return
+	}
 	host := ""
 	if origin, ok := normalizeOrigin(raw); ok {
 		if u, err := url.Parse(origin); err == nil {
@@ -524,6 +528,7 @@ type collectEvent struct {
 	H   bool            `json:"h"`
 	MS  int64           `json:"ms"`
 	SD  int             `json:"sd"`
+	T   int64           `json:"t"`
 	P   json.RawMessage `json:"p"`
 	Rev json.RawMessage `json:"$"`
 	I   *bool           `json:"i"`
@@ -580,6 +585,21 @@ func parseCustomEvent(e collectEvent, pg analytics.Page, children bool) (customE
 	return out, nil
 }
 
+func readAnalyticsBody(w http.ResponseWriter, r *http.Request, drop func(reason string, n int)) ([]byte, bool) {
+	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, maxAnalyticsBody))
+	if err == nil {
+		return body, true
+	}
+	drop(analytics.ReasonInvalid, 1)
+	var tooLarge *http.MaxBytesError
+	if errors.As(err, &tooLarge) {
+		writeProblem(w, errAnalyticsBodyTooLarge)
+	} else {
+		writeProblem(w, errValidation("the body could not be read"))
+	}
+	return nil, false
+}
+
 // parseAnalyticsBatch reads one event, or a batch of them (batch true).
 func parseAnalyticsBatch(body []byte) ([]collectEvent, bool, error) {
 	var probe struct {
@@ -622,15 +642,12 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	ctx, now, prop := r.Context(), s.now(), cp.prop
 	day := analytics.LocalDay(now, cp.loc)
 	drop := func(reason string, n int) { a.buffer.Drop(prop.WorkspaceID, prop.ID, day, reason, int64(n)) }
-	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, maxAnalyticsBody))
-	if err != nil {
-		drop(analytics.ReasonInvalid, 1)
-		var tooLarge *http.MaxBytesError
-		if errors.As(err, &tooLarge) {
-			writeProblem(w, errAnalyticsBodyTooLarge)
-			return
-		}
-		writeProblem(w, errValidation("the body could not be read"))
+	body, ok := readAnalyticsBody(w, r, drop)
+	if !ok {
+		return
+	}
+	if r.Header.Get("Origin") == "" {
+		s.collectApp(w, r, cp, body, now, drop)
 		return
 	}
 	evs, batch, err := parseAnalyticsBatch(body)
@@ -702,44 +719,8 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusAccepted)
 		return
 	}
-	addr, err := netip.ParseAddr(s.visitorIP(r))
-	if err != nil {
-		drop(analytics.ReasonInvalid, len(keep))
-		w.WriteHeader(http.StatusAccepted)
-		return
-	}
-	addr = addr.Unmap()
-	excluded := slices.ContainsFunc(prop.ExcludedIps, func(p netip.Prefix) bool { return p.Contains(addr) })
-	short := analytics.ShortenAddr(addr)
-	addr = netip.Addr{}
-	if excluded {
-		drop(analytics.ReasonExcluded, len(keep))
-		w.WriteHeader(http.StatusAccepted)
-		return
-	}
-	for i := range keep {
-		if ok, wait := a.limits.allowWait("a:"+prop.ID.String()+":"+short.String(), limitAnalyticsPerAddress, now); !ok {
-			drop(analytics.ReasonRate, len(keep)-i)
-			writeProblem(w, rateLimited(wait))
-			return
-		}
-	}
-	for i := range keep {
-		if !a.limits.allow("p:"+prop.ID.String(), limit{a.settings.PropertyEventsPerMinute, time.Minute}, now) {
-			drop(analytics.ReasonRate, len(keep)-i)
-			w.WriteHeader(http.StatusAccepted)
-			return
-		}
-	}
-	ok, err := s.takeUsage(ctx, prop.WorkspaceID, len(keep), now)
-	if err != nil {
-		s.log.ErrorContext(ctx, "analytics usage", slog.Any("error", err))
-		writeProblem(w, errInternal)
-		return
-	}
+	short, ok := s.admitAnalytics(w, r, cp, now, len(keep), drop)
 	if !ok {
-		drop(analytics.ReasonOverLimit, len(keep))
-		w.WriteHeader(http.StatusAccepted)
 		return
 	}
 	ua := r.UserAgent() + "\x00" + r.Header.Get("Sec-CH-UA-Platform") + "\x00" + r.Header.Get("Sec-CH-UA-Mobile")
@@ -747,14 +728,94 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	if prop.Audience != string(oas.AnalyticsAudienceChildren) {
 		language = analytics.Language(r.Header.Get("Accept-Language"))
 	}
+	visitor := func(salt []byte) int64 { return analytics.VisitorHash(salt, prop.ID, short, ua) }
+	items := make([]analyticsItem, 0, len(keep))
+	for _, i := range keep {
+		width := evs[i].W
+		items = append(items, analyticsItem{e: evs[i], page: pages[i], custom: customs[i], at: now, visitor: visitor,
+			describe: func(pg analytics.Page, refHost, refPath string) *analytics.VisitInfo {
+				return s.visitInfo(r, prop, short, agent, pg, refHost, refPath, width, language)
+			}})
+	}
+	if err := s.takeAnalytics(ctx, cp, now, items, drop); err != nil {
+		writeProblem(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusAccepted)
+}
+
+// admitAnalytics checks n events from the request's address against the property's excluded
+// addresses and limits and counts them against the workspace's monthly cap. The address is
+// shortened right after the exclusion check. Unless ok, the answer is written.
+func (s *Server) admitAnalytics(w http.ResponseWriter, r *http.Request, cp *cachedProperty, now time.Time, n int, drop func(reason string, n int)) (analytics.ShortIP, bool) {
+	a, prop := s.analytics, cp.prop
+	addr, err := netip.ParseAddr(s.visitorIP(r))
+	if err != nil {
+		drop(analytics.ReasonInvalid, n)
+		w.WriteHeader(http.StatusAccepted)
+		return analytics.ShortIP{}, false
+	}
+	addr = addr.Unmap()
+	excluded := slices.ContainsFunc(prop.ExcludedIps, func(p netip.Prefix) bool { return p.Contains(addr) })
+	short := analytics.ShortenAddr(addr)
+	addr = netip.Addr{}
+	if excluded {
+		drop(analytics.ReasonExcluded, n)
+		w.WriteHeader(http.StatusAccepted)
+		return analytics.ShortIP{}, false
+	}
+	for i := range n {
+		if ok, wait := a.limits.allowWait("a:"+prop.ID.String()+":"+short.String(), limitAnalyticsPerAddress, now); !ok {
+			drop(analytics.ReasonRate, n-i)
+			writeProblem(w, rateLimited(wait))
+			return analytics.ShortIP{}, false
+		}
+	}
+	for i := range n {
+		if !a.limits.allow("p:"+prop.ID.String(), limit{a.settings.PropertyEventsPerMinute, time.Minute}, now) {
+			drop(analytics.ReasonRate, n-i)
+			w.WriteHeader(http.StatusAccepted)
+			return analytics.ShortIP{}, false
+		}
+	}
+	ok, err := s.takeUsage(r.Context(), prop.WorkspaceID, n, now)
+	if err != nil {
+		s.log.ErrorContext(r.Context(), "analytics usage", slog.Any("error", err))
+		writeProblem(w, errInternal)
+		return analytics.ShortIP{}, false
+	}
+	if !ok {
+		drop(analytics.ReasonOverLimit, n)
+		w.WriteHeader(http.StatusAccepted)
+		return analytics.ShortIP{}, false
+	}
+	return short, true
+}
+
+// analyticsItem is a checked event on its way into the buffer: when it happened, how its visitor is
+// hashed under a salt and how a visit it starts is described.
+type analyticsItem struct {
+	e        collectEvent
+	page     analytics.Page
+	custom   *customEvent
+	at       time.Time
+	visitor  func(salt []byte) int64
+	describe func(pg analytics.Page, refHost, refPath string) *analytics.VisitInfo
+}
+
+// takeAnalytics puts checked events into the buffer: excluded paths and spam referrers are dropped,
+// path rules applied, each event joins or starts its visitor's visit, and only a visit's first
+// event describes it. errAnalyticsBusy means the buffer is full.
+func (s *Server) takeAnalytics(ctx context.Context, cp *cachedProperty, now time.Time, items []analyticsItem, drop func(reason string, n int)) *apiError {
+	a, prop := s.analytics, cp.prop
 	var own string
 	if u, err := url.Parse(s.auth.PublicURL); err == nil {
 		own = u.Hostname()
 	}
-	out := make([]analytics.Event, 0, len(keep))
+	out := make([]analytics.Event, 0, len(items))
 	scrubbed := 0
-	for _, i := range keep {
-		e, pg := evs[i], pages[i]
+	for _, it := range items {
+		e, pg := it.e, it.page
 		if slices.ContainsFunc(prop.ExcludedPaths, func(p string) bool { return analytics.MatchPath(p, pg.Path) }) {
 			drop(analytics.ReasonExcluded, 1)
 			continue
@@ -769,11 +830,10 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 		}
-		v, ok, err := a.resolver.Resolve(ctx, prop.WorkspaceID, prop.ID, cp.loc, now, short, ua, engagement)
+		v, ok, err := a.resolver.ResolveAt(ctx, prop.WorkspaceID, prop.ID, cp.loc, now, it.at, it.visitor, engagement)
 		if err != nil {
 			s.log.ErrorContext(ctx, "analytics visit", slog.Any("error", err))
-			writeProblem(w, errInternal)
-			return
+			return errInternal
 		}
 		if !ok {
 			continue
@@ -785,12 +845,12 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			drop(analytics.ReasonBot, 1)
 			continue
 		}
-		ce := customs[i]
+		ce := it.custom
 		if pg.Scrubbed || (ce != nil && ce.scrubbed) {
 			scrubbed++
 		}
 		ev := analytics.Event{
-			WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Day: v.Day, TS: now, Visit: v.Visit, Visitor: v.Visitor,
+			WorkspaceID: prop.WorkspaceID, PropertyID: prop.ID, Day: v.Day, TS: it.at, Visit: v.Visit, Visitor: v.Visitor,
 			Kind: analytics.KindPageview, Name: e.N, Hostname: pg.Host, Path: path, Interactive: true,
 		}
 		if ce != nil {
@@ -801,19 +861,18 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 			ev.EngagedMS = new(int32(min(max(e.MS, 0), maxEngagedMS)))
 			ev.Scroll = new(int16(min(max(e.SD, 0), 100)))
 		} else if v.NewVisit {
-			ev.Info = s.visitInfo(r, prop, short, agent, pg, refHost, refPath, e.W, language)
+			ev.Info = it.describe(pg, refHost, refPath)
 		}
 		out = append(out, ev)
 	}
 	if len(out) > 0 && !a.buffer.Add(out) {
 		drop(analytics.ReasonBuffer, len(out))
-		writeProblem(w, errAnalyticsBusy)
-		return
+		return errAnalyticsBusy
 	}
 	if scrubbed > 0 {
-		a.buffer.Count(prop.WorkspaceID, prop.ID, day, analytics.ReasonScrubbed, int64(scrubbed))
+		a.buffer.Count(prop.WorkspaceID, prop.ID, analytics.LocalDay(now, cp.loc), analytics.ReasonScrubbed, int64(scrubbed))
 	}
-	w.WriteHeader(http.StatusAccepted)
+	return nil
 }
 
 var sharedAddressSpace = netip.MustParsePrefix("100.64.0.0/10")
@@ -870,7 +929,10 @@ func (s *Server) visitInfo(r *http.Request, prop store.AnalyticsProperty, short 
 		Channel: channel, Language: language, Platform: analytics.PlatformWeb,
 		Device: agent.Device, Browser: agent.Browser, BrowserMajor: agent.BrowserMajor, OS: agent.OS, OSMajor: agent.OSMajor,
 	}
-	loc := s.analytics.geo.Lookup(short)
+	var loc analytics.Location
+	if short != (analytics.ShortIP{}) {
+		loc = s.analytics.geo.Lookup(short)
+	}
 	if loc.Country == "" {
 		loc = analytics.Location{Country: s.requestCountry(r)}
 	}

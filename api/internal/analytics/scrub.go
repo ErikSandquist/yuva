@@ -3,6 +3,7 @@ package analytics
 import (
 	"net/url"
 	"regexp"
+	"slices"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -37,11 +38,20 @@ type Page struct {
 // ParsePage keeps the host and path of an http(s) URL; with hash, the fragment is part of the path
 // (hash routers).
 func ParsePage(raw string, hash bool) (Page, bool) {
+	return parsePage(raw, hash, "http", "https")
+}
+
+// ParseScreen reads an app screen, app://<app id>/<screen>, like a page: the app id is its host.
+func ParseScreen(raw string) (Page, bool) {
+	return parsePage(raw, false, "app")
+}
+
+func parsePage(raw string, hash bool, schemes ...string) (Page, bool) {
 	if len(raw) > MaxURLLength {
 		return Page{}, false
 	}
 	u, err := url.Parse(strings.TrimSpace(raw))
-	if err != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Hostname() == "" {
+	if err != nil || !slices.Contains(schemes, u.Scheme) || u.Hostname() == "" {
 		return Page{}, false
 	}
 	p := Page{Host: strings.ToLower(u.Hostname())}

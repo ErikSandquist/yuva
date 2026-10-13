@@ -44,6 +44,45 @@ func (e AnalyticsAnnotationKind) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsAppDevice.
+const (
+	Desktop AnalyticsAppDevice = "desktop"
+	Mobile  AnalyticsAppDevice = "mobile"
+	Tablet  AnalyticsAppDevice = "tablet"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppDevice enum.
+func (e AnalyticsAppDevice) Valid() bool {
+	switch e {
+	case Desktop:
+		return true
+	case Mobile:
+		return true
+	case Tablet:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsAppPlatform.
+const (
+	AnalyticsAppAndroid AnalyticsAppPlatform = "android"
+	AnalyticsAppIos     AnalyticsAppPlatform = "ios"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAppPlatform enum.
+func (e AnalyticsAppPlatform) Valid() bool {
+	switch e {
+	case AnalyticsAppAndroid:
+		return true
+	case AnalyticsAppIos:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAudience.
 const (
 	AnalyticsAudienceChildren AnalyticsAudience = "children"
@@ -4337,6 +4376,40 @@ type AnalyticsAnnotationUpdate struct {
 	Text     *string             `json:"text,omitempty"`
 }
 
+// AnalyticsApp Apps only, required there: the app that sent the events, describing a visit it starts.
+// Nothing here identifies a device.
+type AnalyticsApp struct {
+	// Device `tablet` for iPads and Android tablets, `desktop` for Mac and ChromeOS.
+	Device *AnalyticsAppDevice `json:"device,omitempty"`
+
+	// Language The app's language as a BCP 47 tag; only its primary language is kept. `Accept-Language` when absent.
+	//
+	// Examples: tr-TR
+	Language *string `json:"language,omitempty"`
+
+	// OsVersion The OS version; its major number is kept (`os_version` dimension `iOS 18`).
+	//
+	// Examples: 18.1
+	OsVersion *string              `json:"os_version,omitempty"`
+	Platform  AnalyticsAppPlatform `json:"platform"`
+
+	// Version The app's version as users see it (`CFBundleShortVersionString`, `versionName`), the `app_version` dimension.
+	//
+	// Examples: 2.3.1
+	Version *string `json:"version,omitempty"`
+
+	// Width Screen width in points or dp, turned into a screen size class and not stored.
+	//
+	// Examples: 390
+	Width *int `json:"width,omitempty"`
+}
+
+// AnalyticsAppDevice `tablet` for iPads and Android tablets, `desktop` for Mac and ChromeOS.
+type AnalyticsAppDevice string
+
+// AnalyticsAppPlatform defines model for AnalyticsApp.Platform.
+type AnalyticsAppPlatform string
+
 // AnalyticsAudience `children` keeps location at country level and allows no consent features or tracked props.
 type AnalyticsAudience string
 
@@ -4476,10 +4549,18 @@ type AnalyticsEvent struct {
 	// Sd `engagement` only: the deepest scroll position reached, in percent.
 	Sd *int `json:"sd,omitempty"`
 
+	// T Apps only: when the event happened, in milliseconds since the Unix epoch. Taken as now
+	// when absent or in the future; an event older than 72 hours is dropped as `late`.
+	//
+	//
+	// Examples: 1760263200000
+	T *int64 `json:"t,omitempty"`
+
 	// U The page URL. Only the host and the path are kept; of the query, only `utm_source`,
 	// `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `ref` and `source` are read, into
 	// the visit's acquisition. Path segments shaped like e-mail addresses are stored as
-	// `:email`.
+	// `:email`. In an app, the screen: `app://<app id>/<screen>`, the screen's path
+	// percent-encoded (`app://com.example.shop/Product%20Detail`), read the same way.
 	U string `json:"u"`
 
 	// W Viewport width in CSS pixels, turned into a screen size class and not stored.
@@ -4500,9 +4581,27 @@ type AnalyticsEvent_P_AdditionalProperties struct {
 	union json.RawMessage
 }
 
-// AnalyticsEventBatch defines model for AnalyticsEventBatch.
+// AnalyticsEventBatch Up to 100 events. Apps also send `k` and `a`, and one request per process key.
 type AnalyticsEventBatch struct {
+	// A Apps only, required there: the app that sent the events, describing a visit it starts.
+	// Nothing here identifies a device.
+	A *AnalyticsApp    `json:"a,omitempty"`
 	E []AnalyticsEvent `json:"e"`
+
+	// K Apps only, required there: the process key, a random value (at least 128 bits, such as
+	// a UUID) the app makes at launch and keeps in memory only, never on disk. It stands for
+	// the visitor in place of the address: a relaunch makes a new key, so a new visitor and
+	// visit. Queued events keep the key of the process that recorded them.
+	//
+	//
+	// Examples: 0f8fad5b-d9cb-469f-a165-70867728950e
+	K *string `json:"k,omitempty"`
+}
+
+// AnalyticsEventError defines model for AnalyticsEventError.
+type AnalyticsEventError struct {
+	Detail string `json:"detail"`
+	Index  int    `json:"index"`
 }
 
 // AnalyticsEventRevenue Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
@@ -4531,6 +4630,15 @@ type AnalyticsEventRevenue_A struct {
 	union json.RawMessage
 }
 
+// AnalyticsEventsResult defines model for AnalyticsEventsResult.
+type AnalyticsEventsResult struct {
+	// Accepted The valid events, stored unless a rule of the operation dropped them.
+	Accepted int `json:"accepted"`
+
+	// Errors The events left out as invalid, by their position in `events`.
+	Errors []AnalyticsEventError `json:"errors"`
+}
+
 // AnalyticsExcludedAddress An IP address or CIDR range whose events are dropped, such as an office or a monitoring host.
 //
 // Examples: 203.0.113.7, 198.51.100.0/24
@@ -4547,7 +4655,10 @@ type AnalyticsFilter struct {
 	// `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 	// (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 	// `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-	// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+	// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+	// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+	// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+	// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
 	// and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 	// for events without it: as
 	// a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -4569,7 +4680,10 @@ type AnalyticsFilterOp string
 // `email`, `referral`, `ai_assistants`, `internal`; `source` the UTM source, or the named site
 // (Google, ChatGPT) or host a visit came from; `device` is `desktop`, `mobile` or `tablet`;
 // `screen_size` is `phone`, `tablet`, `laptop` or `desktop`; `country` an ISO 3166-1 alpha-2
-// code. Unknown values are empty strings. `event` is the name of a custom or built-in event
+// code. `platform` is `web`, `ios`, `android` or `server` (a visit a server event started);
+// `app_version` the version an app sent, empty on the web. In an app, a page is a screen:
+// its `hostname` is the app id and `page`, `entry_page` and `exit_page` are screen paths, so
+// an app property's "Screens" are a `page` breakdown filtered by `platform`. Unknown values are empty strings. `event` is the name of a custom or built-in event
 // and `prop` the value of the event prop the filter's `prop` (or the query's `prop`) names, empty
 // for events without it: as
 // a filter of visits they keep the visits with such an event; in an `event` or `prop`
@@ -4835,7 +4949,8 @@ type AnalyticsPathRule struct {
 	Replacement string `json:"replacement"`
 }
 
-// AnalyticsPlatform Where a property's events come from. Browsers send from `web` pages; `ios` and `android` apps send without an `Origin`.
+// AnalyticsPlatform Where a property's events come from. Browsers send from `web` pages; `ios` and `android`
+// apps send without an `Origin`. Server-side events (`sendAnalyticsEvents`) need no platform.
 type AnalyticsPlatform string
 
 // AnalyticsProperty A website or app the workspace measures.
@@ -5144,6 +5259,90 @@ type AnalyticsSegmentList struct {
 type AnalyticsSegmentUpdate struct {
 	Filters *[]AnalyticsFilter `json:"filters,omitempty"`
 	Name    *string            `json:"name,omitempty"`
+}
+
+// AnalyticsServerEvent One server-side event. Give `ip` and `user_agent`, or `visitor_key`.
+type AnalyticsServerEvent struct {
+	// AcceptLanguage The visitor's `Accept-Language` header; only the primary language of its first entry is kept.
+	AcceptLanguage *string `json:"accept_language,omitempty"`
+
+	// Consent The visitor agreed to analytics; required for a `consent` property to store the event.
+	Consent *bool `json:"consent,omitempty"`
+
+	// Dnt The visitor's request had `DNT: 1`; the event is not stored.
+	Dnt *bool `json:"dnt,omitempty"`
+
+	// Gpc The visitor's request had `Sec-GPC: 1`; the event is not stored.
+	Gpc *bool `json:"gpc,omitempty"`
+
+	// Interactive `false` makes a custom event non-interactive.
+	Interactive *bool `json:"interactive,omitempty"`
+
+	// Ip The visitor's IP address as your server saw it. Shortened on arrival, never stored.
+	//
+	// Examples: 203.0.113.7
+	Ip *string `json:"ip,omitempty"`
+
+	// Name `pageview`, a built-in event or a custom event's name, as in `AnalyticsEvent.n`.
+	//
+	// Examples: Signup
+	Name string `json:"name"`
+
+	// Props Up to 30 props with the rules of `AnalyticsEvent.p`.
+	//
+	// Examples: {"plan":"pro"}
+	Props *map[string]AnalyticsServerEvent_Props_AdditionalProperties `json:"props,omitempty"`
+
+	// Referrer The page's referrer, for a `pageview` that starts a visit.
+	Referrer *string `json:"referrer,omitempty"`
+
+	// Revenue Revenue a custom or built-in event carries: `a` the amount, a decimal with at most the
+	// currency's minor-unit digits (2 for most, 0 for JPY or KRW, 3 for KWD), `c` the ISO 4217
+	// code. It is stored in minor units per currency; Yuva converts nothing.
+	Revenue *AnalyticsEventRevenue `json:"revenue,omitempty"`
+
+	// SecChUaMobile The visitor's `Sec-CH-UA-Mobile` header, as sent.
+	//
+	// Examples: ?0
+	SecChUaMobile *string `json:"sec_ch_ua_mobile,omitempty"`
+
+	// SecChUaPlatform The visitor's `Sec-CH-UA-Platform` header, as sent.
+	//
+	// Examples: "macOS"
+	SecChUaPlatform *string `json:"sec_ch_ua_platform,omitempty"`
+
+	// Timestamp When it happened; now when absent.
+	Timestamp *time.Time `json:"timestamp,omitempty"`
+
+	// Url The page or app screen, read like `AnalyticsEvent.u`.
+	//
+	// Examples: https://example.com/signup
+	Url string `json:"url"`
+
+	// UserAgent The visitor's `User-Agent` header. Never stored.
+	UserAgent *string `json:"user_agent,omitempty"`
+
+	// VisitorKey Your own key for the visitor instead of `ip` and `user_agent`; hashed under the day's salt, never stored.
+	VisitorKey *string `json:"visitor_key,omitempty"`
+}
+
+// AnalyticsServerEventProps0 defines model for AnalyticsServerEvent.Props.0.
+type AnalyticsServerEventProps0 = string
+
+// AnalyticsServerEventProps1 defines model for AnalyticsServerEvent.Props.1.
+type AnalyticsServerEventProps1 = float32
+
+// AnalyticsServerEventProps2 defines model for AnalyticsServerEvent.Props.2.
+type AnalyticsServerEventProps2 = bool
+
+// AnalyticsServerEvent_Props_AdditionalProperties defines model for AnalyticsServerEvent.props.AdditionalProperties.
+type AnalyticsServerEvent_Props_AdditionalProperties struct {
+	union json.RawMessage
+}
+
+// AnalyticsServerEvents defines model for AnalyticsServerEvents.
+type AnalyticsServerEvents struct {
+	Events []AnalyticsServerEvent `json:"events"`
 }
 
 // AnalyticsTopValue defines model for AnalyticsTopValue.
@@ -14980,6 +15179,9 @@ type UpdateAnalyticsAnnotationJSONRequestBody = AnalyticsAnnotationUpdate
 // DeleteAnalyticsDataJSONRequestBody defines body for DeleteAnalyticsData for application/json ContentType.
 type DeleteAnalyticsDataJSONRequestBody = AnalyticsDataDeletion
 
+// SendAnalyticsEventsJSONRequestBody defines body for SendAnalyticsEvents for application/json ContentType.
+type SendAnalyticsEventsJSONRequestBody = AnalyticsServerEvents
+
 // CreateAnalyticsFunnelJSONRequestBody defines body for CreateAnalyticsFunnel for application/json ContentType.
 type CreateAnalyticsFunnelJSONRequestBody = AnalyticsFunnelCreate
 
@@ -15482,6 +15684,94 @@ func (t AnalyticsEventRevenue_A) MarshalJSON() ([]byte, error) {
 }
 
 func (t *AnalyticsEventRevenue_A) UnmarshalJSON(b []byte) error {
+	err := t.union.UnmarshalJSON(b)
+	return err
+}
+
+// AsAnalyticsServerEventProps0 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps0
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps0() (AnalyticsServerEventProps0, error) {
+	var body AnalyticsServerEventProps0
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps0 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps0
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps0(v AnalyticsServerEventProps0) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps0 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps0
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps0(v AnalyticsServerEventProps0) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsServerEventProps1 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps1
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps1() (AnalyticsServerEventProps1, error) {
+	var body AnalyticsServerEventProps1
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps1 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps1
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps1(v AnalyticsServerEventProps1) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps1 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps1
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps1(v AnalyticsServerEventProps1) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+// AsAnalyticsServerEventProps2 returns the union data inside the AnalyticsServerEvent_Props_AdditionalProperties as a AnalyticsServerEventProps2
+func (t AnalyticsServerEvent_Props_AdditionalProperties) AsAnalyticsServerEventProps2() (AnalyticsServerEventProps2, error) {
+	var body AnalyticsServerEventProps2
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsServerEventProps2 overwrites any union data inside the AnalyticsServerEvent_Props_AdditionalProperties as the provided AnalyticsServerEventProps2
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) FromAnalyticsServerEventProps2(v AnalyticsServerEventProps2) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsServerEventProps2 performs a merge with any union data inside the AnalyticsServerEvent_Props_AdditionalProperties, using the provided AnalyticsServerEventProps2
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) MergeAnalyticsServerEventProps2(v AnalyticsServerEventProps2) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
+func (t AnalyticsServerEvent_Props_AdditionalProperties) MarshalJSON() ([]byte, error) {
+	b, err := t.union.MarshalJSON()
+	return b, err
+}
+
+func (t *AnalyticsServerEvent_Props_AdditionalProperties) UnmarshalJSON(b []byte) error {
 	err := t.union.UnmarshalJSON(b)
 	return err
 }
@@ -18394,6 +18684,9 @@ type ServerInterface interface {
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params DeleteAnalyticsDataParams)
+	// SendAnalyticsEvents Send server-side analytics events
+	// (POST /v1/analytics/properties/{propertyId}/events)
+	SendAnalyticsEvents(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId)
 	// ListAnalyticsFunnels List a property's funnels
 	// (GET /v1/analytics/properties/{propertyId}/funnels)
 	ListAnalyticsFunnels(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId, params ListAnalyticsFunnelsParams)
@@ -21042,6 +21335,32 @@ func (siw *ServerInterfaceWrapper) DeleteAnalyticsData(w http.ResponseWriter, r 
 
 	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		siw.Handler.DeleteAnalyticsData(w, r, propertyId, params)
+	}))
+
+	for _, middleware := range siw.HandlerMiddlewares {
+		handler = middleware(handler)
+	}
+
+	handler.ServeHTTP(w, r)
+}
+
+// SendAnalyticsEvents operation middleware
+func (siw *ServerInterfaceWrapper) SendAnalyticsEvents(w http.ResponseWriter, r *http.Request) {
+
+	var err error
+	_ = err
+
+	// ------------- Path parameter "propertyId" -------------
+	var propertyId AnalyticsPropertyId
+
+	err = runtime.BindStyledParameterWithOptions("simple", "propertyId", r.PathValue("propertyId"), &propertyId, runtime.BindStyledParameterOptions{ParamLocation: runtime.ParamLocationPath, Explode: false, Required: true, Type: "string", Format: "uuid", ValueIsUnescaped: true})
+	if err != nil {
+		siw.ErrorHandlerFunc(w, r, &InvalidParamFormatError{ParamName: "propertyId", Err: err})
+		return
+	}
+
+	handler := http.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		siw.Handler.SendAnalyticsEvents(w, r, propertyId)
 	}))
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -34787,6 +35106,7 @@ func HandlerWithOptions(si ServerInterface, options StdHTTPServerOptions) http.H
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/delete-data", wrapper.DeleteAnalyticsData)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/query", wrapper.QueryAnalytics)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/realtime", wrapper.GetAnalyticsRealtime)
+	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/events", wrapper.SendAnalyticsEvents)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/health", wrapper.GetAnalyticsHealth)
 	m.HandleFunc(http.MethodGet+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/goals", wrapper.ListAnalyticsGoals)
 	m.HandleFunc(http.MethodPost+" "+options.BaseURL+"/v1/analytics/properties/{propertyId}/goals", wrapper.CreateAnalyticsGoal)
@@ -40371,6 +40691,101 @@ func (response DeleteAnalyticsData404ApplicationProblemPlusJSONResponse) VisitDe
 	}
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEventsRequestObject struct {
+	PropertyId AnalyticsPropertyId `json:"propertyId"`
+	Body       *SendAnalyticsEventsJSONRequestBody
+}
+
+type SendAnalyticsEventsResponseObject interface {
+	VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error
+}
+
+type SendAnalyticsEvents202JSONResponse AnalyticsEventsResult
+
+func (response SendAnalyticsEvents202JSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(202)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEvents400ApplicationProblemPlusJSONResponse struct {
+	ProblemApplicationProblemPlusJSONResponse
+}
+
+func (response SendAnalyticsEvents400ApplicationProblemPlusJSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(400)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEvents401ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsEvents401ApplicationProblemPlusJSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(401)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEvents403ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsEvents403ApplicationProblemPlusJSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(403)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEvents404ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsEvents404ApplicationProblemPlusJSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(404)
+	_, err := buf.WriteTo(w)
+	return err
+}
+
+type SendAnalyticsEvents503ApplicationProblemPlusJSONResponse Problem
+
+func (response SendAnalyticsEvents503ApplicationProblemPlusJSONResponse) VisitSendAnalyticsEventsResponse(w http.ResponseWriter) error {
+
+	var buf bytes.Buffer
+	if err := json.NewEncoder(&buf).Encode(response); err != nil {
+		return err
+	}
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(503)
 	_, err := buf.WriteTo(w)
 	return err
 }
@@ -58530,6 +58945,9 @@ type StrictServerInterface interface {
 	// DeleteAnalyticsData Delete a property's collected data
 	// (POST /v1/analytics/properties/{propertyId}/delete-data)
 	DeleteAnalyticsData(ctx context.Context, request DeleteAnalyticsDataRequestObject) (DeleteAnalyticsDataResponseObject, error)
+	// SendAnalyticsEvents Send server-side analytics events
+	// (POST /v1/analytics/properties/{propertyId}/events)
+	SendAnalyticsEvents(ctx context.Context, request SendAnalyticsEventsRequestObject) (SendAnalyticsEventsResponseObject, error)
 	// ListAnalyticsFunnels List a property's funnels
 	// (GET /v1/analytics/properties/{propertyId}/funnels)
 	ListAnalyticsFunnels(ctx context.Context, request ListAnalyticsFunnelsRequestObject) (ListAnalyticsFunnelsResponseObject, error)
@@ -60868,6 +61286,39 @@ func (sh *strictHandler) DeleteAnalyticsData(w http.ResponseWriter, r *http.Requ
 		sh.options.ResponseErrorHandlerFunc(w, r, err)
 	} else if validResponse, ok := response.(DeleteAnalyticsDataResponseObject); ok {
 		if err := validResponse.VisitDeleteAnalyticsDataResponse(w); err != nil {
+			sh.options.ResponseErrorHandlerFunc(w, r, err)
+		}
+	} else if response != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, fmt.Errorf("unexpected response type: %T", response))
+	}
+}
+
+// SendAnalyticsEvents operation middleware
+func (sh *strictHandler) SendAnalyticsEvents(w http.ResponseWriter, r *http.Request, propertyId AnalyticsPropertyId) {
+	var request SendAnalyticsEventsRequestObject
+
+	request.PropertyId = propertyId
+
+	var body SendAnalyticsEventsJSONRequestBody
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+		sh.options.RequestErrorHandlerFunc(w, r, fmt.Errorf("can't decode JSON body: %w", err))
+		return
+	}
+	request.Body = &body
+
+	handler := func(ctx context.Context, w http.ResponseWriter, r *http.Request, request interface{}) (interface{}, error) {
+		return sh.ssi.SendAnalyticsEvents(ctx, request.(SendAnalyticsEventsRequestObject))
+	}
+	for _, middleware := range sh.middlewares {
+		handler = middleware(handler, "SendAnalyticsEvents")
+	}
+
+	response, err := handler(r.Context(), w, r, request)
+
+	if err != nil {
+		sh.options.ResponseErrorHandlerFunc(w, r, err)
+	} else if validResponse, ok := response.(SendAnalyticsEventsResponseObject); ok {
+		if err := validResponse.VisitSendAnalyticsEventsResponse(w); err != nil {
 			sh.options.ResponseErrorHandlerFunc(w, r, err)
 		}
 	} else if response != nil {
