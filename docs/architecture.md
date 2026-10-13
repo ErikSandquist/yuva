@@ -1616,7 +1616,8 @@ in six steps (M15.1–M15.6 in the roadmap). Decisions:
   analytics tools (read: properties, overview, query, realtime, support report, goals and funnels,
   funnel report, snippet, notes; manage: create goal, create property), the `analytics_review` and
   `setup_analytics` prompts and the `yuva://property/{id}` resource; visitor-sent values are
-  `customer_content`.
+  `customer_content`. Insights compare in percent only from a baseline of at least 10; a total with none
+  before is `metric_new`, a row `new_value`; each insight appears once per answer.
 - **SDKs.** `/yuva-analytics.js` (≤ 1.5 KB gzip, served like `/yuva.js`, off with `YUVA_WIDGET=off`) with
   automatic and SPA pageviews, engagement, opt-in outbound, file and chat-open events; `useyuva/analytics`,
   React and Nuxt helpers; Swift product `YuvaAnalytics` (no `YuvaKit` dependency, SwiftUI `.yuvaScreen`,
