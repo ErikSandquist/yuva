@@ -51,7 +51,7 @@ for (const { entry, format } of scripts) {
       format,
       target: "browser",
       minify: true,
-      define,
+      define: entry == "src/yuva-analytics.ts" ? { ...define, YUVA_ANALYTICS_LITE: "true" } : define,
       plugins: [linguiMacro],
     })
   )
@@ -100,7 +100,7 @@ for await (const path of new Bun.Glob("dist/types/**/*.d.ts").scan()) {
   await Bun.write(path, text.replace(/((?:from|import\()\s*")(\.\.?\/[^"]+?)(?<!\.js)"/g, '$1$2.js"'))
 }
 
-const budgets: Record<string, number> = { "yuva-analytics.js": 1536, "esm/analytics.js": 1536 }
+const budgets: Record<string, number> = { "yuva-analytics.js": 1536, "esm/analytics.js": 1920 }
 let over = false
 for (const name of [
   "yuva.js",

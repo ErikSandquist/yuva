@@ -196,7 +196,8 @@ browser sends no preflight; events of one moment share a request, and the last o
 `sendBeacon`. A `403` from the server stops sending for the page.
 
 Nothing is put on the device and no cookie is read: the only storage access is reading
-`localStorage.yuva_optout`, written by `optOut()`. With `navigator.globalPrivacyControl`, Do Not
+`localStorage.yuva_optout`, written by `optOut()`, unless the visitor consents to `persistent`
+(below). With `navigator.globalPrivacyControl`, Do Not
 Track or `navigator.webdriver` nothing is sent at all.
 
 | Attribute | Option | |
@@ -229,9 +230,27 @@ like pageviews do. `<yuva-chat>` dispatches `yuva-open` (bubbling, composed) whe
 opens it; the embedded layout does not.
 Links to `#yuva-optout` and `#yuva-optin` opt the visitor out and back in.
 
+### Consent features
+
+For a property whose consent features offer them, and only from `useyuva/analytics`, React and Nuxt
+(the `/yuva-analytics.js` script tag leaves them out to stay within 1.5 KB):
+
+```ts
+analytics.consent({ analytics: true, persistent: true }); // from your consent tool, on every page load
+analytics.identify(await fetchIdentityToken()); // after sign-in, a fresh token from your backend
+analytics.persistentId(); // the id, for an erasure request (DELETE …/visitors/{persistentId})
+```
+
+`persistent: true` keeps `{ id, createdAt }` (a random UUID) in `localStorage.yuva_pid` and sends the
+id as `c.p` on every event, engagement included; a new id is made when none exists or it is 13 months
+old, and none ever under GPC or Do Not Track. Without that call nothing is stored and no id is sent.
+`identify(token)` needs the id; it sends the identity token once in a `yuva_consent` event and keeps
+nothing. `consent(false)` and `optOut()` send a `yuva_consent` withdrawal for a stored id, also under
+GPC or Do Not Track, and delete the id.
+
 In React, render `<YuvaAnalytics server="…" publicKey="yuva_ak_…" outbound />` once (it renders nothing; the
 other options are props too) and call
-`useYuvaAnalytics()` anywhere for `pageview`, `track`, `notFound`, `consent`, `optOut` and `optIn`; calls before it has
+`useYuvaAnalytics()` anywhere for `pageview`, `track`, `notFound`, `consent`, `identify`, `persistentId`, `optOut` and `optIn`; calls before it has
 loaded wait for it. The prop is `publicKey` because React keeps `key` for itself. In Nuxt, set `yuva.analytics` (below) and use `useYuvaAnalytics()`.
 
 ## Nuxt

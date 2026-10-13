@@ -30,13 +30,20 @@ export interface TrackOptions {
   revenue?: { amount: string | number; currency: string }
 }
 
+type Choice = { analytics?: boolean; persistent?: boolean }
+
 export interface AnalyticsMethods {
   /** A custom event. `pageview`, `engagement`, `screen` and names starting with `$` or `yuva_` are refused by the server. */
   track(name: string, options?: TrackOptions): void
   /** Marks the current page as the site's 404 page (`not_found`, non-interactive). */
   notFound(): void
   pageview(options?: PageviewOptions): void
-  consent(choice: { analytics?: boolean } | boolean): void
+  /** `persistent: true` keeps a random id on this device for 13 months and sends it on every event; never under GPC or Do Not Track. */
+  consent(choice: Choice | boolean): void
+  /** Links the persistent id to a contact with a fresh identity token from your backend; needs `persistent` consent. */
+  identify(token: string): void
+  /** The persistent id while `persistent` consent is given, for erasure requests. */
+  persistentId(): string | undefined
   optOut(): void
   optIn(): void
 }
@@ -45,13 +52,53 @@ export interface Analytics extends AnalyticsMethods {
   destroy(): void
 }
 
-export const OPT_OUT_KEY = "yuva_optout"
+declare const YUVA_ANALYTICS_LITE: true | undefined
 
-const noop = () => {}
+type Basic = Omit<Analytics, "identify" | "persistentId">
+
+export const OPT_OUT_KEY = "yuva_optout"
+export const PERSISTENT_KEY = "yuva_pid"
+
+const noop = (): undefined => {}
+// The script tag build defines it to stay within its size budget; it leaves out the consent features.
+const lite = typeof YUVA_ANALYTICS_LITE != "undefined"
+
+const stored = (): string | undefined => {
+  try {
+    const { id, createdAt } = JSON.parse(localStorage.getItem(PERSISTENT_KEY)!)
+    if (Date.now() - createdAt < 3.4e10) return id
+  } catch {}
+}
+
+const keep = (): string | undefined => {
+  try {
+    if (!stored())
+      localStorage.setItem(PERSISTENT_KEY, JSON.stringify({ id: crypto.randomUUID(), createdAt: Date.now() }))
+  } catch {}
+  return stored()
+}
+
+const withdrawal = (u: string): AnalyticsEvent[] => {
+  const p = stored()
+  try {
+    localStorage.removeItem(PERSISTENT_KEY)
+  } catch {}
+  return p ? [{ n: "yuva_consent", u, c: { a: 0, p } }] : []
+}
 
 export function createAnalytics(options: AnalyticsOptions): Analytics {
-  if (typeof window == "undefined" || !options.key)
-    return { pageview: noop, track: noop, notFound: noop, consent: noop, optOut: noop, optIn: noop, destroy: noop }
+  if (typeof window == "undefined" || !options.key) {
+    const idle: Basic = {
+      pageview: noop,
+      track: noop,
+      notFound: noop,
+      consent: noop,
+      optOut: noop,
+      optIn: noop,
+      destroy: noop,
+    }
+    return lite ? (idle as Analytics) : { ...idle, identify: noop, persistentId: noop }
+  }
   const nav = navigator as Navigator & { globalPrivacyControl?: boolean }
   const doc = document as Document & { prerendering?: boolean }
   const storage = () => {
@@ -71,6 +118,7 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   let ms = 0
   let since = 0
   let depth = 0
+  let pid: string | undefined
 
   const flush = (beacon?: boolean) => {
     const body = JSON.stringify(queue[1] ? { e: queue } : queue[0])
@@ -84,7 +132,7 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   const send = (event: AnalyticsEvent) => {
     if (off || !consented) return
     if (hash) event.h = true
-    if (options.consent) event.c = { a: 1 }
+    if (lite ? options.consent : options.consent || pid) event.c = lite ? { a: 1 } : { ...event.c, a: 1, p: pid }
     if (queue.push(event) < 2) setTimeout(flush)
   }
 
@@ -131,7 +179,11 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
 
   const optOut = () => {
     off = true
-    queue = []
+    queue = lite ? [] : withdrawal(page || location.href)
+    if (!lite) {
+      pid = undefined
+      flush(true)
+    }
     storage()?.setItem(OPT_OUT_KEY, "1")
   }
   const optIn = () => {
@@ -175,14 +227,22 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
   for (const t in on) addEventListener(t, on[t]!, true)
 
   if (!doc.prerendering) auto()
-  return {
+  const api: Basic = {
     pageview,
     track,
     notFound: () => track("not_found"),
     consent: (choice) => {
-      consented = choice === true || !!(choice as { analytics?: boolean }).analytics
+      consented = choice === true || !!(choice as Choice).analytics
+      if (!lite) {
+        pid = undefined
+        if (consented && (choice as Choice).persistent && !off) pid = keep()
+      }
       if (consented) auto()
-      else queue = []
+      else if (lite) queue = []
+      else {
+        queue = withdrawal(page || location.href)
+        flush(true)
+      }
     },
     optOut,
     optIn,
@@ -193,4 +253,11 @@ export function createAnalytics(options: AnalyticsOptions): Analytics {
       for (const t in on) removeEventListener(t, on[t]!, true)
     },
   }
+  return lite
+    ? (api as Analytics)
+    : {
+        ...api,
+        identify: (j: string) => void (pid && send({ n: "yuva_consent", u: page || location.href, c: { j } })),
+        persistentId: () => pid,
+      }
 }

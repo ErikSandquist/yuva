@@ -1,6 +1,7 @@
 export {
   createAnalytics,
   OPT_OUT_KEY,
+  PERSISTENT_KEY,
   type Analytics,
   type AnalyticsBatch,
   type AnalyticsEvent,

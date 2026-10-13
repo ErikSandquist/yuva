@@ -13,6 +13,8 @@ export const analytics: AnalyticsMethods = {
   track: call("track"),
   notFound: call("notFound"),
   consent: call("consent"),
+  identify: call("identify"),
+  persistentId: () => current?.persistentId(),
   optOut: call("optOut"),
   optIn: call("optIn"),
 }

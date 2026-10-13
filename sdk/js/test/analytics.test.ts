@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, setSystemTime, test } from "bu
 import {
   createAnalytics,
   OPT_OUT_KEY,
+  PERSISTENT_KEY,
   type Analytics,
   type AnalyticsBatch,
   type AnalyticsEvent,
@@ -168,6 +169,104 @@ describe("consent mode", () => {
     await settle()
     expect(names()).toEqual(["pageview /a"])
   })
+})
+
+describe("consent features", () => {
+  const storedId = () =>
+    JSON.parse(realStorage.getItem(PERSISTENT_KEY) ?? "null") as { id: string; createdAt: number } | null
+
+  test("default and analytics-only consent store nothing and send no persistent id", async () => {
+    const analytics = start({ consent: "required" })
+    analytics.consent({ analytics: true })
+    analytics.identify("token")
+    history.pushState(null, "", "/a")
+    await settle()
+    expect(realStorage.getItem(PERSISTENT_KEY)).toBeNull()
+    expect(analytics.persistentId()).toBeUndefined()
+    expect(events().map(({ n, c }) => [n, c])).toEqual([
+      ["pageview", { a: 1 }],
+      ["pageview", { a: 1 }],
+    ])
+  })
+
+  test("persistent consent keeps one id for 13 months and sends it on every event", async () => {
+    const analytics = start({ consent: "required" })
+    analytics.consent({ analytics: true, persistent: true })
+    const id = analytics.persistentId()!
+    expect(id).toMatch(/^[A-Za-z0-9_-]{16,64}$/)
+    expect(storedId()).toEqual({ id, createdAt: now })
+    advance(2000)
+    history.pushState(null, "", "/a")
+    analytics.track("Signup")
+    advance(1000)
+    hide()
+    await settle()
+    expect(events().map(({ n }) => n)).toEqual(["pageview", "engagement", "pageview", "Signup", "engagement"])
+    for (const event of events()) expect(event.c).toEqual({ a: 1, p: id })
+
+    instance!.destroy()
+    start().consent({ analytics: true, persistent: true })
+    expect(instance!.persistentId()).toBe(id)
+    instance!.destroy()
+    advance(400 * 864e5)
+    start().consent({ analytics: true, persistent: true })
+    expect(instance!.persistentId()).not.toBe(id)
+    expect(storedId()?.createdAt).toBe(now)
+  })
+
+  test("identify sends the token once with the id and stores nothing", async () => {
+    const analytics = start()
+    analytics.consent({ analytics: true, persistent: true })
+    await settle()
+    sent = []
+    const before = realStorage.getItem(PERSISTENT_KEY)
+    analytics.identify("signed.jwt.token")
+    await settle()
+    const id = analytics.persistentId()
+    expect(events()).toEqual([
+      { n: "yuva_consent", u: "https://site.test/", c: { a: 1, p: id, j: "signed.jwt.token" } },
+    ])
+    expect(realStorage.getItem(PERSISTENT_KEY)).toBe(before)
+    expect(realStorage.length).toBe(1)
+    analytics.track("Next")
+    await settle()
+    expect(events()[1]?.c).toEqual({ a: 1, p: id })
+  })
+
+  for (const [how, withdraw] of [
+    ["consent(false)", (analytics: Analytics) => analytics.consent(false)],
+    ["optOut()", (analytics: Analytics) => analytics.optOut()],
+  ] as const)
+    test(`${how} sends the withdrawal and deletes the id, also under GPC`, async () => {
+      start().consent({ analytics: true, persistent: true })
+      const id = instance!.persistentId()
+      instance!.destroy()
+      await settle()
+      sent = []
+      signal("globalPrivacyControl", true)
+      withdraw(start())
+      await settle()
+      expect(sent).toEqual([
+        { via: "beacon", url: endpoint, body: { n: "yuva_consent", u: "https://site.test/", c: { a: 0, p: id } } },
+      ])
+      expect(realStorage.getItem(PERSISTENT_KEY)).toBeNull()
+      expect(instance!.persistentId()).toBeUndefined()
+    })
+
+  for (const [name, value] of [
+    ["globalPrivacyControl", true],
+    ["doNotTrack", "1"],
+  ] as const)
+    test(`${name} never creates an id`, async () => {
+      signal(name, value)
+      const analytics = start()
+      analytics.consent({ analytics: true, persistent: true })
+      analytics.identify("token")
+      await settle()
+      expect(analytics.persistentId()).toBeUndefined()
+      expect(realStorage.getItem(PERSISTENT_KEY)).toBeNull()
+      expect(sent).toEqual([])
+    })
 })
 
 describe("navigation", () => {
