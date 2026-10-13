@@ -16,7 +16,8 @@ import kotlinx.coroutines.withContext
 
 internal sealed interface AnalyticsCommand {
     data class Record(val event: QueuedEvent) : AnalyticsCommand
-    data class Consent(val granted: Boolean) : AnalyticsCommand
+    data class Consent(val granted: Boolean, val persistent: Boolean) : AnalyticsCommand
+    data class Identify(val token: String) : AnalyticsCommand
     data object OptOut : AnalyticsCommand
     data object OptIn : AnalyticsCommand
     class Flush(val done: (() -> Unit)? = null) : AnalyticsCommand
@@ -55,9 +56,11 @@ internal class AnalyticsCore(
     val endpoint: String,
     val processKey: String,
     private var app: AppInfo,
+    private val home: String,
     private val requireConsent: Boolean,
     optedOut: Boolean,
     queueFile: File?,
+    private val ids: PersistentIdStore,
     private val transport: AnalyticsTransport,
     private val scope: CoroutineScope,
     private val autoFlushMillis: Long? = 5_000,
@@ -72,11 +75,15 @@ internal class AnalyticsCore(
     private var failures = 0
     private var sender: Job? = null
     private var senderWaiting = false
+    private var persistentId: PersistentId? = null
+    private val posts = mutableListOf<Job>()
 
     init {
         if (optedOut) queue.clear()
         queue.prune(now())
         queue.save()
+        val stored = ids.load()
+        if (stored != null && (optedOut || stored.expired(now()))) ids.delete() else persistentId = stored
     }
 
     val pending: List<EventBatch> get() = queue.pending
@@ -90,10 +97,24 @@ internal class AnalyticsCore(
             is AnalyticsCommand.Record -> record(command.event)
             is AnalyticsCommand.Consent -> {
                 consented = command.granted
+                if (command.granted && command.persistent && !optedOut) {
+                    if (currentId() == null) persistentId = PersistentId.make(now()).also(ids::save)
+                } else {
+                    withdraw()
+                }
                 if (!command.granted) clear()
+            }
+            is AnalyticsCommand.Identify -> {
+                val id = currentId()
+                if (optedOut || !consented || command.token.isEmpty() || id == null) {
+                    log?.invoke("identify ignored: no persistent consent")
+                    return
+                }
+                post(QueuedEvent(n = CONSENT_EVENT, u = home, t = now(), c = ConsentBody(1, id, command.token)))
             }
             AnalyticsCommand.OptOut -> {
                 optedOut = true
+                withdraw()
                 clear()
             }
             AnalyticsCommand.OptIn -> optedOut = false
@@ -115,6 +136,11 @@ internal class AnalyticsCore(
 
     suspend fun idle() {
         while (true) {
+            val pending = synchronized(posts) { posts.toList().also { posts.clear() } }
+            if (pending.isEmpty()) break
+            pending.forEach { it.join() }
+        }
+        while (true) {
             val current = sender ?: return
             current.join()
             if (sender === current || sender?.isActive != true) return
@@ -126,7 +152,8 @@ internal class AnalyticsCore(
             log?.invoke("dropped ${event.n}: ${if (optedOut) "opted out" else "no consent"}")
             return
         }
-        val stamped = if (requireConsent) event.copy(c = ConsentBody(1)) else event
+        val id = currentId()
+        val stamped = if (requireConsent || id != null) event.copy(c = ConsentBody(1, id)) else event
         if (!queue.append(stamped, processKey, app)) {
             log?.invoke("dropped ${event.n}: larger than 64 KiB")
             return
@@ -134,6 +161,36 @@ internal class AnalyticsCore(
         queue.save()
         log?.invoke("queued ${event.n} ${event.u}")
         autoFlushMillis?.let(::schedule)
+    }
+
+    private fun currentId(): String? {
+        val value = persistentId ?: return null
+        if (!value.expired(now())) return value.id
+        return PersistentId.make(now()).also(ids::save).also { persistentId = it }.id
+    }
+
+    private fun withdraw() {
+        val value = persistentId ?: return
+        post(QueuedEvent(n = CONSENT_EVENT, u = home, t = now(), c = ConsentBody(0, value.id)))
+        ids.delete()
+        persistentId = null
+        queue.stripPersistent()
+        queue.save()
+    }
+
+    private fun post(event: QueuedEvent) {
+        val body = AnalyticsQueue.encode(EventBatch(processKey, app, listOf(event)))
+        val job = scope.launch {
+            try {
+                val answer = withContext(Dispatchers.IO) { transport.post(endpoint, body, null) }
+                log?.invoke("sent $CONSENT_EVENT: ${answer.status}")
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Exception) {
+                log?.invoke("dropped $CONSENT_EVENT: ${error.message}")
+            }
+        }
+        synchronized(posts) { posts += job }
     }
 
     private fun clear() {
@@ -202,6 +259,8 @@ internal class AnalyticsCore(
     }
 
     companion object {
+        const val CONSENT_EVENT = "yuva_consent"
+
         fun retryDelay(header: String?): Long {
             val seconds = header?.trim()?.toLongOrNull()
             return if (seconds != null && seconds >= 0) maxOf(1, seconds) * 1000 else 60_000

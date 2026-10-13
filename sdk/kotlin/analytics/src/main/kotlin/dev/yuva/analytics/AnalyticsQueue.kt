@@ -21,7 +21,7 @@ internal data class AppInfo(
 internal data class RevenueBody(val a: String, val c: String)
 
 @Serializable
-internal data class ConsentBody(val a: Int)
+internal data class ConsentBody(val a: Int, val p: String? = null, val j: String? = null)
 
 @Serializable
 internal data class QueuedEvent(
@@ -65,6 +65,12 @@ internal class AnalyticsQueue(private val file: File?) {
     fun updateApp(key: String, change: (AppInfo) -> AppInfo) {
         for (index in batches.indices) {
             if (batches[index].k == key) batches[index] = batches[index].copy(a = change(batches[index].a))
+        }
+    }
+
+    fun stripPersistent() {
+        for (index in batches.indices) {
+            batches[index] = batches[index].copy(e = batches[index].e.map { event -> event.copy(c = event.c?.copy(p = null, j = null)) })
         }
     }
 

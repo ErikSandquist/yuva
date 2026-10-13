@@ -37,6 +37,8 @@ class YuvaRevenue(val amount: BigDecimal, val currency: String)
 object YuvaAnalytics {
     private const val PREFERENCES = "yuva_analytics"
     private const val OPT_OUT = "optout"
+    private const val PERSISTENT_ID = "persistent_id"
+    private const val PERSISTENT_CREATED = "persistent_created_at"
     private const val TAG = "YuvaAnalytics"
     internal val processKey: String = UUID.randomUUID().toString()
 
@@ -56,9 +58,11 @@ object YuvaAnalytics {
             endpoint = configuration.serverUrl.trimEnd('/') + "/client/v1/analytics/" + configuration.key,
             processKey = processKey,
             app = appInfo(app),
+            home = "app://${configuration.appId ?: app.packageName}/",
             requireConsent = configuration.requireConsent,
             optedOut = prefs.getBoolean(OPT_OUT, false),
             queueFile = File(File(app.noBackupFilesDir, "yuva-analytics"), fileName(configuration.key)),
+            ids = PreferencesIdStore(prefs),
             transport = HttpTransport,
             scope = newScope,
             log = if (configuration.debug) { message -> Log.d(TAG, message) } else null,
@@ -113,9 +117,19 @@ object YuvaAnalytics {
         )
     }
 
-    fun consent(granted: Boolean) {
-        send(AnalyticsCommand.Consent(granted))
+    fun consent(granted: Boolean, persistent: Boolean = false) {
+        send(AnalyticsCommand.Consent(granted, persistent))
     }
+
+    fun identify(token: String) {
+        send(AnalyticsCommand.Identify(token))
+    }
+
+    val persistentId: String?
+        get() {
+            val prefs = synchronized(lock) { preferences } ?: return null
+            return PreferencesIdStore(prefs).load()?.takeUnless { it.expired(System.currentTimeMillis()) }?.id
+        }
 
     fun optOut() {
         synchronized(lock) { preferences }?.edit()?.putBoolean(OPT_OUT, true)?.apply()
@@ -132,6 +146,22 @@ object YuvaAnalytics {
 
     fun flush() {
         send(AnalyticsCommand.Flush())
+    }
+
+    private class PreferencesIdStore(private val prefs: SharedPreferences) : PersistentIdStore {
+        override fun load(): PersistentId? {
+            val id = prefs.getString(PERSISTENT_ID, null) ?: return null
+            val created = prefs.getLong(PERSISTENT_CREATED, -1).takeIf { it >= 0 } ?: return null
+            return PersistentId(id, created)
+        }
+
+        override fun save(value: PersistentId) {
+            prefs.edit().putString(PERSISTENT_ID, value.id).putLong(PERSISTENT_CREATED, value.createdAt).apply()
+        }
+
+        override fun delete() {
+            prefs.edit().remove(PERSISTENT_ID).remove(PERSISTENT_CREATED).apply()
+        }
     }
 
     private fun send(command: AnalyticsCommand) {

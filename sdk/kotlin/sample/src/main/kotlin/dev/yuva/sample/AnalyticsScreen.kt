@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -26,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +41,8 @@ import dev.yuva.analytics.YuvaRevenue
 import java.math.BigDecimal
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,6 +50,16 @@ internal fun AnalyticsScreen(onClose: () -> Unit) {
     var detail by remember { mutableStateOf(false) }
     var optedOut by remember { mutableStateOf(YuvaAnalytics.isOptedOut) }
     var consent by remember { mutableStateOf(false) }
+    var persistent by remember { mutableStateOf(YuvaAnalytics.persistentId != null) }
+    var persistentId by remember { mutableStateOf(YuvaAnalytics.persistentId) }
+    var token by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    fun refreshId() {
+        scope.launch {
+            delay(200)
+            persistentId = YuvaAnalytics.persistentId
+        }
+    }
     val log = remember { mutableStateListOf<String>() }
     fun note(text: String) = log.add(0, LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + "  " + text)
 
@@ -99,13 +113,52 @@ internal fun AnalyticsScreen(onClose: () -> Unit) {
             if (BuildConfig.ANALYTICS_CONSENT == "required") {
                 ToggleRow("Analytics consent", consent, "sample.analytics.consent") {
                     consent = it
-                    YuvaAnalytics.consent(it)
+                    if (!it) persistent = false
+                    YuvaAnalytics.consent(it, persistent)
+                    refreshId()
                 }
             }
+            ToggleRow("Remember me (persistent)", persistent, "sample.analytics.persistent") {
+                persistent = it
+                if (it && BuildConfig.ANALYTICS_CONSENT == "required") consent = true
+                YuvaAnalytics.consent(it || consent || BuildConfig.ANALYTICS_CONSENT != "required", it)
+                note(if (it) "Persistent consent" else "Persistent withdrawn")
+                refreshId()
+            }
+            persistentId?.let {
+                Text(
+                    it,
+                    Modifier.testTag("sample.analytics.persistentId"),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontFamily = FontFamily.Monospace,
+                )
+            }
+            OutlinedTextField(
+                value = token,
+                onValueChange = { token = it },
+                label = { Text("Identity token") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().testTag("sample.analytics.token"),
+            )
+            OutlinedButton(
+                onClick = {
+                    YuvaAnalytics.identify(token)
+                    note("Identify")
+                    token = ""
+                },
+                enabled = persistentId != null && token.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth().testTag("sample.analytics.identify"),
+            ) { Text("Identify") }
             ToggleRow("Opt out", optedOut, "sample.analytics.optout") {
                 optedOut = it
-                if (it) YuvaAnalytics.optOut() else YuvaAnalytics.optIn()
+                if (it) {
+                    YuvaAnalytics.optOut()
+                    persistent = false
+                } else {
+                    YuvaAnalytics.optIn()
+                }
                 note(if (it) "Opted out" else "Opted in")
+                refreshId()
             }
             log.forEach { Text(it, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace) }
         }
