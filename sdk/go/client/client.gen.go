@@ -21,8 +21,51 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+// Defines values for AnalyticsAlertEventType.
+const (
+	AnalyticsAlertEventTypeAnalyticsAlert AnalyticsAlertEventType = "analytics.alert"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAlertEventType enum.
+func (e AnalyticsAlertEventType) Valid() bool {
+	switch e {
+	case AnalyticsAlertEventTypeAnalyticsAlert:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsAlertKind.
+const (
+	AnalyticsAlertDrop        AnalyticsAlertKind = "drop"
+	AnalyticsAlertGoalDrop    AnalyticsAlertKind = "goal_drop"
+	AnalyticsAlertNewReferrer AnalyticsAlertKind = "new_referrer"
+	AnalyticsAlertSpike       AnalyticsAlertKind = "spike"
+	AnalyticsAlertSupportLoad AnalyticsAlertKind = "support_load"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsAlertKind enum.
+func (e AnalyticsAlertKind) Valid() bool {
+	switch e {
+	case AnalyticsAlertDrop:
+		return true
+	case AnalyticsAlertGoalDrop:
+		return true
+	case AnalyticsAlertNewReferrer:
+		return true
+	case AnalyticsAlertSpike:
+		return true
+	case AnalyticsAlertSupportLoad:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsAnnotationKind.
 const (
+	AnalyticsAnnotationAlert       AnalyticsAnnotationKind = "alert"
 	AnalyticsAnnotationGoalCreated AnalyticsAnnotationKind = "goal_created"
 	AnalyticsAnnotationKeyRotated  AnalyticsAnnotationKind = "key_rotated"
 	AnalyticsAnnotationNote        AnalyticsAnnotationKind = "note"
@@ -31,6 +74,8 @@ const (
 // Valid indicates whether the value is a known member of the AnalyticsAnnotationKind enum.
 func (e AnalyticsAnnotationKind) Valid() bool {
 	switch e {
+	case AnalyticsAnnotationAlert:
+		return true
 	case AnalyticsAnnotationGoalCreated:
 		return true
 	case AnalyticsAnnotationKeyRotated:
@@ -168,6 +213,24 @@ func (e AnalyticsConsentFeature) Valid() bool {
 	case AnalyticsConsentIdentify:
 		return true
 	case AnalyticsConsentPersistent:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsDataset.
+const (
+	AnalyticsDatasetSupport AnalyticsDataset = "support"
+	AnalyticsDatasetTraffic AnalyticsDataset = "traffic"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsDataset enum.
+func (e AnalyticsDataset) Valid() bool {
+	switch e {
+	case AnalyticsDatasetSupport:
+		return true
+	case AnalyticsDatasetTraffic:
 		return true
 	default:
 		return false
@@ -498,16 +561,47 @@ func (e AnalyticsGoalKind) Valid() bool {
 	}
 }
 
+// Defines values for AnalyticsInsightKind.
+const (
+	AnalyticsInsightMetricChange   AnalyticsInsightKind = "metric_change"
+	AnalyticsInsightNewValue       AnalyticsInsightKind = "new_value"
+	AnalyticsInsightRowChange      AnalyticsInsightKind = "row_change"
+	AnalyticsInsightSupportHotspot AnalyticsInsightKind = "support_hotspot"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsInsightKind enum.
+func (e AnalyticsInsightKind) Valid() bool {
+	switch e {
+	case AnalyticsInsightMetricChange:
+		return true
+	case AnalyticsInsightNewValue:
+		return true
+	case AnalyticsInsightRowChange:
+		return true
+	case AnalyticsInsightSupportHotspot:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for AnalyticsMetric.
 const (
 	AnalyticsMetricBounceRate     AnalyticsMetric = "bounce_rate"
 	AnalyticsMetricCompletions    AnalyticsMetric = "completions"
+	AnalyticsMetricConversations  AnalyticsMetric = "conversations"
 	AnalyticsMetricConversionRate AnalyticsMetric = "conversion_rate"
 	AnalyticsMetricConversions    AnalyticsMetric = "conversions"
+	AnalyticsMetricDiscussions    AnalyticsMetric = "discussions"
 	AnalyticsMetricEvents         AnalyticsMetric = "events"
+	AnalyticsMetricFeedback       AnalyticsMetric = "feedback"
+	AnalyticsMetricHelpfulRate    AnalyticsMetric = "helpful_rate"
 	AnalyticsMetricPageviews      AnalyticsMetric = "pageviews"
+	AnalyticsMetricRatingsDown    AnalyticsMetric = "ratings_down"
+	AnalyticsMetricRatingsUp      AnalyticsMetric = "ratings_up"
 	AnalyticsMetricRevenue        AnalyticsMetric = "revenue"
 	AnalyticsMetricScrollDepth    AnalyticsMetric = "scroll_depth"
+	AnalyticsMetricSupportRate    AnalyticsMetric = "support_rate"
 	AnalyticsMetricTimeOnPage     AnalyticsMetric = "time_on_page"
 	AnalyticsMetricViewsPerVisit  AnalyticsMetric = "views_per_visit"
 	AnalyticsMetricVisitDuration  AnalyticsMetric = "visit_duration"
@@ -522,17 +616,31 @@ func (e AnalyticsMetric) Valid() bool {
 		return true
 	case AnalyticsMetricCompletions:
 		return true
+	case AnalyticsMetricConversations:
+		return true
 	case AnalyticsMetricConversionRate:
 		return true
 	case AnalyticsMetricConversions:
 		return true
+	case AnalyticsMetricDiscussions:
+		return true
 	case AnalyticsMetricEvents:
 		return true
+	case AnalyticsMetricFeedback:
+		return true
+	case AnalyticsMetricHelpfulRate:
+		return true
 	case AnalyticsMetricPageviews:
+		return true
+	case AnalyticsMetricRatingsDown:
+		return true
+	case AnalyticsMetricRatingsUp:
 		return true
 	case AnalyticsMetricRevenue:
 		return true
 	case AnalyticsMetricScrollDepth:
+		return true
+	case AnalyticsMetricSupportRate:
 		return true
 	case AnalyticsMetricTimeOnPage:
 		return true
@@ -651,6 +759,27 @@ func (e AnalyticsRawEventType) Valid() bool {
 	case AnalyticsRawEventTypePageview:
 		return true
 	case AnalyticsRawEventTypeScreen:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for AnalyticsReportFrequency.
+const (
+	AnalyticsReportMonthly AnalyticsReportFrequency = "monthly"
+	AnalyticsReportNone    AnalyticsReportFrequency = "none"
+	AnalyticsReportWeekly  AnalyticsReportFrequency = "weekly"
+)
+
+// Valid indicates whether the value is a known member of the AnalyticsReportFrequency enum.
+func (e AnalyticsReportFrequency) Valid() bool {
+	switch e {
+	case AnalyticsReportMonthly:
+		return true
+	case AnalyticsReportNone:
+		return true
+	case AnalyticsReportWeekly:
 		return true
 	default:
 		return false
@@ -4133,6 +4262,7 @@ func (e WebhookDeliveryState) Valid() bool {
 
 // Defines values for WebhookEventType.
 const (
+	WebhookEventTypeAnalyticsAlert        WebhookEventType = "analytics.alert"
 	WebhookEventTypeBroadcastUpdated      WebhookEventType = "broadcast.updated"
 	WebhookEventTypeContactDeleted        WebhookEventType = "contact.deleted"
 	WebhookEventTypeContactUpdated        WebhookEventType = "contact.updated"
@@ -4155,6 +4285,8 @@ const (
 // Valid indicates whether the value is a known member of the WebhookEventType enum.
 func (e WebhookEventType) Valid() bool {
 	switch e {
+	case WebhookEventTypeAnalyticsAlert:
+		return true
 	case WebhookEventTypeBroadcastUpdated:
 		return true
 	case WebhookEventTypeContactDeleted:
@@ -4455,9 +4587,87 @@ type AccountDeletion struct {
 	Email string `json:"email"`
 }
 
+// AnalyticsAlert defines model for AnalyticsAlert.
+type AnalyticsAlert struct {
+	AnnotationId *uuid.UUID `json:"annotation_id,omitempty"`
+
+	// Baseline What the rule compared `current` with; 0 for a new referrer.
+	Baseline  float64   `json:"baseline"`
+	CreatedAt time.Time `json:"created_at"`
+	Current   float64   `json:"current"`
+
+	// Day The property's day the alert is about.
+	Day      openapi_types.Date `json:"day"`
+	GoalId   *uuid.UUID         `json:"goal_id,omitempty"`
+	GoalName *string            `json:"goal_name,omitempty"`
+
+	// HoursFrom `spike` and `drop`: the start of the two hours.
+	HoursFrom *time.Time `json:"hours_from,omitempty"`
+	HoursTo   *time.Time `json:"hours_to,omitempty"`
+	Id        uuid.UUID  `json:"id"`
+
+	// Kind Fixed rules, checked every hour over the property's finished hours and days:
+	// `spike` and `drop`, page views of the last two finished hours at least three times, or at
+	// most half, the same two hours' average over the seven days before (at least 20 views
+	// a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+	// average of the seven days before (at least 10 a day); `support_load`, yesterday's
+	// conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+	// least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+	// at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+	// property and day (`new_referrer` once per site).
+	Kind AnalyticsAlertKind `json:"kind"`
+
+	// Metric `pageviews`, `conversions`, `support_rate` or `visits`.
+	Metric     string    `json:"metric"`
+	PropertyId uuid.UUID `json:"property_id"`
+
+	// Referrer `new_referrer`: the site's host.
+	Referrer *string `json:"referrer,omitempty"`
+
+	// Text What was found, in English, as on the annotation.
+	Text string `json:"text"`
+}
+
+// AnalyticsAlertEvent `analytics.alert`: a property raised an alert. Delivered to callers who hold
+// `analytics:read` and can see the property; `inbox_id` is the property's linked inbox.
+type AnalyticsAlertEvent struct {
+	CreatedAt   time.Time               `json:"created_at"`
+	Data        AnalyticsAlertEventData `json:"data"`
+	Id          int64                   `json:"id"`
+	InboxId     *uuid.UUID              `json:"inbox_id,omitempty"`
+	Type        AnalyticsAlertEventType `json:"type"`
+	WorkspaceId uuid.UUID               `json:"workspace_id"`
+}
+
+// AnalyticsAlertEventType defines model for AnalyticsAlertEvent.Type.
+type AnalyticsAlertEventType string
+
+// AnalyticsAlertEventData defines model for AnalyticsAlertEventData.
+type AnalyticsAlertEventData struct {
+	Alert    AnalyticsAlert       `json:"alert"`
+	Property AnalyticsPropertyRef `json:"property"`
+}
+
+// AnalyticsAlertKind Fixed rules, checked every hour over the property's finished hours and days:
+// `spike` and `drop`, page views of the last two finished hours at least three times, or at
+// most half, the same two hours' average over the seven days before (at least 20 views
+// a day in those hours); `goal_drop`, a goal's conversions yesterday at most half its
+// average of the seven days before (at least 10 a day); `support_load`, yesterday's
+// conversations per 1,000 page views at least twice the rate of the 28 days before, with at
+// least 5 conversations (a property linked to an inbox); `new_referrer`, a referring site with
+// at least 10 visits yesterday and none in the 28 days before. Each kind fires once per
+// property and day (`new_referrer` once per site).
+type AnalyticsAlertKind string
+
+// AnalyticsAlertList defines model for AnalyticsAlertList.
+type AnalyticsAlertList struct {
+	Items []AnalyticsAlert `json:"items"`
+}
+
 // AnalyticsAnnotation defines model for AnalyticsAnnotation.
 type AnalyticsAnnotation struct {
-	CreatedAt time.Time `json:"created_at"`
+	AlertId   *uuid.UUID `json:"alert_id,omitempty"`
+	CreatedAt time.Time  `json:"created_at"`
 
 	// CreatedBy The member who wrote it; absent for Yuva's own, API keys and removed members.
 	CreatedBy *uuid.UUID         `json:"created_by,omitempty"`
@@ -4465,16 +4675,18 @@ type AnalyticsAnnotation struct {
 	GoalId    *uuid.UUID         `json:"goal_id,omitempty"`
 	Id        uuid.UUID          `json:"id"`
 
-	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+	// Kind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+	// `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+	// `alert` (with `alert_id`, what the alert found as `text`).
 	Kind      AnalyticsAnnotationKind `json:"kind"`
 	StartsOn  openapi_types.Date      `json:"starts_on"`
 	Text      string                  `json:"text"`
 	UpdatedAt time.Time               `json:"updated_at"`
 }
 
-// AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key and
-// `goal_created` (with `goal_id` while the goal exists, and its name as `text`).
+// AnalyticsAnnotationKind `note` is a member's; Yuva adds `key_rotated` when the property got a new key,
+// `goal_created` (with `goal_id` while the goal exists, and its name as `text`) and
+// `alert` (with `alert_id`, what the alert found as `text`).
 type AnalyticsAnnotationKind string
 
 // AnalyticsAnnotationCreate defines model for AnalyticsAnnotationCreate.
@@ -4586,6 +4798,19 @@ type AnalyticsDataDeletion struct {
 	From *openapi_types.Date `json:"from,omitempty"`
 	To   *openapi_types.Date `json:"to,omitempty"`
 }
+
+// AnalyticsDataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+// day, what the property's linked inbox received from its pages: conversations started on a
+// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+// up from the inbox itself.
+type AnalyticsDataset string
 
 // AnalyticsDimension A filter dimension (`AnalyticsFilterDimension`), or a time grain: `time:hour` (local hours
 // of the property's time zone; only alone, and only with `visitors`, `visits`, `pageviews` and
@@ -5075,6 +5300,52 @@ type AnalyticsIngestCounts struct {
 	Scrubbed int64               `json:"scrubbed"`
 }
 
+// AnalyticsInsight A fixed rule over the answer's own numbers; Yuva runs no model.
+// `metric_change`: a total moved by at least 20% against `compare` (at least 10 before or
+// after). With one dimension other than time: `row_change`, a row whose first count metric
+// (by `order_by`, else the first one asked) moved by at least 50% (at least 10 before or
+// after), the three largest moves; `new_value`, a row with at least 10 that had none in the
+// comparison range (a new referrer, page or campaign), the three largest. `support_hotspot`
+// (`dataset: support` by page): a page with at least 3 conversations whose `support_rate` is
+// at least twice the range's, the three highest. The change rules need `compare`.
+type AnalyticsInsight struct {
+	// Change The change in percent of `previous`; absent when `previous` is 0.
+	Change  *float64 `json:"change,omitempty"`
+	Current float64  `json:"current"`
+
+	// Dimension The dimension of the row; absent for a total.
+	Dimension *string              `json:"dimension,omitempty"`
+	Kind      AnalyticsInsightKind `json:"kind"`
+
+	// Metric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
+	// `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
+	// `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
+	// focused, per page view that reported it), `scroll_depth` (deepest scroll in percent, per
+	// page view that reported it), `events` (custom and built-in events).
+	//
+	// With a `goal_id`: `conversions` (visitors who completed the goal, per day, added up),
+	// `conversion_rate` (conversions per 100 visitors), `completions` (times the goal was
+	// completed) and `revenue` (what the completing events carried, per currency, in
+	// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
+	// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+	//
+	// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+	// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+	// 1,000 page views), next to `visitors` and `pageviews`.
+	Metric AnalyticsMetric `json:"metric"`
+
+	// Previous The comparison range's number, or the range's overall `support_rate` for a hotspot.
+	Previous *float64 `json:"previous,omitempty"`
+
+	// Value The row's value of `dimension`.
+	Value *string `json:"value,omitempty"`
+}
+
+// AnalyticsInsightKind defines model for AnalyticsInsight.Kind.
+type AnalyticsInsightKind string
+
 // AnalyticsMetric `visitors` (distinct visitors per day, added up over the range), `visits`, `pageviews`,
 // `views_per_visit`, `bounce_rate` (percent of visits with one page view and no interaction),
 // `visit_duration` (seconds per visit), `time_on_page` (seconds the page was visible and
@@ -5086,20 +5357,33 @@ type AnalyticsIngestCounts struct {
 // completed) and `revenue` (what the completing events carried, per currency, in
 // `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
 // and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+//
+// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+// 1,000 page views), next to `visitors` and `pageviews`.
 type AnalyticsMetric string
 
 // AnalyticsMetrics The metrics the query asked for.
 type AnalyticsMetrics struct {
 	BounceRate     *float64 `json:"bounce_rate,omitempty"`
 	Completions    *float64 `json:"completions,omitempty"`
+	Conversations  *float64 `json:"conversations,omitempty"`
 	ConversionRate *float64 `json:"conversion_rate,omitempty"`
 	Conversions    *float64 `json:"conversions,omitempty"`
+	Discussions    *float64 `json:"discussions,omitempty"`
 	Events         *float64 `json:"events,omitempty"`
+	Feedback       *float64 `json:"feedback,omitempty"`
+	HelpfulRate    *float64 `json:"helpful_rate,omitempty"`
 	Pageviews      *float64 `json:"pageviews,omitempty"`
+	RatingsDown    *float64 `json:"ratings_down,omitempty"`
+	RatingsUp      *float64 `json:"ratings_up,omitempty"`
 
 	// Revenue Per currency, most first.
 	Revenue       *[]AnalyticsRevenue `json:"revenue,omitempty"`
 	ScrollDepth   *float64            `json:"scroll_depth,omitempty"`
+	SupportRate   *float64            `json:"support_rate,omitempty"`
 	TimeOnPage    *float64            `json:"time_on_page,omitempty"`
 	ViewsPerVisit *float64            `json:"views_per_visit,omitempty"`
 	VisitDuration *float64            `json:"visit_duration,omitempty"`
@@ -5129,6 +5413,12 @@ type AnalyticsOrder struct {
 	// completed) and `revenue` (what the completing events carried, per currency, in
 	// `metrics.revenue`). With an `event` or `prop` dimension only `visitors`, `visits`, `events`
 	// and `revenue` are offered, counted over the events of each row. `revenue` cannot order rows.
+	//
+	// With `dataset: support` (a property linked to an inbox): `conversations` (conversations
+	// started on the page), `feedback` (page feedback sent from it), `ratings_up` and
+	// `ratings_down` (page ratings), `helpful_rate` (percent of ratings that are `up`),
+	// `discussions` (discussion threads started on it) and `support_rate` (conversations per
+	// 1,000 page views), next to `visitors` and `pageviews`.
 	Metric AnalyticsMetric `json:"metric"`
 }
 
@@ -5249,6 +5539,12 @@ type AnalyticsPropertyList struct {
 	Usage AnalyticsUsage `json:"usage"`
 }
 
+// AnalyticsPropertyRef defines model for AnalyticsPropertyRef.
+type AnalyticsPropertyRef struct {
+	Id   uuid.UUID `json:"id"`
+	Name string    `json:"name"`
+}
+
 // AnalyticsPropertyUpdate defines model for AnalyticsPropertyUpdate.
 type AnalyticsPropertyUpdate struct {
 	// Audience `children` keeps location at country level and allows no consent features or tracked props.
@@ -5283,7 +5579,20 @@ type AnalyticsQuery struct {
 	Compare *AnalyticsCompare `json:"compare,omitempty"`
 
 	// Cursor `next_cursor` of the previous page.
-	Cursor     *string               `json:"cursor,omitempty"`
+	Cursor *string `json:"cursor,omitempty"`
+
+	// Dataset `traffic` (default) counts visits, page views and events. `support` counts, per page and
+	// day, what the property's linked inbox received from its pages: conversations started on a
+	// page, page feedback, page ratings and discussion threads, next to the page's `pageviews`
+	// and `visitors`. Pages are joined by host and path only; no visitor is ever joined to a
+	// contact or conversation. It takes the dimensions `page`, `hostname` and `time:day`,
+	// `time:week` or `time:month` (a page or host and a grain at most), filters on `page` and
+	// `hostname`, no goal, prop or segment, and answers `422 no_linked_inbox` for a property
+	// without an inbox. Rows are the pages (or hosts) with any support in the range, ordered by
+	// `support_rate` with pages of fewer than 100 page views after the others unless `order_by`
+	// says otherwise. Days of the past come from the support rollup, today and days not yet rolled
+	// up from the inbox itself.
+	Dataset    *AnalyticsDataset     `json:"dataset,omitempty"`
 	Dimensions *[]AnalyticsDimension `json:"dimensions,omitempty"`
 	Filters    *[]AnalyticsFilter    `json:"filters,omitempty"`
 
@@ -5293,6 +5602,9 @@ type AnalyticsQuery struct {
 	// filter need raw rows. A goal counts on every day of the raw window, also before it was
 	// made; older days have it only if it existed when they were rolled up.
 	GoalId *uuid.UUID `json:"goal_id,omitempty"`
+
+	// Insights Add `insights` to the answer, worked out from its own numbers by fixed rules.
+	Insights *bool `json:"insights,omitempty"`
 
 	// Limit Rows per page; time series are never cut.
 	Limit   *int              `json:"limit,omitempty"`
@@ -5416,10 +5728,16 @@ type AnalyticsRealtime struct {
 	Visitors int64 `json:"visitors"`
 }
 
+// AnalyticsReportFrequency defines model for AnalyticsReportFrequency.
+type AnalyticsReportFrequency string
+
 // AnalyticsResult defines model for AnalyticsResult.
 type AnalyticsResult struct {
 	Comparison *AnalyticsComparison `json:"comparison,omitempty"`
-	Meta       AnalyticsResultMeta  `json:"meta"`
+
+	// Insights With `insights` in the query; empty when no rule applies.
+	Insights *[]AnalyticsInsight `json:"insights,omitempty"`
+	Meta     AnalyticsResultMeta `json:"meta"`
 
 	// NextCursor Present when there are more rows.
 	NextCursor *string `json:"next_cursor,omitempty"`
@@ -5701,6 +6019,25 @@ type AnalyticsSharedProperty struct {
 	Timezone  string              `json:"timezone"`
 }
 
+// AnalyticsSubscription defines model for AnalyticsSubscription.
+type AnalyticsSubscription struct {
+	Alerts []AnalyticsAlertKind `json:"alerts"`
+
+	// LastReportAt When the last scheduled report went out.
+	LastReportAt *time.Time               `json:"last_report_at,omitempty"`
+	PropertyId   uuid.UUID                `json:"property_id"`
+	Report       AnalyticsReportFrequency `json:"report"`
+
+	// UpdatedAt Absent until the member chose.
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+}
+
+// AnalyticsSubscriptionUpdate defines model for AnalyticsSubscriptionUpdate.
+type AnalyticsSubscriptionUpdate struct {
+	Alerts *[]AnalyticsAlertKind     `json:"alerts,omitempty"`
+	Report *AnalyticsReportFrequency `json:"report,omitempty"`
+}
+
 // AnalyticsTopValue defines model for AnalyticsTopValue.
 type AnalyticsTopValue struct {
 	Value    string `json:"value"`
@@ -5962,6 +6299,14 @@ type Broadcast struct {
 	Subject   string    `json:"subject"`
 	UpdatedAt time.Time `json:"updated_at"`
 
+	// Utm Links to the web get `utm_source=newsletter`, `utm_medium=email` and
+	// `utm_campaign=<utm_campaign>` (a link that has a `utm_` parameter of its own keeps its
+	// own), so Analytics counts the visits of the campaign. On by default.
+	Utm bool `json:"utm"`
+
+	// UtmCampaign The campaign's name in links; made from `name` when the broadcast is created.
+	UtmCampaign string `json:"utm_campaign"`
+
 	// WaitingUntil The workspace's daily limit is reached; sending continues at this time (the next 00:00 UTC).
 	WaitingUntil *time.Time `json:"waiting_until,omitempty"`
 }
@@ -6025,6 +6370,15 @@ type BroadcastAudienceInput struct {
 	Locales    *[]LanguageTag        `json:"locales,omitempty"`
 }
 
+// BroadcastCampaignVisits defines model for BroadcastCampaignVisits.
+type BroadcastCampaignVisits struct {
+	Pageviews    int64     `json:"pageviews"`
+	PropertyId   uuid.UUID `json:"property_id"`
+	PropertyName string    `json:"property_name"`
+	Visitors     int64     `json:"visitors"`
+	Visits       int64     `json:"visits"`
+}
+
 // BroadcastCondition defines model for BroadcastCondition.
 type BroadcastCondition struct {
 	Attribute string `json:"attribute"`
@@ -6081,6 +6435,12 @@ type BroadcastCreate struct {
 	Name          string                  `json:"name"`
 	Preheader     *string                 `json:"preheader,omitempty"`
 	Subject       *string                 `json:"subject,omitempty"`
+
+	// Utm On when absent at creation.
+	Utm *bool `json:"utm,omitempty"`
+
+	// UtmCampaign Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
+	UtmCampaign *string `json:"utm_campaign,omitempty"`
 }
 
 // BroadcastDelivery defines model for BroadcastDelivery.
@@ -6256,6 +6616,11 @@ type BroadcastRef struct {
 type BroadcastReport struct {
 	BroadcastId uuid.UUID `json:"broadcast_id"`
 
+	// CampaignVisits With `utm` and the scope `analytics:read`: per Analytics property the caller sees, the
+	// visits whose `utm_campaign` is the broadcast's, from the day sending started; only
+	// properties with any.
+	CampaignVisits *[]BroadcastCampaignVisits `json:"campaign_visits,omitempty"`
+
 	// Counts `recipients` is the audience taken when sending started; `queued` the mails still to go
 	// out. `sent` counts mails the SMTP server accepted; `failed` those it refused for good
 	// without naming a bad address. `bounced` and `complained` count recipients whose mail
@@ -6375,6 +6740,12 @@ type BroadcastUpdate struct {
 	Name          *string                      `json:"name,omitempty"`
 	Preheader     *string                      `json:"preheader,omitempty"`
 	Subject       *string                      `json:"subject,omitempty"`
+
+	// Utm On when absent at creation.
+	Utm *bool `json:"utm,omitempty"`
+
+	// UtmCampaign Lowercase letters, digits, `-`, `_` and `.`; made from `name` when absent at creation.
+	UtmCampaign *string `json:"utm_campaign,omitempty"`
 }
 
 // BroadcastsMode The server's `YUVA_BROADCASTS`: `on`, `approval` (a workspace sends only after the
@@ -6647,7 +7018,13 @@ type ClientConversationCreate struct {
 
 	// ClientId The first message's `client_id`.
 	ClientId *string `json:"client_id,omitempty"`
-	Subject  *string `json:"subject,omitempty"`
+
+	// PageTitle The page's title; needs `page_url`.
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	PageUrl *string `json:"page_url,omitempty"`
+	Subject *string `json:"subject,omitempty"`
 }
 
 // ClientConversationCreateMultipart defines model for ClientConversationCreateMultipart.
@@ -6655,7 +7032,13 @@ type ClientConversationCreateMultipart struct {
 	Body     *string               `json:"body,omitempty"`
 	ClientId *string               `json:"client_id,omitempty"`
 	Files    *[]openapi_types.File `json:"files,omitempty"`
-	Subject  *string               `json:"subject,omitempty"`
+
+	// PageTitle The page's title; needs `page_url`.
+	PageTitle *string `json:"page_title,omitempty"`
+
+	// PageUrl The page the conversation starts on, an absolute http(s) URL; query and fragment are dropped.
+	PageUrl *string `json:"page_url,omitempty"`
+	Subject *string `json:"subject,omitempty"`
 }
 
 // ClientConversationCreated defines model for ClientConversationCreated.
@@ -12693,6 +13076,19 @@ type ViewingEvent struct {
 // ViewingEventType defines model for ViewingEvent.Type.
 type ViewingEventType string
 
+// WebhookAnalyticsAlertPayload defines model for WebhookAnalyticsAlertPayload.
+type WebhookAnalyticsAlertPayload struct {
+	Data AnalyticsAlertEventData `json:"data"`
+
+	// InboxId The conversation's inbox; absent for contact events.
+	InboxId *uuid.UUID `json:"inbox_id,omitempty"`
+
+	// Timestamp When the event happened (not when it was sent).
+	Timestamp   time.Time        `json:"timestamp"`
+	Type        WebhookEventType `json:"type"`
+	WorkspaceId uuid.UUID        `json:"workspace_id"`
+}
+
 // WebhookAttempt defines model for WebhookAttempt.
 type WebhookAttempt struct {
 	AttemptedAt time.Time `json:"attempted_at"`
@@ -13395,6 +13791,15 @@ type UpdateAnalyticsPropertyParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// ListAnalyticsAlertsParams defines parameters for ListAnalyticsAlerts.
+type ListAnalyticsAlertsParams struct {
+	// Before `created_at` of the last alert of the previous page.
+	Before *time.Time `form:"before,omitempty" json:"before,omitempty"`
+
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
 // ListAnalyticsAnnotationsParams defines parameters for ListAnalyticsAnnotations.
 type ListAnalyticsAnnotationsParams struct {
 	From *openapi_types.Date `form:"from,omitempty" json:"from,omitempty"`
@@ -13630,6 +14035,24 @@ type UpdateAnalyticsShareParams struct {
 
 // RevokeAnalyticsShareParams defines parameters for RevokeAnalyticsShare.
 type RevokeAnalyticsShareParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// GetAnalyticsSubscriptionParams defines parameters for GetAnalyticsSubscription.
+type GetAnalyticsSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// UpdateAnalyticsSubscriptionParams defines parameters for UpdateAnalyticsSubscription.
+type UpdateAnalyticsSubscriptionParams struct {
+	// YuvaWorkspace The workspace to act on; see "Workspace selection".
+	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
+}
+
+// SendAnalyticsReportParams defines parameters for SendAnalyticsReport.
+type SendAnalyticsReportParams struct {
 	// YuvaWorkspace The workspace to act on; see "Workspace selection".
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
@@ -15294,6 +15717,20 @@ type RequestBroadcastApprovalParams struct {
 	YuvaWorkspace *WorkspaceHeader `json:"Yuva-Workspace,omitempty"`
 }
 
+// WebhookAnalyticsAlertParams defines parameters for WebhookAnalyticsAlert.
+type WebhookAnalyticsAlertParams struct {
+	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
+	WebhookId WebhookIdHeader `json:"webhook-id"`
+
+	// WebhookTimestamp Unix seconds of this attempt. Refuse values far from your clock.
+	WebhookTimestamp WebhookTimestampHeader `json:"webhook-timestamp"`
+
+	// WebhookSignature Space-separated `v1,<base64>` signatures: HMAC-SHA256 over
+	// `<webhook-id>.<webhook-timestamp>.<body>` with the base64-decoded part of the
+	// `whsec_` secret (Standard Webhooks). Two during a secret rotation.
+	WebhookSignature WebhookSignatureHeader `json:"webhook-signature"`
+}
+
 // WebhookBroadcastUpdatedParams defines parameters for WebhookBroadcastUpdated.
 type WebhookBroadcastUpdatedParams struct {
 	// WebhookId The delivery's id, the same on every retry; use it to ignore duplicates.
@@ -15658,6 +16095,9 @@ type CreateAnalyticsShareJSONRequestBody = AnalyticsShareCreate
 // UpdateAnalyticsShareJSONRequestBody defines body for UpdateAnalyticsShare for application/json ContentType.
 type UpdateAnalyticsShareJSONRequestBody = AnalyticsShareUpdate
 
+// UpdateAnalyticsSubscriptionJSONRequestBody defines body for UpdateAnalyticsSubscription for application/json ContentType.
+type UpdateAnalyticsSubscriptionJSONRequestBody = AnalyticsSubscriptionUpdate
+
 // CreateApiKeyJSONRequestBody defines body for CreateApiKey for application/json ContentType.
 type CreateApiKeyJSONRequestBody = ApiKeyCreate
 
@@ -15879,6 +16319,9 @@ type RequestBroadcastApprovalJSONRequestBody = BroadcastApprovalRequest
 
 // CreateWorkspaceJSONRequestBody defines body for CreateWorkspace for application/json ContentType.
 type CreateWorkspaceJSONRequestBody = WorkspaceCreate
+
+// WebhookAnalyticsAlertJSONRequestBody defines body for WebhookAnalyticsAlert for application/json ContentType.
+type WebhookAnalyticsAlertJSONRequestBody = WebhookAnalyticsAlertPayload
 
 // WebhookBroadcastUpdatedJSONRequestBody defines body for WebhookBroadcastUpdated for application/json ContentType.
 type WebhookBroadcastUpdatedJSONRequestBody = WebhookBroadcastPayload
@@ -18041,6 +18484,32 @@ func (t *RealtimeMessage) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsAnalyticsAlertEvent returns the union data inside the RealtimeMessage as a AnalyticsAlertEvent
+func (t RealtimeMessage) AsAnalyticsAlertEvent() (AnalyticsAlertEvent, error) {
+	var body AnalyticsAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsAlertEvent overwrites any union data inside the RealtimeMessage as the provided AnalyticsAlertEvent
+func (t *RealtimeMessage) FromAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsAlertEvent performs a merge with any union data inside the RealtimeMessage, using the provided AnalyticsAlertEvent
+func (t *RealtimeMessage) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 // AsMigrationProgressEvent returns the union data inside the RealtimeMessage as a MigrationProgressEvent
 func (t RealtimeMessage) AsMigrationProgressEvent() (MigrationProgressEvent, error) {
 	var body MigrationProgressEvent
@@ -18341,6 +18810,8 @@ func (t RealtimeMessage) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "analytics.alert":
+		return t.AsAnalyticsAlertEvent()
 	case "broadcast.progress":
 		return t.AsBroadcastProgressEvent()
 	case "broadcast.updated":
@@ -18896,6 +19367,32 @@ func (t *StoredEvent) MergeMigrationEvent(v MigrationEvent) error {
 	return err
 }
 
+// AsAnalyticsAlertEvent returns the union data inside the StoredEvent as a AnalyticsAlertEvent
+func (t StoredEvent) AsAnalyticsAlertEvent() (AnalyticsAlertEvent, error) {
+	var body AnalyticsAlertEvent
+	err := json.Unmarshal(t.union, &body)
+	return body, err
+}
+
+// FromAnalyticsAlertEvent overwrites any union data inside the StoredEvent as the provided AnalyticsAlertEvent
+func (t *StoredEvent) FromAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	t.union = b
+	return err
+}
+
+// MergeAnalyticsAlertEvent performs a merge with any union data inside the StoredEvent, using the provided AnalyticsAlertEvent
+func (t *StoredEvent) MergeAnalyticsAlertEvent(v AnalyticsAlertEvent) error {
+	b, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	merged, err := runtime.JSONMerge(t.union, b)
+	t.union = merged
+	return err
+}
+
 func (t StoredEvent) Discriminator() (string, error) {
 	var discriminator struct {
 		Discriminator string `json:"type"`
@@ -18910,6 +19407,8 @@ func (t StoredEvent) ValueByDiscriminator() (interface{}, error) {
 		return nil, err
 	}
 	switch discriminator {
+	case "analytics.alert":
+		return t.AsAnalyticsAlertEvent()
 	case "broadcast.updated":
 		return t.AsBroadcastEvent()
 	case "contact.deleted":
@@ -19504,9 +20003,14 @@ type ClientInterface interface {
 	// CreateClientConversationWithBody Start a conversation
 	//
 	// Starts a conversation on the session's channel with its first message. Send
-	// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-	// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-	// address and per channel.
+	// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+	// as `/v1`. Rate limited per IP address and per channel.
+	//
+	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+	// It is shown as `page` on the conversation and counted per page, and never joined to a
+	// visitor of Analytics.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -19516,9 +20020,14 @@ type ClientInterface interface {
 	// CreateClientConversation Start a conversation
 	//
 	// Starts a conversation on the session's channel with its first message. Send
-	// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-	// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-	// address and per channel.
+	// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+	// as `/v1`. Rate limited per IP address and per channel.
+	//
+	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+	// It is shown as `page` on the conversation and counted per page, and never joined to a
+	// visitor of Analytics.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -20235,6 +20744,16 @@ type ClientInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId} (the `UpdateAnalyticsProperty` operationId).
 	UpdateAnalyticsProperty(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsPropertyParams, body UpdateAnalyticsPropertyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ListAnalyticsAlerts List a property's alerts
+	//
+	// The alerts the property raised, newest first, at most 100; each also has an annotation on
+	// its day and an `analytics.alert` event and webhook. With `before`, older ones.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/alerts (the `ListAnalyticsAlerts` operationId).
+	ListAnalyticsAlerts(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAlertsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListAnalyticsAnnotations List a property's annotations
 	//
 	// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
@@ -20678,6 +21197,10 @@ type ClientInterface interface {
 	// raw rows inside the raw window, for any prop key, and the rollups of the property's
 	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 	//
+	// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+	// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+	// `insights` to the answer.
+	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 	// answers that include today for 30 seconds.
@@ -20709,6 +21232,10 @@ type ClientInterface interface {
 	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
 	// raw rows inside the raw window, for any prop key, and the rollups of the property's
 	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+	//
+	// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+	// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+	// `insights` to the answer.
 	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -20897,6 +21424,49 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
 	RevokeAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetAnalyticsSubscription Get my reports and alerts of a property
+	//
+	// The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+	// get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/subscription (the `GetAnalyticsSubscription` operationId).
+	GetAnalyticsSubscription(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsSubscriptionWithBody Choose my reports and alerts of a property
+	//
+	// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+	// before, monthly ones on the 1st about the month before, in the member's language, to the
+	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+	// session only; the member must see the property.
+	//
+	// Takes any type of body and a specified content type.
+	//
+	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+	UpdateAnalyticsSubscriptionWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateAnalyticsSubscription Choose my reports and alerts of a property
+	//
+	// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+	// before, monthly ones on the 1st about the month before, in the member's language, to the
+	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+	// session only; the member must see the property.
+	//
+	// Takes a body of the `application/json` content type.
+	//
+	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+	UpdateAnalyticsSubscription(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, body UpdateAnalyticsSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// SendAnalyticsReport Send me a report now
+	//
+	// Mails the calling member the report of the last seven finished days (`weekly`) or the last
+	// month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+	// looks like. Five an hour per member (`429`). Member session only.
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
+	SendAnalyticsReport(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListApiKeys List API keys
 	//
@@ -25323,9 +25893,14 @@ func (c *Client) ListClientConversations(ctx context.Context, params *ListClient
 // CreateClientConversationWithBody Start a conversation
 //
 // Starts a conversation on the session's channel with its first message. Send
-// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-// address and per channel.
+// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+// as `/v1`. Rate limited per IP address and per channel.
+//
+// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+// It is shown as `page` on the conversation and counted per page, and never joined to a
+// visitor of Analytics.
 //
 // Takes any type of body and a specified content type.
 //
@@ -25345,9 +25920,14 @@ func (c *Client) CreateClientConversationWithBody(ctx context.Context, params *C
 // CreateClientConversation Start a conversation
 //
 // Starts a conversation on the session's channel with its first message. Send
-// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-// address and per channel.
+// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+// as `/v1`. Rate limited per IP address and per channel.
+//
+// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+// It is shown as `page` on the conversation and counted per page, and never joined to a
+// visitor of Analytics.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -26634,6 +27214,26 @@ func (c *Client) UpdateAnalyticsProperty(ctx context.Context, propertyId Analyti
 	return c.Client.Do(req)
 }
 
+// ListAnalyticsAlerts List a property's alerts
+//
+// The alerts the property raised, newest first, at most 100; each also has an annotation on
+// its day and an `analytics.alert` event and webhook. With `before`, older ones.
+//
+// Scope: `analytics:read`.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/alerts (the `ListAnalyticsAlerts` operationId).
+func (c *Client) ListAnalyticsAlerts(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAlertsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewListAnalyticsAlertsRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListAnalyticsAnnotations List a property's annotations
 //
 // Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
@@ -27377,6 +27977,10 @@ func (c *Client) GetAnalyticsHealth(ctx context.Context, propertyId AnalyticsPro
 // raw rows inside the raw window, for any prop key, and the rollups of the property's
 // `tracked_props` before it. `segment_id` adds a saved segment's filters.
 //
+// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+// `insights` to the answer.
+//
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 // answers that include today for 30 seconds.
@@ -27418,6 +28022,10 @@ func (c *Client) QueryAnalyticsWithBody(ctx context.Context, propertyId Analytic
 // Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
 // raw rows inside the raw window, for any prop key, and the rollups of the property's
 // `tracked_props` before it. `segment_id` adds a saved segment's filters.
+//
+// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+// `insights` to the answer.
 //
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -27757,6 +28365,89 @@ func (c *Client) UpdateAnalyticsShare(ctx context.Context, propertyId AnalyticsP
 // Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
 func (c *Client) RevokeAnalyticsShare(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeAnalyticsShareRequest(c.Server, propertyId, shareId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// GetAnalyticsSubscription Get my reports and alerts of a property
+//
+// The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+// get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/subscription (the `GetAnalyticsSubscription` operationId).
+func (c *Client) GetAnalyticsSubscription(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsSubscriptionParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetAnalyticsSubscriptionRequest(c.Server, propertyId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsSubscriptionWithBody Choose my reports and alerts of a property
+//
+// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+// before, monthly ones on the 1st about the month before, in the member's language, to the
+// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+// session only; the member must see the property.
+//
+// Takes any type of body and a specified content type.
+//
+// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+func (c *Client) UpdateAnalyticsSubscriptionWithBody(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsSubscriptionRequestWithBody(c.Server, propertyId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// UpdateAnalyticsSubscription Choose my reports and alerts of a property
+//
+// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+// before, monthly ones on the 1st about the month before, in the member's language, to the
+// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+// session only; the member must see the property.
+//
+// Takes a body of the `application/json` content type.
+//
+// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+func (c *Client) UpdateAnalyticsSubscription(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, body UpdateAnalyticsSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateAnalyticsSubscriptionRequest(c.Server, propertyId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// SendAnalyticsReport Send me a report now
+//
+// Mails the calling member the report of the last seven finished days (`weekly`) or the last
+// month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+// looks like. Five an hour per member (`429`). Member session only.
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
+func (c *Client) SendAnalyticsReport(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewSendAnalyticsReportRequest(c.Server, propertyId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -36889,6 +37580,82 @@ func NewUpdateAnalyticsPropertyRequestWithBody(server string, propertyId Analyti
 	return req, nil
 }
 
+// NewListAnalyticsAlertsRequest constructs an http.Request for the ListAnalyticsAlerts method
+func NewListAnalyticsAlertsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsAlertsParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/alerts", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.Before != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "before", *params.Before, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date-time"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewListAnalyticsAnnotationsRequest constructs an http.Request for the ListAnalyticsAnnotations method
 func NewListAnalyticsAnnotationsRequest(server string, propertyId AnalyticsPropertyId, params *ListAnalyticsAnnotationsParams) (*http.Request, error) {
 	var err error
@@ -39005,6 +39772,166 @@ func NewRevokeAnalyticsShareRequest(server string, propertyId AnalyticsPropertyI
 	}
 
 	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/shares/%s/revoke", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetAnalyticsSubscriptionRequest constructs an http.Request for the GetAnalyticsSubscription method
+func NewGetAnalyticsSubscriptionRequest(server string, propertyId AnalyticsPropertyId, params *GetAnalyticsSubscriptionParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/subscription", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewUpdateAnalyticsSubscriptionRequest calls the generic UpdateAnalyticsSubscription builder with application/json body
+func NewUpdateAnalyticsSubscriptionRequest(server string, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, body UpdateAnalyticsSubscriptionJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateAnalyticsSubscriptionRequestWithBody(server, propertyId, params, "application/json", bodyReader)
+}
+
+// NewUpdateAnalyticsSubscriptionRequestWithBody constructs an http.Request for the UpdateAnalyticsSubscription method, with any body, and a specified content type
+func NewUpdateAnalyticsSubscriptionRequestWithBody(server string, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/subscription", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.YuvaWorkspace != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Yuva-Workspace", *params.YuvaWorkspace, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: "uuid"})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("Yuva-Workspace", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewSendAnalyticsReportRequest constructs an http.Request for the SendAnalyticsReport method
+func NewSendAnalyticsReportRequest(server string, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "propertyId", propertyId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: "uuid"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/v1/analytics/properties/%s/subscription/send-report", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -52881,9 +53808,14 @@ type ClientWithResponsesInterface interface {
 	// CreateClientConversationWithBodyWithResponse Start a conversation
 	//
 	// Starts a conversation on the session's channel with its first message. Send
-	// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-	// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-	// address and per channel.
+	// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+	// as `/v1`. Rate limited per IP address and per channel.
+	//
+	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+	// It is shown as `page` on the conversation and counted per page, and never joined to a
+	// visitor of Analytics.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -52893,9 +53825,14 @@ type ClientWithResponsesInterface interface {
 	// CreateClientConversationWithResponse Start a conversation
 	//
 	// Starts a conversation on the session's channel with its first message. Send
-	// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-	// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-	// address and per channel.
+	// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+	// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+	// as `/v1`. Rate limited per IP address and per channel.
+	//
+	// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+	// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+	// It is shown as `page` on the conversation and counted per page, and never joined to a
+	// visitor of Analytics.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -53656,6 +54593,18 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /v1/analytics/properties/{propertyId} (the `UpdateAnalyticsProperty` operationId).
 	UpdateAnalyticsPropertyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsPropertyParams, body UpdateAnalyticsPropertyJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsPropertyResponse, error)
 
+	// ListAnalyticsAlertsWithResponse List a property's alerts
+	//
+	// The alerts the property raised, newest first, at most 100; each also has an annotation on
+	// its day and an `analytics.alert` event and webhook. With `before`, older ones.
+	//
+	// Scope: `analytics:read`.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/alerts (the `ListAnalyticsAlerts` operationId).
+	ListAnalyticsAlertsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAlertsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsAlertsResponse, error)
+
 	// ListAnalyticsAnnotationsWithResponse List a property's annotations
 	//
 	// Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
@@ -54123,6 +55072,10 @@ type ClientWithResponsesInterface interface {
 	// raw rows inside the raw window, for any prop key, and the rollups of the property's
 	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
 	//
+	// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+	// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+	// `insights` to the answer.
+	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 	// answers that include today for 30 seconds.
@@ -54154,6 +55107,10 @@ type ClientWithResponsesInterface interface {
 	// Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
 	// raw rows inside the raw window, for any prop key, and the rollups of the property's
 	// `tracked_props` before it. `segment_id` adds a saved segment's filters.
+	//
+	// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+	// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+	// `insights` to the answer.
 	//
 	// Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 	// two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -54356,6 +55313,53 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /v1/analytics/properties/{propertyId}/shares/{shareId}/revoke (the `RevokeAnalyticsShare` operationId).
 	RevokeAnalyticsShareWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, shareId AnalyticsShareId, params *RevokeAnalyticsShareParams, reqEditors ...RequestEditorFn) (*RevokeAnalyticsShareResponse, error)
+
+	// GetAnalyticsSubscriptionWithResponse Get my reports and alerts of a property
+	//
+	// The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+	// get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /v1/analytics/properties/{propertyId}/subscription (the `GetAnalyticsSubscription` operationId).
+	GetAnalyticsSubscriptionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsSubscriptionParams, reqEditors ...RequestEditorFn) (*GetAnalyticsSubscriptionResponse, error)
+
+	// UpdateAnalyticsSubscriptionWithBodyWithResponse Choose my reports and alerts of a property
+	//
+	// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+	// before, monthly ones on the 1st about the month before, in the member's language, to the
+	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+	// session only; the member must see the property.
+	//
+	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+	UpdateAnalyticsSubscriptionWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSubscriptionResponse, error)
+
+	// UpdateAnalyticsSubscriptionWithResponse Choose my reports and alerts of a property
+	//
+	// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+	// before, monthly ones on the 1st about the month before, in the member's language, to the
+	// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+	// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+	// session only; the member must see the property.
+	//
+	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+	UpdateAnalyticsSubscriptionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, body UpdateAnalyticsSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSubscriptionResponse, error)
+
+	// SendAnalyticsReportWithResponse Send me a report now
+	//
+	// Mails the calling member the report of the last seven finished days (`weekly`) or the last
+	// month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+	// looks like. Five an hour per member (`429`). Member session only.
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
+	SendAnalyticsReportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*SendAnalyticsReportResponse, error)
 
 	// ListApiKeysWithResponse List API keys
 	//
@@ -61885,6 +62889,75 @@ func (r UpdateAnalyticsPropertyResponse) ContentType() string {
 	return ""
 }
 
+type ListAnalyticsAlertsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsAlertList
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r ListAnalyticsAlertsResponse) GetJSON200() *AnalyticsAlertList {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r ListAnalyticsAlertsResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r ListAnalyticsAlertsResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r ListAnalyticsAlertsResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r ListAnalyticsAlertsResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r ListAnalyticsAlertsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r ListAnalyticsAlertsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ListAnalyticsAlertsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ListAnalyticsAlertsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListAnalyticsAnnotationsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -64128,6 +65201,213 @@ func (r RevokeAnalyticsShareResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r RevokeAnalyticsShareResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetAnalyticsSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsSubscription
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetAnalyticsSubscriptionResponse) GetJSON200() *AnalyticsSubscription {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r GetAnalyticsSubscriptionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r GetAnalyticsSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r GetAnalyticsSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r GetAnalyticsSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r GetAnalyticsSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetAnalyticsSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetAnalyticsSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetAnalyticsSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpdateAnalyticsSubscriptionResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *AnalyticsSubscription
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r UpdateAnalyticsSubscriptionResponse) GetJSON200() *AnalyticsSubscription {
+	return r.JSON200
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r UpdateAnalyticsSubscriptionResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r UpdateAnalyticsSubscriptionResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r UpdateAnalyticsSubscriptionResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r UpdateAnalyticsSubscriptionResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetBody returns the raw response body bytes
+func (r UpdateAnalyticsSubscriptionResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateAnalyticsSubscriptionResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateAnalyticsSubscriptionResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateAnalyticsSubscriptionResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type SendAnalyticsReportResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// ApplicationproblemJSON400 the response for an HTTP 400 `application/problem+json` response
+	ApplicationproblemJSON400 *Problem
+	// ApplicationproblemJSON401 the response for an HTTP 401 `application/problem+json` response
+	ApplicationproblemJSON401 *Problem
+	// ApplicationproblemJSON403 the response for an HTTP 403 `application/problem+json` response
+	ApplicationproblemJSON403 *Problem
+	// ApplicationproblemJSON404 the response for an HTTP 404 `application/problem+json` response
+	ApplicationproblemJSON404 *Problem
+	// ApplicationproblemJSON429 the response for an HTTP 429 `application/problem+json` response
+	ApplicationproblemJSON429 *Problem
+}
+
+// GetApplicationproblemJSON400 returns the response for an HTTP 400 `application/problem+json` response
+func (r SendAnalyticsReportResponse) GetApplicationproblemJSON400() *Problem {
+	return r.ApplicationproblemJSON400
+}
+
+// GetApplicationproblemJSON401 returns the response for an HTTP 401 `application/problem+json` response
+func (r SendAnalyticsReportResponse) GetApplicationproblemJSON401() *Problem {
+	return r.ApplicationproblemJSON401
+}
+
+// GetApplicationproblemJSON403 returns the response for an HTTP 403 `application/problem+json` response
+func (r SendAnalyticsReportResponse) GetApplicationproblemJSON403() *Problem {
+	return r.ApplicationproblemJSON403
+}
+
+// GetApplicationproblemJSON404 returns the response for an HTTP 404 `application/problem+json` response
+func (r SendAnalyticsReportResponse) GetApplicationproblemJSON404() *Problem {
+	return r.ApplicationproblemJSON404
+}
+
+// GetApplicationproblemJSON429 returns the response for an HTTP 429 `application/problem+json` response
+func (r SendAnalyticsReportResponse) GetApplicationproblemJSON429() *Problem {
+	return r.ApplicationproblemJSON429
+}
+
+// GetBody returns the raw response body bytes
+func (r SendAnalyticsReportResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r SendAnalyticsReportResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r SendAnalyticsReportResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r SendAnalyticsReportResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -78986,9 +80266,14 @@ func (c *ClientWithResponses) ListClientConversationsWithResponse(ctx context.Co
 // CreateClientConversationWithBodyWithResponse Start a conversation
 //
 // Starts a conversation on the session's channel with its first message. Send
-// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-// address and per channel.
+// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+// as `/v1`. Rate limited per IP address and per channel.
+//
+// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+// It is shown as `page` on the conversation and counted per page, and never joined to a
+// visitor of Analytics.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -79004,9 +80289,14 @@ func (c *ClientWithResponses) CreateClientConversationWithBodyWithResponse(ctx c
 // CreateClientConversationWithResponse Start a conversation
 //
 // Starts a conversation on the session's channel with its first message. Send
-// `multipart/form-data` to attach files (`body`, `subject`, `client_id` as form fields and up
-// to 10 `files` parts), with the same size and type rules as `/v1`. Rate limited per IP
-// address and per channel.
+// `multipart/form-data` to attach files (`body`, `subject`, `client_id`, `page_url` and
+// `page_title` as form fields and up to 10 `files` parts), with the same size and type rules
+// as `/v1`. Rate limited per IP address and per channel.
+//
+// `page_url` is the page the conversation starts on, kept without query and fragment; on a
+// chat channel its origin must be one of the channel's allowed origins (`400 page_origin`).
+// It is shown as `page` on the conversation and counted per page, and never joined to a
+// visitor of Analytics.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -80109,6 +81399,24 @@ func (c *ClientWithResponses) UpdateAnalyticsPropertyWithResponse(ctx context.Co
 	return ParseUpdateAnalyticsPropertyResponse(rsp)
 }
 
+// ListAnalyticsAlertsWithResponse List a property's alerts
+//
+// The alerts the property raised, newest first, at most 100; each also has an annotation on
+// its day and an `analytics.alert` event and webhook. With `before`, older ones.
+//
+// Scope: `analytics:read`.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/alerts (the `ListAnalyticsAlerts` operationId).
+func (c *ClientWithResponses) ListAnalyticsAlertsWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *ListAnalyticsAlertsParams, reqEditors ...RequestEditorFn) (*ListAnalyticsAlertsResponse, error) {
+	rsp, err := c.ListAnalyticsAlerts(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseListAnalyticsAlertsResponse(rsp)
+}
+
 // ListAnalyticsAnnotationsWithResponse List a property's annotations
 //
 // Notes on the property's charts, by `starts_on`: members' (`note`) and Yuva's own
@@ -80756,6 +82064,10 @@ func (c *ClientWithResponses) GetAnalyticsHealthWithResponse(ctx context.Context
 // raw rows inside the raw window, for any prop key, and the rollups of the property's
 // `tracked_props` before it. `segment_id` adds a saved segment's filters.
 //
+// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+// `insights` to the answer.
+//
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
 // answers that include today for 30 seconds.
@@ -80793,6 +82105,10 @@ func (c *ClientWithResponses) QueryAnalyticsWithBodyWithResponse(ctx context.Con
 // Events: an `event` breakdown comes from rollups without filters; a `prop` breakdown reads
 // raw rows inside the raw window, for any prop key, and the rollups of the property's
 // `tracked_props` before it. `segment_id` adds a saved segment's filters.
+//
+// `dataset: support` puts the linked inbox's conversations, page feedback, page ratings and
+// discussions next to each page's views (`AnalyticsDataset`). `insights: true` adds fixed-rule
+// `insights` to the answer.
 //
 // Queries run for at most 15 seconds and four at a time per workspace; a fifth waits up to
 // two seconds and then answers `429`. Answers about finished days are cached for ten minutes,
@@ -81090,6 +82406,77 @@ func (c *ClientWithResponses) RevokeAnalyticsShareWithResponse(ctx context.Conte
 		return nil, err
 	}
 	return ParseRevokeAnalyticsShareResponse(rsp)
+}
+
+// GetAnalyticsSubscriptionWithResponse Get my reports and alerts of a property
+//
+// The calling member's e-mail report (`none`, `weekly`, `monthly`) and the alert kinds they
+// get by e-mail for the property; `none` and no alerts until they choose. Member session only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /v1/analytics/properties/{propertyId}/subscription (the `GetAnalyticsSubscription` operationId).
+func (c *ClientWithResponses) GetAnalyticsSubscriptionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *GetAnalyticsSubscriptionParams, reqEditors ...RequestEditorFn) (*GetAnalyticsSubscriptionResponse, error) {
+	rsp, err := c.GetAnalyticsSubscription(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetAnalyticsSubscriptionResponse(rsp)
+}
+
+// UpdateAnalyticsSubscriptionWithBodyWithResponse Choose my reports and alerts of a property
+//
+// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+// before, monthly ones on the 1st about the month before, in the member's language, to the
+// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+// session only; the member must see the property.
+//
+// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsSubscriptionWithBodyWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSubscriptionResponse, error) {
+	rsp, err := c.UpdateAnalyticsSubscriptionWithBody(ctx, propertyId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsSubscriptionResponse(rsp)
+}
+
+// UpdateAnalyticsSubscriptionWithResponse Choose my reports and alerts of a property
+//
+// Weekly reports go out on Monday morning (08:00 in the property's time zone) about the week
+// before, monthly ones on the 1st about the month before, in the member's language, to the
+// member's address: plain numbers, no images, nothing that tracks opening or clicks. Alerts
+// are fixed rules checked every hour (`AnalyticsAlertKind`); each alert is sent once. Member
+// session only; the member must see the property.
+//
+// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
+//
+// Corresponds with PUT /v1/analytics/properties/{propertyId}/subscription (the `UpdateAnalyticsSubscription` operationId).
+func (c *ClientWithResponses) UpdateAnalyticsSubscriptionWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *UpdateAnalyticsSubscriptionParams, body UpdateAnalyticsSubscriptionJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAnalyticsSubscriptionResponse, error) {
+	rsp, err := c.UpdateAnalyticsSubscription(ctx, propertyId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateAnalyticsSubscriptionResponse(rsp)
+}
+
+// SendAnalyticsReportWithResponse Send me a report now
+//
+// Mails the calling member the report of the last seven finished days (`weekly`) or the last
+// month (`monthly`, by the subscription; `weekly` when there is none), so they see what it
+// looks like. Five an hour per member (`429`). Member session only.
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /v1/analytics/properties/{propertyId}/subscription/send-report (the `SendAnalyticsReport` operationId).
+func (c *ClientWithResponses) SendAnalyticsReportWithResponse(ctx context.Context, propertyId AnalyticsPropertyId, params *SendAnalyticsReportParams, reqEditors ...RequestEditorFn) (*SendAnalyticsReportResponse, error) {
+	rsp, err := c.SendAnalyticsReport(ctx, propertyId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseSendAnalyticsReportResponse(rsp)
 }
 
 // ListApiKeysWithResponse List API keys
@@ -89591,6 +90978,60 @@ func ParseUpdateAnalyticsPropertyResponse(rsp *http.Response) (*UpdateAnalyticsP
 	return response, nil
 }
 
+// ParseListAnalyticsAlertsResponse parses an HTTP response from a ListAnalyticsAlertsWithResponse call
+func ParseListAnalyticsAlertsResponse(rsp *http.Response) (*ListAnalyticsAlertsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ListAnalyticsAlertsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsAlertList
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListAnalyticsAnnotationsResponse parses an HTTP response from a ListAnalyticsAnnotationsWithResponse call
 func ParseListAnalyticsAnnotationsResponse(rsp *http.Response) (*ListAnalyticsAnnotationsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -91375,6 +92816,171 @@ func ParseRevokeAnalyticsShareResponse(rsp *http.Response) (*RevokeAnalyticsShar
 			return nil, err
 		}
 		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetAnalyticsSubscriptionResponse parses an HTTP response from a GetAnalyticsSubscriptionWithResponse call
+func ParseGetAnalyticsSubscriptionResponse(rsp *http.Response) (*GetAnalyticsSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetAnalyticsSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsSubscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpdateAnalyticsSubscriptionResponse parses an HTTP response from a UpdateAnalyticsSubscriptionWithResponse call
+func ParseUpdateAnalyticsSubscriptionResponse(rsp *http.Response) (*UpdateAnalyticsSubscriptionResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateAnalyticsSubscriptionResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest AnalyticsSubscription
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseSendAnalyticsReportResponse parses an HTTP response from a SendAnalyticsReportWithResponse call
+func ParseSendAnalyticsReportResponse(rsp *http.Response) (*SendAnalyticsReportResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &SendAnalyticsReportResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 202:
+		break // No content-type
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 401:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON401 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 403:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON403 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON404 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 429:
+		var dest Problem
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.ApplicationproblemJSON429 = &dest
 
 	}
 
@@ -102636,6 +104242,11 @@ func (p *WebhookInitiator) applyWebhookEditors(ctx context.Context, req *http.Re
 
 // WebhookInitiatorInterface is the interface specification for the webhook initiator.
 type WebhookInitiatorInterface interface {
+	// WebhookAnalyticsAlertWithBody fires the analytics.alert webhook with any body
+	WebhookAnalyticsAlertWithBody(ctx context.Context, targetURL string, params *WebhookAnalyticsAlertParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	WebhookAnalyticsAlert(ctx context.Context, targetURL string, params *WebhookAnalyticsAlertParams, body WebhookAnalyticsAlertJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// WebhookBroadcastUpdatedWithBody fires the broadcast.updated webhook with any body
 	WebhookBroadcastUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -102720,6 +104331,30 @@ type WebhookInitiatorInterface interface {
 	WebhookSubscriptionUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	WebhookSubscriptionUpdated(ctx context.Context, targetURL string, params *WebhookSubscriptionUpdatedParams, body WebhookSubscriptionUpdatedJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+}
+
+func (p *WebhookInitiator) WebhookAnalyticsAlertWithBody(ctx context.Context, targetURL string, params *WebhookAnalyticsAlertParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookAnalyticsAlertWebhookRequestWithBody(targetURL, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
+}
+
+func (p *WebhookInitiator) WebhookAnalyticsAlert(ctx context.Context, targetURL string, params *WebhookAnalyticsAlertParams, body WebhookAnalyticsAlertJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewWebhookAnalyticsAlertWebhookRequest(targetURL, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := p.applyWebhookEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return p.Client.Do(req)
 }
 
 func (p *WebhookInitiator) WebhookBroadcastUpdatedWithBody(ctx context.Context, targetURL string, params *WebhookBroadcastUpdatedParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -103128,6 +104763,67 @@ func (p *WebhookInitiator) WebhookSubscriptionUpdated(ctx context.Context, targe
 		return nil, err
 	}
 	return p.Client.Do(req)
+}
+
+// NewWebhookAnalyticsAlertWebhookRequest builds a application/json POST request for the analytics.alert webhook
+func NewWebhookAnalyticsAlertWebhookRequest(targetURL string, params *WebhookAnalyticsAlertParams, body WebhookAnalyticsAlertJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewWebhookAnalyticsAlertWebhookRequestWithBody(targetURL, params, "application/json", bodyReader)
+}
+
+// NewWebhookAnalyticsAlertWebhookRequestWithBody builds a POST request for the analytics.alert webhook with any body
+func NewWebhookAnalyticsAlertWebhookRequestWithBody(targetURL string, params *WebhookAnalyticsAlertParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+	_ = err
+
+	reqURL, err := url.Parse(targetURL)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, reqURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "webhook-id", params.WebhookId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-id", headerParam0)
+
+		var headerParam1 string
+
+		headerParam1, err = runtime.StyleParamWithOptions("simple", false, "webhook-timestamp", params.WebhookTimestamp, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-timestamp", headerParam1)
+
+		var headerParam2 string
+
+		headerParam2, err = runtime.StyleParamWithOptions("simple", false, "webhook-signature", params.WebhookSignature, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("webhook-signature", headerParam2)
+
+	}
+	return req, nil
 }
 
 // NewWebhookBroadcastUpdatedWebhookRequest builds a application/json POST request for the broadcast.updated webhook
