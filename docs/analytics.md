@@ -277,7 +277,9 @@ wherever locations are shown, and the panel shows "IP Geolocation by DB-IP" unde
   numbers, can be changed or removed, and combine. Operators: is, is not, contains, does not contain,
   matches (`*` is one part of a path, `**` any number).
 - **Comparison** sets the range against the period before, a year earlier, or other days of your choice.
-- **Download CSV** saves the table you see, one column per breakdown and metric.
+- **Download CSV** saves the table you see, one column per breakdown and metric. Larger files, daily numbers and
+  raw events are [exports](analytics-sharing.md#exports); a report for people without an account is a
+  [share link](analytics-sharing.md#share-links).
 - Some filter combinations need the detailed records, which are kept for the last
   [`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analytics) days (90 by default). Older days only have totals per
   page, source, place and device, and the panel says so.

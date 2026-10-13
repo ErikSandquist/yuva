@@ -279,7 +279,9 @@ dort, wo Standorte gezeigt werden, eine Namensnennung; das Panel zeigt darunter 
   not contain, matches (`*` ist ein Pfadteil, `**` beliebig viele).
 - **Comparison** stellt den Zeitraum der vorherigen Periode, dem Vorjahr oder anderen Tagen Ihrer Wahl
   gegenüber.
-- **Download CSV** speichert die Tabelle, die Sie sehen, mit einer Spalte je Aufschlüsselung und Metrik.
+- **Download CSV** speichert die Tabelle, die Sie sehen, mit einer Spalte je Aufschlüsselung und Metrik. Größere
+  Dateien, Tageszahlen und Rohereignisse sind [Exporte](analytics-sharing.md#exporte); ein Bericht für Menschen ohne
+  Konto ist ein [Freigabelink](analytics-sharing.md#freigabelinks).
 - Manche Filterkombinationen brauchen die Detaildaten, die für die letzten
   [`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analytics) Tage (standardmäßig 90) aufbewahrt werden. Ältere
   Tage haben nur Summen je Seite, Quelle, Ort und Gerät, und das Panel sagt es.

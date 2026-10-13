@@ -280,7 +280,9 @@ yerde kendisine atıf yapılmasını ister; panel bunların altında “IP Geolo
   rakamların üstünde görünür, değiştirilebilir, kaldırılabilir ve birleşir. İşleçler: eşittir, eşit
   değildir, içerir, içermez, kalıba uyar (`*` yolun bir parçası, `**` istenen sayıda parça).
 - **Karşılaştırma** aralığı önceki dönemle, bir yıl öncesiyle ya da seçtiğiniz başka günlerle karşılaştırır.
-- **CSV indir**, gördüğünüz tabloyu her döküm ve metrik için bir sütunla kaydeder.
+- **CSV indir**, gördüğünüz tabloyu her döküm ve metrik için bir sütunla kaydeder. Daha büyük dosyalar, günlük
+  rakamlar ve ham olaylar [dışa aktarmalardır](analytics-sharing.md#dışa-aktarmalar); hesabı olmayanlara rapor ise
+  bir [paylaşım bağlantısıdır](analytics-sharing.md#paylaşım-bağlantıları).
 - Bazı filtre birleşimleri ayrıntılı kayıtlara ihtiyaç duyar; bunlar son
   [`YUVA_ANALYTICS_RAW_DAYS`](configuration.md#analitik) gün boyunca (varsayılan 90) saklanır. Daha eski günler
   için yalnızca sayfa, kaynak, konum ve cihaz başına toplamlar vardır; panel bunu söyler.
