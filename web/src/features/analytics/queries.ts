@@ -151,16 +151,22 @@ export function useInsights(id: string, bodies: AnalyticsQuery[], enabled = true
   return useQuery({
     queryKey: [...base, "insights", bodies],
     queryFn: async () => {
-      const out: AnalyticsInsight[] = []
+      const out = new Map<string, AnalyticsInsight>()
       for (const body of bodies) {
+        const rows = (body.dimensions ?? []).some((d) => !d.startsWith("time:"))
         try {
           const r = await runQuery(share, id, { ...body, insights: true })
-          out.push(...(r.insights ?? []))
+          for (const x of r.insights ?? []) {
+            const total = x.kind === "metric_change" || x.kind === "metric_new"
+            if (total === rows) continue
+            const key = [x.kind, x.metric, x.dimension ?? "", x.value ?? ""].join("\u0000")
+            if (!out.has(key)) out.set(key, x)
+          }
         } catch {
           continue
         }
       }
-      return out
+      return [...out.values()]
     },
     placeholderData: keepPreviousData,
     staleTime: 60_000,
