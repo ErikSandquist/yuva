@@ -1,7 +1,7 @@
 # Kurulum
 
-Yuva'yı tek bir sunucuda Docker Compose ile, HTTPS sunan bir ters vekil sunucunun (reverse proxy)
-arkasında çalıştırın. Gerekenler: Docker, TLS sertifikalı bir alan adı ve giriş kodları için bir
+Yuva'yı tek bir sunucuda Docker Compose ile ya da Kubernetes'te [Helm chart](#helm-ile-kubernetes) ile, HTTPS sunan bir ters vekil sunucunun (reverse proxy)
+arkasında çalıştırın. Gerekenler: Docker (ya da bir küme), TLS sertifikalı bir alan adı ve giriş kodları için bir
 SMTP hesabı.
 
 > [!WARNING]
@@ -109,6 +109,63 @@ support.example.com {
 SMTP yoksa kod `docker compose logs yuva` çıktısındadır. Sonra ekibinizi davet edin, bir gelen
 kutusu oluşturun ve [e-posta](email.md), [web widget'ı](widget.md) ya da
 [mobil SDK'ları](mobile.md) kurun.
+
+## Helm ile Kubernetes
+
+Yuva'nın bir Helm chart'ı var; her sürümle sunucunun sürüm numarasıyla `oci://ghcr.io/productdevbook/charts/yuva` adresinde yayımlanır. Veritabanı getirmez: yönetilen bir Postgres 16 veya üstünü ya da [CloudNativePG](https://cloudnative-pg.io) gibi bir operatörün çalıştırdığı birini kullanın.
+
+### 1. Secret oluşturun
+
+Veritabanı adresini ve ana anahtarı ([Ana anahtar](#ana-anahtar)) ingress sırrı ve SMTP girişiyle birlikte bir Secret içine koyun. S3 anahtarları ve `yuva vapid-keys` çıktısındaki Web Push anahtarları aynı Secret içinde `YUVA_S3_ACCESS_KEY_ID`, `YUVA_S3_SECRET_ACCESS_KEY`, `YUVA_VAPID_PUBLIC_KEY` ve `YUVA_VAPID_PRIVATE_KEY` adlarıyla yer alır:
+
+```sh
+kubectl create namespace yuva
+kubectl -n yuva create secret generic yuva \
+  --from-literal=YUVA_DATABASE_URL='postgres://yuva:<password>@<host>:5432/yuva?sslmode=require' \
+  --from-literal=YUVA_MASTER_KEY="$(openssl rand -base64 32)" \
+  --from-literal=YUVA_INGRESS_SECRET="$(openssl rand -hex 32)" \
+  --from-literal=YUVA_SMTP_USERNAME='yuva@example.com' \
+  --from-literal=YUVA_SMTP_PASSWORD='<password>'
+```
+
+### 2. `values.yaml` dosyasını yazın
+
+`publicUrl` değerini verin, `secrets.existingSecret` ile Secret'ı gösterin, diğer [ayarları](configuration.md) `env` altına koyun. Aşağıdaki ingress sınıfı ve açıklamaları ingress-nginx içindir; kullandığınız ingress en az 26 MiB gövdeli istekleri kabul etmeli ve WebSocket'leri geçirmelidir ([Ters vekil sunucu ve TLS](#ters-vekil-sunucu-ve-tls)):
+
+```yaml
+publicUrl: https://support.example.com
+secrets:
+  existingSecret: yuva
+env:
+  YUVA_CLIENT_IP_HEADER: X-Real-IP
+  YUVA_SMTP_HOST: smtp.example.com
+  YUVA_SMTP_FROM: Yuva <yuva@example.com>
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 30m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+  tls:
+    - secretName: yuva-tls
+      hosts: [support.example.com]
+```
+
+### 3. Kurun
+
+```sh
+helm install yuva oci://ghcr.io/productdevbook/charts/yuva --version 0.0.10 -n yuva -f values.yaml
+```
+
+### 4. Sahip hesabını oluşturun
+
+```sh
+kubectl -n yuva exec deploy/yuva -c yuva -- \
+  /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"
+```
+
+Veritabanı geçişleri her pod başlamadan önce bir init container içinde çalışır. Ekler varsayılan olarak bir birimde tutulur; bu yalnızca tek kopyaya izin verir. Birden çok kopya için S3 kullanın (`storage.driver: s3` ve `YUVA_S3_*` [ayarları](configuration.md)). Yük dengeleyiciniz yapışkan oturum (sticky session) çerezi koyuyorsa `service.analytics.separateService: true` yapın; böylece analitik betiği ve uç noktası hiç çerez almaz. Tüm değerler chart'ın [README](https://github.com/productdevbook/yuva/blob/main/deploy/helm/yuva/README.md) dosyasındadır.
 
 ## Başvuru
 

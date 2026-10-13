@@ -1,7 +1,8 @@
 # Install
 
-Run Yuva on one host with Docker Compose, behind a reverse proxy that serves HTTPS. You need Docker,
-a host name with TLS and an SMTP account for sign-in codes.
+Run Yuva on one host with Docker Compose, or on Kubernetes with the [Helm chart](#kubernetes-with-helm),
+behind a reverse proxy that serves HTTPS. You need Docker (or a cluster), a host name with TLS and an
+SMTP account for sign-in codes.
 
 > [!WARNING]
 > Yuva is pre-alpha. Read the warning in the [README](../README.md) before you put real
@@ -106,6 +107,63 @@ support.example.com {
 Open `YUVA_PUBLIC_URL`, enter your address and sign in with the code from the e-mail. Without SMTP
 the code is in `docker compose logs yuva`. Then invite your team, create an inbox, and set up
 [e-mail](email.md), the [web widget](widget.md) or the [mobile SDKs](mobile.md).
+
+## Kubernetes with Helm
+
+Yuva has a Helm chart, published with every release as `oci://ghcr.io/productdevbook/charts/yuva` under the server's version. It brings no database: use a managed Postgres 16 or newer, or one run by an operator such as [CloudNativePG](https://cloudnative-pg.io).
+
+### 1. Create the Secret
+
+Put the database URL and the master key ([Master key](#master-key)) in a Secret, with the ingress secret and SMTP login. S3 keys and the Web Push keys from `yuva vapid-keys` go in the same Secret under `YUVA_S3_ACCESS_KEY_ID`, `YUVA_S3_SECRET_ACCESS_KEY`, `YUVA_VAPID_PUBLIC_KEY` and `YUVA_VAPID_PRIVATE_KEY`:
+
+```sh
+kubectl create namespace yuva
+kubectl -n yuva create secret generic yuva \
+  --from-literal=YUVA_DATABASE_URL='postgres://yuva:<password>@<host>:5432/yuva?sslmode=require' \
+  --from-literal=YUVA_MASTER_KEY="$(openssl rand -base64 32)" \
+  --from-literal=YUVA_INGRESS_SECRET="$(openssl rand -hex 32)" \
+  --from-literal=YUVA_SMTP_USERNAME='yuva@example.com' \
+  --from-literal=YUVA_SMTP_PASSWORD='<password>'
+```
+
+### 2. Write `values.yaml`
+
+Set `publicUrl`, point `secrets.existingSecret` at the Secret, and put other [settings](configuration.md) under `env`. The ingress class and annotations below are for ingress-nginx; whatever you use must accept request bodies of at least 26 MiB and pass WebSockets ([Reverse proxy and TLS](#reverse-proxy-and-tls)):
+
+```yaml
+publicUrl: https://support.example.com
+secrets:
+  existingSecret: yuva
+env:
+  YUVA_CLIENT_IP_HEADER: X-Real-IP
+  YUVA_SMTP_HOST: smtp.example.com
+  YUVA_SMTP_FROM: Yuva <yuva@example.com>
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 30m
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+  tls:
+    - secretName: yuva-tls
+      hosts: [support.example.com]
+```
+
+### 3. Install
+
+```sh
+helm install yuva oci://ghcr.io/productdevbook/charts/yuva --version 0.0.10 -n yuva -f values.yaml
+```
+
+### 4. Create the first owner
+
+```sh
+kubectl -n yuva exec deploy/yuva -c yuva -- \
+  /yuva bootstrap --email you@example.com --workspace "Example" --name "Your Name"
+```
+
+Migrations run in an init container before each pod starts. Attachments are kept on a volume by default, which allows one replica only; for several replicas use S3 (`storage.driver: s3` and the `YUVA_S3_*` [settings](configuration.md#attachments-and-storage)). If your load balancer sets sticky-session cookies, set `service.analytics.separateService: true` so the analytics script and endpoint never get one. All values are in the chart's [README](https://github.com/productdevbook/yuva/blob/main/deploy/helm/yuva/README.md).
 
 ## Reference
 
