@@ -10,6 +10,7 @@ import Developers from "@/sections/Developers.astro"
 import Faq from "@/sections/Faq.astro"
 import Hero from "@/sections/Hero.astro"
 import How from "@/sections/How.astro"
+import More from "@/sections/More.astro"
 import Panel from "@/sections/Panel.astro"
 import SelfHost from "@/sections/SelfHost.astro"
 import Trust from "@/sections/Trust.astro"
@@ -44,6 +45,7 @@ const jsonLd = [
   <Channels t={c.channels} shots={shots(locale)} />
   <How t={c.how} />
   <Panel t={c.panel} shots={shots(locale)} />
+  <More t={c.more} />
   <Developers t={c.developers} />
   <SelfHost t={c.host} />
   <Trust security={c.trust} open={c.open} />

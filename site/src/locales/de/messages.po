@@ -89,6 +89,10 @@ msgid "Amara Okafor"
 msgstr "Amara Okafor"
 
 #: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analytics"
+
+#: src/copy/home.ts
 msgid "And an API for everything else"
 msgstr "Und eine API für alles andere"
 
@@ -154,6 +158,10 @@ msgstr "Zurück zur Startseite"
 msgid "Back to the website"
 msgstr "Zur Website"
 
+#: src/copy/home.ts
+msgid "Beyond the inbox"
+msgstr "Mehr als der Posteingang"
+
 #: src/copy/header.ts
 #: src/copy/pages.ts
 #: src/layouts/Footer.astro
@@ -170,6 +178,14 @@ msgstr "Marke"
 #: src/layouts/Footer.astro
 msgid "Brand assets"
 msgstr "Markenmaterial"
+
+#: src/copy/home.ts
+msgid "Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed."
+msgstr "Bringen Sie Ihren Mail- und Support-Verlauf aus Gmail, Google Workspace, Outlook und Microsoft 365, Yandex, iCloud, Zoho oder jedem IMAP-Server, aus Zendesk und Help Scout oder aus mbox-, Takeout- und .eml-Dateien mit. Yuva liest an der Quelle nur; dort wird nichts verändert."
+
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Newsletter-Versand"
 
 #: src/copy/home.ts
 msgid "Built for the people who answer."
@@ -276,6 +292,10 @@ msgstr "Mitwirken"
 msgid "Conversations from every channel share one list, one thread view and one set of tools. Members see only the inboxes they were given."
 msgstr "Unterhaltungen aus allen Kanälen teilen sich eine Liste, eine Verlaufsansicht und dieselben Werkzeuge. Mitglieder sehen nur die Posteingänge, die ihnen zugeteilt sind."
 
+#: src/copy/home.ts
+msgid "Cookieless web analytics next to your support inbox: no cookies, no stored IP addresses, and Do Not Track and Global Privacy Control respected. See pages, sources, locations, devices and realtime visitors, plus events with revenue, goals and funnels."
+msgstr "Cookiefreie Web-Analyse neben Ihrem Support-Posteingang: keine Cookies, keine gespeicherten IP-Adressen, Do Not Track und Global Privacy Control werden beachtet. Sehen Sie Seiten, Quellen, Standorte, Geräte und Besucher in Echtzeit, dazu Ereignisse mit Umsatz, Ziele und Trichter."
+
 #: src/copy/brand.ts
 #: src/copy/contact.ts
 #: src/copy/docs.ts
@@ -341,6 +361,10 @@ msgstr "Daten, die Sie löschen können"
 msgid "Delete a contact, from the panel or by your own user id, and their conversations, messages and files go with them. Nothing goes to third parties except what a channel is set up to send."
 msgstr "Löschen Sie einen Kontakt im Panel oder über Ihre eigene Nutzer-ID, und seine Unterhaltungen, Nachrichten und Dateien verschwinden mit ihm. An Dritte geht nur, was ein Kanal versenden soll."
 
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Zustellbarkeit"
+
 #: src/copy/pages.ts
 msgid "Deprecated"
 msgstr "Veraltet"
@@ -348,6 +372,10 @@ msgstr "Veraltet"
 #: src/copy/docs.ts
 msgid "Description"
 msgstr "Beschreibung"
+
+#: src/copy/home.ts
+msgid "Designs"
+msgstr "Designs"
 
 #: src/copy/templates.ts
 msgid "Desktop"
@@ -444,6 +472,10 @@ msgstr "Geben Sie die Adresse Ihres Yuva-Servers ein, um die Vorlage dort zu öf
 #: src/copy/templates.ts
 msgid "Event"
 msgstr "Event"
+
+#: src/copy/home.ts
+msgid "Events and goals"
+msgstr "Ereignisse und Ziele"
 
 #: src/copy/home.ts
 msgid "Every channel, one conversation model."
@@ -654,6 +686,10 @@ msgstr "iOS: YuvaKit und SwiftUI"
 msgid "Is Yuva ready for production?"
 msgstr "Ist Yuva bereit für den Produktivbetrieb?"
 
+#: src/copy/home.ts
+msgid "Keep mailing lists with recorded consent and subscribe forms, build e-mails in the designer or start from the template gallery, and send them with deliverability checks: SPF, DKIM, DMARC and one-click unsubscribe."
+msgstr "Führen Sie Mailinglisten mit dokumentierter Einwilligung und Anmeldeformularen, gestalten Sie E-Mails im Designer oder starten Sie mit der Vorlagengalerie und versenden Sie sie mit Zustellbarkeitsprüfungen: SPF, DKIM, DMARC und Abmeldung mit einem Klick."
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "Verwenden Sie das Logo unverändert: Form, Proportionen und Farben bleiben, wie sie sind."
@@ -715,6 +751,10 @@ msgstr "Lizenzierung"
 msgid "Light"
 msgstr "Hell"
 
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Listen"
+
 #: src/copy/contact.ts
 #: src/copy/home.ts
 msgid "Live chat"
@@ -773,6 +813,10 @@ msgid "Messages come in on any channel. Your team answers in one place."
 msgstr "Nachrichten kommen über jeden Kanal. Ihr Team antwortet an einem Ort."
 
 #: src/copy/home.ts
+msgid "Migration guide"
+msgstr "Umzugsanleitung"
+
+#: src/copy/home.ts
 msgid "Mobile SDK guide"
 msgstr "Anleitung für die Mobile-SDKs"
 
@@ -791,6 +835,10 @@ msgstr "Weitere Beiträge"
 #: src/copy/docs.ts
 msgid "Move to Yuva"
 msgstr "Zu Yuva umziehen"
+
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Umzug zu Yuva"
 
 #: src/copy/docs.ts
 msgid "Name"
@@ -826,6 +874,10 @@ msgstr "Neuigkeiten, Release-Geschichten und Notizen aus der Entwicklung von Yuv
 
 #: src/copy/templates.ts
 msgid "Newsletter"
+msgstr "Newsletter"
+
+#: src/copy/home.ts
+msgid "Newsletters"
 msgstr "Newsletter"
 
 #: src/copy/docs.ts
@@ -1059,6 +1111,10 @@ msgstr "Breite der Vorschau"
 msgid "Previous"
 msgstr "Zurück"
 
+#: src/copy/home.ts
+msgid "Privacy"
+msgstr "Datenschutz"
+
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
 msgid "Product"
@@ -1253,6 +1309,10 @@ msgstr "Selbst gehostet"
 msgid "Self-hosting"
 msgstr "Selbst hosten"
 
+#: src/copy/home.ts
+msgid "Send newsletters, move in, and see who visits."
+msgstr "Newsletter versenden, Verlauf mitbringen, Besucher sehen."
+
 #: src/copy/templates.ts
 msgid "Server address"
 msgstr "Serveradresse"
@@ -1373,6 +1433,10 @@ msgstr "Das Panel steckt im Binary. Es ist schnell, für die Tastatur gemacht un
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "Die Payloads, die Yuva an Ihre Webhook-Endpunkte sendet."
+
+#: src/copy/home.ts
+msgid "The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies."
+msgstr "Derselben Arbeitsbereich versendet auch E-Mails an Ihre Listen, übernimmt Ihren Verlauf aus den Tools, die Sie heute nutzen, und zählt Besuche auf Ihren Websites ohne Cookies."
 
 #: src/copy/contact.ts
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
@@ -1595,8 +1659,8 @@ msgid "Yuva brand assets: logo, colours and name"
 msgstr "Yuva-Markenmaterial: Logo, Farben und Name"
 
 #: src/copy/home.ts
-msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox. Open source, self-hosted, one Go binary with Postgres."
-msgstr "Yuva bringt Support-E-Mails, Live-Chat und In-App-Unterhaltungen aus all Ihren Produkten in einen gemeinsamen Posteingang. Open Source, selbst gehostet, ein Go-Binary mit Postgres."
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva führt Support-E-Mails, Live-Chat und In-App-Gespräche aller Ihrer Produkte in einem gemeinsamen Posteingang zusammen und bringt Newsletter, Mail-Umzug und cookiefreie Analyse mit. Open Source, selbst gehostet, eine Go-Binärdatei mit Postgres."
 
 #: src/copy/docs.ts
 msgid "Yuva documentation"

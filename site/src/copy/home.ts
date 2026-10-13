@@ -15,7 +15,7 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
     meta: {
       title: i18n._(msg`Yuva: one open-source inbox for e-mail, live chat and in-app messages`),
       description: i18n._(
-        msg`Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox. Open source, self-hosted, one Go binary with Postgres.`
+        msg`Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres.`
       ),
     },
 
@@ -230,6 +230,49 @@ export function homeCopy(i18n: I18n, quickStartRel: string) {
       phoneAlt: i18n._(
         msg`The panel on a phone: the conversation list with each person's channel and latest message, and the tabs at the bottom.`
       ),
+    },
+
+    more: {
+      kicker: i18n._(msg`Beyond the inbox`),
+      title: i18n._(msg`Send newsletters, move in, and see who visits.`),
+      lead: i18n._(
+        msg`The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies.`
+      ),
+      cards: [
+        {
+          icon: "send",
+          title: i18n._(msg`Newsletters`),
+          body: i18n._(
+            msg`Keep mailing lists with recorded consent and subscribe forms, build e-mails in the designer or start from the template gallery, and send them with deliverability checks: SPF, DKIM, DMARC and one-click unsubscribe.`
+          ),
+          links: [
+            { label: i18n._(msg`Broadcasts`), href: docs("broadcasts/") },
+            { label: i18n._(msg`Lists`), href: docs("lists/") },
+            { label: i18n._(msg`Designs`), href: docs("designs/") },
+            { label: i18n._(msg`Deliverability`), href: docs("deliverability/") },
+          ],
+        },
+        {
+          icon: "download",
+          title: i18n._(msg`Moving in`),
+          body: i18n._(
+            msg`Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed.`
+          ),
+          links: [{ label: i18n._(msg`Migration guide`), href: docs("migrate/") }],
+        },
+        {
+          icon: "chart",
+          title: i18n._(msg`Analytics`),
+          body: i18n._(
+            msg`Cookieless web analytics next to your support inbox: no cookies, no stored IP addresses, and Do Not Track and Global Privacy Control respected. See pages, sources, locations, devices and realtime visitors, plus events with revenue, goals and funnels.`
+          ),
+          links: [
+            { label: i18n._(msg`Analytics`), href: docs("analytics/") },
+            { label: i18n._(msg`Events and goals`), href: docs("analytics-events/") },
+            { label: i18n._(msg`Privacy`), href: docs("analytics-privacy/") },
+          ],
+        },
+      ] as { icon: IconName; title: string; body: string; links: { label: string; href: string }[] }[],
     },
 
     developers: {

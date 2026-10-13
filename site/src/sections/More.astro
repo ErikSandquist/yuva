@@ -1,0 +1,34 @@
+---
+import type { HomeCopy } from "@/copy/home"
+import Icon from "@/ui/Icon.astro"
+import SectionHead from "@/ui/SectionHead.astro"
+import Stop from "@/ui/Stop.astro"
+
+interface Props {
+  t: HomeCopy["more"]
+}
+
+const { t } = Astro.props
+---
+
+<Stop id="more" labelledby="more-title" tone="deep">
+  <SectionHead kicker={t.kicker} title={t.title} lead={t.lead} id="more-title" />
+  <ul class="mt-12 grid gap-x-10 gap-y-10 lg:grid-cols-3">
+    {t.cards.map((card) => (
+      <li class="flex flex-col border-t border-rule-strong pt-4">
+        <h3 class="flex items-center gap-2.5 font-semibold tracking-tight">
+          <Icon name={card.icon} class="text-brand" />
+          {card.title}
+        </h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-soft">{card.body}</p>
+        <p class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-sm font-medium">
+          {card.links.map((l) => (
+            <a href={l.href} class="text-brand underline-offset-4 hover:underline">
+              {l.label}
+            </a>
+          ))}
+        </p>
+      </li>
+    ))}
+  </ul>
+</Stop>

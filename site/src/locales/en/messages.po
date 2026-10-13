@@ -89,6 +89,10 @@ msgid "Amara Okafor"
 msgstr "Amara Okafor"
 
 #: src/copy/home.ts
+msgid "Analytics"
+msgstr "Analytics"
+
+#: src/copy/home.ts
 msgid "And an API for everything else"
 msgstr "And an API for everything else"
 
@@ -154,6 +158,10 @@ msgstr "Back to the home page"
 msgid "Back to the website"
 msgstr "Back to the website"
 
+#: src/copy/home.ts
+msgid "Beyond the inbox"
+msgstr "Beyond the inbox"
+
 #: src/copy/header.ts
 #: src/copy/pages.ts
 #: src/layouts/Footer.astro
@@ -170,6 +178,14 @@ msgstr "Brand"
 #: src/layouts/Footer.astro
 msgid "Brand assets"
 msgstr "Brand assets"
+
+#: src/copy/home.ts
+msgid "Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed."
+msgstr "Bring mail and support history from Gmail, Google Workspace, Outlook and Microsoft 365, Yandex, iCloud, Zoho or any IMAP server, from Zendesk and Help Scout, or from mbox, Takeout and .eml files. Yuva only reads at the source; nothing there is changed."
+
+#: src/copy/home.ts
+msgid "Broadcasts"
+msgstr "Broadcasts"
 
 #: src/copy/home.ts
 msgid "Built for the people who answer."
@@ -276,6 +292,10 @@ msgstr "Contributing"
 msgid "Conversations from every channel share one list, one thread view and one set of tools. Members see only the inboxes they were given."
 msgstr "Conversations from every channel share one list, one thread view and one set of tools. Members see only the inboxes they were given."
 
+#: src/copy/home.ts
+msgid "Cookieless web analytics next to your support inbox: no cookies, no stored IP addresses, and Do Not Track and Global Privacy Control respected. See pages, sources, locations, devices and realtime visitors, plus events with revenue, goals and funnels."
+msgstr "Cookieless web analytics next to your support inbox: no cookies, no stored IP addresses, and Do Not Track and Global Privacy Control respected. See pages, sources, locations, devices and realtime visitors, plus events with revenue, goals and funnels."
+
 #: src/copy/brand.ts
 #: src/copy/contact.ts
 #: src/copy/docs.ts
@@ -341,6 +361,10 @@ msgstr "Data you can delete"
 msgid "Delete a contact, from the panel or by your own user id, and their conversations, messages and files go with them. Nothing goes to third parties except what a channel is set up to send."
 msgstr "Delete a contact, from the panel or by your own user id, and their conversations, messages and files go with them. Nothing goes to third parties except what a channel is set up to send."
 
+#: src/copy/home.ts
+msgid "Deliverability"
+msgstr "Deliverability"
+
 #: src/copy/pages.ts
 msgid "Deprecated"
 msgstr "Deprecated"
@@ -348,6 +372,10 @@ msgstr "Deprecated"
 #: src/copy/docs.ts
 msgid "Description"
 msgstr "Description"
+
+#: src/copy/home.ts
+msgid "Designs"
+msgstr "Designs"
 
 #: src/copy/templates.ts
 msgid "Desktop"
@@ -444,6 +472,10 @@ msgstr "Enter the address of your Yuva server to open the template there. It is 
 #: src/copy/templates.ts
 msgid "Event"
 msgstr "Event"
+
+#: src/copy/home.ts
+msgid "Events and goals"
+msgstr "Events and goals"
 
 #: src/copy/home.ts
 msgid "Every channel, one conversation model."
@@ -654,6 +686,10 @@ msgstr "iOS: YuvaKit and SwiftUI"
 msgid "Is Yuva ready for production?"
 msgstr "Is Yuva ready for production?"
 
+#: src/copy/home.ts
+msgid "Keep mailing lists with recorded consent and subscribe forms, build e-mails in the designer or start from the template gallery, and send them with deliverability checks: SPF, DKIM, DMARC and one-click unsubscribe."
+msgstr "Keep mailing lists with recorded consent and subscribe forms, build e-mails in the designer or start from the template gallery, and send them with deliverability checks: SPF, DKIM, DMARC and one-click unsubscribe."
+
 #: src/copy/brand.ts
 msgid "Keep the logo as it is: do not change its shape, proportions or colours."
 msgstr "Keep the logo as it is: do not change its shape, proportions or colours."
@@ -715,6 +751,10 @@ msgstr "Licensing"
 msgid "Light"
 msgstr "Light"
 
+#: src/copy/home.ts
+msgid "Lists"
+msgstr "Lists"
+
 #: src/copy/contact.ts
 #: src/copy/home.ts
 msgid "Live chat"
@@ -773,6 +813,10 @@ msgid "Messages come in on any channel. Your team answers in one place."
 msgstr "Messages come in on any channel. Your team answers in one place."
 
 #: src/copy/home.ts
+msgid "Migration guide"
+msgstr "Migration guide"
+
+#: src/copy/home.ts
 msgid "Mobile SDK guide"
 msgstr "Mobile SDK guide"
 
@@ -791,6 +835,10 @@ msgstr "More posts"
 #: src/copy/docs.ts
 msgid "Move to Yuva"
 msgstr "Move to Yuva"
+
+#: src/copy/home.ts
+msgid "Moving in"
+msgstr "Moving in"
 
 #: src/copy/docs.ts
 msgid "Name"
@@ -827,6 +875,10 @@ msgstr "News, release stories and notes from building Yuva."
 #: src/copy/templates.ts
 msgid "Newsletter"
 msgstr "Newsletter"
+
+#: src/copy/home.ts
+msgid "Newsletters"
+msgstr "Newsletters"
 
 #: src/copy/docs.ts
 #: src/copy/pages.ts
@@ -1059,6 +1111,10 @@ msgstr "Preview width"
 msgid "Previous"
 msgstr "Previous"
 
+#: src/copy/home.ts
+msgid "Privacy"
+msgstr "Privacy"
+
 #: src/copy/templates.ts
 #: src/layouts/Footer.astro
 msgid "Product"
@@ -1253,6 +1309,10 @@ msgstr "Self-hosted"
 msgid "Self-hosting"
 msgstr "Self-hosting"
 
+#: src/copy/home.ts
+msgid "Send newsletters, move in, and see who visits."
+msgstr "Send newsletters, move in, and see who visits."
+
 #: src/copy/templates.ts
 msgid "Server address"
 msgstr "Server address"
@@ -1373,6 +1433,10 @@ msgstr "The panel ships inside the binary. It is fast, made for the keyboard, an
 #: src/copy/docs.ts
 msgid "The payloads Yuva sends to your webhook endpoints."
 msgstr "The payloads Yuva sends to your webhook endpoints."
+
+#: src/copy/home.ts
+msgid "The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies."
+msgstr "The same workspace also sends mail to your lists, brings your history over from the tools you use today, and counts visits to your sites without cookies."
 
 #: src/copy/contact.ts
 msgid "The server and panel are AGPL-3.0, the SDKs and API contract MIT. Improvements to the core stay public."
@@ -1595,8 +1659,8 @@ msgid "Yuva brand assets: logo, colours and name"
 msgstr "Yuva brand assets: logo, colours and name"
 
 #: src/copy/home.ts
-msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox. Open source, self-hosted, one Go binary with Postgres."
-msgstr "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox. Open source, self-hosted, one Go binary with Postgres."
+msgid "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
+msgstr "Yuva brings support e-mail, live chat and in-app conversations from all of your products into one shared inbox, and adds newsletters, mail migration and cookieless analytics. Open source, self-hosted, one Go binary with Postgres."
 
 #: src/copy/docs.ts
 msgid "Yuva documentation"
