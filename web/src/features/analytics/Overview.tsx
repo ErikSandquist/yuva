@@ -17,7 +17,7 @@ import {
   QueryProblem,
   useCurrentProperty,
 } from "@/features/analytics/parts"
-import { downloadCsv, useAnalytics, type Query } from "@/features/analytics/queries"
+import { downloadCsv, useAnalytics, useShare, type Query } from "@/features/analytics/queries"
 import { AddNoteButton, annotationMarks, AnnotationList } from "@/features/analytics/Annotations"
 import { useAnnotations } from "@/features/analytics/queries"
 import { grainFor, KPIS, scopeOf, useView, useViewSearch } from "@/features/analytics/state"
@@ -128,6 +128,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
     goal_id: goalId,
   })
   const notes = useAnnotations(property.id, q.data?.meta.from, q.data?.meta.to)
+  const share = useShare()
   const hour = grain === "time:hour"
   const tick = new Intl.DateTimeFormat(
     i18n.locale,
@@ -166,7 +167,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
           </span>
         </>
       }
-      action={<AddNoteButton propertyId={property.id} />}
+      action={!share && <AddNoteButton propertyId={property.id} />}
       testId="analytics-chart"
     >
       {q.isPending ? (
@@ -247,7 +248,7 @@ export function TimeChart({ metric: fixed, goalId }: { metric?: NumMetric; goalI
           </AreaChart>
         </ChartContainer>
       )}
-      <AnnotationList propertyId={property.id} items={notes.data ?? []} />
+      {!share && <AnnotationList propertyId={property.id} items={notes.data ?? []} />}
     </Panel>
   )
 }
@@ -268,6 +269,7 @@ function BreakdownCard({
   const property = useCurrentProperty()
   const search = useViewSearch()
   const { view, addFilter } = useView()
+  const share = useShare()
   const [dim, setDim] = useState(dims[0])
   const by = dims.includes(dim) ? dim : dims[0]
   const body: Query = {
@@ -280,6 +282,7 @@ function BreakdownCard({
   const q = useAnalytics(property.id, body)
   const rows = q.data?.rows ?? []
   const join = search ? `${search}&by=${by}` : `?by=${by}`
+  const details = share ? `/share/${share.token}/${group}${join}` : `/analytics/${property.id}/${group}${join}`
   return (
     <Panel
       title={title}
@@ -297,10 +300,7 @@ function BreakdownCard({
       }
       footer={
         <>
-          <Link
-            to={`/analytics/${property.id}/${group}${join}`}
-            className="text-small text-brand underline-offset-4 hover:underline"
-          >
+          <Link to={details} className="text-small text-brand underline-offset-4 hover:underline">
             <Trans>Details</Trans>
           </Link>
           <span className="flex-1" />
@@ -327,7 +327,7 @@ function BreakdownCard({
               label: <RowLabel dim={by} row={r} value={value} text={text} />,
               value: num(r.metrics, "visitors") ?? 0,
               display: formatCompact(num(r.metrics, "visitors") ?? 0, i18n.locale),
-              onClick: value === OTHER ? undefined : () => addFilter(by, value),
+              onClick: value === OTHER || share ? undefined : () => addFilter(by, value),
             }
           })}
         />
@@ -339,31 +339,41 @@ function BreakdownCard({
 export function Overview() {
   const property = useCurrentProperty()
   const text = useAnalyticsText()
+  const share = useShare()
+  const shown = (g: Group) => !share || share.views.includes(g)
   const sources: AnalyticsFilterDimension[] = ["channel", "source", "utm_campaign"]
   return (
     <div className="flex flex-col gap-4" data-testid="analytics-overview">
       <Kpis />
       <TimeChart />
       <div className="grid gap-4 md:grid-cols-2">
-        <BreakdownCard
-          group="pages"
-          title={text.title.top}
-          dims={["page", "entry_page", "exit_page"]}
-          testId="card-pages"
-        />
-        <BreakdownCard group="sources" title={<Trans>Sources</Trans>} dims={sources} testId="card-sources" />
-        <BreakdownCard
-          group="locations"
-          title={<Trans>Locations</Trans>}
-          dims={groupDimensions("locations", property)}
-          testId="card-locations"
-        />
-        <BreakdownCard
-          group="devices"
-          title={<Trans>Devices</Trans>}
-          dims={deviceCard(property)}
-          testId="card-devices"
-        />
+        {shown("pages") && (
+          <BreakdownCard
+            group="pages"
+            title={text.title.top}
+            dims={["page", "entry_page", "exit_page"]}
+            testId="card-pages"
+          />
+        )}
+        {shown("sources") && (
+          <BreakdownCard group="sources" title={<Trans>Sources</Trans>} dims={sources} testId="card-sources" />
+        )}
+        {shown("locations") && (
+          <BreakdownCard
+            group="locations"
+            title={<Trans>Locations</Trans>}
+            dims={groupDimensions("locations", property)}
+            testId="card-locations"
+          />
+        )}
+        {shown("devices") && (
+          <BreakdownCard
+            group="devices"
+            title={<Trans>Devices</Trans>}
+            dims={deviceCard(property)}
+            testId="card-devices"
+          />
+        )}
       </div>
       <p className="mx-1 text-caption text-faint">{text.metricHelp.visitors}</p>
     </div>

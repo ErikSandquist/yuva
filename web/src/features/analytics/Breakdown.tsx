@@ -7,7 +7,7 @@ import { Segmented } from "@/components/common"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Attribution, CsvButton, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { downloadCsv, useAnalyticsTable } from "@/features/analytics/queries"
+import { downloadCsv, useAnalyticsTable, useShare } from "@/features/analytics/queries"
 import { scopeOf, useView } from "@/features/analytics/state"
 import {
   flag,
@@ -98,6 +98,7 @@ export function BreakdownView({ group }: { group: Group }) {
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view, addFilter } = useView()
+  const share = useShare()
   const [params, setParams] = useSearchParams()
   const dims = groupDimensions(group, property)
   const raw = params.get("by") as AnalyticsFilterDimension | null
@@ -193,7 +194,7 @@ export function BreakdownView({ group }: { group: Group }) {
             ) : (
               rows.map((r, i) => {
                 const value = r.dimensions[0] ?? ""
-                const filterable = value !== OTHER
+                const filterable = value !== OTHER && !share
                 return (
                   <tr key={`${value}${i}`} className="hover:bg-muted/50">
                     <td className="truncate px-4 py-2">

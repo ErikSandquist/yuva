@@ -11,7 +11,7 @@ export function PageViews() {
   useEffect(() => {
     const path = pathname
       .split("/")
-      .map((segment) => (id.test(segment) ? ":id" : segment))
+      .map((segment, i, all) => (id.test(segment) ? ":id" : all[i - 1] === "share" && i === 2 ? ":token" : segment))
       .join("/")
     if (path === last.current) return
     last.current = path

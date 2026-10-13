@@ -11,6 +11,11 @@ msgstr ""
 msgid "(not set)"
 msgstr "(belirtilmemiş)"
 
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# satır} other {# satır}}"
+
 #. placeholder {0}: p.visitors_today
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{0, plural, one {visitor today} other {visitors today}}"
@@ -68,6 +73,10 @@ msgstr "Huni, bir ziyaret içinde kaç ziyaretçinin bir hedeften sonrakine geç
 msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 msgstr "Hedef, bir sayfayı görüntüleyen, bir olay gönderen ya da yeterince aşağı kaydıran ziyaretçileri ve getirdikleri geliri sayar."
 
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "Bir bağlantı bu mülkün yalnızca seçilen görünümlerini salt okunur gösterir; filtre ve segment kullanılamaz. İptal etmek ya da silmek bağlantıyı hemen durdurur."
+
 #: src/features/analytics/Goals.tsx
 msgid "A new goal also counts the days the detailed records are kept, not only from today."
 msgstr "Yeni hedef yalnızca bugünden itibaren değil, ayrıntılı kayıtların saklandığı günleri de sayar."
@@ -76,6 +85,10 @@ msgstr "Yeni hedef yalnızca bugünden itibaren değil, ayrıntılı kayıtları
 msgid "A new key was made"
 msgstr "Yeni bir anahtar oluşturuldu"
 
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "Yeni parola, bağlantıyı açmış herkesin erişimini sonlandırır."
+
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
 msgstr "Bir yol. * yolun bir parçası, ** ise herhangi sayıda parçası yerine geçer."
@@ -83,6 +96,10 @@ msgstr "Bir yol. * yolun bir parçası, ** ise herhangi sayıda parçası yerine
 #: src/features/analytics/Settings.tsx
 msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
 msgstr "Bir özellik adı en fazla 300 karakterdir ve $ ya da yuva_ ile başlamaz."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "Bir mülkün en fazla 50 paylaşım bağlantısı olabilir. Önce birini silin."
 
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
@@ -103,6 +120,10 @@ msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boş
 #: src/features/analytics/text.ts
 msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 msgstr "Bir ziyaretçinin aynı gün içinde, aralarında 30 dakikadan uzun boşluk olmayan ekran görüntülemeleri. Uygulama her açıldığında yeni bir ziyaret başlar."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Etkin"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Add"
@@ -180,6 +201,10 @@ msgstr "Analitik mülkleri"
 msgid "Analytics views"
 msgstr "Analitik görünümleri"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Bağlantıya sahip herkes, seçtiğiniz görünümleri oturum açmadan ve salt okunur olarak görür."
+
 #: src/features/analytics/text.ts
 msgid "App"
 msgstr "Uygulama"
@@ -192,6 +217,14 @@ msgstr "Uygulama sürümü"
 msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
 msgstr "Uygulamalar alan adı olmadan gönderir, bu yüzden yalnızca burada açık olan platformlar sayılır. Sunucunuzdan gelen olaylar platform gerektirmez."
 
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Parola sor"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "En az 8 karakter"
+
 #: src/features/analytics/Settings.tsx
 msgid "At most 10 props can be tracked."
 msgstr "En fazla 10 özellik izlenebilir."
@@ -199,6 +232,10 @@ msgstr "En fazla 10 özellik izlenebilir."
 #: src/features/analytics/Settings.tsx
 msgid "Audience"
 msgstr "Kitle"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "{expires} tarihine kadar açık"
 
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
@@ -221,6 +258,10 @@ msgstr "Özelliğe göre dök"
 msgid "Breakdown"
 msgstr "Döküm"
 
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Kırılım"
+
 #: src/features/analytics/Settings.tsx
 msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
 msgstr "Bozuk olaylar: app:// ile başlamayan bir ekran adresi, ayrılmış bir ad ya da fazla özellik gibi."
@@ -241,6 +282,7 @@ msgstr "Tarayıcıda bir kez çağırın. Sunucu tarafında oluşturma sırasın
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Cancel"
 msgstr "Vazgeç"
 
@@ -273,6 +315,7 @@ msgid "City"
 msgstr "Şehir"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Clear"
 msgstr "Temizle"
 
@@ -342,6 +385,10 @@ msgstr "Dönüşümler"
 msgid "Conversions per 100 visitors."
 msgstr "100 ziyaretçi başına dönüşüm."
 
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Şimdi kopyalayın; bir daha gösterilmez. Kaybolan bir bağlantı ancak iptal edilip yeniden oluşturulabilir."
+
 #: src/features/analytics/Install.tsx
 msgid "Count my visits again"
 msgstr "Ziyaretlerimi yeniden say"
@@ -382,6 +429,10 @@ msgstr "Her adıma, öncekilerden sonra, aynı gün tek bir ziyaret içinde ula�
 msgid "Currency"
 msgstr "Para birimi"
 
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Geçerli görünüm"
+
 #: src/features/analytics/text.ts
 msgid "Custom and built-in events."
 msgstr "Özel ve yerleşik olaylar."
@@ -406,7 +457,12 @@ msgstr "data-outbound başka sitelere giden bağlantılara tıklamaları, data-f
 msgid "Day"
 msgstr "Gün"
 
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Gün gün"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
 msgid "Days are counted in this time zone"
 msgstr "Günler bu saat dilimine göre sayılır"
 
@@ -418,10 +474,18 @@ msgstr "Günler mülkün saat dilimine göredir. Toplamlar bu günler olmadan ye
 msgid "Days waiting to be summed up"
 msgstr "Toplanmayı bekleyen günler"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Sil"
+
 #. placeholder {0}: p.name
 #: src/features/analytics/Settings.tsx
 msgid "Delete {0}?"
 msgstr "{0} silinsin mi?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "{name} silinsin mi?"
 
 #: src/features/analytics/Settings.tsx
 msgid "Delete all data"
@@ -435,6 +499,10 @@ msgstr "{0} için tüm veriler silinsin mi?"
 #: src/features/analytics/Settings.tsx
 msgid "Delete days"
 msgstr "Günleri sil"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Dışa aktarmayı sil"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Delete funnel"
@@ -483,6 +551,10 @@ msgstr "Bu günleri sil"
 msgid "Delete this note?"
 msgstr "Bu not silinsin mi?"
 
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "{expires} tarihinde silinir"
+
 #: src/features/analytics/Settings.tsx
 msgid "Deleting in the background. The numbers update when it is done."
 msgstr "Arka planda siliniyor. Bittiğinde rakamlar güncellenir."
@@ -494,6 +566,10 @@ msgstr "Derinlik (%)"
 #: src/features/analytics/text.ts
 msgid "Desktop"
 msgstr "Masaüstü"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Ayrıntılı kayıtlar {rawDay} tarihinden beri tutuluyor."
 
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
@@ -510,6 +586,7 @@ msgstr "Cihaz"
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Devices"
 msgstr "Cihazlar"
 
@@ -538,6 +615,10 @@ msgstr "içermez"
 msgid "Domains"
 msgstr "Alan adları"
 
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "İndir"
+
 #: src/features/analytics/parts.tsx
 msgid "Download CSV"
 msgstr "CSV indir"
@@ -552,6 +633,7 @@ msgstr "E-posta"
 
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Edit"
 msgstr "Düzenle"
 
@@ -566,6 +648,22 @@ msgstr "Hedefi düzenle"
 #: src/features/analytics/Annotations.tsx
 msgid "Edit note"
 msgstr "Notu düzenle"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Paylaşım bağlantısını düzenle"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Yerleştirme kodu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Yerleştirilebilir"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Bağlantıyla birlikte size verilen parolayı girin."
 
 #: src/features/analytics/text.ts
 msgid "Entry page"
@@ -590,6 +688,7 @@ msgstr "{key} = {value} olan {event} olayı"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
 #: src/features/analytics/text.ts
 msgid "Events"
 msgstr "Olaylar"
@@ -614,6 +713,18 @@ msgstr "olay sayıldı"
 msgid "events dropped"
 msgstr "olay atıldı"
 
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Her olay, ziyaretinin sayfası, kaynağı, konumu ve cihazıyla birlikte NDJSON olarak. Ziyaretler dosya içinde numaralanır; ziyaretçi kimliği, adres ya da kişi bilgisi yoktur. En fazla 31 gün."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Baktığınız aralığın ve filtrelerin tüm satırları, karşılaştırma olmadan."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Baktığınız aralığın tüm satırları, karşılaştırma olmadan."
+
 #: src/features/analytics/Settings.tsx
 msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
 msgstr "Bütün ziyaretler, olaylar ve toplamlar silinir. Mülk ve anahtarı kalır, sayım sürer."
@@ -634,9 +745,37 @@ msgstr "Hariç tutulan"
 msgid "Exit page"
 msgstr "Çıkış sayfası"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Süresi doldu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Son geçerlilik"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Dışa aktar"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Dışa aktarma ilerlemesi"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Dışa aktarmalar"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Başarısız"
+
 #: src/features/analytics/text.ts
 msgid "File download"
 msgstr "Dosya indirme"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Dosyalar arka planda hazırlanır ve yedi gün sonra silinir."
 
 #: src/features/analytics/Breakdown.tsx
 msgid "Filter by this"
@@ -670,8 +809,13 @@ msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için.
 msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
 msgstr "Kayıt ya da ödeme gibi yalnızca sunucunuzun gördüğü işler için. Track ziyaretçinin adresini ve tarayıcısını iletir, böylece olay ziyaretine eklenir; Do Not Track ya da Global Privacy Control taşıyan istekler gönderilmez. Bir sahip ya da yöneticiden analytics:write yetkili bir API anahtarı gerekir ve bu anahtar sunucunuzda kalır."
 
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Biçim"
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "Başlangıç"
@@ -710,6 +854,7 @@ msgid "Goal “{0}” was created"
 msgstr "“{0}” hedefi oluşturuldu"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Goals"
 msgstr "Hedefler"
 
@@ -737,6 +882,10 @@ msgstr "Kurulum yolu"
 msgid "How to send events"
 msgstr "Olaylar nasıl gönderilir"
 
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "Kaydettim"
+
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Inbox"
@@ -759,6 +908,10 @@ msgstr "Dahili"
 msgid "Invalid"
 msgstr "Geçersiz"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Yatırımcılar"
+
 #: src/features/analytics/text.ts
 msgid "is"
 msgstr "eşittir"
@@ -770,6 +923,10 @@ msgstr "eşit değildir"
 #: src/features/analytics/Controls.tsx
 msgid "It is gone for everyone who uses it. The numbers stay."
 msgstr "Kullanan herkes için kaybolur. Sayılar kalır."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "Süresi dolmuş ya da iptal edilmiş olabilir. Paylaşan kişiden yeni bir bağlantı isteyin."
 
 #: src/features/analytics/Funnels.tsx
 msgid "Its goals stay."
@@ -835,6 +992,10 @@ msgstr "Son olay: {last}"
 msgid "Last month"
 msgstr "Geçen ay"
 
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "son açılış {viewed}"
+
 #: src/features/analytics/text.ts
 msgid "Last page or screen"
 msgstr "Son sayfa ya da ekran"
@@ -842,6 +1003,14 @@ msgstr "Son sayfa ya da ekran"
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Son ekran"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Geçerli parolayı korumak için boş bırakın"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Bağlantı"
 
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -855,8 +1024,17 @@ msgstr "Konum veritabanı"
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Konumlar"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "{created} tarihinde oluşturuldu"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "{created} tarihinde {by} oluşturdu"
 
 #: src/features/analytics/Settings.tsx
 msgid "Make a new key"
@@ -873,6 +1051,10 @@ msgstr "Önce en az iki hedef oluşturun."
 #: src/features/analytics/Goals.tsx
 msgid "Make goal"
 msgstr "Hedef oluştur"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Bağlantı oluştur"
 
 #: src/features/analytics/text.ts
 msgid "matches"
@@ -899,8 +1081,17 @@ msgstr "Yukarı taşı"
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Name"
 msgstr "Ad"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Hiçbir zaman"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "hiç açılmadı"
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -910,9 +1101,17 @@ msgstr "Yeni huni"
 msgid "New goal"
 msgstr "Yeni hedef"
 
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "Yeni bağlantı"
+
 #: src/features/analytics/Annotations.tsx
 msgid "New pricing page"
 msgstr "Yeni fiyat sayfası"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "Yeni paylaşım bağlantısı"
 
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
@@ -934,6 +1133,10 @@ msgstr "Son 24 saatte olay yok"
 msgid "No events yet"
 msgstr "Henüz olay yok"
 
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "Henüz dışa aktarma yok."
+
 #: src/features/analytics/Funnels.tsx
 msgid "No funnels yet"
 msgstr "Henüz huni yok"
@@ -953,6 +1156,14 @@ msgstr "İzlenen özellik yok."
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "Segment yok"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "Henüz paylaşım bağlantısı yok. Bu sayıları çalışma alanı dışındaki kişilere göstermek için bir tane oluşturun."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "Henüz paylaşım bağlantısı yok. Bağlantıları sahipler ve yöneticiler oluşturur."
 
 #: src/features/analytics/Realtime.tsx
 msgid "Nobody in the last 30 minutes."
@@ -983,6 +1194,10 @@ msgstr "Not"
 msgid "Notes"
 msgstr "Notlar"
 
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Yok"
+
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
@@ -1005,6 +1220,10 @@ msgstr "Her satıra bir IP adresi ya da aralığı, en fazla 50 tane; örneğin 
 msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
 msgstr "Her satıra bir yol, en fazla 50 tane. * yolun bir parçası, ** istenen sayıda parça yerine geçer."
 
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "Her satıra bir tane; örneğin https://example.com ya da https://*.example.com. Hiç yoksa başka hiçbir site bağlantıyı bir çerçevede gösteremez."
+
 #: src/features/analytics/Settings.tsx
 msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
 msgstr "Her satıra bir tane. *.example.com tüm alt alan adlarını kapsar, example.com'un kendisini kapsamaz."
@@ -1016,6 +1235,14 @@ msgstr "Her satıra bir tane. Başka alan adlarındaki sayfalar olay gönderemez
 #: src/features/analytics/Settings.tsx
 msgid "One prop name per line, up to 10, such as plan."
 msgstr "Her satıra bir özellik adı, en fazla 10 tane; örneğin plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "Her gün için ziyaretçi, ziyaret, görüntüleme, hemen çıkma oranı, süreler ve kaydırma derinliğini içeren bir satır. En fazla 400 gün."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Yalnızca üyeler görür; bağlantıları ayırt etmek içindir."
 
 #: src/features/analytics/Settings.tsx
 msgid "Only the country is kept, never the region or city."
@@ -1036,6 +1263,10 @@ msgstr "Yalnızca şu özellik"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Kod parçası eklenmiş bir sayfanızı açın. Sunucu ilk sayfa görüntülemesini kaydeder kaydetmez burası yeşile döner. Do Not Track ya da Global Privacy Control açık tarayıcılar hiçbir şey göndermez; denemek için başka bir tarayıcı kullanın."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Raporu aç"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Open the overview"
@@ -1078,6 +1309,7 @@ msgid "Outbound link"
 msgstr "Dış bağlantı"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Overview"
 msgstr "Genel bakış"
 
@@ -1162,6 +1394,11 @@ msgstr "Ücretli arama"
 msgid "Paid social"
 msgstr "Ücretli sosyal"
 
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Parola"
+
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Yol kuralları"
@@ -1205,6 +1442,10 @@ msgstr "Bu olayın taşıdığı değerleri görmek için bir özellik seçin."
 #: src/features/analytics/Settings.tsx
 msgid "Pick at least one platform."
 msgstr "En az bir platform seçin."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "En az bir görünüm seçin."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
@@ -1260,6 +1501,7 @@ msgid "Put these links on your privacy page. Opting out is the only thing the sc
 msgstr "Bu bağlantıları gizlilik sayfanıza koyun. Betiğin ziyaretçinin cihazına yazdığı tek şey vazgeçme tercihidir ve yalnızca ziyaretçi isterse yazılır. Do Not Track ya da Global Privacy Control kullanan ziyaretçiler hiç sayılmaz."
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 msgid "Range"
 msgstr "Aralık"
 
@@ -1267,11 +1509,24 @@ msgstr "Aralık"
 msgid "Rate limits"
 msgstr "Hız sınırları"
 
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Ham olaylar"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Ham dışa aktarmalar en fazla 31 günü kapsar."
+
 #: src/features/analytics/Goals.tsx
 msgid "Reached when a visitor"
 msgstr "Ziyaretçi şunu yapınca ulaşılır"
 
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Hazır"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Realtime"
 msgstr "Canlı"
 
@@ -1333,10 +1588,31 @@ msgstr "Do Not Track ya da Global Privacy Control taşıyan istekler ve onay ist
 msgid "Revenue"
 msgstr "Gelir"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "İptal et"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "{name} iptal edilsin mi?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "İptal edildi"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Satırlar"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Hazırlanıyor"
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Save"
 msgstr "Kaydet"
 
@@ -1430,6 +1706,18 @@ msgstr "Sunucu meşgul"
 msgid "Settings"
 msgstr "Ayarlar"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Paylaşım bağlantıları"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Yuva ile paylaşıldı"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Paylaşım"
+
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Events.tsx
 msgid "Show"
@@ -1456,6 +1744,10 @@ msgstr "Son 30 günü göster"
 msgid "Signed up"
 msgstr "Kaydoldu"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Yerleştirebilecek siteler"
+
 #: src/features/analytics/text.ts
 msgid "Social"
 msgstr "Sosyal"
@@ -1472,6 +1764,7 @@ msgstr "Kaynak"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
 #: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Sources"
 msgstr "Kaynaklar"
 
@@ -1500,6 +1793,10 @@ msgstr "Alındı ve saklandı. Bir dakika içinde Canlı görünümde çıkar."
 msgid "Test events"
 msgstr "Test olayları"
 
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "Parola yanlış."
+
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
 msgstr "Mevcut anahtar 24 saat daha çalışır; böylece sayfalarınızı olay kaybetmeden güncelleyebilirsiniz. Bu süre içinde bir anahtar daha oluşturursanız eskisi hemen biter."
@@ -1507,6 +1804,14 @@ msgstr "Mevcut anahtar 24 saat daha çalışır; böylece sayfalarınızı olay 
 #: src/features/analytics/text.ts
 msgid "The deepest point reached on the page, per view."
 msgstr "Görüntüleme başına sayfada inilen en derin nokta."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "Dışa aktarma sunucuda başarısız oldu."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "Dosya 1 GiB'tan büyük olurdu. Daha kısa bir aralık dışa aktarın."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "The first event arrived at {at}."
@@ -1528,6 +1833,18 @@ msgstr "Anahtar hemen çalışmaz olur, tüm ziyaretler, olaylar ve toplamlar si
 msgid "The last 30 days"
 msgstr "Son 30 gün"
 
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "Bağlantı hemen çalışmayı bırakır ve listeden kalkar."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "Bağlantı hemen çalışmayı bırakır ve listede kalır."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day. Leave empty to keep it until revoked."
+msgstr "Bağlantı bu günün sonunda çalışmayı bırakır. İptal edilene kadar açık kalması için boş bırakın."
+
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
 msgstr "Modül bir istemci eklentisi ve useYuvaAnalytics() composable'ını ekler. NUXT_PUBLIC_YUVA_ANALYTICS_KEY çalışma zamanında anahtarın yerine geçer."
@@ -1547,6 +1864,18 @@ msgstr "Önceki anahtar {at} tarihine kadar çalışır. Her sayfayı ve uygulam
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "The properties of your inboxes show up here once an owner or admin adds them."
 msgstr "Gelen kutularınızın mülkleri, bir sahip ya da yönetici eklediğinde burada görünür."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "Sorgu çalıştırılamadı."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "Aralık, ayrıntılı kayıtların dışında."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "Rapor yüklenemedi"
 
 #: src/features/analytics/Settings.tsx
 msgid "The server’s own database"
@@ -1572,6 +1901,10 @@ msgstr "Bu hedefin sayıları {since} tarihinden itibaren var. Önceki günlerde
 msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
 msgstr "Bu hedef bir huninin adımı. Önce onu huniden çıkarın ya da huniyi silin."
 
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "Bu bağlantı kullanılamıyor"
+
 #: src/features/analytics/text.ts
 msgid "This month"
 msgstr "Bu ay"
@@ -1588,6 +1921,14 @@ msgstr "Bu mülkte bu adla bir hedef zaten var."
 msgid "This property already has a segment with this name."
 msgstr "Bu mülkte bu adla bir segment zaten var."
 
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "Bu aralık dışa aktarılamaz. Daha kısa ya da ayrıntılı kayıtların içinde kalan bir aralık seçin."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "Bu rapor parolalı"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "Bu çalışma alanı bu ayki {limit} analitik olay sınırına ulaştı. Yeni olaylar ay bitene kadar atılır."
@@ -1595,6 +1936,10 @@ msgstr "Bu çalışma alanı bu ayki {limit} analitik olay sınırına ulaştı.
 #: src/features/analytics/text.ts
 msgid "This year"
 msgstr "Bu yıl"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Bu çalışma alanında zaten üç dışa aktarma çalışıyor. Biri bitince yeniden deneyin."
 
 #: src/features/analytics/text.ts
 msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
@@ -1619,6 +1964,7 @@ msgstr "Hedefe kaç kez ulaşıldığı; bir ziyaretçinin birden çok kez ulaş
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Settings.tsx
 msgid "To"
 msgstr "Bitiş"
@@ -1631,9 +1977,21 @@ msgstr "Bugün"
 msgid "Today: {todayCounted} counted, {todayDropped} dropped"
 msgstr "Bugün: {todayCounted} sayılan, {todayDropped} atılan"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Belirteç"
+
 #: src/features/analytics/Settings.tsx
 msgid "Too late"
 msgstr "Çok geç"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Ağınızdan çok fazla istek geldi. Bir dakika bekleyip sayfayı yenileyin."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Çok fazla deneme. Bir dakika bekleyip yeniden deneyin."
 
 #: src/features/analytics/text.ts
 msgid "Top pages"
@@ -1654,6 +2012,10 @@ msgstr "İzlenen özellikler"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "İzleme"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Yeniden dene"
 
 #: src/features/analytics/Install.tsx
 msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
@@ -1695,6 +2057,8 @@ msgstr "UTM kaynağı"
 msgid "UTM term"
 msgstr "UTM terimi"
 
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
 #: src/features/analytics/text.ts
 msgid "Views"
 msgstr "Görüntüleme"
@@ -1759,6 +2123,10 @@ msgstr "Tek ekran görüntülemesi olan ve başka hiçbir şey yapılmayan ziyar
 msgid "Vue, Astro, other"
 msgstr "Vue, Astro, diğer"
 
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Sırada"
+
 #: src/features/analytics/Settings.tsx
 msgid "Waiting for events since {at}."
 msgstr "{at} saatinden beri olaylar bekleniyor."
@@ -1779,6 +2147,10 @@ msgstr "Web"
 msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
 msgstr "Hedefin olaylarının taşıdığı tutar, para birimi başına. Para birimleri asla çevrilmez ya da toplanmaz."
 
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "Ne dışa aktarılsın"
+
 #: src/features/analytics/Goals.tsx
 msgid "Where conversions come from"
 msgstr "Dönüşümler nereden geliyor"
@@ -1798,3 +2170,11 @@ msgstr "Çerezsiz, herkes için"
 #: src/features/analytics/text.ts
 msgid "Yesterday"
 msgstr "Dün"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Erişiminiz sona erdi. Okumaya devam etmek için parolayı yeniden girin."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Yeni paylaşım bağlantınız"

@@ -11,6 +11,11 @@ msgstr ""
 msgid "(not set)"
 msgstr "(not set)"
 
+#. placeholder {0}: e.rows
+#: src/features/analytics/Exports.tsx
+msgid "{0, plural, one {# row} other {# rows}}"
+msgstr "{0, plural, one {# row} other {# rows}}"
+
 #. placeholder {0}: p.visitors_today
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "{0, plural, one {visitor today} other {visitors today}}"
@@ -68,6 +73,10 @@ msgstr "A funnel shows how many visitors go from one goal to the next within a v
 msgid "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 msgstr "A goal counts the visitors who view a page, send an event or scroll far enough, and the revenue they bring."
 
+#: src/features/analytics/Sharing.tsx
+msgid "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+msgstr "A link shows only its views of this property, read-only, without filters or segments. Revoking or deleting it stops it at once."
+
 #: src/features/analytics/Goals.tsx
 msgid "A new goal also counts the days the detailed records are kept, not only from today."
 msgstr "A new goal also counts the days the detailed records are kept, not only from today."
@@ -76,6 +85,10 @@ msgstr "A new goal also counts the days the detailed records are kept, not only 
 msgid "A new key was made"
 msgstr "A new key was made"
 
+#: src/features/analytics/Sharing.tsx
+msgid "A new password signs out everyone who unlocked the link."
+msgstr "A new password signs out everyone who unlocked the link."
+
 #: src/features/analytics/Goals.tsx
 msgid "A path. * stands for one part of it, ** for any number of them."
 msgstr "A path. * stands for one part of it, ** for any number of them."
@@ -83,6 +96,10 @@ msgstr "A path. * stands for one part of it, ** for any number of them."
 #: src/features/analytics/Settings.tsx
 msgid "A prop name has at most 300 characters and does not start with $ or yuva_."
 msgstr "A prop name has at most 300 characters and does not start with $ or yuva_."
+
+#: src/features/analytics/Sharing.tsx
+msgid "A property can have at most 50 share links. Delete one first."
+msgstr "A property can have at most 50 share links. Delete one first."
 
 #: src/features/analytics/parts.tsx
 msgid "A range can be at most 400 days long. Pick a shorter one."
@@ -103,6 +120,10 @@ msgstr "A visitor's page views without a gap of 30 minutes, within one day."
 #: src/features/analytics/text.ts
 msgid "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
 msgstr "A visitor's screen views without a gap of 30 minutes, within one day. Each launch of the app starts a new visit."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Active"
+msgstr "Active"
 
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "Add"
@@ -180,6 +201,10 @@ msgstr "Analytics properties"
 msgid "Analytics views"
 msgstr "Analytics views"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Anyone with the link sees the views you pick, read-only, without signing in."
+msgstr "Anyone with the link sees the views you pick, read-only, without signing in."
+
 #: src/features/analytics/text.ts
 msgid "App"
 msgstr "App"
@@ -192,6 +217,14 @@ msgstr "App version"
 msgid "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
 msgstr "Apps send without a domain, so only the platforms turned on here are counted. Events from your backend need no platform."
 
+#: src/features/analytics/Sharing.tsx
+msgid "Ask for a password"
+msgstr "Ask for a password"
+
+#: src/features/analytics/Sharing.tsx
+msgid "At least 8 characters"
+msgstr "At least 8 characters"
+
 #: src/features/analytics/Settings.tsx
 msgid "At most 10 props can be tracked."
 msgstr "At most 10 props can be tracked."
@@ -199,6 +232,10 @@ msgstr "At most 10 props can be tracked."
 #: src/features/analytics/Settings.tsx
 msgid "Audience"
 msgstr "Audience"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Available until {expires}"
+msgstr "Available until {expires}"
 
 #: src/features/analytics/Settings.tsx
 msgid "Bots"
@@ -221,6 +258,10 @@ msgstr "Break down by prop"
 msgid "Breakdown"
 msgstr "Breakdown"
 
+#: src/features/analytics/Exports.tsx
+msgid "Broken down by"
+msgstr "Broken down by"
+
 #: src/features/analytics/Settings.tsx
 msgid "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
 msgstr "Broken events, such as a screen address that does not start with app://, a reserved name or too many props."
@@ -241,6 +282,7 @@ msgstr "Call it once in the browser. During server rendering it does nothing."
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -273,6 +315,7 @@ msgid "City"
 msgstr "City"
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Clear"
 msgstr "Clear"
 
@@ -342,6 +385,10 @@ msgstr "Conversions"
 msgid "Conversions per 100 visitors."
 msgstr "Conversions per 100 visitors."
 
+#: src/features/analytics/Sharing.tsx
+msgid "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+msgstr "Copy it now; it is not shown again. Lost links can only be revoked and made anew."
+
 #: src/features/analytics/Install.tsx
 msgid "Count my visits again"
 msgstr "Count my visits again"
@@ -382,6 +429,10 @@ msgstr "Counts the visitors who reached each step after the ones before it, with
 msgid "Currency"
 msgstr "Currency"
 
+#: src/features/analytics/Exports.tsx
+msgid "Current view"
+msgstr "Current view"
+
 #: src/features/analytics/text.ts
 msgid "Custom and built-in events."
 msgstr "Custom and built-in events."
@@ -406,7 +457,12 @@ msgstr "data-outbound counts clicks on links to other sites, data-files download
 msgid "Day"
 msgstr "Day"
 
+#: src/features/analytics/Exports.tsx
+msgid "Day by day"
+msgstr "Day by day"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/SharePage.tsx
 msgid "Days are counted in this time zone"
 msgstr "Days are counted in this time zone"
 
@@ -418,10 +474,18 @@ msgstr "Days are in the property’s time zone. Their totals are counted again w
 msgid "Days waiting to be summed up"
 msgstr "Days waiting to be summed up"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Delete"
+msgstr "Delete"
+
 #. placeholder {0}: p.name
 #: src/features/analytics/Settings.tsx
 msgid "Delete {0}?"
 msgstr "Delete {0}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Delete {name}?"
+msgstr "Delete {name}?"
 
 #: src/features/analytics/Settings.tsx
 msgid "Delete all data"
@@ -435,6 +499,10 @@ msgstr "Delete all data of {0}?"
 #: src/features/analytics/Settings.tsx
 msgid "Delete days"
 msgstr "Delete days"
+
+#: src/features/analytics/Exports.tsx
+msgid "Delete export"
+msgstr "Delete export"
 
 #: src/features/analytics/Funnels.tsx
 msgid "Delete funnel"
@@ -483,6 +551,10 @@ msgstr "Delete these days"
 msgid "Delete this note?"
 msgstr "Delete this note?"
 
+#: src/features/analytics/Exports.tsx
+msgid "deleted {expires}"
+msgstr "deleted {expires}"
+
 #: src/features/analytics/Settings.tsx
 msgid "Deleting in the background. The numbers update when it is done."
 msgstr "Deleting in the background. The numbers update when it is done."
@@ -494,6 +566,10 @@ msgstr "Depth in %"
 #: src/features/analytics/text.ts
 msgid "Desktop"
 msgstr "Desktop"
+
+#: src/features/analytics/Exports.tsx
+msgid "Detailed records are kept since {rawDay}."
+msgstr "Detailed records are kept since {rawDay}."
 
 #: src/features/analytics/Settings.tsx
 msgid "Detailed records kept since"
@@ -510,6 +586,7 @@ msgstr "Device"
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Devices"
 msgstr "Devices"
 
@@ -538,6 +615,10 @@ msgstr "does not contain"
 msgid "Domains"
 msgstr "Domains"
 
+#: src/features/analytics/Exports.tsx
+msgid "Download"
+msgstr "Download"
+
 #: src/features/analytics/parts.tsx
 msgid "Download CSV"
 msgstr "Download CSV"
@@ -552,6 +633,7 @@ msgstr "E-mail"
 
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Edit"
 msgstr "Edit"
 
@@ -566,6 +648,22 @@ msgstr "Edit goal"
 #: src/features/analytics/Annotations.tsx
 msgid "Edit note"
 msgstr "Edit note"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Edit share link"
+msgstr "Edit share link"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embed"
+msgstr "Embed"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Embeds"
+msgstr "Embeds"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Enter the password you were given with the link."
+msgstr "Enter the password you were given with the link."
 
 #: src/features/analytics/text.ts
 msgid "Entry page"
@@ -590,6 +688,7 @@ msgstr "Event {event} with {key} = {value}"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Install.tsx
+#: src/features/analytics/Sharing.tsx
 #: src/features/analytics/text.ts
 msgid "Events"
 msgstr "Events"
@@ -614,6 +713,18 @@ msgstr "events counted"
 msgid "events dropped"
 msgstr "events dropped"
 
+#: src/features/analytics/Exports.tsx
+msgid "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+msgstr "Every event with its visit’s page, source, place and device, as NDJSON. Visits are numbered within the file; there is no visitor id, address or contact. At most 31 days."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range and the filters you are looking at, without a comparison."
+msgstr "Every row of the range and the filters you are looking at, without a comparison."
+
+#: src/features/analytics/Exports.tsx
+msgid "Every row of the range you are looking at, without a comparison."
+msgstr "Every row of the range you are looking at, without a comparison."
+
 #: src/features/analytics/Settings.tsx
 msgid "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
 msgstr "Every visit, event and total is deleted. The property and its key stay, and counting goes on."
@@ -634,9 +745,37 @@ msgstr "Excluded"
 msgid "Exit page"
 msgstr "Exit page"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Expired"
+msgstr "Expired"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Expires"
+msgstr "Expires"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export"
+msgstr "Export"
+
+#: src/features/analytics/Exports.tsx
+msgid "Export progress"
+msgstr "Export progress"
+
+#: src/features/analytics/Exports.tsx
+msgid "Exports"
+msgstr "Exports"
+
+#: src/features/analytics/Exports.tsx
+msgid "Failed"
+msgstr "Failed"
+
 #: src/features/analytics/text.ts
 msgid "File download"
 msgstr "File download"
+
+#: src/features/analytics/Exports.tsx
+msgid "Files are made in the background and deleted seven days later."
+msgstr "Files are made in the background and deleted seven days later."
 
 #: src/features/analytics/Breakdown.tsx
 msgid "Filter by this"
@@ -670,8 +809,13 @@ msgstr "For what only your backend sees, such as a signup or a payment. Track fo
 msgid "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
 msgstr "For what only your backend sees, such as a signup or a payment. Track forwards the visitor’s address and browser, so the event joins their visit; requests with Do Not Track or Global Privacy Control are not sent. It needs an API key with the analytics:write scope from an owner or admin, which stays on your server."
 
+#: src/features/analytics/Exports.tsx
+msgid "Format"
+msgstr "Format"
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Settings.tsx
 msgid "From"
 msgstr "From"
@@ -710,6 +854,7 @@ msgid "Goal “{0}” was created"
 msgstr "Goal “{0}” was created"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Goals"
 msgstr "Goals"
 
@@ -737,6 +882,10 @@ msgstr "How to install"
 msgid "How to send events"
 msgstr "How to send events"
 
+#: src/features/analytics/Sharing.tsx
+msgid "I saved it"
+msgstr "I saved it"
+
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
 msgid "Inbox"
@@ -759,6 +908,10 @@ msgstr "Internal"
 msgid "Invalid"
 msgstr "Invalid"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Investors"
+msgstr "Investors"
+
 #: src/features/analytics/text.ts
 msgid "is"
 msgstr "is"
@@ -770,6 +923,10 @@ msgstr "is not"
 #: src/features/analytics/Controls.tsx
 msgid "It is gone for everyone who uses it. The numbers stay."
 msgstr "It is gone for everyone who uses it. The numbers stay."
+
+#: src/features/analytics/SharePage.tsx
+msgid "It may have expired or been revoked. Ask the person who shared it for a new one."
+msgstr "It may have expired or been revoked. Ask the person who shared it for a new one."
 
 #: src/features/analytics/Funnels.tsx
 msgid "Its goals stay."
@@ -835,6 +992,10 @@ msgstr "Last event: {last}"
 msgid "Last month"
 msgstr "Last month"
 
+#: src/features/analytics/Sharing.tsx
+msgid "last opened {viewed}"
+msgstr "last opened {viewed}"
+
 #: src/features/analytics/text.ts
 msgid "Last page or screen"
 msgstr "Last page or screen"
@@ -842,6 +1003,14 @@ msgstr "Last page or screen"
 #: src/features/analytics/text.ts
 msgid "Last screen"
 msgstr "Last screen"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Leave empty to keep the current one"
+msgstr "Leave empty to keep the current one"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Link"
+msgstr "Link"
 
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
@@ -855,8 +1024,17 @@ msgstr "Location database"
 #: src/features/analytics/AnalyticsRoutes.tsx
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Locations"
 msgstr "Locations"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created}"
+msgstr "Made {created}"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Made {created} by {by}"
+msgstr "Made {created} by {by}"
 
 #: src/features/analytics/Settings.tsx
 msgid "Make a new key"
@@ -873,6 +1051,10 @@ msgstr "Make at least two goals first."
 #: src/features/analytics/Goals.tsx
 msgid "Make goal"
 msgstr "Make goal"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Make link"
+msgstr "Make link"
 
 #: src/features/analytics/text.ts
 msgid "matches"
@@ -899,8 +1081,17 @@ msgstr "Move up"
 #: src/features/analytics/Goals.tsx
 #: src/features/analytics/NewProperty.tsx
 #: src/features/analytics/Settings.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Name"
 msgstr "Name"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Never"
+msgstr "Never"
+
+#: src/features/analytics/Sharing.tsx
+msgid "never opened"
+msgstr "never opened"
 
 #: src/features/analytics/Funnels.tsx
 msgid "New funnel"
@@ -910,9 +1101,17 @@ msgstr "New funnel"
 msgid "New goal"
 msgstr "New goal"
 
+#: src/features/analytics/Sharing.tsx
+msgid "New link"
+msgstr "New link"
+
 #: src/features/analytics/Annotations.tsx
 msgid "New pricing page"
 msgstr "New pricing page"
+
+#: src/features/analytics/Sharing.tsx
+msgid "New share link"
+msgstr "New share link"
 
 #: src/features/analytics/Controls.tsx
 msgid "No comparison"
@@ -934,6 +1133,10 @@ msgstr "No events in the last 24 hours"
 msgid "No events yet"
 msgstr "No events yet"
 
+#: src/features/analytics/Exports.tsx
+msgid "No exports yet."
+msgstr "No exports yet."
+
 #: src/features/analytics/Funnels.tsx
 msgid "No funnels yet"
 msgstr "No funnels yet"
@@ -953,6 +1156,14 @@ msgstr "No props are tracked."
 #: src/features/analytics/Controls.tsx
 msgid "No segment"
 msgstr "No segment"
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Make one to show these numbers to people outside the workspace."
+msgstr "No share links yet. Make one to show these numbers to people outside the workspace."
+
+#: src/features/analytics/Sharing.tsx
+msgid "No share links yet. Owners and admins make them."
+msgstr "No share links yet. Owners and admins make them."
 
 #: src/features/analytics/Realtime.tsx
 msgid "Nobody in the last 30 minutes."
@@ -983,6 +1194,10 @@ msgstr "Note"
 msgid "Notes"
 msgstr "Notes"
 
+#: src/features/analytics/Exports.tsx
+msgid "Nothing"
+msgstr "Nothing"
+
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Events.tsx
 #: src/features/analytics/Overview.tsx
@@ -1005,6 +1220,10 @@ msgstr "One IP address or range per line, up to 50, such as your office or a mon
 msgid "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
 msgstr "One path per line, up to 50. * stands for one part of the path, ** for any number of them."
 
+#: src/features/analytics/Sharing.tsx
+msgid "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+msgstr "One per line, like https://example.com or https://*.example.com. Without any, no other site can show it in a frame."
+
 #: src/features/analytics/Settings.tsx
 msgid "One per line. *.example.com covers every subdomain, but not example.com itself."
 msgstr "One per line. *.example.com covers every subdomain, but not example.com itself."
@@ -1016,6 +1235,14 @@ msgstr "One per line. Pages on other domains cannot send events. *.example.com c
 #: src/features/analytics/Settings.tsx
 msgid "One prop name per line, up to 10, such as plan."
 msgstr "One prop name per line, up to 10, such as plan."
+
+#: src/features/analytics/Exports.tsx
+msgid "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+msgstr "One row per day with visitors, visits, views, bounce rate, durations and scroll depth. At most 400 days."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Only members see it, to tell links apart."
+msgstr "Only members see it, to tell links apart."
 
 #: src/features/analytics/Settings.tsx
 msgid "Only the country is kept, never the region or city."
@@ -1036,6 +1263,10 @@ msgstr "Only with prop"
 #: src/features/analytics/NewProperty.tsx
 msgid "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
 msgstr "Open a page of your site with the snippet in place. This turns green as soon as the server has stored the first page view. Browsers with Do Not Track or Global Privacy Control send nothing, so use another one to test."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Open report"
+msgstr "Open report"
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Open the overview"
@@ -1078,6 +1309,7 @@ msgid "Outbound link"
 msgstr "Outbound link"
 
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Overview"
 msgstr "Overview"
 
@@ -1162,6 +1394,11 @@ msgstr "Paid search"
 msgid "Paid social"
 msgstr "Paid social"
 
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
+msgid "Password"
+msgstr "Password"
+
 #: src/features/analytics/Settings.tsx
 msgid "Path rules"
 msgstr "Path rules"
@@ -1205,6 +1442,10 @@ msgstr "Pick a prop to see the values this event carried."
 #: src/features/analytics/Settings.tsx
 msgid "Pick at least one platform."
 msgstr "Pick at least one platform."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Pick at least one view."
+msgstr "Pick at least one view."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "Pick how the site is built and copy the snippet. The key is public, like a chat key: it only works on the property’s domains."
@@ -1260,6 +1501,7 @@ msgid "Put these links on your privacy page. Opting out is the only thing the sc
 msgstr "Put these links on your privacy page. Opting out is the only thing the script stores on the visitor’s device, and only when they ask for it. Visitors with Do Not Track or Global Privacy Control are never counted."
 
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 msgid "Range"
 msgstr "Range"
 
@@ -1267,11 +1509,24 @@ msgstr "Range"
 msgid "Rate limits"
 msgstr "Rate limits"
 
+#: src/features/analytics/Exports.tsx
+msgid "Raw events"
+msgstr "Raw events"
+
+#: src/features/analytics/Exports.tsx
+msgid "Raw exports cover at most 31 days."
+msgstr "Raw exports cover at most 31 days."
+
 #: src/features/analytics/Goals.tsx
 msgid "Reached when a visitor"
 msgstr "Reached when a visitor"
 
+#: src/features/analytics/Exports.tsx
+msgid "Ready"
+msgstr "Ready"
+
 #: src/features/analytics/AnalyticsRoutes.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Realtime"
 msgstr "Realtime"
 
@@ -1333,10 +1588,31 @@ msgstr "Requests with Do Not Track or Global Privacy Control, and events without
 msgid "Revenue"
 msgstr "Revenue"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke"
+msgstr "Revoke"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoke {name}?"
+msgstr "Revoke {name}?"
+
+#: src/features/analytics/Sharing.tsx
+msgid "Revoked"
+msgstr "Revoked"
+
+#: src/features/analytics/Exports.tsx
+msgid "Rows"
+msgstr "Rows"
+
+#: src/features/analytics/Exports.tsx
+msgid "Running"
+msgstr "Running"
+
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Funnels.tsx
 #: src/features/analytics/Goals.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Save"
 msgstr "Save"
 
@@ -1430,6 +1706,18 @@ msgstr "Server busy"
 msgid "Settings"
 msgstr "Settings"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Share links"
+msgstr "Share links"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Shared with Yuva"
+msgstr "Shared with Yuva"
+
+#: src/features/analytics/Settings.tsx
+msgid "Sharing"
+msgstr "Sharing"
+
 #: src/features/analytics/Controls.tsx
 #: src/features/analytics/Events.tsx
 msgid "Show"
@@ -1456,6 +1744,10 @@ msgstr "Show the last 30 days"
 msgid "Signed up"
 msgstr "Signed up"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Sites that may embed it"
+msgstr "Sites that may embed it"
+
 #: src/features/analytics/text.ts
 msgid "Social"
 msgstr "Social"
@@ -1472,6 +1764,7 @@ msgstr "Source"
 #: src/features/analytics/Breakdown.tsx
 #: src/features/analytics/Overview.tsx
 #: src/features/analytics/Realtime.tsx
+#: src/features/analytics/Sharing.tsx
 msgid "Sources"
 msgstr "Sources"
 
@@ -1500,6 +1793,10 @@ msgstr "Taken and stored. They show up in Realtime within a minute."
 msgid "Test events"
 msgstr "Test events"
 
+#: src/features/analytics/SharePage.tsx
+msgid "That password is not right."
+msgstr "That password is not right."
+
 #: src/features/analytics/Settings.tsx
 msgid "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
 msgstr "The current key keeps working for 24 hours, so you can update your pages without losing events. Making another key within that time ends the old one at once."
@@ -1507,6 +1804,14 @@ msgstr "The current key keeps working for 24 hours, so you can update your pages
 #: src/features/analytics/text.ts
 msgid "The deepest point reached on the page, per view."
 msgstr "The deepest point reached on the page, per view."
+
+#: src/features/analytics/Exports.tsx
+msgid "The export failed on the server."
+msgstr "The export failed on the server."
+
+#: src/features/analytics/Exports.tsx
+msgid "The file would be larger than 1 GiB. Export a shorter range."
+msgstr "The file would be larger than 1 GiB. Export a shorter range."
 
 #: src/features/analytics/NewProperty.tsx
 msgid "The first event arrived at {at}."
@@ -1528,6 +1833,18 @@ msgstr "The key stops working at once, and all visits, events and totals are del
 msgid "The last 30 days"
 msgstr "The last 30 days"
 
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and leaves the list."
+msgstr "The link stops working at once and leaves the list."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at once and stays in the list."
+msgstr "The link stops working at once and stays in the list."
+
+#: src/features/analytics/Sharing.tsx
+msgid "The link stops working at the end of this day. Leave empty to keep it until revoked."
+msgstr "The link stops working at the end of this day. Leave empty to keep it until revoked."
+
 #: src/features/analytics/Install.tsx
 msgid "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
 msgstr "The module adds a client plugin and the useYuvaAnalytics() composable. NUXT_PUBLIC_YUVA_ANALYTICS_KEY overrides the key at runtime."
@@ -1547,6 +1864,18 @@ msgstr "The previous key keeps working until {at}. Update every page and app bef
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "The properties of your inboxes show up here once an owner or admin adds them."
 msgstr "The properties of your inboxes show up here once an owner or admin adds them."
+
+#: src/features/analytics/Exports.tsx
+msgid "The query could not be run."
+msgstr "The query could not be run."
+
+#: src/features/analytics/Exports.tsx
+msgid "The range is outside the detailed records."
+msgstr "The range is outside the detailed records."
+
+#: src/features/analytics/SharePage.tsx
+msgid "The report could not be loaded"
+msgstr "The report could not be loaded"
 
 #: src/features/analytics/Settings.tsx
 msgid "The server’s own database"
@@ -1572,6 +1901,10 @@ msgstr "This goal has numbers from {since} on. Days before that show none."
 msgid "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
 msgstr "This goal is a step of a funnel. Take it out of the funnel, or delete the funnel, first."
 
+#: src/features/analytics/SharePage.tsx
+msgid "This link is not available"
+msgstr "This link is not available"
+
 #: src/features/analytics/text.ts
 msgid "This month"
 msgstr "This month"
@@ -1588,6 +1921,14 @@ msgstr "This property already has a goal with this name."
 msgid "This property already has a segment with this name."
 msgstr "This property already has a segment with this name."
 
+#: src/features/analytics/Exports.tsx
+msgid "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+msgstr "This range cannot be exported. Pick a shorter one, or one inside the detailed records."
+
+#: src/features/analytics/SharePage.tsx
+msgid "This report has a password"
+msgstr "This report has a password"
+
 #: src/features/analytics/AnalyticsColumn.tsx
 msgid "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
 msgstr "This workspace reached its {limit} analytics events for this month. New events are dropped until the month ends."
@@ -1595,6 +1936,10 @@ msgstr "This workspace reached its {limit} analytics events for this month. New 
 #: src/features/analytics/text.ts
 msgid "This year"
 msgstr "This year"
+
+#: src/features/analytics/Exports.tsx
+msgid "Three exports are already running in this workspace. Try again when one finishes."
+msgstr "Three exports are already running in this workspace. Try again when one finishes."
 
 #: src/features/analytics/text.ts
 msgid "Time from the first to the last event of a visit, on average. Bounces count as zero."
@@ -1619,6 +1964,7 @@ msgstr "Times the goal was reached, also several times by one visitor."
 
 #: src/features/analytics/Annotations.tsx
 #: src/features/analytics/Controls.tsx
+#: src/features/analytics/Exports.tsx
 #: src/features/analytics/Settings.tsx
 msgid "To"
 msgstr "To"
@@ -1631,9 +1977,21 @@ msgstr "Today"
 msgid "Today: {todayCounted} counted, {todayDropped} dropped"
 msgstr "Today: {todayCounted} counted, {todayDropped} dropped"
 
+#: src/features/analytics/Sharing.tsx
+msgid "Token"
+msgstr "Token"
+
 #: src/features/analytics/Settings.tsx
 msgid "Too late"
 msgstr "Too late"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many requests from your network. Wait a minute and reload the page."
+msgstr "Too many requests from your network. Wait a minute and reload the page."
+
+#: src/features/analytics/SharePage.tsx
+msgid "Too many tries. Wait a minute and try again."
+msgstr "Too many tries. Wait a minute and try again."
 
 #: src/features/analytics/text.ts
 msgid "Top pages"
@@ -1654,6 +2012,10 @@ msgstr "Tracked props"
 #: src/features/analytics/Settings.tsx
 msgid "Tracking"
 msgstr "Tracking"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Try again"
+msgstr "Try again"
 
 #: src/features/analytics/Install.tsx
 msgid "Turn on {name} under Platforms in the general settings first. Until then the server refuses the app’s events."
@@ -1695,6 +2057,8 @@ msgstr "UTM source"
 msgid "UTM term"
 msgstr "UTM term"
 
+#: src/features/analytics/SharePage.tsx
+#: src/features/analytics/Sharing.tsx
 #: src/features/analytics/text.ts
 msgid "Views"
 msgstr "Views"
@@ -1759,6 +2123,10 @@ msgstr "Visits with one screen view and nothing else."
 msgid "Vue, Astro, other"
 msgstr "Vue, Astro, other"
 
+#: src/features/analytics/Exports.tsx
+msgid "Waiting"
+msgstr "Waiting"
+
 #: src/features/analytics/Settings.tsx
 msgid "Waiting for events since {at}."
 msgstr "Waiting for events since {at}."
@@ -1779,6 +2147,10 @@ msgstr "Web"
 msgid "What the goal's events carried, per currency. Currencies are never converted or added up."
 msgstr "What the goal's events carried, per currency. Currencies are never converted or added up."
 
+#: src/features/analytics/Exports.tsx
+msgid "What to export"
+msgstr "What to export"
+
 #: src/features/analytics/Goals.tsx
 msgid "Where conversions come from"
 msgstr "Where conversions come from"
@@ -1798,3 +2170,11 @@ msgstr "Without cookies, for everyone"
 #: src/features/analytics/text.ts
 msgid "Yesterday"
 msgstr "Yesterday"
+
+#: src/features/analytics/SharePage.tsx
+msgid "Your access ended. Enter the password again to keep reading."
+msgstr "Your access ended. Enter the password again to keep reading."
+
+#: src/features/analytics/Sharing.tsx
+msgid "Your new share link"
+msgstr "Your new share link"

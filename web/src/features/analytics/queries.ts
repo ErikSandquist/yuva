@@ -1,24 +1,85 @@
 import { keepPreviousData, useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { createContext, useContext } from "react"
 
 import { useAnalyticsProperties } from "@/features/analytics/properties"
 import {
   api,
+  ApiError,
   unwrap,
+  type AnalyticsExport,
+  type AnalyticsExportCreate,
   type AnalyticsFilter,
+  type AnalyticsGeoIP,
   type AnalyticsGoal,
   type AnalyticsGoalCreate,
   type AnalyticsProperty,
   type AnalyticsPropertyUpdate,
   type AnalyticsQuery,
   type AnalyticsResult,
+  type AnalyticsShare,
+  type AnalyticsShareCreate,
+  type AnalyticsSharedProperty,
+  type AnalyticsShareUpdate,
+  type AnalyticsShareView,
 } from "@/lib/api"
 import { saveDownload } from "@/lib/download"
 import type { paths } from "@/lib/schema.gen"
 import { keys } from "@/lib/keys"
-import { useSession } from "@/lib/session"
+import { useOptionalSession, useSession } from "@/lib/session"
+
+export type ShareScope = {
+  token: string
+  access?: string
+  views: AnalyticsShareView[]
+  property: AnalyticsSharedProperty
+  goals: AnalyticsGoal[]
+  geo?: AnalyticsGeoIP
+  locked: () => void
+}
+
+export const ShareContext = createContext<ShareScope | null>(null)
+
+export function useShare() {
+  return useContext(ShareContext)
+}
+
+function useDataKey(id: string) {
+  const share = useShare()
+  const ws = useOptionalSession()?.workspaceId ?? ""
+  return share ? (["share", share.token, share.access ?? ""] as const) : keys.analyticsData(ws, id)
+}
+
+export function shareHeaders(access?: string) {
+  return access ? { Authorization: `Bearer ${access}` } : undefined
+}
+
+async function shared<T>(share: ShareScope, call: Promise<{ data?: T; error?: unknown; response: Response }>) {
+  try {
+    return await unwrap(call)
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) share.locked()
+    throw err
+  }
+}
+
+function runQuery(share: ShareScope | null, id: string, body: AnalyticsQuery): Promise<AnalyticsResult> {
+  if (share) {
+    return shared(
+      share,
+      api.POST("/client/v1/analytics-shares/{token}/query", {
+        params: { path: { token: share.token } },
+        headers: shareHeaders(share.access),
+        body,
+      })
+    ) as Promise<AnalyticsResult>
+  }
+  return unwrap(
+    api.POST("/v1/analytics/properties/{propertyId}/query", { params: { path: { propertyId: id } }, body })
+  ) as Promise<AnalyticsResult>
+}
 
 export function useProperty(id: string) {
-  const { workspaceId: ws } = useSession()
+  const ws = useOptionalSession()?.workspaceId ?? ""
   const list = useAnalyticsProperties()
   return useQuery({
     queryKey: keys.analyticsProperty(ws, id),
@@ -26,7 +87,7 @@ export function useProperty(id: string) {
     initialData: () => list.data?.items.find((p) => p.id === id),
     initialDataUpdatedAt: () => list.dataUpdatedAt,
     staleTime: 30_000,
-    enabled: !!id,
+    enabled: !!id && !!ws,
   })
 }
 
@@ -44,13 +105,11 @@ export type Query = Omit<AnalyticsQuery, "limit"> & { limit?: number }
 
 export function useAnalytics(id: string, query: Query, enabled = true) {
   const body: AnalyticsQuery = { limit: 100, ...query }
-  const { workspaceId: ws } = useSession()
+  const share = useShare()
+  const base = useDataKey(id)
   return useQuery({
-    queryKey: [...keys.analyticsData(ws, id), "query", body],
-    queryFn: () =>
-      unwrap(
-        api.POST("/v1/analytics/properties/{propertyId}/query", { params: { path: { propertyId: id } }, body })
-      ) as Promise<AnalyticsResult>,
+    queryKey: [...base, "query", body],
+    queryFn: () => runQuery(share, id, body),
     placeholderData: keepPreviousData,
     staleTime: 30_000,
     enabled: !!id && enabled,
@@ -58,16 +117,11 @@ export function useAnalytics(id: string, query: Query, enabled = true) {
 }
 
 export function useAnalyticsTable(id: string, body: AnalyticsQuery) {
-  const { workspaceId: ws } = useSession()
+  const share = useShare()
+  const base = useDataKey(id)
   return useInfiniteQuery({
-    queryKey: [...keys.analyticsData(ws, id), "table", body],
-    queryFn: ({ pageParam }) =>
-      unwrap(
-        api.POST("/v1/analytics/properties/{propertyId}/query", {
-          params: { path: { propertyId: id } },
-          body: { ...body, cursor: pageParam },
-        })
-      ) as Promise<AnalyticsResult>,
+    queryKey: [...base, "table", body],
+    queryFn: ({ pageParam }) => runQuery(share, id, { ...body, cursor: pageParam }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor,
     placeholderData: keepPreviousData,
@@ -87,20 +141,29 @@ export function downloadCsv(id: string, body: Query, name: string) {
 }
 
 export function useRealtime(id: string) {
-  const { workspaceId: ws } = useSession()
+  const share = useShare()
+  const base = useDataKey(id)
   return useQuery({
-    queryKey: [...keys.analyticsData(ws, id), "realtime"],
+    queryKey: [...base, "realtime"],
     queryFn: () =>
-      unwrap(api.GET("/v1/analytics/properties/{propertyId}/realtime", { params: { path: { propertyId: id } } })),
+      share
+        ? shared(
+            share,
+            api.GET("/client/v1/analytics-shares/{token}/realtime", {
+              params: { path: { token: share.token } },
+              headers: shareHeaders(share.access),
+            })
+          )
+        : unwrap(api.GET("/v1/analytics/properties/{propertyId}/realtime", { params: { path: { propertyId: id } } })),
     refetchInterval: 15_000,
     placeholderData: keepPreviousData,
   })
 }
 
-export function useHealth(id: string, days: number) {
-  const { workspaceId: ws } = useSession()
+export function useHealth(id: string, days: number, enabled = true) {
+  const base = useDataKey(id)
   return useQuery({
-    queryKey: [...keys.analyticsData(ws, id), "health", days],
+    queryKey: [...base, "health", days],
     queryFn: () =>
       unwrap(
         api.GET("/v1/analytics/properties/{propertyId}/health", {
@@ -108,6 +171,7 @@ export function useHealth(id: string, days: number) {
         })
       ),
     staleTime: days === 1 ? 10 * 60_000 : 30_000,
+    enabled,
   })
 }
 
@@ -128,7 +192,9 @@ export function useHealthWatch(id: string) {
 }
 
 export function useGeoAttribution(id: string) {
-  const geo = useHealth(id, 1).data?.geoip
+  const share = useShare()
+  const health = useHealth(id, 1, !share)
+  const geo = share ? share.geo : health.data?.geoip
   return geo?.attribution ? { text: geo.attribution, url: geo.attribution_url } : null
 }
 
@@ -203,8 +269,7 @@ export function useDeleteProperty(id: string) {
 
 function useMeta(id: string) {
   const qc = useQueryClient()
-  const { workspaceId: ws } = useSession()
-  const base = keys.analyticsData(ws, id)
+  const base = useDataKey(id)
   return {
     goals: [...base, "goals"] as const,
     funnels: [...base, "funnels"] as const,
@@ -219,9 +284,13 @@ const path = (id: string) => ({ params: { path: { propertyId: id } } })
 
 export function useGoals(id: string) {
   const m = useMeta(id)
+  const share = useShare()
   return useQuery({
     queryKey: m.goals,
-    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/goals", path(id))),
+    queryFn: () =>
+      share
+        ? Promise.resolve({ items: share.goals })
+        : unwrap(api.GET("/v1/analytics/properties/{propertyId}/goals", path(id))),
     select: (d) => d.items,
     staleTime: 60_000,
   })
@@ -258,6 +327,7 @@ export function useDeleteGoal(id: string) {
 
 export function useGoalTotals(id: string, goals: AnalyticsGoal[], query: Omit<Query, "metrics" | "goal_id">) {
   const m = useMeta(id)
+  const share = useShare()
   const ids = goals.map((g) => g.id)
   return useQuery({
     queryKey: [...m.base, "goal-totals", ids, query],
@@ -266,12 +336,12 @@ export function useGoalTotals(id: string, goals: AnalyticsGoal[], query: Omit<Qu
       const queue = [...ids]
       const worker = async () => {
         for (let goal = queue.shift(); goal; goal = queue.shift()) {
-          const r = (await unwrap(
-            api.POST("/v1/analytics/properties/{propertyId}/query", {
-              ...path(id),
-              body: { limit: 1, ...query, goal_id: goal, metrics: ["conversions", "conversion_rate", "revenue"] },
-            })
-          )) as AnalyticsResult
+          const r = await runQuery(share, id, {
+            limit: 1,
+            ...query,
+            goal_id: goal,
+            metrics: ["conversions", "conversion_rate", "revenue"],
+          })
           out.set(goal, r.totals)
         }
       }
@@ -390,6 +460,7 @@ export function useDeleteSegment(id: string) {
 
 export function useAnnotations(id: string, from?: string, to?: string) {
   const m = useMeta(id)
+  const share = useShare()
   return useQuery({
     queryKey: [...m.annotations, from, to],
     queryFn: () =>
@@ -401,7 +472,7 @@ export function useAnnotations(id: string, from?: string, to?: string) {
     select: (d) => d.items,
     placeholderData: keepPreviousData,
     staleTime: 60_000,
-    enabled: !!from && !!to,
+    enabled: !!from && !!to && !share,
   })
 }
 
@@ -432,4 +503,82 @@ export function useDeleteAnnotation(id: string) {
       ),
     onSuccess: () => m.invalidate(m.annotations),
   })
+}
+
+export function useShares(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.base, "shares"],
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/shares", path(id))),
+    select: (d) => d.items,
+  })
+}
+
+export function useCreateShare(id: string) {
+  const m = useMeta(id)
+  return useMutation({
+    mutationFn: (body: AnalyticsShareCreate) =>
+      unwrap(api.POST("/v1/analytics/properties/{propertyId}/shares", { ...path(id), body })),
+    onSuccess: () => m.invalidate([...m.base, "shares"]),
+  })
+}
+
+export function useShareActions(id: string) {
+  const m = useMeta(id)
+  const done = () => m.invalidate([...m.base, "shares"])
+  const at = (shareId: string) => ({ params: { path: { propertyId: id, shareId } } })
+  return {
+    update: useMutation({
+      mutationFn: ({ shareId, body }: { shareId: string; body: AnalyticsShareUpdate }) =>
+        unwrap(api.PATCH("/v1/analytics/properties/{propertyId}/shares/{shareId}", { ...at(shareId), body })),
+      onSuccess: done,
+    }),
+    revoke: useMutation({
+      mutationFn: (s: AnalyticsShare) =>
+        unwrap(api.POST("/v1/analytics/properties/{propertyId}/shares/{shareId}/revoke", at(s.id))),
+      onSuccess: done,
+    }),
+    remove: useMutation({
+      mutationFn: (s: AnalyticsShare) =>
+        unwrap(api.DELETE("/v1/analytics/properties/{propertyId}/shares/{shareId}", at(s.id))),
+      onSuccess: done,
+    }),
+  }
+}
+
+const unfinished = (e: AnalyticsExport) => e.status === "queued" || e.status === "running"
+
+export function useExports(id: string) {
+  const m = useMeta(id)
+  return useQuery({
+    queryKey: [...m.base, "exports"],
+    queryFn: () => unwrap(api.GET("/v1/analytics/properties/{propertyId}/exports", path(id))),
+    select: (d) => d.items,
+    refetchInterval: (q) => (q.state.data?.items.some(unfinished) ? 2_000 : false),
+  })
+}
+
+export function useExportActions(id: string) {
+  const m = useMeta(id)
+  const done = () => m.invalidate([...m.base, "exports"])
+  return {
+    create: useMutation({
+      mutationFn: (body: AnalyticsExportCreate) =>
+        unwrap(api.POST("/v1/analytics/properties/{propertyId}/exports", { ...path(id), body })),
+      onSuccess: done,
+    }),
+    remove: useMutation({
+      mutationFn: (exportId: string) =>
+        unwrap(
+          api.DELETE("/v1/analytics/properties/{propertyId}/exports/{exportId}", {
+            params: { path: { propertyId: id, exportId } },
+          })
+        ),
+      onSuccess: done,
+    }),
+  }
+}
+
+export function exportDownloadUrl(propertyId: string, exportId: string, ws: string) {
+  return `/v1/analytics/properties/${encodeURIComponent(propertyId)}/exports/${encodeURIComponent(exportId)}/download?workspace_id=${encodeURIComponent(ws)}`
 }

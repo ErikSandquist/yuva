@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
+import { Exports } from "@/features/analytics/Exports"
 import { InstallSnippets } from "@/features/analytics/Install"
 import { hostOnly, splitLines, useZones } from "@/features/analytics/NewProperty"
 import { useCurrentProperty } from "@/features/analytics/parts"
@@ -33,6 +34,7 @@ import {
   useRotateKey,
   useUpdateProperty,
 } from "@/features/analytics/queries"
+import { Sharing } from "@/features/analytics/Sharing"
 import { todayIso } from "@/features/analytics/state"
 import { ChoiceSelect, Field, FormActions, FormCard, Card, Section } from "@/features/settings/ui"
 import { useAnalyticsText } from "@/features/analytics/text"
@@ -49,7 +51,9 @@ import { useSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { useInboxes } from "@/lib/workspace"
 
-type Tab = "general" | "tracking" | "install" | "test" | "health" | "data"
+type Tab = "general" | "tracking" | "install" | "test" | "health" | "sharing" | "data"
+
+const VIEW_PARAMS = ["period", "compare", "f", "segment"]
 
 const NO_INBOX = "none"
 
@@ -934,8 +938,8 @@ export function SettingsView() {
   const p = useCurrentProperty()
   const [params, setParams] = useSearchParams()
   const tabs: Tab[] = canManage
-    ? ["general", "tracking", "install", "test", "health", "data"]
-    : ["install", "test", "tracking", "health"]
+    ? ["general", "tracking", "install", "test", "health", "sharing", "data"]
+    : ["install", "test", "tracking", "health", "sharing", "data"]
   const raw = params.get("tab") as Tab | null
   const tab = raw && tabs.includes(raw) ? raw : tabs[0]
   const names: Record<Tab, string> = {
@@ -944,6 +948,7 @@ export function SettingsView() {
     install: t`Install`,
     test: t`Test events`,
     health: t`Health`,
+    sharing: t`Sharing`,
     data: t`Data`,
   }
   return (
@@ -951,7 +956,17 @@ export function SettingsView() {
       <div className="-mx-1 max-w-[calc(100%+0.5rem)] overflow-x-auto px-1 py-1">
         <Segmented
           value={tab}
-          onChange={(v) => setParams(v === tabs[0] ? {} : { tab: v }, { replace: true })}
+          onChange={(v) =>
+            setParams(
+              (prev) => {
+                const next = new URLSearchParams()
+                for (const k of VIEW_PARAMS) for (const x of prev.getAll(k)) next.append(k, x)
+                if (v !== tabs[0]) next.set("tab", v)
+                return next
+              },
+              { replace: true }
+            )
+          }
           label={t`Settings`}
           items={tabs.map((v) => ({ value: v, label: names[v], testId: `settings-tab-${v}` }))}
         />
@@ -966,7 +981,13 @@ export function SettingsView() {
       {tab === "install" && <Install p={p} />}
       {tab === "test" && <TestEvents p={p} />}
       {tab === "health" && <Health p={p} />}
-      {tab === "data" && <Data p={p} />}
+      {tab === "sharing" && <Sharing p={p} />}
+      {tab === "data" && (
+        <div className="flex flex-col gap-6">
+          <Exports p={p} />
+          {canManage && <Data p={p} />}
+        </div>
+      )}
     </div>
   )
 }

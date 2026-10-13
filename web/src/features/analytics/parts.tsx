@@ -6,7 +6,7 @@ import { useOutletContext } from "react-router"
 import { ErrorLine, Notice } from "@/components/common"
 import { formatDate } from "@/components/common/text"
 import { Button } from "@/components/ui/button"
-import { useGeoAttribution } from "@/features/analytics/queries"
+import { useGeoAttribution, useShare } from "@/features/analytics/queries"
 import { todayIso, useView } from "@/features/analytics/state"
 import { ApiError, type AnalyticsProperty } from "@/lib/api"
 import { cn } from "@/lib/utils"
@@ -102,6 +102,8 @@ export function Attribution({ propertyId, className }: { propertyId: string; cla
 export function CsvButton({ run, testId }: { run: () => Promise<void>; testId?: string }) {
   const { t } = useLingui()
   const save = useMutation({ mutationFn: run })
+  const share = useShare()
+  if (share) return null
   return (
     <span className="inline-flex items-center gap-2">
       <ErrorLine error={save.error} className="text-small" />

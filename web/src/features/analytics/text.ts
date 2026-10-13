@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro"
 import { useParams, useSearchParams } from "react-router"
 
-import { useProperty } from "@/features/analytics/queries"
+import { useProperty, useShare } from "@/features/analytics/queries"
 import { parseFilters, type Period, type FilterOp } from "@/features/analytics/state"
 import type {
   AnalyticsDimension,
@@ -32,8 +32,9 @@ export function wordingFor(p: Pick<AnalyticsProperty, "platforms">, filters: Ana
 export function useWording(): Wording {
   const { propertyId = "" } = useParams()
   const [params] = useSearchParams()
-  const property = useProperty(propertyId).data
-  return wordingFor(property ?? { platforms: ["web"] }, parseFilters(params.getAll("f")))
+  const share = useShare()
+  const property = useProperty(share ? "" : propertyId).data
+  return wordingFor(share?.property ?? property ?? { platforms: ["web"] }, parseFilters(params.getAll("f")))
 }
 
 export function useAnalyticsText() {

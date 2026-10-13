@@ -5089,6 +5089,195 @@ export interface paths {
         patch: operations["updateAnalyticsAnnotation"];
         trace?: never;
     };
+    "/v1/analytics/properties/{propertyId}/shares": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's share links
+         * @description Newest first, revoked and expired links included (`active` tells them apart). A link's
+         *     token is shown only once, when it is made; the list carries its first characters as
+         *     `token_prefix`.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsShares"];
+        put?: never;
+        /**
+         * Make a read-only share link
+         * @description A link anyone holding it can open at `<public URL>/share/<token>` without signing in. It
+         *     shows only the `views` it lists, of this property only, read-only. With a `password` the
+         *     viewer unlocks it first (`POST /client/v1/analytics-shares/{token}/access`); the password
+         *     is stored as an argon2id hash and the token as a SHA-256 hash, so neither can be shown
+         *     again: the answer carries the `token` and the `url` once. `expires_at` ends the link;
+         *     `embed_origins` lists the sites whose pages may show it in an iframe (the share page's
+         *     `frame-ancestors`); without them no other site can frame it. A property has at most 50
+         *     links (`403 share_limit`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["createAnalyticsShare"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/shares/{shareId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a share link
+         * @description The link stops working at once and leaves the list.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        delete: operations["deleteAnalyticsShare"];
+        options?: never;
+        head?: never;
+        /**
+         * Change a share link
+         * @description Changes the given fields; the token stays. A new `password` (or `password: null`, which
+         *     removes it) ends every viewer's unlocked access at once. `expires_at: null` keeps the link
+         *     until it is revoked. A revoked link cannot be changed (`409 share_revoked`).
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        patch: operations["updateAnalyticsShare"];
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/shares/{shareId}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke a share link
+         * @description The link stops working at once and stays in the list with `revoked_at`. Revoking a revoked
+         *     link changes nothing.
+         *
+         *     Owners, admins and API keys without an inbox limit. Scope: `analytics:manage`.
+         */
+        post: operations["revokeAnalyticsShare"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List a property's exports
+         * @description Newest first, until each expires. `raw` exports are listed only for callers who may make
+         *     them.
+         *
+         *     Scope: `analytics:read`.
+         */
+        get: operations["listAnalyticsExports"];
+        put?: never;
+        /**
+         * Export a property's numbers or raw events
+         * @description A background job writes the file to the server's storage; poll `getAnalyticsExport` until
+         *     `status` is `done`, then download it with `downloadAnalyticsExport`. Files are kept seven
+         *     days (`expires_at`) and then deleted.
+         *
+         *     - `view`: the rows of one `query` (as `queryAnalytics` answers it, every row, no
+         *       comparison), CSV or NDJSON.
+         *     - `daily`: one row per day of `range` (at most 400 days) with visitors, visits, page views,
+         *       views per visit, bounce rate, visit duration, time on page and scroll depth, broken down
+         *       by `dimension` when given, CSV or NDJSON.
+         *     - `raw`: every stored event of `range` (at most 31 days, inside the raw window of
+         *       `YUVA_ANALYTICS_RAW_DAYS`, else `422 needs_raw_window`) with its visit's description, as
+         *       NDJSON only (`AnalyticsRawEvent`). It carries no visitor hash, salt, address, contact or
+         *       stored visit id: a visit is a number that counts up within the file. Bots are left out.
+         *       Raw rows are pseudonymous personal data, so raw exports need `analytics:manage` and an
+         *       owner, an admin or an API key without an inbox limit (`403`).
+         *
+         *     CSV cells that start with `=`, `+`, `-`, `@`, a tab or a carriage return get a leading `'`
+         *     so spreadsheets do not run them as formulas. A file larger than 1 GiB fails with
+         *     `error` `too_large`. A workspace runs at most three exports at a time (`429 rate_limited`).
+         *
+         *     Scope: `analytics:read`; `analytics:manage` for `raw`.
+         */
+        post: operations["createAnalyticsExport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/exports/{exportId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * An export and its progress
+         * @description Scope: `analytics:read`; `analytics:manage` for `raw`.
+         */
+        get: operations["getAnalyticsExport"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an export
+         * @description Deletes the export and its file before it expires; one still running stops at its next
+         *     step.
+         *
+         *     Scope: `analytics:read`; `analytics:manage` for `raw`.
+         */
+        delete: operations["deleteAnalyticsExport"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/analytics/properties/{propertyId}/exports/{exportId}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download an export's file
+         * @description `text/csv` or `application/x-ndjson`, always as a download (`Content-Disposition:
+         *     attachment`). An export that is not `done` answers `409 export_not_ready`; an expired or
+         *     deleted one `404`. Links cannot carry headers, so the workspace can also be named with the
+         *     `workspace_id` query parameter instead of `Yuva-Workspace`.
+         *
+         *     Scope: `analytics:read`; `analytics:manage` for `raw`.
+         */
+        get: operations["downloadAnalyticsExport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/realtime": {
         parameters: {
             query?: never;
@@ -5915,6 +6104,112 @@ export interface paths {
          *     `Retry-After`.
          */
         post: operations["collectAnalytics"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics-shares/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A share link's page settings
+         * @description What the public share page (`<public URL>/share/<token>`, served by the panel) needs first.
+         *     A link with a password answers only `password_required: true` until the request carries
+         *     an access token from `unlockSharedAnalytics` as `Authorization: Bearer yuva_sa_…`; then,
+         *     like a link without a password, it answers the views it may show, the property's name,
+         *     time zone and currency, the raw window, its goals (with the `goals` view) and the GeoIP
+         *     attribution to show next to locations.
+         *
+         *     The share page itself is served with `Content-Security-Policy: frame-ancestors` set to the
+         *     link's `embed_origins` (`'none'` without them, an unknown, revoked or expired link included),
+         *     so only those sites can show it in an iframe; it carries no analytics script.
+         *
+         *     An unknown, revoked or expired token answers `404`. Every share endpoint is limited per IP
+         *     address (`429 rate_limited` with `Retry-After`).
+         */
+        get: operations["getSharedAnalytics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics-shares/{token}/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unlock a share link with its password
+         * @description Answers an access token for the link's other endpoints, valid for 12 hours or until the
+         *     link expires, is revoked or gets another password. A wrong password answers
+         *     `401 wrong_password`; an IP address may try 10 times a minute per link and 30 times a minute
+         *     in all (`429 rate_limited`). A link without a password answers `409 no_password`.
+         */
+        post: operations["unlockSharedAnalytics"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics-shares/{token}/query": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Query a shared property's numbers
+         * @description `queryAnalytics` for a share link, with the same body and answer, limited to the link's
+         *     views: totals and time grains with any view; `page`, `entry_page`, `exit_page` and
+         *     `hostname` with `pages`; `channel`, `source`, `referrer` and the UTM dimensions with
+         *     `sources`; `country`, `region` and `city` with `locations`; `device`, `browser`,
+         *     `browser_version`, `os`, `os_version`, `screen_size`, `language`, `platform` and
+         *     `app_version` with `devices`; `event`, `prop` and the `events` metric with `events`; a
+         *     `goal_id` of the property and the goal metrics with `goals`. Dimensions and filters outside
+         *     them answer `403 view_not_shared`; `segment_id` is refused (`400`).
+         *
+         *     A link with a password needs its access token (`401 share_password_required`). Answers are
+         *     cached like `queryAnalytics` and count towards the workspace's four concurrent queries.
+         */
+        post: operations["querySharedAnalytics"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/client/v1/analytics-shares/{token}/realtime": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * A shared property's last 30 minutes
+         * @description `getAnalyticsRealtime` for a share link with the `realtime` view (`403 view_not_shared`
+         *     otherwise). A link with a password needs its access token (`401 share_password_required`).
+         */
+        get: operations["getSharedAnalyticsRealtime"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -12900,6 +13195,235 @@ export interface components {
         AnalyticsAnnotationList: {
             items: components["schemas"]["AnalyticsAnnotation"][];
         };
+        /**
+         * @description A part of the property's report a share link shows: `overview` (totals and the chart),
+         *     `realtime`, `pages`, `sources`, `locations`, `devices`, `events`, `goals`.
+         * @enum {string}
+         */
+        AnalyticsShareView: "overview" | "realtime" | "pages" | "sources" | "locations" | "devices" | "events" | "goals";
+        /**
+         * @description A site whose pages may frame the link: `https://` (or `http://`) and a host with an
+         *     optional port, nothing after it; `https://*.example.com` allows every subdomain.
+         */
+        AnalyticsEmbedOrigin: string;
+        AnalyticsShare: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            property_id: string;
+            /** @description What the link is for, shown to members only. */
+            name: string;
+            views: components["schemas"]["AnalyticsShareView"][];
+            has_password: boolean;
+            embed_origins: components["schemas"]["AnalyticsEmbedOrigin"][];
+            /** @description The first characters of the token, to tell links apart. */
+            token_prefix: string;
+            /** Format: date-time */
+            expires_at?: string;
+            /** Format: date-time */
+            revoked_at?: string;
+            /** @description Neither revoked nor expired. */
+            active: boolean;
+            /**
+             * Format: date-time
+             * @description The last time the link's page settings were read, to the minute.
+             */
+            last_viewed_at?: string;
+            /**
+             * Format: uuid
+             * @description The member who made it; absent for API keys and removed members.
+             */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        AnalyticsShareCreated: {
+            share: components["schemas"]["AnalyticsShare"];
+            /** @description The link's token, `yuva_sh_…`; shown only in this answer. */
+            token: string;
+            /**
+             * Format: uri
+             * @description The share page, `<public URL>/share/<token>`.
+             */
+            url: string;
+        };
+        AnalyticsShareCreate: {
+            name: string;
+            views: components["schemas"]["AnalyticsShareView"][];
+            password?: string;
+            embed_origins?: components["schemas"]["AnalyticsEmbedOrigin"][];
+            /**
+             * Format: date-time
+             * @description When the link stops working; in the future.
+             */
+            expires_at?: string;
+        };
+        AnalyticsShareUpdate: {
+            name?: string;
+            views?: components["schemas"]["AnalyticsShareView"][];
+            /** @description A new password; `null` removes it. */
+            password?: string | null;
+            embed_origins?: components["schemas"]["AnalyticsEmbedOrigin"][];
+            /**
+             * Format: date-time
+             * @description `null` keeps the link until it is revoked.
+             */
+            expires_at?: string | null;
+        };
+        AnalyticsShareList: {
+            items: components["schemas"]["AnalyticsShare"][];
+        };
+        AnalyticsShareUnlock: {
+            password: string;
+        };
+        AnalyticsShareAccess: {
+            /** @description `yuva_sa_…`, sent as `Authorization: Bearer` to the link's other endpoints. */
+            access_token: string;
+            /** Format: date-time */
+            expires_at: string;
+        };
+        AnalyticsSharedProperty: {
+            name: string;
+            timezone: string;
+            currency: string;
+            platforms: components["schemas"]["AnalyticsPlatform"][];
+        };
+        /**
+         * @description With `password_required` and no valid access token only that field is present; otherwise
+         *     everything the page shows.
+         */
+        AnalyticsSharedPage: {
+            password_required: boolean;
+            /** @description The link's name. */
+            name?: string;
+            views?: components["schemas"]["AnalyticsShareView"][];
+            property?: components["schemas"]["AnalyticsSharedProperty"];
+            /** Format: date-time */
+            expires_at?: string;
+            /**
+             * Format: date
+             * @description The first day queries that need raw rows can serve.
+             */
+            raw_window_from?: string;
+            /** @description With the `goals` view, the property's goals. */
+            goals?: components["schemas"]["AnalyticsGoal"][];
+            geoip?: components["schemas"]["AnalyticsGeoIP"];
+        };
+        /** @enum {string} */
+        AnalyticsExportKind: "view" | "daily" | "raw";
+        /** @enum {string} */
+        AnalyticsExportFormat: "csv" | "ndjson";
+        /**
+         * @description `view` takes `query` (its own range; `compare`, `limit` and `cursor` are ignored); `daily`
+         *     and `raw` take `range`, `daily` also an optional `dimension` other than `event` and `prop`.
+         *     `format` is `csv` by default, and must be `ndjson` for `raw`.
+         */
+        AnalyticsExportCreate: {
+            kind: components["schemas"]["AnalyticsExportKind"];
+            format?: components["schemas"]["AnalyticsExportFormat"];
+            query?: components["schemas"]["AnalyticsQuery"];
+            range?: components["schemas"]["AnalyticsRange"];
+            dimension?: components["schemas"]["AnalyticsFilterDimension"];
+        };
+        AnalyticsExport: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            property_id: string;
+            kind: components["schemas"]["AnalyticsExportKind"];
+            format: components["schemas"]["AnalyticsExportFormat"];
+            /** @enum {string} */
+            status: "queued" | "running" | "done" | "failed";
+            /** Format: date */
+            from: string;
+            /** Format: date */
+            to: string;
+            /** @description Percent of the work done. */
+            progress: number;
+            /**
+             * Format: int64
+             * @description Rows written so far.
+             */
+            rows: number;
+            /** Format: int64 */
+            size_bytes: number;
+            /**
+             * @description Why a `failed` export failed: `too_large`, `needs_raw_window`, `invalid_query` (with the
+             *     reason after a colon) or `internal`.
+             */
+            error?: string;
+            /** @description The file's name, when it is `done`. */
+            file_name?: string;
+            /**
+             * Format: uuid
+             * @description The member who asked for it; absent for API keys and removed members.
+             */
+            created_by?: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            finished_at?: string;
+            /**
+             * Format: date-time
+             * @description When the export and its file are deleted, seven days after it was made or finished.
+             */
+            expires_at: string;
+        };
+        AnalyticsExportList: {
+            items: components["schemas"]["AnalyticsExport"][];
+        };
+        /**
+         * @description One line of a `raw` export. `visit` counts up from 1 within the file and joins a visit's
+         *     events; it is not the stored visit and says nothing about the visitor. `type` is
+         *     `pageview`, `screen`, `event` or `engagement`. Places, devices and sources describe the
+         *     visit as its first event did.
+         */
+        AnalyticsRawEvent: {
+            /** Format: date */
+            day: string;
+            /** Format: date-time */
+            time: string;
+            /** Format: int64 */
+            visit: number;
+            /** @enum {string} */
+            type: "pageview" | "screen" | "event" | "engagement";
+            name?: string;
+            hostname: string;
+            path: string;
+            props?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Format: int64
+             * @description Revenue the event carried, in the currency's minor units.
+             */
+            revenue_minor?: number;
+            currency?: string;
+            engaged_ms?: number;
+            scroll?: number;
+            channel: string;
+            source?: string;
+            referrer?: string;
+            utm_source?: string;
+            utm_medium?: string;
+            utm_campaign?: string;
+            utm_term?: string;
+            utm_content?: string;
+            country?: string;
+            region?: string;
+            city?: string;
+            device?: string;
+            browser?: string;
+            browser_version?: string;
+            os?: string;
+            os_version?: string;
+            screen_size?: string;
+            language?: string;
+            platform: string;
+            app_version?: string;
+        };
         AnalyticsConsent: {
             /**
              * @description `1` when the visitor agreed to analytics.
@@ -13858,6 +14382,10 @@ export interface components {
         AnalyticsGoalId: string;
         AnalyticsFunnelId: string;
         AnalyticsSegmentId: string;
+        AnalyticsShareId: string;
+        AnalyticsExportId: string;
+        /** @description The share link's token, `yuva_sh_…`. */
+        AnalyticsShareToken: string;
         AnalyticsAnnotationId: string;
         ListId: string;
         MigrationId: string;
@@ -21715,6 +22243,325 @@ export interface operations {
             404: components["responses"]["Problem"];
         };
     };
+    listAnalyticsShares: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The share links. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsShareList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsShare: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsShareCreate"];
+            };
+        };
+        responses: {
+            /** @description The link with its token, shown only now. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsShareCreated"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsShare: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                shareId: components["parameters"]["AnalyticsShareId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    updateAnalyticsShare: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                shareId: components["parameters"]["AnalyticsShareId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsShareUpdate"];
+            };
+        };
+        responses: {
+            /** @description The updated link. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsShare"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
+    revokeAnalyticsShare: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                shareId: components["parameters"]["AnalyticsShareId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The revoked link. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsShare"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    listAnalyticsExports: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The exports. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsExportList"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    createAnalyticsExport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Makes a retried request return the first response; see "Idempotency". */
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsExportCreate"];
+            };
+        };
+        responses: {
+            /** @description The export, queued. */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsExport"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description `needs_raw_window` or `range_too_large`: the range cannot be exported. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AnalyticsRangeProblem"];
+                };
+            };
+            429: components["responses"]["Problem"];
+        };
+    };
+    getAnalyticsExport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                exportId: components["parameters"]["AnalyticsExportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The export. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsExport"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    deleteAnalyticsExport: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                exportId: components["parameters"]["AnalyticsExportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+        };
+    };
+    downloadAnalyticsExport: {
+        parameters: {
+            query?: {
+                /** @description The workspace to act on, for links that cannot send `Yuva-Workspace`. */
+                workspace_id?: string;
+            };
+            header?: {
+                /** @description The workspace to act on; see "Workspace selection". */
+                "Yuva-Workspace"?: components["parameters"]["WorkspaceHeader"];
+            };
+            path: {
+                propertyId: components["parameters"]["AnalyticsPropertyId"];
+                exportId: components["parameters"]["AnalyticsExportId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The file. NDJSON has one JSON object per line, `AnalyticsRawEvent` for `raw`. */
+            200: {
+                headers: {
+                    "Content-Disposition"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/csv": string;
+                    "application/x-ndjson": components["schemas"]["AnalyticsRawEvent"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+        };
+    };
     realtime: {
         parameters: {
             query?: {
@@ -22750,6 +23597,132 @@ export interface operations {
             413: components["responses"]["Problem"];
             429: components["responses"]["Problem"];
             503: components["responses"]["Problem"];
+        };
+    };
+    getSharedAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The share link's token, `yuva_sh_…`. */
+                token: components["parameters"]["AnalyticsShareToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The link's page settings. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsSharedPage"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    unlockSharedAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The share link's token, `yuva_sh_…`. */
+                token: components["parameters"]["AnalyticsShareToken"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsShareUnlock"];
+            };
+        };
+        responses: {
+            /** @description The access token. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsShareAccess"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            409: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
+        };
+    };
+    querySharedAnalytics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The share link's token, `yuva_sh_…`. */
+                token: components["parameters"]["AnalyticsShareToken"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalyticsQuery"];
+            };
+        };
+        responses: {
+            /** @description The numbers. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsResult"];
+                };
+            };
+            400: components["responses"]["Problem"];
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            /** @description `needs_raw_window` or `range_too_large`, as on `queryAnalytics`. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["AnalyticsRangeProblem"];
+                };
+            };
+            429: components["responses"]["Problem"];
+        };
+    };
+    getSharedAnalyticsRealtime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description The share link's token, `yuva_sh_…`. */
+                token: components["parameters"]["AnalyticsShareToken"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The last 30 minutes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalyticsRealtime"];
+                };
+            };
+            401: components["responses"]["Problem"];
+            403: components["responses"]["Problem"];
+            404: components["responses"]["Problem"];
+            429: components["responses"]["Problem"];
         };
     };
     clientRealtime: {

@@ -2,14 +2,15 @@ import { useQuery } from "@tanstack/react-query"
 
 import { api, ApiError, unwrap } from "@/lib/api"
 import { keys } from "@/lib/keys"
-import { useSession } from "@/lib/session"
+import { useOptionalSession, useSession } from "@/lib/session"
 
 export function useAnalyticsProperties() {
-  const { workspaceId: ws } = useSession()
+  const ws = useOptionalSession()?.workspaceId
   return useQuery({
-    queryKey: keys.analyticsProperties(ws),
+    queryKey: keys.analyticsProperties(ws ?? ""),
     queryFn: () => unwrap(api.GET("/v1/analytics/properties")),
     staleTime: 60_000,
+    enabled: !!ws,
   })
 }
 

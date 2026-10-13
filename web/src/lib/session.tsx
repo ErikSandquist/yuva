@@ -60,6 +60,10 @@ export function useSession(): Session {
   return s
 }
 
+export function useOptionalSession(): Session | null {
+  return useContext(SessionContext)
+}
+
 export function useWorkspaceChoice() {
   const [chosen, setChosen] = useState(storedWorkspace)
   const choose = (id: string | null) => {

@@ -43,6 +43,7 @@ import { TeamHome } from "@/features/team/TeamColumn"
 const GalleryPage = lazy(() => import("@/features/designs/GalleryPage"))
 const DesignerPage = lazy(() => import("@/features/designs/designer/DesignerPage"))
 const AnalyticsRoutes = lazy(() => import("@/features/analytics/AnalyticsRoutes"))
+const SharePage = lazy(() => import("@/features/analytics/SharePage"))
 
 function Loading() {
   return <div className="flex-1 bg-background" data-testid="route-loading" />
@@ -55,6 +56,14 @@ export function AppRoutes() {
       <Route path="oauth/consent" element={<ConsentPage />} />
       <Route path="account" element={<AccountPage />} />
       <Route path="account/connect" element={<ConnectPage />} />
+      <Route
+        path="share/:token/*"
+        element={
+          <Suspense fallback={<Loading />}>
+            <SharePage />
+          </Suspense>
+        }
+      />
       <Route element={<Gate />}>
         <Route path="workspaces/new" element={<NewWorkspacePage />} />
         <Route path="setup" element={<SetupPage />} />

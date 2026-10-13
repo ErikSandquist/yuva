@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { CsvButton, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { downloadCsv, useAnalytics, useAnalyticsTable } from "@/features/analytics/queries"
+import { downloadCsv, useAnalytics, useAnalyticsTable, useShare } from "@/features/analytics/queries"
 import { useView } from "@/features/analytics/state"
 import { formatMetric, formatMoney, num, OTHER, useAnalyticsText, valueText } from "@/features/analytics/text"
 import type { AnalyticsDimension, AnalyticsFilter, AnalyticsQuery, AnalyticsRevenue, AnalyticsRow } from "@/lib/api"
@@ -198,6 +198,7 @@ function EventDetail({ name }: { name: string }) {
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view, addFilter } = useView()
+  const share = useShare()
   const [params, setParams] = useSearchParams()
   const [other, setOther] = useState("")
   const key = params.get("prop") ?? ""
@@ -323,7 +324,7 @@ function EventDetail({ name }: { name: string }) {
           }}
           dim="prop"
           head={<span dir="ltr">{key}</span>}
-          onPick={(v) => addFilter("prop", v, "is", key)}
+          onPick={share ? undefined : (v) => addFilter("prop", v, "is", key)}
           pickTitle={t`Keep only visits with this value`}
           csvName={`${property.name}-${name}-${key}`}
           testId="analytics-props"
@@ -348,6 +349,7 @@ function EventList() {
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view } = useView()
+  const share = useShare()
   const [, setParams] = useSearchParams()
   return (
     <section className="flex flex-col gap-3" data-testid="analytics-events">
@@ -373,21 +375,23 @@ function EventList() {
         csvName={`${property.name}-events`}
         testId="analytics-table"
       />
-      <Notice icon={MousePointerClickIcon}>
-        <p>
-          <Trans>
-            Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when
-            the script has their attributes.
-          </Trans>
-        </p>
-        <Link
-          to={`/analytics/${property.id}/settings?tab=install&snippet=events`}
-          className="w-fit text-small text-brand underline-offset-4 hover:underline"
-          data-testid="events-install"
-        >
-          <Trans>How to send events</Trans>
-        </Link>
-      </Notice>
+      {!share && (
+        <Notice icon={MousePointerClickIcon}>
+          <p>
+            <Trans>
+              Events come from track() calls on your pages and apps. Outbound links, downloads and chat opens count when
+              the script has their attributes.
+            </Trans>
+          </p>
+          <Link
+            to={`/analytics/${property.id}/settings?tab=install&snippet=events`}
+            className="w-fit text-small text-brand underline-offset-4 hover:underline"
+            data-testid="events-install"
+          >
+            <Trans>How to send events</Trans>
+          </Link>
+        </Notice>
+      )}
     </section>
   )
 }

@@ -13,12 +13,25 @@ import { RowLabel } from "@/features/analytics/Breakdown"
 import { RevenueAmounts, RevenueTiles } from "@/features/analytics/Events"
 import { Change, TimeChart } from "@/features/analytics/Overview"
 import { BarList, Panel, PanelProblem, QueryProblem, useCurrentProperty } from "@/features/analytics/parts"
-import { useAnalytics, useDeleteGoal, useGoalTotals, useGoals, useSaveGoal } from "@/features/analytics/queries"
+import {
+  useAnalytics,
+  useDeleteGoal,
+  useGoalTotals,
+  useGoals,
+  useSaveGoal,
+  useShare,
+} from "@/features/analytics/queries"
 import { scopeOf, useView } from "@/features/analytics/state"
 import { formatCompact, formatMetric, num, OTHER, useAnalyticsText, type NumMetric } from "@/features/analytics/text"
 import { Field } from "@/features/settings/ui"
-import { ApiError, type AnalyticsFilterDimension, type AnalyticsGoal, type AnalyticsGoalKind } from "@/lib/api"
-import { useSession } from "@/lib/session"
+import {
+  ApiError,
+  type AnalyticsFilterDimension,
+  type AnalyticsGoal,
+  type AnalyticsGoalKind,
+  type AnalyticsShareView,
+} from "@/lib/api"
+import { useOptionalSession } from "@/lib/session"
 import { cn } from "@/lib/utils"
 
 export function useGoalText() {
@@ -239,22 +252,38 @@ function GoalDialog({ goal, onClose }: { goal?: AnalyticsGoal; onClose: () => vo
 
 const GOAL_DIMS: AnalyticsFilterDimension[] = ["channel", "source", "entry_page", "country", "device"]
 
+const GOAL_DIM_VIEW: Record<string, AnalyticsShareView> = {
+  channel: "sources",
+  source: "sources",
+  entry_page: "pages",
+  country: "locations",
+  device: "devices",
+}
+
 function GoalBreakdown({ goal }: { goal: AnalyticsGoal }) {
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const property = useCurrentProperty()
   const { view } = useView()
-  const [by, setBy] = useState<AnalyticsFilterDimension>("channel")
-  const q = useAnalytics(property.id, {
-    metrics: ["conversions", "conversion_rate"],
-    dimensions: [by],
-    range: view.range,
-    ...scopeOf(view),
-    goal_id: goal.id,
-    order_by: [{ metric: "conversions", dir: "desc" }],
-    limit: 10,
-  })
+  const share = useShare()
+  const dims = GOAL_DIMS.filter((d) => !share || share.views.includes(GOAL_DIM_VIEW[d]))
+  const [picked, setBy] = useState<AnalyticsFilterDimension>("channel")
+  const by = dims.includes(picked) ? picked : (dims[0] ?? "channel")
+  const q = useAnalytics(
+    property.id,
+    {
+      metrics: ["conversions", "conversion_rate"],
+      dimensions: [by],
+      range: view.range,
+      ...scopeOf(view),
+      goal_id: goal.id,
+      order_by: [{ metric: "conversions", dir: "desc" }],
+      limit: 10,
+    },
+    dims.length > 0
+  )
   const rows = (q.data?.rows ?? []).filter((r) => (num(r.metrics, "conversions") ?? 0) > 0)
+  if (dims.length === 0) return null
   return (
     <Panel
       title={<Trans>Where conversions come from</Trans>}
@@ -266,7 +295,7 @@ function GoalBreakdown({ goal }: { goal: AnalyticsGoal }) {
             onChange={setBy}
             label={t`Breakdown`}
             itemClassName="h-6 px-2 text-small"
-            items={GOAL_DIMS.map((d) => ({ value: d, label: text.dimension[d] }))}
+            items={dims.map((d) => ({ value: d, label: text.dimension[d] }))}
           />
         </div>
       }
@@ -305,7 +334,7 @@ function GoalDetail({ goal, onBack }: { goal: AnalyticsGoal; onBack: () => void 
   const { t, i18n } = useLingui()
   const text = useAnalyticsText()
   const describe = useGoalText()
-  const { canManage } = useSession()
+  const canManage = !!useOptionalSession()?.canManage
   const property = useCurrentProperty()
   const { view } = useView()
   const remove = useDeleteGoal(property.id)
@@ -491,7 +520,8 @@ function Dash({ pending }: { pending: boolean }) {
 }
 
 export function GoalsView() {
-  const { canManage } = useSession()
+  const canManage = !!useOptionalSession()?.canManage
+  const share = useShare()
   const property = useCurrentProperty()
   const goals = useGoals(property.id)
   const [params, setParams] = useSearchParams()
@@ -526,7 +556,7 @@ export function GoalsView() {
                 bring.
               </Trans>
             ) : (
-              <Trans>Owners and admins make goals. They show up here with their conversions.</Trans>
+              !share && <Trans>Owners and admins make goals. They show up here with their conversions.</Trans>
             )}
           </p>
           {canManage && (
