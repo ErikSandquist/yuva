@@ -256,7 +256,12 @@ der Domains der Website sein.
 | **Sources** | Channels, Quellen, Referrer und die fünf `utm_*`-Parameter. |
 | **Locations** | Länder, Regionen und Städte (bei Audience Children nur Länder). |
 | **Devices** | Gerät, Browser und Version, Betriebssystem und Version, Bildschirmgröße und Sprache. |
+| **Events** | Eigene und eingebaute Events mit ihren Props und Umsätzen. |
+| **Goals** | Conversions, Conversion-Rate und Umsatz der Ziele, die Sie festlegen. |
+| **Funnels** | Wie Besucher eine Kette von Zielen durchlaufen und wo sie aussteigen. |
 | **Settings** | General, Tracking, Install, Health und Data. |
+
+Events, Goals und Funnels stehen unter [Events, Goals und Funnels](analytics-events.md).
 
 **Channels** ordnen ein, woher ein Besuch kam: Direct, Organic search, Paid search, Social, Paid social,
 E-mail, Referral, **AI assistants** (Besuche von ChatGPT und anderen Assistenten) und Internal.

@@ -255,7 +255,12 @@ months, or a custom range of at most 400 days), and its tabs are:
 | **Sources** | Channels, sources, referrers and the five `utm_*` parameters. |
 | **Locations** | Countries, regions and cities (countries only for a Children audience). |
 | **Devices** | Device, browser and version, operating system and version, screen size and language. |
+| **Events** | Custom and built-in events with their props and revenue. |
+| **Goals** | Conversions, conversion rate and revenue of the goals you set. |
+| **Funnels** | How visitors go through a chain of goals, and where they leave. |
 | **Settings** | General, Tracking, Install, Health and Data. |
+
+Events, goals and funnels are in [Events, goals and funnels](analytics-events.md).
 
 **Channels** sort where a visit came from: Direct, Organic search, Paid search, Social, Paid social,
 E-mail, Referral, **AI assistants** (visits from ChatGPT and other assistants) and Internal.

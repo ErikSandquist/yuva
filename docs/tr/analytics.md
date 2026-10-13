@@ -257,7 +257,12 @@ ay'a kadar, ya da en fazla 400 günlük özel bir aralık) ve sekmeleri şunlard
 | **Kaynaklar** | Kanallar, kaynaklar, yönlendirenler ve beş `utm_*` parametresi. |
 | **Konumlar** | Ülkeler, bölgeler ve şehirler (Çocuklar kitlesinde yalnızca ülkeler). |
 | **Cihazlar** | Cihaz, tarayıcı ve sürümü, işletim sistemi ve sürümü, ekran boyutu ve dil. |
+| **Olaylar** | Özel ve yerleşik olaylar, özellikleri ve gelirleriyle. |
+| **Hedefler** | Koyduğunuz hedeflerin dönüşümleri, dönüşüm oranı ve geliri. |
+| **Dönüşüm hunileri** | Ziyaretçilerin bir hedef zincirinden nasıl geçtiği ve nerede ayrıldığı. |
 | **Ayarlar** | Genel, İzleme, Kurulum, Durum ve Veriler. |
+
+Olaylar, hedefler ve dönüşüm hunileri [Olaylar, hedefler ve dönüşüm hunileri](analytics-events.md) sayfasındadır.
 
 **Kanallar** bir ziyaretin nereden geldiğini ayırır: Doğrudan, Organik arama, Ücretli arama, Sosyal,
 Ücretli sosyal, E-posta, Yönlendirme, **Yapay zekâ asistanları** (ChatGPT ve benzeri asistanlardan gelen

@@ -22,6 +22,7 @@ const groups = [
       "broadcasts",
       "deliverability",
       "analytics",
+      "analytics-events",
       "analytics-privacy",
       "mobile",
     ],
