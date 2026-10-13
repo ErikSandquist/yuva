@@ -580,28 +580,29 @@ func parseCustomEvent(e collectEvent, pg analytics.Page, children bool) (customE
 	return out, nil
 }
 
-func parseAnalyticsBatch(body []byte) ([]collectEvent, error) {
+// parseAnalyticsBatch reads one event, or a batch of them (batch true).
+func parseAnalyticsBatch(body []byte) ([]collectEvent, bool, error) {
 	var probe struct {
 		E json.RawMessage `json:"e"`
 	}
 	if err := json.Unmarshal(body, &probe); err != nil {
-		return nil, errors.New("the body is not a JSON object")
+		return nil, false, errors.New("the body is not a JSON object")
 	}
 	if probe.E == nil {
 		var e collectEvent
 		if err := json.Unmarshal(body, &e); err != nil {
-			return nil, errors.New("the event does not match AnalyticsEvent")
+			return nil, false, errors.New("the event does not match AnalyticsEvent")
 		}
-		return []collectEvent{e}, nil
+		return []collectEvent{e}, false, nil
 	}
 	var evs []collectEvent
 	if err := json.Unmarshal(probe.E, &evs); err != nil {
-		return nil, errors.New("e must be a list of events")
+		return nil, true, errors.New("e must be a list of events")
 	}
 	if len(evs) < 1 || len(evs) > maxAnalyticsBatch {
-		return nil, errors.New("e must hold 1 to 100 events")
+		return nil, true, errors.New("e must hold 1 to 100 events")
 	}
-	return evs, nil
+	return evs, true, nil
 }
 
 // serveAnalyticsCollect takes events for the property analyticsCORS found. The client's address is
@@ -632,7 +633,7 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		writeProblem(w, errValidation("the body could not be read"))
 		return
 	}
-	evs, err := parseAnalyticsBatch(body)
+	evs, batch, err := parseAnalyticsBatch(body)
 	if err != nil {
 		drop(analytics.ReasonInvalid, 1)
 		writeProblem(w, errValidation(err.Error()))
@@ -640,13 +641,25 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 	}
 	pages := make([]analytics.Page, len(evs))
 	customs := make([]*customEvent, len(evs))
+	valid := make([]bool, len(evs))
 	children := prop.Audience == string(oas.AnalyticsAudienceChildren)
+	// In a batch an invalid event is dropped on its own, so a mistake in one custom event does not
+	// cost the page views sent with it; a single event answers why it was refused.
+	refuse := func(reason string) bool {
+		drop(analytics.ReasonInvalid, 1)
+		if !batch {
+			writeProblem(w, errValidation(reason))
+			return true
+		}
+		return false
+	}
 	for i, e := range evs {
 		pg, ok := analytics.ParsePage(e.U, e.H)
 		if !ok {
-			drop(analytics.ReasonInvalid, len(evs))
-			writeProblem(w, errValidation("u must be an http(s) URL of at most 2,000 characters"))
-			return
+			if refuse("u must be an http(s) URL of at most 2,000 characters") {
+				return
+			}
+			continue
 		}
 		if !analytics.DomainAllowed(prop.Domains, matchHost(pg.Host)) {
 			drop(analytics.ReasonOrigin, len(evs))
@@ -656,23 +669,26 @@ func (s *Server) serveAnalyticsCollect(w http.ResponseWriter, r *http.Request) {
 		pages[i] = pg
 		if e.N == "pageview" || e.N == "engagement" {
 			if len(e.Rev) > 0 && string(e.Rev) != "null" {
-				drop(analytics.ReasonInvalid, len(evs))
-				writeProblem(w, errValidation("only custom and built-in events carry revenue"))
-				return
+				if refuse("only custom and built-in events carry revenue") {
+					return
+				}
+				continue
 			}
+			valid[i] = true
 			continue
 		}
 		ce, err := parseCustomEvent(e, pg, children)
 		if err != nil {
-			drop(analytics.ReasonInvalid, len(evs))
-			writeProblem(w, errValidation(err.Error()))
-			return
+			if refuse(err.Error()) {
+				return
+			}
+			continue
 		}
-		customs[i] = &ce
+		customs[i], valid[i] = &ce, true
 	}
 	var keep []int
 	for i, e := range evs {
-		if prop.Collection != string(oas.AnalyticsCollectionConsent) || (e.C != nil && e.C.A == 1) {
+		if valid[i] && prop.Collection != string(oas.AnalyticsCollectionConsent) || (e.C != nil && e.C.A == 1) {
 			keep = append(keep, i)
 		}
 	}

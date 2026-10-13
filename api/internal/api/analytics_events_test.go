@@ -389,3 +389,31 @@ func TestAnalyticsSegmentsAndAnnotations(t *testing.T) {
 	}
 	tm.agent.expectProblem(http.StatusForbidden, "forbidden", "POST", "/v1/analytics/properties/"+id+"/goals", map[string]any{"name": "X", "kind": "pageview", "path_pattern": "/x"})
 }
+
+func TestAnalyticsBatchDropsOnlyInvalidEvents(t *testing.T) {
+	h := newHarness(t)
+	tm := newTeam(t, h)
+	id, key := createProperty(tm.owner, map[string]any{"name": "Batch", "domains": []string{"example.com"}})
+	h.clock.Set(time.Date(2026, 10, 12, 9, 0, 0, 0, time.UTC))
+	r := collect(h, key, collectReq{origin: "https://example.com", ip: "203.0.113.5", body: map[string]any{"e": []any{
+		view("/pricing"),
+		event("Signup", "/pricing", map[string]any{"yuva_plan": "pro"}, nil),
+	}}})
+	if r.status != http.StatusAccepted {
+		t.Fatalf("batch with one invalid event: %d %s", r.status, r.raw)
+	}
+	if r := collect(h, key, collectReq{origin: "https://example.com", ip: "203.0.113.5", body: event("Signup", "/pricing", map[string]any{"yuva_plan": "pro"}, nil)}); r.status != http.StatusBadRequest ||
+		!strings.Contains(string(r.raw), "reserved") {
+		t.Fatalf("a single invalid event: %d %s", r.status, r.raw)
+	}
+	h.flushAnalytics()
+	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2 AND kind = 1 AND path = '/pricing'", tm.ws, id); n != 1 {
+		t.Fatalf("%d page views stored from the batch", n)
+	}
+	if n := h.count("SELECT count(*) FROM analytics_events WHERE workspace_id = $1 AND property_id = $2 AND kind = 3", tm.ws, id); n != 0 {
+		t.Fatalf("%d invalid events stored", n)
+	}
+	if n := h.count("SELECT coalesce(sum(events), 0) FROM analytics_ingest_stats WHERE workspace_id = $1 AND property_id = $2 AND reason = 'invalid'", tm.ws, id); n != 2 {
+		t.Fatalf("%d invalid events counted; want the batch's one and the single one", n)
+	}
+}

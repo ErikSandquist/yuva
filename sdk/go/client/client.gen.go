@@ -18322,9 +18322,14 @@ type ClientInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -18352,9 +18357,14 @@ type ClientInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -18382,9 +18392,14 @@ type ClientInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -23532,9 +23547,14 @@ type ClientInterface interface {
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -23572,9 +23592,14 @@ func (c *Client) CollectAnalyticsWithBody(ctx context.Context, key string, conte
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -23612,9 +23637,14 @@ func (c *Client) CollectAnalytics(ctx context.Context, key string, body CollectA
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -49846,9 +49876,14 @@ type ClientWithResponsesInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -49876,9 +49911,14 @@ type ClientWithResponsesInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -49906,9 +49946,14 @@ type ClientWithResponsesInterface interface {
 	// are refused until app collection exists. An unknown or deleted key answers `404`.
 	//
 	// Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-	// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-	// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-	// answers `400` for the whole request.
+	// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+	// or revenue that break those limits, revenue on a page view or engagement, an
+	// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+	// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+	// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+	// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+	// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+	// still refuse the whole request.
 	//
 	// Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 	// of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -74380,9 +74425,14 @@ func (r CreateWorkspaceResponse) ContentType() string {
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -74416,9 +74466,14 @@ func (c *ClientWithResponses) CollectAnalyticsWithBodyWithResponse(ctx context.C
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
@@ -74452,9 +74507,14 @@ func (c *ClientWithResponses) CollectAnalyticsWithResponse(ctx context.Context, 
 // are refused until app collection exists. An unknown or deleted key answers `404`.
 //
 // Custom and built-in events carry props (`p`) and revenue (`$`) within the limits of
-// `AnalyticsEvent`; an event that breaks them, an `outbound_click` or `file_download` without
-// an http(s) `url` prop (for `outbound_click` on another host), or revenue on a page view
-// answers `400` for the whole request.
+// `AnalyticsEvent`. An invalid event (a `u` that is not an http(s) URL, a reserved name, props
+// or revenue that break those limits, revenue on a page view or engagement, an
+// `outbound_click` or `file_download` without an http(s) `url` prop, or an `outbound_click`
+// to the page's own host) answers `400` with the reason when it is sent alone. In a batch
+// it is dropped on its own and counted as `invalid` in the property's health, the batch's
+// other events are taken, and the answer is `202`. A body that is not JSON or does not match
+// `AnalyticsBatch`, a body over 64 KiB, a refused origin or page host and an unknown key
+// still refuse the whole request.
 //
 // Accepted but not stored, still `202`: every request with `Sec-GPC: 1` or `DNT: 1`; events
 // of a `consent` property that do not carry `c.a: 1`; events from an excluded address or
